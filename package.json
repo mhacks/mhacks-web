@@ -1,0 +1,20 @@
+{
+    "name": "MHacks-Unchained",
+    "version": "0.0.1",
+    "description": "#Unchained",
+    "main": "src/app.js",
+    "repository": "https://github.com/mhacks/unchained",
+    "author": "MHacks Team",
+    "license": "GPLv3",
+    "scripts": {
+        "start": "node src/app.js"
+    },
+    "dependencies": {
+        "body-parser": "^1.17.1",
+        "express": "^4.15.2",
+        "express-session": "^1.15.2",
+        "mongoose": "^4.9.2",
+        "morgan": "^1.8.1",
+        "swig": "^1.4.2"
+    }
+}
