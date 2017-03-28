@@ -4,7 +4,7 @@
   "description": "unchained",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --progress --colors --inline --watch --hot --devtool source-map --history-api-fallback --host 0.0.0.0 --port 3000",
+    "start": "webpack-dev-server --progress --colors --inline --watch --hot --devtool source-map --history-api-fallback --host 0.0.0.0",
     "build": "webpack --progress --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
