@@ -5,7 +5,7 @@
     "main": "src/app.js",
     "repository": "https://github.com/mhacks/unchained",
     "author": "MHacks Team",
-    "license": "GPLv3",
+    "license": "GPL-3.0",
     "scripts": {
         "start": "node src/app.js"
     },
@@ -15,6 +15,6 @@
         "express-session": "^1.15.2",
         "mongoose": "^4.9.2",
         "morgan": "^1.8.1",
-        "swig": "^1.4.2"
+        "pug": "^2.0.0-beta11"
     }
 }

@@ -1,0 +1,16 @@
+version: '2'
+services:
+  mhacks_db:
+    extends:
+      file: docker-compose.yml
+      service: mhacks_db
+  mhacks_website:
+    extends:
+      file: docker-compose.yml
+      service: mhacks_website
+    ports:
+      - "3000:3000"
+    volumes:
+      - ..:/usr/src/app
+    links:
+      - mhacks_db
