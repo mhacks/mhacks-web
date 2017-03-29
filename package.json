@@ -7,7 +7,7 @@
     "author": "MHacks Team",
     "license": "GPL-3.0",
     "scripts": {
-        "start": "node src/app.js"
+        "start": "node server/app.js"
     },
     "dependencies": {
         "body-parser": "^1.17.1",
