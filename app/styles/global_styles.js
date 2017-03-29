@@ -5,19 +5,19 @@ injectGlobal`
 html {height: 100%}
 
 body {
-	height: 100%;
-	margin: 0px;
-	background-color: #F5F5F5;
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-	font-size: 14px;
-	line-height: 1.42857143;
-	color: #333;
+    height: 100%;
+    margin: 0px;
+    background-color: #F5F5F5;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
 }
 
 #app {
-	height: 100%;
-	width: 100%;
-	position: fixed;
+    height: 100%;
+    width: 100%;
+    position: fixed;
 }
 
 *:focus { outline: none; }
@@ -45,24 +45,24 @@ button, input, select, textarea {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	line-height: 1.1;
-	color: inherit;
+    line-height: 1.1;
+    color: inherit;
 }
 
 h2, h3 {
-	font-weight: 300;
+    font-weight: 300;
 }
 
 h4, h5, h6 {
-	font-weight: 200;
-	margin-top: 10px;
-	margin-bottom: 10px;
+    font-weight: 200;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 h1 { 
-	font-size: 36px;
-	margin-bottom: 10px;
-	font-weight: 500;
+    font-size: 36px;
+    margin-bottom: 10px;
+    font-weight: 500;
 }
 
 h2 { font-size: 30px; }
@@ -76,7 +76,7 @@ h5 { font-size: 14px; }
 h6 { font-size: 12px; }
 
 p {
-	font-size: 14px;
-	font-weight: 100;
+    font-size: 14px;
+    font-weight: 100;
 }
 `
