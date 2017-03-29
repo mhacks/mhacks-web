@@ -12,6 +12,6 @@ services:
       - "3000:3000"
     volumes:
       - ..:/usr/src/app
-    command: sh -c "nodemon app.js"
+    command: sh -c "yarn install && nodemon app.js"
     links:
       - mhacks_db
