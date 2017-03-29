@@ -9,10 +9,10 @@ var cssExtractor = new ExtractTextWebpackPlugin('./[name].css');
 var lifecycleEvent = process.env.npm_lifecycle_event;
 
 var devConfig = {
-    entry: './app.jsx',
+    entry: './app/app.jsx',
     output: {
         publicPath: '/',
-        path: __dirname + '/public',
+        path: __dirname + '/static',
         filename: 'js/app.js'
     },
     devtool: 'source-map',
@@ -40,7 +40,7 @@ var devConfig = {
                 test: /\.(eot|ttf|woff|woff2|otf)$/,
                 use: 'url-loader'
             },
-            { 
+            {
                 test: /\.(png|jpg|jpeg|gif|woff|svg)$/,
                 exclude: /favicon/,
                 use: 'file-loader'
@@ -51,7 +51,7 @@ var devConfig = {
         // inject styles and javascript into index.html
         new HtmlWebpackPlugin({
             title: 'Webpack Build',
-            template: './index.html'
+            template: './app/index.html'
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"development"'
@@ -59,7 +59,7 @@ var devConfig = {
     ],
     devServer: {
         historyApiFallback: true,
-        contentBase: './public',
+        contentBase: './static',
         proxy: {
             '/api': {
                 target: 'http://localhost:9090',
@@ -71,10 +71,10 @@ var devConfig = {
 }
 
 var buildConfig = {
-    entry: './app.jsx',
+    entry: './app/app.jsx',
     output: {
         publicPath: '/',
-        path: __dirname + '/public',
+        path: __dirname + '/static',
         filename: 'js/app.js'
     },
     devtool: 'source-map',
@@ -109,25 +109,25 @@ var buildConfig = {
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Webpack Build',
-            template: './src/index.html'
+            template: './app/index.html'
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"production"'
         }),
-        new CleanWebpackPlugin(['public/fonts', 'public/js', 'public/styles', 'public/index.html']),
+        new CleanWebpackPlugin(['static/fonts', 'static/js', 'static/styles', 'static/index.html']),
         cssExtractor,
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true,
             minimize: true
         }),
         new CopyWebpackPlugin([
-            {context: "./src/favicon/", from: '**/*', to: './favicon/'},
-            {context: "./src/fonts/", from: '**/*', to: './fonts/'}
+            {context: "./app/favicon/", from: '**/*', to: './favicon/'},
+            {context: "./app/fonts/", from: '**/*', to: './fonts/'}
         ])
     ],
     devServer: {
         historyApiFallback: true,
-        contentBase: './public',
+        contentBase: './static',
         proxy: {
             '/api': {
                 target: 'http://localhost:9090',
