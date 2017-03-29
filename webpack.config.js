@@ -123,7 +123,9 @@ var buildConfig = {
         new CopyWebpackPlugin([
             {context: "./app/favicon/", from: '**/*', to: './favicon/'},
             {context: "./app/fonts/", from: '**/*', to: './fonts/'}
-        ])
+        ]),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin()
     ],
     devServer: {
         historyApiFallback: true,
