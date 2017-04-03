@@ -13,5 +13,8 @@ services:
     volumes:
       - ..:/usr/src/app
     command: sh -c "yarn install && nodemon app.js"
+    environment:
+      - DEBUG
+      - APIWORK
     links:
       - mhacks_db
