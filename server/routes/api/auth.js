@@ -55,7 +55,7 @@ router.post('/login', function(req, res) {
     } else {
         res.status(401).send({
             status: false,
-            message: "Unauthorized, email and password combination is invalid."
+            message: "Unauthorized, email and password fields not set."
         });
     }
 });
@@ -104,7 +104,7 @@ router.post('/register', function(req, res) {
     } else {
         res.status(401).send({
             status: false,
-            message: "Unauthorized, email and password combination is invalid."
+            message: "Unauthorized, email and password fields not set."
         });
     }
 });
