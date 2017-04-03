@@ -20,12 +20,20 @@ var schema = new mongoose.Schema({
         required: true
     },
     tokens: [{
+        created_at: {
+            type: Date,
+            default: Date.now
+        },
         token: String
     }],
     old_tokens: [{
+        created_at: {
+            type: Date,
+            default: Date.now
+        },
         token: String
     }],
-    created_date: {
+    created_at: {
         type: Date,
         default: Date.now
     },
@@ -74,7 +82,7 @@ schema.methods.verifyToken = function(token, callback) {
         }
     } catch (err) {
         console.error(err);
-        switch(err.name) {
+        switch (err.name) {
             case 'TokenExpiredError':
                 break;
             case 'JsonWebTokenError':
@@ -93,6 +101,13 @@ schema.methods.checkPassword = function(suppliedPassword, callback) {
 
 // Generate a new JWT
 schema.methods.generateNewToken = function() {
+    if (this.tokens.length >= config.max_tokens) {
+        this.tokens.sort(function(first, second) {
+            return first.created_at - second.created_at;
+        });
+
+        this.removeToken(this.tokens[0].token);
+    }
     var newToken = jwt.sign({
         email: this.email
     }, secret, {
