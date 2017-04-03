@@ -1,5 +1,5 @@
 var router = require('express').Router(),
-    userModel = require('../../db/model/User.js'),
+    User = require('../../db/model/User.js'),
     authMiddleware = require('../../middleware/auth.js');
 
 // Disable all non-post methods for /v1/auth
@@ -18,18 +18,18 @@ router.post('/login', function(req, res) {
     // Check if the login request contains the email and password
     if (req.body.email && req.body.password) {
         // Lookup users with the email provided in the post body
-        userModel.find().byEmail(req.body.email).exec(function(err, model) {
+        User.find().byEmail(req.body.email).exec(function(err, user) {
             // If there are no errors and the model is valid, check the password
             // and allow the user in. If not, shutdown the request
             if (!err) {
-                if (model) {
-                    model.checkPassword(req.body.password, function(checkErr, checkRes) {
+                if (user) {
+                    user.checkPassword(req.body.password, function(checkErr, checkRes) {
                         if (checkRes) {
                             req.session.loggedIn = true;
                             res.send({
                                 status: true,
                                 message: "Successfully authenticated",
-                                token: model.generateNewToken()
+                                token: user.generateNewToken()
                             });
                         } else {
                             res.status(401).send({
@@ -67,10 +67,10 @@ router.post('/register', function(req, res) {
         // Make sure a user with the same email doesn't exist. If it doesn't,
         // instantiate the new model with the username and password, save it,
         // and generate a new JWT to be used as the Authorization header
-        userModel.find().byEmail(req.body.email).exec(function(err, model) {
+        User.find().byEmail(req.body.email).exec(function(err, user) {
             if (!err) {
-                if (!model) {
-                    userModel.create({
+                if (!user) {
+                    User.create({
                         email: req.body.email,
                         password: req.body.password
                     }, function(err, user) {
@@ -115,7 +115,7 @@ router.post('/logout', authMiddleware('api'), function(req, res) {
         delete req.session.loggedIn;
     }
 
-    userModel.find().byToken(req.authToken).exec(function(err, user) {
+    User.find().byToken(req.authToken).exec(function(err, user) {
         if (!err && user) {
             user.removeToken(req.authToken);
         }

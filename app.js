@@ -53,7 +53,7 @@ app.use(function(req, res, next) {
 });
 
 // Intiialize development webpack (hot reloading, etc);
-if (app.get('env') !== 'production' && !process.env.APIWORK) {
+if (app.get('env') !== 'production' && !config.api_work) {
     var webpack = require('webpack'),
     webpackDevMiddleware = require('webpack-dev-middleware'),
     webpackHotMiddleware = require('webpack-hot-middleware'),
@@ -81,4 +81,4 @@ app.use('/v1', apiRouter);
 app.use('/admin', adminRouter);
 
 // Now we start the server
-server.listen(process.env.PORT || 3000);
+server.listen(config.server_port);

@@ -1,5 +1,5 @@
 var router = require('express').Router(),
-    userModel = require('../db/model/User.js');
+    User = require('../db/model/User.js');
 
 module.exports = function(checkType) {
     type = checkType;
@@ -7,22 +7,23 @@ module.exports = function(checkType) {
         if (req.get('Authorization')) {
             var authorization = req.get('Authorization');
             var token = authorization.replace(/Bearer /g, '');
-            userModel.find().byToken(token).exec(function(err, user) {
+            User.find().byToken(token).exec(function(err, user) {
                 if (!err && user) {
-                    var verify = user.verifyToken(token);
-                    if (verify[0]) {
-                        req.authToken = token;
-                        next();
-                    } else {
-                        if (type === 'api') {
-                            res.status(401).send({
-                                status: false,
-                                message: verify[1]
-                            });
+                    user.verifyToken(token, function(verification, message) {
+                        if (verification) {
+                            req.authToken = token;
+                            next();
                         } else {
-                            res.redirect('/');
+                            if (type === 'api') {
+                                res.status(401).send({
+                                    status: false,
+                                    message: message
+                                });
+                            } else {
+                                res.redirect('/');
+                            }
                         }
-                    }
+                    });
                 } else {
                     if (type === 'api') {
                         res.status(401).send({

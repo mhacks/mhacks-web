@@ -2,11 +2,10 @@ var bcrypt = require('bcrypt'),
     jwt = require('jsonwebtoken'),
     mongoose = require('../index.js'),
     config = require('../../../config/default.js'),
-    Schema = mongoose.Schema,
     secret = config.secret;
 
 // Define the document Schema
-var userSchema = new Schema({
+var schema = new mongoose.Schema({
     full_name: String,
     email: {
         type: String,
@@ -40,21 +39,21 @@ var userSchema = new Schema({
 });
 
 // Allow us to query by name
-userSchema.query.byName = function(name) {
+schema.query.byName = function(name) {
     return this.findOne({
         full_name: new RegExp(name, 'i')
     });
 };
 
 // Allow us to query by email
-userSchema.query.byEmail = function(email) {
+schema.query.byEmail = function(email) {
     return this.findOne({
         email: new RegExp(email, 'i')
     });
 };
 
 // Allow us to query by token
-userSchema.query.byToken = function(findToken) {
+schema.query.byToken = function(findToken) {
     return this.findOne({
         tokens: {
             $elemMatch: {
@@ -65,13 +64,13 @@ userSchema.query.byToken = function(findToken) {
 };
 
 // Verify the token is correct
-userSchema.methods.verifyToken = function(token) {
+schema.methods.verifyToken = function(token, callback) {
     try {
         tokenData = jwt.verify(token, secret);
         if (this.email == tokenData.email) {
-            return [true, null];
+            callback(true, null);
         } else {
-            return [false, 'Email does not match token'];
+            callback(false, 'Email does not match token');
         }
     } catch (err) {
         console.error(err);
@@ -83,17 +82,17 @@ userSchema.methods.verifyToken = function(token) {
             default:
                 break;
         }
-        return [false, err.message];
+        callback(false, err.message);
     }
 };
 
 // Handle bcrypt password comparison
-userSchema.methods.checkPassword = function(suppliedPassword, cb) {
-    bcrypt.compare(suppliedPassword, this.password, cb);
+schema.methods.checkPassword = function(suppliedPassword, callback) {
+    bcrypt.compare(suppliedPassword, this.password, callback);
 };
 
 // Generate a new JWT
-userSchema.methods.generateNewToken = function() {
+schema.methods.generateNewToken = function() {
     var newToken = jwt.sign({
         email: this.email
     }, secret, {
@@ -109,7 +108,7 @@ userSchema.methods.generateNewToken = function() {
 };
 
 // Remove a JWT (logout)
-userSchema.methods.removeToken = function(token) {
+schema.methods.removeToken = function(token) {
     var removeElem = null;
     this.tokens.forEach(function(dbToken, elem) {
         if (dbToken.token === token) {
@@ -141,11 +140,11 @@ var passwordMiddleware = function(next) {
 };
 
 // Set the update middleware on each of the document save and update events
-userSchema.pre('save', passwordMiddleware);
-userSchema.pre('findOneAndUpdate', passwordMiddleware);
-userSchema.pre('update', passwordMiddleware);
+schema.pre('save', passwordMiddleware);
+schema.pre('findOneAndUpdate', passwordMiddleware);
+schema.pre('update', passwordMiddleware);
 
 // Initialize the model with the schema, and export it
-var userModel = mongoose.model('User', userSchema);
+var model = mongoose.model('User', schema);
 
-module.exports = userModel;
+module.exports = model;
