@@ -6,21 +6,18 @@ import styled from 'styled-components'
 import { routes } from '../constants'
 
 const Container = styled.div`
-    position: relative;
-    height: 100%;
-    font-weight: 30px;
-    color: ${props => props.theme.primary1}
+    
 `
 
-class HomePage extends React.Component {
+class SubscribePage extends React.Component {
 
     componentWillMount(){
-        this.props.dispatch(push(routes.HOME));
+        this.props.dispatch(push(routes.SUBSCRIBE));
     }
 
     render () {
         return (
-            <Container>MHacks Unchained</Container>
+            <Container>Subscribe</Container>
         );
     }
 }
@@ -30,4 +27,4 @@ function mapStateToProps(/*state*/){
     }
 }
 
-export default connect(mapStateToProps)(HomePage)
+export default connect(mapStateToProps)(SubscribePage)

@@ -80,5 +80,9 @@ app.use('/', indexRouter);
 app.use('/v1', apiRouter);
 app.use('/admin', adminRouter);
 
+app.use(function(req, res, next) {
+    res.sendFile(__dirname + '/static/index.html');
+});
+
 // Now we start the server
 server.listen(config.server_port);

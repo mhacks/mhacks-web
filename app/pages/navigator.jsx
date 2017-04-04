@@ -13,10 +13,10 @@ class Navigator extends React.Component {
     }
 }
 
-function select(state){
+function mapStateToProps(state){
     return {
         theme: state.theme.data
     }
 }
 
-export default connect(select)(Navigator)
+export default connect(mapStateToProps)(Navigator)

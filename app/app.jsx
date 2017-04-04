@@ -11,7 +11,7 @@ import thunkMiddleware from 'redux-thunk'
 
 import reducers from './reducers'
 import { routes } from './constants'
-import { Navigator, HomePage } from './pages'
+import { Navigator, HomePage, SubscribePage } from './pages'
 
 /* uncomment to view redux logs in console */
 // import createLogger from 'redux-logger'
@@ -27,7 +27,10 @@ render((
     <Provider store={store}>
         <ConnectedRouter history={history}>
             <Navigator>
-                <Route path={routes.HOME} component={HomePage}/>
+                <div>
+                    <Route exact path={routes.HOME} component={HomePage}/>
+                    <Route exact path={routes.SUBSCRIBE} component={SubscribePage}/>
+                </div>
             </Navigator>
         </ConnectedRouter>
     </Provider>

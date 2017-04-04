@@ -1,4 +1,5 @@
 // react-router routes
 export default {
-    HOME: '/'
+    HOME: '/',
+    SUBSCRIBE: '/subscribe'
 }
