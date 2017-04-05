@@ -9,6 +9,7 @@ import { SubscribeThunks } from '../actions'
 
 var Background = require('../../static/backgrounds/night.jpg')
 
+/* Containers */
 const Page = styled.div`
     backgroundColor: #2D2E2F;
     width: 100%;
@@ -38,6 +39,7 @@ const VerticalCenter = styled.div`
     textAlign: center;
 `
 
+/* Styled elements */
 const Header = styled.h1`
     fontSize: 70px;
 `
@@ -47,6 +49,12 @@ const Subhead = styled.h3`
     fontSize: 20px;
 `
 
+const Anchor = styled.a`
+    marginLeft: 10px;
+    color: #BFBFBF;
+`
+
+/* Header underline section */
 const Underline = styled.div`
     color: #BFBFBF;
     position: relative;
@@ -69,6 +77,7 @@ const LineRight = styled.hr`
     right: 0px;
 `
 
+/* TextSubmit Component */
 const Input = styled.input`
     width: 250px;
     height: 40px;
@@ -98,6 +107,7 @@ const TextSubmit = styled.div`
     minWidth: 350px;
 `
 
+/* Footer Section */
 const Footer = styled.div`
     display: flex;
     flexWrap: wrap;
@@ -121,11 +131,7 @@ const Right = styled.div`
     
 `
 
-const Anchor = styled.a`
-    marginLeft: 10px;
-    color: #BFBFBF;
-`
-
+/* Page Component */
 class SubscribePage extends React.Component {
 
     constructor(){
