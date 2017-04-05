@@ -55,34 +55,38 @@ app.use(function(req, res, next) {
 // Intiialize development webpack (hot reloading, etc);
 if (app.get('env') !== 'production' && !config.api_work) {
     var webpack = require('webpack'),
-    webpackDevMiddleware = require('webpack-dev-middleware'),
-    webpackHotMiddleware = require('webpack-hot-middleware'),
-    webpackConfig = require('./webpack.dev.config'),
-    webpackCompiler = webpack(webpackConfig);
+        webpackDevMiddleware = require('webpack-dev-middleware'),
+        webpackHotMiddleware = require('webpack-hot-middleware'),
+        historyApiFallback = require('connect-history-api-fallback'),
+        webpackConfig = require('./webpack.dev.config'),
+        webpackCompiler = webpack(webpackConfig),
+        webpackMiddlewareInstance = webpackDevMiddleware(webpackCompiler, {
+            publicPath: webpackConfig.output.publicPath,
+            stats: {
+                colors: true
+            }
+        });
 
-    app.use(webpackDevMiddleware(webpackCompiler, {
-        publicPath: webpackConfig.output.publicPath,
-        stats: {
-            colors: true
-        }
-    }));
+    app.use(webpackMiddlewareInstance);
+    app.use(historyApiFallback());
+    app.use(webpackMiddlewareInstance);
 
     app.use(webpackHotMiddleware(webpackCompiler, {
         log: console.log
     }));
-}
+} else {
+    // Static files middleware
+    app.use(express.static('build'));
 
-// Static files middleware
-app.use(express.static('build'));
+    app.use(function(req, res, next) {
+        res.sendFile(__dirname + '/build/index.html');
+    });
+}
 
 // Other route middleware (modules in `routes/`)
 app.use('/', indexRouter);
 app.use('/v1', apiRouter);
 app.use('/admin', adminRouter);
-
-app.use(function(req, res, next) {
-    res.sendFile(__dirname + '/build/index.html');
-});
 
 // Now we start the server
 server.listen(config.server_port);
