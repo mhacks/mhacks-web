@@ -52,6 +52,11 @@ app.use(function(req, res, next) {
     return next();
 });
 
+// Other route middleware (modules in `routes/`)
+app.use('/', indexRouter);
+app.use('/v1', apiRouter);
+app.use('/admin', adminRouter);
+
 // Intiialize development webpack (hot reloading, etc);
 if (app.get('env') !== 'production' && !config.api_work) {
     var webpack = require('webpack'),
@@ -82,11 +87,6 @@ if (app.get('env') !== 'production' && !config.api_work) {
         res.sendFile(__dirname + '/build/index.html');
     });
 }
-
-// Other route middleware (modules in `routes/`)
-app.use('/', indexRouter);
-app.use('/v1', apiRouter);
-app.use('/admin', adminRouter);
 
 // Now we start the server
 server.listen(config.server_port);
