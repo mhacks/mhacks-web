@@ -12,7 +12,7 @@ var devConfig = {
     entry: './app/app.jsx',
     output: {
         publicPath: '/',
-        path: __dirname + '/static',
+        path: __dirname + '/build',
         filename: 'js/app.js'
     },
     devtool: 'source-map',
@@ -59,7 +59,7 @@ var devConfig = {
     ],
     devServer: {
         historyApiFallback: true,
-        contentBase: './static',
+        contentBase: './build',
         proxy: {
             '/api': {
                 target: 'http://localhost:9090',
@@ -74,7 +74,7 @@ var buildConfig = {
     entry: './app/app.jsx',
     output: {
         publicPath: '/',
-        path: __dirname + '/static',
+        path: __dirname + '/build',
         filename: 'js/app.js'
     },
     devtool: 'source-map',
@@ -114,7 +114,7 @@ var buildConfig = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"production"'
         }),
-        new CleanWebpackPlugin(['static/fonts', 'static/js', 'static/styles', 'static/index.html']),
+        new CleanWebpackPlugin(['build/fonts', 'build/js', 'build/styles', 'build/index.html']),
         cssExtractor,
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true,
@@ -129,7 +129,7 @@ var buildConfig = {
     ],
     devServer: {
         historyApiFallback: true,
-        contentBase: './static',
+        contentBase: './build',
         proxy: {
             '/api': {
                 target: 'http://localhost:9090',

@@ -8,7 +8,7 @@ body {
     height: 100%;
     margin: 0px;
     background-color: #F5F5F5;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
     color: #333;

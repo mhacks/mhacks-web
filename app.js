@@ -73,7 +73,7 @@ if (app.get('env') !== 'production' && !config.api_work) {
 }
 
 // Static files middleware
-app.use(express.static('static'));
+app.use(express.static('build'));
 
 // Other route middleware (modules in `routes/`)
 app.use('/', indexRouter);
@@ -81,7 +81,7 @@ app.use('/v1', apiRouter);
 app.use('/admin', adminRouter);
 
 app.use(function(req, res, next) {
-    res.sendFile(__dirname + '/static/index.html');
+    res.sendFile(__dirname + '/build/index.html');
 });
 
 // Now we start the server

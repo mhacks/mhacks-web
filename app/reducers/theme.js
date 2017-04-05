@@ -1,6 +1,6 @@
 import { reduxActions } from '../constants'
 import { objectState } from './initial_states.js'
-import Theme from '../styles'
+import { Theme } from '../styles'
 
 const defaultTheme = {
     ...objectState,

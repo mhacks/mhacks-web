@@ -38,3 +38,6 @@ jspm_packages
 
 static/*
 !static/.gitkeep
+
+build/*
+!build/.gitkeep

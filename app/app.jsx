@@ -11,11 +11,10 @@ import thunkMiddleware from 'redux-thunk'
 
 import reducers from './reducers'
 import { routes } from './constants'
-import { Navigator, HomePage, SubscribePage } from './pages'
+import { Navigator, SubscribePage } from './pages'
 
 /* uncomment to view redux logs in console */
-// import createLogger from 'redux-logger'
-// const logger = createLogger()
+// import logger from 'redux-logger'
 
 const history = createHistory()
 const middleware = routerMiddleware(history)
@@ -27,8 +26,8 @@ render((
     <Provider store={store}>
         <ConnectedRouter history={history}>
             <Navigator>
-                <div>
-                    <Route exact path={routes.HOME} component={HomePage}/>
+                <div style={{width: '100%', height: '100%'}}>
+                    <Route exact path={routes.HOME} component={SubscribePage}/>
                     <Route exact path={routes.SUBSCRIBE} component={SubscribePage}/>
                 </div>
             </Navigator>

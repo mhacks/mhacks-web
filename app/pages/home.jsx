@@ -14,7 +14,7 @@ const Container = styled.div`
 
 class HomePage extends React.Component {
 
-    componentWillMount(){
+    componentDidMount(){
         this.props.dispatch(push(routes.HOME));
     }
 
