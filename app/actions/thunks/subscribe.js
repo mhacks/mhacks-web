@@ -10,7 +10,7 @@ export default class SubscribeThunks {
                 if (response.status == 200) {
                     dispatch(SubscribePureActions.subscribeSuccess(email))
                 } else {
-                    dispatch(SubscribePureActions.subscribeFailure(email, response.status))
+                    dispatch(SubscribePureActions.subscribeError(email, response.status))
                 }
             })
         }

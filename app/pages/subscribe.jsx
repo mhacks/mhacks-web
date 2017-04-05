@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { routes } from '../constants'
 import { devices } from '../styles'
 import { SubscribeThunks } from '../actions'
+import { TextSubmit } from '../components'
 
 var Background = require('../../static/backgrounds/night.jpg')
 
@@ -77,36 +78,6 @@ const LineRight = styled.hr`
     right: 0px;
 `
 
-/* TextSubmit Component */
-const Input = styled.input`
-    width: 250px;
-    height: 40px;
-    border: 3px solid #E6E6E6;
-    borderTopLeftRadius: 8px;
-    borderBottomLeftRadius: 8px;
-    padding: 10px;
-    fontSize: 16px;
-` 
-
-const Button = styled.button`
-    width: 100px;
-    height: 40px;
-    top: -1px;
-    left: -3px;
-    position: relative;
-    border: 3px solid #E6E6E6;
-    borderTopRightRadius: 8px;
-    borderBottomRightRadius: 8px;
-    backgroundColor: #E6E6E6;
-`
-
-const TextSubmit = styled.div`
-    display: block;
-    position: relative;
-    whiteSpace: no-wrap;
-    minWidth: 350px;
-`
-
 /* Footer Section */
 const Footer = styled.div`
     display: flex;
@@ -169,17 +140,12 @@ class SubscribePage extends React.Component {
                             <LineRight/><LineLeft/>
                         </Underline>
                         <Subhead>Subscribe for Updates</Subhead>
-                        <TextSubmit>
-                            <Input 
-                                type="text" 
-                                value={this.state.email}
-                                onChange={e => {this.emailChange(e)}}
-                                placeholder="example@email.com"/>
-                            <Button 
-                                onClick={this.submitEmail}>
-                                Subscribe
-                            </Button>
-                        </TextSubmit>
+                        <TextSubmit 
+                            placeholder="example@email.com"
+                            buttonText="Subscribe"
+                            value={this.state.email}
+                            onChange={e => {this.emailChange(e)}}
+                            onSubmit={this.submitEmail}/>
                     </VerticalCenter>
                 </FlexBox>
                 <Footer>
