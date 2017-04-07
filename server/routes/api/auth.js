@@ -1,6 +1,6 @@
 var router = require('express').Router(),
     User = require('../../db/model/User.js'),
-    Responses = require('../../responses/api/auth.js');
+    Responses = require('../../responses/api/auth.js'),
     authMiddleware = require('../../middleware/auth.js');
 
 // Disable all non-post methods for /v1/auth
