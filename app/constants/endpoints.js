@@ -1,4 +1,4 @@
 // api endpoints
 export default {
-    SUBSCRIBE: '/api/subscribe'
+    SUBSCRIBE: '/v1/email/subscribe'
 }
