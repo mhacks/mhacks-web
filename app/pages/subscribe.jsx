@@ -109,7 +109,8 @@ class SubscribePage extends React.Component {
         super();
         
         this.state = { 
-            email: ''
+            email: '',
+            feedback: ''
         }
 
         this.emailChange = this.emailChange.bind(this)
@@ -127,7 +128,14 @@ class SubscribePage extends React.Component {
     }
 
     submitEmail() {
+        if (!this.state.email){
+            this.setState({
+                feedback: 'Please Enter your email'
+            })
+            return
+        }
         this.props.dispatch(SubscribeThunks.subscribe(this.state.email))
+        this.setState({ email: '', feedback: '' })
     }
 
     render () {
@@ -135,14 +143,17 @@ class SubscribePage extends React.Component {
             <Page>
                 <FlexBox>
                     <VerticalCenter>
-                        <Header>MHacks10</Header>
+                        <Header>MHacks 10</Header>
                         <Underline>Coming in Fall 2017
                             <LineRight/><LineLeft/>
                         </Underline>
                         <Subhead>Subscribe for Updates</Subhead>
                         <TextSubmit 
-                            placeholder="example@email.com"
+                            placeholder="your@email.com"
                             buttonText="Subscribe"
+                            focusColor="#350044"
+                            baseColor="#E6E6E6"
+                            feedback={this.state.feedback}
                             value={this.state.email}
                             onChange={e => {this.emailChange(e)}}
                             onSubmit={this.submitEmail}/>
