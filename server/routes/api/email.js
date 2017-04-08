@@ -32,12 +32,17 @@ router.post('/subscribe', function(req, res) {
                         return_message = Responses.UNKNOWN_ERROR;
                         break;
                 }
-                
-                res.send({
+
+                res.status(400).send({
                     status: false,
                     message: return_message
                 });
             }
+        });
+    } else {
+        res.status(400).send({
+            status: false,
+            message: Responses.EMAIL_NOT_PROVIDED
         });
     }
 });
