@@ -18,10 +18,11 @@ export default class SubscribePureActions {
         }
     }
 
-    static subscribeSuccess(data) {
+    static subscribeSuccess(data, message) {
         return {
             type: reduxActions.SUBSCRIBE_SUCCESS,
-            data
+            data,
+            message
         }
     }
 }

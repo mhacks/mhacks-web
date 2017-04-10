@@ -8,7 +8,9 @@ export default class SubscribeThunks {
             dispatch(SubscribePureActions.subscribeRequest(email))
             return SubscribeRequests.subscribe({email}).then(response => {
                 if (response.status == 200) {
-                    dispatch(SubscribePureActions.subscribeSuccess(email))
+                    response.json().then(json => {
+                        dispatch(SubscribePureActions.subscribeSuccess(email, json.message))
+                    })
                 } else {
                     response.json().then(json => {
                         dispatch(SubscribePureActions.subscribeError(email, response.status, json.message))
