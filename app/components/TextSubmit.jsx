@@ -180,6 +180,7 @@ const ButtonText = styled.span`
 `
 
 const Feedback = styled.div`
+    width: 350px;
     textAlign: left;
     color: ${props => props.color || props.baseColor || '#E6E6E6'};
 `

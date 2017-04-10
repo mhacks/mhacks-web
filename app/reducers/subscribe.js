@@ -6,7 +6,7 @@ export function subscribeState(state = objectState, action) {
         case reduxActions.SUBSCRIBE_REQUEST:
             return {...state, fetching: true, fetched: false, error: null}
         case reduxActions.SUBSCRIBE_ERROR:
-            return {...state, fetching: false, fetched: false, error: action.error}
+            return {...state, fetching: false, fetched: false, error: action.error, message: action.message}
         case reduxActions.SUBSCRIBE_SUCCESS:
             return {...state, fetching: false, fetched: true, data: action.data}
         default:

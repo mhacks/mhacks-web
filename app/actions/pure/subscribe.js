@@ -9,11 +9,12 @@ export default class SubscribePureActions {
         }
     }
 
-    static subscribeError(data, error) {
+    static subscribeError(data, error, message) {
         return {
             type: reduxActions.SUBSCRIBE_ERROR,
             data,
-            error
+            error,
+            message
         }
     }
 
