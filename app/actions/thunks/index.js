@@ -1,5 +1,3 @@
-import SubscribeThunks from './subscribe.js'
+import SubscribeThunks from './subscribe.js';
 
-export {
-    SubscribeThunks
-}
+export { SubscribeThunks };

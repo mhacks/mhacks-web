@@ -1,5 +1,3 @@
-import TextSubmit from './TextSubmit.jsx'
+import TextSubmit from './TextSubmit.jsx';
 
-export {
-    TextSubmit
-}
+export { TextSubmit };

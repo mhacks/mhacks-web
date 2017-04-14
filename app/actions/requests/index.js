@@ -1,5 +1,3 @@
-import SubscribeRequests from './subscribe.js'
+import SubscribeRequests from './subscribe.js';
 
-export {
-    SubscribeRequests
-}
+export { SubscribeRequests };

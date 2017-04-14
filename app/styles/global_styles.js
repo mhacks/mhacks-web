@@ -1,4 +1,4 @@
-import { injectGlobal } from 'styled-components'
+import { injectGlobal } from 'styled-components';
 
 // uses some bootstrap defaults
 injectGlobal`
@@ -79,4 +79,4 @@ p {
     font-size: 14px;
     font-weight: 100;
 }
-`
+`;

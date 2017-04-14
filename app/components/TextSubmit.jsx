@@ -1,6 +1,6 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import styled, { keyframes } from 'styled-components'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import styled, { keyframes } from 'styled-components';
 
 const ScaleY0to1 = keyframes`
     from {
@@ -8,7 +8,7 @@ const ScaleY0to1 = keyframes`
     } to {
         transform: scaleY(1);
     }
-`
+`;
 
 const TopBottomAnimation = keyframes`
     from {
@@ -16,7 +16,7 @@ const TopBottomAnimation = keyframes`
     } to {
         transform: scaleX(.98);
     }
-`
+`;
 
 const ButtonAnimation = keyframes`
     from {
@@ -24,7 +24,7 @@ const ButtonAnimation = keyframes`
     } to {
         border-left-width: 98px;
     }
-`
+`;
 
 const Container = styled.div`
     display: block;
@@ -32,7 +32,7 @@ const Container = styled.div`
     whiteSpace: no-wrap;
     minWidth: 350px;
     height: 40px;
-`
+`;
 
 const LeftBorder = styled.div`
     position: absolute;
@@ -46,13 +46,13 @@ const LeftBorder = styled.div`
     borderRadius: 8px;
     borderLeft: 3px solid ${props => props.focusColor || '#350044'};
 
-    ${props => props.focused ? `
+    ${props => (props.focused ? `
         animationName: ${ScaleY0to1};
         animationTimingFunction: linear;
         animationFillMode: forwards;
         animationDuration: 0.01s;
-    ` : ''}
-`
+    ` : '')}
+`;
 
 const TopBottomBorders = styled.div`
     position: absolute;
@@ -68,14 +68,14 @@ const TopBottomBorders = styled.div`
     transformOrigin: center left;
     transform: scaleX(0);
 
-    ${props => props.focused ? `
+    ${props => (props.focused ? `
         animationName: ${TopBottomAnimation};
         animationTimingFunction: linear;
         animationFillMode: forwards;
         animationDuration: 0.25s;
         animationDelay: 0.01s;
-    ` : ''}
-`
+    ` : '')}
+`;
 
 const TopRightBorder = styled.div`
     position: absolute;
@@ -91,14 +91,14 @@ const TopRightBorder = styled.div`
     borderTopRightRadius: 8px;
     borderRight: 3px solid ${props => props.focusColor || '#350044'};
 
-    ${props => props.focused ? `
+    ${props => (props.focused ? `
         animationName: ${ScaleY0to1};
         animationTimingFunction: linear;
         animationFillMode: forwards;
         animationDuration: 0.05s;
         animationDelay: 0.3s;
-    ` : ''}
-`
+    ` : '')}
+`;
 
 const BottomRightBorder = styled.div`
     position: absolute;
@@ -114,14 +114,14 @@ const BottomRightBorder = styled.div`
     borderBottomRightRadius: 8px;
     borderRight: 3px solid ${props => props.focusColor || '#350044'};
 
-    ${props => props.focused ? `
+    ${props => (props.focused ? `
         animationName: ${ScaleY0to1};
         animationTimingFunction: linear;
         animationFillMode: forwards;
         animationDuration: 0.05s;
         animationDelay: 0.3s;
-    ` : ''}
-`
+    ` : '')}
+`;
 
 const Input = styled.input`
     position: relative;
@@ -134,7 +134,7 @@ const Input = styled.input`
     backgroundColor: white;
     padding: 10px;
     fontSize: 16px;
-` 
+`;
 
 const Button = styled.button`
     width: 100px;
@@ -147,7 +147,7 @@ const Button = styled.button`
     borderTopRightRadius: 8px;
     borderBottomRightRadius: 8px;
     backgroundColor: transparent;
-`
+`;
 
 const ButtonBackground = styled.div`
     position: absolute;
@@ -159,99 +159,111 @@ const ButtonBackground = styled.div`
     backgroundColor: ${props => props.baseColor || '#E6E6E6'};
     borderLeft: solid 0px ${props => props.focusColor || '#350044'};
 
-    ${props => props.focused ? `
+    ${props => (props.focused ? `
         animationName: ${ButtonAnimation};
         animationTimingFunction: linear;
         animationFillMode: forwards;
         animationDuration: 0.1s;
         animationDelay: 0.20s;
-    ` : ''}
-`
+    ` : '')}
+`;
 
 const ButtonText = styled.span`
     position: relative;
     z-index: 10;
 
-    ${props => props.focused ? `
+    ${props => (props.focused ? `
         color: white;
         transition: color;
         transitionDelay: .3s;
-    ` : 'color: black'}
-`
+    ` : 'color: black')}
+`;
 
 const Feedback = styled.div`
     width: 350px;
     textAlign: left;
     color: ${props => props.color || props.baseColor || '#E6E6E6'};
-`
+`;
 
 export default class TextSubmit extends React.Component {
+  constructor() {
+    super();
+    this.state = { focused: false };
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+  }
 
-    constructor(){
-        super()
-        this.state = { focused: false }
-        this.handleKeyPress = this.handleKeyPress.bind(this)
+  handleKeyPress(e) {
+    if (e.key == 'Enter') {
+      ReactDOM.findDOMNode(this.refs.textField).blur();
+      this.props.onSubmit();
     }
+  }
 
-    handleKeyPress(e){
-        if (e.key == 'Enter'){
-            ReactDOM.findDOMNode(this.refs.textField).blur()
-            this.props.onSubmit()
-        }
-    }
-
-    render() {
-        return (
-            <div>
-            {this.props.feedback ? 
-                <Feedback color={this.props.feedbackColor}>
-                    {this.props.feedback}
-                </Feedback> 
-            : <br/>}
-            <Container>
-                <LeftBorder 
-                    focused={this.state.focused}
-                    focusColor={this.props.focusColor}
-                    baseColor={this.props.baseColor}/>
-                <TopBottomBorders 
-                    focused={this.state.focused}
-                    focusColor={this.props.focusColor}
-                    baseColor={this.props.baseColor}/>
-                <TopRightBorder 
-                    focused={this.state.focused}
-                    focusColor={this.props.focusColor}
-                    baseColor={this.props.baseColor}/> 
-                <BottomRightBorder 
-                    focused={this.state.focused}
-                    focusColor={this.props.focusColor}
-                    baseColor={this.props.baseColor}/> 
-                <Input
-                    type="text"
-                    ref="textField"
-                    value={this.props.value}
-                    onChange={this.props.onChange}
-                    placeholder={this.props.placeholder}
-                    onFocus={()=>{this.setState({focused: true})}}
-                    onBlur={()=>{this.setState({focused: false})}}
-                    onKeyDown={e=>{this.handleKeyPress(e)}} 
-                    baseColor={this.props.baseColor}
-                />
-                <Button 
-                    onClick={this.props.onSubmit}
-                    baseColor={this.props.baseColor}>    
-                    <ButtonBackground 
-                        focused={this.state.focused}
-                        focusColor={this.props.focusColor}
-                        baseColor={this.props.baseColor}/>
-                    <ButtonText 
-                        focused={this.state.focused}
-                        focusColor={this.props.focusColor}
-                        baseColor={this.props.baseColor}>
-                        {this.props.buttonText}
-                    </ButtonText>
-                </Button>
-            </Container>
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div>
+        {this.props.feedback
+          ? <Feedback color={this.props.feedbackColor}>
+              {this.props.feedback}
+            </Feedback>
+          : <br />}
+        <Container>
+          <LeftBorder
+            focused={this.state.focused}
+            focusColor={this.props.focusColor}
+            baseColor={this.props.baseColor}
+          />
+          <TopBottomBorders
+            focused={this.state.focused}
+            focusColor={this.props.focusColor}
+            baseColor={this.props.baseColor}
+          />
+          <TopRightBorder
+            focused={this.state.focused}
+            focusColor={this.props.focusColor}
+            baseColor={this.props.baseColor}
+          />
+          <BottomRightBorder
+            focused={this.state.focused}
+            focusColor={this.props.focusColor}
+            baseColor={this.props.baseColor}
+          />
+          <Input
+            type="text"
+            ref="textField"
+            value={this.props.value}
+            onChange={this.props.onChange}
+            placeholder={this.props.placeholder}
+            onFocus={() => {
+              this.setState({ focused: true });
+            }}
+            onBlur={() => {
+              this.setState({ focused: false });
+            }}
+            onKeyDown={e => {
+              this.handleKeyPress(e);
+            }}
+            baseColor={this.props.baseColor}
+          />
+          <Button
+            onClick={this.props.onSubmit}
+            baseColor={this.props.baseColor}
+          >
+            <ButtonBackground
+              focused={this.state.focused}
+              focusColor={this.props.focusColor}
+              baseColor={this.props.baseColor}
+            />
+            <ButtonText
+              focused={this.state.focused}
+              focusColor={this.props.focusColor}
+              baseColor={this.props.baseColor}
+            >
+              {this.props.buttonText}
+            </ButtonText>
+          </Button>
+        </Container>
+      </div>
+    );
+  }
 }

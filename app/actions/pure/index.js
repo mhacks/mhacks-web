@@ -1,5 +1,3 @@
-import SubscribePureActions from './subscribe.js'
+import SubscribePureActions from './subscribe.js';
 
-export {
-    SubscribePureActions
-}
+export { SubscribePureActions };
