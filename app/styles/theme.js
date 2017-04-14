@@ -1,5 +1,6 @@
 // example use
 export default {
+  font1: 'Ubuntu',
   primary1: 'blue',
   primary2: '',
   primary3: '',
