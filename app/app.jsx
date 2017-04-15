@@ -23,15 +23,19 @@ let store = applyMiddleware(thunkMiddleware, middleware)(createStore)(reducers);
 window.s = store;
 
 render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <Navigator>
-        <div style={{ width: '100%', height: '100%' }}>
-          <Route exact path={routes.HOME} component={SubscribePage} />
-          <Route exact path={routes.SUBSCRIBE} component={SubscribePage} />
-        </div>
-      </Navigator>
-    </ConnectedRouter>
-  </Provider>,
-  document.getElementById('app')
+    <Provider store={store}>
+        <ConnectedRouter history={history}>
+            <Navigator>
+                <div style={{ width: '100%', height: '100%' }}>
+                    <Route exact path={routes.HOME} component={SubscribePage} />
+                    <Route
+                        exact
+                        path={routes.SUBSCRIBE}
+                        component={SubscribePage}
+                    />
+                </div>
+            </Navigator>
+        </ConnectedRouter>
+    </Provider>,
+    document.getElementById('app')
 );

@@ -186,84 +186,84 @@ const Feedback = styled.div`
 `;
 
 export default class TextSubmit extends React.Component {
-  constructor() {
-    super();
-    this.state = { focused: false };
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-  }
-
-  handleKeyPress(e) {
-    if (e.key == 'Enter') {
-      ReactDOM.findDOMNode(this.refs.textField).blur();
-      this.props.onSubmit();
+    constructor() {
+        super();
+        this.state = { focused: false };
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
-  }
 
-  render() {
-    return (
-      <div>
-        {this.props.feedback
-          ? <Feedback color={this.props.feedbackColor}>
-              {this.props.feedback}
-            </Feedback>
-          : <br />}
-        <Container>
-          <LeftBorder
-            focused={this.state.focused}
-            focusColor={this.props.focusColor}
-            baseColor={this.props.baseColor}
-          />
-          <TopBottomBorders
-            focused={this.state.focused}
-            focusColor={this.props.focusColor}
-            baseColor={this.props.baseColor}
-          />
-          <TopRightBorder
-            focused={this.state.focused}
-            focusColor={this.props.focusColor}
-            baseColor={this.props.baseColor}
-          />
-          <BottomRightBorder
-            focused={this.state.focused}
-            focusColor={this.props.focusColor}
-            baseColor={this.props.baseColor}
-          />
-          <Input
-            type="text"
-            ref="textField"
-            value={this.props.value}
-            onChange={this.props.onChange}
-            placeholder={this.props.placeholder}
-            onFocus={() => {
-              this.setState({ focused: true });
-            }}
-            onBlur={() => {
-              this.setState({ focused: false });
-            }}
-            onKeyDown={e => {
-              this.handleKeyPress(e);
-            }}
-            baseColor={this.props.baseColor}
-          />
-          <Button
-            onClick={this.props.onSubmit}
-            baseColor={this.props.baseColor}
-          >
-            <ButtonBackground
-              focused={this.state.focused}
-              focusColor={this.props.focusColor}
-              baseColor={this.props.baseColor}
-            />
-            <ButtonText
-              focused={this.state.focused}
-              focusColor={this.props.focusColor}
-              baseColor={this.props.baseColor}
-            >
-              {this.props.buttonText}
-            </ButtonText>
-          </Button>
-        </Container>
-      </div>
-    );
-  }
+    handleKeyPress(e) {
+        if (e.key == 'Enter') {
+            ReactDOM.findDOMNode(this.refs.textField).blur();
+            this.props.onSubmit();
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                {this.props.feedback
+                    ? <Feedback color={this.props.feedbackColor}>
+                          {this.props.feedback}
+                      </Feedback>
+                    : <br />}
+                <Container>
+                    <LeftBorder
+                        focused={this.state.focused}
+                        focusColor={this.props.focusColor}
+                        baseColor={this.props.baseColor}
+                    />
+                    <TopBottomBorders
+                        focused={this.state.focused}
+                        focusColor={this.props.focusColor}
+                        baseColor={this.props.baseColor}
+                    />
+                    <TopRightBorder
+                        focused={this.state.focused}
+                        focusColor={this.props.focusColor}
+                        baseColor={this.props.baseColor}
+                    />
+                    <BottomRightBorder
+                        focused={this.state.focused}
+                        focusColor={this.props.focusColor}
+                        baseColor={this.props.baseColor}
+                    />
+                    <Input
+                        type="text"
+                        ref="textField"
+                        value={this.props.value}
+                        onChange={this.props.onChange}
+                        placeholder={this.props.placeholder}
+                        onFocus={() => {
+                            this.setState({ focused: true });
+                        }}
+                        onBlur={() => {
+                            this.setState({ focused: false });
+                        }}
+                        onKeyDown={e => {
+                            this.handleKeyPress(e);
+                        }}
+                        baseColor={this.props.baseColor}
+                    />
+                    <Button
+                        onClick={this.props.onSubmit}
+                        baseColor={this.props.baseColor}
+                    >
+                        <ButtonBackground
+                            focused={this.state.focused}
+                            focusColor={this.props.focusColor}
+                            baseColor={this.props.baseColor}
+                        />
+                        <ButtonText
+                            focused={this.state.focused}
+                            focusColor={this.props.focusColor}
+                            baseColor={this.props.baseColor}
+                        >
+                            {this.props.buttonText}
+                        </ButtonText>
+                    </Button>
+                </Container>
+            </div>
+        );
+    }
 }

@@ -104,81 +104,81 @@ const Right = styled.div`
 
 /* Page Component */
 class SubscribePage extends React.Component {
-  constructor() {
-    super();
+    constructor() {
+        super();
 
-    this.state = {
-      email: '',
-      feedback: ''
-    };
+        this.state = {
+            email: '',
+            feedback: ''
+        };
 
-    this.emailChange = this.emailChange.bind(this);
-    this.submitEmail = this.submitEmail.bind(this);
-  }
+        this.emailChange = this.emailChange.bind(this);
+        this.submitEmail = this.submitEmail.bind(this);
+    }
 
-  componentDidMount() {
-    this.props.dispatch(push(routes.SUBSCRIBE));
-  }
+    componentDidMount() {
+        this.props.dispatch(push(routes.SUBSCRIBE));
+    }
 
-  emailChange(e) {
-    this.setState({
-      email: e.target.value
-    });
-  }
+    emailChange(e) {
+        this.setState({
+            email: e.target.value
+        });
+    }
 
-  submitEmail() {
-    this.props.dispatch(SubscribeThunks.subscribe(this.state.email));
-    this.setState({ email: '' });
-  }
+    submitEmail() {
+        this.props.dispatch(SubscribeThunks.subscribe(this.state.email));
+        this.setState({ email: '' });
+    }
 
-  render() {
-    return (
-      <Page>
-        <FlexBox>
-          <VerticalCenter>
-            <Header>MHacks 10</Header>
-            <Underline>
-              Coming in Fall 2017
-              <LineRight /><LineLeft />
-            </Underline>
-            <Subhead>Subscribe for Updates</Subhead>
-            <TextSubmit
-              placeholder="your@email.com"
-              buttonText="Subscribe"
-              focusColor="#350044"
-              baseColor="#E6E6E6"
-              feedback={this.props.status.message}
-              value={this.state.email}
-              onChange={e => {
-                this.emailChange(e);
-              }}
-              onSubmit={this.submitEmail}
-            />
-          </VerticalCenter>
-        </FlexBox>
-        <Footer>
-          <Left>
-            Have any questions?
-            <Anchor href="mailto:hackathon@umich.edu">
-              hackathon@umich.edu
-            </Anchor>
-          </Left>
-          <Right>
-            Sponsorship inquiries:
-            <Anchor href="mailto:sponsor-mhacks@umich.edu">
-              sponsor-mhacks@umich.edu
-            </Anchor>
-          </Right>
-        </Footer>
-      </Page>
-    );
-  }
+    render() {
+        return (
+            <Page>
+                <FlexBox>
+                    <VerticalCenter>
+                        <Header>MHacks 10</Header>
+                        <Underline>
+                            Coming in Fall 2017
+                            <LineRight /><LineLeft />
+                        </Underline>
+                        <Subhead>Subscribe for Updates</Subhead>
+                        <TextSubmit
+                            placeholder="your@email.com"
+                            buttonText="Subscribe"
+                            focusColor="#350044"
+                            baseColor="#E6E6E6"
+                            feedback={this.props.status.message}
+                            value={this.state.email}
+                            onChange={e => {
+                                this.emailChange(e);
+                            }}
+                            onSubmit={this.submitEmail}
+                        />
+                    </VerticalCenter>
+                </FlexBox>
+                <Footer>
+                    <Left>
+                        Have any questions?
+                        <Anchor href="mailto:hackathon@umich.edu">
+                            hackathon@umich.edu
+                        </Anchor>
+                    </Left>
+                    <Right>
+                        Sponsorship inquiries:
+                        <Anchor href="mailto:sponsor-mhacks@umich.edu">
+                            sponsor-mhacks@umich.edu
+                        </Anchor>
+                    </Right>
+                </Footer>
+            </Page>
+        );
+    }
 }
 
 function mapStateToProps(state) {
-  return {
-    status: state.subscribeState
-  };
+    return {
+        status: state.subscribeState
+    };
 }
 
 export default connect(mapStateToProps)(SubscribePage);

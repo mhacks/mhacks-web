@@ -13,17 +13,17 @@ const Container = styled.div`
 `;
 
 class HomePage extends React.Component {
-  componentDidMount() {
-    this.props.dispatch(push(routes.HOME));
-  }
+    componentDidMount() {
+        this.props.dispatch(push(routes.HOME));
+    }
 
-  render() {
-    return <Container>MHacks Unchained</Container>;
-  }
+    render() {
+        return <Container>MHacks Unchained</Container>;
+    }
 }
 
 function mapStateToProps(/*state*/) {
-  return {};
+    return {};
 }
 
 export default connect(mapStateToProps)(HomePage);
