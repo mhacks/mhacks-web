@@ -16,5 +16,6 @@ services:
     environment:
       - DEBUG
       - APIWORK
+      - MAILCHIMP_TOKEN
     links:
       - mhacks_db

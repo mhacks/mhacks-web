@@ -1,6 +1,6 @@
 var router = require('express').Router();
 
-router.get('/', function(req, res) {
+router.get('/index', function(req, res) {
     res.send('index/');
 });
 

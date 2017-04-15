@@ -5,5 +5,7 @@ module.exports = {
     sessions_db: process.env.SESSIONS_DB || 'mhacks_sessions',
     api_work: process.env.APIWORK || false,
     server_port: process.env.PORT || 3000,
-    max_tokens: process.env.MAX_TOKENS || 10
+    max_tokens: process.env.MAX_TOKENS || 10,
+    mailchimp_token: process.env.MAILCHIMP_TOKEN || '',
+    mailchimp_listid: process.env.MAILCHIMP_LISTID || 'd9245d6d34'
 };

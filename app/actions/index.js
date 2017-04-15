@@ -1,3 +1,3 @@
-// redux-actions
-export {
-}
+import { SubscribeThunks } from './thunks';
+
+export { SubscribeThunks };

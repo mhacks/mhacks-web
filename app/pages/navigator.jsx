@@ -1,22 +1,21 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { ThemeProvider } from 'styled-components'
+import React from 'react';
+import { connect } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
 
 class Navigator extends React.Component {
-
-    render () {
+    render() {
         return (
             <ThemeProvider theme={this.props.theme}>
                 {this.props.children}
             </ThemeProvider>
-        )
+        );
     }
 }
 
-function select(state){
+function mapStateToProps(state) {
     return {
         theme: state.theme.data
-    }
+    };
 }
 
-export default connect(select)(Navigator)
+export default connect(mapStateToProps)(Navigator);

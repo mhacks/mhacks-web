@@ -1,5 +1,6 @@
 var router = require('express').Router(),
     User = require('../../db/model/User.js'),
+    Responses = require('../../responses/api/auth.js'),
     authMiddleware = require('../../middleware/auth.js');
 
 // Disable all non-post methods for /v1/auth
@@ -7,7 +8,7 @@ router.use(function(req, res, next) {
     if (req.method !== 'POST') {
         res.status(405).send({
             status: false,
-            message: "Method not allowed"
+            message: Responses.METHOD_NOT_ALLOWED
         });
     }
     return next();
@@ -28,34 +29,34 @@ router.post('/login', function(req, res) {
                             req.session.loggedIn = true;
                             res.send({
                                 status: true,
-                                message: "Successfully authenticated",
+                                message: Responses.SUCCESSFUL_AUTH,
                                 token: user.generateNewToken()
                             });
                         } else {
                             res.status(401).send({
                                 status: false,
-                                message: "Unauthorized, email and password combination is invalid."
+                                message: Responses.INVALID_PASSWORD
                             });
                         }
                     });
                 } else {
                     res.status(401).send({
                         status: false,
-                        message: "Unauthorized, email and password combination is invalid."
+                        message: Responses.USER_NOT_FOUND
                     });
                 }
             } else {
                 console.error(err);
                 res.status(500).send({
                     status: false,
-                    message: "There was an error with the request, please try again later"
+                    message: Responses.UNKNOWN_ERROR
                 });
             }
         });
     } else {
         res.status(401).send({
             status: false,
-            message: "Unauthorized, email and password fields not set."
+            message: Responses.PARAMS_NOT_FOUND
         });
     }
 });
@@ -82,7 +83,7 @@ router.post('/register', function(req, res) {
                             console.error(err);
                             res.status(500).send({
                                 status: false,
-                                message: "There was an error with the request, please try again later"
+                                message: Responses.UNKNOWN_ERROR
                             });
                         }
                     });
@@ -90,21 +91,21 @@ router.post('/register', function(req, res) {
                     console.error(err);
                     res.status(401).send({
                         status: false,
-                        message: "You are not allowed to register with that email."
+                        message: Responses.USER_EXISTS
                     });
                 }
             } else {
                 console.error(err);
                 res.status(500).send({
                     status: false,
-                    message: "There was an error with the request, please try again later"
+                    message: Responses.UNKNOWN_ERROR
                 });
             }
         });
     } else {
         res.status(401).send({
             status: false,
-            message: "Unauthorized, email and password fields not set."
+            message: Responses.PARAMS_NOT_FOUND
         });
     }
 });
