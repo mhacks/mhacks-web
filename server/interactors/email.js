@@ -8,7 +8,7 @@ var Errors = {
     UNKNOWN: 'UNKNOWN_ERROR'
 };
 
-var subscribe = function(email, callback) {
+function subscribe(email, callback) {
     if (!config.mailchimp_token || !config.mailchimp_listid) {
         callback(Errors.MISSING_CONFIG);
         return;
@@ -28,8 +28,6 @@ var subscribe = function(email, callback) {
         }
     }, function(err, result) {
         var error = null;
-        console.log("err:", err);
-        console.log("res:", result);
         if (result.errors.length > 0) {
             var message = result.errors[0].error;
             if (message.toLowerCase().indexOf('already a list member') != -1) {
