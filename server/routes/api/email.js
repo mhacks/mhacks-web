@@ -25,10 +25,13 @@ router.post('/subscribe', function(req, res) {
             } else {
                 var return_message = '';
                 switch (err) {
-                    case Email.ERRORS.ALREADY_SUBSCRIBED:
+                    case Email.Errors.ALREADY_SUBSCRIBED:
                         return_message = Responses.ALREADY_SUBSCRIBED;
                         break;
-                    case Email.ERRORS.UNKNOWN:
+                    case Email.Errors.MISSING_CONFIG:
+                        return_message = Responses.MISSING_CONFIG;
+                        break;
+                    case Email.Errors.UNKNOWN:
                         return_message = Responses.UNKNOWN_ERROR;
                         break;
                 }

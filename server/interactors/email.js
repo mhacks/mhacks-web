@@ -1,13 +1,21 @@
 var Mailchimp = require('mailchimp-api-v3'),
     config = require('../../config/default.js'),
-    mailchimp = new Mailchimp(config.mailchimp_token);
+    Responses = require('../responses/api/email');
 
-module.exports.ERRORS = {
+var Errors = {
     ALREADY_SUBSCRIBED: 'ALREADY_SUBSCRIBED',
+    MISSING_CONFIG: 'MISSING_CONFIG',
     UNKNOWN: 'UNKNOWN_ERROR'
 };
 
-module.exports.subscribe = function(email, callback) {
+var subscribe = function(email, callback) {
+    if (!config.mailchimp_token || !config.mailchimp_listid) {
+        callback(Errors.MISSING_CONFIG);
+        return;
+    }
+
+    var mailchimp = new Mailchimp(config.mailchimp_token);
+
     mailchimp.post({
         path: '/lists/' + config.mailchimp_listid,
         body: {
@@ -20,14 +28,21 @@ module.exports.subscribe = function(email, callback) {
         }
     }, function(err, result) {
         var error = null;
-        if (result.error_count > 0) {
+        console.log("err:", err);
+        console.log("res:", result);
+        if (result.errors.length > 0) {
             var message = result.errors[0].error;
             if (message.toLowerCase().indexOf('already a list member') != -1) {
-                error = module.exports.ERRORS.ALREADY_SUBSCRIBED;
+                error = Errors.ALREADY_SUBSCRIBED;
             } else {
-                error = module.exports.ERRORS.UNKNOWN;
+                error = Errors.ERRORS.UNKNOWN;
             }
         }
         callback(error, result);
     });
 };
+
+module.exports = {
+    subscribe,
+    Errors
+}
