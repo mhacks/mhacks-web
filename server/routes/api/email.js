@@ -16,14 +16,12 @@ router.use(function(req, res, next) {
 // Handles /v1/email/subscribe
 router.post('/subscribe', function(req, res) {
     if (req.body.email) {
-        Email.subscribe(req.body.email)
-            .then((result) => {
+        Email.subscribe(req.body.email).then((result) => {
                 res.send({
                     status: true,
                     message: Responses.SUBSCRIBE_SUCCESSFUL
                 });
-            })
-            .catch((err) => {
+            }).catch((err) => {
                 var return_message = '';
                 switch (err) {
                     case Email.Errors.ALREADY_SUBSCRIBED:
