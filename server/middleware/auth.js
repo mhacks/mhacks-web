@@ -8,32 +8,30 @@ module.exports = function(checkType) {
         if (req.get('Authorization')) {
             var authorization = req.get('Authorization');
             var token = authorization.replace(/Bearer /g, '');
-            User.find().byToken(token).exec(function(err, user) {
-                if (!err && user) {
-                    user.verifyToken(token, function(verification, message) {
-                        if (verification) {
-                            req.authToken = token;
-                            next();
+            User.find().byToken(token).exec().then((user) => {
+                user.verifyToken(token, function(verification, message) {
+                    if (verification) {
+                        req.authToken = token;
+                        next();
+                    } else {
+                        if (type === 'api') {
+                            res.status(401).send({
+                                status: false,
+                                message: message
+                            });
                         } else {
-                            if (type === 'api') {
-                                res.status(401).send({
-                                    status: false,
-                                    message: message
-                                });
-                            } else {
-                                res.redirect('/');
-                            }
+                            res.redirect('/');
                         }
+                    }
+                });
+            }).catch((err) => {
+                if (type === 'api') {
+                    res.status(401).send({
+                        status: false,
+                        message: Responses.UNAUTHORIZED
                     });
                 } else {
-                    if (type === 'api') {
-                        res.status(401).send({
-                            status: false,
-                            message: Responses.UNAUTHORIZED
-                        });
-                    } else {
-                        res.redirect('/');
-                    }
+                    res.redirect('/');
                 }
             });
         } else if (req.session.loggedIn) {
