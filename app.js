@@ -9,7 +9,6 @@ var http = require('http'),
     MongoStore = require('connect-mongo')(session),
     csrf = require('csurf'),
     csrfProtection = csrf(),
-    adminRouter = require('./server/routes/admin.js'),
     apiRouter = require('./server/routes/api.js'),
     indexRouter = require('./server/routes/index.js'),
     config = require('./config/default.js');
@@ -55,7 +54,6 @@ app.use(function(req, res, next) {
 // Other route middleware (modules in `routes/`)
 app.use('/', indexRouter);
 app.use('/v1', apiRouter);
-app.use('/admin', adminRouter);
 
 // Intiialize development webpack (hot reloading, etc);
 if (app.get('env') !== 'production' && !config.api_work) {
