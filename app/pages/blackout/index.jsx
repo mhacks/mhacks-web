@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { routes } from '../../constants';
 import { devices } from '../../styles';
 import { SubscribeThunks } from '../../actions';
-import { TextSubmit } from '../../components';
+import { InputText } from '../../components';
 import Header from './header.jsx';
 
 /* Containers */
@@ -104,11 +104,13 @@ class BlackoutPage extends React.Component {
                 <FlexBox>
                     <VerticalCenter>
                         <Subhead>Subscribe for Updates</Subhead>
-                        <TextSubmit
-                            placeholder="your@email.com"
-                            buttonText="Subscribe"
-                            focusColor="#350044"
-                            baseColor="#E6E6E6"
+                        <InputText
+                            color={this.props.theme.darkPink}
+                            borderColor="white"
+                            placeholder="ENTER YOUR EMAIL FOR UPDATES"
+                            placeholderColor={this.props.theme.darkPink}
+                            feedbackColor="white"
+                            width="300px"
                             feedback={this.props.status.message}
                             value={this.state.email}
                             onChange={e => {
@@ -139,7 +141,8 @@ class BlackoutPage extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        status: state.subscribeState
+        status: state.subscribeState,
+        theme: state.theme.data
     };
 }
 
