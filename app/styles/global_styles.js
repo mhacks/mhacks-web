@@ -9,7 +9,7 @@ body {
     height: 100%;
     margin: 0px;
     background-color: #F5F5F5;
-    font-family: ${Theme.font1}, sans-serif;
+    font-family: ${Theme.primaryFont}, sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
     color: #333;
