@@ -16,6 +16,9 @@ var devConfig = {
         filename: 'js/app.js'
     },
     devtool: 'source-map',
+    resolve: {
+        extensions: ['.js', '.jsx']
+    },
     module: {
         rules: [
             {
@@ -78,6 +81,9 @@ var buildConfig = {
         filename: 'js/app.js'
     },
     devtool: 'source-map',
+    resolve: {
+        extensions: ['.js', '.jsx']
+    },
     module: {
         rules: [
             {
