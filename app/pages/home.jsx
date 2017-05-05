@@ -9,7 +9,6 @@ const Container = styled.div`
     position: relative;
     height: 100%;
     font-weight: 30px;
-    color: ${props => props.theme.primary1}
 `;
 
 class HomePage extends React.Component {
