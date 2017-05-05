@@ -11,7 +11,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import reducers from './reducers';
 import { routes } from './constants';
-import { Navigator, SubscribePage } from './pages';
+import { Navigator, BlackoutPage } from './pages';
 
 /* uncomment to view redux logs in console */
 // import logger from 'redux-logger'
@@ -27,11 +27,11 @@ render(
         <ConnectedRouter history={history}>
             <Navigator>
                 <div style={{ width: '100%', height: '100%' }}>
-                    <Route exact path={routes.HOME} component={SubscribePage} />
+                    <Route exact path={routes.HOME} component={BlackoutPage} />
                     <Route
                         exact
                         path={routes.SUBSCRIBE}
-                        component={SubscribePage}
+                        component={BlackoutPage}
                     />
                 </div>
             </Navigator>

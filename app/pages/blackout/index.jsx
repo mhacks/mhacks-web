@@ -3,24 +3,18 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import styled from 'styled-components';
 
-import { routes } from '../constants';
-import { devices } from '../styles';
-import { SubscribeThunks } from '../actions';
-import { TextSubmit } from '../components';
-
-var Background = require('../../static/backgrounds/night.jpg');
+import { routes } from '../../constants';
+import { devices } from '../../styles';
+import { SubscribeThunks } from '../../actions';
+import { TextSubmit } from '../../components';
+import Header from './header.jsx';
 
 /* Containers */
 const Page = styled.div`
-    backgroundColor: #2D2E2F;
+    backgroundColor: black;
     width: 100%;
     height: 100%;
     color: #F1F7FF;
-    padding: 15px;
-    backgroundImage: url('${Background}');
-    backgroundSize:cover; 
-    backgroundAttachment:fixed;
-    zIndex: 0;
 `;
 
 const FlexBox = styled.div`
@@ -31,7 +25,7 @@ const FlexBox = styled.div`
     `}
 `;
 
-const VerticalCenter = styled.div`  
+const VerticalCenter = styled.div`
     alignSelf: center;
     margin: auto;
     display: block;
@@ -41,10 +35,6 @@ const VerticalCenter = styled.div`
 `;
 
 /* Styled elements */
-const Header = styled.h1`
-    fontSize: 70px;
-`;
-
 const Subhead = styled.h3`
     marginBottom: 30px;
     fontSize: 20px;
@@ -53,29 +43,6 @@ const Subhead = styled.h3`
 const Anchor = styled.a`
     marginLeft: 10px;
     color: #BFBFBF;
-`;
-
-/* Header underline section */
-const Underline = styled.div`
-    color: #BFBFBF;
-    position: relative;
-    margin: auto;
-    marginBottom: 50px;
-    width: 350px;
-`;
-
-const LineLeft = styled.hr`
-    width: 100px;
-    position: absolute;
-    top: 3px;
-
-`;
-
-const LineRight = styled.hr`
-    width: 100px;
-    position: absolute;
-    top: 3px;
-    right: 0px;
 `;
 
 /* Footer Section */
@@ -99,11 +66,10 @@ const Right = styled.div`
         marginLeft: 10px;
         marginRight: 10px;
     `}
-    
 `;
 
 /* Page Component */
-class SubscribePage extends React.Component {
+class BlackoutPage extends React.Component {
     constructor() {
         super();
 
@@ -134,13 +100,9 @@ class SubscribePage extends React.Component {
     render() {
         return (
             <Page>
+                <Header />
                 <FlexBox>
                     <VerticalCenter>
-                        <Header>MHacks 10</Header>
-                        <Underline>
-                            Coming in Fall 2017
-                            <LineRight /><LineLeft />
-                        </Underline>
                         <Subhead>Subscribe for Updates</Subhead>
                         <TextSubmit
                             placeholder="your@email.com"
@@ -181,4 +143,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(SubscribePage);
+export default connect(mapStateToProps)(BlackoutPage);

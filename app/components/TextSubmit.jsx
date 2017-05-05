@@ -42,7 +42,7 @@ const LeftBorder = styled.div`
     height: 100%;
     transformOrigin: center left;
     transform: scaleY(0);
-    
+
     borderRadius: 8px;
     borderLeft: 3px solid ${props => props.focusColor || '#350044'};
 
@@ -60,7 +60,7 @@ const TopBottomBorders = styled.div`
     z-index: 10;
     width: 100%;
     height: 100%;
-    
+
     borderTopLeftRadius: 8px;
     borderBottomLeftRadius: 8px;
     borderTop: 3px solid ${props => props.focusColor || '#350044'};
