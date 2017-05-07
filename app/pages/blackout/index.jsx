@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { devices } from '../../styles';
-import Header from './header.jsx';
+//import Header from './header.jsx';
 import Hero from './hero.jsx';
 
 /* Containers */
