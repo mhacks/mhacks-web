@@ -139,7 +139,7 @@ const Input = styled.input`
 const Button = styled.button`
     width: 100px;
     height: 40px;
-    top: -1px;
+    top: -2px;
     left: -3px;
     position: relative;
     border: 3px solid ${props => props.baseColor || '#E6E6E6'};
