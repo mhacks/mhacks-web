@@ -126,7 +126,7 @@ const BottomRightBorder = styled.div`
 const Input = styled.input`
     position: relative;
     z-index: 1;
-    width: 250px;
+    width: ${props => props.width || '350px'};
     height: 40px;
     border: 3px solid ${props => props.baseColor || '#E6E6E6'};
     borderTopLeftRadius: 8px;
