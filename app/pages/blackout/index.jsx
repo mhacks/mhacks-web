@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { devices } from '../../styles';
-//import Header from './header.jsx';
+import Header from './header.jsx';
 import Hero from './hero.jsx';
 
 /* Containers */
@@ -64,13 +64,19 @@ const Right = styled.div`
     `}
 `;
 
+const HeroWrapper = styled.div`
+    margin: 35px 0;
+`;
+
 /* Page Component */
 class BlackoutPage extends React.Component {
     render() {
         return (
             <Page>
                 <Header />
-                <Hero />
+                <HeroWrapper>
+                    <Hero />
+                </HeroWrapper>
                 <FlexBox>
                     <VerticalCenter>
                         <Subhead>Subscribe for Updates</Subhead>
