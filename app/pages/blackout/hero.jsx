@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { devices } from '../../styles';
-import { TextSubmit, Container } from '../../components';
+import { TextSubmit, Container, VideoPlayer } from '../../components';
 import { SubscribeThunks } from '../../actions';
 import { routes } from '../../constants';
 import { connect } from 'react-redux';
@@ -43,18 +43,6 @@ const LeftSideContainer = styled.div`
     `}
 `;
 
-const VideoPlaceholderContainer = styled.div`
-    ${devices.desktop`
-        width: 60%;
-        float: right;
-    `}
-`;
-
-const VideoPlaceholder = styled.img`
-    width: 100%;
-    height: auto;
-`;
-
 const TextSubmitPositioner = styled.div`
     marginBottom: 20px;
     textAlign: center;
@@ -72,6 +60,13 @@ const Text = styled.h2`
         fontSize: 28px;
         margin: -50px 15px 25px 0;
         textAlign: left;
+    `}
+`;
+
+const VideoPlayerContainer = styled.div`
+    ${devices.desktop`
+        width: 60%;
+        float: right;
     `}
 `;
 
@@ -124,9 +119,15 @@ class BlackoutHero extends React.Component {
                             />
                         </TextSubmitPositioner>
                     </LeftSideContainer>
-                    <VideoPlaceholderContainer>
-                        <VideoPlaceholder src={VideoPlaceholderImage} />
-                    </VideoPlaceholderContainer>
+                    <VideoPlayerContainer>
+                        <VideoPlayer
+                            placeholderImage={VideoPlaceholderImage}
+                            videoUrl="https://www.youtube.com/embed/FcZhyLZlIA8"
+                            showControls={false}
+                            showVideoDetails={false}
+                            autoplay={true}
+                        />
+                    </VideoPlayerContainer>
                 </HeroContainer>
             </Container>
         );
