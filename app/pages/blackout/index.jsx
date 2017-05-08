@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { devices } from '../../styles';
+import { connect } from 'react-redux';
 import Header from './header.jsx';
 import Hero from './hero.jsx';
 

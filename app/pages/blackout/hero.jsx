@@ -2,28 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { devices } from '../../styles';
-import { TextSubmit, Container } from '../../components';
+import { InputText, Container } from '../../components';
 import { SubscribeThunks } from '../../actions';
 import { routes } from '../../constants';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 const VideoPlaceholderImage = require('../../../static/blackout/video-placeholder.png');
-
-/*
-const HeaderWrapper = styled.div`
-    display: flex;
-    height: 90px;
-    alignItems: center;
-    justifyContent: center;
-`;
-
-const HeaderLogoWrapper = styled.div`
-    display: flex;
-    alignItems: center;
-    height: 90%;
-`;
-*/
 
 const HeroContainer = styled.div`
     overflow: auto;
@@ -35,7 +20,6 @@ const HeroContainer = styled.div`
         alignItems: center;
     `}
 `;
-
 const LeftSideContainer = styled.div`
     ${devices.desktop`
         width: calc(40% - 20px);
@@ -110,11 +94,13 @@ class BlackoutHero extends React.Component {
                     <LeftSideContainer>
                         <Text>MHacks helps you turn your dreams into reality.</Text>
                         <TextSubmitPositioner>
-                            <TextSubmit
-                                placeholder="your@email.com"
-                                buttonText="Subscribe"
-                                focusColor="#350044"
-                                baseColor="#E6E6E6"
+                            <InputText
+                                color={this.props.theme.darkPink}
+                                borderColor="white"
+                                placeholder="ENTER YOUR EMAIL FOR UPDATES"
+                                placeholderColor={this.props.theme.darkPink}
+                                feedbackColor="white"
+                                width="400px"
                                 feedback={this.props.status.message}
                                 value={this.state.email}
                                 onChange={e => {
@@ -135,7 +121,8 @@ class BlackoutHero extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        status: state.subscribeState
+        status: state.subscribeState,
+        theme: state.theme.data
     };
 }
 
