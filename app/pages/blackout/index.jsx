@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { devices } from '../../styles';
+import { connect } from 'react-redux';
 import Header from './header.jsx';
 import Hero from './hero.jsx';
 
@@ -101,4 +102,11 @@ class BlackoutPage extends React.Component {
     }
 }
 
-export default BlackoutPage;
+function mapStateToProps(state) {
+    return {
+        status: state.subscribeState,
+        theme: state.theme.data
+    };
+}
+
+export default connect(mapStateToProps)(BlackoutPage);
