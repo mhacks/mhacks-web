@@ -1,13 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import styled from 'styled-components';
 
-import { routes } from '../../constants';
 import { devices } from '../../styles';
-import { SubscribeThunks } from '../../actions';
-import { InputText } from '../../components';
+import { connect } from 'react-redux';
 import Header from './header.jsx';
+import Hero from './hero.jsx';
 
 /* Containers */
 const Page = styled.div`
@@ -68,56 +65,22 @@ const Right = styled.div`
     `}
 `;
 
+const HeroWrapper = styled.div`
+    margin: 35px 0;
+`;
+
 /* Page Component */
 class BlackoutPage extends React.Component {
-    constructor() {
-        super();
-
-        this.state = {
-            email: '',
-            feedback: ''
-        };
-
-        this.emailChange = this.emailChange.bind(this);
-        this.submitEmail = this.submitEmail.bind(this);
-    }
-
-    componentDidMount() {
-        this.props.dispatch(push(routes.SUBSCRIBE));
-    }
-
-    emailChange(e) {
-        this.setState({
-            email: e.target.value
-        });
-    }
-
-    submitEmail() {
-        this.props.dispatch(SubscribeThunks.subscribe(this.state.email));
-        this.setState({ email: '' });
-    }
-
     render() {
         return (
             <Page>
                 <Header />
+                <HeroWrapper>
+                    <Hero />
+                </HeroWrapper>
                 <FlexBox>
                     <VerticalCenter>
                         <Subhead>Subscribe for Updates</Subhead>
-                        <InputText
-                            color={this.props.theme.darkPink}
-                            borderColor="white"
-                            placeholder="ENTER YOUR EMAIL FOR UPDATES"
-                            placeholderColor={this.props.theme.darkPink}
-                            feedbackColor="white"
-                            width="300px"
-                            feedback={this.props.status.message}
-                            value={this.state.email}
-                            onChange={e => {
-                                this.emailChange(e);
-                            }}
-                            onSubmit={this.submitEmail}
-                        />
                     </VerticalCenter>
                 </FlexBox>
                 <Footer>
