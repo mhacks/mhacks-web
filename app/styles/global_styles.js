@@ -6,7 +6,6 @@ injectGlobal`
 html {height: 100%}
 
 body {
-    height: 100%;
     margin: 0px;
     background-color: #F5F5F5;
     font-family: ${Theme.primaryFont}, sans-serif;
@@ -18,7 +17,6 @@ body {
 #app {
     height: 100%;
     width: 100%;
-    position: fixed;
 }
 
 *:focus { outline: none; }
