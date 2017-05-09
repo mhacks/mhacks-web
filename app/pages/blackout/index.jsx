@@ -5,10 +5,11 @@ import { devices } from '../../styles';
 import { connect } from 'react-redux';
 import Header from './header.jsx';
 import Hero from './hero.jsx';
+import QuoteSection from './QuoteSection/index';
+
 
 /* Containers */
 const Page = styled.div`
-    backgroundColor: black;
     width: 100%;
     color: #F1F7FF;
 `;
@@ -78,21 +79,21 @@ class BlackoutPage extends React.Component {
                         <Subhead>Subscribe for Updates</Subhead>
                     </VerticalCenter>
                 </FlexBox>
-                <Footer>
-                    <Left>
-                        Have any questions?
-                        <Anchor href="mailto:hackathon@umich.edu">
-                            hackathon@umich.edu
-                        </Anchor>
-                    </Left>
-                    <Right>
-                        Sponsorship inquiries:
-                        <Anchor href="mailto:sponsor-mhacks@umich.edu">
-                            sponsor-mhacks@umich.edu
-                        </Anchor>
-                    </Right>
-                </Footer>
-
+            <QuoteSection />
+            <Footer>
+              <Left>
+                Have any questions?
+                <Anchor href="mailto:hackathon@umich.edu">
+                  hackathon@umich.edu
+                </Anchor>
+              </Left>
+              <Right>
+                Sponsorship inquiries:
+                <Anchor href="mailto:sponsor-mhacks@umich.edu">
+                  sponsor-mhacks@umich.edu
+                </Anchor>
+              </Right>
+            </Footer>
             </Page>
         );
     }
