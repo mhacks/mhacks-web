@@ -11,6 +11,8 @@ import { push } from 'react-router-redux';
 const VideoPlaceholderImage = require('../../../static/blackout/video-placeholder.png');
 
 const HeroContainer = styled.div`
+    paddingTop: 75px;
+    paddingBottom: 75px;
     overflow: auto;
     display: flex;
     flexDirection: column;
