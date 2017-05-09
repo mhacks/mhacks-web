@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import Header from './header.jsx';
 import Hero from './hero.jsx';
@@ -22,6 +23,7 @@ const StyledFaq = styled(Faq)``;
 
 /* Page Component */
 class BlackoutPage extends React.Component {
+    
     render() {
         return (
             <Page>
@@ -33,4 +35,8 @@ class BlackoutPage extends React.Component {
     }
 }
 
-export default BlackoutPage;
+function mapStateToProps(/*state*/) {
+    return {};
+}
+
+export default connect(mapStateToProps)(BlackoutPage);
