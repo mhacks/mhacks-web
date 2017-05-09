@@ -10,16 +10,11 @@ import Hero from './hero.jsx';
 const Page = styled.div`
     backgroundColor: black;
     width: 100%;
-    height: 100%;
     color: #F1F7FF;
 `;
 
 const FlexBox = styled.div`
     display: flex;
-
-    ${devices.tablet`
-        height: 90%;
-    `}
 `;
 
 const VerticalCenter = styled.div`
@@ -97,6 +92,7 @@ class BlackoutPage extends React.Component {
                         </Anchor>
                     </Right>
                 </Footer>
+
             </Page>
         );
     }
