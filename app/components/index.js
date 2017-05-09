@@ -1,5 +1,11 @@
 import TextSubmit from './TextSubmit.jsx';
-import Container from './Container.jsx';
 import InputText from './InputText.jsx';
+import Container from './Container.jsx';
+import VideoPlayer from './VideoPlayer.jsx';
 
-export { TextSubmit, Container, InputText };
+export {
+    TextSubmit,
+    InputText,
+    Container,
+    VideoPlayer
+};
