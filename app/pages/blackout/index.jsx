@@ -26,22 +26,21 @@ const StyledFaq = styled(Faq)``;
 
 /* Page Component */
 class BlackoutPage extends React.Component {
-
-  render() {
-    return (
-      <Page>
-        <Header />
-        <StyledHero />
-        <StyledFaq />
-        <QuoteSection />
-        <Sponsorship />
-      </Page>
-    );
-  }
+    render() {
+        return (
+            <Page>
+                <Header />
+                <StyledHero />
+                <StyledFaq />
+                <Sponsorship />
+                <QuoteSection />
+            </Page>
+        );
+    }
 }
 
 function mapStateToProps(/*state*/) {
-  return {};
+    return {};
 }
 
 export default connect(mapStateToProps)(BlackoutPage);

@@ -8,8 +8,8 @@ const Wrapper = styled.div`
 `;
 
 export default () => (
-  <Wrapper>
-    <SectionHeader> Sponsorship </SectionHeader>
-      <SectionBody> Section Body </SectionBody>
-  </Wrapper>
+    <Wrapper>
+        <SectionHeader> Sponsorship </SectionHeader>
+        <SectionBody> Section Body </SectionBody>
+    </Wrapper>
 );
