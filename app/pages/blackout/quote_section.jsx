@@ -32,6 +32,7 @@ const Quote = styled.div`
     fontSize: 2.0em;
     textAlign: left;
     ${devices.tablet`
+        textAlign: ${props => (props.position === 'left' ? 'left' : 'right')};
         minWidth: 30%;
         width: 100%;
         fontSize: 2.5em;
@@ -87,17 +88,19 @@ const EndWrapper = styled.img`
     width: auto;
     visibility: hidden;
     right: 0;
-    bottom: 2%;
+    bottom: 4%;
   
   ${devices.desktop`
         height: 20%;
         visibility: visible;
+        bottom: 12%;
   `}
   
   ${devices.tablet`
         height: 20%;
         visibility: visible;
         right: 3%;
+        bottom: 10%;
   `}
   
   ${devices.giant`
@@ -113,10 +116,11 @@ const CompanyName = styled.div`
     clear: both;
     fontSize: 2.0em;
     zIndex: 9999;
+    padding-bottom: 50px;
     textAlign: left;
     
     ${devices.tablet`
-      textAlign: 
+      textAlign: ${props => (props.position === 'right' ? 'right' : 'left')};
 
     `}
     
