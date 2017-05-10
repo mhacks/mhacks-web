@@ -49,7 +49,7 @@ const Quote = styled.div`
   ${devices.giant`
         textAlign: ${props => (props.position === 'left' ? 'left' : 'right')};
         min-width: 30%;
-        width: 70%;
+        width: 80%;
         fontSize: 2.5em;
   `}
 `;
