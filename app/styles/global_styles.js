@@ -12,7 +12,6 @@ body {
     background-color: black;
 }
 
-
 *:focus { outline: none; }
 
 * { box-sizing: border-box; }

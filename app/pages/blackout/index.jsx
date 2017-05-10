@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-
-import { devices } from '../../styles';
 import { connect } from 'react-redux';
+
 import Header from './header.jsx';
 import Hero from './hero.jsx';
+import Faq from './faq.jsx';
 import QuoteSection from './QuoteSection/index';
-
 
 /* Containers */
 const Page = styled.div`
@@ -28,49 +27,21 @@ const VerticalCenter = styled.div`
 `;
 
 /* Styled elements */
-const Subhead = styled.h3`
-    marginBottom: 30px;
-    fontSize: 20px;
-`;
-
-const Anchor = styled.a`
-    marginLeft: 10px;
-    color: #BFBFBF;
-`;
-
-/* Footer Section */
-const Footer = styled.div`
-    display: flex;
-    flexWrap: wrap;
-    justifyContent: space-between;
-    alignItems: flex-end;
-    height: 10%;
-`;
-
-const Left = styled.div`
-    ${devices.tablet`
-        marginLeft: 10px;
-        marginRight: 10px;
-    `}
-`;
-
-const Right = styled.div`
-    ${devices.tablet`
-        marginLeft: 10px;
-        marginRight: 10px;
-    `}
-`;
-
-const HeroWrapper = styled.div`
+const StyledHero = styled(Hero)`
     margin: 35px 0;
 `;
 
+const StyledFaq = styled(Faq)``;
+
 /* Page Component */
 class BlackoutPage extends React.Component {
+    
     render() {
         return (
             <Page>
                 <Header />
+                <StyledHero />
+                <StyledFaq />
                 <HeroWrapper>
                     <Hero />
                 </HeroWrapper>
@@ -99,11 +70,8 @@ class BlackoutPage extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        status: state.subscribeState,
-        theme: state.theme.data
-    };
+function mapStateToProps(/*state*/) {
+    return {};
 }
 
 export default connect(mapStateToProps)(BlackoutPage);
