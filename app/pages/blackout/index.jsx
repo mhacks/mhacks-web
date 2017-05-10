@@ -26,7 +26,6 @@ const StyledFaq = styled(Faq)``;
 
 /* Page Component */
 class BlackoutPage extends React.Component {
-
   render() {
     return (
       <Page>
@@ -40,7 +39,7 @@ class BlackoutPage extends React.Component {
 }
 
 function mapStateToProps(/*state*/) {
-  return {};
+    return {};
 }
 
 export default connect(mapStateToProps)(BlackoutPage);
