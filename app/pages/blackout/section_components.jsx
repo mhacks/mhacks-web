@@ -14,3 +14,4 @@ const SectionBody = styled.p`
 `;
 
 export { SectionHeader, SectionBody };
+
