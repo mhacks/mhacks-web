@@ -116,7 +116,7 @@ const CompanyName = styled.div`
     clear: both;
     fontSize: 2.0em;
     zIndex: 9999;
-    padding-bottom: 50px;
+    paddingBottom: 50px;
     textAlign: left;
     
     ${devices.tablet`
@@ -126,10 +126,12 @@ const CompanyName = styled.div`
     
     ${devices.desktop`
       fontSize: 2.5em;
+      paddingBottom: 30px;
       textAlign: ${props => (props.position === 'right' ? 'right' : 'left')};
     `}
     ${devices.giant`
       fontSize: 2.5em;
+      paddingBottom: 20px;
       textAlign: ${props => (props.position === 'right' ? 'right' : 'left')};
     `}
 `;
@@ -137,14 +139,14 @@ const CompanyName = styled.div`
 export default () => (
   <Wrapper>
     <QuoteSection>
-        <StartWrapper src={StartIcon} />
-        <EndWrapper src={EndIcon} />
-        <Quote color={props => props.theme.pink} position="left">
-          This was one of the most well organized student-run hackathons that we’ve ever sponsored.
-        </Quote>
+      <StartWrapper src={StartIcon} />
+      <EndWrapper src={EndIcon} />
+      <Quote color={props => props.theme.pink} position="left">
+        This was one of the most well organized student-run hackathons that we’ve ever sponsored.
+      </Quote>
       <CompanyName position="left">Google</CompanyName>
       <Quote color={props => props.theme.darkPink} position="right">
-          The caliber and number of students that MHacks attracts is like no other hacking event.
+        The caliber and number of students that MHacks attracts is like no other hacking event.
       </Quote>
       <CompanyName position="right" dark> Walmart </CompanyName>
     </QuoteSection>
