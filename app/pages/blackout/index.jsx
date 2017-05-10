@@ -34,7 +34,6 @@ class BlackoutPage extends React.Component {
         <StyledHero />
         <StyledFaq />
         <QuoteSection />
-        <Sponsorship />
       </Page>
     );
   }
