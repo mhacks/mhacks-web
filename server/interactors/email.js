@@ -50,7 +50,7 @@ function subscribe(email) {
             reject(Errors.UNKNOWN);
         });
     });
-};
+}
 
 module.exports = {
     subscribe,
