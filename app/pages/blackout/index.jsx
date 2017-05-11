@@ -25,15 +25,15 @@ const StyledFaq = styled(Faq)``;
 
 /* Page Component */
 class BlackoutPage extends React.Component {
-  render() {
-    return (
-      <Page>
-        <Header />
-        <StyledHero />
-        <StyledFaq />
-        <QuoteSection />
-      </Page>
-    );
+    render() {
+      return (
+          <Page>
+              <Header />
+              <StyledHero />
+              <StyledFaq />
+              <QuoteSection />
+          </Page>
+      );
   }
 }
 
