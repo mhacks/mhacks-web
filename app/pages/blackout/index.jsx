@@ -42,7 +42,6 @@ class BlackoutPage extends React.Component {
                 <Header />
                 <StyledHero />
                 <StyledFaq />
-=======
                 <HeroWrapper>
                     <Hero />
                 </HeroWrapper>
@@ -66,6 +65,7 @@ class BlackoutPage extends React.Component {
                 </Anchor>
               </Right>
             </Footer>
+
             </Page>
         );
     }
