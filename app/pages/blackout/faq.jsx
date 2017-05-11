@@ -59,7 +59,6 @@ const FaqItem = connect(state => {
 
 class BlackoutFaq extends React.Component {
     render() {
-        console.log(this.props.theme);
         return (
             <Container>
                 <Wrapper>
