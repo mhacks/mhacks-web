@@ -9,7 +9,7 @@ const SectionHeader = styled.h2`
 
 const SectionBody = styled.p`
     color: white;
-    fontSize: 15px;
+    fontSize: 2em;
     paddingLeft: 100px;
 `;
 

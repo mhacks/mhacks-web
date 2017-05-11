@@ -7,6 +7,7 @@ import Hero from './hero.jsx';
 
 import Faq from './faq.jsx';
 import QuoteSection from './quote_section';
+import Sponsorship from './sponsorship';
 
 /* Containers */
 const Page = styled.div`
@@ -36,7 +37,6 @@ class BlackoutPage extends React.Component {
             </Page>
         );
     }
-
 }
 
 function mapStateToProps(/*state*/) {
