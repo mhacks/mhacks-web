@@ -67,8 +67,7 @@ const StartWrapper = styled.img`
     
     ${devices.tablet`
         height: 20%;
-        visibility: visible;
-        
+        visibility: visible;    
     `}
     
     ${devices.giant`
@@ -84,23 +83,21 @@ const EndWrapper = styled.img`
     right: 0;
     bottom: 4%;
   
-  ${devices.desktop`
-        height: 20%;
-        visibility: visible;
-        bottom: 12%;
-  `}
-  
-  ${devices.tablet`
+    ${devices.tablet`
         height: 20%;
         visibility: visible;
         right: 3%;
         bottom: 10%;
-  `}
-  
-  ${devices.giant`
+    `}
+    
+    ${devices.desktop`
+        height: 20%;
+        bottom: 12%;
+    `}
+    
+    ${devices.giant`
         height: 25%;
-        visibility: visible;
-  `}
+    `}
 `;
 
 const CompanyName = styled.div`
