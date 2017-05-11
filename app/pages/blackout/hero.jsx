@@ -11,6 +11,7 @@ import { push } from 'react-router-redux';
 const VideoPlaceholderImage = require('../../../static/blackout/video-placeholder.png');
 
 const HeroContainer = styled.div`
+    padding: 75px 0;
     overflow: auto;
     display: flex;
     flexDirection: column;
@@ -88,7 +89,9 @@ class BlackoutHero extends React.Component {
             <Container>
                 <HeroContainer>
                     <LeftSideContainer>
-                        <Text>MHacks helps you turn your dreams into reality.</Text>
+                        <Text>
+                            MHacks helps you turn your dreams into reality.
+                        </Text>
                         <TextSubmitPositioner>
                             <InputText
                                 color={this.props.theme.darkPink}
