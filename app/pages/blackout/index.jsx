@@ -37,6 +37,7 @@ class BlackoutPage extends React.Component {
             </Page>
         );
     }
+
 }
 
 function mapStateToProps(/*state*/) {
