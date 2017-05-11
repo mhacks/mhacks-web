@@ -33,14 +33,34 @@ const Quote = styled.div`
     textAlign: left;
 
     ${devices.tablet`
+<<<<<<< HEAD
+=======
+        textAlign: ${props => (props.position === 'left' ? 'left' : 'right')};
+>>>>>>> e594c771fbf5715097d0eb0f719587761ab00bc6
         minWidth: 30%;
         width: 100%;
         fontSize: 2.5em;
         paddingBottom: 10px;
     `}
+<<<<<<< HEAD
   ${devices.giant`
         min-width: 30%;
         width: 80%;
+=======
+
+  ${devices.desktop`
+        textAlign: ${props => (props.position === 'left' ? 'left' : 'right')};
+        min-width: 30%;
+        width: 100%;
+        fontSize: 2.5em;
+  `}
+
+  ${devices.giant`
+        textAlign: ${props => (props.position === 'left' ? 'left' : 'right')};
+        min-width: 30%;
+        width: 80%;
+        fontSize: 2.5em;
+>>>>>>> e594c771fbf5715097d0eb0f719587761ab00bc6
   `}
 `;
 
@@ -53,14 +73,31 @@ const StartWrapper = styled.img`
     visibility: hidden;
     left: 0;
     top: 0;
+<<<<<<< HEAD
 
     ${devices.tablet`
         height: 20%;
         visibility: visible;
+=======
+    
+    ${devices.desktop`
+        height: 20%;
+        visibility: visible;
+    `}
+    
+    ${devices.tablet`
+        height: 20%;
+        visibility: visible;
+        
+>>>>>>> e594c771fbf5715097d0eb0f719587761ab00bc6
     `}
     
     ${devices.giant`
         height: 25%;
+<<<<<<< HEAD
+=======
+        visibility: visible;
+>>>>>>> e594c771fbf5715097d0eb0f719587761ab00bc6
     `}  
 `;
 
@@ -74,18 +111,32 @@ const EndWrapper = styled.img`
   
   ${devices.desktop`
         height: 20%;
+<<<<<<< HEAD
+=======
+        visibility: visible;
+>>>>>>> e594c771fbf5715097d0eb0f719587761ab00bc6
         bottom: 12%;
   `}
   
   ${devices.tablet`
         height: 20%;
+<<<<<<< HEAD
         right: 3%;
         bottom: 10%;
         visibility: visible;
+=======
+        visibility: visible;
+        right: 3%;
+        bottom: 10%;
+>>>>>>> e594c771fbf5715097d0eb0f719587761ab00bc6
   `}
   
   ${devices.giant`
         height: 25%;
+<<<<<<< HEAD
+=======
+        visibility: visible;
+>>>>>>> e594c771fbf5715097d0eb0f719587761ab00bc6
   `}
 `;
 
@@ -106,10 +157,20 @@ const CompanyName = styled.div`
     ${devices.desktop`
       fontSize: 2.5em;
       paddingBottom: 30px;
+<<<<<<< HEAD
     `}
 
     ${devices.giant`
       paddingBottom: 20px;
+=======
+      textAlign: ${props => (props.position === 'right' ? 'right' : 'left')};
+    `}
+
+    ${devices.giant`
+      fontSize: 2.5em;
+      paddingBottom: 20px;
+      textAlign: ${props => (props.position === 'right' ? 'right' : 'left')};
+>>>>>>> e594c771fbf5715097d0eb0f719587761ab00bc6
     `}
 `;
 
