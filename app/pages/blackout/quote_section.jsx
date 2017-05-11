@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 import devices from '../../styles/devices';
 
-import StartIcon from '../../../static/icons/quote_start.png';
-import EndIcon from '../../../static/icons/quote_end.png';
+import StartIcon from 'icons/quote_start.png';
+import EndIcon from 'icons/quote_end.png';
 
 const Wrapper = styled.section`
     padding: 70px 0;
@@ -67,7 +67,7 @@ const StartWrapper = styled.img`
     
     ${devices.desktop`
         height: 20%;
-        visibility: visible;
+        
     `}
     
     ${devices.tablet`
@@ -78,7 +78,6 @@ const StartWrapper = styled.img`
     
     ${devices.giant`
         height: 25%;
-        visibility: visible;
     `}  
 `;
 
@@ -126,13 +125,10 @@ const CompanyName = styled.div`
     ${devices.desktop`
       fontSize: 2.5em;
       paddingBottom: 30px;
-      textAlign: ${props => (props.position === 'right' ? 'right' : 'left')};
     `}
 
     ${devices.giant`
-      fontSize: 2.5em;
       paddingBottom: 20px;
-      textAlign: ${props => (props.position === 'right' ? 'right' : 'left')};
     `}
 `;
 
