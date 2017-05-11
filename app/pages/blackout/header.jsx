@@ -30,7 +30,7 @@ class BlackoutHeader extends React.Component {
             <Container>
                 <HeaderWrapper>
                     <HeaderLogoWrapper>
-                        <HeaderLogo src={HeaderLogoImage}></HeaderLogo>
+                        <HeaderLogo src={HeaderLogoImage} />
                     </HeaderLogoWrapper>
                 </HeaderWrapper>
             </Container>

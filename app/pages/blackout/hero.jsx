@@ -88,7 +88,9 @@ class BlackoutHero extends React.Component {
             <Container>
                 <HeroContainer>
                     <LeftSideContainer>
-                        <Text>MHacks helps you turn your dreams into reality.</Text>
+                        <Text>
+                            MHacks helps you turn your dreams into reality.
+                        </Text>
                         <TextSubmitPositioner>
                             <InputText
                                 color={this.props.theme.darkPink}

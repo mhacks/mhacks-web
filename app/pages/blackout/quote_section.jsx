@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import devices from 'styles/devices';
-import StartIcon from 'icons/quote_start.png';
-import EndIcon from 'icons/quote_end.png';
 
+import devices from '../../styles/devices';
 
+import StartIcon from '../../../static/icons/quote_start.png';
+import EndIcon from '../../../static/icons/quote_end.png';
 
 const Wrapper = styled.section`
     padding: 70px 0;
@@ -13,13 +13,13 @@ const Wrapper = styled.section`
 const QuoteSection = styled.div`
     position: relative;
     width: 100%
-    maxWidth: 75%;
     margin: 0 auto;
     padding: 30px 55px 60px 50px;
     overflow: auto;
   
     ${devices.tablet`
          padding: 30px 55px 60px 50px;
+         maxWidth: 75%;
     `}
 `;
 
@@ -31,6 +31,7 @@ const Quote = styled.div`
     letter-spacing: 3px;
     fontSize: 2.0em;
     textAlign: left;
+
     ${devices.tablet`
         textAlign: ${props => (props.position === 'left' ? 'left' : 'right')};
         minWidth: 30%;
@@ -53,7 +54,6 @@ const Quote = styled.div`
         fontSize: 2.5em;
   `}
 `;
-
 
 const StartWrapper = styled.img`
     position: absolute;
@@ -107,8 +107,8 @@ const EndWrapper = styled.img`
         height: 25%;
         visibility: visible;
   `}
-  
 `;
+
 const CompanyName = styled.div`
     position: relative;
     color: #a3a3a3;
@@ -121,7 +121,6 @@ const CompanyName = styled.div`
     
     ${devices.tablet`
       textAlign: ${props => (props.position === 'right' ? 'right' : 'left')};
-
     `}
     
     ${devices.desktop`
@@ -129,6 +128,7 @@ const CompanyName = styled.div`
       paddingBottom: 30px;
       textAlign: ${props => (props.position === 'right' ? 'right' : 'left')};
     `}
+
     ${devices.giant`
       fontSize: 2.5em;
       paddingBottom: 20px;
@@ -137,18 +137,18 @@ const CompanyName = styled.div`
 `;
 
 export default () => (
-  <Wrapper>
-    <QuoteSection>
-      <StartWrapper src={StartIcon} />
-      <EndWrapper src={EndIcon} />
-      <Quote color={props => props.theme.pink} position="left">
-        This was one of the most well organized student-run hackathons that we’ve ever sponsored.
-      </Quote>
-      <CompanyName position="left">Google</CompanyName>
-      <Quote color={props => props.theme.darkPink} position="right">
-        The caliber and number of students that MHacks attracts is like no other hacking event.
-      </Quote>
-      <CompanyName position="right" dark> Walmart </CompanyName>
-    </QuoteSection>
-  </Wrapper>
+    <Wrapper>
+        <QuoteSection>
+            <StartWrapper src={StartIcon} />
+            <EndWrapper src={EndIcon} />
+            <Quote color={props => props.theme.pink} position="left">
+                This was one of the most well organized student-run hackathons that we’ve ever sponsored.
+            </Quote>
+            <CompanyName position="left">Google</CompanyName>
+            <Quote color={props => props.theme.darkPink} position="right">
+                The caliber and number of students that MHacks attracts is like no other hacking event.
+            </Quote>
+            <CompanyName position="right" dark> Walmart </CompanyName>
+        </QuoteSection>
+    </Wrapper>
 );
