@@ -33,25 +33,14 @@ const Quote = styled.div`
     textAlign: left;
 
     ${devices.tablet`
-        textAlign: ${props => (props.position === 'left' ? 'left' : 'right')};
         minWidth: 30%;
         width: 100%;
         fontSize: 2.5em;
         paddingBottom: 10px;
     `}
-
-  ${devices.desktop`
-        textAlign: ${props => (props.position === 'left' ? 'left' : 'right')};
-        min-width: 30%;
-        width: 100%;
-        fontSize: 2.5em;
-  `}
-
   ${devices.giant`
-        textAlign: ${props => (props.position === 'left' ? 'left' : 'right')};
         min-width: 30%;
         width: 80%;
-        fontSize: 2.5em;
   `}
 `;
 
@@ -64,21 +53,14 @@ const StartWrapper = styled.img`
     visibility: hidden;
     left: 0;
     top: 0;
-    
-    ${devices.desktop`
-        height: 20%;
-        visibility: visible;
-    `}
-    
+
     ${devices.tablet`
         height: 20%;
         visibility: visible;
-        
     `}
     
     ${devices.giant`
         height: 25%;
-        visibility: visible;
     `}  
 `;
 
@@ -92,20 +74,18 @@ const EndWrapper = styled.img`
   
   ${devices.desktop`
         height: 20%;
-        visibility: visible;
         bottom: 12%;
   `}
   
   ${devices.tablet`
         height: 20%;
-        visibility: visible;
         right: 3%;
         bottom: 10%;
+        visibility: visible;
   `}
   
   ${devices.giant`
         height: 25%;
-        visibility: visible;
   `}
 `;
 
@@ -126,13 +106,10 @@ const CompanyName = styled.div`
     ${devices.desktop`
       fontSize: 2.5em;
       paddingBottom: 30px;
-      textAlign: ${props => (props.position === 'right' ? 'right' : 'left')};
     `}
 
     ${devices.giant`
-      fontSize: 2.5em;
       paddingBottom: 20px;
-      textAlign: ${props => (props.position === 'right' ? 'right' : 'left')};
     `}
 `;
 

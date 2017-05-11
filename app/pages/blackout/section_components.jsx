@@ -13,9 +13,4 @@ const SectionBody = styled.p`
     paddingLeft: 100px;
 `;
 
-<<<<<<< HEAD
 export { SectionHeader, SectionBody };
-
-=======
-export { SectionHeader, SectionBody };
->>>>>>> Finished the Quotes section
