@@ -64,6 +64,7 @@ let devConfig = {
     ],
     devServer: {
         historyApiFallback: true,
+        disableHostCheck: true,
         contentBase: './build',
         proxy: {
             '/api': {

@@ -13,4 +13,8 @@ const SectionBody = styled.p`
     paddingLeft: 100px;
 `;
 
-export { SectionHeader, SectionBody };
+const Links = styled.a`
+    color: white;
+`;
+
+export { SectionHeader, SectionBody, Links };
