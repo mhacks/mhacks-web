@@ -6,7 +6,7 @@ import Header from './header.jsx';
 import Hero from './hero.jsx';
 
 import Faq from './faq.jsx';
-import QuoteSection from './QuoteSection';
+import QuoteSection from './quote_section';
 
 /* Containers */
 const Page = styled.div`
