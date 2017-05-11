@@ -11,6 +11,10 @@ body {
     line-height: 1.42857143;
     background-color: black;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> Finished the Quotes section
 
 *:focus { outline: none; }
 

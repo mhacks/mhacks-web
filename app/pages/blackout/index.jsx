@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import Header from './header.jsx';
 import Hero from './hero.jsx';
+
 import Faq from './faq.jsx';
 import QuoteSection from './QuoteSection/index';
 
