@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const Wrapper = styled.div`
-    
+    display: inline-block
 `;
 
 const Header = styled.h3`
@@ -10,31 +10,55 @@ const Header = styled.h3`
     -webkit-margin-after: 10px;
     color: ${props => props.color};
     fontSize: 18px;
+    cursor: pointer;
 `;
 
 const Body = styled.p`
-    paddingLeft: 20px;
+    paddingLeft: 35px;
     -webkit-margin-before: 0px;
     color: ${props => props.color};
     fontSize: 15px;
 `;
 
+const Open = keyframes`
+    from {
+        height: 0px;
+        transform: scaleY(0);
+    } to {
+        height: max-content;
+        transform: scaleY(1);
+    }
+`;
+
+const Close = keyframes`
+    from {
+        height: max-content;
+        transform: scaleY(1);
+    } to {
+        height: 0px;
+        transform: scaleY(0);
+    }
+`;
+
 const Slider = styled.div`
     overflow: hidden;
     transformOrigin: top center;
-    transition: all 0.3s ease-in-out; 
+    height: 0px;
     
     ${props => props.open ? ` 
-        transform: scaleY(1);
+        animation: ${Open} 0.3s ease-in-out;
+        animationFillMode: forwards;
     ` : `
-        transform: scaleY(0);
+        animation: ${Close} 0.3s ease-in-out;
+        animationFillMode: forwards;
     `}
 `;
 
 const PlusWrapper = styled.div`
     position: relative;
     display: inline-block;
-    paddingRight: 10px;
+    marginRight: 10px;
+    marginLeft: 10px;
     height: 15px;
     width: 15px;
 `;
@@ -54,10 +78,6 @@ const PlusLine = styled.div`
         transform: rotate(0deg);
     `}
 `;
-
-const Clickable = styled.div`
-    cursor: pointer;
-`
 
 const Plus = (props) => {
     return (
@@ -84,10 +104,13 @@ export default class ExpandingItem extends React.Component {
     render() {
         return (
             <Wrapper>
-                <Clickable onClick={this.handleClick}>
+                <Header 
+                    onClick={this.handleClick} 
+                    color={this.props.headerColor}
+                >
                     <Plus color={this.props.plusColor} open={this.state.expanded} />
-                    <Header color={this.props.headerColor}>{this.props.header}</Header>
-                </Clickable>
+                    {this.props.header}
+                </Header>
                 <Slider open={this.state.expanded}>
                     <Body color={this.props.bodyColor} >{this.props.body}</Body>
                 </Slider>
