@@ -42,12 +42,12 @@ const Header = styled(SectionHeader)`
 
     ${devices.tablet`
         textAlign: left;
-        left: 15%;
+        paddingLeft: 15%;
     `}
 
     ${devices.giant`
         textAlign: left;
-        left: 15%;
+        paddingLeft: 15%;
     `}
 `;
 
@@ -64,6 +64,7 @@ const Body = styled(SectionBody)`
         width: 130%;
     `}
 `;
+
 
 class BlackoutWhatIsMHacks extends React.Component {
     render() {
