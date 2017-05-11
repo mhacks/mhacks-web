@@ -30,8 +30,8 @@ class BlackoutPage extends React.Component {
           <Page>
               <Header />
               <StyledHero />
-              <StyledFaq />
               <QuoteSection />
+              <StyledFaq />
           </Page>
       );
   }

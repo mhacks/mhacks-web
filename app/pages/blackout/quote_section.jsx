@@ -65,11 +65,6 @@ const StartWrapper = styled.img`
     left: 0;
     top: 0;
     
-    ${devices.desktop`
-        height: 20%;
-        
-    `}
-    
     ${devices.tablet`
         height: 20%;
         visibility: visible;
