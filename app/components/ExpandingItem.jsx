@@ -7,10 +7,11 @@ const Wrapper = styled.div`
 
 const Header = styled.h3`
     display: inline-block;
+    -webkit-margin-before: 10px;
     -webkit-margin-after: 10px;
     color: ${props => props.color};
     fontSize: 18px;
-    cursor: pointer;
+    flex: 1;
 `;
 
 const Body = styled.p`
@@ -18,6 +19,11 @@ const Body = styled.p`
     -webkit-margin-before: 0px;
     color: ${props => props.color};
     fontSize: 15px;
+`;
+
+const Flexbox = styled.div`
+    display: flex;
+    cursor: pointer;
 `;
 
 const Open = keyframes`
@@ -57,8 +63,7 @@ const Slider = styled.div`
 const PlusWrapper = styled.div`
     position: relative;
     display: inline-block;
-    marginRight: 10px;
-    marginLeft: 10px;
+    margin: 10px;
     height: 15px;
     width: 15px;
 `;
@@ -104,13 +109,12 @@ export default class ExpandingItem extends React.Component {
     render() {
         return (
             <Wrapper>
-                <Header 
-                    onClick={this.handleClick} 
-                    color={this.props.headerColor}
-                >
+                <Flexbox onClick={this.handleClick} >
                     <Plus color={this.props.plusColor} open={this.state.expanded} />
-                    {this.props.header}
-                </Header>
+                    <Header color={this.props.headerColor} >    
+                        {this.props.header}
+                    </Header>
+                </Flexbox>
                 <Slider open={this.state.expanded}>
                     <Body color={this.props.bodyColor} >{this.props.body}</Body>
                 </Slider>

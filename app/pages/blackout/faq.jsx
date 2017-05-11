@@ -7,8 +7,7 @@ import { ExpandingItem, Container } from '../../components';
 import { devices } from '../../styles';
 
 const Wrapper = styled.div`
-    paddingTop: 75px;
-    paddingBottom: 75px;
+    padding: 75px 0;
     position: relative;
 `;
 
@@ -20,7 +19,7 @@ const FaqSectionHeader = styled.h2`
     fontSize: 18px;
     textTransform: uppercase;
     marginTop: 30px;
-    marginBottom: 0px;
+    marginBottom: 5px;
     color: ${props => props.theme.pink};
 `;
 
