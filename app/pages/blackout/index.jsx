@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import Header from './header.jsx';
 import Hero from './hero.jsx';
 import Faq from './faq.jsx';
+import WhatIsMHacks from './what_is_mhacks.jsx';
+import Footer from './footer.jsx';
 
 import QuoteSection from './quote_section';
 
@@ -26,15 +28,17 @@ const StyledFaq = styled(Faq)``;
 /* Page Component */
 class BlackoutPage extends React.Component {
     render() {
-      return (
-          <Page>
-              <Header />
-              <StyledHero />
-              <QuoteSection />
-              <StyledFaq />
-          </Page>
-      );
-  }
+        return (
+            <Page>
+                <Header />
+                <StyledHero />
+                <WhatIsMHacks />
+                <StyledFaq />
+                <QuoteSection />
+                <Footer />
+            </Page>
+        );
+    }
 }
 
 function mapStateToProps(/*state*/) {

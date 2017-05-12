@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
+    position: relative;
+    width: 100%;
+
     input::-webkit-input-placeholder {
         color: ${props => props.placeholderColor} !important;
     }
@@ -21,7 +24,7 @@ const Wrapper = styled.div`
 `;
 
 const Input = styled.input`
-    width: ${props => props.width};
+    width: 100%;
     height: 40px;
     padding: 10px;
     fontSize: 16px;
@@ -32,7 +35,7 @@ const Input = styled.input`
 `;
 
 const Feedback = styled.div`
-    width: ${props => props.width};
+    width: 100%;
     textAlign: left;
     color: ${props => props.color || 'black'};
 `;
@@ -54,17 +57,13 @@ export default class InputText extends React.Component {
         return (
             <Wrapper placeholderColor={this.props.placeholderColor}>
                 {this.props.feedback
-                    ? <Feedback
-                          color={this.props.feedbackColor}
-                          width={this.props.width}
-                      >
+                    ? <Feedback color={this.props.feedbackColor}>
                           {this.props.feedback}
                       </Feedback>
                     : <br />}
                 <Input
                     type="text"
                     ref="textField"
-                    width={this.props.width}
                     color={this.props.color}
                     borderColor={this.props.borderColor}
                     placeholder={this.props.placeholder}

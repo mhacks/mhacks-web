@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 import devices from '../../styles/devices';
 
-import StartIcon from 'icons/quote_start.png';
-import EndIcon from 'icons/quote_end.png';
+import StartIcon from '../../../static/icons/quote_start.png';
+import EndIcon from '../../../static/icons/quote_end.png';
 
 const Wrapper = styled.section`
     padding: 70px 0;
