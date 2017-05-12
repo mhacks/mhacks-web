@@ -5,18 +5,13 @@ import { SectionHeader, SectionBody } from './section_components.jsx';
 import { Container } from '../../components';
 import { devices } from '../../styles';
 
-const Orb1 = require('../../../static/blackout/Orb 1.png');
+const Orb1 = require('../../../static/blackout/orb-1.png');
 
 const OrbImage1 = styled.img`
     height: 500px;
     width: auto;
 
     ${devices.tablet`
-        position: relative;
-        left: -20%;
-    `}
-
-    ${devices.giant`
         position: relative;
         left: -20%;
     `}
@@ -30,10 +25,6 @@ const FlexBox = styled.div`
     ${devices.tablet`
         flexWrap: nowrap;
     `}
-
-    ${devices.giant`
-        flexWrap: nowrap;
-    `}
 `;
 
 const Header = styled(SectionHeader)`
@@ -41,11 +32,6 @@ const Header = styled(SectionHeader)`
     textAlign: center;
 
     ${devices.tablet`
-        textAlign: left;
-        paddingLeft: 15%;
-    `}
-
-    ${devices.giant`
         textAlign: left;
         paddingLeft: 15%;
     `}
