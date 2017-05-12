@@ -41,7 +41,7 @@ class VideoPlayer extends React.Component {
         this.state = { playing: false };
     }
 
-    getImageDimensions({target: img}) {
+    getImageDimensions({ target: img }) {
         this.setState({
             imageHeight: img.offsetHeight,
             imageWidth: img.offsetWidth
@@ -50,8 +50,12 @@ class VideoPlayer extends React.Component {
 
     generateUrl() {
         const autoplay = '?autoplay='.concat(this.props.autoplay ? '1' : '0');
-        const controls = '&controls='.concat(this.props.showControls ? '1' : '0');
-        const info = '&showinfo='.concat(this.props.showVideoDetails ? '1' : '0');
+        const controls = '&controls='.concat(
+            this.props.showControls ? '1' : '0'
+        );
+        const info = '&showinfo='.concat(
+            this.props.showVideoDetails ? '1' : '0'
+        );
         const origin = '&origin=http://example.com';
 
         console.log(autoplay);
@@ -61,7 +65,8 @@ class VideoPlayer extends React.Component {
     // Generates the dimensions for the video player based on
     // the dimensions of the provided image
     generateAspectRatioMaintainer() {
-        const aspectRatio = this.state.imageHeight / this.state.imageWidth * 100;
+        const aspectRatio =
+            this.state.imageHeight / this.state.imageWidth * 100;
         const AspectRatioMaintainer = styled.div`
             position: relative;
             width: 100%;
@@ -90,17 +95,14 @@ class VideoPlayer extends React.Component {
         return (
             <div>
                 {this.state.playing
-                        ? this.generateAspectRatioMaintainer.bind(this)()
-                        : <PlaceholderContainer
-                              onClick={this.playVideo.bind(this)}
-                          >
-                              <VideoPlaceholder
-                                  src={this.props.placeholderImage}
-                                  onLoad={this.getImageDimensions.bind(this)}
-                              />
-                              <PlayButton src={PlayButtonImage} className="play" />
-                          </PlaceholderContainer>
-                }
+                    ? this.generateAspectRatioMaintainer.bind(this)()
+                    : <PlaceholderContainer onClick={this.playVideo.bind(this)}>
+                          <VideoPlaceholder
+                              src={this.props.placeholderImage}
+                              onLoad={this.getImageDimensions.bind(this)}
+                          />
+                          <PlayButton src={PlayButtonImage} className="play" />
+                      </PlaceholderContainer>}
             </div>
         );
     }
