@@ -28,7 +28,15 @@ const OrbImage = styled.img`
         width: 100%;
         height: auto;
         padding: 20px 0;
-
+        
+        ${devices.tablet`
+            flexBasis: 50%;
+            display: block;
+        `}
+        ${devices.desktop`
+            flexBasis: 50%;
+            display: block;
+        `}        
 `;
 
 const SectionWrapper = styled.div`
