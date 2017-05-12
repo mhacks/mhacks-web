@@ -52,10 +52,7 @@ const Flexer = styled.div`
         textAlign: left;
         minWidth: 0;
 
-        ${props => props.right ? 
-            'justifyContent: flex-end;' 
-            : ''
-        }
+        ${props => (props.right ? 'justifyContent: flex-end;' : '')}
     `}    
 `;
 
@@ -73,7 +70,7 @@ const ImgButtonWrapper = styled.div`
     margin: 10px;
 `;
 
-const ImgButton = (props) => (
+const ImgButton = props => (
     <ImgButtonWrapper>
         <a href={props.href}>
             <Img100 {...props} />
@@ -91,14 +88,29 @@ class BlackoutFooter extends React.Component {
                         <HeaderLogo src={HeaderLogoImage} align="middle" />
                     </Flexer>
                     <Flexer right>
-                        <ImgButton src={FacebookImg} alt="Facebook" align="middle" href="https://www.facebook.com/MHacksHackathon"/>
-                        <ImgButton src={InstagramImg} alt="Instagram" align="middle" href="https://www.instagram.com/mhacks_" />
-                        <ImgButton src={TwitterImg} alt="Twitter" align="middle" href="https://twitter.com/mhacks" />
+                        <ImgButton
+                            src={FacebookImg}
+                            alt="Facebook"
+                            align="middle"
+                            href="https://www.facebook.com/MHacksHackathon"
+                        />
+                        <ImgButton
+                            src={InstagramImg}
+                            alt="Instagram"
+                            align="middle"
+                            href="https://www.instagram.com/mhacks_"
+                        />
+                        <ImgButton
+                            src={TwitterImg}
+                            alt="Twitter"
+                            align="middle"
+                            href="https://twitter.com/mhacks"
+                        />
                     </Flexer>
                 </Footer>
             </Container>
         );
     }
-} 
+}
 
 export default BlackoutFooter;

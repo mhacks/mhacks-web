@@ -51,13 +51,13 @@ const Slider = styled.div`
     transformOrigin: top center;
     height: 0px;
     
-    ${props => props.open ? ` 
+    ${props => (props.open ? ` 
         animation: ${Open} 0.3s ease-in-out;
         animationFillMode: forwards;
     ` : `
         animation: ${Close} 0.3s ease-in-out;
         animationFillMode: forwards;
-    `}
+    `)}
 `;
 
 const PlusWrapper = styled.div`
@@ -77,31 +77,31 @@ const PlusLine = styled.div`
     top: 3px;
     transitionDuration: 0.3s;
 
-    ${props => !props.vertical ? `
+    ${props => (!props.vertical ? `
         transform: rotate(90deg);
     ` : `
         transform: rotate(0deg);
-    `}
+    `)}
 `;
 
-const Plus = (props) => {
+const Plus = props => {
     return (
-    <PlusWrapper>
-        <PlusLine color={props.color}/>
-        <PlusLine color={props.color} vertical={!props.open}/>
-    </PlusWrapper>
-)};
+        <PlusWrapper>
+            <PlusLine color={props.color} />
+            <PlusLine color={props.color} vertical={!props.open} />
+        </PlusWrapper>
+    );
+};
 
 export default class ExpandingItem extends React.Component {
-
-    constructor(){
+    constructor() {
         super();
         this.state = { expanded: false };
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(){
-        this.setState( prevState => ({
+    handleClick() {
+        this.setState(prevState => ({
             expanded: !prevState.expanded
         }));
     }
@@ -109,17 +109,19 @@ export default class ExpandingItem extends React.Component {
     render() {
         return (
             <Wrapper>
-                <Flexbox onClick={this.handleClick} >
-                    <Plus color={this.props.plusColor} open={this.state.expanded} />
-                    <Header color={this.props.headerColor} >    
+                <Flexbox onClick={this.handleClick}>
+                    <Plus
+                        color={this.props.plusColor}
+                        open={this.state.expanded}
+                    />
+                    <Header color={this.props.headerColor}>
                         {this.props.header}
                     </Header>
                 </Flexbox>
                 <Slider open={this.state.expanded}>
-                    <Body color={this.props.bodyColor} >{this.props.body}</Body>
+                    <Body color={this.props.bodyColor}>{this.props.body}</Body>
                 </Slider>
             </Wrapper>
         );
     }
-
 }
