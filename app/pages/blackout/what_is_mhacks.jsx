@@ -8,10 +8,11 @@ import { devices } from '../../styles';
 const Orb1 = require('../../../static/blackout/orb-1.png');
 
 const OrbImage1 = styled.img`
-    height: 500px;
+    height: 250px;
     width: auto;
 
     ${devices.tablet`
+        height: 500px;
         position: relative;
         left: -20%;
     `}
