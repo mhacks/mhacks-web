@@ -17,7 +17,6 @@ const SectionBody = styled.p`
     
     ${devices.desktop`
         font-size: 2.0em;
-        
     `}
 `;
 

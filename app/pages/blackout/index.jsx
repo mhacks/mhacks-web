@@ -6,6 +6,8 @@ import Header from './header.jsx';
 import Hero from './hero.jsx';
 
 import Faq from './faq.jsx';
+import WhatIsMHacks from './what_is_mhacks.jsx';
+import Footer from './footer.jsx';
 
 import Sponsorship from './sponsorship';
 
@@ -31,8 +33,10 @@ class BlackoutPage extends React.Component {
             <Page>
                 <Header />
                 <StyledHero />
+                <WhatIsMHacks />
                 <StyledFaq />
                 <Sponsorship />
+                <Footer />
             </Page>
         );
     }
