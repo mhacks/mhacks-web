@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {SectionHeader, SectionBody, Links} from './section_components';
 import { devices } from '../../styles';
-import Orb from 'icons/orb_2.png';
+import Orb from '../../../static/icons/orb_2.png';
 
 const Wrapper = styled.div`
         display: flex;
@@ -31,7 +31,8 @@ const OrbImage = styled.img`
         
         ${devices.tablet`
             flexBasis: 50%;
-            display: block;
+            width: 120%;
+            display: static;
         `}
         ${devices.desktop`
             flexBasis: 50%;
@@ -66,8 +67,6 @@ const CenterAlign = styled.div`
         display: flex;
         flexDirection: row;
         justifyContent: center;
-        
-
 `;
 
 export default () => (
