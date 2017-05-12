@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import Header from './header.jsx';
 import Hero from './hero.jsx';
 import Faq from './faq.jsx';
+import WhatIsMHacks from './what_is_mhacks.jsx';
+
 
 /* Containers */
 const Page = styled.div`
@@ -19,6 +21,7 @@ const StyledHero = styled(Hero)`
     margin: 35px 0;
 `;
 
+
 const StyledFaq = styled(Faq)``;
 
 /* Page Component */
@@ -28,6 +31,7 @@ class BlackoutPage extends React.Component {
             <Page>
                 <Header />
                 <StyledHero />
+                <WhatIsMHacks />
                 <StyledFaq />
             </Page>
         );
