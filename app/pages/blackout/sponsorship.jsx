@@ -81,7 +81,7 @@ export default () => (
                             promote brand awareness, or get feedback on a product or API, we'll provide the tools you need to make the
                             most out of your experience.
                         </SectionBody>
-                        <SectionBody>
+                        <SectionBody style ={{fontWeight: '500'}}>
                             Interested in sponsoring? Want more information? Shoot us an email at <Links
                             href="mailto:kevin@mhacks.org">kevin@mhacks.org</Links>
                         </SectionBody>
