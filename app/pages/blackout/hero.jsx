@@ -8,7 +8,7 @@ import { routes } from '../../constants';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-const VideoPlaceholderImage = require('../../../static/blackout/video-placeholder.png');
+const VideoPlaceholderImage = require('blackout/video-placeholder.png');
 
 const HeroContainer = styled.div`
     padding: 20px 0;
