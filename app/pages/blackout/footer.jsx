@@ -5,9 +5,9 @@ import { Container } from '../../components';
 import { devices } from '../../styles';
 
 const HeaderLogoImage = require('../../../static/icons/blackout-logo.png');
-const InstagramImg = require('../../../static/icons/Instagram.png');
-const FacebookImg = require('../../../static/icons/Facebook.png');
-const TwitterImg = require('../../../static/icons/Twitter.png');
+const InstagramImg = require('../../../static/icons/instagram.png');
+const FacebookImg = require('../../../static/icons/facebook.png');
+const TwitterImg = require('../../../static/icons/twitter.png');
 
 /* Footer Style */
 const Footer = styled.footer`

@@ -9,8 +9,7 @@ const SectionHeader = styled.h2`
 
 const SectionBody = styled.p`
     color: white;
-    fontSize: 15px;
-    paddingLeft: 100px;
+    fontSize: 20px;
 `;
 
 export { SectionHeader, SectionBody };
