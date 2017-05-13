@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 
 import Header from './header.jsx';
 import Hero from './hero.jsx';
-import Faq from './faq.jsx';
 import WhatIsMHacks from './what_is_mhacks.jsx';
-import Footer from './footer.jsx';
-
+import Faq from './faq.jsx';
+import Sponsorship from './sponsorship.jsx';
 import QuoteSection from './quote_section';
+import Footer from './footer.jsx';
 
 /* Containers */
 const Page = styled.div`
@@ -34,6 +34,7 @@ class BlackoutPage extends React.Component {
                 <StyledHero />
                 <WhatIsMHacks />
                 <StyledFaq />
+                <Sponsorship />
                 <QuoteSection />
                 <Footer />
             </Page>
