@@ -1,23 +1,25 @@
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
-var autoprefixer = require('autoprefixer');
+let webpack = require('webpack');
+let path = require('path');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
+let CopyWebpackPlugin = require('copy-webpack-plugin');
+let CleanWebpackPlugin = require('clean-webpack-plugin');
+let ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+let autoprefixer = require('autoprefixer');
 
-var cssExtractor = new ExtractTextWebpackPlugin('./[name].css');
-var lifecycleEvent = process.env.npm_lifecycle_event;
+let cssExtractor = new ExtractTextWebpackPlugin('./[name].css');
+let lifecycleEvent = process.env.npm_lifecycle_event;
 
-var devConfig = {
+let devConfig = {
     entry: './app/app.jsx',
     output: {
         publicPath: '/',
-        path: __dirname + '/build',
+        path: path.resolve('./build'),
         filename: 'js/app.js'
     },
     devtool: 'source-map',
     resolve: {
-        extensions: ['.js', '.jsx']
+      modules: ['web_modules', 'node_modules', 'app', 'static'],
+      extensions: ['.js', '.jsx'],
     },
     module: {
         rules: [
@@ -71,13 +73,13 @@ var devConfig = {
             }
         }
     }
-}
+};
 
-var buildConfig = {
+let buildConfig = {
     entry: './app/app.jsx',
     output: {
         publicPath: '/',
-        path: __dirname + '/build',
+        path: path.resolve('./build'),
         filename: 'js/app.js'
     },
     devtool: 'source-map',
@@ -127,8 +129,8 @@ var buildConfig = {
             minimize: true
         }),
         new CopyWebpackPlugin([
-            {context: "./app/favicon/", from: '**/*', to: './favicon/'},
-            {context: "./app/fonts/", from: '**/*', to: './fonts/'}
+            {context: './app/favicon/', from: '**/*', to: './favicon/'},
+            {context: './app/fonts/', from: '**/*', to: './fonts/'}
         ]),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin()
@@ -144,7 +146,7 @@ var buildConfig = {
             }
         }
     }
-}
+};
 
 switch (lifecycleEvent) {
     case 'build':

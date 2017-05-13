@@ -26,7 +26,7 @@ render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
             <Navigator>
-                <div style={{ width: '100%', height: '100%' }}>
+                <div>
                     <Route exact path={routes.HOME} component={BlackoutPage} />
                     <Route
                         exact

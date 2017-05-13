@@ -3,20 +3,13 @@ import Theme from './theme.js';
 
 // uses some bootstrap defaults
 injectGlobal`
-html {height: 100%}
-
 body {
     margin: 0px;
     background-color: #F5F5F5;
     font-family: ${Theme.primaryFont}, sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
-    color: #333;
-}
-
-#app {
-    height: 100%;
-    width: 100%;
+    background-color: black;
 }
 
 *:focus { outline: none; }

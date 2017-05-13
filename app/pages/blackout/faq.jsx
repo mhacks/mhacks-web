@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { SectionHeader } from './section_components.jsx';
-
 import { ExpandingItem, Container } from '../../components';
 import { devices } from '../../styles';
+
 
 const Wrapper = styled.div`
     padding: 75px 0;

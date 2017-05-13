@@ -8,6 +8,8 @@ import Faq from './faq.jsx';
 import WhatIsMHacks from './what_is_mhacks.jsx';
 import Footer from './footer.jsx';
 
+import QuoteSection from './quote_section';
+
 /* Containers */
 const Page = styled.div`
     backgroundColor: black;
@@ -32,6 +34,7 @@ class BlackoutPage extends React.Component {
                 <StyledHero />
                 <WhatIsMHacks />
                 <StyledFaq />
+                <QuoteSection />
                 <Footer />
             </Page>
         );
