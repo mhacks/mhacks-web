@@ -14,9 +14,10 @@ const Orb = styled.img`
 
     ${devices.tablet`
         order: 2;
-        height: 500px;
+        height: 400px;
         position: relative;
-        left: 20%;
+        left: 16%;
+        top: -200px;
     `}
 `;
 
@@ -43,7 +44,7 @@ const Body = styled(SectionBody)`
 
     ${devices.tablet`
         left: 15%;
-        width: 130%;
+        width: 105%;
     `}
 `;
 
@@ -55,8 +56,14 @@ const Link = styled.a`
     color: white;
 `;
 
+const StyledContainer = styled(Container)`
+    ${devices.tablet`
+        marginBottom: -150px;
+    `}
+`;
+
 export default () => (
-    <Container>
+    <StyledContainer>
         <Header>Sponsorship</Header>
         <FlexBox>
             <div>
@@ -72,5 +79,5 @@ export default () => (
             </div>
             <Orb src={OrbImage} />
         </FlexBox>
-    </Container>
+    </StyledContainer>
 );
