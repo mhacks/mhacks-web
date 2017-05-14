@@ -16,7 +16,7 @@ const QuoteSection = styled.div`
     margin: 0 auto;
     padding: 30px 55px 60px 50px;
     overflow: auto;
-  
+
     ${devices.tablet`
          padding: 30px 55px 60px 50px;
          maxWidth: 75%;
@@ -39,40 +39,25 @@ const Quote = styled.div`
         fontSize: 2.5em;
         paddingBottom: 10px;
     `}
-
-  ${devices.desktop`
-        textAlign: ${props => (props.position === 'left' ? 'left' : 'right')};
-        min-width: 30%;
-        width: 100%;
-        fontSize: 2.5em;
-  `}
-
-  ${devices.giant`
-        textAlign: ${props => (props.position === 'left' ? 'left' : 'right')};
-        min-width: 30%;
-        width: 80%;
-        fontSize: 2.5em;
-  `}
 `;
 
 const StartWrapper = styled.img`
     position: absolute;
-    
     height: 20%;
     width: auto;
     zIndex: 1;
     visibility: hidden;
     left: 0;
     top: 0;
-    
+
     ${devices.tablet`
         height: 20%;
-        visibility: visible;    
+        visibility: visible;
     `}
-    
+
     ${devices.giant`
         height: 25%;
-    `}  
+    `}
 `;
 
 const EndWrapper = styled.img`
@@ -82,19 +67,18 @@ const EndWrapper = styled.img`
     visibility: hidden;
     right: 0;
     bottom: 4%;
-  
+
     ${devices.tablet`
         height: 20%;
         visibility: visible;
         right: 3%;
         bottom: 10%;
     `}
-    
+
     ${devices.desktop`
-        height: 20%;
         bottom: 12%;
     `}
-    
+
     ${devices.giant`
         height: 25%;
     `}
@@ -109,11 +93,11 @@ const CompanyName = styled.div`
     zIndex: 9999;
     paddingBottom: 50px;
     textAlign: left;
-    
+
     ${devices.tablet`
       textAlign: ${props => (props.position === 'right' ? 'right' : 'left')};
     `}
-    
+
     ${devices.desktop`
       fontSize: 2.5em;
       paddingBottom: 30px;
@@ -129,7 +113,7 @@ export default () => (
         <QuoteSection>
             <StartWrapper src={StartIcon} />
             <EndWrapper src={EndIcon} />
-            <Quote color={props => props.theme.pink} position="left">
+            <Quote color={props => props.theme.darkPink} position="left">
                 This was one of the most well organized student-run hackathons that we’ve ever sponsored.
             </Quote>
             <CompanyName position="left">Google</CompanyName>
