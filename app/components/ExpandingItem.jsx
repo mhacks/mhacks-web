@@ -28,7 +28,6 @@ const Flexbox = styled.div`
 
 const Open = keyframes`
     from {
-        height: 0px;
         transform: scaleY(0);
     } to {
         height: max-content;
@@ -49,12 +48,12 @@ const Close = keyframes`
 const Slider = styled.div`
     overflow: hidden;
     transformOrigin: top center;
-    height: 0px;
     
     ${props => (props.open ? ` 
         animation: ${Open} 0.3s ease-in-out;
         animationFillMode: forwards;
     ` : `
+        height: max-content;
         animation: ${Close} 0.3s ease-in-out;
         animationFillMode: forwards;
     `)}
