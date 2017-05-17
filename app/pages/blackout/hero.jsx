@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { devices } from '../../styles';
-import { InputText, Container, VideoPlayer } from '../../components';
+import { TextSubmit, Container, VideoPlayer } from '../../components';
 import { SubscribeThunks } from '../../actions';
 import { routes } from '../../constants';
 import { connect } from 'react-redux';
@@ -37,7 +37,7 @@ const TextSubmitPositioner = styled.div`
     ${devices.desktop`
         position: absolute;
         margin: 0;
-        width: 400px;
+        width: 425px;
     `}
 `;
 
@@ -83,10 +83,6 @@ const TealOrb = styled(Orb)`
     backgroundColor: ${props => props.theme.teal};
     bottom: -10%;
     left: 20%;
-`;
-
-const StyledInput = styled(InputText)`
-    width: 500px;
 `;
 
 class BlackoutHero extends React.Component {
@@ -137,13 +133,13 @@ class BlackoutHero extends React.Component {
                             MHacks helps you turn your dreams into reality.
                         </Text>
                         <TextSubmitPositioner>
-                            <StyledInput
+                            <TextSubmit
                                 color={this.props.theme.darkPink}
-                                borderColor="white"
                                 placeholder="ENTER YOUR EMAIL FOR UPDATES"
                                 placeholderColor={this.props.theme.darkPink}
                                 feedbackColor="white"
                                 feedback={this.props.status.message}
+                                buttonText="Subscribe"
                                 value={this.state.email}
                                 onChange={e => {
                                     this.emailChange(e);
