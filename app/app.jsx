@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { render } from 'react-dom';
 
-import { Route } from 'react-router';
+import { Route, Switch } from 'react-router';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 
@@ -26,7 +26,7 @@ render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
             <Navigator>
-                <div>
+                <Switch>
                     <Route
                         exact
                         path={routes.HOME}
@@ -40,7 +40,7 @@ render(
                     <Route
                         component={BlackoutPage}
                     />
-                </div>
+                </Switch>
             </Navigator>
         </ConnectedRouter>
     </Provider>,
