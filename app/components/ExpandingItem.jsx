@@ -18,7 +18,7 @@ const Body = styled.p`
     paddingLeft: 35px;
     -webkit-margin-before: 0px;
     color: ${props => props.color};
-    fontSize: 15px;
+    fontSize: 17px;
 `;
 
 const Flexbox = styled.div`
