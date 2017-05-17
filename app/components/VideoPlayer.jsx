@@ -6,6 +6,10 @@ const PlayButtonImage = require('../../static/icons/play-button.png');
 const PlaceholderContainer = styled.div`
     position: relative;
 
+    &:hover {
+        cursor: pointer;
+    }
+
     &:hover .play {
         filter: brightness(80%);
     }
