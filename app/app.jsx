@@ -27,10 +27,17 @@ render(
         <ConnectedRouter history={history}>
             <Navigator>
                 <div>
-                    <Route exact path={routes.HOME} component={BlackoutPage} />
+                    <Route
+                        exact
+                        path={routes.HOME}
+                        component={BlackoutPage}
+                    />
                     <Route
                         exact
                         path={routes.SUBSCRIBE}
+                        component={BlackoutPage}
+                    />
+                    <Route
                         component={BlackoutPage}
                     />
                 </div>
