@@ -53,7 +53,7 @@ const Flexer = styled.div`
         minWidth: 0;
 
         ${props => (props.right ? 'justifyContent: flex-end;' : '')}
-    `}    
+    `}
 `;
 
 const Img100 = styled.img`
@@ -62,12 +62,11 @@ const Img100 = styled.img`
 `;
 
 const ImgButtonWrapper = styled.div`
-    display: flex;
-    justifyContent: center;
-    position: relative;
     height: 30px;
     width: 30px;
     margin: 10px;
+    textAlign: center;
+    display: block;
 `;
 
 const ImgButton = props => (
