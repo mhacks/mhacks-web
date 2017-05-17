@@ -45,6 +45,21 @@ class VideoPlayer extends React.Component {
         this.state = { playing: false };
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextState.playing != this.state.playing ||
+            nextState.imageHeight != this.state.imageHeight ||
+            nextState.imageWidth != this.state.imageWidth ||
+            nextProps.autoplay != this.props.autoplay ||
+            nextProps.showControls != this.props.showControls ||
+            nextProps.showVideoDetails != this.props.showVideoDetails ||
+            nextProps.videoUrl != this.props.videoUrl ||
+            nextProps.placeholderImage != this.props.placeholderImage) {
+            return true;
+        }
+
+        return false;
+    }
+
     getImageDimensions({ target: img }) {
         this.setState({
             imageHeight: img.offsetHeight,
