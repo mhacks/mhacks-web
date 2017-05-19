@@ -8,32 +8,28 @@ module.exports = function(checkType) {
         if (req.get('Authorization')) {
             var authorization = req.get('Authorization');
             var token = authorization.replace(/Bearer /g, '');
-            User.find().byToken(token).exec(function(err, user) {
-                if (!err && user) {
-                    user.verifyToken(token, function(verification, message) {
-                        if (verification) {
-                            req.authToken = token;
-                            next();
-                        } else {
-                            if (type === 'api') {
-                                res.status(401).send({
-                                    status: false,
-                                    message: message
-                                });
-                            } else {
-                                res.redirect('/');
-                            }
-                        }
-                    });
-                } else {
+            User.find().byToken(token).exec().then((user) => {
+                user.verifyToken(token).then((result) => {
+                    req.authToken = token;
+                    next();
+                }).catch((result) => {
                     if (type === 'api') {
                         res.status(401).send({
                             status: false,
-                            message: Responses.UNAUTHORIZED
+                            message: message
                         });
                     } else {
                         res.redirect('/');
                     }
+                });
+            }).catch((err) => {
+                if (type === 'api') {
+                    res.status(401).send({
+                        status: false,
+                        message: Responses.UNAUTHORIZED
+                    });
+                } else {
+                    res.redirect('/');
                 }
             });
         } else if (req.session.loggedIn) {
