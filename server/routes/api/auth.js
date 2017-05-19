@@ -23,6 +23,7 @@ router.post('/login', function(req, res) {
             if (user) {
                 user.checkPassword(req.body.password).then((checkRes) => {
                     req.session.loggedIn = true;
+                    req.session.email = req.body.email;
                     res.send({
                         status: true,
                         message: Responses.SUCCESSFUL_AUTH,
@@ -135,6 +136,8 @@ router.post('/logout', authMiddleware('api'), function(req, res) {
     }).catch((err) => {
         console.error(err);
     });
+
+    req.session.destroy();
 
     res.send({
         status: true
