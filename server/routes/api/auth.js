@@ -22,13 +22,20 @@ router.post('/login', function(req, res) {
         User.find().byEmail(req.body.email).exec().then((user) => {
             if (user) {
                 user.checkPassword(req.body.password).then((checkRes) => {
-                    req.session.loggedIn = true;
-                    req.session.email = req.body.email;
-                    res.send({
-                        status: true,
-                        message: Responses.SUCCESSFUL_AUTH,
-                        token: user.generateNewToken()
-                    });
+                    if (checkRes) {
+                        req.session.loggedIn = true;
+                        req.session.email = req.body.email;
+                        res.send({
+                            status: true,
+                            message: Responses.SUCCESSFUL_AUTH,
+                            token: user.generateNewToken()
+                        });
+                    } else {
+                        res.status(401).send({
+                            status: false,
+                            message: Responses.INVALID_PASSWORD
+                        });
+                    }
                 }).catch((checkErr) => {
                     res.status(401).send({
                         status: false,
@@ -121,6 +128,67 @@ router.get('/verify/:token', function(req, res) {
             status: false
         });
     });
+});
+
+router.post('/passwordreset', function(req, res) {
+    if (req.body.email) {
+        User.find().byEmail(req.body.email).exec().then((user) => {
+            if (user) {
+                user.sendPasswordResetEmail();
+                res.send({
+                    status: true
+                });
+            } else {
+                res.send({
+                    status: false
+                });
+            }
+        }).catch((err) => {
+            res.send({
+                status: false
+            });
+        });
+    } else {
+        res.send({
+            status: false,
+            message: Responses.PARAMS_NOT_FOUND
+        });
+    }
+});
+
+router.post('/passwordreset/:token', function(req, res) {
+    if (req.body.password) {
+        User.find().byPasswordResetToken(req.params.token).exec().then((user) => {
+            if (user) {
+                console.log(user);
+                user.checkPasswordResetToken(req.params.token).then((result) => {
+                    console.log(result);
+                    user.changePassword(req.body.password);
+                    res.send({
+                        status: true
+                    });
+                }).catch((err) => {
+                    console.error(err);
+                    res.send({
+                        status: false
+                    });
+                });
+            } else {
+                res.send({
+                    status: false
+                });
+            }
+        }).catch((err) => {
+            res.send({
+                status: false
+            });
+        });
+    } else {
+        res.send({
+            status: false,
+            message: Responses.PARAMS_NOT_FOUND
+        });
+    }
 });
 
 // Handles /v1/auth/logout

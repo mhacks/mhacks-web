@@ -17,6 +17,7 @@ var schema = new mongoose.Schema({
     },
     email_verified: Boolean,
     verification_token: String,
+    password_reset_token: String,
     password: {
         type: String,
         required: true
@@ -77,6 +78,13 @@ schema.query.byToken = function(findToken) {
 schema.query.byVerificationToken = function(findToken) {
     return this.findOne({
         verification_token: findToken
+    });
+};
+
+// Allow us to query by token
+schema.query.byPasswordResetToken = function(findToken) {
+    return this.findOne({
+        password_reset_token: findToken
     });
 };
 
@@ -150,24 +158,47 @@ schema.methods.removeToken = function(token) {
 };
 
 schema.methods.generateVerificationToken = function() {
+    var token = this.generateTempToken('email_verification');
+
+    this.verification_token = token;
+    this.save();
+
+    return token;
+};
+
+schema.methods.generatePasswordResetToken = function() {
+    var token = this.generateTempToken('password_reset');
+
+    this.password_reset_token = token;
+    this.save();
+
+    return token;
+};
+
+schema.methods.generateTempToken = function(tokenType) {
     var newToken = jwt.sign({
         email: this.email,
-        type: 'email_verification'
+        type: tokenType
     }, secret, {
         expiresIn: '30m'
     });
-
-    this.verification_token = newToken;
-    this.save();
 
     return newToken;
 };
 
 schema.methods.checkVerificationToken = function(token) {
+    return this.checkTempToken(token, 'email_verification');
+};
+
+schema.methods.checkPasswordResetToken = function(token) {
+    return this.checkTempToken(token, 'password_reset');
+};
+
+schema.methods.checkTempToken = function(token, tokenType) {
     return new Promise((resolve, reject) => {
         try {
             var tokenData = jwt.verify(token, secret);
-            if (this.email == tokenData.email && tokenData.type == 'email_verification') {
+            if (this.email == tokenData.email && tokenData.type == tokenType) {
                 resolve(true);
             } else {
                 reject('Token not valid');
@@ -194,14 +225,38 @@ schema.methods.verifiedEmail = function() {
     this.save();
 };
 
+schema.methods.changePassword = function(password) {
+    this.password = password;
+    this.password_reset_token = undefined;
+
+    this.save();
+};
+
 schema.methods.sendVerificationEmail = function() {
-    Email.sendVerificationEmail(
+    Email.sendEmailTemplate(
         config.confirmation_email_template,
         {
             confirmation_url: config.host + '/v1/auth/verify/' + this.generateVerificationToken(),
             FIRST_NAME: this.full_name.split(' ')[0]
         },
         config.confirmation_email_subject,
+        this.email,
+        config.email_from,
+        config.email_from_name
+    ).then((result) => {
+        console.log('MANDRILL', result);
+    }).catch((error) => {
+        console.error('MANDRILL', error);
+    });
+};
+
+schema.methods.sendPasswordResetEmail = function() {
+    Email.sendEmailTemplate(
+        config.password_reset_email_template,
+        {
+            update_password_url: config.host + '/auth/passwordreset/' + this.generatePasswordResetToken()
+        },
+        config.password_reset_email_subject,
         this.email,
         config.email_from,
         config.email_from_name

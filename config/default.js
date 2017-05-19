@@ -13,5 +13,7 @@ module.exports = {
     email_from: process.env.EMAIL_FROM || 'hackathon@umich.edu',
     email_from_name: process.env.EMAIL_FROM_NAME || 'MHacks',
     confirmation_email_template: process.env.CONFIRMATION_EMAIL_TEMPLATE || 'confirmation_instructions',
-    confirmation_email_subject: process.env.CONFIRMATION_EMAIL_SUBJECT || 'Confirm Your Email for MHacks'
+    confirmation_email_subject: process.env.CONFIRMATION_EMAIL_SUBJECT || 'Confirm Your Email for MHacks',
+    password_reset_email_template: process.env.PASSWORD_RESET_EMAIL_TEMPLATE || 'change_password',
+    password_reset_email_subject: process.env.PASSWORD_RESEST_EMAIL_SUBJECT || 'Reset Your MHacks Password'
 };

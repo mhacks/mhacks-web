@@ -53,7 +53,7 @@ function subscribe(email) {
     });
 }
 
-function sendVerificationEmail(template_name, template_content, subject, to_email, from_email, from_name) {
+function sendEmailTemplate(template_name, template_content, subject, to_email, from_email, from_name) {
     return new Promise((resolve, reject) => {
         if (!config.mandrill_token) {
             reject(Errors.MISSING_CONFIG);
@@ -91,6 +91,6 @@ function sendVerificationEmail(template_name, template_content, subject, to_emai
 
 module.exports = {
     subscribe,
-    sendVerificationEmail,
+    sendEmailTemplate,
     Errors
 };
