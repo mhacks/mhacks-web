@@ -4,7 +4,7 @@ var router = require('express').Router(),
 
 module.exports = function(checkType, verifiedEmail) {
     verifiedEmail = typeof(verifiedEmail) === 'boolean' ? verifiedEmail : true;
-    router.use(function(req, res, next) {
+    return function(req, res, next) {
         console.log("HERE", checkType, verifiedEmail, req.originalUrl);
         if (req.get('Authorization')) {
             var authorization = req.get('Authorization');
@@ -109,7 +109,5 @@ module.exports = function(checkType, verifiedEmail) {
                 res.redirect('/');
             }
         }
-    });
-
-    return router;
+    };
 };
