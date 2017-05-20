@@ -46,7 +46,7 @@ const ExpandingItemWrapper = styled.div`
 const Link = styled.a`
     color: ${props => props.theme.teal};
     textDecoration: none;
-`
+`;
 
 const FaqItem = connect(state => {
     return { theme: state.theme.data };
