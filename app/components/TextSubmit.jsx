@@ -7,19 +7,19 @@ const Wrapper = styled.div`
     width: 100%;
 
     input::-webkit-input-placeholder {
-        color: ${props => props.placeholderColor} !important;
+        color: ${props => props.primaryColor} !important;
     }
 
     input:-moz-placeholder {
-        color: ${props => props.placeholderColor} !important;  
+        color: ${props => props.primaryColor} !important;
     }
-     
-    input::-moz-placeholder { 
-        color: ${props => props.placeholderColor} !important;  
+
+    input::-moz-placeholder {
+        color: ${props => props.primaryColor} !important;
     }
-     
-    input:-ms-input-placeholder {  
-        color: ${props => props.placeholderColor} !important;  
+
+    input:-ms-input-placeholder {
+        color: ${props => props.primaryColor} !important;
     }
 `;
 
@@ -34,11 +34,11 @@ const Input = styled.input`
     z-index: 1;
     width: 70%;
     height: 40px;
-    color: ${props => props.color || '#E6E6E6'};
-    border: 3px solid ${props => props.color || '#E6E6E6'};
+    color: ${props => props.primaryColor || '#E6E6E6'};
+    border: 3px solid ${props => props.primaryColor || '#E6E6E6'};
     borderTopLeftRadius: 8px;
     borderBottomLeftRadius: 8px;
-    backgroundColor: white;
+    backgroundColor: ${props => props.secondaryColor || 'white'};
     padding: 10px;
     fontSize: 16px;
 `;
@@ -50,11 +50,12 @@ const Button = styled.button`
     left: -3px;
     position: relative;
     fontSize: 18px;
-    border: 3px solid ${props => props.color || '#E6E6E6'};
-    borderRight: 6px solid ${props => props.color || '#E6E6E6'};
+    border: 3px solid ${props => props.primaryColor || '#E6E6E6'};
+    borderRight: 6px solid ${props => props.primaryColor || '#E6E6E6'};
     borderTopRightRadius: 8px;
     borderBottomRightRadius: 8px;
-    backgroundColor: ${props => props.color || '#E6E6E6'};
+    backgroundColor: ${props => props.primaryColor || '#E6E6E6'};
+    color: ${props => props.secondaryColor || 'white'};
 `;
 
 const Feedback = styled.div`
@@ -78,7 +79,7 @@ export default class TextSubmit extends React.Component {
 
     render() {
         return (
-            <Wrapper placeholderColor={this.props.placeholderColor}>
+            <Wrapper primaryColor={this.props.primaryColor}>
                 {this.props.feedback
                     ? <Feedback color={this.props.feedbackColor}>
                           {this.props.feedback}
@@ -94,11 +95,12 @@ export default class TextSubmit extends React.Component {
                         onKeyDown={e => {
                             this.handleKeyPress(e);
                         }}
-                        color={this.props.color}
+                        primaryColor={this.props.primaryColor}
                     />
                     <Button
                         onClick={this.props.onSubmit}
-                        color={this.props.color}
+                        primaryColor={this.props.primaryColor}
+                        secondaryColor={this.props.secondaryColor}
                     >
                         {this.props.buttonText}
                     </Button>

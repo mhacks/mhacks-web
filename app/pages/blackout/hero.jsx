@@ -134,10 +134,10 @@ class BlackoutHero extends React.Component {
                         </Text>
                         <TextSubmitPositioner>
                             <TextSubmit
-                                color={this.props.theme.darkPink}
-                                placeholder="ENTER YOUR EMAIL FOR UPDATES"
-                                placeholderColor={this.props.theme.darkPink}
+                                primaryColor={this.props.theme.teal}
+                                secondaryColor="white"
                                 feedbackColor="white"
+                                placeholder="ENTER YOUR EMAIL FOR UPDATES"
                                 feedback={this.props.status.message}
                                 buttonText="Subscribe"
                                 value={this.state.email}
