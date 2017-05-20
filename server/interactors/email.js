@@ -16,42 +16,49 @@ function subscribe(email) {
 
         var mailchimp = new Mailchimp(config.mailchimp_token);
 
-        mailchimp.post({
-            path: '/lists/' + config.mailchimp_listid,
-            body: {
-                members: [
-                    {
-                        email_address: email,
-                        status: 'subscribed'
-                    }
-                ]
-            }
-        }).then((result) => {
-            // mailchimp-api-v3 module resolves on all 200 HTTP status codes
-            // so must check for errors here as well
-            if (result.errors.length > 0) {
-                var message = result.errors[0].error;
-                var error = null;
-
-                if (message.toLowerCase().indexOf('already a list member') != -1) {
-                    error = Errors.ALREADY_SUBSCRIBED;
-                } else {
-                    error = Errors.UNKNOWN;
+        mailchimp
+            .post({
+                path: '/lists/' + config.mailchimp_listid,
+                body: {
+                    members: [
+                        {
+                            email_address: email,
+                            status: 'subscribed'
+                        }
+                    ]
                 }
+            })
+            .then(result => {
+                // mailchimp-api-v3 module resolves on all 200 HTTP status codes
+                // so must check for errors here as well
+                if (result.errors.length > 0) {
+                    var message = result.errors[0].error;
+                    var error = null;
 
-                reject(error);
-            } else {
-                resolve(result);
-            }
-        }).catch((err) => {
-            console.error(err);
+                    if (
+                        message
+                            .toLowerCase()
+                            .indexOf('already a list member') != -1
+                    ) {
+                        error = Errors.ALREADY_SUBSCRIBED;
+                    } else {
+                        error = Errors.UNKNOWN;
+                    }
 
-            reject(Errors.UNKNOWN);
-        });
+                    reject(error);
+                } else {
+                    resolve(result);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+
+                reject(Errors.UNKNOWN);
+            });
     });
 }
 
 module.exports = {
     subscribe,
     Errors
-}
+};

@@ -24,7 +24,10 @@ router.post('/login', function(req, res) {
             // and allow the user in. If not, shutdown the request
             if (!err) {
                 if (user) {
-                    user.checkPassword(req.body.password, function(checkErr, checkRes) {
+                    user.checkPassword(req.body.password, function(
+                        checkErr,
+                        checkRes
+                    ) {
                         if (checkRes) {
                             req.session.loggedIn = true;
                             res.send({
@@ -71,22 +74,25 @@ router.post('/register', function(req, res) {
         User.find().byEmail(req.body.email).exec(function(err, user) {
             if (!err) {
                 if (!user) {
-                    User.create({
-                        email: req.body.email,
-                        password: req.body.password
-                    }, function(err) {
-                        if (!err) {
-                            res.send({
-                                status: true
-                            });
-                        } else {
-                            console.error(err);
-                            res.status(500).send({
-                                status: false,
-                                message: Responses.UNKNOWN_ERROR
-                            });
+                    User.create(
+                        {
+                            email: req.body.email,
+                            password: req.body.password
+                        },
+                        function(err) {
+                            if (!err) {
+                                res.send({
+                                    status: true
+                                });
+                            } else {
+                                console.error(err);
+                                res.status(500).send({
+                                    status: false,
+                                    message: Responses.UNKNOWN_ERROR
+                                });
+                            }
                         }
-                    });
+                    );
                 } else {
                     console.error(err);
                     res.status(401).send({

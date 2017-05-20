@@ -19,28 +19,34 @@ var schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    tokens: [{
-        created_at: {
-            type: Date,
-            default: Date.now
-        },
-        token: String
-    }],
-    old_tokens: [{
-        created_at: {
-            type: Date,
-            default: Date.now
-        },
-        token: String
-    }],
+    tokens: [
+        {
+            created_at: {
+                type: Date,
+                default: Date.now
+            },
+            token: String
+        }
+    ],
+    old_tokens: [
+        {
+            created_at: {
+                type: Date,
+                default: Date.now
+            },
+            token: String
+        }
+    ],
     created_at: {
         type: Date,
         default: Date.now
     },
     birthday: Date,
-    groups: [{
-        name: String
-    }],
+    groups: [
+        {
+            name: String
+        }
+    ],
     meta: {
         ip: String
     }
@@ -108,11 +114,15 @@ schema.methods.generateNewToken = function() {
 
         this.removeToken(this.tokens[0].token);
     }
-    var newToken = jwt.sign({
-        email: this.email
-    }, secret, {
-        expiresIn: '14d'
-    });
+    var newToken = jwt.sign(
+        {
+            email: this.email
+        },
+        secret,
+        {
+            expiresIn: '14d'
+        }
+    );
 
     this.tokens.push({
         token: newToken

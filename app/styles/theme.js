@@ -8,5 +8,5 @@ export default {
 
     // Font sizes
     headerFontSize: '50px',
-    fontSize: '1.5em',
+    fontSize: '1.5em'
 };
