@@ -43,6 +43,11 @@ const ExpandingItemWrapper = styled.div`
     `}
 `;
 
+const Link = styled.a`
+    color: ${props => props.theme.teal};
+    textDecoration: none;
+`
+
 const FaqItem = connect(state => {
     return { theme: state.theme.data };
 })(props => (
@@ -66,16 +71,20 @@ class BlackoutFaq extends React.Component {
                     <Section>
                         <FaqItem
                             header="What happens at a hackathon?"
-                            body="Participants (“hackers”) spend 36 hours working in teams of 
-                                1 - 4 people to build or code projects (“hacks”) they’re 
-                                excited about. There are workshops, mentors, food, swag, and 
-                                buckets of coffee to guide you along the way. You bring your ideas, 
-                                and we give you everything you need to make them come to life."
+                            body={<span>Participants (“hackers”) spend 36 hours working in teams of 
+                                    1 - 4 people to build or code projects (“hacks”) they’re 
+                                    excited about. There are workshops, mentors, food, swag, and 
+                                    buckets of coffee to guide you along the way. You bring your ideas, 
+                                    and we give you everything you need to make them come to life. &nbsp;
+                                    <Link href="https://drive.google.com/file/d/0B4fSxuPetYFGWjNLSng1QVdVdm8/view" target="_blank">Past Schedule</Link>
+                                </span>}
                         />
                         <FaqItem
                             header="What do people normally make?"
-                            body="Common areas of focus include iOS or Android apps, web apps,
-                                and hardware hacks. Check out the hacks from MHacks 8 on Devpost."
+                            body={<span>Common areas of focus include iOS or Android apps, web apps,
+                                    and hardware hacks. Check out the hacks from MHacks 9 on &nbsp;
+                                    <Link href="https://mhacks9.devpost.com/submissions" target="_blank">Devpost.</Link>
+                                </span>}
                         />
                         <FaqItem
                             header="Do I have to know how to code to attend?"
@@ -104,11 +113,6 @@ class BlackoutFaq extends React.Component {
                             body="You and your intended teammates should all apply individually. But if you 
                                 get an invitation and some of your teammates don’t, shoot us an email at 
                                 hackathon@umich.edu and we’ll try to sort things out."
-                        />
-                        <FaqItem
-                            header="What happens if I'm accepted?"
-                            body="Once your application is accepted, you’ll receive an invitation and a link 
-                                to confirm your registration for MHacks 9."
                         />
                         <FaqItem
                             header="What are you looking for in an application?"
