@@ -160,9 +160,7 @@ router.post('/passwordreset/:token', function(req, res) {
     if (req.body.password) {
         User.find().byPasswordResetToken(req.params.token).exec().then((user) => {
             if (user) {
-                console.log(user);
                 user.checkPasswordResetToken(req.params.token).then((result) => {
-                    console.log(result);
                     user.changePassword(req.body.password);
                     res.send({
                         status: true

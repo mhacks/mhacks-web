@@ -244,9 +244,9 @@ schema.methods.sendVerificationEmail = function() {
         config.email_from,
         config.email_from_name
     ).then((result) => {
-        console.log('MANDRILL', result);
     }).catch((error) => {
         console.error('MANDRILL', error);
+        return false;
     });
 };
 
@@ -261,7 +261,6 @@ schema.methods.sendPasswordResetEmail = function() {
         config.email_from,
         config.email_from_name
     ).then((result) => {
-        console.log('MANDRILL', result);
     }).catch((error) => {
         console.error('MANDRILL', error);
     });
@@ -277,7 +276,7 @@ var passwordMiddleware = function(next) {
         user.password = hash;
         return next();
     }).catch((err) => {
-        console.log(err);
+        console.error(err);
         return next(err);
     });
 };

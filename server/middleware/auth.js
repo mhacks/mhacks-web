@@ -5,7 +5,6 @@ var router = require('express').Router(),
 module.exports = function(checkType, verifiedEmail) {
     verifiedEmail = typeof(verifiedEmail) === 'boolean' ? verifiedEmail : true;
     return function(req, res, next) {
-        console.log("HERE", checkType, verifiedEmail, req.originalUrl);
         if (req.get('Authorization')) {
             var authorization = req.get('Authorization');
             var token = authorization.replace(/Bearer /g, '');
