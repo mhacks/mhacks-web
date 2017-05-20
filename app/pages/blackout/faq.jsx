@@ -5,7 +5,6 @@ import { SectionHeader } from './section_components.jsx';
 import { ExpandingItem, Container } from '../../components';
 import { devices } from '../../styles';
 
-
 const Wrapper = styled.div`
     padding: 75px 0;
     position: relative;
