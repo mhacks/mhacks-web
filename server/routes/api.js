@@ -1,7 +1,6 @@
 var router = require('express').Router(),
     authHandler = require('./api/auth.js'),
-    emailHandler = require('./api/email.js'),
-    authMiddleware = require('../middleware/auth.js');
+    emailHandler = require('./api/email.js');
 
 router.use('/auth', authHandler);
 router.use('/email', emailHandler);

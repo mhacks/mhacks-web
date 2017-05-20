@@ -74,7 +74,7 @@ schema.query.byToken = function(findToken) {
 // Verify the token is correct
 schema.methods.verifyToken = function(token, callback) {
     try {
-        tokenData = jwt.verify(token, secret);
+        var tokenData = jwt.verify(token, secret);
         if (this.email == tokenData.email) {
             callback(true, null);
         } else {

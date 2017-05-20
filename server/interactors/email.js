@@ -1,6 +1,5 @@
 var Mailchimp = require('mailchimp-api-v3'),
-    config = require('../../config/default.js'),
-    Responses = require('../responses/api/email');
+    config = require('../../config/default.js');
 
 var Errors = {
     ALREADY_SUBSCRIBED: 'ALREADY_SUBSCRIBED',

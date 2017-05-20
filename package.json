@@ -13,7 +13,8 @@
         "build": "webpack --progress --colors",
         "test": "echo \"Error: no test specified\" && exit 1",
         "lint": "eslint server/ app/ config/",
-        "prettier": "ci/prettier.sh"
+        "prettier": "ci/prettier.sh",
+        "test": "yarn run lint && yarn run prettier"
     },
     "dependencies": {
         "autoprefixer": "^6.7.7",

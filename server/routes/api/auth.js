@@ -74,7 +74,7 @@ router.post('/register', function(req, res) {
                     User.create({
                         email: req.body.email,
                         password: req.body.password
-                    }, function(err, user) {
+                    }, function(err) {
                         if (!err) {
                             res.send({
                                 status: true

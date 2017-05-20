@@ -3,7 +3,7 @@ var router = require('express').Router(),
     Responses = require('../responses/middleware/auth.js');
 
 module.exports = function(checkType) {
-    type = checkType;
+    var type = checkType;
     router.use(function(req, res, next) {
         if (req.get('Authorization')) {
             var authorization = req.get('Authorization');
