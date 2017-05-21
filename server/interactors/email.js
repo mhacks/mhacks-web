@@ -1,6 +1,5 @@
 var Mailchimp = require('mailchimp-api-v3'),
     config = require('../../config/default.js'),
-    Responses = require('../responses/api/email'),
     Mandrill = require('mandrill-api/mandrill');
 
 var Errors = {
@@ -18,42 +17,56 @@ function subscribe(email) {
 
         var mailchimp = new Mailchimp(config.mailchimp_token);
 
-        mailchimp.post({
-            path: '/lists/' + config.mailchimp_listid,
-            body: {
-                members: [
-                    {
-                        email_address: email,
-                        status: 'subscribed'
-                    }
-                ]
-            }
-        }).then((result) => {
-            // mailchimp-api-v3 module resolves on all 200 HTTP status codes
-            // so must check for errors here as well
-            if (result.errors.length > 0) {
-                var message = result.errors[0].error;
-                var error = null;
-
-                if (message.toLowerCase().indexOf('already a list member') != -1) {
-                    error = Errors.ALREADY_SUBSCRIBED;
-                } else {
-                    error = Errors.UNKNOWN;
+        mailchimp
+            .post({
+                path: '/lists/' + config.mailchimp_listid,
+                body: {
+                    members: [
+                        {
+                            email_address: email,
+                            status: 'subscribed'
+                        }
+                    ]
                 }
+            })
+            .then(result => {
+                // mailchimp-api-v3 module resolves on all 200 HTTP status codes
+                // so must check for errors here as well
+                if (result.errors.length > 0) {
+                    var message = result.errors[0].error;
+                    var error = null;
 
-                reject(error);
-            } else {
-                resolve(result);
-            }
-        }).catch((err) => {
-            console.error(err);
+                    if (
+                        message
+                            .toLowerCase()
+                            .indexOf('already a list member') != -1
+                    ) {
+                        error = Errors.ALREADY_SUBSCRIBED;
+                    } else {
+                        error = Errors.UNKNOWN;
+                    }
 
-            reject(Errors.UNKNOWN);
-        });
+                    reject(error);
+                } else {
+                    resolve(result);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+
+                reject(Errors.UNKNOWN);
+            });
     });
 }
 
-function sendEmailTemplate(template_name, template_content, subject, to_email, from_email, from_name) {
+function sendEmailTemplate(
+    template_name,
+    template_content,
+    subject,
+    to_email,
+    from_email,
+    from_name
+) {
     return new Promise((resolve, reject) => {
         if (!config.mandrill_token) {
             reject(Errors.MISSING_CONFIG);
@@ -64,28 +77,34 @@ function sendEmailTemplate(template_name, template_content, subject, to_email, f
 
         var content_array = [];
         for (var i in template_content) {
-            content_array.push({name: i, content: template_content[i]});
+            content_array.push({ name: i, content: template_content[i] });
         }
 
         var message = {
             subject: subject,
             from_email: from_email,
             from_name: from_name,
-            to: [{
-                email: to_email
-            }],
+            to: [
+                {
+                    email: to_email
+                }
+            ],
             global_merge_vars: content_array
         };
 
-        mandrill.messages.sendTemplate({
-            template_name: template_name,
-            template_content: content_array,
-            message: message
-        }, function(result) {
-            resolve(result);
-        }, function(error) {
-            reject(error);
-        });
+        mandrill.messages.sendTemplate(
+            {
+                template_name: template_name,
+                template_content: content_array,
+                message: message
+            },
+            function(result) {
+                resolve(result);
+            },
+            function(error) {
+                reject(error);
+            }
+        );
     });
 }
 

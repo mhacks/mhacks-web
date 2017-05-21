@@ -5,4 +5,3 @@ import VideoPlayer from './VideoPlayer.jsx';
 import ExpandingItem from './ExpandingItem.jsx';
 
 export { TextSubmit, InputText, Container, VideoPlayer, ExpandingItem };
-

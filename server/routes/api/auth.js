@@ -19,41 +19,48 @@ router.post('/login', function(req, res) {
     // Check if the login request contains the email and password
     if (req.body.email && req.body.password) {
         // Lookup users with the email provided in the post body
-        User.find().byEmail(req.body.email).exec().then((user) => {
-            if (user) {
-                user.checkPassword(req.body.password).then((checkRes) => {
-                    if (checkRes) {
-                        req.session.loggedIn = true;
-                        req.session.email = req.body.email;
-                        res.send({
-                            status: true,
-                            message: Responses.SUCCESSFUL_AUTH,
-                            token: user.generateNewToken()
+        User.find()
+            .byEmail(req.body.email)
+            .exec()
+            .then(user => {
+                if (user) {
+                    user
+                        .checkPassword(req.body.password)
+                        .then(checkRes => {
+                            if (checkRes) {
+                                req.session.loggedIn = true;
+                                req.session.email = req.body.email;
+                                res.send({
+                                    status: true,
+                                    message: Responses.SUCCESSFUL_AUTH,
+                                    token: user.generateNewToken()
+                                });
+                            } else {
+                                res.status(401).send({
+                                    status: false,
+                                    message: Responses.INVALID_PASSWORD
+                                });
+                            }
+                        })
+                        .catch(() => {
+                            res.status(401).send({
+                                status: false,
+                                message: Responses.INVALID_PASSWORD
+                            });
                         });
-                    } else {
-                        res.status(401).send({
-                            status: false,
-                            message: Responses.INVALID_PASSWORD
-                        });
-                    }
-                }).catch((checkErr) => {
+                } else {
                     res.status(401).send({
                         status: false,
-                        message: Responses.INVALID_PASSWORD
+                        message: Responses.USER_NOT_FOUND
                     });
-                });
-            } else {
-                res.status(401).send({
+                }
+            })
+            .catch(() => {
+                res.status(500).send({
                     status: false,
-                    message: Responses.USER_NOT_FOUND
+                    message: Responses.UNKNOWN_ERROR
                 });
-            }
-        }).catch((err) => {
-            res.status(500).send({
-                status: false,
-                message: Responses.UNKNOWN_ERROR
             });
-        });
     } else {
         res.status(401).send({
             status: false,
@@ -69,37 +76,43 @@ router.post('/register', function(req, res) {
         // Make sure a user with the same email doesn't exist. If it doesn't,
         // instantiate the new model with the username and password, save it,
         // and generate a new JWT to be used as the Authorization header
-        User.find().byEmail(req.body.email).exec().then((user) => {
-            if (!user) {
-                User.create({
-                    email: req.body.email,
-                    password: req.body.password,
-                    full_name: req.body.full_name
-                }).then((user) => {
-                    user.sendVerificationEmail();
-                    res.send({
-                        status: true
-                    });
-                }).catch((err) => {
-                    console.error(err);
-                    res.status(500).send({
+        User.find()
+            .byEmail(req.body.email)
+            .exec()
+            .then(user => {
+                if (!user) {
+                    User.create({
+                        email: req.body.email,
+                        password: req.body.password,
+                        full_name: req.body.full_name
+                    })
+                        .then(user => {
+                            user.sendVerificationEmail();
+                            res.send({
+                                status: true
+                            });
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            res.status(500).send({
+                                status: false,
+                                message: Responses.UNKNOWN_ERROR
+                            });
+                        });
+                } else {
+                    res.status(401).send({
                         status: false,
-                        message: Responses.UNKNOWN_ERROR
+                        message: Responses.USER_EXISTS
                     });
-                });
-            } else {
-                res.status(401).send({
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({
                     status: false,
-                    message: Responses.USER_EXISTS
+                    message: Responses.UNKNOWN_ERROR
                 });
-            }
-        }).catch((err) => {
-            console.error(err);
-            res.status(500).send({
-                status: false,
-                message: Responses.UNKNOWN_ERROR
             });
-        });
     } else {
         res.status(401).send({
             status: false,
@@ -109,45 +122,56 @@ router.post('/register', function(req, res) {
 });
 
 router.get('/verify/:token', function(req, res) {
-    User.find().byVerificationToken(req.params.token).exec().then((user) => {
-        if (user) {
-            user.checkVerificationToken(req.params.token).then((result) => {
-                user.verifiedEmail();
-                res.send({
-                    status: true
-                });
-            }).catch((err) => {
-                console.error(err);
-                res.send({
-                    status: false
-                });
-            });
-        }
-    }).catch((err) => {
-        res.send({
-            status: false
-        });
-    });
-});
-
-router.post('/passwordreset', function(req, res) {
-    if (req.body.email) {
-        User.find().byEmail(req.body.email).exec().then((user) => {
+    User.find()
+        .byVerificationToken(req.params.token)
+        .exec()
+        .then(user => {
             if (user) {
-                user.sendPasswordResetEmail();
-                res.send({
-                    status: true
-                });
-            } else {
-                res.send({
-                    status: false
-                });
+                user
+                    .checkVerificationToken(req.params.token)
+                    .then(() => {
+                        user.verifiedEmail();
+                        res.send({
+                            status: true
+                        });
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        res.send({
+                            status: false
+                        });
+                    });
             }
-        }).catch((err) => {
+        })
+        .catch(() => {
             res.send({
                 status: false
             });
         });
+});
+
+router.post('/passwordreset', function(req, res) {
+    if (req.body.email) {
+        User.find()
+            .byEmail(req.body.email)
+            .exec()
+            .then(user => {
+                if (user) {
+                    user.sendPasswordResetEmail();
+                    res.send({
+                        status: true
+                    });
+                } else {
+                    res.send({
+                        status: false
+                    });
+                }
+            })
+            .catch(() => {
+                res.send({
+                    status: false
+                });
+            });
     } else {
         res.send({
             status: false,
@@ -158,29 +182,36 @@ router.post('/passwordreset', function(req, res) {
 
 router.post('/passwordreset/:token', function(req, res) {
     if (req.body.password) {
-        User.find().byPasswordResetToken(req.params.token).exec().then((user) => {
-            if (user) {
-                user.checkPasswordResetToken(req.params.token).then((result) => {
-                    user.changePassword(req.body.password);
-                    res.send({
-                        status: true
-                    });
-                }).catch((err) => {
-                    console.error(err);
+        User.find()
+            .byPasswordResetToken(req.params.token)
+            .exec()
+            .then(user => {
+                if (user) {
+                    user
+                        .checkPasswordResetToken(req.params.token)
+                        .then(() => {
+                            user.changePassword(req.body.password);
+                            res.send({
+                                status: true
+                            });
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            res.send({
+                                status: false
+                            });
+                        });
+                } else {
                     res.send({
                         status: false
                     });
-                });
-            } else {
+                }
+            })
+            .catch(() => {
                 res.send({
                     status: false
                 });
-            }
-        }).catch((err) => {
-            res.send({
-                status: false
             });
-        });
     } else {
         res.send({
             status: false,
@@ -195,13 +226,17 @@ router.post('/logout', authMiddleware('api'), function(req, res) {
         delete req.session.loggedIn;
     }
 
-    User.find().byToken(req.authToken).exec().then((user) => {
-        if (user) {
-            user.removeToken(req.authToken);
-        }
-    }).catch((err) => {
-        console.error(err);
-    });
+    User.find()
+        .byToken(req.authToken)
+        .exec()
+        .then(user => {
+            if (user) {
+                user.removeToken(req.authToken);
+            }
+        })
+        .catch(err => {
+            console.error(err);
+        });
 
     req.session.destroy();
 

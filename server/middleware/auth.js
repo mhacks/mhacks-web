@@ -1,21 +1,40 @@
-var router = require('express').Router(),
-    User = require('../db/model/User.js'),
+var User = require('../db/model/User.js'),
     Responses = require('../responses/middleware/auth.js');
 
 module.exports = function(checkType, verifiedEmail) {
-    verifiedEmail = typeof(verifiedEmail) === 'boolean' ? verifiedEmail : true;
+    verifiedEmail = typeof verifiedEmail === 'boolean' ? verifiedEmail : true;
     return function(req, res, next) {
         if (req.get('Authorization')) {
             var authorization = req.get('Authorization');
             var token = authorization.replace(/Bearer /g, '');
-            User.find().byToken(token).exec().then((user) => {
-                if (user) {
-                    user.verifyToken(token).then((result) => {
-                        if (verifiedEmail) {
-                            if (user.email_verified) {
-                                req.authToken = token;
-                                next();
-                            } else {
+            User.find()
+                .byToken(token)
+                .exec()
+                .then(user => {
+                    if (user) {
+                        user
+                            .verifyToken(token)
+                            .then(result => {
+                                if (verifiedEmail) {
+                                    if (user.email_verified) {
+                                        req.authToken = token;
+                                        next();
+                                    } else {
+                                        if (checkType === 'api') {
+                                            res.status(401).send({
+                                                status: false,
+                                                message: result
+                                            });
+                                        } else {
+                                            res.redirect('/');
+                                        }
+                                    }
+                                } else {
+                                    req.authToken = token;
+                                    next();
+                                }
+                            })
+                            .catch(result => {
                                 if (checkType === 'api') {
                                     res.status(401).send({
                                         status: false,
@@ -24,22 +43,19 @@ module.exports = function(checkType, verifiedEmail) {
                                 } else {
                                     res.redirect('/');
                                 }
-                            }
-                        } else {
-                            req.authToken = token;
-                            next();
-                        }
-                    }).catch((result) => {
+                            });
+                    } else {
                         if (checkType === 'api') {
                             res.status(401).send({
                                 status: false,
-                                message: result
+                                message: Responses.UNAUTHORIZED
                             });
                         } else {
                             res.redirect('/');
                         }
-                    });
-                } else {
+                    }
+                })
+                .catch(() => {
                     if (checkType === 'api') {
                         res.status(401).send({
                             status: false,
@@ -48,37 +64,41 @@ module.exports = function(checkType, verifiedEmail) {
                     } else {
                         res.redirect('/');
                     }
-                }
-            }).catch((err) => {
-                if (checkType === 'api') {
-                    res.status(401).send({
-                        status: false,
-                        message: Responses.UNAUTHORIZED
-                    });
-                } else {
-                    res.redirect('/');
-                }
-            });
+                });
         } else if (req.session.loggedIn) {
-            User.find().byEmail(req.session.email).exec().then((user) => {
-                if (user) {
-                    if (verifiedEmail) {
-                        if (user.email_verified) {
-                            next();
-                        } else {
-                            if (checkType === 'api') {
-                                res.status(401).send({
-                                    status: false,
-                                    message: Responses.UNAUTHORIZED
-                                });
+            User.find()
+                .byEmail(req.session.email)
+                .exec()
+                .then(user => {
+                    if (user) {
+                        if (verifiedEmail) {
+                            if (user.email_verified) {
+                                next();
                             } else {
-                                res.redirect('/');
+                                if (checkType === 'api') {
+                                    res.status(401).send({
+                                        status: false,
+                                        message: Responses.UNAUTHORIZED
+                                    });
+                                } else {
+                                    res.redirect('/');
+                                }
                             }
+                        } else {
+                            next();
                         }
                     } else {
-                        next();
+                        if (checkType === 'api') {
+                            res.status(401).send({
+                                status: false,
+                                message: Responses.UNAUTHORIZED
+                            });
+                        } else {
+                            res.redirect('/');
+                        }
                     }
-                } else {
+                })
+                .catch(() => {
                     if (checkType === 'api') {
                         res.status(401).send({
                             status: false,
@@ -87,17 +107,7 @@ module.exports = function(checkType, verifiedEmail) {
                     } else {
                         res.redirect('/');
                     }
-                }
-            }).catch((err) => {
-                if (checkType === 'api') {
-                    res.status(401).send({
-                        status: false,
-                        message: Responses.UNAUTHORIZED
-                    });
-                } else {
-                    res.redirect('/');
-                }
-            });
+                });
         } else {
             if (checkType === 'api') {
                 res.status(401).send({

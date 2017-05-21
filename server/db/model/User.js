@@ -22,28 +22,34 @@ var schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    tokens: [{
-        created_at: {
-            type: Date,
-            default: Date.now
-        },
-        token: String
-    }],
-    old_tokens: [{
-        created_at: {
-            type: Date,
-            default: Date.now
-        },
-        token: String
-    }],
+    tokens: [
+        {
+            created_at: {
+                type: Date,
+                default: Date.now
+            },
+            token: String
+        }
+    ],
+    old_tokens: [
+        {
+            created_at: {
+                type: Date,
+                default: Date.now
+            },
+            token: String
+        }
+    ],
     created_at: {
         type: Date,
         default: Date.now
     },
     birthday: Date,
-    groups: [{
-        name: String
-    }],
+    groups: [
+        {
+            name: String
+        }
+    ],
     meta: {
         ip: String
     }
@@ -128,11 +134,15 @@ schema.methods.generateNewToken = function() {
         this.removeToken(this.tokens[0].token);
     }
 
-    var newToken = jwt.sign({
-        email: this.email
-    }, secret, {
-        expiresIn: '14d'
-    });
+    var newToken = jwt.sign(
+        {
+            email: this.email
+        },
+        secret,
+        {
+            expiresIn: '14d'
+        }
+    );
 
     this.tokens.push({
         token: newToken
@@ -176,12 +186,16 @@ schema.methods.generatePasswordResetToken = function() {
 };
 
 schema.methods.generateTempToken = function(tokenType) {
-    var newToken = jwt.sign({
-        email: this.email,
-        type: tokenType
-    }, secret, {
-        expiresIn: '30m'
-    });
+    var newToken = jwt.sign(
+        {
+            email: this.email,
+            type: tokenType
+        },
+        secret,
+        {
+            expiresIn: '30m'
+        }
+    );
 
     return newToken;
 };
@@ -236,15 +250,16 @@ schema.methods.sendVerificationEmail = function() {
     Email.sendEmailTemplate(
         config.confirmation_email_template,
         {
-            confirmation_url: config.host + '/v1/auth/verify/' + this.generateVerificationToken(),
+            confirmation_url: config.host +
+                '/v1/auth/verify/' +
+                this.generateVerificationToken(),
             FIRST_NAME: this.full_name.split(' ')[0]
         },
         config.confirmation_email_subject,
         this.email,
         config.email_from,
         config.email_from_name
-    ).then((result) => {
-    }).catch((error) => {
+    ).catch(error => {
         console.error('MANDRILL', error);
         return false;
     });
@@ -254,14 +269,15 @@ schema.methods.sendPasswordResetEmail = function() {
     Email.sendEmailTemplate(
         config.password_reset_email_template,
         {
-            update_password_url: config.host + '/auth/passwordreset/' + this.generatePasswordResetToken()
+            update_password_url: config.host +
+                '/auth/passwordreset/' +
+                this.generatePasswordResetToken()
         },
         config.password_reset_email_subject,
         this.email,
         config.email_from,
         config.email_from_name
-    ).then((result) => {
-    }).catch((error) => {
+    ).catch(error => {
         console.error('MANDRILL', error);
     });
 };
@@ -272,13 +288,16 @@ var passwordMiddleware = function(next) {
 
     if (!user.isModified('password')) return next();
 
-    bcrypt.hash(user.password, 10).then((hash) => {
-        user.password = hash;
-        return next();
-    }).catch((err) => {
-        console.error(err);
-        return next(err);
-    });
+    bcrypt
+        .hash(user.password, 10)
+        .then(hash => {
+            user.password = hash;
+            return next();
+        })
+        .catch(err => {
+            console.error(err);
+            return next(err);
+        });
 };
 
 // Set the update middleware on each of the document save and update events
