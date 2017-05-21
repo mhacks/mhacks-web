@@ -2,6 +2,7 @@ var bcrypt = require('bcrypt'),
     jwt = require('jsonwebtoken'),
     mongoose = require('../index.js'),
     config = require('../../../config/default.js'),
+    Email = require('../../interactors/email.js'),
     secret = config.secret;
 
 // Define the document Schema
@@ -15,6 +16,8 @@ var schema = new mongoose.Schema({
         }
     },
     email_verified: Boolean,
+    verification_token: String,
+    password_reset_token: String,
     password: {
         type: String,
         required: true
@@ -77,32 +80,48 @@ schema.query.byToken = function(findToken) {
     });
 };
 
+// Allow us to query by token
+schema.query.byVerificationToken = function(findToken) {
+    return this.findOne({
+        verification_token: findToken
+    });
+};
+
+// Allow us to query by token
+schema.query.byPasswordResetToken = function(findToken) {
+    return this.findOne({
+        password_reset_token: findToken
+    });
+};
+
 // Verify the token is correct
-schema.methods.verifyToken = function(token, callback) {
-    try {
-        var tokenData = jwt.verify(token, secret);
-        if (this.email == tokenData.email) {
-            callback(true, null);
-        } else {
-            callback(false, 'Email does not match token');
+schema.methods.verifyToken = function(token) {
+    return new Promise((resolve, reject) => {
+        try {
+            var tokenData = jwt.verify(token, secret);
+            if (this.email == tokenData.email) {
+                resolve(true);
+            } else {
+                reject('Email does not match token');
+            }
+        } catch (err) {
+            console.error(err);
+            switch (err.name) {
+                case 'TokenExpiredError':
+                    break;
+                case 'JsonWebTokenError':
+                    break;
+                default:
+                    break;
+            }
+            reject(err.message);
         }
-    } catch (err) {
-        console.error(err);
-        switch (err.name) {
-            case 'TokenExpiredError':
-                break;
-            case 'JsonWebTokenError':
-                break;
-            default:
-                break;
-        }
-        callback(false, err.message);
-    }
+    });
 };
 
 // Handle bcrypt password comparison
-schema.methods.checkPassword = function(suppliedPassword, callback) {
-    bcrypt.compare(suppliedPassword, this.password, callback);
+schema.methods.checkPassword = function(suppliedPassword) {
+    return bcrypt.compare(suppliedPassword, this.password);
 };
 
 // Generate a new JWT
@@ -114,15 +133,12 @@ schema.methods.generateNewToken = function() {
 
         this.removeToken(this.tokens[0].token);
     }
-    var newToken = jwt.sign(
-        {
-            email: this.email
-        },
-        secret,
-        {
-            expiresIn: '14d'
-        }
-    );
+
+    var newToken = jwt.sign({
+        email: this.email
+    }, secret, {
+        expiresIn: '14d'
+    });
 
     this.tokens.push({
         token: newToken
@@ -147,20 +163,127 @@ schema.methods.removeToken = function(token) {
     this.save();
 };
 
+schema.methods.generateVerificationToken = function() {
+    var token = this.generateTempToken('email_verification');
+
+    this.verification_token = token;
+    this.save();
+
+    return token;
+};
+
+schema.methods.generatePasswordResetToken = function() {
+    var token = this.generateTempToken('password_reset');
+
+    this.password_reset_token = token;
+    this.save();
+
+    return token;
+};
+
+schema.methods.generateTempToken = function(tokenType) {
+    var newToken = jwt.sign({
+        email: this.email,
+        type: tokenType
+    }, secret, {
+        expiresIn: '30m'
+    });
+
+    return newToken;
+};
+
+schema.methods.checkVerificationToken = function(token) {
+    return this.checkTempToken(token, 'email_verification');
+};
+
+schema.methods.checkPasswordResetToken = function(token) {
+    return this.checkTempToken(token, 'password_reset');
+};
+
+schema.methods.checkTempToken = function(token, tokenType) {
+    return new Promise((resolve, reject) => {
+        try {
+            var tokenData = jwt.verify(token, secret);
+            if (this.email == tokenData.email && tokenData.type == tokenType) {
+                resolve(true);
+            } else {
+                reject('Token not valid');
+            }
+        } catch (err) {
+            console.error(err);
+            switch (err.name) {
+                case 'TokenExpiredError':
+                    break;
+                case 'JsonWebTokenError':
+                    break;
+                default:
+                    break;
+            }
+            reject(err.message);
+        }
+    });
+};
+
+schema.methods.verifiedEmail = function() {
+    this.email_verified = true;
+    this.verification_token = undefined;
+
+    this.save();
+};
+
+schema.methods.changePassword = function(password) {
+    this.password = password;
+    this.password_reset_token = undefined;
+
+    this.save();
+};
+
+schema.methods.sendVerificationEmail = function() {
+    Email.sendEmailTemplate(
+        config.confirmation_email_template,
+        {
+            confirmation_url: config.host + '/v1/auth/verify/' + this.generateVerificationToken(),
+            FIRST_NAME: this.full_name.split(' ')[0]
+        },
+        config.confirmation_email_subject,
+        this.email,
+        config.email_from,
+        config.email_from_name
+    ).then((result) => {
+    }).catch((error) => {
+        console.error('MANDRILL', error);
+        return false;
+    });
+};
+
+schema.methods.sendPasswordResetEmail = function() {
+    Email.sendEmailTemplate(
+        config.password_reset_email_template,
+        {
+            update_password_url: config.host + '/auth/passwordreset/' + this.generatePasswordResetToken()
+        },
+        config.password_reset_email_subject,
+        this.email,
+        config.email_from,
+        config.email_from_name
+    ).then((result) => {
+    }).catch((error) => {
+        console.error('MANDRILL', error);
+    });
+};
+
 // Password middleware to update passwords with bcrypt when needed
 var passwordMiddleware = function(next) {
     var user = this;
 
     if (!user.isModified('password')) return next();
 
-    bcrypt.hash(user.password, 10, function(err, hash) {
-        if (!err) {
-            user.password = hash;
-            return next();
-        } else {
-            console.log(err);
-            return next(err);
-        }
+    bcrypt.hash(user.password, 10).then((hash) => {
+        user.password = hash;
+        return next();
+    }).catch((err) => {
+        console.error(err);
+        return next(err);
     });
 };
 
