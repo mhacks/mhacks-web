@@ -17,5 +17,7 @@ services:
       - DEBUG
       - APIWORK
       - MAILCHIMP_TOKEN
+      - MANDRILL_TOKEN
+      - HOST
     links:
       - mhacks_db
