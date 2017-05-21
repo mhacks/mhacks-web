@@ -5,7 +5,6 @@ import { SectionHeader } from './section_components.jsx';
 import { ExpandingItem, Container } from '../../components';
 import { devices } from '../../styles';
 
-
 const Wrapper = styled.div`
     padding: 75px 0;
     position: relative;
@@ -44,6 +43,11 @@ const ExpandingItemWrapper = styled.div`
     `}
 `;
 
+const Link = styled.a`
+    color: ${props => props.theme.teal};
+    textDecoration: none;
+`;
+
 const FaqItem = connect(state => {
     return { theme: state.theme.data };
 })(props => (
@@ -67,16 +71,20 @@ class BlackoutFaq extends React.Component {
                     <Section>
                         <FaqItem
                             header="What happens at a hackathon?"
-                            body="Participants (“hackers”) spend 36 hours working in teams of 
-                                1 - 4 people to build or code projects (“hacks”) they’re 
-                                excited about. There are workshops, mentors, food, swag, and 
-                                buckets of coffee to guide you along the way. You bring your ideas, 
-                                and we give you everything you need to make them come to life."
+                            body={<span>Participants (“hackers”) spend 36 hours working in teams of 
+                                    1 - 4 people to build or code projects (“hacks”) they’re 
+                                    excited about. There are workshops, mentors, food, swag, and 
+                                    buckets of coffee to guide you along the way. You bring your ideas, 
+                                    and we give you everything you need to make them come to life. &nbsp;
+                                    <Link href="https://drive.google.com/file/d/0B4fSxuPetYFGWjNLSng1QVdVdm8/view" target="_blank">Past Schedule</Link>
+                                </span>}
                         />
                         <FaqItem
                             header="What do people normally make?"
-                            body="Common areas of focus include iOS or Android apps, web apps,
-                                and hardware hacks. Check out the hacks from MHacks 8 on Devpost."
+                            body={<span>Common areas of focus include iOS or Android apps, web apps,
+                                    and hardware hacks. Check out the hacks from MHacks 9 on &nbsp;
+                                    <Link href="https://mhacks9.devpost.com/submissions" target="_blank">Devpost.</Link>
+                                </span>}
                         />
                         <FaqItem
                             header="Do I have to know how to code to attend?"
@@ -91,23 +99,8 @@ class BlackoutFaq extends React.Component {
                                 most of whom are students at the University of Michigan."
                         />
                     </Section>
-                    <FaqSectionHeader>Application</FaqSectionHeader>
+                    <FaqSectionHeader>Logistics</FaqSectionHeader>
                     <Section>
-                        <FaqItem
-                            header="When are applications closing?"
-                            body="Applications will be evaluated on a rolling basis until Friday, March 10th. 
-                                Space fills up quickly, so apply early! If you need a Travel 
-                                Reimbursement then you will need to apply by Saturday, February 18th. 
-                                You are eligible for a Travel Reimbursement if there are no MHacks Buses 
-                                nearby your location and it costs you money to get to MHacks. Check back soon 
-                                for MHacks Bus information."
-                        />
-                        <FaqItem
-                            header="How and when will I hear back?"
-                            body="We’ll be releasing decisions weekly as soon as the application opens. 
-                                If you’ve submitted your application by a Monday, you can expect an email 
-                                back by the next Monday!"
-                        />
                         <FaqItem
                             header="Who can apply?"
                             body="If you’re enrolled in a high school, college, or university, 
@@ -122,26 +115,11 @@ class BlackoutFaq extends React.Component {
                                 hackathon@umich.edu and we’ll try to sort things out."
                         />
                         <FaqItem
-                            header="What happens if I'm accepted?"
-                            body="Once your application is accepted, you’ll receive an invitation and a link 
-                                to confirm your registration for MHacks 9."
-                        />
-                        <FaqItem
-                            header="What if I’m a Michigan student?"
-                            body="Michigan students will need to apply and be accepted to be able to 
-                                attend MHacks 9."
-                        />
-                        <FaqItem
                             header="What are you looking for in an application?"
                             body="Above anything else: passion. Tell us what you care about — what excites you.
                                 We want to know what’ll drive you to start and continue hacking. 
                                 If there’s something about MHacks in particular that you’re excited about, 
                                 we’d love to hear about that too!"
-                        />
-                        <FaqItem
-                            header="Are you allowing walk-ins?"
-                            body="We will not be allowing walk-ins. To ensure that you'll be allowed in, 
-                                please apply and register ahead of time."
                         />
                     </Section>
                     <FaqSectionHeader>Hacking</FaqSectionHeader>
@@ -194,10 +172,6 @@ class BlackoutFaq extends React.Component {
                             header="What shouldn't I bring?"
                             body="Weapons of any kind, drugs, or alcohol. If you’re not sure whether 
                                 something will be okay, please ask ahead of time!"
-                        />
-                        <FaqItem
-                            header="Can I shower?"
-                            body="Yes, there will be opportunities to shower at MHacks 9!."
                         />
                     </Section>
                     <FaqSectionHeader>Help!</FaqSectionHeader>

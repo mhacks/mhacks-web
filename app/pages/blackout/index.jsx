@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 
 import Header from './header.jsx';
 import Hero from './hero.jsx';
@@ -8,6 +9,8 @@ import Faq from './faq.jsx';
 import Sponsorship from './sponsorship.jsx';
 import QuoteSection from './quote_section';
 import Footer from './footer.jsx';
+
+const Favicon = require('../../../static/blackout/favicon.png');
 
 /* Containers */
 const Page = styled.div`
@@ -27,6 +30,12 @@ class BlackoutPage extends React.Component {
     render() {
         return (
             <Page>
+                <Helmet>
+                    <title>MHacks</title>
+
+                    <link rel="icon" type="image/x-icon" href={Favicon} />
+                </Helmet>
+
                 <Header />
                 <StyledHero />
                 <WhatIsMHacks />

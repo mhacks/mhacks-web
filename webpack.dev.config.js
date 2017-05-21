@@ -49,7 +49,6 @@ var devConfig = {
             },
             {
                 test: /\.(png|jpg|jpeg|gif|woff|svg)$/,
-                exclude: /favicon/,
                 use: 'file-loader'
             }
         ]
