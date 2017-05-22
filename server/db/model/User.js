@@ -16,8 +16,16 @@ var schema = new mongoose.Schema({
         }
     },
     email_verified: Boolean,
-    verification_token: String,
-    password_reset_token: String,
+    verification_tokens: [
+        {
+            created_at: {
+                type: Date,
+                default: Date.now
+            },
+            token: String,
+            tokenType: String
+        }
+    ],
     password: {
         type: String,
         required: true
@@ -83,14 +91,11 @@ schema.query.byToken = function(findToken) {
 // Allow us to query by token
 schema.query.byVerificationToken = function(findToken) {
     return this.findOne({
-        verification_token: findToken
-    });
-};
-
-// Allow us to query by token
-schema.query.byPasswordResetToken = function(findToken) {
-    return this.findOne({
-        password_reset_token: findToken
+        verification_tokens: {
+            $elemMatch: {
+                token: findToken
+            }
+        }
     });
 };
 
@@ -167,20 +172,14 @@ schema.methods.removeToken = function(token) {
     this.save();
 };
 
-schema.methods.generateVerificationToken = function() {
+schema.methods.generateEmailVerificationToken = function() {
     var token = this.generateTempToken('email_verification');
-
-    this.verification_token = token;
-    this.save();
 
     return token;
 };
 
 schema.methods.generatePasswordResetToken = function() {
     var token = this.generateTempToken('password_reset');
-
-    this.password_reset_token = token;
-    this.save();
 
     return token;
 };
@@ -189,7 +188,7 @@ schema.methods.generateTempToken = function(tokenType) {
     var newToken = jwt.sign(
         {
             email: this.email,
-            type: tokenType
+            tokenType: tokenType
         },
         secret,
         {
@@ -197,10 +196,17 @@ schema.methods.generateTempToken = function(tokenType) {
         }
     );
 
+    this.verification_tokens.push({
+        token: newToken,
+        tokenType: tokenType
+    });
+
+    this.save();
+
     return newToken;
 };
 
-schema.methods.checkVerificationToken = function(token) {
+schema.methods.checkEmailVerificationToken = function(token) {
     return this.checkTempToken(token, 'email_verification');
 };
 
@@ -212,7 +218,10 @@ schema.methods.checkTempToken = function(token, tokenType) {
     return new Promise((resolve, reject) => {
         try {
             var tokenData = jwt.verify(token, secret);
-            if (this.email == tokenData.email && tokenData.type == tokenType) {
+            if (
+                this.email == tokenData.email &&
+                tokenData.tokenType == tokenType
+            ) {
                 resolve(true);
             } else {
                 reject('Token not valid');
@@ -234,14 +243,30 @@ schema.methods.checkTempToken = function(token, tokenType) {
 
 schema.methods.verifiedEmail = function() {
     this.email_verified = true;
-    this.verification_token = undefined;
+
+    var verification_tokens = this.verification_tokens;
+    this.verification_tokens.forEach(function(tokenInfo, elem) {
+        if (tokenInfo.tokenType === 'email_verification') {
+            verification_tokens.splice(elem, 1);
+        }
+    });
+
+    this.verification_tokens = verification_tokens;
 
     this.save();
 };
 
 schema.methods.changePassword = function(password) {
     this.password = password;
-    this.password_reset_token = undefined;
+
+    var verification_tokens = this.verification_tokens;
+    this.verification_tokens.forEach(function(tokenInfo, elem) {
+        if (tokenInfo.tokenType === 'password_reset') {
+            verification_tokens.splice(elem, 1);
+        }
+    });
+
+    this.verification_tokens = verification_tokens;
 
     this.save();
 };
@@ -252,7 +277,7 @@ schema.methods.sendVerificationEmail = function() {
         {
             confirmation_url: config.host +
                 '/v1/auth/verify/' +
-                this.generateVerificationToken(),
+                this.generateEmailVerificationToken(),
             FIRST_NAME: this.full_name.split(' ')[0]
         },
         config.confirmation_email_subject,

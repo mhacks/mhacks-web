@@ -128,7 +128,7 @@ router.get('/verify/:token', function(req, res) {
         .then(user => {
             if (user) {
                 user
-                    .checkVerificationToken(req.params.token)
+                    .checkEmailVerificationToken(req.params.token)
                     .then(() => {
                         user.verifiedEmail();
                         res.send({
@@ -183,7 +183,7 @@ router.post('/passwordreset', function(req, res) {
 router.post('/passwordreset/:token', function(req, res) {
     if (req.body.password) {
         User.find()
-            .byPasswordResetToken(req.params.token)
+            .byVerificationToken(req.params.token)
             .exec()
             .then(user => {
                 if (user) {
