@@ -311,7 +311,7 @@ schema.methods.checkGroup = function(checkGroup) {
     if (checkGroup === 'all') {
         return true;
     } else {
-        this.groups.forEach(function(data, elem) {
+        this.groups.forEach(function(data) {
             if (data.name === checkGroup) {
                 return true;
             }

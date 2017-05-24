@@ -16,7 +16,17 @@ module.exports = function(groupName, checkType, verifiedEmail) {
                         user
                             .verifyToken(token)
                             .then(result => {
-                                verifyEmail(user, req, res, token, groupName, checkType, next, message, verifiedEmail);
+                                verifyEmail(
+                                    user,
+                                    req,
+                                    res,
+                                    token,
+                                    groupName,
+                                    checkType,
+                                    next,
+                                    result,
+                                    verifiedEmail
+                                );
                             })
                             .catch(result => {
                                 returnFailure(res, checkType, result);
@@ -34,7 +44,17 @@ module.exports = function(groupName, checkType, verifiedEmail) {
                 .exec()
                 .then(user => {
                     if (user) {
-                        verifyEmail(user, req, res, token, groupName, checkType, next, message, verifiedEmail);
+                        verifyEmail(
+                            user,
+                            req,
+                            res,
+                            token,
+                            groupName,
+                            checkType,
+                            next,
+                            Responses.UNAUTHORIZED,
+                            verifiedEmail
+                        );
                     } else {
                         returnFailure(res, checkType, Responses.UNAUTHORIZED);
                     }
@@ -48,10 +68,29 @@ module.exports = function(groupName, checkType, verifiedEmail) {
     };
 };
 
-function verifyEmail(user, req, res, token, groupName, checkType, next, message, verifiedEmail) {
+function verifyEmail(
+    user,
+    req,
+    res,
+    token,
+    groupName,
+    checkType,
+    next,
+    message,
+    verifiedEmail
+) {
     if (verifiedEmail) {
         if (user.email_verified) {
-            groupCheck(user, req, res, token, groupName, checkType, next, message);
+            groupCheck(
+                user,
+                req,
+                res,
+                token,
+                groupName,
+                checkType,
+                next,
+                message
+            );
         } else {
             returnFailure(res, checkType, Responses.UNAUTHORIZED);
         }
@@ -60,7 +99,16 @@ function verifyEmail(user, req, res, token, groupName, checkType, next, message,
     }
 }
 
-function groupCheck(user, req, res, token, groupName, checkType, next, message) {
+function groupCheck(
+    user,
+    req,
+    res,
+    token,
+    groupName,
+    checkType,
+    next,
+    message
+) {
     if (user.checkGroup(groupName)) {
         callNext(req, token, next);
     } else {
