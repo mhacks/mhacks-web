@@ -1,7 +1,8 @@
 var User = require('../db/model/User.js'),
     Responses = require('../responses/middleware/auth.js');
 
-module.exports = function(checkType, verifiedEmail) {
+module.exports = function(groupName, checkType, verifiedEmail) {
+    groupName = groupName || 'all';
     verifiedEmail = typeof verifiedEmail === 'boolean' ? verifiedEmail : true;
     return function(req, res, next) {
         if (req.get('Authorization')) {
@@ -15,55 +16,17 @@ module.exports = function(checkType, verifiedEmail) {
                         user
                             .verifyToken(token)
                             .then(result => {
-                                if (verifiedEmail) {
-                                    if (user.email_verified) {
-                                        req.authToken = token;
-                                        next();
-                                    } else {
-                                        if (checkType === 'api') {
-                                            res.status(401).send({
-                                                status: false,
-                                                message: result
-                                            });
-                                        } else {
-                                            res.redirect('/');
-                                        }
-                                    }
-                                } else {
-                                    req.authToken = token;
-                                    next();
-                                }
+                                verifyEmail(user, req, res, token, groupName, checkType, next, message, verifiedEmail);
                             })
                             .catch(result => {
-                                if (checkType === 'api') {
-                                    res.status(401).send({
-                                        status: false,
-                                        message: result
-                                    });
-                                } else {
-                                    res.redirect('/');
-                                }
+                                returnFailure(res, checkType, result);
                             });
                     } else {
-                        if (checkType === 'api') {
-                            res.status(401).send({
-                                status: false,
-                                message: Responses.UNAUTHORIZED
-                            });
-                        } else {
-                            res.redirect('/');
-                        }
+                        returnFailure(res, checkType, Responses.UNAUTHORIZED);
                     }
                 })
                 .catch(() => {
-                    if (checkType === 'api') {
-                        res.status(401).send({
-                            status: false,
-                            message: Responses.UNAUTHORIZED
-                        });
-                    } else {
-                        res.redirect('/');
-                    }
+                    returnFailure(res, checkType, Responses.UNAUTHORIZED);
                 });
         } else if (req.session.loggedIn) {
             User.find()
@@ -71,52 +34,56 @@ module.exports = function(checkType, verifiedEmail) {
                 .exec()
                 .then(user => {
                     if (user) {
-                        if (verifiedEmail) {
-                            if (user.email_verified) {
-                                next();
-                            } else {
-                                if (checkType === 'api') {
-                                    res.status(401).send({
-                                        status: false,
-                                        message: Responses.UNAUTHORIZED
-                                    });
-                                } else {
-                                    res.redirect('/');
-                                }
-                            }
-                        } else {
-                            next();
-                        }
+                        verifyEmail(user, req, res, token, groupName, checkType, next, message, verifiedEmail);
                     } else {
-                        if (checkType === 'api') {
-                            res.status(401).send({
-                                status: false,
-                                message: Responses.UNAUTHORIZED
-                            });
-                        } else {
-                            res.redirect('/');
-                        }
+                        returnFailure(res, checkType, Responses.UNAUTHORIZED);
                     }
                 })
                 .catch(() => {
-                    if (checkType === 'api') {
-                        res.status(401).send({
-                            status: false,
-                            message: Responses.UNAUTHORIZED
-                        });
-                    } else {
-                        res.redirect('/');
-                    }
+                    returnFailure(res, checkType, Responses.UNAUTHORIZED);
                 });
         } else {
-            if (checkType === 'api') {
-                res.status(401).send({
-                    status: false,
-                    message: Responses.UNAUTHORIZED
-                });
-            } else {
-                res.redirect('/');
-            }
+            returnFailure(res, checkType, Responses.UNAUTHORIZED);
         }
     };
 };
+
+function verifyEmail(user, req, res, token, groupName, checkType, next, message, verifiedEmail) {
+    if (verifiedEmail) {
+        if (user.email_verified) {
+            groupCheck(user, req, res, token, groupName, checkType, next, message);
+        } else {
+            returnFailure(res, checkType, Responses.UNAUTHORIZED);
+        }
+    } else {
+        groupCheck(user, req, res, token, groupName, checkType, next, message);
+    }
+}
+
+function groupCheck(user, req, res, token, groupName, checkType, next, message) {
+    if (user.checkGroup(groupName)) {
+        callNext(req, token, next);
+    } else {
+        returnFailure(res, checkType, message);
+    }
+}
+
+function callNext(req, token, next) {
+    req.authToken = token;
+    next();
+}
+
+function returnAPIFailure(res, message) {
+    res.status(401).send({
+        status: false,
+        message: message
+    });
+}
+
+function returnFailure(res, checkType, message) {
+    if (checkType === 'api') {
+        return returnAPIFailure(res, message);
+    } else {
+        res.redirect('/');
+    }
+}

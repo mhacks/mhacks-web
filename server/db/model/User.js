@@ -307,6 +307,20 @@ schema.methods.sendPasswordResetEmail = function() {
     });
 };
 
+schema.methods.checkGroup = function(checkGroup) {
+    if (checkGroup === 'all') {
+        return true;
+    } else {
+        this.groups.forEach(function(data, elem) {
+            if (data.name === checkGroup) {
+                return true;
+            }
+        });
+    }
+
+    return false;
+};
+
 // Password middleware to update passwords with bcrypt when needed
 var passwordMiddleware = function(next) {
     var user = this;
