@@ -1,9 +1,11 @@
----
 language: node_js
 node_js:
-  - stable
+- stable
 cache:
   yarn: true
   directories:
   - node_modules
 script: yarn run test
+notifications:
+  slack:
+    secure: LKVaP+L0XYI3kBovNM02GT7I7S+46XbNSa+St7W85EgX7Zfe1P5lrpd18+HvQXz8NMXZUiJb7y8n+w8uE9Jqi1EKLWocJt7drmtkW2Qd4TfqaKAInB+Ghn6oEFIXBbDb6wDYvoJDAqQnev7DdcpFQRuTW2F4Y6RrcBQ8owRJd+hBlxuwZwQVGWX9/il3y4GzvUx26/30OtJUZ16kMlUBXr+xOjNBzHLg7+tVfQbZKl/zs1QJ/IqrVBXv+oHEAS5eS+jJ1tC9ZP4NjjbnCm2zRurACsQDPMhD/PRFYaTDLL8TQkw7MheKRtG3OvPlYrX8/DwzumLtHHINMXxAAjrA2Vy9xY2Sp/OtHQjHkw9veJolrw2EY2lPJ5HMpon2UhoNZxs3OP7yOobsxTy/BAb6VytEx7Mr+6vManDEjWcKnKo5bPBVL33pC3VViMRaBRIHXyRmFlMposbUG6doKh//sXZVMdr6Z3L57Rw6F1o3tq6HwuDKqD9ZHpsuLl3GcDaFTvkWYLH2KZ3yUhkyuUUasmKxWD3DlMVuJ91ewOMHKMcytBgV0h0OHjCLdWOCTItD7MtzGsISJAD1d8ZPla+KWV7gXVWefk/VqspAo2+2WvsNtrQlQrPzLfGbL41viIZkGn+LPU78qJs2kTh6qDHDZdJyDOutpSDyM48znmSscjI=
