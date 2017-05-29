@@ -40,26 +40,32 @@ function deploy(host, user, privateKey) {
                                 .execCommand('unchained-deploy')
                                 .then(result => {
                                     if (result.code === 0) {
+                                        ssh.dispose();
                                         resolve({
                                             host: hostresult,
                                             command: result
                                         });
                                     } else {
+                                        ssh.dispose();
                                         reject(result);
                                     }
                                 })
                                 .catch(err => {
+                                    ssh.dispose();
                                     reject(err);
                                 });
                         } else {
+                            ssh.dispose();
                             reject(hostresult);
                         }
                     })
                     .catch(err => {
+                        ssh.dispose();
                         reject(err);
                     });
             })
             .catch(err => {
+                ssh.dispose();
                 reject(err);
             });
     });

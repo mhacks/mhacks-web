@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd ~/mhacks-web/ && git pull
+
+cd deploy/ && docker-compose -f production.yml restart mhacks_website

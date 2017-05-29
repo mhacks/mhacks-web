@@ -16,3 +16,6 @@ services:
       - mhacks_db
     env_file:
       - production.env
+    volumes:
+      - ..:/usr/src/app
+    command: sh -c "yarn install && yarn run startprod"
