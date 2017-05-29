@@ -77,7 +77,6 @@ class VideoPlayer extends React.Component {
         );
         const origin = '&origin=http://example.com';
 
-        console.log(autoplay);
         return this.props.videoUrl + autoplay + controls + info + origin;
     }
 

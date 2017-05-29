@@ -137,7 +137,7 @@ class BlackoutHero extends React.Component {
                                 primaryColor={this.props.theme.teal}
                                 secondaryColor="white"
                                 feedbackColor="white"
-                                placeholder="ENTER YOUR EMAIL FOR UPDATES"
+                                placeholder="ENTER YOUR EMAIL"
                                 feedback={this.props.status.message}
                                 buttonText="Subscribe"
                                 value={this.state.email}
