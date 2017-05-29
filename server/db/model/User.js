@@ -324,7 +324,7 @@ schema.methods.checkGroup = function(checkGroup) {
 
 schema.methods.addGroup = function(groupName) {
     if (!this.checkGroup(groupName)) {
-        this.groups.push({name: groupName});
+        this.groups.push({ name: groupName });
         this.save();
 
         return true;

@@ -31,7 +31,11 @@ module.exports = function(groupName, checkType, verifiedEmail) {
                                             });
                                     })
                                     .catch(() => {
-                                        returnFailure(res, checkType, Responses.UNAUTHORIZED);
+                                        returnFailure(
+                                            res,
+                                            checkType,
+                                            Responses.UNAUTHORIZED
+                                        );
                                     });
                             })
                             .catch(result => {
