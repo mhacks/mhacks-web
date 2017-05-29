@@ -40,3 +40,5 @@ build/*
 !build/.gitkeep
 
 .idea/
+
+*.env

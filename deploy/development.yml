@@ -19,5 +19,6 @@ services:
       - MAILCHIMP_TOKEN
       - MANDRILL_TOKEN
       - HOST
+      - DEPLOYMENT_SECRET
     links:
       - mhacks_db
