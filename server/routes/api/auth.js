@@ -131,7 +131,6 @@ router.get('/verify/:token', function(req, res) {
                     .checkEmailVerificationToken(req.params.token)
                     .then(() => {
                         user.verifiedEmail();
-                        user.addGroup('hacker');
 
                         res.send({
                             status: true
