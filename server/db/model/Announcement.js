@@ -10,8 +10,7 @@ var schema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    //Indexed?
-    broadcastAt: {
+    broadcastTime: {
         type: Date,
         default: Date.now,
         index: true
@@ -20,11 +19,11 @@ var schema = new mongoose.Schema({
         type: String,
         enum: ['Emergency', 'Logistics', 'Food', 'Event', 'Sponsored']
     },
-    approved: {
+    isApproved: {
         type: Boolean,
         default: false
     },
-    sent: {
+    isSent: {
         type: Boolean,
         default: false
     }
@@ -39,7 +38,36 @@ schema.query.byTitle = function(title) {
 
 // Allow us to query by token
 schema.query.byCategory = function(category) {
-    return this.findOne({
+    return this.find({
         category: category
     });
 };
+
+// Allow us to query by broadcastTime
+schema.query.byBroadcastTime = function(since, until) {
+    return this.find({
+        broadcastTime: {
+            $gte: since,
+            $lte: until
+        }
+    });
+};
+
+// Allow us to query by isApproved
+schema.query.byIsApproved = function() {
+    return this.find({
+        isApproved: true
+    });
+};
+
+// Allow us to query by isSent
+schema.query.byIsSent = function() {
+    return this.find({
+        isSent: true
+    });
+};
+
+// Initialize the model with the schema, and export it
+var model = mongoose.model('Announcements', schema);
+
+module.exports = model;
