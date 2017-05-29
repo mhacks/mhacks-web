@@ -308,17 +308,29 @@ schema.methods.sendPasswordResetEmail = function() {
 };
 
 schema.methods.checkGroup = function(checkGroup) {
-    if (checkGroup === 'all') {
+    if (checkGroup === 'any') {
         return true;
     } else {
+        var returnVal = false;
         this.groups.forEach(function(data) {
             if (data.name === checkGroup) {
-                return true;
+                returnVal = true;
             }
         });
-    }
 
-    return false;
+        return returnVal;
+    }
+};
+
+schema.methods.addGroup = function(groupName) {
+    if (!this.checkGroup(groupName)) {
+        this.groups.push({name: groupName});
+        this.save();
+
+        return true;
+    } else {
+        return false;
+    }
 };
 
 // Password middleware to update passwords with bcrypt when needed

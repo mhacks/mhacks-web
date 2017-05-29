@@ -6,7 +6,7 @@ var router = require('express').Router(),
 
 router.use('/auth', authHandler);
 router.use('/email', emailHandler);
-router.use('/user', authMiddleware('api'), userHandler);
+router.use('/user', authMiddleware('any', 'api'), userHandler);
 
 router.get('/', function(req, res) {
     res.send('API');

@@ -2,7 +2,7 @@ var User = require('../db/model/User.js'),
     Responses = require('../responses/middleware/auth.js');
 
 module.exports = function(groupName, checkType, verifiedEmail) {
-    groupName = groupName || 'all';
+    groupName = groupName || 'any';
     verifiedEmail = typeof verifiedEmail === 'boolean' ? verifiedEmail : true;
     return function(req, res, next) {
         if (req.get('Authorization')) {
@@ -15,18 +15,24 @@ module.exports = function(groupName, checkType, verifiedEmail) {
                     if (user) {
                         user
                             .verifyToken(token)
-                            .then(result => {
-                                verifyEmail(
-                                    user,
-                                    req,
-                                    res,
-                                    token,
-                                    groupName,
-                                    checkType,
-                                    next,
-                                    result,
-                                    verifiedEmail
-                                );
+                            .then(() => {
+                                verifyEmail(verifiedEmail, user)
+                                    .then(() => {
+                                        groupCheck(groupName, user)
+                                            .then(() => {
+                                                callNext(req, token, next);
+                                            })
+                                            .catch(result => {
+                                                returnFailure(
+                                                    res,
+                                                    checkType,
+                                                    result
+                                                );
+                                            });
+                                    })
+                                    .catch(() => {
+                                        returnFailure(res, checkType, Responses.UNAUTHORIZED);
+                                    });
                             })
                             .catch(result => {
                                 returnFailure(res, checkType, result);
@@ -44,17 +50,27 @@ module.exports = function(groupName, checkType, verifiedEmail) {
                 .exec()
                 .then(user => {
                     if (user) {
-                        verifyEmail(
-                            user,
-                            req,
-                            res,
-                            token,
-                            groupName,
-                            checkType,
-                            next,
-                            Responses.UNAUTHORIZED,
-                            verifiedEmail
-                        );
+                        verifyEmail(verifiedEmail, user)
+                            .then(() => {
+                                groupCheck(groupName, user)
+                                    .then(() => {
+                                        callNext(req, token, next);
+                                    })
+                                    .catch(() => {
+                                        returnFailure(
+                                            res,
+                                            checkType,
+                                            Responses.UNAUTHORIZED
+                                        );
+                                    });
+                            })
+                            .catch(() => {
+                                returnFailure(
+                                    res,
+                                    checkType,
+                                    Responses.UNAUTHORIZED
+                                );
+                            });
                     } else {
                         returnFailure(res, checkType, Responses.UNAUTHORIZED);
                     }
@@ -68,52 +84,28 @@ module.exports = function(groupName, checkType, verifiedEmail) {
     };
 };
 
-function verifyEmail(
-    user,
-    req,
-    res,
-    token,
-    groupName,
-    checkType,
-    next,
-    message,
-    verifiedEmail
-) {
-    if (verifiedEmail) {
-        if (user.email_verified) {
-            groupCheck(
-                user,
-                req,
-                res,
-                token,
-                groupName,
-                checkType,
-                next,
-                message
-            );
+function verifyEmail(verifiedEmail, user) {
+    return new Promise((resolve, reject) => {
+        if (verifiedEmail) {
+            if (user.email_verified) {
+                resolve(true);
+            } else {
+                reject(false);
+            }
         } else {
-            returnFailure(res, checkType, Responses.UNAUTHORIZED);
+            resolve(true);
         }
-    } else {
-        groupCheck(user, req, res, token, groupName, checkType, next, message);
-    }
+    });
 }
 
-function groupCheck(
-    user,
-    req,
-    res,
-    token,
-    groupName,
-    checkType,
-    next,
-    message
-) {
-    if (user.checkGroup(groupName)) {
-        callNext(req, token, next);
-    } else {
-        returnFailure(res, checkType, message);
-    }
+function groupCheck(groupName, user) {
+    return new Promise((resolve, reject) => {
+        if (user.checkGroup(groupName)) {
+            resolve(true);
+        } else {
+            reject(false);
+        }
+    });
 }
 
 function callNext(req, token, next) {
