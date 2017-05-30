@@ -73,7 +73,8 @@ router.post('/webhook/slack', function(req, res) {
                     request.post({
                         method: 'POST',
                         uri: 'https://staging.mhacks.org' + req.originalUrl,
-                        body: req.body
+                        body: req.body,
+                        json: true
                     });
 
                     res.send({
