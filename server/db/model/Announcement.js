@@ -36,7 +36,7 @@ schema.query.byTitle = function(title) {
     });
 };
 
-// Allow us to query by token
+// Allow us to query by category
 schema.query.byCategory = function(category) {
     return this.find({
         category: category
@@ -67,7 +67,15 @@ schema.query.byIsSent = function() {
     });
 };
 
+// Allow us to query for isApproved and isSent
+schema.query.byIsPublic = function() {
+    return this.find({
+        isApproved: true,
+        isSent: true
+    });
+};
+
 // Initialize the model with the schema, and export it
-var model = mongoose.model('Announcements', schema);
+var model = mongoose.model('Announcement', schema);
 
 module.exports = model;
