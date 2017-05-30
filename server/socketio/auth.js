@@ -17,7 +17,11 @@ module.exports = function(groupName, verifiedEmail) {
                             .then(() => {
                                 groupCheck(groupName, user)
                                     .then(() => {
-                                        callNext(socket.handshake, user.tokens[0].token, next);
+                                        callNext(
+                                            socket.handshake,
+                                            user.tokens[0].token,
+                                            next
+                                        );
                                     })
                                     .catch(() => {
                                         returnFailure(
@@ -27,10 +31,7 @@ module.exports = function(groupName, verifiedEmail) {
                                     });
                             })
                             .catch(() => {
-                                returnFailure(
-                                    socket,
-                                    Responses.UNAUTHORIZED
-                                );
+                                returnFailure(socket, Responses.UNAUTHORIZED);
                             });
                     } else {
                         returnFailure(socket, Responses.UNAUTHORIZED);
@@ -62,7 +63,11 @@ module.exports = function(groupName, verifiedEmail) {
                                         .then(() => {
                                             groupCheck(groupName, user)
                                                 .then(() => {
-                                                    callNext(socket.handshake, token, next);
+                                                    callNext(
+                                                        socket.handshake,
+                                                        token,
+                                                        next
+                                                    );
                                                 })
                                                 .catch(result => {
                                                     returnFailure(
@@ -92,7 +97,7 @@ module.exports = function(groupName, verifiedEmail) {
         }
 
         if (socket.connected) {
-            socket.emit('authenticate', {status: true});
+            socket.emit('authenticate', { status: true });
         }
     };
 };
@@ -127,5 +132,5 @@ function callNext(handshake, token, next) {
 }
 
 function returnFailure(socket, message) {
-    socket.emit('authenticate', {status: false, message: message});
+    socket.emit('authenticate', { status: false, message: message });
 }
