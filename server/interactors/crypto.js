@@ -17,7 +17,12 @@ function decrypt(text) {
     return dec;
 }
 
+function createHmac(secret, body) {
+    return crypto.createHmac('sha1', secret).update(body).digest('hex');
+}
+
 module.exports = {
     encrypt,
-    decrypt
+    decrypt,
+    createHmac
 };

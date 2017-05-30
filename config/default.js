@@ -35,5 +35,8 @@ module.exports = {
             user: process.env.PRODUCTION_USER || 'core',
             privateKey: process.env.PRODUCTION_PRIVATEKEY || ''
         }
-    }
+    },
+    slack_token: process.env.SLACK_TOKEN || '',
+    slack_notifications_channel: process.env.SLACK_NOTIFICATIONS_CHANNEL ||
+        '#notifications'
 };

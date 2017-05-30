@@ -37,7 +37,7 @@ function deploy(host, user, privateKey) {
                     .then(hostresult => {
                         if (hostresult.code === 0) {
                             ssh
-                                .execCommand('unchained-deploy')
+                                .execCommand('/opt/bin/unchained-deploy')
                                 .then(result => {
                                     if (result.code === 0) {
                                         ssh.dispose();
@@ -47,31 +47,64 @@ function deploy(host, user, privateKey) {
                                         });
                                     } else {
                                         ssh.dispose();
-                                        reject(result);
+                                        reject({
+                                            host: hostresult,
+                                            command: result
+                                        });
                                     }
                                 })
                                 .catch(err => {
                                     ssh.dispose();
-                                    reject(err);
+                                    reject({
+                                        host: hostresult,
+                                        command: err
+                                    });
                                 });
                         } else {
                             ssh.dispose();
-                            reject(hostresult);
+                            reject({
+                                host: hostresult,
+                                command: {}
+                            });
                         }
                     })
                     .catch(err => {
                         ssh.dispose();
-                        reject(err);
+                        reject({
+                            host: err,
+                            command: {}
+                        });
                     });
             })
             .catch(err => {
                 ssh.dispose();
-                reject(err);
+                reject({
+                    host: err,
+                    command: {}
+                });
             });
     });
 }
 
+function formatResponse(result) {
+    var response = '';
+    for (var command in result) {
+        if (result[command].stdout) {
+            response += result[command].stdout;
+        }
+
+        if (result[command].stderr) {
+            response += result[command].stderr;
+        }
+
+        response += '\n';
+    }
+
+    return response;
+}
+
 module.exports = {
     deployStaging,
-    deployProduction
+    deployProduction,
+    formatResponse
 };

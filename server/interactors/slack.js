@@ -1,12 +1,25 @@
-var request = require('request-promise-native');
+var request = require('request-promise-native'),
+    validator = require('validator');
 
-function sendMessage(response_url, message) {
-    return request({
-        method: 'POST',
-        uri: response_url,
-        body: message,
-        json: true
-    });
+function sendMessage(location, message) {
+    if (validator.isURL(location)) {
+        return request({
+            method: 'POST',
+            uri: location,
+            body: message,
+            json: true
+        });
+    } else {
+        return request({
+            method: 'POST',
+            uri: 'https://slack.com/api/chat.postMessage',
+            form: {
+                token: location,
+                channel: message.channel,
+                text: message.text
+            }
+        });
+    }
 }
 
 module.exports = {

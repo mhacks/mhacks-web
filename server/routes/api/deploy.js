@@ -2,7 +2,8 @@ var router = require('express').Router(),
     Responses = require('../../responses/api/index.js'),
     config = require('../../../config/default.js'),
     deploy = require('../../interactors/deploy.js'),
-    slack = require('../../interactors/slack.js');
+    slack = require('../../interactors/slack.js'),
+    crypto = require('../../interactors/crypto.js');
 
 // Disable all non-post methods for /v1/auth
 router.use(function(req, res, next) {
@@ -16,18 +17,51 @@ router.use(function(req, res, next) {
 });
 
 router.post('/webhook/github', function(req, res) {
-    var event = req.headers['x-github-event'] || '';
-    switch (event) {
-        case 'push':
-            if (req.body.ref === 'refs/heads/master') {
-                deploy.deployStaging();
-            }
-            break;
-    }
+    var rawBody = JSON.stringify(req.body);
+    if (
+        req.headers['x-hub-signature'] &&
+        req.headers['x-hub-signature'].replace(/sha1=/g, '') ===
+            crypto.createHmac(config.deployment_secret, rawBody)
+    ) {
+        var event = req.headers['x-github-event'] || '';
+        switch (event) {
+            case 'push':
+                if (req.body.ref === 'refs/heads/master') {
+                    slack.sendMessage(config.slack_token, {
+                        channel: config.slack_notifications_channel,
+                        text: 'Deploying master to staging.'
+                    });
 
-    res.send({
-        status: true
-    });
+                    deploy
+                        .deployStaging()
+                        .then(result => {
+                            slack.sendMessage(config.slack_token, {
+                                channel: config.slack_notifications_channel,
+                                text: 'Success: ```' +
+                                    deploy.formatResponse(result) +
+                                    '```'
+                            });
+                        })
+                        .catch(err => {
+                            slack.sendMessage(config.slack_token, {
+                                channel: config.slack_notifications_channel,
+                                text: 'Error: ```' +
+                                    deploy.formatResponse(err) +
+                                    '```'
+                            });
+                        });
+                }
+                break;
+        }
+
+        res.send({
+            status: true
+        });
+    } else {
+        res.send({
+            status: false
+        });
+    }
 });
 
 router.post('/webhook/slack', function(req, res) {
@@ -36,7 +70,7 @@ router.post('/webhook/slack', function(req, res) {
             if (req.body.text === 'production') {
                 res.send({
                     response_type: 'ephemeral',
-                    text: Responses.Deploy.EXECUTING + 'Production'
+                    text: 'Deploying master to production.'
                 });
 
                 deploy
@@ -44,8 +78,8 @@ router.post('/webhook/slack', function(req, res) {
                     .then(result => {
                         slack.sendMessage(req.body.response_url, {
                             response_type: 'ephemeral',
-                            text: 'Result: ```' +
-                                JSON.stringify(result, null, 4) +
+                            text: 'Success: ```' +
+                                deploy.formatResponse(result) +
                                 '```'
                         });
                     })
@@ -53,14 +87,14 @@ router.post('/webhook/slack', function(req, res) {
                         slack.sendMessage(req.body.response_url, {
                             response_type: 'ephemeral',
                             text: 'Error: ```' +
-                                JSON.stringify(err, null, 4) +
+                                deploy.formatResponse(err) +
                                 '```'
                         });
                     });
             } else {
                 res.send({
                     response_type: 'ephemeral',
-                    text: Responses.Deploy.EXECUTING + 'Staging'
+                    text: 'Deploying master to staging.'
                 });
 
                 deploy
@@ -68,8 +102,8 @@ router.post('/webhook/slack', function(req, res) {
                     .then(result => {
                         slack.sendMessage(req.body.response_url, {
                             response_type: 'ephemeral',
-                            text: 'First: ```' +
-                                JSON.stringify(result, null, 4) +
+                            text: 'Success: ```' +
+                                deploy.formatResponse(result) +
                                 '```'
                         });
                     })
@@ -77,7 +111,7 @@ router.post('/webhook/slack', function(req, res) {
                         slack.sendMessage(req.body.response_url, {
                             response_type: 'ephemeral',
                             text: 'Error: ```' +
-                                JSON.stringify(err, null, 4) +
+                                deploy.formatResponse(err) +
                                 '```'
                         });
                     });
