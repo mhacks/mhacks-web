@@ -4,7 +4,7 @@ var router = require('express').Router(),
     deploy = require('../../interactors/deploy.js'),
     slack = require('../../interactors/slack.js'),
     crypto = require('../../interactors/crypto.js'),
-    request = require('request');
+    request = require('request-promise-native');
 
 // Disable all non-post methods for /v1/auth
 router.use(function(req, res, next) {
