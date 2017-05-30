@@ -5,6 +5,7 @@ export default class SubscribeThunks {
     static subscribe(email) {
         return dispatch => {
             dispatch(SubscribePureActions.subscribeRequest(email));
+
             return SubscribeRequests.subscribe({ email }).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const HeaderLogoImage = require('../../../static/icons/blackout-logo.png');
+const HeaderLogoImage = require('../../static/icons/blackout-logo.png');
 
 /* Header Section */
 const HeaderWrapper = styled.div`

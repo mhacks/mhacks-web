@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Container } from '../../components';
-import { devices } from '../../styles';
+import { Container } from '../components';
+import { devices } from '../styles';
 
-const InstagramImg = require('../../../static/icons/instagram.png');
-const FacebookImg = require('../../../static/icons/facebook.png');
-const TwitterImg = require('../../../static/icons/twitter.png');
+const InstagramImg = require('../../static/icons/instagram.png');
+const FacebookImg = require('../../static/icons/facebook.png');
+const TwitterImg = require('../../static/icons/twitter.png');
 
 /* Footer Style */
 const FooterWrapper = styled.div`
