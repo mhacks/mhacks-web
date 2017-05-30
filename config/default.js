@@ -19,5 +19,21 @@ module.exports = {
     password_reset_email_template: process.env.PASSWORD_RESET_EMAIL_TEMPLATE ||
         'change_password',
     password_reset_email_subject: process.env.PASSWORD_RESEST_EMAIL_SUBJECT ||
-        'Reset Your MHacks Password'
+        'Reset Your MHacks Password',
+    deployment_secret: process.env.DEPLOYMENT_SECRET || 'some_secret',
+    deployment_users: (process.env.DEPLOYMENT_USERS ||
+        'antoniomika,konnor,roball')
+        .split(','),
+    deploy: {
+        staging: {
+            host: process.env.STAGING_HOST || 'staging0.aws.mhacks.org',
+            user: process.env.STAGING_USER || 'core',
+            privateKey: process.env.STAGING_PRIVATEKEY || ''
+        },
+        production: {
+            host: process.env.PRODUCTION_HOST || 'prod0.aws.mhacks.org',
+            user: process.env.PRODUCTION_USER || 'core',
+            privateKey: process.env.PRODUCTION_PRIVATEKEY || ''
+        }
+    }
 };

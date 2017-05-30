@@ -11,10 +11,9 @@
         "startweb": "webpack-dev-server --progress --colors --inline --watch --hot --devtool source-map --history-api-fallback --host 0.0.0.0 --port 3000",
         "startprod": "npm run build && NODE_ENV=production npm run start",
         "build": "webpack --progress --colors",
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "yarn run lint && yarn run prettier",
         "lint": "eslint server/ app/ config/",
-        "prettier": "ci/prettier.sh",
-        "test": "yarn run lint && yarn run prettier"
+        "prettier": "ci/prettier.sh"
     },
     "dependencies": {
         "autoprefixer": "^6.7.7",
@@ -47,6 +46,7 @@
         "mandrill-api": "^1.0.45",
         "mongoose": "^4.9.2",
         "morgan": "^1.8.1",
+        "node-ssh": "^4.2.2",
         "postcss-loader": "^1.3.3",
         "prettier": "^1.3.1",
         "pug": "^2.0.0-beta11",
@@ -62,9 +62,12 @@
         "redux": "^3.6.0",
         "redux-logger": "^3.0.0",
         "redux-thunk": "^2.2.0",
+        "request": "^2.81.0",
+        "request-promise-native": "^1.0.4",
         "style-loader": "^0.16.0",
         "styled-components": "^1.4.4",
         "url-loader": "^0.5.8",
+        "validator": "^7.0.0",
         "webpack": "^2.3.2",
         "webpack-dev-middleware": "^1.10.1",
         "webpack-dev-server": "^2.4.2",

@@ -1,5 +1,6 @@
 var authResponses = require('./auth.js'),
-    emailResponses = require('./email.js');
+    emailResponses = require('./email.js'),
+    deployResponse = require('./deploy.js');
 
 var Responses = {
     METHOD_NOT_ALLOWED: 'Method not allowed',
@@ -9,5 +10,6 @@ var Responses = {
 
 Responses.Auth = authResponses;
 Responses.Email = emailResponses;
+Responses.Deploy = deployResponse;
 
 module.exports = Responses;
