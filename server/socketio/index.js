@@ -1,5 +1,11 @@
-var authMiddleware = require('./auth.js');
+var rateLimiter = require('./ratelimiter.js'),
+    authMiddleware = require('./auth.js'),
+    userMiddleware = require('./user.js'),
+    chatMiddleware = require('./chat.js');
 
 module.exports = function(io) {
-    io.of('/').use(authMiddleware('any', 'socket'));
+    rateLimiter(io);
+    authMiddleware(io, 'any');
+    userMiddleware(io);
+    chatMiddleware(io);
 };

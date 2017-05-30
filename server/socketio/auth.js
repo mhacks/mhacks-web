@@ -2,11 +2,10 @@ var User = require('../db/model/User.js'),
     Responses = require('../responses/middleware/auth.js'),
     config = require('../../config/default.js');
 
-module.exports = function(groupName, verifiedEmail) {
+module.exports = function(io, groupName, verifiedEmail) {
     groupName = groupName || 'any';
     verifiedEmail = typeof verifiedEmail === 'boolean' ? verifiedEmail : true;
-    return function(socket, next) {
-        console.log(socket.handshake, next);
+    io.use(function(socket, next) {
         if (socket.handshake.session.loggedIn) {
             User.find()
                 .byEmail(socket.handshake.session.email)
@@ -18,7 +17,7 @@ module.exports = function(groupName, verifiedEmail) {
                                 groupCheck(groupName, user)
                                     .then(() => {
                                         callNext(
-                                            socket.handshake,
+                                            socket,
                                             user.tokens[0].token,
                                             next
                                         );
@@ -42,7 +41,7 @@ module.exports = function(groupName, verifiedEmail) {
                 });
         } else {
             var timeout = setTimeout(function() {
-                socket.disconnect(Responses.UNAUTHORIZED);
+                returnFailure(socket, Responses.UNAUTHORIZED);
             }, config.socket_auth_timeout);
 
             socket.emit('authenticate');
@@ -95,11 +94,7 @@ module.exports = function(groupName, verifiedEmail) {
                     });
             });
         }
-
-        if (socket.connected) {
-            socket.emit('authenticate', { status: true });
-        }
-    };
+    });
 };
 
 function verifyEmail(verifiedEmail, user) {
@@ -126,11 +121,13 @@ function groupCheck(groupName, user) {
     });
 }
 
-function callNext(handshake, token, next) {
-    handshake.authToken = token;
+function callNext(socket, token, next) {
+    socket.emit('authenticate', { status: true });
+    socket.handshake.authToken = token;
     next();
 }
 
 function returnFailure(socket, message) {
     socket.emit('authenticate', { status: false, message: message });
+    socket.disconnect(message);
 }
