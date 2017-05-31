@@ -53,6 +53,15 @@ schema.query.byBroadcastTime = function(since, until) {
     });
 };
 
+// Allow us to query for announcements before the current date
+schema.query.beforeNow = function() {
+    return this.find({
+        broadcastTime: {
+            $lte: Date.now
+        }
+    });
+};
+
 // Allow us to query by isApproved
 schema.query.byIsApproved = function() {
     return this.find({
