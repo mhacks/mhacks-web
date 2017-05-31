@@ -136,6 +136,9 @@ class BlackoutFaq extends React.Component {
                                 closer to the event so you can see what’s available. You can also feel free to
                                 bring your own from home or email us with any suggestions!"
                         />
+                    </Section>
+                    <FaqSectionHeader>Hacking</FaqSectionHeader>
+                    <Section>
                         <FaqItem
                             header="How will I get there from other schools?"
                             body="After you’ve applied and received word that you're coming to MHacks,
