@@ -1,8 +1,9 @@
 var Responses = require('../responses/socketio/index.js'),
+    config = require('../../config/default.js'),
     FastRateLimit = require('fast-ratelimit').FastRateLimit,
     socketLimiter = new FastRateLimit({
-        threshold: 3,
-        ttl: 1
+        threshold: config.socket_messages_threshold,
+        ttl: config.socket_messages_ttl,
     });
 
 module.exports = function(io) {

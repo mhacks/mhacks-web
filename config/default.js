@@ -39,5 +39,7 @@ module.exports = {
     },
     slack_token: process.env.SLACK_TOKEN || '',
     slack_notifications_channel: process.env.SLACK_NOTIFICATIONS_CHANNEL ||
-        '#notifications'
+        '#notifications',
+    socket_messages_threshold: process.env.SOCKET_MESSAGES_THRESHOLD || 3,
+    socket_messages_ttl: process.env.SOCKET_MESSAGES_TTL || 1
 };
