@@ -99,7 +99,7 @@ class BlackoutFaq extends React.Component {
                                 most of whom are students at the University of Michigan."
                         />
                     </Section>
-                    <FaqSectionHeader>Logistics</FaqSectionHeader>
+                    <FaqSectionHeader>Application</FaqSectionHeader>
                     <Section>
                         <FaqItem
                             header="Who can apply?"
@@ -122,7 +122,7 @@ class BlackoutFaq extends React.Component {
                                 we’d love to hear about that too!"
                         />
                     </Section>
-                    <FaqSectionHeader>Hacking</FaqSectionHeader>
+                    <FaqSectionHeader>Logistics</FaqSectionHeader>
                     <Section>
                         <FaqItem
                             header="What if I don’t have a team or idea?"
