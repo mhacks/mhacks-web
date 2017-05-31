@@ -99,7 +99,7 @@ class BlackoutFaq extends React.Component {
                                 most of whom are students at the University of Michigan."
                         />
                     </Section>
-                    <FaqSectionHeader>Logistics</FaqSectionHeader>
+                    <FaqSectionHeader>Application</FaqSectionHeader>
                     <Section>
                         <FaqItem
                             header="Who can apply?"
@@ -122,7 +122,7 @@ class BlackoutFaq extends React.Component {
                                 we’d love to hear about that too!"
                         />
                     </Section>
-                    <FaqSectionHeader>Hacking</FaqSectionHeader>
+                    <FaqSectionHeader>Logistics</FaqSectionHeader>
                     <Section>
                         <FaqItem
                             header="What if I don’t have a team or idea?"
@@ -136,6 +136,9 @@ class BlackoutFaq extends React.Component {
                                 closer to the event so you can see what’s available. You can also feel free to
                                 bring your own from home or email us with any suggestions!"
                         />
+                    </Section>
+                    <FaqSectionHeader>Hacking</FaqSectionHeader>
+                    <Section>
                         <FaqItem
                             header="How will I get there from other schools?"
                             body="After you’ve applied and received word that you're coming to MHacks,
