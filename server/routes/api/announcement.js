@@ -8,7 +8,6 @@ function sortByDate(a,b) {
 router.get('/', function(req, res) {
     if (req.session.loggedIn && req.session.can_edit_announcement) {
         Announcements.find()
-            .byBroadcastTime(new Date("Sun, 28 Mar 2017 02:30:00 GMT"), Date.now())
             .exec()
             .then(announcements => {
                 announcements.sort(sortByDate);
@@ -22,6 +21,7 @@ router.get('/', function(req, res) {
     else {
         Announcements.find()
             .byIsPublic()
+            .beforeNow()
             .exec()
             .then(announcements => {
                 announcements.sort(sortByDate);
