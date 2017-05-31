@@ -57,7 +57,7 @@ schema.query.byBroadcastTime = function(since, until) {
 schema.query.beforeNow = function() {
     return this.find({
         broadcastTime: {
-            $lte: Date.now
+            $lte: Date.now()
         }
     });
 };
