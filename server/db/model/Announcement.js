@@ -80,7 +80,10 @@ schema.query.byIsSent = function() {
 schema.query.byIsPublic = function() {
     return this.find({
         isApproved: true,
-        isSent: true
+        isSent: true,
+        broadcastTime: {
+            $lte: Date.now()
+        }
     });
 };
 
