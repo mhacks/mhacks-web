@@ -4,12 +4,6 @@ services:
     extends:
       file: docker-compose.yml
       service: mhacks_nginx
-  mhacks_nginx_letsencrypt:
-    extends:
-      file: docker-compose.yml
-      service: mhacks_nginx_letsencrypt
-    volumes_from:
-      - mhacks_nginx
   mhacks_db:
     extends:
       file: docker-compose.yml
@@ -20,8 +14,8 @@ services:
       service: mhacks_website
     links:
       - mhacks_db
-    environment:
-      MONGO_HOSTNAME: mhacks_db
-      VIRTUAL_HOST: mhacks.org
-      LETSENCRYPT_HOST: mhacks.org,mhacks.com,expo.mhacks.org,expo.mhacks.com,www.mhacks.com,www.mhacks.org
-      LETSENCRYPT_EMAIL: hackathon@umich.edu
+    env_file:
+      - production.env
+    volumes:
+      - ..:/usr/src/app
+    command: sh -c "yarn install && yarn run startprod"

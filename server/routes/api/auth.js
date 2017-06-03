@@ -131,12 +131,14 @@ router.get('/verify/:token', function(req, res) {
                     .checkEmailVerificationToken(req.params.token)
                     .then(() => {
                         user.verifiedEmail();
+
                         res.send({
                             status: true
                         });
                     })
                     .catch(err => {
                         console.error(err);
+
                         res.send({
                             status: false
                         });
@@ -221,7 +223,7 @@ router.post('/passwordreset/:token', function(req, res) {
 });
 
 // Handles /v1/auth/logout
-router.post('/logout', authMiddleware('api'), function(req, res) {
+router.post('/logout', authMiddleware('any', 'api'), function(req, res) {
     if (req.session.loggedIn) {
         delete req.session.loggedIn;
     }
