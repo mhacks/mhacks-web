@@ -1,5 +1,5 @@
 import Navigator from './navigator.jsx';
-import HomePage from './home.jsx';
 import BlackoutPage from './blackout';
+import HomePage from './home';
 
-export { Navigator, HomePage, BlackoutPage };
+export { Navigator, BlackoutPage, HomePage };

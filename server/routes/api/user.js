@@ -8,13 +8,19 @@ router.get('/profile', function(req, res) {
         .byToken(req.authToken)
         .exec()
         .then(user => {
+            var groups = [];
+
+            user.groups.forEach(function(data) {
+                groups.push(data.name);
+            });
+
             res.send({
                 status: true,
                 user: {
                     email: user.email,
                     full_name: user.full_name,
                     birthday: user.birthday,
-                    groups: user.groups
+                    groups: groups
                 }
             });
         })

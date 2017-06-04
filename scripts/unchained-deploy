@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd ~/mhacks-web/ && git pull
+
+cd deploy/ && /opt/bin/docker-compose -f production.yml restart mhacks_website
+
+cd ~/mhacks-web/ && git --no-pager log --stat -n 2

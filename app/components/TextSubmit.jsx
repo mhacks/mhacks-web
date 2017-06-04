@@ -29,10 +29,13 @@ const Container = styled.div`
     height: 40px;
 `;
 
+const minButtonWidth = '110px';
+
 const Input = styled.input`
     position: relative;
     z-index: 1;
     width: 70%;
+    maxWidth: calc(100% - ${minButtonWidth});
     height: 40px;
     color: ${props => props.primaryColor || '#E6E6E6'};
     border: 3px solid ${props => props.primaryColor || '#E6E6E6'};
@@ -45,6 +48,7 @@ const Input = styled.input`
 
 const Button = styled.button`
     width: 30%;
+    minWidth: ${minButtonWidth};
     height: 40px;
     top: 0px;
     left: -3px;

@@ -7,7 +7,9 @@ mongoose.Promise = global.Promise;
 mongoose
     .connect('mongodb://' + config.mongo_hostname + '/' + config.backend_db)
     .then(res => {
-        console.log(res);
+        if (res) {
+            console.log(res);
+        }
     })
     .catch(err => {
         console.error(err);
