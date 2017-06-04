@@ -10,7 +10,7 @@ import Footer from './footer.jsx';
 import { SectionHeader, SectionBody } from './section_components.jsx';
 
 const contentHeight = 120;
-const sidebarWidth = '200px';
+const sidebarWidth = 200;
 
 const Container = styled.div`
     display: flex;
@@ -20,7 +20,7 @@ const Container = styled.div`
 `;
 
 const Sidebar = styled.div`
-    width: ${sidebarWidth};
+    width: ${sidebarWidth}px;
 `;
 
 const SidebarLinks = styled.ul`
@@ -44,15 +44,11 @@ const SidebarLink = styled.li`
 `;
 
 const Content = styled.div`
-    width: calc(100% - ${sidebarWidth});
+    width: calc(100% - ${sidebarWidth}px);
     height: 100%;
     overflowX: hidden;
     overflowY: scroll;
 `;
-
-//
-// TODO REMOVE BOUNCE ON FIXED ELEMENTS
-//
 
 /* Page Component */
 class HomePage extends React.Component {
@@ -74,7 +70,6 @@ class HomePage extends React.Component {
     }
 
     updateWindowDimensions() {
-        console.log(window.innerHeight);
         this.setState({
             width: window.innerWidth,
             height: window.innerHeight
@@ -104,17 +99,17 @@ class HomePage extends React.Component {
                     </Sidebar>
 
                     <Content>
-                        <div id="section-about">
+                        <div id="about">
                             <SectionHeader>About MHacks</SectionHeader>
                             <SectionBody>MHacks is a 36-hour hackathon run by University of Michigan students. At MHacks, we want to help you turn your ideas into reality. You're welcome to come with or without a team. We'll provide you with all the resources and mentors you need to help you work on something cool or learn new skills. You'll have the freedom to create a product, learn new techniques for your future work, or just have fun working on a project with friends. Moreover, we will offer you a chance to network with other creators and professionals. For newcomers and veterans alike, MHacks is a weekend experience you won’t want to miss.</SectionBody>
                         </div>
 
-                        <div id="section-what-is-nano">
+                        <div id="what-is-mhacks-nano">
                             <SectionHeader>What is MHacks Nano?</SectionHeader>
                             <SectionBody>MHacks is a 36-hour hackathon run by University of Michigan students. At MHacks, we want to help you turn your ideas into reality. You're welcome to come with or without a team. We'll provide you with all the resources and mentors you need to help you work on something cool or learn new skills. You'll have the freedom to create a product, learn new techniques for your future work, or just have fun working on a project with friends. Moreover, we will offer you a chance to network with other creators and professionals. For newcomers and veterans alike, MHacks is a weekend experience you won’t want to miss.</SectionBody>
                         </div>
 
-                        <div id="section-faq">
+                        <div id="faq">
                             <SectionHeader>FAQ</SectionHeader>
                             <SectionBody>MHacks is a 36-hour hackathon run by University of Michigan students. At MHacks, we want to help you turn your ideas into reality. You're welcome to come with or without a team. We'll provide you with all the resources and mentors you need to help you work on something cool or learn new skills. You'll have the freedom to create a product, learn new techniques for your future work, or just have fun working on a project with friends. Moreover, we will offer you a chance to network with other creators and professionals. For newcomers and veterans alike, MHacks is a weekend experience you won’t want to miss.
 
