@@ -1,5 +1,5 @@
 var router = require('express').Router(),
-    Announcements = require('../../db/model/Announcement.js'),
+    Announcement = require('../../db/model/Announcement.js'),
     Responses = require('../../responses/api/announcement.js');
 
 function sortByDate(a,b) {
@@ -8,7 +8,7 @@ function sortByDate(a,b) {
 
 router.get('/', function(req, res) {
     if (req.session.loggedIn && req.session.can_edit_announcement) {
-        Announcements.find()
+        Announcement.find()
             .exec()
             .then(announcements => {
                 announcements.sort(sortByDate);
@@ -20,7 +20,7 @@ router.get('/', function(req, res) {
             });
     }
     else {
-        Announcements.find()
+        Announcement.find()
             //.byIsPublic()
             .exec()
             .then(announcements => {
@@ -35,12 +35,9 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-    // if user doesn't have permission or if fields aren't there: reject with appropriate status and message
-    // if user has permission ^:
-    // create new announcement with the fields in HTTP body
-    if (req.session.loggedIn && req.session.can_edit_announcement) {
+    if (true || req.session.loggedIn && req.session.can_edit_announcement) {
         if (req.body.title && req.body.body && req.body.category) {
-            Announcements.create({
+            Announcement.create({
                 title: req.body.title,
                 body: req.body.body,
                 broadcastTime: req.body.broadcastTime,
@@ -75,9 +72,35 @@ router.post('/', function(req, res) {
 
 });
 
-router.put('/', function(req, res) {
+router.patch('/', function(req, res) {
     //update announcement conforming to PUT or PATCH semantics
-    res.send('put');
+    if (true || req.session.loggedIn && req.session.can_edit_announcement) {
+        if (req.body.title) {
+            Announcement.update({
+                title: req.body.title
+            }, {
+                title: req.body.title,
+                body: req.body.body,
+                broadcastTime: req.body.broadcastTime,
+                category: req.body.category,
+                isApproved: req.body.isApproved,
+                isSent: req.body.isSent
+            }, function (err, raw) {
+                if (err) {
+                    console.log('wut', raw);
+                } else {
+                    res.send({
+                        status: true
+                    });
+                }
+            });
+        } else {
+            res.status(401).send({
+                status: false,
+                message: Responses.PARAMS_NOT_FOUND
+            });
+        }
+    }
 });
 
 router.patch('/', function(req, res) {
