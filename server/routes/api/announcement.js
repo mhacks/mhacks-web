@@ -4,7 +4,7 @@ var router = require('express').Router(),
 
 function sortByDate(a,b) {
     return new Date(b.broadcastTime) - new Date(a.broadcastTime);
-};
+}
 
 router.get('/', function(req, res) {
     if (req.session.loggedIn && req.session.can_edit_announcement) {
@@ -59,7 +59,7 @@ router.post('/', function(req, res) {
                 isApproved: req.body.isApproved,
                 isSent: req.body.isSent
             })
-                .then(announcement => {
+                .then(() => {
                     res.send({
                         status: true
                     });
@@ -127,7 +127,7 @@ router.patch('/', function(req, res) {
     if (req.session.loggedIn && req.session.can_edit_announcement) {
         if (req.body.id) {
             Announcement.updateOne({ _id: req.body.id }, req.body, { runValidators: true })
-                .then(announcement => {
+                .then(() => {
                     res.send({
                         status: true
                     });
