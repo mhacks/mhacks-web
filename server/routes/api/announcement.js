@@ -6,6 +6,7 @@ function sortByDate(a,b) {
     return new Date(b.broadcastTime) - new Date(a.broadcastTime);
 }
 
+// Handles get requests for /v1/announcements
 router.get('/', function(req, res) {
     if (req.session.loggedIn && req.session.can_edit_announcement) {
         Announcement.find()
