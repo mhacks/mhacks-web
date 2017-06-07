@@ -2,7 +2,7 @@ var router = require('express').Router(),
     Announcement = require('../../db/model/Announcement.js'),
     Responses = require('../../responses/api/announcement.js');
 
-function sortByDate(a,b) {
+function sortByDate(a, b) {
     return new Date(b.broadcastTime) - new Date(a.broadcastTime);
 }
 
@@ -26,8 +26,7 @@ router.get('/', function(req, res) {
                     message: Responses.UNKNOWN_ERROR
                 });
             });
-    }
-    else {
+    } else {
         Announcement.find()
             .byIsPublic()
             .exec()
@@ -90,26 +89,26 @@ router.put('/', function(req, res) {
     if (req.session.loggedIn && req.session.can_edit_announcement) {
         if (req.body.id) {
             Announcement.findById(req.body.id)
-            .exec()
-            .then(announcement => {
-                announcement.title = req.body.title;
-                announcement.body = req.body.body;
-                announcement.broadcastTime = req.body.broadcastTime;
-                announcement.category = req.body.category;
-                announcement.isApproved = req.body.isApproved;
-                announcement.isSent = req.body.isSent;
-                announcement.save();
-                res.send({
-                    status: true
+                .exec()
+                .then(announcement => {
+                    announcement.title = req.body.title;
+                    announcement.body = req.body.body;
+                    announcement.broadcastTime = req.body.broadcastTime;
+                    announcement.category = req.body.category;
+                    announcement.isApproved = req.body.isApproved;
+                    announcement.isSent = req.body.isSent;
+                    announcement.save();
+                    res.send({
+                        status: true
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    res.status(500).send({
+                        status: false,
+                        message: Responses.UNKNOWN_ERROR
+                    });
                 });
-            })
-            .catch(err => {
-                console.error(err);
-                res.status(500).send({
-                    status: false,
-                    message: Responses.UNKNOWN_ERROR
-                });
-            });
         } else {
             res.status(401).send({
                 status: false,
@@ -127,7 +126,9 @@ router.put('/', function(req, res) {
 router.patch('/', function(req, res) {
     if (req.session.loggedIn && req.session.can_edit_announcement) {
         if (req.body.id) {
-            Announcement.updateOne({ _id: req.body.id }, req.body, { runValidators: true })
+            Announcement.updateOne({ _id: req.body.id }, req.body, {
+                runValidators: true
+            })
                 .then(() => {
                     res.send({
                         status: true
