@@ -1,4 +1,7 @@
 module.exports = {
+    env: process.env.NODE_ENV || 'development',
+    development: process.env.NODE_ENV !== 'production',
+    production: process.env.NODE_ENV === 'production',
     host: process.env.HOST || 'https://mhacks.org',
     secret: process.env.SECRET || 'mhacks',
     mongo_hostname: process.env.MONGO_HOSTNAME || 'mhacks_db',
@@ -41,5 +44,6 @@ module.exports = {
     slack_notifications_channel: process.env.SLACK_NOTIFICATIONS_CHANNEL ||
         '#notifications',
     socket_messages_threshold: process.env.SOCKET_MESSAGES_THRESHOLD || 3,
-    socket_messages_ttl: process.env.SOCKET_MESSAGES_TTL || 1
+    socket_messages_ttl: process.env.SOCKET_MESSAGES_TTL || 1,
+    only_one_chat_client: process.env.ONLY_ONE_CHAT_CLIENT || true
 };

@@ -9,19 +9,13 @@ module.exports = function(io) {
                     .exec()
                     .then(user => {
                         if (user) {
-                            var groups = [];
-
-                            user.groups.forEach(function(data) {
-                                groups.push(data.name);
-                            });
-
                             socket.emit('profile', {
                                 status: true,
                                 user: {
                                     email: user.email,
                                     full_name: user.full_name,
                                     birthday: user.birthday,
-                                    groups: groups
+                                    groups: user.getGroupsList()
                                 }
                             });
                         } else {

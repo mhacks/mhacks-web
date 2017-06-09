@@ -5,8 +5,17 @@ var User = require('../db/model/User.js'),
 module.exports = function(io, groupName, verifiedEmail) {
     groupName = groupName || 'any';
     verifiedEmail = typeof verifiedEmail === 'boolean' ? verifiedEmail : true;
-    io.use(function(socket, next) {
-        if (socket.handshake.session.loggedIn) {
+
+    for (var nsp in io.nsps) {
+        io.nsps[nsp].on('connect', function(socket) {
+            if (!socket.handshake && !socket.handshake.authToken) {
+                delete io.nsps[nsp].connected[socket.id];
+            }
+        });
+    }
+
+    io.on('connection', function(socket) {
+        if (socket.handshake.session && socket.handshake.session.loggedIn) {
             User.find()
                 .byEmail(socket.handshake.session.email)
                 .exec()
@@ -18,8 +27,9 @@ module.exports = function(io, groupName, verifiedEmail) {
                                     .then(() => {
                                         callNext(
                                             socket,
+                                            user,
                                             user.tokens[0].token,
-                                            next
+                                            io
                                         );
                                     })
                                     .catch(() => {
@@ -45,6 +55,7 @@ module.exports = function(io, groupName, verifiedEmail) {
             }, config.socket_auth_timeout);
 
             socket.emit('authenticate');
+
             socket.on('authenticate', function(data) {
                 clearTimeout(timeout);
 
@@ -63,12 +74,14 @@ module.exports = function(io, groupName, verifiedEmail) {
                                             groupCheck(groupName, user)
                                                 .then(() => {
                                                     callNext(
-                                                        socket.handshake,
+                                                        socket,
+                                                        user,
                                                         token,
-                                                        next
+                                                        io
                                                     );
                                                 })
                                                 .catch(result => {
+                                                    console.log(result);
                                                     returnFailure(
                                                         socket,
                                                         result
@@ -121,10 +134,27 @@ function groupCheck(groupName, user) {
     });
 }
 
-function callNext(socket, token, next) {
+function callNext(socket, user, token, io) {
+    if (config.only_one_chat_client) {
+        for (var roomName in io.sockets.sockets) {
+            if (io.sockets.sockets[roomName].handshake.email === user.email) {
+                io.sockets.sockets[roomName].disconnect();
+                return returnFailure(socket, Responses.USER_ALREADY_CONNECTED);
+            }
+        }
+    }
+
     socket.emit('authenticate', { status: true });
+    socket.handshake.name = user.full_name;
+    socket.handshake.email = user.email;
+    socket.handshake.groups = user.getGroupsList();
     socket.handshake.authToken = token;
-    next();
+
+    for (var nsp in io.nsps) {
+        if (socket.id in io.nsps[nsp].sockets) {
+            io.nsps[nsp].connected[socket.id] = socket;
+        }
+    }
 }
 
 function returnFailure(socket, message) {

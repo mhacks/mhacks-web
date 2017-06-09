@@ -3,6 +3,7 @@ var bcrypt = require('bcrypt'),
     mongoose = require('../index.js'),
     config = require('../../../config/default.js'),
     Email = require('../../interactors/email.js'),
+    emailResponses = require('../../responses/api/email.js'),
     secret = config.secret;
 
 // Define the document Schema
@@ -272,39 +273,57 @@ schema.methods.changePassword = function(password) {
 };
 
 schema.methods.sendVerificationEmail = function() {
-    Email.sendEmailTemplate(
-        config.confirmation_email_template,
-        {
-            confirmation_url: config.host +
+    if (config.development) {
+        console.log(
+            emailResponses.VERIFICATION_URL_CONSOLE,
+            config.host +
                 '/v1/auth/verify/' +
-                this.generateEmailVerificationToken(),
-            FIRST_NAME: this.full_name.split(' ')[0]
-        },
-        config.confirmation_email_subject,
-        this.email,
-        config.email_from,
-        config.email_from_name
-    ).catch(error => {
-        console.error('MANDRILL', error);
-        return false;
-    });
+                this.generateEmailVerificationToken()
+        );
+    } else {
+        Email.sendEmailTemplate(
+            config.confirmation_email_template,
+            {
+                confirmation_url: config.host +
+                    '/v1/auth/verify/' +
+                    this.generateEmailVerificationToken(),
+                FIRST_NAME: this.full_name.split(' ')[0]
+            },
+            config.confirmation_email_subject,
+            this.email,
+            config.email_from,
+            config.email_from_name
+        ).catch(error => {
+            console.error('MANDRILL', error);
+            return false;
+        });
+    }
 };
 
 schema.methods.sendPasswordResetEmail = function() {
-    Email.sendEmailTemplate(
-        config.password_reset_email_template,
-        {
-            update_password_url: config.host +
+    if (config.development) {
+        console.log(
+            emailResponses.PASSWORDRESET_URL_CONSOLE,
+            config.host +
                 '/auth/passwordreset/' +
                 this.generatePasswordResetToken()
-        },
-        config.password_reset_email_subject,
-        this.email,
-        config.email_from,
-        config.email_from_name
-    ).catch(error => {
-        console.error('MANDRILL', error);
-    });
+        );
+    } else {
+        Email.sendEmailTemplate(
+            config.password_reset_email_template,
+            {
+                update_password_url: config.host +
+                    '/auth/passwordreset/' +
+                    this.generatePasswordResetToken()
+            },
+            config.password_reset_email_subject,
+            this.email,
+            config.email_from,
+            config.email_from_name
+        ).catch(error => {
+            console.error('MANDRILL', error);
+        });
+    }
 };
 
 schema.methods.checkGroup = function(checkGroup) {
@@ -331,6 +350,16 @@ schema.methods.addGroup = function(groupName) {
     } else {
         return false;
     }
+};
+
+schema.methods.getGroupsList = function() {
+    var groups = [];
+
+    this.groups.forEach(function(data) {
+        groups.push(data.name);
+    });
+
+    return groups;
 };
 
 // Password middleware to update passwords with bcrypt when needed
