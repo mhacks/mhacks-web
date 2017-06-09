@@ -52,15 +52,17 @@ function chatHandler(io, socket) {
         });
 
         socket.on('new-chat', function(data) {
-            if (
-                data instanceof Object &&
-                'users' in data &&
-                'message' in data
-            ) {
+            if (data instanceof Object && 'users' in data) {
                 var newChannelName = '';
-                if (data.users.length > 1) {
+
+                if (data.users.length > 0) {
+                    var thisUser = socket.handshake.email;
+                    if (data.users.indexOf(thisUser) === -1) {
+                        data.users.push(thisUser);
+                    }
+
                     data.users.forEach(function(user, elem) {
-                        var channelName = getUserChannelName(user);
+                        var channelName = getUserChannelName(io, user);
                         if (channelName) {
                             newChannelName +=
                                 channelName +
@@ -74,6 +76,8 @@ function chatHandler(io, socket) {
                         io.sockets.sockets[name].join(newChannelName);
                     }
                 });
+
+                sendChannelsToAll(io);
             }
         });
 
@@ -109,7 +113,8 @@ function sendChannels(io, socket) {
     for (var roomName in io.sockets.adapter.rooms) {
         if (
             userInChannel(io, roomName, socket.handshake.email) ||
-            socket.handshake.groups.indexOf('admin') !== -1
+            (socket.handshake.groups &&
+                socket.handshake.groups.indexOf('admin') !== -1)
         ) {
             var channelObj = {
                 name: roomName,

@@ -58,7 +58,7 @@
                         $('#channels').append('<li class="channel" id="' + channel.name + '">' + (channel.user || channel.name) + '<ul id="users-' + channel.name + '"></ul></li>');
 
                         for (var email in channel.members) {
-                            $('[id="users-' + channel.name + '"]').append('<li>' + channel.members[email].name + '</li>');
+                            $('[id="users-' + channel.name + '"]').append('<li>' + channel.members[email].name + '<a onclick="startPrivateMessage(\'' + channel.members[email].email + '\');" class="btn btn-sm btn-primary">Start a private message</a></li>');
                         }
                     });
                 }
@@ -76,6 +76,12 @@
                     }
                 })
             })
+        }
+
+        function startPrivateMessage(email) {
+            socket.emit('new-chat', {
+                users: [email]
+            });
         }
 
         function sendMessage() {
