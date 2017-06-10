@@ -9,7 +9,7 @@ import Apply from './apply.jsx';
 
 import { SectionHeader, SectionBody } from './section_components.jsx';
 
-const contentHeight = 120;
+const contentHeight = 130;
 const sidebarWidth = 200;
 
 const Container = styled.div`
