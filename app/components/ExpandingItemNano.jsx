@@ -3,21 +3,21 @@ import styled, { keyframes } from 'styled-components';
 
 const Wrapper = styled.div`
     display: inline-block;
-    marginTop: -20px;
 `;
 
 const Header = styled.h3`
     display: inline-block;
-    -webkit-margin-before: 10px;
-    -webkit-margin-after: 10px;
+    -webkit-margin-before: 0px;
+    -webkit-margin-after: 0px;
     color: ${props => props.color};
     fontSize: 14px;
     flex: 1;
 `;
 
 const Body = styled.p`
-    paddingLeft: 35px;
-    -webkit-margin-before: 0px;
+    paddingLeft: 25px;
+    -webkit-margin-before: 5px;
+    -webkit-margin-after: 5px;
     color: ${props => props.color};
     fontSize: 14px;
 `;
@@ -63,7 +63,7 @@ const Slider = styled.div`
 const PlusWrapper = styled.div`
     position: relative;
     display: inline-block;
-    margin: 10px;
+    marginLeft: 10px;
     height: 15px;
     width: 15px;
 `;

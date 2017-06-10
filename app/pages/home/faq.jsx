@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import { ExpandingItemNano } from '../../components';
 
 const FaqSectionHeader = styled.h2`
-    fontSize: 18px;
+    fontSize: 20px;
     color: darkorange;
+    marginTop: 6px;
+    marginBottom: 6px;
 `;
 
 const Section = styled.div`
-    marginBottom: -20px;
+    marginBottom: 10px;
 `;
 
 const Link = styled.a`
@@ -20,6 +22,7 @@ const Link = styled.a`
 const ExpandingItemWrapper = styled.div`
     width: 95%;
 `;
+
 const FaqItem = (props => (
     <ExpandingItemWrapper>
         <ExpandingItemNano
