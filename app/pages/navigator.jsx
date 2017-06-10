@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
+import { withRouter } from 'react-router-dom';
 import Header from './header.jsx';
 import Footer from './footer.jsx';
 
@@ -24,4 +25,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Navigator);
+export default withRouter(connect(mapStateToProps)(Navigator));
