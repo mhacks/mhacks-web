@@ -272,6 +272,7 @@ schema.methods.changePassword = function(password) {
 };
 
 schema.methods.sendVerificationEmail = function() {
+    this.email_verified = false;
     Email.sendEmailTemplate(
         config.confirmation_email_template,
         {
@@ -288,6 +289,7 @@ schema.methods.sendVerificationEmail = function() {
         console.error('MANDRILL', error);
         return false;
     });
+    this.save();
 };
 
 schema.methods.sendPasswordResetEmail = function() {
@@ -332,6 +334,25 @@ schema.methods.addGroup = function(groupName) {
         return false;
     }
 };
+
+schema.methods.getGroupsList = function() {
+    var groups = [];
+
+    this.groups.forEach(function(data) {
+        groups.push(data.name);
+    });
+
+    return groups;
+};
+
+schema.methods.updateFields = function(fields) {
+    for (var param in fields) {
+        if (this.hasOwnProperty(param)) {
+            this[param] = fields[param];
+        }
+    }
+    this.save();
+}
 
 // Password middleware to update passwords with bcrypt when needed
 var passwordMiddleware = function(next) {

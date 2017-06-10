@@ -1,4 +1,5 @@
 var router = require('express').Router(),
+    validator = require('validator'),
     User = require('../../db/model/User.js'),
     Responses = require('../../responses/api/auth.js'),
     authMiddleware = require('../../middleware/auth.js');
@@ -17,7 +18,7 @@ router.use(function(req, res, next) {
 // Handles /v1/auth/login
 router.post('/login', function(req, res) {
     // Check if the login request contains the email and password
-    if (req.body.email && req.body.password) {
+    if (req.body.email && req.body.password && validator.isEmail(req.body.email)) {
         // Lookup users with the email provided in the post body
         User.find()
             .byEmail(req.body.email)
@@ -72,7 +73,7 @@ router.post('/login', function(req, res) {
 // Handles /v1/auth/register
 router.post('/register', function(req, res) {
     // Check if the login request contains the email and password (only required things for initial signup)
-    if (req.body.email && req.body.password) {
+    if (req.body.email && req.body.password && req.body.full_name && validator.isEmail(req.body.email)) {
         // Make sure a user with the same email doesn't exist. If it doesn't,
         // instantiate the new model with the username and password, save it,
         // and generate a new JWT to be used as the Authorization header
@@ -157,7 +158,7 @@ router.get('/verify/:token', function(req, res) {
 });
 
 router.post('/passwordreset', function(req, res) {
-    if (req.body.email) {
+    if (req.body.email && validator.isEmail(req.body.email)) {
         User.find()
             .byEmail(req.body.email)
             .exec()
