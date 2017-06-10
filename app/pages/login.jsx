@@ -58,7 +58,7 @@ class Login extends React.Component {
 
     componentWillUpdate(nextProps) {
         if (nextProps.authState.data.isLoggedIn) {
-            this.props.history.push(routes.SUBSCRIBE);
+            this.props.history.push(routes.PROFILE);
         }
     }
 
