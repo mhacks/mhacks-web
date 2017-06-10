@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { ExpandingItemNano } from '../../components';
+import { ExpandingItem } from '../../components';
 
 const FaqSectionHeader = styled.h2`
     fontSize: 20px;
@@ -25,8 +25,9 @@ const ExpandingItemWrapper = styled.div`
 
 const FaqItem = (props => (
     <ExpandingItemWrapper>
-        <ExpandingItemNano
+        <ExpandingItem
             {...props}
+            expandColor
             colorOn="darkorange"
             colorOff="gray"
         />
