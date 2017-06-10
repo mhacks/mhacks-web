@@ -4,10 +4,8 @@ import { Helmet } from 'react-helmet';
 
 const Favicon = require('../../../static/blackout/favicon.png');
 
-import Header from './header.jsx';
 import Faq from './faq.jsx';
-import Footer from './footer.jsx';
-
+        
 import { SectionHeader, SectionBody } from './section_components.jsx';
 
 const contentHeight = 120;
@@ -86,8 +84,6 @@ class HomePage extends React.Component {
                     <link rel="icon" type="image/x-icon" href={Favicon} />
                 </Helmet>
 
-                <Header />
-
                 <Container {...this.state}>
                     <Sidebar>
                         <nav>
@@ -116,8 +112,6 @@ class HomePage extends React.Component {
                         </div>
                     </Content>
                 </Container>
-
-                <Footer />
             </div>
         );
     }

@@ -1,3 +1,4 @@
 import { SubscribeThunks } from './thunks';
+import { AuthThunks } from './thunks';
 
-export { SubscribeThunks };
+export { SubscribeThunks, AuthThunks };

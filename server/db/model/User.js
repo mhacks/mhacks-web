@@ -278,7 +278,7 @@ schema.methods.sendVerificationEmail = function() {
             confirmation_url: config.host +
                 '/v1/auth/verify/' +
                 this.generateEmailVerificationToken(),
-            FIRST_NAME: this.full_name.split(' ')[0]
+            FIRST_NAME: this.full_name ? this.full_name.split(' ')[0] : 'Hacker'
         },
         config.confirmation_email_subject,
         this.email,

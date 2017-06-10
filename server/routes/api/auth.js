@@ -88,8 +88,12 @@ router.post('/register', function(req, res) {
                     })
                         .then(user => {
                             user.sendVerificationEmail();
+                            req.session.loggedIn = true;
+                            req.session.email = req.body.email;
                             res.send({
-                                status: true
+                                status: true,
+                                message: Responses.SUCCESSFUL_AUTH,
+                                token: user.generateNewToken()
                             });
                         })
                         .catch(err => {
