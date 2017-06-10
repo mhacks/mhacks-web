@@ -1,7 +1,29 @@
 import React from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { RoundedButton } from '../../components';
+import { routes } from '../../constants';
+import { NavLink } from 'react-router-dom';
 import { SectionHeader, SectionBody } from './section_components.jsx';
+
+const StyledNavLink = styled(NavLink)`
+    fontSize: 20px;
+    padding: 5px 35px;
+    margin: 0px 15px;
+    border: 2px solid ${props => props.primaryColor};
+    color: ${props => props.primaryColor};
+    borderRadius: 5px;
+    textDecoration: none;
+    transition: all 0.3s;
+
+    &:hover {
+        backgroundColor: ${props => props.primaryColor};
+        color: white;
+    }
+
+    &:last-child {
+        margin: 0;
+    }
+`;
 
 class Apply extends React.Component {
     render() {
@@ -9,14 +31,12 @@ class Apply extends React.Component {
             <div>
                 <SectionHeader>Apply</SectionHeader>
                 <SectionBody>Apply to MHacks Nano! We will just ask you a couple questions about yourself, your hackathon experiences and allow you to form a team.</SectionBody>
-                <a href="/login">
-                    <RoundedButton
-                        type="button"
-                        color={this.props.theme.primary}
-                    >
-                    Log In
-                    </RoundedButton>
-                </a>
+                <StyledNavLink
+                    to={routes.LOGIN}
+                    primaryColor={this.props.theme.primary}
+                >
+                Log In
+                </StyledNavLink>
             </div>
         );
     }
