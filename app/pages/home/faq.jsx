@@ -41,12 +41,8 @@ class Faq extends React.Component {
                     <Section>
                         <FaqItem
                             header="What happens at a hackathon?"
-                            body={<span>Participants (“hackers”) spend 36 hours working in teams of
-                                    1 - 4 people to build or code projects (“hacks”) they’re
-                                    excited about. There are workshops, mentors, food, swag, and
-                                    buckets of coffee to guide you along the way. You bring your ideas,
-                                    and we give you everything you need to make them come to life. &nbsp;
-                                    <Link href="https://drive.google.com/file/d/0B4fSxuPetYFGWjNLSng1QVdVdm8/view" target="_blank">Past Schedule</Link>
+                            body={<span>Participants ("hackers") work in teams of 1-4 people to make something (a&nbsp;"hack") 
+                                they're excited about. We'll have tons of online resources to help you along the way.
                                 </span>}
                         />
                         <FaqItem
@@ -58,10 +54,9 @@ class Faq extends React.Component {
                         />
                         <FaqItem
                             header="Do I have to know how to code to attend?"
-                            body="Nope! We’ll have lots of resources — including workshops and a sweet,
-                                new mentorship system — to help beginners get started. For this MHacks,
-                                we will also dedicate one room to new hackers and have several project
-                                ideas to help you get started."
+                            body="Nope! We'll have links to lots of online resources to help you get started or 
+                                find your way if you get lost. Moreover, your hack doesn't necessarily have 
+                                to include coding."
                         />
                         <FaqItem
                             header="Who runs MHacks?"
@@ -73,85 +68,43 @@ class Faq extends React.Component {
                     <Section>
                         <FaqItem
                             header="Who can apply?"
-                            body="If you’re enrolled in a high school, college, or university,
-                                or if you left school during the current school year, you’re good to go!
-                                (Minors are welcome to apply, but will need to fill out a couple extra forms
-                                in order to attend.)"
+                            body="MHacks Nano is open to any and all students."
+                        />
+                        <FaqItem
+                            header="When are applications closing?"
+                            body="Applications for MHacks Nano will remain open until the hacking period ends
+                             (Saturday, June 24th at 9pm Eastern Time)."
+                        />
+                        <FaqItem
+                            header="How and when will I hear back?"
+                            body="If you've applied, you're accepted!"
                         />
                         <FaqItem
                             header="Can we apply as a team?"
-                            body="You and your intended teammates should all apply individually. But if you
-                                get an invitation and some of your teammates don’t, shoot us an email at
-                                hackathon@umich.edu and we’ll try to sort things out."
-                        />
-                        <FaqItem
-                            header="What are you looking for in an application?"
-                            body="Above anything else: passion. Tell us what you care about — what excites you.
-                                We want to know what’ll drive you to start and continue hacking.
-                                If there’s something about MHacks in particular that you’re excited about,
-                                we’d love to hear about that too!"
+                            body="Yes! Add your teammates to your application to form a team."
                         />
                     </Section>
                 <FaqSectionHeader>Hacking</FaqSectionHeader>
                     <Section>
                         <FaqItem
                             header="What if I don’t have a team or idea?"
-                            body="Not to worry, most people don’t! We have some great activities planned
-                                before and during the event to help you meet teammates and start thinking
-                                through your ideas."
-                        />
-                        <FaqItem
-                            header="What kind of hardware will there be?"
-                            body="There’ll be tons of cool hardware for you to hack on! We’ll put out a list
-                                closer to the event so you can see what’s available. You can also feel free to
-                                bring your own from home or email us with any suggestions!"
+                            body={<span>Not to worry, most people don't! Check out the
+                                    <Link href="https://www.facebook.com/groups/1900638676819691/?ref=br_rs" target="_blank"> MHacks&nbsp;Nano&nbsp;Facebook&nbsp;Event </Link>
+                                     to get started! 
+                                </span>}
                         />
                     </Section>
-                <FaqSectionHeader>Logistics</FaqSectionHeader>
+                <FaqSectionHeader>Voting</FaqSectionHeader>
                     <Section>
                         <FaqItem
-                            header="How will I get there from other schools?"
-                            body="After you’ve applied and received word that you're coming to MHacks,
-                                we'll share information about buses and travel reimbursements. More than likely,
-                                we'll be sending a bus to a school near you. If you’re flying in, we’ll have shuttles
-                                from DTW as well. All bus schedules will be released closer to the event."
-                        />
-                        <FaqItem
-                            header="What if I'm an International Student?"
-                            body="If you go to school in Canada, we may be sending a bus to your university or one
-                                near you. If you are traveling from another country, the first step is to make
-                                sure you have a valid travel Visa. Please refer to this website to make sure you meet
-                                the requirements and get started on the process if you haven’t already. If you need
-                                anything from the organizers, such as a letter of invitation, please contact us as
-                                soon as possible at hackathon@umich.edu."
-                        />
-                        <FaqItem
-                            header="Will you be offering travel reimbursements?"
-                            body="We can’t guarantee reimbursements for everyone, but we don’t want money to
-                                keep you from experiencing MHacks. You’ll get a reimbursement amount along with
-                                your invitation. Let us know if you still need help making your way to Detroit
-                                and we’ll see what we can do."
-                        />
-                        <FaqItem
-                            header="What should I bring?"
-                            body="You should bring your student ID and anything you’d need for a productive
-                                and healthy weekend: laptop, charger, deodorant (!), change of clothes, etc.
-                                You won’t need food or drinks; we’ve got you covered there. :)"
-                        />
-                        <FaqItem
-                            header="What shouldn't I bring?"
-                            body="Weapons of any kind, drugs, or alcohol. If you’re not sure whether
-                                something will be okay, please ask ahead of time!"
+                            header="How does voting work?"
+                            body="You'll be able to upvote hacks that impress you and downvote hacks that you don't 
+                                think met the bar. The more hacks you vote on, the more likely your hack is to get votes. 
+                                Please be respectful to your fellow hackers and vote honestly."
                         />
                     </Section>
                 <FaqSectionHeader>Help!</FaqSectionHeader>
                     <Section>
-                        <FaqItem
-                            header="I don’t want to hack, I want to ________!"
-                            body="If you’re contemplating judging, volunteering, or mentoring, shoot us an email
-                                at hackathon@umich.edu. If your company is interested in becoming a sponsor,
-                                check out the sponsorship section below."
-                        />
                         <FaqItem
                             header="I didn't find my question here..."
                             body="If you’ve got something else on your mind, fire it off to hackathon@umich.edu!"
