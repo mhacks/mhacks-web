@@ -9,6 +9,7 @@ const FaqSectionHeader = styled.h2`
 `;
 
 const Section = styled.div`
+    marginBottom: -20px;
 `;
 
 const Link = styled.a`
@@ -16,12 +17,17 @@ const Link = styled.a`
     textDecoration: none;
 `;
 
+const ExpandingItemWrapper = styled.div`
+    width: 95%;
+`;
 const FaqItem = (props => (
+    <ExpandingItemWrapper>
         <ExpandingItemNano
             {...props}
             colorOn="darkorange"
             colorOff="gray"
         />
+    </ExpandingItemWrapper>
 ));
 
 class Faq extends React.Component {
@@ -60,7 +66,7 @@ class Faq extends React.Component {
                                 most of whom are students at the University of Michigan."
                         />
                     </Section>
-                    <FaqSectionHeader>Application</FaqSectionHeader>
+                <FaqSectionHeader>Application</FaqSectionHeader>
                     <Section>
                         <FaqItem
                             header="Who can apply?"
@@ -83,7 +89,7 @@ class Faq extends React.Component {
                                 we’d love to hear about that too!"
                         />
                     </Section>
-                    <FaqSectionHeader>Hacking</FaqSectionHeader>
+                <FaqSectionHeader>Hacking</FaqSectionHeader>
                     <Section>
                         <FaqItem
                             header="What if I don’t have a team or idea?"
@@ -98,7 +104,7 @@ class Faq extends React.Component {
                                 bring your own from home or email us with any suggestions!"
                         />
                     </Section>
-                    <FaqSectionHeader>Logistics</FaqSectionHeader>
+                <FaqSectionHeader>Logistics</FaqSectionHeader>
                     <Section>
                         <FaqItem
                             header="How will I get there from other schools?"
@@ -135,7 +141,7 @@ class Faq extends React.Component {
                                 something will be okay, please ask ahead of time!"
                         />
                     </Section>
-                    <FaqSectionHeader>Help!</FaqSectionHeader>
+                <FaqSectionHeader>Help!</FaqSectionHeader>
                     <Section>
                         <FaqItem
                             header="I don’t want to hack, I want to ________!"

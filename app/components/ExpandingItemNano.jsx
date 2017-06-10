@@ -2,7 +2,8 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const Wrapper = styled.div`
-    display: inline-block
+    display: inline-block;
+    marginTop: -20px;
 `;
 
 const Header = styled.h3`
@@ -10,7 +11,7 @@ const Header = styled.h3`
     -webkit-margin-before: 10px;
     -webkit-margin-after: 10px;
     color: ${props => props.color};
-    fontSize: 18px;
+    fontSize: 14px;
     flex: 1;
 `;
 
@@ -18,7 +19,7 @@ const Body = styled.p`
     paddingLeft: 35px;
     -webkit-margin-before: 0px;
     color: ${props => props.color};
-    fontSize: 17px;
+    fontSize: 14px;
 `;
 
 const Flexbox = styled.div`
@@ -71,9 +72,9 @@ const PlusLine = styled.div`
     display: inline-block;
     position: absolute;
     backgroundColor: ${props => props.color};
-    height: 10px;
+    height: 8px;
     width: 2px;
-    top: 3px;
+    top: 4px;
     transitionDuration: 0.3s;
 
     ${props => (!props.vertical ? `
@@ -101,18 +102,9 @@ export default class ExpandingItemNano extends React.Component {
 
     handleClick() {
         this.setState(prevState => ({
-            expanded: !prevState.expanded
+            expanded: !prevState.expanded,
+            currentColor: this.state.expanded ? this.props.colorOff : this.props.colorOn
         }));
-        if(this.state.expanded){
-            this.setState({
-                currentColor: this.props.colorOff
-            });
-        }
-        else{
-            this.setState({
-                currentColor: this.props.colorOn
-            });
-        }
     }
 
     render() {
