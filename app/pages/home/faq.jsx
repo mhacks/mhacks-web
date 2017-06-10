@@ -5,20 +5,10 @@ import { ExpandingItem } from '../../components';
 
 const FaqSectionHeader = styled.h2`
     fontSize: 18px;
-    marginTop: 10px;
-    marginBottom: 5px;
-    color: ${props => props.theme.pink};
+    color: darkorange;
 `;
 
 const Section = styled.div`
-`;
-
-const ExpandingItemWrapper = styled.div`
-    display: block;
-    position: relative;
-    paddingRight: 30px;
-    clear: both;
-    width: 100%;
 `;
 
 const Link = styled.a`
@@ -26,17 +16,13 @@ const Link = styled.a`
     textDecoration: none;
 `;
 
-const FaqItem = connect(state => {
-    return { theme: state.theme.data };
-})(props => (
-    <ExpandingItemWrapper>
+const FaqItem = (props => (
         <ExpandingItem
             {...props}
-            plusColor={props.theme.pink}
-            headerColor="black"
-            bodyColor={props.theme.pink}
+            plusColor={props => props.expanded ? 'darkorange' : 'gray'}
+            headerColor='gray'
+            bodyColor={props => props.expanded ? 'darkorange' : 'gray'}
         />
-    </ExpandingItemWrapper>
 ));
 
 class Faq extends React.Component {
