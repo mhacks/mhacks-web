@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { routes } from '../constants';
 import { Container } from '../components';
 
@@ -41,14 +42,14 @@ const StyledNavLink = styled(NavLink)`
     fontSize: 20px;
     padding: 5px 35px;
     margin: 0px 15px;
-    border: 2px solid darkorange;
-    color: darkorange;
+    border: 2px solid ${props => props.primaryColor};
+    color: ${props => props.primaryColor};
     borderRadius: 5px;
     textDecoration: none;
     transition: all 0.3s;
 
     &:hover {
-        backgroundColor: darkorange;
+        backgroundColor: ${props => props.primaryColor};
         color: white;
     }
 
@@ -59,7 +60,7 @@ const StyledNavLink = styled(NavLink)`
 
 class Header extends React.Component {
     render() {
-        const { isLoggedIn, isApplied } = this.props;
+        const { isLoggedIn, isApplied } = this.props.authState.data;
 
         return (
             <Wrapper>
@@ -69,11 +70,21 @@ class Header extends React.Component {
                         <NavContainer>
                             {isApplied ?
                                 null :
-                                <StyledNavLink to={routes.REGISTER}>Register</StyledNavLink>
+                                <StyledNavLink
+                                    to={routes.REGISTER}
+                                    primaryColor={this.props.theme.primary}
+                                >
+                                Register
+                                </StyledNavLink>
                             }
                             {isLoggedIn ?
                                 null :
-                                <StyledNavLink to={routes.LOGIN}>Log In</StyledNavLink>
+                                <StyledNavLink
+                                    to={routes.LOGIN}
+                                    primaryColor={this.props.theme.primary}
+                                >
+                                Log In
+                                </StyledNavLink>
                             }
                         </NavContainer>
                     </FlexWrapper>
@@ -83,4 +94,12 @@ class Header extends React.Component {
     }
 }
 
-export default Header;
+
+function mapStateToProps(state) {
+    return {
+        authState: state.authState,
+        theme: state.theme.data
+    };
+}
+
+export default connect(mapStateToProps)(Header);
