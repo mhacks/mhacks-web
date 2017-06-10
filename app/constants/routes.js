@@ -4,6 +4,6 @@ export default {
     SUBSCRIBE: '/subscribe',
     LOGIN: '/login',
     LOGOUT: '/logout',
-    REGISTER: '/register',
+    APPLY: '/apply',
     PROFILE: '/profile'
 };

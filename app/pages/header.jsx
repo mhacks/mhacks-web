@@ -71,10 +71,10 @@ class Header extends React.Component {
                             {isApplied ?
                                 null :
                                 <StyledNavLink
-                                    to={routes.REGISTER}
+                                    to={routes.APPLY}
                                     primaryColor={this.props.theme.primary}
                                 >
-                                Register
+                                Apply
                                 </StyledNavLink>
                             }
                             {isLoggedIn ?
