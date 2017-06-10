@@ -19,7 +19,7 @@ const HomeFooter = styled.footer`
 `;
 
 const Text = styled.h2`
-    fontSize: 16px;
+    fontSize: 12px;
     marginBottom: 0;
     textAlign: left;
     flex: 1;
@@ -55,9 +55,9 @@ const Img100 = styled.img`
 `;
 
 const ImgButtonWrapper = styled.div`
-    height: 30px;
-    width: 30px;
-    margin: 10px;
+    height: 20px;
+    width: 20px;
+    margin: 5px;
     textAlign: center;
     display: block;
 `;
