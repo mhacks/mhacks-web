@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Container } from '../../components';
 import { devices } from '../../styles';
 
-const HeaderLogoImage = require('../../../static/icons/blackout-logo.png');
 const InstagramImg = require('../../../static/icons/instagram.png');
 const FacebookImg = require('../../../static/icons/facebook.png');
 const TwitterImg = require('../../../static/icons/twitter.png');
@@ -33,12 +32,6 @@ const Text = styled.h2`
         minWidth: 0;
         order: 0;
     `}
-`;
-
-const HeaderLogo = styled.img`
-    display: block;
-    margin: auto;
-    height: 90px;
 `;
 
 const Flexer = styled.div`
@@ -84,9 +77,6 @@ class BlackoutFooter extends React.Component {
                 <Footer>
                     <Text>© MHacks 2017</Text>
                     <Flexer>
-                        <HeaderLogo src={HeaderLogoImage} align="middle" />
-                    </Flexer>
-                    <Flexer right>
                         <ImgButton
                             src={FacebookImg}
                             alt="Facebook"
@@ -106,6 +96,7 @@ class BlackoutFooter extends React.Component {
                             href="https://twitter.com/mhacks"
                         />
                     </Flexer>
+                    <Flexer/>
                 </Footer>
             </Container>
         );
