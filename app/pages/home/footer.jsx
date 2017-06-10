@@ -19,6 +19,7 @@ const HomeFooter = styled.footer`
 `;
 
 const Text = styled.h2`
+    color: gray;
     fontSize: 12px;
     marginBottom: 0;
     textAlign: left;
