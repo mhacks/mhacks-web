@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 const Favicon = require('../../../static/blackout/favicon.png');
 
 import Faq from './faq.jsx';
+import Apply from './apply.jsx';
         
 import { SectionHeader, SectionBody } from './section_components.jsx';
 
@@ -91,6 +92,7 @@ class HomePage extends React.Component {
                                 <SidebarLink><a href="#section-about">About MHacks</a></SidebarLink>
                                 <SidebarLink><a href="#section-what-is-nano">MHacks Nano</a></SidebarLink>
                                 <SidebarLink><a href="#section-faq">FAQ</a></SidebarLink>
+                                <SidebarLink><a href="#section-apply">Apply</a></SidebarLink>
                             </SidebarLinks>
                         </nav>
                     </Sidebar>
@@ -109,6 +111,9 @@ class HomePage extends React.Component {
                         <div id="faq">
                             <SectionHeader>Frequently Asked Questions</SectionHeader>
                             <Faq />
+                        </div>
+                        <div id ="apply">
+                            <Apply />
                         </div>
                     </Content>
                 </Container>
