@@ -9,6 +9,13 @@ const FacebookImg = require('../../../static/icons/facebook.png');
 const TwitterImg = require('../../../static/icons/twitter.png');
 
 /* Footer Style */
+const FooterWrapper = styled.div`
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+`;
+
 const HomeFooter = styled.footer`
     position: relative;
     display: flex;
@@ -30,6 +37,7 @@ const Text = styled.h2`
 
     ${devices.tablet`
         textAlign: left;
+        textIndent: 50px;
         minWidth: 0;
         order: 0;
     `}
@@ -75,30 +83,32 @@ class Footer extends React.Component {
     render() {
         return (
             <Container>
-                <HomeFooter>
-                    <Text>© MHacks 2017</Text>
-                    <Flexer>
-                        <ImgButton
-                            src={FacebookImg}
-                            alt="Facebook"
-                            align="middle"
-                            href="https://www.facebook.com/MHacksHackathon"
-                        />
-                        <ImgButton
-                            src={InstagramImg}
-                            alt="Instagram"
-                            align="middle"
-                            href="https://www.instagram.com/mhacks_"
-                        />
-                        <ImgButton
-                            src={TwitterImg}
-                            alt="Twitter"
-                            align="middle"
-                            href="https://twitter.com/mhacks"
-                        />
-                    </Flexer>
-                    <Flexer/>
-                </HomeFooter>
+                <FooterWrapper>
+                    <HomeFooter>
+                        <Text>© MHacks 2017</Text>
+                        <Flexer>
+                            <ImgButton
+                                src={FacebookImg}
+                                alt="Facebook"
+                                align="middle"
+                                href="https://www.facebook.com/MHacksHackathon"
+                            />
+                            <ImgButton
+                                src={InstagramImg}
+                                alt="Instagram"
+                                align="middle"
+                                href="https://www.instagram.com/mhacks_"
+                            />
+                            <ImgButton
+                                src={TwitterImg}
+                                alt="Twitter"
+                                align="middle"
+                                href="https://twitter.com/mhacks"
+                            />
+                        </Flexer>
+                        <Flexer/>
+                    </HomeFooter>
+                </FooterWrapper>
             </Container>
         );
     }
