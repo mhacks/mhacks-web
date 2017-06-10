@@ -89,10 +89,10 @@ class HomePage extends React.Component {
                     <Sidebar>
                         <nav>
                             <SidebarLinks>
-                                <SidebarLink><a href="#section-about">About MHacks</a></SidebarLink>
-                                <SidebarLink><a href="#section-what-is-nano">MHacks Nano</a></SidebarLink>
-                                <SidebarLink><a href="#section-faq">FAQ</a></SidebarLink>
-                                <SidebarLink><a href="#section-apply">Apply</a></SidebarLink>
+                                <SidebarLink><a href="#about">About MHacks</a></SidebarLink>
+                                <SidebarLink><a href="#what-is-mhacks-nano">MHacks Nano</a></SidebarLink>
+                                <SidebarLink><a href="#faq">FAQ</a></SidebarLink>
+                                <SidebarLink><a href="#apply">Apply</a></SidebarLink>
                             </SidebarLinks>
                         </nav>
                     </Sidebar>
