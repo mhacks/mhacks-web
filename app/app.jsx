@@ -43,7 +43,7 @@ render(
                         component={Login}
                     />
                     <Route
-                        component={BlackoutPage}
+                        component={HomePage}
                     />
                 </Switch>
             </Navigator>

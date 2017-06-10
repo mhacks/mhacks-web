@@ -2,5 +2,8 @@
 export default {
     HOME: '/',
     SUBSCRIBE: '/subscribe',
-    LOGIN: '/login'
+    LOGIN: '/login',
+    LOGOUT: '/logout',
+    APPLY: '/apply',
+    PROFILE: '/profile'
 };
