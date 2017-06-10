@@ -63,6 +63,7 @@ const Slider = styled.div`
 const PlusWrapper = styled.div`
     position: relative;
     display: inline-block;
+    margin: 0;
     marginLeft: 10px;
     height: 15px;
     width: 15px;
