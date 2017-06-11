@@ -15,7 +15,10 @@ router.post('/', function(req, res) {
                     if (i === 'group_members') {
                         var addMembers = [];
                         if (Array.isArray(req.body.group_members)) {
-                            req.body.group_members.forEach(function(email, elem) {
+                            req.body.group_members.forEach(function(
+                                email,
+                                elem
+                            ) {
                                 if (elem < 4 && validator.isEmail(email)) {
                                     addMembers.push(email.toLowerCase());
                                 }
