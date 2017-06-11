@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { routes } from '../constants';
 import { Container } from '../components';
+import { devices } from '../styles';
 
 const HeaderLogoImage = require('../../static/icons/nano-logo.png');
 
@@ -26,8 +27,12 @@ const Wrapper = styled.div`
 const FlexWrapper = styled.div`
     display: flex;
     alignItems: center;
-    justifyContent: space-between;
+    justifyContent: center;
     height: 90%;
+
+    ${devices.tablet`
+        justifyContent: space-between;
+    `}
 `;
 
 const Logo = styled.img`
@@ -70,40 +75,42 @@ class Header extends React.Component {
                 <Container>
                     <FlexWrapper>
                         <NavLink to={routes.HOME}><Logo src={HeaderLogoImage} /></NavLink>
-                        <NavContainer>
-                            {isApplied ?
-                                null :
-                                <StyledNavLink
-                                    to={routes.APPLY}
-                                    primaryColor={this.props.theme.primary}
-                                >
-                                Apply
-                                </StyledNavLink>
-                            }
-                            {isLoggedIn ?
-                                <StyledNavLink
-                                    to={routes.PROFILE}
-                                    primaryColor={this.props.theme.primary}
-                                >
-                                Profile
-                                </StyledNavLink> :
-                                null
-                            }
-                            {isLoggedIn ?
-                                <StyledNavLink
-                                    to={routes.LOGOUT}
-                                    primaryColor={this.props.theme.primary}
-                                >
-                                Log Out
-                                </StyledNavLink> :
-                                <StyledNavLink
-                                    to={routes.LOGIN}
-                                    primaryColor={this.props.theme.primary}
-                                >
-                                Log In
-                                </StyledNavLink>
-                            }
-                        </NavContainer>
+                        {!this.props.showLinks ? null :
+                            <NavContainer>
+                                {isApplied ?
+                                    null :
+                                    <StyledNavLink
+                                        to={routes.APPLY}
+                                        primaryColor={this.props.theme.primary}
+                                    >
+                                    Apply
+                                    </StyledNavLink>
+                                }
+                                {isLoggedIn ?
+                                    <StyledNavLink
+                                        to={routes.PROFILE}
+                                        primaryColor={this.props.theme.primary}
+                                    >
+                                    Profile
+                                    </StyledNavLink> :
+                                    null
+                                }
+                                {isLoggedIn ?
+                                    <StyledNavLink
+                                        to={routes.LOGOUT}
+                                        primaryColor={this.props.theme.primary}
+                                    >
+                                    Log Out
+                                    </StyledNavLink> :
+                                    <StyledNavLink
+                                        to={routes.LOGIN}
+                                        primaryColor={this.props.theme.primary}
+                                    >
+                                    Log In
+                                    </StyledNavLink>
+                                }
+                            </NavContainer>
+                        }
                     </FlexWrapper>
                 </Container>
             </Wrapper>
