@@ -1,4 +1,5 @@
 var router = require('express').Router(),
+    validator = require('validator'),
     Email = require('../../interactors/email.js'),
     Responses = require('../../responses/api/email.js');
 
@@ -15,7 +16,7 @@ router.use(function(req, res, next) {
 
 // Handles /v1/email/subscribe
 router.post('/subscribe', function(req, res) {
-    if (req.body.email) {
+    if (req.body.email && validator.isEmail(req.body.email)) {
         Email.subscribe(req.body.email)
             .then(() => {
                 res.send({
