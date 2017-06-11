@@ -52,7 +52,11 @@ export default class ProfileThunks {
 
             const token = getState().userState.data.token;
 
-            return ProfileRequests.updateProfile(token, profile, files).then(response => {
+            return ProfileRequests.updateProfile(
+                token,
+                profile,
+                files
+            ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch(

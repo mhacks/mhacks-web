@@ -13,7 +13,6 @@ export default class ProfileRequests {
     }
 
     static updateProfile(token, body, files) {
-
         const formData = new FormData();
 
         if (files['resume']) {

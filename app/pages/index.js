@@ -6,12 +6,4 @@ import Logout from './logout.jsx';
 import Profile from './profile.jsx';
 import Apply from './apply.jsx';
 
-export {
-    Navigator,
-    HomePage,
-    BlackoutPage,
-    Login,
-    Logout,
-    Profile,
-    Apply
-};
+export { Navigator, HomePage, BlackoutPage, Login, Logout, Profile, Apply };
