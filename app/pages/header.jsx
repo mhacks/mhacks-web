@@ -10,14 +10,17 @@ const HeaderLogoImage = require('../../static/icons/nano-logo.png');
 /* Header Section */
 const Wrapper = styled.div`
     position: fixed;
-    top: 30px;
+    top: 0;
     left: 0;
     right: 0;
+    paddingTop: 30px
+    paddingBottom: 10px
 
     display: flex;
     height: 90px;
     alignItems: center;
     justifyContent: flex-start;
+    background: white;
 `;
 
 const FlexWrapper = styled.div`

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
+import { devices } from '../../styles';
 
 const Favicon = require('../../../static/blackout/favicon.png');
 
@@ -15,13 +16,28 @@ const sidebarWidth = 200;
 
 const Container = styled.div`
     display: flex;
-    height: ${props => props.height - contentHeight*2}px;
-    width: 60%;
+    height: 100%;
+    width: 80%;
     margin: ${contentHeight}px auto;
+
+    ${devices.tablet`
+        height: calc(100vh - ${contentHeight*2}px);
+    `}
+
+    ${devices.desktop`
+        width: 60%;
+        height: calc(100vh - ${contentHeight*2}px);
+    `}
+
 `;
 
 const Sidebar = styled.div`
+    display: None;
     width: ${sidebarWidth}px;
+
+    ${devices.tablet`
+        display: inline;
+    `}
 `;
 
 const SidebarLinks = styled.ul`
@@ -45,38 +61,19 @@ const SidebarLink = styled.li`
 `;
 
 const Content = styled.div`
-    width: calc(100% - ${sidebarWidth}px);
+    width: 100%;
     height: 100%;
-    overflowX: hidden;
-    overflowY: scroll;
+
+    ${devices.tablet`
+        width: calc(100% - ${sidebarWidth}px);
+        paddingRight: 50px;
+        overflowX: hidden;
+        overflowY: scroll;
+    `}
 `;
 
 /* Page Component */
 class HomePage extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = { width: '0', height: '0' };
-        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-    }
-
-    componentDidMount() {
-        this.updateWindowDimensions();
-
-        window.addEventListener('resize', this.updateWindowDimensions);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.updateWindowDimensions);
-    }
-
-    updateWindowDimensions() {
-        this.setState({
-            width: window.innerWidth,
-            height: window.innerHeight
-        });
-    }
-
     render() {
         return (
             <div>
@@ -86,7 +83,7 @@ class HomePage extends React.Component {
                     <link rel="icon" type="image/x-icon" href={Favicon} />
                 </Helmet>
 
-                <Container {...this.state}>
+                <Container>
                     <Sidebar>
                         <nav>
                             <SidebarLinks>

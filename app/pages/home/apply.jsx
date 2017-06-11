@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { routes } from '../../constants';
+import { devices } from '../../styles';
+
 import { NavLink } from 'react-router-dom';
 import { SectionHeader, SectionBody } from './section_components.jsx';
 
@@ -25,18 +27,28 @@ const StyledNavLink = styled(NavLink)`
     }
 `;
 
+const StyledNavLinkWrapper = styled.div`
+    textAlign: center;
+
+    ${devices.tablet`
+        textAlign: left;
+    `}
+`;
+
 class Apply extends React.Component {
     render() {
         return (
             <div>
                 <SectionHeader>Apply</SectionHeader>
                 <SectionBody>Apply to MHacks Nano! We will just ask you a couple questions about yourself, your hackathon experiences and allow you to form a team.</SectionBody>
-                <StyledNavLink
-                    to={routes.LOGIN}
-                    primaryColor={this.props.theme.primary}
-                >
-                Log In
-                </StyledNavLink>
+                <StyledNavLinkWrapper>
+                    <StyledNavLink
+                        to={routes.LOGIN}
+                        primaryColor={this.props.theme.primary}
+                    >
+                    Log In
+                    </StyledNavLink>
+                </StyledNavLinkWrapper>
             </div>
         );
     }
