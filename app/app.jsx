@@ -1,24 +1,34 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { render } from 'react-dom';
 
-import { Route, Switch } from 'react-router';
+import { Route, Switch, Redirect } from 'react-router';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 
-import { createStore, applyMiddleware } from 'redux';
+import { compose, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { persistStore, autoRehydrate } from 'redux-persist';
 import thunkMiddleware from 'redux-thunk';
 
 import reducers from './reducers';
 import { routes } from './constants';
-import { Navigator, BlackoutPage, HomePage, Login } from './pages';
+import { Navigator, HomePage, Login, Logout, Profile } from './pages';
 
 /* uncomment to view redux logs in console */
 // import logger from 'redux-logger'
 
 const history = createHistory();
 const middleware = routerMiddleware(history);
-let store = applyMiddleware(thunkMiddleware, middleware)(createStore)(reducers);
+const store = createStore(
+    reducers,
+    undefined,
+    compose(
+        applyMiddleware(thunkMiddleware, middleware),
+        autoRehydrate()
+    )
+);
+
+persistStore(store);
 
 window.s = store;
 
@@ -34,13 +44,32 @@ render(
                     />
                     <Route
                         exact
-                        path={routes.SUBSCRIBE}
-                        component={BlackoutPage}
+                        path={routes.LOGIN}
+                        render={() => {
+                            if (store.getState().userState.data.isLoggedIn) {
+                                return <Redirect to={routes.PROFILE} />;
+                            }
+
+                            return <Login />;
+                        }}
                     />
                     <Route
                         exact
-                        path={routes.LOGIN}
-                        component={Login}
+                        path={routes.LOGOUT}
+                        render={() => {
+                            return <Logout />;
+                        }}
+                    />
+                    <Route
+                        exact
+                        path={routes.PROFILE}
+                        render={() => {
+                            if (store.getState().userState.data.isLoggedIn) {
+                                return <Profile />;
+                            }
+
+                            return <Redirect to={routes.LOGIN} />;
+                        }}
                     />
                     <Route
                         component={HomePage}

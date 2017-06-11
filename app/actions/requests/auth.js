@@ -21,4 +21,10 @@ export default class AuthRequests {
             body: JSON.stringify(body)
         });
     }
+
+    static logout() {
+        return fetch(endpoints.LOGOUT, {
+            method: 'post'
+        });
+    }
 }
