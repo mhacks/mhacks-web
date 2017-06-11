@@ -91,6 +91,7 @@ router.get('/profile', function(req, res) {
                 status: true,
                 user: {
                     email: user.email,
+                    email_verified: user.email_verified,
                     full_name: user.full_name,
                     birthday: user.birthday,
                     groups: groups,

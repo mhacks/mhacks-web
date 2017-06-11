@@ -5,20 +5,30 @@ import { Route, Switch } from 'react-router';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 
-import { createStore, applyMiddleware } from 'redux';
+import { compose, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { persistStore, autoRehydrate } from 'redux-persist';
 import thunkMiddleware from 'redux-thunk';
 
 import reducers from './reducers';
 import { routes } from './constants';
-import { Navigator, BlackoutPage, HomePage, Login } from './pages';
+import { Navigator, HomePage } from './pages';
 
 /* uncomment to view redux logs in console */
 // import logger from 'redux-logger'
 
 const history = createHistory();
 const middleware = routerMiddleware(history);
-let store = applyMiddleware(thunkMiddleware, middleware)(createStore)(reducers);
+const store = createStore(
+    reducers,
+    undefined,
+    compose(
+        applyMiddleware(thunkMiddleware, middleware),
+        autoRehydrate()
+    )
+);
+
+persistStore(store);
 
 window.s = store;
 
@@ -31,16 +41,6 @@ render(
                         exact
                         path={routes.HOME}
                         component={HomePage}
-                    />
-                    <Route
-                        exact
-                        path={routes.SUBSCRIBE}
-                        component={BlackoutPage}
-                    />
-                    <Route
-                        exact
-                        path={routes.LOGIN}
-                        component={Login}
                     />
                     <Route
                         component={HomePage}
