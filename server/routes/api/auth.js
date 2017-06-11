@@ -151,8 +151,7 @@ router.get('/verify/:token', function(req, res) {
                     });
             }
         })
-        .catch(() => {
-        });
+        .catch(() => {});
     res.redirect('/profile');
 });
 
