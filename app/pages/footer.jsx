@@ -10,10 +10,12 @@ const TwitterImg = require('../../static/icons/twitter.png');
 
 /* Footer Style */
 const FooterWrapper = styled.div`
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    ${devices.tablet`
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    `}
 `;
 
 const HomeFooter = styled.footer`

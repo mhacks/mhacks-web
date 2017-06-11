@@ -16,12 +16,17 @@ const sidebarWidth = 200;
 
 const Container = styled.div`
     display: flex;
-    height: calc(100vh - ${contentHeight*2}px);
+    height: 100%;
     width: 80%;
     margin: ${contentHeight}px auto;
 
+    ${devices.tablet`
+        height: calc(100vh - ${contentHeight*2}px);
+    `}
+
     ${devices.desktop`
         width: 60%;
+        height: calc(100vh - ${contentHeight*2}px);
     `}
 
 `;
@@ -58,12 +63,12 @@ const SidebarLink = styled.li`
 const Content = styled.div`
     width: 100%;
     height: 100%;
-    overflowX: hidden;
-    overflowY: scroll;
-    paddingRight: 50px;
 
     ${devices.tablet`
         width: calc(100% - ${sidebarWidth}px);
+        paddingRight: 50px;
+        overflowX: hidden;
+        overflowY: scroll;
     `}
 `;
 
@@ -78,7 +83,7 @@ class HomePage extends React.Component {
                     <link rel="icon" type="image/x-icon" href={Favicon} />
                 </Helmet>
 
-                <Container {...this.state}>
+                <Container>
                     <Sidebar>
                         <nav>
                             <SidebarLinks>
