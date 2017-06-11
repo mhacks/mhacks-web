@@ -15,8 +15,8 @@ const Wrapper = styled.div`
     left: 0;
     right: 0;
     paddingTop: 30px
-    paddingBottom: 10px
-    zIndex: 1;
+    paddingBottom: 30px
+    zIndex: 100;
 
     display: flex;
     height: 90px;
