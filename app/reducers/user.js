@@ -63,11 +63,40 @@ export function userState(state = initialUserState, action) {
                 fetched: true,
                 data: {
                     ...state.data,
-                    user: action.data
+                    ...action.data
                 },
                 message: action.message
             };
 
+        case reduxActions.UPDATE_PROFILE_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+                fetched: false,
+                error: null
+            };
+
+        case reduxActions.UPDATE_PROFILE_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                fetched: false,
+                error: action.error,
+                message: action.message
+            };
+
+        case reduxActions.UPDATE_PROFILE_SUCCESS:
+            console.log('update suck', action);
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data
+                },
+                message: action.message
+            };
         default:
             return state;
     }

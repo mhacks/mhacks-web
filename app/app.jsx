@@ -46,7 +46,9 @@ render(
                         exact
                         path={routes.LOGIN}
                         render={() => {
-                            if (store.getState().userState.data.isLoggedIn) {
+                            const userData = store.getState().userState.data;
+
+                            if (userData.isLoggedIn) {
                                 return <Redirect to={routes.PROFILE} />;
                             }
 
@@ -64,8 +66,27 @@ render(
                         exact
                         path={routes.PROFILE}
                         render={() => {
-                            if (store.getState().userState.data.isLoggedIn) {
+                            const userData = store.getState().userState.data;
+
+                            if (userData.isLoggedIn) {
                                 return <Profile />;
+                            }
+
+                            return <Redirect to={routes.LOGIN} />;
+                        }}
+                    />
+                    <Route
+                        exact
+                        path={routes.APPLY}
+                        render={() => {
+                            const userData = store.getState().userState.data;
+
+                            if (userData.isLoggedIn && userData.isEmailVerified) {
+                                return <HomePage />;
+                            }
+
+                            if (userData.isLoggedIn && !userData.isEmailVerified) {
+                                return <Redirect to={routes.PROFILE} />;
                             }
 
                             return <Redirect to={routes.LOGIN} />;

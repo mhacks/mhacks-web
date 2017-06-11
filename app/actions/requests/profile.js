@@ -11,4 +11,17 @@ export default class ProfileRequests {
             })
         });
     }
+
+    static updateProfile(token, body) {
+
+        console.log('updating', body);
+        return fetch(endpoints.PROFILE, {
+            method: 'post',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token
+            }),
+            body: JSON.stringify(body)
+        });
+    }
 }

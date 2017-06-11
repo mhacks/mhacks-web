@@ -52,13 +52,15 @@ const FileUploadContainer = styled.div`
 `;
 
 class Profile extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+
+        const userData = this.props.userState.data.user;
 
         this.state = {
-            birthday: '',
-            university: '',
-            focus: ''
+            birthday: userData.birthday ? new Date(userData.birthday).toISOString().split('T')[0] : '',
+            university: userData.university || '',
+            major: userData.major || ''
         };
 
         this.onSubmit = this.onSubmit.bind(this);
@@ -87,7 +89,24 @@ class Profile extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
-        console.log('save profile');
+        const userData = this.props.userState.data.user;
+        var profile = {};
+
+        const inputBirthday = new Date(this.state.birthday);
+
+        if (inputBirthday && inputBirthday !== userData.birthday) {
+            profile.birthday = inputBirthday;
+        }
+
+        if (this.state.major !== userData.major) {
+            profile.major = this.state.major;
+        }
+
+        if (this.state.university !== userData.university) {
+            profile.university = this.state.university;
+        }
+
+        this.props.dispatch(ProfileThunks.updateProfile(profile));
     }
 
     render() {
@@ -95,11 +114,11 @@ class Profile extends React.Component {
             <Page>
                 <FormContainer>
                     <SectionHeader color={this.props.theme.primary}>
-                        {this.props.userState.data.user.isEmailVerified ? 'Profile' : 'Unverified Email'}
+                        {this.props.userState.data.isEmailVerified ? 'Profile' : 'Unverified Email'}
                     </SectionHeader>
-                    {this.props.userState.data.user.isEmailVerified ?
-
+                    {this.props.userState.data.isEmailVerified ?
                         <form onSubmit={this.onSubmit}>
+                            <p>Update your profile with some info about yourself. This will be automatically populated into your application and persist through hackathons!</p>
                             <Flexer>
                                 <InputContainer>
                                     <Input
@@ -119,11 +138,11 @@ class Profile extends React.Component {
                                         onChange={this.handleAttributeChange}
                                     />
                                     <Input
-                                        id="focus"
+                                        id="major"
                                         type="text"
-                                        name="focus"
+                                        name="major"
                                         placeholder="Underwater Basket Weaving"
-                                        value={this.state.focus}
+                                        value={this.state.major}
                                         onChange={this.handleAttributeChange}
                                     />
                                     <FileUploadContainer>

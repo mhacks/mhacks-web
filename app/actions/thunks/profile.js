@@ -16,11 +16,13 @@ export default class ProfileThunks {
                         dispatch(
                             ProfilePureActions.loadProfileSuccess(
                                 {
-                                    name: user.full_name,
-                                    birthday: user.birthday,
-                                    email: user.email,
                                     isEmailVerified: user.email_verified,
-                                    groups: user.groups
+                                    user: {
+                                        name: user.full_name,
+                                        birthday: user.birthday,
+                                        email: user.email,
+                                        groups: user.groups
+                                    }
                                 },
                                 json.message
                             )
@@ -31,6 +33,39 @@ export default class ProfileThunks {
                         dispatch(
                             ProfilePureActions.loadProfileError(
                                 token,
+                                response.status,
+                                json.message
+                            )
+                        );
+                    });
+                }
+            });
+        };
+    }
+
+    static updateProfile(profile) {
+        return (dispatch, getState) => {
+            console.log(profile);
+            dispatch(ProfilePureActions.updateProfileRequest(profile));
+
+            const token = getState().userState.data.token;
+
+            return ProfileRequests.updateProfile(token, profile).then(response => {
+                if (response.status == 200) {
+                    response.json().then(json => {
+                        dispatch(
+                            ProfilePureActions.updateProfileSuccess(
+                                {
+                                    user: profile
+                                },
+                                json.message
+                            )
+                        );
+                    });
+                } else {
+                    response.json().then(json => {
+                        dispatch(
+                            ProfilePureActions.updateProfileError(
                                 response.status,
                                 json.message
                             )

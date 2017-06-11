@@ -33,4 +33,10 @@ router.get('/profile', function(req, res) {
         });
 });
 
+router.post('/profile', function(req, res) {
+    res.send({
+        status: true
+    });
+});
+
 module.exports = router;

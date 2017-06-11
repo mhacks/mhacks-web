@@ -24,11 +24,11 @@ const initialUserState = {
     error: null,
     data: {
         isLoggedIn: false,
+        isEmailVerified: false,
+        isApplied: false,
         token: null,
         email: null,
-        user: {
-            isEmailVerified: false
-        }
+        user: {}
     }
 };
 
