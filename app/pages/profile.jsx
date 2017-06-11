@@ -135,6 +135,12 @@ class Profile extends React.Component {
                     </SectionHeader>
                     {this.props.userState.data.isEmailVerified ?
                         <form onSubmit={this.onSubmit}>
+                            {this.props.userState.error ?
+                                <AlertContainer>
+                                    <Alert message={this.props.userState.message} />
+                                </AlertContainer> :
+                                null
+                            }
                             <p>Update your profile with some info about yourself. This will be automatically populated into your application and persist through hackathons!</p>
                             <Flexer>
                                 <InputContainer>
