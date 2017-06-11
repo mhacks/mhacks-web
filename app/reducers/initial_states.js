@@ -18,4 +18,18 @@ const objectState = {
     data: {}
 };
 
-export { defaultState, arrayState, objectState };
+const initialUserState = {
+    fetching: false,
+    fetched: false,
+    error: null,
+    data: {
+        isLoggedIn: false,
+        token: null,
+        email: null,
+        user: {
+            isEmailVerified: false
+        }
+    }
+};
+
+export { defaultState, arrayState, objectState, initialUserState };

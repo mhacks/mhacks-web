@@ -39,9 +39,9 @@ const NavContainer = styled.div`
 `;
 
 const StyledNavLink = styled(NavLink)`
-    fontSize: 20px;
-    padding: 5px 35px;
-    margin: 0px 15px;
+    fontSize: 18px;
+    padding: 5px 25px;
+    marginLeft: 15px;
     border: 2px solid ${props => props.primaryColor};
     color: ${props => props.primaryColor};
     borderRadius: 5px;
@@ -53,14 +53,14 @@ const StyledNavLink = styled(NavLink)`
         color: white;
     }
 
-    &:last-child {
+    &:first-child {
         margin: 0;
     }
 `;
 
 class Header extends React.Component {
     render() {
-        const { isLoggedIn, isApplied } = this.props.authState.data;
+        const { isLoggedIn, isApplied } = this.props.userState.data;
 
         return (
             <Wrapper>
@@ -76,6 +76,15 @@ class Header extends React.Component {
                                 >
                                 Apply
                                 </StyledNavLink>
+                            }
+                            {isLoggedIn ?
+                                <StyledNavLink
+                                    to={routes.PROFILE}
+                                    primaryColor={this.props.theme.primary}
+                                >
+                                Profile
+                                </StyledNavLink> :
+                                null
                             }
                             {isLoggedIn ?
                                 <StyledNavLink
@@ -102,7 +111,7 @@ class Header extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        authState: state.authState,
+        userState: state.userState,
         theme: state.theme.data
     };
 }

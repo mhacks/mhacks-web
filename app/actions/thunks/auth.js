@@ -72,4 +72,27 @@ export default class AuthThunks {
             });
         };
     }
+
+    static logout() {
+        return dispatch => {
+            dispatch(AuthPureActions.logoutRequest());
+
+            return AuthRequests.logout().then(response => {
+                if (response.status == 200) {
+                    response.json().then(json => {
+                        dispatch(AuthPureActions.logoutSuccess(json.message));
+                    });
+                } else {
+                    response.json().then(json => {
+                        dispatch(
+                            AuthPureActions.logoutError(
+                                response.status,
+                                json.message
+                            )
+                        );
+                    });
+                }
+            });
+        };
+    }
 }
