@@ -111,7 +111,7 @@ router.get('/profile', function(req, res) {
                     birthday: user.birthday,
                     groups: groups,
                     avatar: [
-                        user.avatar,
+                        config.host + '/v1/artifact/avatar/' + user.email,
                         'https://www.gravatar.com/avatar/' +
                             crypto
                                 .createHash('md5')

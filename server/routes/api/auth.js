@@ -145,25 +145,15 @@ router.get('/verify/:token', function(req, res) {
                     .checkEmailVerificationToken(req.params.token)
                     .then(() => {
                         user.verifiedEmail();
-
-                        res.send({
-                            status: true
-                        });
                     })
                     .catch(err => {
                         console.error(err);
-
-                        res.send({
-                            status: false
-                        });
                     });
             }
         })
         .catch(() => {
-            res.send({
-                status: false
-            });
         });
+    res.redirect('/profile');
 });
 
 router.post('/passwordreset', function(req, res) {
