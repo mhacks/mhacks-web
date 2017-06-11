@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { render } from 'react-dom';
 
-import { Route, Switch } from 'react-router';
+import { Route, Switch, Redirect } from 'react-router';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 
@@ -12,7 +12,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import reducers from './reducers';
 import { routes } from './constants';
-import { Navigator, HomePage } from './pages';
+import { Navigator, HomePage, Login, Logout, Profile } from './pages';
 
 /* uncomment to view redux logs in console */
 // import logger from 'redux-logger'
@@ -41,6 +41,35 @@ render(
                         exact
                         path={routes.HOME}
                         component={HomePage}
+                    />
+                    <Route
+                        exact
+                        path={routes.LOGIN}
+                        render={() => {
+                            if (store.getState().userState.data.isLoggedIn) {
+                                return <Redirect to={routes.PROFILE} />;
+                            }
+
+                            return <Login />;
+                        }}
+                    />
+                    <Route
+                        exact
+                        path={routes.LOGOUT}
+                        render={() => {
+                            return <Logout />;
+                        }}
+                    />
+                    <Route
+                        exact
+                        path={routes.PROFILE}
+                        render={() => {
+                            if (store.getState().userState.data.isLoggedIn) {
+                                return <Profile />;
+                            }
+
+                            return <Redirect to={routes.LOGIN} />;
+                        }}
                     />
                     <Route
                         component={HomePage}

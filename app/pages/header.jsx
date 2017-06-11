@@ -75,42 +75,40 @@ class Header extends React.Component {
                 <Container>
                     <FlexWrapper>
                         <NavLink to={routes.HOME}><Logo src={HeaderLogoImage} /></NavLink>
-                        {!this.props.showLinks ? null :
-                            <NavContainer>
-                                {isApplied ?
-                                    null :
-                                    <StyledNavLink
-                                        to={routes.APPLY}
-                                        primaryColor={this.props.theme.primary}
-                                    >
-                                    Apply
-                                    </StyledNavLink>
-                                }
-                                {isLoggedIn ?
-                                    <StyledNavLink
-                                        to={routes.PROFILE}
-                                        primaryColor={this.props.theme.primary}
-                                    >
-                                    Profile
-                                    </StyledNavLink> :
-                                    null
-                                }
-                                {isLoggedIn ?
-                                    <StyledNavLink
-                                        to={routes.LOGOUT}
-                                        primaryColor={this.props.theme.primary}
-                                    >
-                                    Log Out
-                                    </StyledNavLink> :
-                                    <StyledNavLink
-                                        to={routes.LOGIN}
-                                        primaryColor={this.props.theme.primary}
-                                    >
-                                    Log In
-                                    </StyledNavLink>
-                                }
-                            </NavContainer>
-                        }
+                        <NavContainer>
+                            {isApplied ?
+                                null :
+                                <StyledNavLink
+                                    to={routes.APPLY}
+                                    primaryColor={this.props.theme.primary}
+                                >
+                                Apply
+                                </StyledNavLink>
+                            }
+                            {isLoggedIn ?
+                                <StyledNavLink
+                                    to={routes.PROFILE}
+                                    primaryColor={this.props.theme.primary}
+                                >
+                                Profile
+                                </StyledNavLink> :
+                                null
+                            }
+                            {isLoggedIn ?
+                                <StyledNavLink
+                                    to={routes.LOGOUT}
+                                    primaryColor={this.props.theme.primary}
+                                >
+                                Log Out
+                                </StyledNavLink> :
+                                <StyledNavLink
+                                    to={routes.LOGIN}
+                                    primaryColor={this.props.theme.primary}
+                                >
+                                Log In
+                                </StyledNavLink>
+                            }
+                        </NavContainer>
                     </FlexWrapper>
                 </Container>
             </Wrapper>
