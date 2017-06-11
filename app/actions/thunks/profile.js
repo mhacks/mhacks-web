@@ -6,17 +6,21 @@ export default class ProfileThunks {
         return (dispatch, getState) => {
             dispatch(ProfilePureActions.loadProfileRequest());
 
-            const token = getState().authState.data.token;
+            const token = getState().userState.data.token;
 
             return ProfileRequests.loadProfile(token).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
+                        const { user } = json;
+
                         dispatch(
                             ProfilePureActions.loadProfileSuccess(
                                 {
-                                    name: json.full_name,
-                                    birthday: json.birthday,
-                                    email: json.email
+                                    name: user.full_name,
+                                    birthday: user.birthday,
+                                    email: user.email,
+                                    isEmailVerified: user.email_verified,
+                                    groups: user.groups
                                 },
                                 json.message
                             )

@@ -60,7 +60,7 @@ const StyledNavLink = styled(NavLink)`
 
 class Header extends React.Component {
     render() {
-        const { isLoggedIn, isApplied } = this.props.authState.data;
+        const { isLoggedIn, isApplied } = this.props.userState.data;
 
         return (
             <Wrapper>
@@ -111,7 +111,7 @@ class Header extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        authState: state.authState,
+        userState: state.userState,
         theme: state.theme.data
     };
 }

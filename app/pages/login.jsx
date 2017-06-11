@@ -57,8 +57,7 @@ class Login extends React.Component {
     }
 
     componentWillUpdate(nextProps) {
-        if (nextProps.authState.data.isLoggedIn) {
-            console.log(this.context)
+        if (nextProps.userState.data.isLoggedIn) {
             this.context.router.history.replace(routes.PROFILE);
         }
     }
@@ -164,7 +163,7 @@ Login.contextTypes = {
 
 function mapStateToProps(state) {
     return {
-        authState: state.authState,
+        userState: state.userState,
         theme: state.theme.data
     };
 }

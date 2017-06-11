@@ -75,20 +75,13 @@ export default class AuthThunks {
 
     static logout() {
         return dispatch => {
-            dispatch(AuthPureActions.logoutRequest({
-                isLoggedIn: false
-            }));
+            dispatch(AuthPureActions.logoutRequest());
 
             return AuthRequests.logout().then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch(
                             AuthPureActions.logoutSuccess(
-                                {
-                                    email: null,
-                                    token: null,
-                                    isLoggedIn: false
-                                },
                                 json.message
                             )
                         );
@@ -97,9 +90,6 @@ export default class AuthThunks {
                     response.json().then(json => {
                         dispatch(
                             AuthPureActions.logoutError(
-                                {
-                                    isLoggedIn: false
-                                },
                                 response.status,
                                 json.message
                             )

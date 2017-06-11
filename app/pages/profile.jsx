@@ -94,53 +94,59 @@ class Profile extends React.Component {
         return (
             <Page>
                 <FormContainer>
-                    <SectionHeader color={this.props.theme.primary}>Profile</SectionHeader>
-                    <form onSubmit={this.onSubmit}>
-                        <Flexer>
-                            <InputContainer>
-                                <Input
-                                    id="birthday"
-                                    type="date"
-                                    name="birthday"
-                                    placeholder="01/01/1970"
-                                    value={this.state.birthday}
-                                    onChange={this.handleAttributeChange}
-                                />
-                                <Input
-                                    id="university"
-                                    type="text"
-                                    name="university"
-                                    placeholder="University of Michigan"
-                                    value={this.state.university}
-                                    onChange={this.handleAttributeChange}
-                                />
-                                <Input
-                                    id="focus"
-                                    type="text"
-                                    name="focus"
-                                    placeholder="Underwater Basket Weaving"
-                                    value={this.state.focus}
-                                    onChange={this.handleAttributeChange}
-                                />
-                                <FileUploadContainer>
-                                    <FileUpload
-                                        defaultColor={this.props.theme.primary}
-                                        hoverColor={this.props.theme.secondary}
-                                        activeColor={this.props.theme.success}
-                                        onFileSelect={this.handleFileUpload}
+                    <SectionHeader color={this.props.theme.primary}>
+                        {this.props.userState.data.user.isEmailVerified ? 'Profile' : 'Unverified Email'}
+                    </SectionHeader>
+                    {this.props.userState.data.user.isEmailVerified ?
+
+                        <form onSubmit={this.onSubmit}>
+                            <Flexer>
+                                <InputContainer>
+                                    <Input
+                                        id="birthday"
+                                        type="date"
+                                        name="birthday"
+                                        placeholder="01/01/1970"
+                                        value={this.state.birthday}
+                                        onChange={this.handleAttributeChange}
                                     />
-                                </FileUploadContainer>
-                            </InputContainer>
-                            <ButtonGroup>
-                                <RoundedButton
-                                    type="submit"
-                                    color={this.props.theme.primary}
-                                >
-                                Save
-                                </RoundedButton>
-                            </ButtonGroup>
-                        </Flexer>
-                    </form>
+                                    <Input
+                                        id="university"
+                                        type="text"
+                                        name="university"
+                                        placeholder="University of Michigan"
+                                        value={this.state.university}
+                                        onChange={this.handleAttributeChange}
+                                    />
+                                    <Input
+                                        id="focus"
+                                        type="text"
+                                        name="focus"
+                                        placeholder="Underwater Basket Weaving"
+                                        value={this.state.focus}
+                                        onChange={this.handleAttributeChange}
+                                    />
+                                    <FileUploadContainer>
+                                        <FileUpload
+                                            defaultColor={this.props.theme.primary}
+                                            hoverColor={this.props.theme.secondary}
+                                            activeColor={this.props.theme.success}
+                                            onFileSelect={this.handleFileUpload}
+                                        />
+                                    </FileUploadContainer>
+                                </InputContainer>
+                                <ButtonGroup>
+                                    <RoundedButton
+                                        type="submit"
+                                        color={this.props.theme.primary}
+                                    >
+                                    Save
+                                    </RoundedButton>
+                                </ButtonGroup>
+                            </Flexer>
+                        </form> :
+                        <p>You should receive a verification email at {this.props.userState.data.email}. After you verify your email you can continue setting up your profile!</p>
+                    }
                 </FormContainer>
             </Page>
         );
@@ -149,7 +155,7 @@ class Profile extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        authState: state.authState,
+        userState: state.userState,
         theme: state.theme.data
     };
 }

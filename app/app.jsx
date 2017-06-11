@@ -28,11 +28,7 @@ const store = createStore(
     )
 );
 
-persistStore(store, {
-    whitelist: [
-        'authState'
-    ]
-});
+persistStore(store);
 
 window.s = store;
 
@@ -50,7 +46,7 @@ render(
                         exact
                         path={routes.LOGIN}
                         render={() => {
-                            if (store.getState().authState.data.isLoggedIn) {
+                            if (store.getState().userState.data.isLoggedIn) {
                                 return <Redirect to={routes.PROFILE} />;
                             }
 
@@ -68,7 +64,7 @@ render(
                         exact
                         path={routes.PROFILE}
                         render={() => {
-                            if (store.getState().authState.data.isLoggedIn) {
+                            if (store.getState().userState.data.isLoggedIn) {
                                 return <Profile />;
                             }
 

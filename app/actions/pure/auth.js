@@ -49,27 +49,23 @@ export default class AuthPureActions {
         };
     }
 
-    static logoutRequest(data) {
-        console.log('pure', data);
+    static logoutRequest() {
         return {
-            type: reduxActions.LOGOUT_REQUEST,
-            data
+            type: reduxActions.LOGOUT_REQUEST
         }
     }
 
-    static logoutError(data, error, message) {
+    static logoutError(error, message) {
         return {
             type: reduxActions.LOGOUT_ERROR,
-            data,
             error,
             message
         };
     }
 
-    static logoutSuccess(data, message) {
+    static logoutSuccess(message) {
         return {
             type: reduxActions.LOGOUT_SUCCESS,
-            data,
             message
         };
     }
