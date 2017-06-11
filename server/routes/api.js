@@ -8,7 +8,7 @@ var router = require('express').Router(),
 
 router.use('/auth', authHandler);
 router.use('/email', emailHandler);
-router.use('/user', authMiddleware('any', 'api'), userHandler);
+router.use('/user', authMiddleware('any', 'api', false), userHandler);
 router.use('/application', authMiddleware('any', 'api'), applicationHandler);
 router.use('/deploy', deployHandler);
 

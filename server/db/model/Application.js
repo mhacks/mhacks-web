@@ -6,24 +6,30 @@ var mongoose = require('../index.js'),
 // Define the document Schema
 var schema = new mongoose.Schema({
     user: String,
-    hackathon_count: Integer,
+    hackathon_count: Number,
     group_members: [
         {
             email: String
         }
-    ],
+    ]
 });
 
 // Allow us to query by token
 schema.query.byToken = function(findToken) {
     return Promise(function(resolve, reject) {
-        User.find().byToken(findToken).exec().then(user => {
-            resolve(this.findOne({
-                user: user.email
-            }));
-        }).catch(() => {
-            reject();
-        });
+        User.find()
+            .byToken(findToken)
+            .exec()
+            .then(user => {
+                resolve(
+                    this.findOne({
+                        user: user.email
+                    })
+                );
+            })
+            .catch(() => {
+                reject();
+            });
     });
 };
 
@@ -59,7 +65,7 @@ schema.methods.updateFields = function(fields) {
         }
     }
     this.save();
-}
+};
 
 // Initialize the model with the schema, and export it
 var model = mongoose.model('Application', schema);

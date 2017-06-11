@@ -352,7 +352,7 @@ schema.methods.updateFields = function(fields) {
         }
     }
     this.save();
-}
+};
 
 // Password middleware to update passwords with bcrypt when needed
 var passwordMiddleware = function(next) {

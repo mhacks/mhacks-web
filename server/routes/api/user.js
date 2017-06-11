@@ -1,16 +1,28 @@
 var router = require('express').Router(),
     validator = require('validator'),
     Responses = require('../../responses/api'),
+    crypto = require('crypto'),
+    authMiddleware = require('../../middleware/auth.js'),
     User = require('../../db/model/User.js');
 
-router.post('/profile', function(req, res) {
+router.post('/profile', authMiddleware('any', 'api', true), function(req, res) {
     User.find()
         .byToken(req.authToken)
         .exec()
         .then(user => {
-            var updateable_fields = ['full_name', 'email', 'password', 'profile_picture', 'birthday', 'university', 'major', 'resume'];
+            var updateable_fields = [
+                'full_name',
+                'email',
+                'password',
+                'profile_picture',
+                'birthday',
+                'university',
+                'major',
+                'resume'
+            ];
             var fields = {};
             var sendVerificationEmail = false;
+            var sendPasswordChangedEmail = false;
 
             // Add handlers for s3 upload of profile picture and resume
 
@@ -20,6 +32,18 @@ router.post('/profile', function(req, res) {
                         continue;
                     } else {
                         sendVerificationEmail = true;
+                        req.body.email = req.body.email;
+                    }
+                }
+
+                if (i === 'password') {
+                    if (
+                        req.body.current_password &&
+                        user.checkPassword(req.body.current_password)
+                    ) {
+                        sendPasswordChangedEmail = true;
+                    } else {
+                        continue;
                     }
                 }
 
@@ -32,6 +56,10 @@ router.post('/profile', function(req, res) {
 
             if (sendVerificationEmail) {
                 user.sendVerificationEmail();
+            }
+
+            if (sendPasswordChangedEmail) {
+                //TODO do stuff
             }
 
             res.send({
@@ -65,7 +93,20 @@ router.get('/profile', function(req, res) {
                     email: user.email,
                     full_name: user.full_name,
                     birthday: user.birthday,
-                    groups: groups
+                    groups: groups,
+                    profile_picture: [
+                        user.profile_picture,
+                        'https://www.gravatar.com/avatar/' +
+                            crypto
+                                .createHash('md5')
+                                .update(user.email)
+                                .digest('hex') +
+                            '?d=404',
+                        'https://api-avatar.trove.com/v1/avatar/' +
+                            user.email +
+                            '?fallback=true'
+                    ],
+                    email_verified: user.email_verified
                 }
             });
         })
