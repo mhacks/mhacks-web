@@ -106,8 +106,7 @@ router.get('/profile', function(req, res) {
                         'https://api-avatar.trove.com/v1/avatar/' +
                             user.email +
                             '?fallback=true'
-                    ],
-                    email_verified: user.email_verified
+                    ]
                 }
             });
         })
