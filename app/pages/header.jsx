@@ -4,6 +4,8 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { routes } from '../constants';
 import { Container } from '../components';
+import { devices } from '../styles';
+
 
 const HeaderLogoImage = require('../../static/icons/nano-logo.png');
 
@@ -22,6 +24,8 @@ const Wrapper = styled.div`
 
 const FlexWrapper = styled.div`
     display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
     alignItems: center;
     justifyContent: space-between;
     height: 90%;
@@ -34,8 +38,23 @@ const Logo = styled.img`
 
 const NavContainer = styled.div`
     display: flex;
+    justifyContent: center;
     alignItems: center;
-    justifyContent: flex-end;
+    margin: auto;
+    -webkit-margin-before: 25px;
+    -webkit-margin-after: 25px;
+    ${devices.tablet`
+        justifyContent: flex-end;
+        margin: 0;
+    `}
+`;
+
+const HeaderNavLink = styled(NavLink)`
+    margin: auto;
+    -webkit-margin-before: 10px;
+    ${devices.tablet`
+        margin: initial;
+    `}
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -66,7 +85,7 @@ class Header extends React.Component {
             <Wrapper>
                 <Container>
                     <FlexWrapper>
-                        <NavLink to={routes.HOME}><Logo src={HeaderLogoImage} /></NavLink>
+                        <HeaderNavLink to={routes.HOME}><Logo src={HeaderLogoImage} /></HeaderNavLink>
                         <NavContainer>
                             {isApplied ?
                                 null :
