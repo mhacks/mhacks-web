@@ -7,7 +7,7 @@ export default class ProfileRequests {
             method: 'get',
             headers: new Headers({
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
+                Authorization: 'Bearer ' + token
             })
         });
     }

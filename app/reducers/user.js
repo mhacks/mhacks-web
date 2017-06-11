@@ -9,7 +9,6 @@ export function userState(state = initialUserState, action) {
 
         case reduxActions.REGISTER_REQUEST:
         case reduxActions.LOGIN_REQUEST:
-
             return {
                 ...state,
                 fetching: true,

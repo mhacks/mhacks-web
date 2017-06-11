@@ -30,6 +30,6 @@ const initialUserState = {
             isEmailVerified: false
         }
     }
-}
+};
 
 export { defaultState, arrayState, objectState, initialUserState };

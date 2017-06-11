@@ -52,7 +52,7 @@ export default class AuthPureActions {
     static logoutRequest() {
         return {
             type: reduxActions.LOGOUT_REQUEST
-        }
+        };
     }
 
     static logoutError(error, message) {

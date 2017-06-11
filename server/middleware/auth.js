@@ -5,14 +5,13 @@ module.exports = function(groupName, checkType, verifiedEmail) {
     groupName = groupName || 'any';
     verifiedEmail = typeof verifiedEmail === 'boolean' ? verifiedEmail : true;
     return function(req, res, next) {
-        if (req.get('Authorization') || req.get('authorization')) {
-            var authorization = req.get('Authorization') || req.get('authorization');
+        if (req.get('Authorization')) {
+            var authorization = req.get('Authorization');
             var token = authorization.replace(/Bearer /g, '');
             User.find()
                 .byToken(token)
                 .exec()
                 .then(user => {
-                    console.log('fishy', user);
                     if (user) {
                         user
                             .verifyToken(token)

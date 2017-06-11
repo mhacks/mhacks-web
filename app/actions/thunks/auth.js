@@ -80,11 +80,7 @@ export default class AuthThunks {
             return AuthRequests.logout().then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
-                        dispatch(
-                            AuthPureActions.logoutSuccess(
-                                json.message
-                            )
-                        );
+                        dispatch(AuthPureActions.logoutSuccess(json.message));
                     });
                 } else {
                     response.json().then(json => {
@@ -97,6 +93,6 @@ export default class AuthThunks {
                     });
                 }
             });
-        }
+        };
     }
 }
