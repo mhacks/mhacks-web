@@ -32,11 +32,11 @@ router.post(
                 var sendVerificationEmail = false;
                 var sendPasswordChangedEmail = false;
 
-                if (req.files.resume) {
+                if (req.files && req.files.resume) {
                     req.body.resume = req.files.resume[0].location;
                 }
 
-                if (req.files.avatar) {
+                if (req.files && req.files.avatar) {
                     req.body.avatar = req.files.avatar[0].location;
                 }
 
@@ -109,7 +109,10 @@ router.get('/profile', function(req, res) {
                     email_verified: user.email_verified,
                     full_name: user.full_name,
                     birthday: user.birthday,
+                    major: user.major,
+                    university: user.university,
                     groups: groups,
+                    resume: user.resume,
                     avatar: [
                         config.host + '/v1/artifact/avatar/' + user.email,
                         'https://www.gravatar.com/avatar/' +
@@ -131,12 +134,6 @@ router.get('/profile', function(req, res) {
                 message: Responses.UNKNOWN_ERROR
             });
         });
-});
-
-router.post('/profile', function(req, res) {
-    res.send({
-        status: true
-    });
 });
 
 module.exports = router;

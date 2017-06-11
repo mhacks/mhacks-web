@@ -12,7 +12,6 @@ export default class ProfileThunks {
                 if (response.status == 200) {
                     response.json().then(json => {
                         const { user } = json;
-
                         dispatch(
                             ProfilePureActions.loadProfileSuccess(
                                 {
@@ -20,8 +19,12 @@ export default class ProfileThunks {
                                     user: {
                                         name: user.full_name,
                                         birthday: user.birthday,
+                                        major: user.major,
+                                        university: user.university,
                                         email: user.email,
-                                        groups: user.groups
+                                        groups: user.groups,
+                                        avatar: user.avatar,
+                                        resume: user.resume
                                     }
                                 },
                                 json.message
@@ -43,14 +46,13 @@ export default class ProfileThunks {
         };
     }
 
-    static updateProfile(profile) {
+    static updateProfile(profile, files) {
         return (dispatch, getState) => {
-            console.log(profile);
             dispatch(ProfilePureActions.updateProfileRequest(profile));
 
             const token = getState().userState.data.token;
 
-            return ProfileRequests.updateProfile(token, profile).then(response => {
+            return ProfileRequests.updateProfile(token, profile, files).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch(

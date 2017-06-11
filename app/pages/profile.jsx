@@ -72,6 +72,21 @@ class Profile extends React.Component {
         this.props.dispatch(ProfileThunks.loadProfile());
     }
 
+    componentWillReceiveProps(nextProps) {
+        const userData = this.props.userState.data.user;
+        const nextUserData = nextProps.userState.data.user;
+
+        if (userData.birthday !== nextUserData ||
+            userData.university !== nextUserData.university ||
+            userData.major !== nextUserData.major) {
+                this.setState({
+                    birthday: nextUserData.birthday ? new Date(nextUserData.birthday).toISOString().split('T')[0] : '',
+                    university: nextUserData.university || '',
+                    major: nextUserData.major || ''
+                });
+            }
+    }
+
     // Generic function for changing state
     // -- input using this must have a name attribute
     handleAttributeChange(e) {
@@ -91,6 +106,7 @@ class Profile extends React.Component {
 
         const userData = this.props.userState.data.user;
         var profile = {};
+        var files = {};
 
         const inputBirthday = new Date(this.state.birthday);
 
@@ -106,7 +122,11 @@ class Profile extends React.Component {
             profile.university = this.state.university;
         }
 
-        this.props.dispatch(ProfileThunks.updateProfile(profile));
+        if (this.state.resume) {
+            files['resume'] = this.state.resume;
+        }
+
+        this.props.dispatch(ProfileThunks.updateProfile(profile, files));
     }
 
     render() {
