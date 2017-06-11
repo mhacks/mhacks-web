@@ -72,6 +72,7 @@ const PlusWrapper = styled.div`
 const PlusLine = styled.div`
     display: inline-block;
     position: absolute;
+    zIndex: -1;
     backgroundColor: ${props => props.color};
     height: 10px;
     width: 2px;
