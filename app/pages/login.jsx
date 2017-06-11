@@ -58,7 +58,8 @@ class Login extends React.Component {
 
     componentWillUpdate(nextProps) {
         if (nextProps.authState.data.isLoggedIn) {
-            this.props.history.push(routes.PROFILE);
+            console.log(this.context)
+            this.context.router.history.replace(routes.PROFILE);
         }
     }
 
@@ -156,6 +157,10 @@ class Login extends React.Component {
         );
     }
 }
+
+Login.contextTypes = {
+    router: React.PropTypes.object
+};
 
 function mapStateToProps(state) {
     return {

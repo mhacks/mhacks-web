@@ -39,9 +39,9 @@ const NavContainer = styled.div`
 `;
 
 const StyledNavLink = styled(NavLink)`
-    fontSize: 20px;
-    padding: 5px 35px;
-    margin: 0px 15px;
+    fontSize: 18px;
+    padding: 5px 25px;
+    marginLeft: 15px;
     border: 2px solid ${props => props.primaryColor};
     color: ${props => props.primaryColor};
     borderRadius: 5px;
@@ -53,7 +53,7 @@ const StyledNavLink = styled(NavLink)`
         color: white;
     }
 
-    &:last-child {
+    &:first-child {
         margin: 0;
     }
 `;
@@ -76,6 +76,15 @@ class Header extends React.Component {
                                 >
                                 Apply
                                 </StyledNavLink>
+                            }
+                            {isLoggedIn ?
+                                <StyledNavLink
+                                    to={routes.PROFILE}
+                                    primaryColor={this.props.theme.primary}
+                                >
+                                Profile
+                                </StyledNavLink> :
+                                null
                             }
                             {isLoggedIn ?
                                 <StyledNavLink

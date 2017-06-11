@@ -48,4 +48,29 @@ export default class AuthPureActions {
             message
         };
     }
+
+    static logoutRequest(data) {
+        console.log('pure', data);
+        return {
+            type: reduxActions.LOGOUT_REQUEST,
+            data
+        }
+    }
+
+    static logoutError(data, error, message) {
+        return {
+            type: reduxActions.LOGOUT_ERROR,
+            data,
+            error,
+            message
+        };
+    }
+
+    static logoutSuccess(data, message) {
+        return {
+            type: reduxActions.LOGOUT_SUCCESS,
+            data,
+            message
+        };
+    }
 }

@@ -1,21 +1,9 @@
 import { reduxActions } from '../constants';
 import { objectState } from './initial_states.js';
 
-export function authState(state = objectState, action) {
+export function userState(state = objectState, action) {
     switch (action.type) {
-        // Handled separately as we optimistically update
-        case reduxActions.LOGOUT_REQUEST:
-            return {
-                ...state,
-                fetching: true,
-                fetched: false,
-                error: null,
-                data: action.data
-            };
-
-        case reduxActions.REGISTER_REQUEST:
-        case reduxActions.LOGIN_REQUEST:
-
+        case reduxActions.LOAD_PROFILE_REQUEST:
             return {
                 ...state,
                 fetching: true,
@@ -23,9 +11,7 @@ export function authState(state = objectState, action) {
                 error: null
             };
 
-        case reduxActions.REGISTER_ERROR:
-        case reduxActions.LOGIN_ERROR:
-        case reduxActions.LOGOUT_ERROR:
+        case reduxActions.LOAD_PROFILE_ERROR:
             return {
                 ...state,
                 fetching: false,
@@ -34,9 +20,7 @@ export function authState(state = objectState, action) {
                 message: action.message
             };
 
-        case reduxActions.REGISTER_SUCCESS:
-        case reduxActions.LOGIN_SUCCESS:
-        case reduxActions.LOGOUT_SUCCESS:
+        case reduxActions.LOAD_PROFILE_SUCCESS:
             return {
                 ...state,
                 fetching: false,
