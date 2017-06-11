@@ -8,6 +8,7 @@ const Favicon = require('../../../static/blackout/favicon.png');
 import Faq from './faq.jsx';
 import Apply from './apply.jsx';
 import WhatIsMHacksNano from './what_is_mhacks_nano.jsx';
+import Sponsorship from './sponsorship.jsx'
 
 import { SectionHeader, SectionBody } from './section_components.jsx';
 
@@ -91,6 +92,7 @@ class HomePage extends React.Component {
                                 <SidebarLink><a href="#what-is-mhacks-nano">MHacks Nano</a></SidebarLink>
                                 <SidebarLink><a href="#faq">FAQ</a></SidebarLink>
                                 <SidebarLink><a href="#apply">Apply</a></SidebarLink>
+                                <SidebarLink><a href="#sponsorship">Sponsorship</a></SidebarLink>
                             </SidebarLinks>
                         </nav>
                     </Sidebar>
@@ -110,6 +112,9 @@ class HomePage extends React.Component {
                         </div>
                         <div id="apply">
                             <Apply />
+                        </div>
+                        <div id="sponsorship">
+                            <Sponsorship />
                         </div>
                     </Content>
                 </Container>
