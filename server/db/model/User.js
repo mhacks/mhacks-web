@@ -60,7 +60,9 @@ var schema = new mongoose.Schema({
     ],
     meta: {
         ip: String
-    }
+    },
+    avatar: String,
+    resume: String
 });
 
 // Allow us to query by name
@@ -347,9 +349,7 @@ schema.methods.getGroupsList = function() {
 
 schema.methods.updateFields = function(fields) {
     for (var param in fields) {
-        if (this.hasOwnProperty(param)) {
-            this[param] = fields[param];
-        }
+        this[param] = fields[param];
     }
     this.save();
 };

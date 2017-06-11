@@ -3,77 +3,92 @@ var router = require('express').Router(),
     Responses = require('../../responses/api'),
     crypto = require('crypto'),
     authMiddleware = require('../../middleware/auth.js'),
-    User = require('../../db/model/User.js');
+    User = require('../../db/model/User.js'),
+    config = require('../../../config/default.js'),
+    uploadHelper = require('../../interactors/multer-s3.js')(
+        config.AWS_BUCKET_NAME
+    );
 
-router.post('/profile', authMiddleware('any', 'api', true), function(req, res) {
-    User.find()
-        .byToken(req.authToken)
-        .exec()
-        .then(user => {
-            var updateable_fields = [
-                'full_name',
-                'email',
-                'password',
-                'profile_picture',
-                'birthday',
-                'university',
-                'major',
-                'resume'
-            ];
-            var fields = {};
-            var sendVerificationEmail = false;
-            var sendPasswordChangedEmail = false;
+router.post(
+    '/profile',
+    authMiddleware('any', 'api', true),
+    uploadHelper.fields([{ name: 'avatar' }, { name: 'resume' }]),
+    function(req, res) {
+        User.find()
+            .byToken(req.authToken)
+            .exec()
+            .then(user => {
+                var updateable_fields = [
+                    'full_name',
+                    'email',
+                    'password',
+                    'avatar',
+                    'birthday',
+                    'university',
+                    'major',
+                    'resume'
+                ];
+                var fields = {};
+                var sendVerificationEmail = false;
+                var sendPasswordChangedEmail = false;
 
-            // Add handlers for s3 upload of profile picture and resume
+                if (req.files.resume) {
+                    req.body.resume = req.files.resume[0].location;
+                }
 
-            for (var i in req.body) {
-                if (i === 'email') {
-                    if (!validator.isEmail(req.body.email)) {
-                        continue;
-                    } else {
-                        sendVerificationEmail = true;
-                        req.body.email = req.body.email;
+                if (req.files.avatar) {
+                    req.body.avatar = req.files.avatar[0].location;
+                }
+
+                for (var i in req.body) {
+                    if (i === 'email') {
+                        if (!validator.isEmail(req.body.email)) {
+                            continue;
+                        } else {
+                            sendVerificationEmail = true;
+                            req.body.email = req.body.email;
+                        }
+                    }
+
+                    if (i === 'password') {
+                        if (
+                            req.body.current_password &&
+                            user.checkPassword(req.body.current_password)
+                        ) {
+                            sendPasswordChangedEmail = true;
+                        } else {
+                            continue;
+                        }
+                    }
+
+                    if (updateable_fields.indexOf(i) !== -1) {
+                        fields[i] = req.body[i];
                     }
                 }
 
-                if (i === 'password') {
-                    if (
-                        req.body.current_password &&
-                        user.checkPassword(req.body.current_password)
-                    ) {
-                        sendPasswordChangedEmail = true;
-                    } else {
-                        continue;
-                    }
+                user.updateFields(fields);
+
+                if (sendVerificationEmail) {
+                    user.sendVerificationEmail();
                 }
 
-                if (updateable_fields.indexOf(i) !== -1) {
-                    fields[i] = req.body[i];
+                if (sendPasswordChangedEmail) {
+                    //TODO do stuff
                 }
-            }
 
-            user.updateFields(fields);
-
-            if (sendVerificationEmail) {
-                user.sendVerificationEmail();
-            }
-
-            if (sendPasswordChangedEmail) {
-                //TODO do stuff
-            }
-
-            res.send({
-                status: false,
-                message: fields
+                res.send({
+                    status: true,
+                    message: fields
+                });
+            })
+            .catch(() => {
+                res.send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
             });
-        })
-        .catch(() => {
-            res.send({
-                status: false,
-                message: Responses.UNKNOWN_ERROR
-            });
-        });
-});
+    }
+);
 
 // Handles /v1/user/profile
 router.get('/profile', function(req, res) {
@@ -95,8 +110,8 @@ router.get('/profile', function(req, res) {
                     full_name: user.full_name,
                     birthday: user.birthday,
                     groups: groups,
-                    profile_picture: [
-                        user.profile_picture,
+                    avatar: [
+                        user.avatar,
                         'https://www.gravatar.com/avatar/' +
                             crypto
                                 .createHash('md5')
