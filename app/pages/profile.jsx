@@ -104,23 +104,14 @@ class Profile extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
-        const userData = this.props.userState.data.user;
         var profile = {};
         var files = {};
 
         const inputBirthday = new Date(this.state.birthday);
 
-        if (inputBirthday && inputBirthday !== userData.birthday) {
-            profile.birthday = inputBirthday;
-        }
-
-        if (this.state.major !== userData.major) {
-            profile.major = this.state.major;
-        }
-
-        if (this.state.university !== userData.university) {
-            profile.university = this.state.university;
-        }
+        profile.birthday = inputBirthday;
+        profile.major = this.state.major;
+        profile.university = this.state.university;
 
         if (this.state.resume) {
             files['resume'] = this.state.resume;

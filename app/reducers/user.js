@@ -86,14 +86,15 @@ export function userState(state = initialUserState, action) {
             };
 
         case reduxActions.UPDATE_PROFILE_SUCCESS:
-            console.log('update suck', action);
             return {
                 ...state,
                 fetching: false,
                 fetched: true,
                 data: {
                     ...state.data,
-                    ...action.data
+                    user: {
+                        ...action.data.user
+                    }
                 },
                 message: action.message
             };
