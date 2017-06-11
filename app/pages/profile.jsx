@@ -76,6 +76,10 @@ class Profile extends React.Component {
         const userData = this.props.userState.data.user;
         const nextUserData = nextProps.userState.data.user;
 
+        if (nextProps.userState.fetching) {
+            return;
+        }
+        
         if (userData.birthday !== nextUserData ||
             userData.university !== nextUserData.university ||
             userData.major !== nextUserData.major) {
