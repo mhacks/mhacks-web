@@ -92,7 +92,7 @@ class FileUpload extends React.Component {
                     >
                     Upload Resume
                     </Button>
-                    <FileName>{this.state.fileSelected ? this.state.fileName : 'No file chosen...'}</FileName>
+                    <FileName>{this.state.fileSelected ? this.state.fileName : this.props.defaultText || 'No file chosen...'}</FileName>
                     <Input
                         type="file"
                         name="chooseFile"

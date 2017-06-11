@@ -6,6 +6,7 @@ import ExpandingItem from './ExpandingItem.jsx';
 import TabGroup from './TabGroup.jsx';
 import RoundedButton from './RoundedButton.jsx';
 import FileUpload from './FileUpload.jsx';
+import Alert from './Alert.jsx';
 
 export {
     TextSubmit,
@@ -15,5 +16,6 @@ export {
     ExpandingItem,
     TabGroup,
     RoundedButton,
-    FileUpload
+    FileUpload,
+    Alert
 };

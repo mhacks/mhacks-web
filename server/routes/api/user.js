@@ -112,7 +112,7 @@ router.get('/profile', function(req, res) {
                     major: user.major,
                     university: user.university,
                     groups: groups,
-                    resume: user.resume,
+                    resume_uploaded: user.resume ? true : false,
                     avatar: [
                         config.host + '/v1/artifact/avatar/' + user.email,
                         'https://www.gravatar.com/avatar/' +

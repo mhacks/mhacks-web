@@ -4,7 +4,7 @@ import { AuthThunks } from '../actions';
 import { connect } from 'react-redux';
 import { routes } from '../constants';
 
-import { TabGroup, RoundedButton } from '../components';
+import { TabGroup, RoundedButton, Alert } from '../components';
 
 /* Containers */
 const Page = styled.div`
@@ -39,6 +39,10 @@ const ButtonGroup = styled.div`
     display: flex;
     flexDirection: row;
     justifyContent: space-between;
+`;
+
+const AlertContainer = styled.div`
+    marginTop: 30px;
 `;
 
 /* Login Component */
@@ -110,6 +114,12 @@ class Login extends React.Component {
                         }]}
                         primaryColor={this.props.theme.primary}
                     />
+                    {this.props.userState.error ?
+                        <AlertContainer>
+                            <Alert message={this.props.userState.message} />
+                        </AlertContainer> :
+                        null
+                    }
                     <form onSubmit={this.onSubmit.bind(this)}>
                         <Flexer>
                             <InputContainer>

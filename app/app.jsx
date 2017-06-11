@@ -8,6 +8,7 @@ import createHistory from 'history/createBrowserHistory';
 import { compose, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
+import createFilter from 'redux-persist-transform-filter';
 import thunkMiddleware from 'redux-thunk';
 
 import reducers from './reducers';
@@ -40,10 +41,19 @@ class AppProvider extends React.Component {
         this.state = { rehydrated: false };
     }
 
-    componentWillMount(){
-      persistStore(store, {}, () => {
-          this.setState({ rehydrated: true });
-      });
+    componentWillMount() {
+        const dataWhitelistFilter = createFilter(
+            'userState',
+            ['data']
+        );
+
+        persistStore(store, {
+            transforms: [
+                dataWhitelistFilter
+            ]
+        }, () => {
+            this.setState({ rehydrated: true });
+        });
     }
 
     render() {
