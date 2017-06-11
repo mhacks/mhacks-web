@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 class Logout extends React.Component {
     componentWillMount() {
         this.props.dispatch(AuthThunks.logout());
+        window.localStorage.clear();
         this.context.router.history.replace(routes.HOME);
     }
 
