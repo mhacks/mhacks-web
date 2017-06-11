@@ -53,6 +53,8 @@ var schema = new mongoose.Schema({
         default: Date.now
     },
     birthday: Date,
+    major: String,
+    university: String,
     groups: [
         {
             name: String

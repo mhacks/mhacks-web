@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { render } from 'react-dom';
 
-import { Route, Switch } from 'react-router';
+import { Route, Switch, Redirect } from 'react-router';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 
@@ -12,7 +12,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import reducers from './reducers';
 import { routes } from './constants';
-import { Navigator, HomePage } from './pages';
+import { Navigator, HomePage, Login, Logout, Profile, Apply } from './pages';
 
 /* uncomment to view redux logs in console */
 // import logger from 'redux-logger'
@@ -28,26 +28,101 @@ const store = createStore(
     )
 );
 
-persistStore(store);
-
 window.s = store;
 
+// Delay render of components until the store
+// has rehydrated to prevent redirects and other
+// weird effects
+class AppProvider extends React.Component {
+    constructor() {
+        super();
+
+        this.state = { rehydrated: false };
+    }
+
+    componentWillMount(){
+      persistStore(store, {}, () => {
+          this.setState({ rehydrated: true });
+      });
+    }
+
+    render() {
+        if (!this.state.rehydrated) {
+            return (<div></div>);
+        }
+
+        return (
+            <Provider store={store}>
+                <ConnectedRouter history={history}>
+                    <Navigator>
+                        <Switch>
+                            <Route
+                                exact
+                                path={routes.HOME}
+                                component={HomePage}
+                            />
+                            <Route
+                                exact
+                                path={routes.LOGIN}
+                                render={() => {
+                                    const userData = store.getState().userState.data;
+
+                                    if (userData.isLoggedIn) {
+                                        return <Redirect to={routes.PROFILE} />;
+                                    }
+
+                                    return <Login />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.LOGOUT}
+                                render={() => {
+                                    return <Logout />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.PROFILE}
+                                render={() => {
+                                    const userData = store.getState().userState.data;
+
+                                    if (userData.isLoggedIn) {
+                                        return <Profile />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.APPLY}
+                                render={() => {
+                                    const userData = store.getState().userState.data;
+
+                                    if (userData.isLoggedIn && userData.isEmailVerified) {
+                                        return <Apply />;
+                                    }
+
+                                    if (userData.isLoggedIn && !userData.isEmailVerified) {
+                                        return <Redirect to={routes.PROFILE} />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                component={HomePage}
+                            />
+                        </Switch>
+                    </Navigator>
+                </ConnectedRouter>
+            </Provider>
+        );
+    }
+}
+
 render(
-    <Provider store={store}>
-        <ConnectedRouter history={history}>
-            <Navigator>
-                <Switch>
-                    <Route
-                        exact
-                        path={routes.HOME}
-                        component={HomePage}
-                    />
-                    <Route
-                        component={HomePage}
-                    />
-                </Switch>
-            </Navigator>
-        </ConnectedRouter>
-    </Provider>,
+    <AppProvider />,
     document.getElementById('app')
 );

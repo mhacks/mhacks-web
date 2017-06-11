@@ -24,4 +24,27 @@ export default class ProfilePureActions {
             message
         };
     }
+
+    static updateProfileRequest(data) {
+        return {
+            type: reduxActions.UPDATE_PROFILE_REQUEST,
+            data
+        };
+    }
+
+    static updateProfileError(data, error, message) {
+        return {
+            type: reduxActions.UPDATE_PROFILE_ERROR,
+            error,
+            message
+        };
+    }
+
+    static updateProfileSuccess(data, message) {
+        return {
+            type: reduxActions.UPDATE_PROFILE_SUCCESS,
+            data,
+            message
+        };
+    }
 }

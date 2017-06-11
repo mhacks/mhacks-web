@@ -11,4 +11,26 @@ export default class ProfileRequests {
             })
         });
     }
+
+    static updateProfile(token, body, files) {
+        const formData = new FormData();
+
+        if (files['resume']) {
+            formData.append('resume', files['resume']);
+        }
+
+        for (var key in body) {
+            if (body.hasOwnProperty(key)) {
+                formData.append(key, body[key]);
+            }
+        }
+
+        return fetch(endpoints.PROFILE, {
+            method: 'post',
+            headers: new Headers({
+                Authorization: 'Bearer ' + token
+            }),
+            body: formData
+        });
+    }
 }

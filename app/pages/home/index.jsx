@@ -6,6 +6,7 @@ import { devices } from '../../styles';
 const Favicon = require('../../../static/blackout/favicon.png');
 
 import Faq from './faq.jsx';
+import Apply from './apply.jsx';
 import WhatIsMHacksNano from './what_is_mhacks_nano.jsx';
 
 import { SectionHeader, SectionBody } from './section_components.jsx';
@@ -89,6 +90,7 @@ class HomePage extends React.Component {
                                 <SidebarLink><a href="#about">About MHacks</a></SidebarLink>
                                 <SidebarLink><a href="#what-is-mhacks-nano">MHacks Nano</a></SidebarLink>
                                 <SidebarLink><a href="#faq">FAQ</a></SidebarLink>
+                                <SidebarLink><a href="#apply">Apply</a></SidebarLink>
                             </SidebarLinks>
                         </nav>
                     </Sidebar>
@@ -105,6 +107,9 @@ class HomePage extends React.Component {
                         <div id="faq">
                             <SectionHeader>Frequently Asked Questions</SectionHeader>
                             <Faq />
+                        </div>
+                        <div id="apply">
+                            <Apply />
                         </div>
                     </Content>
                 </Container>

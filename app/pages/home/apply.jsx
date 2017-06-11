@@ -40,14 +40,23 @@ class Apply extends React.Component {
         return (
             <div>
                 <SectionHeader>Apply</SectionHeader>
-                <SectionBody>Apply to MHacks Nano! We will just ask you a couple questions about yourself, your hackathon experiences and allow you to form a team.</SectionBody>
+                <SectionBody>Apply to MHacks Nano! We will just ask you a couple quick questions. Nothing long or difficult :)</SectionBody>
                 <StyledNavLinkWrapper>
-                    <StyledNavLink
-                        to={routes.LOGIN}
-                        primaryColor={this.props.theme.primary}
-                    >
-                    Log In
-                    </StyledNavLink>
+                    {this.props.userState.data.isLoggedIn ?
+                        <StyledNavLink
+                            to={routes.APPLY}
+                            primaryColor={this.props.theme.primary}
+                        >
+                        Apply
+                        </StyledNavLink> :
+                        <StyledNavLink
+                            to={routes.LOGIN}
+                            primaryColor={this.props.theme.primary}
+                        >
+                        Log In
+                        </StyledNavLink>
+                    }
+
                 </StyledNavLinkWrapper>
             </div>
         );
@@ -56,6 +65,7 @@ class Apply extends React.Component {
 
 function mapStateToProps(state) {
     return {
+        userState: state.userState,
         theme: state.theme.data
     };
 }

@@ -4,5 +4,6 @@ import HomePage from './home';
 import Login from './login.jsx';
 import Logout from './logout.jsx';
 import Profile from './profile.jsx';
+import Apply from './apply.jsx';
 
-export { Navigator, HomePage, BlackoutPage, Login, Logout, Profile };
+export { Navigator, HomePage, BlackoutPage, Login, Logout, Profile, Apply };

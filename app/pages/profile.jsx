@@ -52,13 +52,15 @@ const FileUploadContainer = styled.div`
 `;
 
 class Profile extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+
+        const userData = this.props.userState.data.user;
 
         this.state = {
-            birthday: '',
-            university: '',
-            focus: ''
+            birthday: userData.birthday ? new Date(userData.birthday).toISOString().split('T')[0] : '',
+            university: userData.university || '',
+            major: userData.major || ''
         };
 
         this.onSubmit = this.onSubmit.bind(this);
@@ -68,6 +70,25 @@ class Profile extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(ProfileThunks.loadProfile());
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const userData = this.props.userState.data.user;
+        const nextUserData = nextProps.userState.data.user;
+
+        if (nextProps.userState.fetching) {
+            return;
+        }
+        
+        if (userData.birthday !== nextUserData ||
+            userData.university !== nextUserData.university ||
+            userData.major !== nextUserData.major) {
+                this.setState({
+                    birthday: nextUserData.birthday ? new Date(nextUserData.birthday).toISOString().split('T')[0] : '',
+                    university: nextUserData.university || '',
+                    major: nextUserData.major || ''
+                });
+            }
     }
 
     // Generic function for changing state
@@ -87,7 +108,20 @@ class Profile extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
-        console.log('save profile');
+        var profile = {};
+        var files = {};
+
+        const inputBirthday = new Date(this.state.birthday);
+
+        profile.birthday = inputBirthday;
+        profile.major = this.state.major;
+        profile.university = this.state.university;
+
+        if (this.state.resume) {
+            files['resume'] = this.state.resume;
+        }
+
+        this.props.dispatch(ProfileThunks.updateProfile(profile, files));
     }
 
     render() {
@@ -95,11 +129,11 @@ class Profile extends React.Component {
             <Page>
                 <FormContainer>
                     <SectionHeader color={this.props.theme.primary}>
-                        {this.props.userState.data.user.isEmailVerified ? 'Profile' : 'Unverified Email'}
+                        {this.props.userState.data.isEmailVerified ? 'Profile' : 'Unverified Email'}
                     </SectionHeader>
-                    {this.props.userState.data.user.isEmailVerified ?
-
+                    {this.props.userState.data.isEmailVerified ?
                         <form onSubmit={this.onSubmit}>
+                            <p>Update your profile with some info about yourself. This will be automatically populated into your application and persist through hackathons!</p>
                             <Flexer>
                                 <InputContainer>
                                     <Input
@@ -119,11 +153,11 @@ class Profile extends React.Component {
                                         onChange={this.handleAttributeChange}
                                     />
                                     <Input
-                                        id="focus"
+                                        id="major"
                                         type="text"
-                                        name="focus"
+                                        name="major"
                                         placeholder="Underwater Basket Weaving"
-                                        value={this.state.focus}
+                                        value={this.state.major}
                                         onChange={this.handleAttributeChange}
                                     />
                                     <FileUploadContainer>
