@@ -23,8 +23,8 @@ export default class ProfileThunks {
                                         university: user.university,
                                         email: user.email,
                                         groups: user.groups,
-                                        avatar: user.avatar,
-                                        resume: user.resume
+                                        avatars: user.avatar,
+                                        isResumeUploaded: user.resume_uploaded
                                     }
                                 },
                                 json.message

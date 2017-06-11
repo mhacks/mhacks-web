@@ -60,7 +60,9 @@ class Profile extends React.Component {
         this.state = {
             birthday: userData.birthday ? new Date(userData.birthday).toISOString().split('T')[0] : '',
             university: userData.university || '',
-            major: userData.major || ''
+            major: userData.major || '',
+            avatars: userData.avatars || [],
+            isResumeUploaded: userData.isResumeUploaded || false
         };
 
         this.onSubmit = this.onSubmit.bind(this);
@@ -79,7 +81,7 @@ class Profile extends React.Component {
         if (nextProps.userState.fetching) {
             return;
         }
-        
+
         if (userData.birthday !== nextUserData ||
             userData.university !== nextUserData.university ||
             userData.major !== nextUserData.major) {
@@ -162,10 +164,11 @@ class Profile extends React.Component {
                                     />
                                     <FileUploadContainer>
                                         <FileUpload
-                                            defaultColor={this.props.theme.primary}
+                                            defaultColor={this.props.userState.data.user.isResumeUploaded ? this.props.theme.success : this.props.theme.primary}
                                             hoverColor={this.props.theme.secondary}
                                             activeColor={this.props.theme.success}
                                             onFileSelect={this.handleFileUpload}
+                                            defaultText={this.props.userState.data.user.isResumeUploaded ? 'Resume Uploaded' : null}
                                         />
                                     </FileUploadContainer>
                                 </InputContainer>
