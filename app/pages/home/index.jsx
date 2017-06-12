@@ -1,9 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
 import { devices } from '../../styles';
-
-const Favicon = require('../../../static/blackout/favicon.png');
 
 import Faq from './faq.jsx';
 import About from './about.jsx';
@@ -79,53 +76,45 @@ const Content = styled.div`
 class HomePage extends React.Component {
     render() {
         return (
-            <div>
-                <Helmet>
-                    <title>MHacks Nano</title>
+            <Container>
+                <Sidebar>
+                    <nav>
+                        <SidebarLinks>
+                            <SidebarLink><a href="#about">About MHacks</a></SidebarLink>
+                            <SidebarLink><a href="#what-is-mhacks-nano">MHacks Nano</a></SidebarLink>
+                            <SidebarLink><a href="#schedule">Schedule</a></SidebarLink>
+                            <SidebarLink><a href="#rules">Rules</a></SidebarLink>
+                            <SidebarLink><a href="#faq">FAQ</a></SidebarLink>
+                            <SidebarLink><a href="#sponsorship">Sponsorship</a></SidebarLink>
+                            <SidebarLink><a href="#apply">Apply</a></SidebarLink>
+                        </SidebarLinks>
+                    </nav>
+                </Sidebar>
 
-                    <link rel="icon" type="image/x-icon" href={Favicon} />
-                </Helmet>
-
-                <Container>
-                    <Sidebar>
-                        <nav>
-                            <SidebarLinks>
-                                <SidebarLink><a href="#about">About MHacks</a></SidebarLink>
-                                <SidebarLink><a href="#what-is-mhacks-nano">MHacks Nano</a></SidebarLink>
-                                <SidebarLink><a href="#schedule">Schedule</a></SidebarLink>
-                                <SidebarLink><a href="#rules">Rules</a></SidebarLink>
-                                <SidebarLink><a href="#faq">FAQ</a></SidebarLink>
-                                <SidebarLink><a href="#sponsorship">Sponsorship</a></SidebarLink>
-                                <SidebarLink><a href="#apply">Apply</a></SidebarLink>
-                            </SidebarLinks>
-                        </nav>
-                    </Sidebar>
-
-                    <Content>
-                        <div id="about">
-                            <About />
-                        </div>
-                        <div id="what-is-mhacks-nano">
-                            <WhatIsMHacksNano />
-                        </div>
-                        <div id="schedule">
-                            <Schedule />
-                        </div>
-                        <div id="rules">
-                            <Rules />
-                        </div>
-                        <div id="faq">
-                            <Faq />
-                        </div>
-                        <div id="sponsorship">
-                            <Sponsorship />
-                        </div>
-                        <div id="apply">
-                            <Apply />
-                        </div>
-                    </Content>
-                </Container>
-            </div>
+                <Content>
+                    <div id="about">
+                        <About />
+                    </div>
+                    <div id="what-is-mhacks-nano">
+                        <WhatIsMHacksNano />
+                    </div>
+                    <div id="schedule">
+                        <Schedule />
+                    </div>
+                    <div id="rules">
+                        <Rules />
+                    </div>
+                    <div id="faq">
+                        <Faq />
+                    </div>
+                    <div id="sponsorship">
+                        <Sponsorship />
+                    </div>
+                    <div id="apply">
+                        <Apply />
+                    </div>
+                </Content>
+            </Container>
         );
     }
 }
