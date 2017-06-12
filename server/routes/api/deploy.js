@@ -107,11 +107,16 @@ router.post('/webhook/slack', function(req, res) {
                 }
             } else if (req.body.text.indexOf('damage report') !== -1) {
                 if (req.body.text.indexOf('production') !== -1) {
+                    res.send({
+                        response_type: 'in_channel',
+                        text: 'Retrieving damage report from production'
+                    });
+
                     deploy
                         .productionDamageReport()
                         .then(result => {
                             slack.postSnippet(config.slack_token, {
-                                channel: req.body.channel,
+                                channels: req.body.channel,
                                 content: deploy.formatResponse(result),
                                 title: new Date().toString() +
                                     ' Production Damage Report'
@@ -119,18 +124,23 @@ router.post('/webhook/slack', function(req, res) {
                         })
                         .catch(err => {
                             slack.postSnippet(config.slack_token, {
-                                channel: req.body.channel,
+                                channels: req.body.channel,
                                 content: deploy.formatResponse(err),
                                 title: new Date().toString() +
                                     ' Production Damage Report Error'
                             });
                         });
                 } else {
+                    res.send({
+                        response_type: 'in_channel',
+                        text: 'Retrieving damage report from staging'
+                    });
+
                     deploy
                         .stagingDamageReport()
                         .then(result => {
                             slack.postSnippet(config.slack_token, {
-                                channel: req.body.channel,
+                                channels: req.body.channel,
                                 content: deploy.formatResponse(result),
                                 title: new Date().toString() +
                                     ' Staging Damage Report'
@@ -138,7 +148,7 @@ router.post('/webhook/slack', function(req, res) {
                         })
                         .catch(err => {
                             slack.postSnippet(config.slack_token, {
-                                channel: req.body.channel,
+                                channels: req.body.channel,
                                 content: deploy.formatResponse(err),
                                 title: new Date().toString() +
                                     ' Staging Damage Report Error'
