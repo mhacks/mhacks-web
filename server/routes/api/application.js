@@ -29,6 +29,12 @@ router.post('/', function(req, res) {
                     message: Responses.UNKNOWN_ERROR
                 });
             });
+    })
+    .catch(() => {
+        res.send({
+            status: false,
+            message: Responses.UNKNOWN_ERROR
+        });
     });
 });
 

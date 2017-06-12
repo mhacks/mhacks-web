@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ProfileThunks } from '../actions';
 
-import { RoundedButton, FileUpload } from '../components';
+import { RoundedButton, FileUpload, Alert } from '../components';
 
 /* Containers */
 const Page = styled.div`
@@ -51,6 +51,10 @@ const FileUploadContainer = styled.div`
     marginTop: 10px;
 `;
 
+const AlertContainer = styled.div`
+    marginTop: 30px;
+`;
+
 class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -84,11 +88,13 @@ class Profile extends React.Component {
 
         if (userData.birthday !== nextUserData ||
             userData.university !== nextUserData.university ||
-            userData.major !== nextUserData.major) {
+            userData.major !== nextUserData.major ||
+            userData.isResumeUploaded !== nextUserData.isResumeUploaded) {
                 this.setState({
                     birthday: nextUserData.birthday ? new Date(nextUserData.birthday).toISOString().split('T')[0] : '',
                     university: nextUserData.university || '',
-                    major: nextUserData.major || ''
+                    major: nextUserData.major || '',
+                    isResumeUploaded: userData.isResumeUploaded || false
                 });
             }
     }

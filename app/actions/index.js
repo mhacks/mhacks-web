@@ -1,3 +1,3 @@
-import { SubscribeThunks, AuthThunks, ProfileThunks } from './thunks';
+import { SubscribeThunks, AuthThunks, ProfileThunks, ApplicationThunks } from './thunks';
 
-export { SubscribeThunks, AuthThunks, ProfileThunks };
+export { SubscribeThunks, AuthThunks, ProfileThunks, ApplicationThunks };
