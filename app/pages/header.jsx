@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { routes } from '../constants';
@@ -7,6 +8,7 @@ import { Container } from '../components';
 import { devices } from '../styles';
 
 const HeaderLogoImage = require('../../static/icons/nano-logo.png');
+const Favicon = require('../../static/nano/favicon.png');
 
 /* Header Section */
 const Wrapper = styled.div`
@@ -71,47 +73,54 @@ class Header extends React.Component {
         const { isLoggedIn, isApplied, isEmailVerified } = this.props.userState.data;
 
         return (
-            <Wrapper>
-                <Container>
-                    <FlexWrapper>
-                        <NavLink to={routes.HOME}><Logo src={HeaderLogoImage} /></NavLink>
-                        <NavContainer>
-                            {!isLoggedIn || !isEmailVerified || isApplied ?
-                                null :
-                                <StyledNavLink
-                                    to={routes.APPLY}
-                                    primaryColor={this.props.theme.primary}
-                                >
-                                Apply
-                                </StyledNavLink>
-                            }
-                            {isLoggedIn ?
-                                <StyledNavLink
-                                    to={routes.PROFILE}
-                                    primaryColor={this.props.theme.primary}
-                                >
-                                Profile
-                                </StyledNavLink> :
-                                null
-                            }
-                            {isLoggedIn ?
-                                <StyledNavLink
-                                    to={routes.LOGOUT}
-                                    primaryColor={this.props.theme.primary}
-                                >
-                                Log Out
-                                </StyledNavLink> :
-                                <StyledNavLink
-                                    to={routes.LOGIN}
-                                    primaryColor={this.props.theme.primary}
-                                >
-                                Log In
-                                </StyledNavLink>
-                            }
-                        </NavContainer>
-                    </FlexWrapper>
-                </Container>
-            </Wrapper>
+            <div>
+                <Helmet>
+                    <title>MHacks Nano</title>
+
+                    <link rel="icon" type="image/x-icon" href={Favicon} />
+                </Helmet>
+                <Wrapper>
+                    <Container>
+                        <FlexWrapper>
+                            <NavLink to={routes.HOME}><Logo src={HeaderLogoImage} /></NavLink>
+                            <NavContainer>
+                                {!isLoggedIn || !isEmailVerified || isApplied ?
+                                    null :
+                                    <StyledNavLink
+                                        to={routes.APPLY}
+                                        primaryColor={this.props.theme.primary}
+                                    >
+                                    Apply
+                                    </StyledNavLink>
+                                }
+                                {isLoggedIn ?
+                                    <StyledNavLink
+                                        to={routes.PROFILE}
+                                        primaryColor={this.props.theme.primary}
+                                    >
+                                    Profile
+                                    </StyledNavLink> :
+                                    null
+                                }
+                                {isLoggedIn ?
+                                    <StyledNavLink
+                                        to={routes.LOGOUT}
+                                        primaryColor={this.props.theme.primary}
+                                    >
+                                    Log Out
+                                    </StyledNavLink> :
+                                    <StyledNavLink
+                                        to={routes.LOGIN}
+                                        primaryColor={this.props.theme.primary}
+                                    >
+                                    Log In
+                                    </StyledNavLink>
+                                }
+                            </NavContainer>
+                        </FlexWrapper>
+                    </Container>
+                </Wrapper>
+            </div>
         );
     }
 }
