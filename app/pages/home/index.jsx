@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { devices } from '../../styles';
 
-const Favicon = require('../../../static/blackout/favicon.png');
+const Favicon = require('../../../static/nano/favicon.png');
 
 import Faq from './faq.jsx';
 import Apply from './apply.jsx';
