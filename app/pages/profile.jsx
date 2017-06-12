@@ -3,20 +3,11 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ProfileThunks } from '../actions';
 
-import { RoundedButton, FileUpload, Alert } from '../components';
-
-/* Containers */
-const Page = styled.div`
-    display: flex;
-    alignItems: center;
-    justifyContent: center;
-    height: 100vh;
-`;
+import { PageContainer, RoundedButton, FileUpload, Alert, LabeledInput } from '../components';
 
 const FormContainer = styled.div`
-    width: 500px;
-    maxWidth: calc(100% - 40px);
-    margin: 40px auto;
+    maxWidth: 500px;
+    margin: 0 auto;
 `;
 
 const Flexer = styled.div`
@@ -25,13 +16,7 @@ const Flexer = styled.div`
 `;
 
 const InputContainer = styled.div`
-    margin: 20px 0 30px 0;
-`;
-
-const Input = styled.input`
-    width: 100%;
-    margin: 10px 0;
-    padding: 8px;
+    marginBottom: 30px;
 `;
 
 const ButtonGroup = styled.div`
@@ -48,11 +33,15 @@ const SectionHeader = styled.h2`
 `;
 
 const FileUploadContainer = styled.div`
-    marginTop: 10px;
+    marginTop: 30px;
 `;
 
 const AlertContainer = styled.div`
     marginTop: 30px;
+`;
+
+const Subhead = styled.p`
+    margin: 20px 0 0 0;
 `;
 
 class Profile extends React.Component {
@@ -134,7 +123,7 @@ class Profile extends React.Component {
 
     render() {
         return (
-            <Page>
+            <PageContainer>
                 <FormContainer>
                     <SectionHeader color={this.props.theme.primary}>
                         {this.props.userState.data.isEmailVerified ? 'Profile' : 'Unverified Email'}
@@ -155,33 +144,45 @@ class Profile extends React.Component {
                                 </AlertContainer> :
                                 null
                             }
-                            <p>Update your profile with some info about yourself. This will be automatically populated into your application and persist through hackathons!</p>
+                            <Subhead>Update your profile with some info about yourself. This will be automatically populated into your application and persist through hackathons!</Subhead>
                             <Flexer>
                                 <InputContainer>
-                                    <Input
-                                        id="birthday"
-                                        type="date"
-                                        name="birthday"
-                                        placeholder="Birthday (e.g. 01/01/1970)"
-                                        value={this.state.birthday}
-                                        onChange={this.handleAttributeChange}
-                                    />
-                                    <Input
-                                        id="university"
-                                        type="text"
-                                        name="university"
-                                        placeholder="School (e.g. University of Michigan)"
-                                        value={this.state.university}
-                                        onChange={this.handleAttributeChange}
-                                    />
-                                    <Input
-                                        id="major"
-                                        type="text"
-                                        name="major"
-                                        placeholder="Area of Study (e.g. Underwater Basket Weaving)"
-                                        value={this.state.major}
-                                        onChange={this.handleAttributeChange}
-                                    />
+                                    <LabeledInput
+                                        label="Date of Birth"
+                                    >
+                                        <input
+                                            id="birthday"
+                                            type="date"
+                                            name="birthday"
+                                            placeholder="mm/dd/yyyy"
+                                            value={this.state.birthday}
+                                            onChange={this.handleAttributeChange}
+                                        />
+                                    </LabeledInput>
+                                    <LabeledInput
+                                        label="University"
+                                    >
+                                        <input
+                                            id="university"
+                                            type="text"
+                                            name="university"
+                                            placeholder="e.g. University of Michigan"
+                                            value={this.state.university}
+                                            onChange={this.handleAttributeChange}
+                                        />
+                                    </LabeledInput>
+                                    <LabeledInput
+                                        label="Major"
+                                    >
+                                        <input
+                                            id="major"
+                                            type="text"
+                                            name="major"
+                                            placeholder="e.g. Underwater Basket Weaving"
+                                            value={this.state.major}
+                                            onChange={this.handleAttributeChange}
+                                        />
+                                    </LabeledInput>
                                     <FileUploadContainer>
                                         <FileUpload
                                             defaultColor={this.props.userState.data.user.isResumeUploaded ? this.props.theme.success : this.props.theme.primary}
@@ -205,7 +206,7 @@ class Profile extends React.Component {
                         <p>You should receive a verification email at {this.props.userState.data.email}. After you verify your email you can continue setting up your profile!</p>
                     }
                 </FormContainer>
-            </Page>
+            </PageContainer>
         );
     }
 }

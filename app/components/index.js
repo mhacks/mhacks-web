@@ -7,6 +7,8 @@ import TabGroup from './TabGroup.jsx';
 import RoundedButton from './RoundedButton.jsx';
 import FileUpload from './FileUpload.jsx';
 import Alert from './Alert.jsx';
+import LabeledInput from './LabeledInput.jsx';
+import PageContainer from './PageContainer.jsx';
 
 export {
     TextSubmit,
@@ -17,5 +19,7 @@ export {
     TabGroup,
     RoundedButton,
     FileUpload,
-    Alert
+    Alert,
+    LabeledInput,
+    PageContainer
 };

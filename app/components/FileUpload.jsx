@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { devices } from '../styles';
 
 const Container = styled.div`
     display: block;
@@ -31,7 +32,11 @@ const Button = styled.div`
     order: 1;
     backgroundColor: ${props => props.backgroundColor};
     color: white;
-    padding: 12px 20px;
+    padding: 12px 10px;
+
+    ${devices.small`
+        padding: 12px 20px;
+    `}
 `;
 
 const FileName = styled.div`

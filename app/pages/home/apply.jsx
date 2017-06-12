@@ -8,6 +8,7 @@ import { NavLink } from 'react-router-dom';
 import { SectionHeader, SectionBody } from './section_components.jsx';
 
 const StyledNavLink = styled(NavLink)`
+    display: inline-block;
     fontSize: 20px;
     padding: 5px 35px;
     margin: 0px 15px;
@@ -56,7 +57,6 @@ class Apply extends React.Component {
                         Log In
                         </StyledNavLink>
                     }
-
                 </StyledNavLinkWrapper>
             </div>
         );

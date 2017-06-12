@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { slide as Menu } from 'react-burger-menu'
 import { routes } from '../constants';
 import { Container } from '../components';
-import { devices, burger_styles } from '../styles';
+import { devices } from '../styles';
 
 const HeaderLogoImage = require('../../static/icons/nano-logo.png');
 const Favicon = require('../../static/nano/favicon.png');
@@ -40,8 +40,12 @@ const FlexWrapper = styled.div`
 `;
 
 const Logo = styled.img`
-    height: 70px;
+    height: 50px;
     display: block;
+
+    ${devices.small`
+        height: 70px;
+    `}
 `;
 
 const NavContainer = styled.div`
@@ -83,6 +87,56 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 const Burger = styled.div`
+    .bm-burger-button {
+      position: fixed;
+      width: 36px;
+      height: 30px;
+      right: 36px;
+      top: 40px;
+    }
+
+    .bm-burger-bars {
+      background: ${props => props.primaryColor};
+    }
+
+    .bm-cross-button {
+      height: 24px;
+      width: 24px;
+    }
+
+    .bm-cross {
+      background: ${props => props.primaryColor};
+    }
+
+    .bm-menu {
+      background: white;
+      padding: 2.5em 1.5em 0;
+      font-size: 1.15em;
+    }
+
+    .bm-morph-shape {
+      fill: #373a47;
+    }
+
+    .bm-item-list {
+      color: white;
+      padding: 0.8em;
+    }
+
+    .bm-overlay {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .bm-menu-wrap {
+        top: 0;
+    }
+
+    ${devices.small`
+        .bm-burger-button {
+            top: 50px;
+        }
+    `}
+
     ${devices.tablet`
         display: none;
     `}
@@ -137,8 +191,10 @@ class Header extends React.Component {
                                     </StyledNavLink>
                                 }
                             </NavContainer>
-                            <Burger>
-                                <Menu right styles={ burger_styles }>
+                            <Burger
+                                primaryColor={this.props.theme.primary}
+                            >
+                                <Menu right>
                                     {!isLoggedIn || !isEmailVerified || isApplicationSubmitted ?
                                         null :
                                         <StyledNavLink
