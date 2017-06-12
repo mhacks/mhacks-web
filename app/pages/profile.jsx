@@ -25,7 +25,7 @@ const Flexer = styled.div`
 `;
 
 const InputContainer = styled.div`
-    margin: 20px 0 30px 0;
+    marginBottom: 30px;
 `;
 
 const ButtonGroup = styled.div`
@@ -42,11 +42,15 @@ const SectionHeader = styled.h2`
 `;
 
 const FileUploadContainer = styled.div`
-    marginTop: 10px;
+    marginTop: 30px;
 `;
 
 const AlertContainer = styled.div`
     marginTop: 30px;
+`;
+
+const Subhead = styled.p`
+    margin: 20px 0 0 0;
 `;
 
 class Profile extends React.Component {
@@ -149,7 +153,7 @@ class Profile extends React.Component {
                                 </AlertContainer> :
                                 null
                             }
-                            <p>Update your profile with some info about yourself. This will be automatically populated into your application and persist through hackathons!</p>
+                            <Subhead>Update your profile with some info about yourself. This will be automatically populated into your application and persist through hackathons!</Subhead>
                             <Flexer>
                                 <InputContainer>
                                     <LabeledInput

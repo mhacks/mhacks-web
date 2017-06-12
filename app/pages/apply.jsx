@@ -42,7 +42,7 @@ const SectionHeader = styled.h2`
 `;
 
 const FileUploadContainer = styled.div`
-    marginTop: 10px;
+    marginTop: 30px;
 `;
 
 const AlertContainer = styled.div`
