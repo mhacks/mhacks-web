@@ -154,6 +154,7 @@ class Profile extends React.Component {
                                             id="birthday"
                                             type="date"
                                             name="birthday"
+                                            placeholder="mm/dd/yyyy"
                                             value={this.state.birthday}
                                             onChange={this.handleAttributeChange}
                                         />
