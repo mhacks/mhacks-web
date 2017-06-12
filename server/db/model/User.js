@@ -304,7 +304,7 @@ schema.methods.sendPasswordResetEmail = function() {
         config.password_reset_email_template,
         {
             update_password_url: config.host +
-                '/auth/passwordreset/' +
+                '/v1/auth/password/' +
                 this.generatePasswordResetToken()
         },
         config.password_reset_email_subject,

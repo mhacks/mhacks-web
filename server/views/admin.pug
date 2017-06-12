@@ -10,6 +10,12 @@ html(lang='en')
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin="anonymous")
         link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
         link(href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel="stylesheet", integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin="anonymous")
+        script.
+            function sendVerificationEmail(email) {
+                $.post('/v1/auth/verify', {email: email}, function (data) {
+                    console.log(data);
+                });
+            }
     body
         // Fixed navbar
         .navbar.navbar-default.navbar-fixed-top(role='navigation')
@@ -62,14 +68,15 @@ html(lang='en')
                                     td=val.email
                                     td
                                         if val.email_verified
-                                            i.fa.fa-check
+                                            i.fa.fa-check(style='color: #2ECC40')
                                         else
-                                            i.fa.fa-times
+                                            a(onclick='sendVerificationEmail("' + val.email + '");')
+                                                i.fa.fa-times(style='color: #FF4136')
                                     td
                                         if val.application_submitted
-                                            i.fa.fa-check
+                                            i.fa.fa-check(style='color: #2ECC40')
                                         else
-                                            i.fa.fa-times
+                                            i.fa.fa-times(style='color: #FF4136')
                                     td=val.birthday ? (birthday.getUTCMonth() + 1) + '/' + birthday.getUTCDate() + '/' + birthday.getUTCFullYear() : ''
                                     td=(created_at.getUTCMonth() + 1) + '/' + created_at.getUTCDate() + '/' + created_at.getUTCFullYear()
                                     td=val.major ? val.major.substr(0, 30) + (val.major.substr(0, 30).length < val.major.length ? '...' : '') : ''
