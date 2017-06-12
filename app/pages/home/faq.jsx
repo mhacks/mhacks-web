@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ExpandingItem } from '../../components';
+import { SectionHeader } from './section_components.jsx';
+
 
 const FaqSectionHeader = styled.h2`
     fontSize: 20px;
@@ -38,6 +40,7 @@ class Faq extends React.Component {
     render() {
         return (
             <div>
+                <SectionHeader>Frequently Asked Questions</SectionHeader>
                 <FaqSectionHeader>General</FaqSectionHeader>
                     <Section>
                         <FaqItem

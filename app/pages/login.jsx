@@ -128,7 +128,7 @@ class Login extends React.Component {
                                         id="name"
                                         type="text"
                                         name="name"
-                                        placeholder="Hacker mcHackerface"
+                                        placeholder="Name (e.g. Hacker McHackerface)"
                                         value={this.state.name}
                                         onChange={this.handleAttributeChange.bind(this)}
                                     /> :
@@ -138,7 +138,7 @@ class Login extends React.Component {
                                     id="email"
                                     type="email"
                                     name="email"
-                                    placeholder="hacker@umich.edu"
+                                    placeholder="Email (e.g. hacker@umich.edu)"
                                     value={this.state.email}
                                     onChange={this.handleAttributeChange.bind(this)}
                                 />
@@ -146,7 +146,7 @@ class Login extends React.Component {
                                     id="password"
                                     type="password"
                                     name="password"
-                                    placeholder="hunter2"
+                                    placeholder="Password (e.g. hunter2)"
                                     value={this.state.password}
                                     onChange={this.handleAttributeChange.bind(this)}
                                 />
