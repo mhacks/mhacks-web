@@ -1,5 +1,6 @@
 var mongoose = require('../index.js'),
     User = require('./User.js'),
+    sanitizerPlugin = require('mongoose-sanitizer-plugin'),
     config = require('../../../config/default.js');
 
 // Define the document Schema
@@ -50,6 +51,8 @@ schema.methods.getResume = function() {
         config.host + '/v1/artifact/resume/' + this.user + '?application=true'
     );
 };
+
+schema.plugin(sanitizerPlugin);
 
 // Initialize the model with the schema, and export it
 var model = mongoose.model('Application', schema);

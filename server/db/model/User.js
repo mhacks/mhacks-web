@@ -4,6 +4,7 @@ var bcrypt = require('bcrypt'),
     config = require('../../../config/default.js'),
     Email = require('../../interactors/email.js'),
     crypto = require('crypto'),
+    sanitizerPlugin = require('mongoose-sanitizer-plugin'),
     secret = config.secret;
 
 // Define the document Schema
@@ -396,6 +397,8 @@ var passwordMiddleware = function(next) {
 schema.pre('save', passwordMiddleware);
 schema.pre('findOneAndUpdate', passwordMiddleware);
 schema.pre('update', passwordMiddleware);
+
+schema.plugin(sanitizerPlugin);
 
 // Initialize the model with the schema, and export it
 var model = mongoose.model('User', schema);

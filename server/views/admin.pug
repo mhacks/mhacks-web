@@ -31,6 +31,8 @@ html(lang='en')
                             a(href='#users') Users
                     ul.nav.navbar-nav.navbar-right
                         li
+                            a(href='/profile')=currentUser.email
+                        li
                             a(href='/logout') Logout
         .container(style='padding-top: 60px;')
             .row
@@ -56,7 +58,7 @@ html(lang='en')
                                 - var created_at = new Date(val.created_at)
                                 tr#table-body-row-unchained
                                     th=(index + 1)
-                                    td=val.full_name
+                                    td=val.full_name ? val.full_name.substr(0, 30) + (val.full_name.substr(0, 30).length < val.full_name.length ? '...' : '') : ''
                                     td=val.email
                                     td
                                         if val.email_verified
@@ -68,10 +70,10 @@ html(lang='en')
                                             i.fa.fa-check
                                         else
                                             i.fa.fa-times
-                                    td=(birthday.getUTCMonth() + 1) + '/' + birthday.getUTCDate() + '/' + birthday.getUTCFullYear()
+                                    td=val.birthday ? (birthday.getUTCMonth() + 1) + '/' + birthday.getUTCDate() + '/' + birthday.getUTCFullYear() : ''
                                     td=(created_at.getUTCMonth() + 1) + '/' + created_at.getUTCDate() + '/' + created_at.getUTCFullYear()
-                                    td=val.major
-                                    td=val.university
+                                    td=val.major ? val.major.substr(0, 30) + (val.major.substr(0, 30).length < val.major.length ? '...' : '') : ''
+                                    td=val.university ? val.university.substr(0, 30) + (val.university.substr(0, 30).length < val.university.length ? '...' : '') : ''
                                     td
                                         each url in val.getAvatars()
                                             img(src=url, onerror='$(this).hide()', height='50px', width='50px')
@@ -101,10 +103,10 @@ html(lang='en')
                                 tr#table-body-row-unchained
                                     th=(index + 1)
                                     td=val.user
-                                    td=(birthday.getUTCMonth() + 1) + '/' + birthday.getUTCDate() + '/' + birthday.getUTCFullYear()
+                                    td=val.birthday ? (birthday.getUTCMonth() + 1) + '/' + birthday.getUTCDate() + '/' + birthday.getUTCFullYear() : ''
                                     td=(created_at.getUTCMonth() + 1) + '/' + created_at.getUTCDate() + '/' + created_at.getUTCFullYear()
-                                    td=val.major
-                                    td=val.university
+                                    td=val.major ? val.major.substr(0, 30) + (val.major.substr(0, 30).length < val.major.length ? '...' : '') : ''
+                                    td=val.university ? val.university.substr(0, 30) + (val.university.substr(0, 30).length < val.university.length ? '...' : '') : ''
                                     td=val.tshirt_size.toUpperCase()
                                     td=val.experience
                                     if val.resume
