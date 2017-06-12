@@ -116,7 +116,7 @@ router.post('/webhook/slack', function(req, res) {
                         .productionDamageReport()
                         .then(result => {
                             slack.postSnippet(config.slack_token, {
-                                channels: req.body.channel,
+                                channels: req.body.channel_id,
                                 content: deploy.formatResponse(result),
                                 title: new Date().toString() +
                                     ' Production Damage Report'
@@ -124,7 +124,7 @@ router.post('/webhook/slack', function(req, res) {
                         })
                         .catch(err => {
                             slack.postSnippet(config.slack_token, {
-                                channels: req.body.channel,
+                                channels: req.body.channel_id,
                                 content: deploy.formatResponse(err),
                                 title: new Date().toString() +
                                     ' Production Damage Report Error'
@@ -140,7 +140,7 @@ router.post('/webhook/slack', function(req, res) {
                         .stagingDamageReport()
                         .then(result => {
                             slack.postSnippet(config.slack_token, {
-                                channels: req.body.channel,
+                                channels: req.body.channel_id,
                                 content: deploy.formatResponse(result),
                                 title: new Date().toString() +
                                     ' Staging Damage Report'
@@ -148,7 +148,7 @@ router.post('/webhook/slack', function(req, res) {
                         })
                         .catch(err => {
                             slack.postSnippet(config.slack_token, {
-                                channels: req.body.channel,
+                                channels: req.body.channel_id,
                                 content: deploy.formatResponse(err),
                                 title: new Date().toString() +
                                     ' Staging Damage Report Error'
