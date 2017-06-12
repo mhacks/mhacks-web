@@ -19,6 +19,7 @@ const Container = styled.div`
     height: 100%;
     width: 80%;
     margin: ${contentHeight}px auto;
+    overflowX: hidden;
 
     ${devices.tablet`
         height: calc(100vh - ${contentHeight*2}px);
