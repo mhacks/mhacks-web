@@ -85,7 +85,7 @@ class Faq extends React.Component {
                         />
                         <FaqItem
                             header="Can we apply as a team?"
-                            body="Yes! Add your teammates to your application to form a team."
+                            body="You can form a team when submitting your hack."
                         />
                     </Section>
                 <FaqSectionHeader>Hacking</FaqSectionHeader>
