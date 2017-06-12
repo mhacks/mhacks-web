@@ -149,7 +149,9 @@ class Profile extends React.Component {
                             }
                             {this.props.userState.data.isApplied ?
                                 <AlertContainer>
-                                    <Alert message={'Your application is submitted! Thanks for applying to MHacks Nano'} />
+                                    <Alert
+                                        message={'Your application is submitted! Thanks for applying to MHacks Nano'}
+                                    />
                                 </AlertContainer> :
                                 null
                             }
