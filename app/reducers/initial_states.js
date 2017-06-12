@@ -25,7 +25,7 @@ const initialUserState = {
     data: {
         isLoggedIn: false,
         isEmailVerified: false,
-        isApplied: false,
+        isApplicationSubmitted: false,
         token: null,
         email: null,
         user: {}

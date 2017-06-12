@@ -15,7 +15,8 @@ const Wrapper = styled.div`
     left: 0;
     right: 0;
     paddingTop: 30px
-    paddingBottom: 10px
+    paddingBottom: 30px
+    zIndex: 100;
 
     display: flex;
     height: 90px;
@@ -68,7 +69,7 @@ const StyledNavLink = styled(NavLink)`
 
 class Header extends React.Component {
     render() {
-        const { isLoggedIn, isApplied, isEmailVerified } = this.props.userState.data;
+        const { isLoggedIn, isApplicationSubmitted, isEmailVerified } = this.props.userState.data;
 
         return (
             <Wrapper>
@@ -76,7 +77,7 @@ class Header extends React.Component {
                     <FlexWrapper>
                         <NavLink to={routes.HOME}><Logo src={HeaderLogoImage} /></NavLink>
                         <NavContainer>
-                            {!isLoggedIn || !isEmailVerified || isApplied ?
+                            {!isLoggedIn || !isEmailVerified || isApplicationSubmitted ?
                                 null :
                                 <StyledNavLink
                                     to={routes.APPLY}
