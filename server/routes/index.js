@@ -4,25 +4,43 @@ var router = require('express').Router(),
     Application = require('../db/model/Application.js');
 
 router.get('/admin', authMiddleware('admin', 'web'), function(req, res) {
-    User.find().byToken(req.authToken).exec().then(user => {
-        User.find().exec().then(users => {
-            Application.find().exec().then(applications => {
-                res.render('admin', {
-                    user: User,
-                    application: Application,
-                    users: users,
-                    applications: applications,
-                    currentUser: user
-                });
-            }).catch(err => {
-                console.error(err);
+    User.find()
+        .byToken(req.authToken)
+        .exec()
+        .then(user => {
+            User.find()
+                .exec()
+                .then(users => {
+                    Application.find()
+                        .exec()
+                        .then(applications => {
+                            res.render('admin', {
+                                user: User,
+                                application: Application,
+                                users: users,
+                                applications: applications,
+                                currentUser: user
+                            });
+                        })
+                        .catch(err => {
+                            console.error(err);
 
-                res.send({
-                    status: false,
-                    message: err
+                            res.send({
+                                status: false,
+                                message: err
+                            });
+                        });
+                })
+                .catch(err => {
+                    console.error(err);
+
+                    res.send({
+                        status: false,
+                        message: err
+                    });
                 });
-            });
-        }).catch(err => {
+        })
+        .catch(err => {
             console.error(err);
 
             res.send({
@@ -30,14 +48,6 @@ router.get('/admin', authMiddleware('admin', 'web'), function(req, res) {
                 message: err
             });
         });
-    }).catch(err => {
-        console.error(err);
-
-        res.send({
-            status: false,
-            message: err
-        });
-    });
 });
 
 module.exports = router;

@@ -58,7 +58,11 @@ module.exports = function(groupName, checkType, verifiedEmail) {
                             .then(() => {
                                 groupCheck(groupName, user)
                                     .then(() => {
-                                        callNext(req, user.tokens[0].token, next);
+                                        callNext(
+                                            req,
+                                            user.tokens[0].token,
+                                            next
+                                        );
                                     })
                                     .catch(() => {
                                         returnFailure(

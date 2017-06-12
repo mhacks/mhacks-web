@@ -1,7 +1,6 @@
 var router = require('express').Router(),
     validator = require('validator'),
     Responses = require('../../responses/api'),
-    crypto = require('crypto'),
     authMiddleware = require('../../middleware/auth.js'),
     User = require('../../db/model/User.js'),
     config = require('../../../config/default.js'),
