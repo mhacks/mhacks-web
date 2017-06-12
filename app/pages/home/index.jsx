@@ -113,6 +113,7 @@ class HomePage extends React.Component {
                         </div>
                         <div id="rules">
                             <Rules />
+                        </div>
                         <div id="faq">
                             <Faq />
                         </div>
