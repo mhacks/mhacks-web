@@ -28,7 +28,7 @@ function postSnippet(token, message) {
         uri: 'https://slack.com/api/files.upload',
         form: {
             token: token,
-            channel: message.channel,
+            channels: message.channels,
             content: message.content,
             title: message.title
         }
