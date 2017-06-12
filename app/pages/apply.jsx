@@ -51,6 +51,16 @@ const FileUploadContainer = styled.div`
     marginTop: 10px;
 `;
 
+const LegalText = styled.p`
+    fontSize: 15px;
+    color: gray;
+`;
+
+const LegalLink = styled.a`
+    color: ${props => props.theme.teal};
+    textDecoration: none;
+`;
+
 class Apply extends React.Component {
     constructor(props) {
         super(props);
@@ -184,6 +194,9 @@ class Apply extends React.Component {
                                 Submit
                                 </RoundedButton>
                             </ButtonGroup>
+                            <LegalText>
+                                By applying to MHacks Nano, you agree to the MHacks <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">Code of Conduct</LegalLink>.
+                            </LegalText>
                         </Flexer>
                     </form>
                 </FormContainer>
