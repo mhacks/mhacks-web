@@ -3,20 +3,11 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ProfileThunks } from '../actions';
 
-import { RoundedButton, FileUpload, Alert, LabeledInput } from '../components';
-
-/* Containers */
-const Page = styled.div`
-    display: flex;
-    alignItems: center;
-    justifyContent: center;
-    height: 100vh;
-`;
+import { PageContainer, RoundedButton, FileUpload, Alert, LabeledInput } from '../components';
 
 const FormContainer = styled.div`
-    width: 500px;
-    maxWidth: calc(100% - 40px);
-    margin: 40px auto;
+    maxWidth: 500px;
+    margin: 0 auto;
 `;
 
 const Flexer = styled.div`
@@ -132,7 +123,7 @@ class Profile extends React.Component {
 
     render() {
         return (
-            <Page>
+            <PageContainer>
                 <FormContainer>
                     <SectionHeader color={this.props.theme.primary}>
                         {this.props.userState.data.isEmailVerified ? 'Profile' : 'Unverified Email'}
@@ -214,7 +205,7 @@ class Profile extends React.Component {
                         <p>You should receive a verification email at {this.props.userState.data.email}. After you verify your email you can continue setting up your profile!</p>
                     }
                 </FormContainer>
-            </Page>
+            </PageContainer>
         );
     }
 }

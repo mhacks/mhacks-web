@@ -31,7 +31,6 @@ const Container = styled.div`
         width: 60%;
         height: calc(100vh - ${contentHeight*2}px);
     `}
-
 `;
 
 const Sidebar = styled.div`

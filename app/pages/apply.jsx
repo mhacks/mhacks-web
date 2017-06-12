@@ -3,20 +3,11 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ProfileThunks, ApplicationThunks } from '../actions';
 import { routes } from '../constants';
-import { RoundedButton, FileUpload, Alert, LabeledInput } from '../components';
-
-/* Containers */
-const Page = styled.div`
-    display: flex;
-    alignItems: center;
-    justifyContent: center;
-    height: 100vh;
-`;
+import { PageContainer, RoundedButton, FileUpload, Alert, LabeledInput } from '../components';
 
 const FormContainer = styled.div`
-    width: 500px;
-    maxWidth: calc(100% - 40px);
-    margin: 40px auto;
+    maxWidth: 500px;
+    margin: 0 auto;
 `;
 
 const Flexer = styled.div`
@@ -148,7 +139,7 @@ class Apply extends React.Component {
 
     render() {
         return (
-            <Page>
+            <PageContainer>
                 <FormContainer>
                     <SectionHeader color={this.props.theme.primary}>
                         Application
@@ -251,7 +242,7 @@ class Apply extends React.Component {
                         </Flexer>
                     </form>
                 </FormContainer>
-            </Page>
+            </PageContainer>
         );
     }
 }

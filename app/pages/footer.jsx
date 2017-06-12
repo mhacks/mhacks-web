@@ -10,6 +10,7 @@ const TwitterImg = require('../../static/icons/twitter.png');
 
 /* Footer Style */
 const FooterWrapper = styled.div`
+    marginTop: 40px;
     ${devices.tablet`
         position: fixed;
         bottom: 0;
