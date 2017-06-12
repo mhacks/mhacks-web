@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ProfileThunks, ApplicationThunks } from '../actions';
 import { routes } from '../constants';
-import { RoundedButton, FileUpload, Alert } from '../components';
+import { RoundedButton, FileUpload, Alert, LabeledInput } from '../components';
 
 /* Containers */
 const Page = styled.div`
@@ -43,30 +43,6 @@ const SectionHeader = styled.h2`
 
 const FileUploadContainer = styled.div`
     marginTop: 10px;
-`;
-
-const InputField = styled.div`
-    width: 100%;
-    margin: 10px 0;
-    display: flex;
-    justifyContent: space-between;
-
-    p {
-        width: 160px;
-    }
-
-    select {
-        background: none;
-        borderColor: rgb(215, 215, 215);
-        marginLeft: 30px;
-        flexGrow: 1;
-    }
-
-    input {
-        marginLeft: 30px;
-        paddingLeft: 10px;
-        flexGrow: 1;
-    }
 `;
 
 const AlertContainer = styled.div`
@@ -186,41 +162,44 @@ class Apply extends React.Component {
                         }
                         <Flexer>
                             <InputContainer>
-                                <InputField>
-                                    <p>Date of Birth</p>
+                                <LabeledInput
+                                    label="Date of Birth"
+                                >
                                     <input
                                         id="birthday"
                                         type="date"
                                         name="birthday"
-                                        placeholder="01/01/1970"
                                         value={this.state.birthday}
                                         onChange={this.handleAttributeChange}
                                     />
-                                </InputField>
-                                <InputField>
-                                    <p>University</p>
+                                </LabeledInput>
+                                <LabeledInput
+                                    label="University"
+                                >
                                     <input
                                         id="university"
                                         type="text"
                                         name="university"
-                                        placeholder="University of Michigan"
+                                        placeholder="e.g. University of Michigan"
                                         value={this.state.university}
                                         onChange={this.handleAttributeChange}
                                     />
-                                </InputField>
-                                <InputField>
-                                    <p>Major</p>
+                                </LabeledInput>
+                                <LabeledInput
+                                    label="Major"
+                                >
                                     <input
                                         id="major"
                                         type="text"
                                         name="major"
-                                        placeholder="Underwater Basket Weaving"
+                                        placeholder="e.g. Underwater Basket Weaving"
                                         value={this.state.major}
                                         onChange={this.handleAttributeChange}
                                     />
-                                </InputField>
-                                <InputField>
-                                    <p>T-Shirt Size</p>
+                                </LabeledInput>
+                                <LabeledInput
+                                    label="T-Shirt Size"
+                                >
                                     <select
                                         name="tshirt"
                                         value={this.state.tshirt}
@@ -234,19 +213,20 @@ class Apply extends React.Component {
                                         <option value="2xl">2XL</option>
                                         <option value="3xl">3XL</option>
                                     </select>
-                                </InputField>
-                                <InputField>
-                                    <p>Hackathons Attended</p>
+                                </LabeledInput>
+                                <LabeledInput
+                                    label="Experience"
+                                >
                                     <select
                                         name="hackathonExperience"
                                         value={this.state.hackathonExperience}
                                         onChange={this.handleAttributeChange}
                                     >
-                                        <option value="novice">0-1 (Novice)</option>
-                                        <option value="experienced">2-5 (Experienced)</option>
-                                        <option value="veteran">6+ (Veteran)</option>
+                                        <option value="novice">0-1 Hackathons (Novice)</option>
+                                        <option value="experienced">2-5 Hackathons (Experienced)</option>
+                                        <option value="veteran">6+ Hackathons (Veteran)</option>
                                     </select>
-                                </InputField>
+                                </LabeledInput>
                                 <FileUploadContainer>
                                     <FileUpload
                                         defaultColor={this.props.userState.data.user.isResumeUploaded ? this.props.theme.success : this.props.theme.primary}

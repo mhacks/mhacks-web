@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ProfileThunks } from '../actions';
 
-import { RoundedButton, FileUpload, Alert } from '../components';
+import { RoundedButton, FileUpload, Alert, LabeledInput } from '../components';
 
 /* Containers */
 const Page = styled.div`
@@ -26,12 +26,6 @@ const Flexer = styled.div`
 
 const InputContainer = styled.div`
     margin: 20px 0 30px 0;
-`;
-
-const Input = styled.input`
-    width: 100%;
-    margin: 10px 0;
-    padding: 8px;
 `;
 
 const ButtonGroup = styled.div`
@@ -158,30 +152,41 @@ class Profile extends React.Component {
                             <p>Update your profile with some info about yourself. This will be automatically populated into your application and persist through hackathons!</p>
                             <Flexer>
                                 <InputContainer>
-                                    <Input
-                                        id="birthday"
-                                        type="date"
-                                        name="birthday"
-                                        placeholder="Birthday (e.g. 01/01/1970)"
-                                        value={this.state.birthday}
-                                        onChange={this.handleAttributeChange}
-                                    />
-                                    <Input
-                                        id="university"
-                                        type="text"
-                                        name="university"
-                                        placeholder="School (e.g. University of Michigan)"
-                                        value={this.state.university}
-                                        onChange={this.handleAttributeChange}
-                                    />
-                                    <Input
-                                        id="major"
-                                        type="text"
-                                        name="major"
-                                        placeholder="Area of Study (e.g. Underwater Basket Weaving)"
-                                        value={this.state.major}
-                                        onChange={this.handleAttributeChange}
-                                    />
+                                    <LabeledInput
+                                        label="Date of Birth"
+                                    >
+                                        <input
+                                            id="birthday"
+                                            type="date"
+                                            name="birthday"
+                                            value={this.state.birthday}
+                                            onChange={this.handleAttributeChange}
+                                        />
+                                    </LabeledInput>
+                                    <LabeledInput
+                                        label="University"
+                                    >
+                                        <input
+                                            id="university"
+                                            type="text"
+                                            name="university"
+                                            placeholder="e.g. University of Michigan"
+                                            value={this.state.university}
+                                            onChange={this.handleAttributeChange}
+                                        />
+                                    </LabeledInput>
+                                    <LabeledInput
+                                        label="Major"
+                                    >
+                                        <input
+                                            id="major"
+                                            type="text"
+                                            name="major"
+                                            placeholder="e.g. Underwater Basket Weaving"
+                                            value={this.state.major}
+                                            onChange={this.handleAttributeChange}
+                                        />
+                                    </LabeledInput>
                                     <FileUploadContainer>
                                         <FileUpload
                                             defaultColor={this.props.userState.data.user.isResumeUploaded ? this.props.theme.success : this.props.theme.primary}
