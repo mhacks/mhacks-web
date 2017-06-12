@@ -130,7 +130,7 @@ class Apply extends React.Component {
                                     id="birthday"
                                     type="date"
                                     name="birthday"
-                                    placeholder="01/01/1970"
+                                    placeholder="Birthday (e.g. 01/01/1970)"
                                     value={this.state.birthday}
                                     onChange={this.handleAttributeChange}
                                 />
@@ -138,7 +138,7 @@ class Apply extends React.Component {
                                     id="university"
                                     type="text"
                                     name="university"
-                                    placeholder="University of Michigan"
+                                    placeholder="School (e.g. University of Michigan)"
                                     value={this.state.university}
                                     onChange={this.handleAttributeChange}
                                 />
@@ -146,11 +146,12 @@ class Apply extends React.Component {
                                     id="major"
                                     type="text"
                                     name="major"
-                                    placeholder="Underwater Basket Weaving"
+                                    placeholder="Area of Study (e.g. Underwater Basket Weaving)"
                                     value={this.state.major}
                                     onChange={this.handleAttributeChange}
                                 />
                                 <select name="tshirt">
+                                    <option value="" disabled selected hidden>Shirt Size</option>
                                     <option value="xs">XS</option>
                                     <option value="s">S</option>
                                     <option value="m">M</option>
@@ -163,7 +164,7 @@ class Apply extends React.Component {
                                     id="major"
                                     type="text"
                                     name="major"
-                                    placeholder="Underwater Basket Weaving"
+                                    placeholder="Area of Study (e.g. Underwater Basket Weaving)"
                                     value={this.state.major}
                                     onChange={this.handleAttributeChange}
                                 />
