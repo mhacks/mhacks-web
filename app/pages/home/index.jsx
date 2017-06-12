@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { devices } from '../../styles';
-import { SectionHeader, SectionBody } from './section_components.jsx';
 
 const Favicon = require('../../../static/blackout/favicon.png');
 
