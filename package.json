@@ -11,7 +11,7 @@
         "startweb": "webpack-dev-server --progress --colors --inline --watch --hot --devtool source-map --history-api-fallback --host 0.0.0.0 --port 3000",
         "startprod": "npm run build && NODE_ENV=production npm run start",
         "build": "webpack --progress --colors",
-        "test": "yarn run lint && yarn run prettier",
+        "test": "yarn run lint && yarn run prettier && yarn run build",
         "lint": "eslint server/ app/ config/",
         "prettier": "ci/prettier.sh"
     },

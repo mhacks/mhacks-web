@@ -8,6 +8,8 @@ services:
     extends:
       file: docker-compose.yml
       service: mhacks_db
+    volumes:
+      - /data/mongodb:/data/db
   mhacks_website:
     extends:
       file: docker-compose.yml

@@ -1,4 +1,4 @@
-var mongoose = require('../index.js'), User = require('./User.js');
+var mongoose = require('../index.js'), User = require('./User.js'), config = require('../../../config/default.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema({
@@ -14,7 +14,11 @@ var schema = new mongoose.Schema({
         type: String,
         enum: ['novice', 'experienced', 'veteran']
     },
-    resume: String
+    resume: String,
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
 });
 
 // Allow us to query by token
@@ -37,6 +41,10 @@ schema.methods.updateFields = function(fields) {
         this[param] = fields[param];
     }
     this.save();
+};
+
+schema.methods.getResume = function() {
+    return config.host + '/v1/artifact/resume/' + this.user + '?application=true';
 };
 
 // Initialize the model with the schema, and export it
