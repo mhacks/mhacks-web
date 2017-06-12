@@ -8,7 +8,8 @@ export default class AuthRequests {
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),
-            body: JSON.stringify(body)
+            body: JSON.stringify(body),
+            credentials: 'include'
         });
     }
 
@@ -18,13 +19,15 @@ export default class AuthRequests {
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),
-            body: JSON.stringify(body)
+            body: JSON.stringify(body),
+            credentials: 'include'
         });
     }
 
     static logout() {
         return fetch(endpoints.LOGOUT, {
-            method: 'post'
+            method: 'post',
+            credentials: 'include'
         });
     }
 }

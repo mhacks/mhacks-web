@@ -10,7 +10,7 @@ router.get('/resume/:email', authMiddleware('admin', 'api'), function(
     res
 ) {
     if (req.params.email && validator.isEmail(req.params.email)) {
-        artifact(req.params.email, 'resume')
+        artifact(req.params.email, 'resume', req.query.application)
             .then(stream => {
                 res.attachment(stream[0]);
                 res.send(stream[1].data.Body);

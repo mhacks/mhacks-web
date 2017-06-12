@@ -1,7 +1,6 @@
 var router = require('express').Router(),
     validator = require('validator'),
     Responses = require('../../responses/api'),
-    crypto = require('crypto'),
     authMiddleware = require('../../middleware/auth.js'),
     User = require('../../db/model/User.js'),
     config = require('../../../config/default.js'),
@@ -114,18 +113,7 @@ router.get('/profile', function(req, res) {
                     university: user.university,
                     groups: groups,
                     resume_uploaded: user.resume ? true : false,
-                    avatar: [
-                        config.host + '/v1/artifact/avatar/' + user.email,
-                        'https://www.gravatar.com/avatar/' +
-                            crypto
-                                .createHash('md5')
-                                .update(user.email)
-                                .digest('hex') +
-                            '?d=404',
-                        'https://api-avatar.trove.com/v1/avatar/' +
-                            user.email +
-                            '?fallback=true'
-                    ]
+                    avatar: user.getAvatars()
                 }
             });
         })

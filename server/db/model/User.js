@@ -3,6 +3,8 @@ var bcrypt = require('bcrypt'),
     mongoose = require('../index.js'),
     config = require('../../../config/default.js'),
     Email = require('../../interactors/email.js'),
+    crypto = require('crypto'),
+    sanitizerPlugin = require('mongoose-sanitizer-plugin'),
     secret = config.secret;
 
 // Define the document Schema
@@ -357,6 +359,22 @@ schema.methods.updateFields = function(fields) {
     this.save();
 };
 
+schema.methods.getAvatars = function() {
+    return [
+        config.host + '/v1/artifact/avatar/' + this.email,
+        'https://www.gravatar.com/avatar/' +
+            crypto.createHash('md5').update(this.email).digest('hex') +
+            '?d=404',
+        'https://api-avatar.trove.com/v1/avatar/' +
+            this.email +
+            '?fallback=true'
+    ];
+};
+
+schema.methods.getResume = function() {
+    return config.host + '/v1/artifact/resume/' + this.email;
+};
+
 // Password middleware to update passwords with bcrypt when needed
 var passwordMiddleware = function(next) {
     var user = this;
@@ -379,6 +397,8 @@ var passwordMiddleware = function(next) {
 schema.pre('save', passwordMiddleware);
 schema.pre('findOneAndUpdate', passwordMiddleware);
 schema.pre('update', passwordMiddleware);
+
+schema.plugin(sanitizerPlugin);
 
 // Initialize the model with the schema, and export it
 var model = mongoose.model('User', schema);
