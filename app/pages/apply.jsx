@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { ProfileThunks } from '../actions';
-
-import { RoundedButton, FileUpload } from '../components';
+import { ProfileThunks, ApplicationThunks } from '../actions';
+import { routes } from '../constants';
+import { RoundedButton, FileUpload, Alert } from '../components';
 
 /* Containers */
 const Page = styled.div`
@@ -28,12 +28,6 @@ const InputContainer = styled.div`
     margin: 20px 0 30px 0;
 `;
 
-const Input = styled.input`
-    width: 100%;
-    margin: 10px 0;
-    padding: 8px;
-`;
-
 const ButtonGroup = styled.div`
     display: flex;
     flexDirection: row;
@@ -51,6 +45,44 @@ const FileUploadContainer = styled.div`
     marginTop: 10px;
 `;
 
+const InputField = styled.div`
+    width: 100%;
+    margin: 10px 0;
+    display: flex;
+    justifyContent: space-between;
+
+    p {
+        width: 160px;
+    }
+
+    select {
+        background: none;
+        borderColor: rgb(215, 215, 215);
+        marginLeft: 30px;
+        flexGrow: 1;
+    }
+
+    input {
+        marginLeft: 30px;
+        paddingLeft: 10px;
+        flexGrow: 1;
+    }
+`;
+
+const AlertContainer = styled.div`
+    marginTop: 30px;
+`;
+
+const LegalText = styled.p`
+    fontSize: 15px;
+    color: gray;
+`;
+
+const LegalLink = styled.a`
+    color: ${props => props.theme.teal};
+    textDecoration: none;
+`;
+
 class Apply extends React.Component {
     constructor(props) {
         super(props);
@@ -60,7 +92,11 @@ class Apply extends React.Component {
         this.state = {
             birthday: userData.birthday ? new Date(userData.birthday).toISOString().split('T')[0] : '',
             university: userData.university || '',
-            major: userData.major || ''
+            major: userData.major || '',
+            isResumeUploaded: userData.isResumeUploaded || false,
+            tshirt: userData.tshirt || 'm',
+            hackathonExperience: userData.hackathonExperience || 'novice',
+            resume: null
         };
 
         this.onSubmit = this.onSubmit.bind(this);
@@ -70,6 +106,33 @@ class Apply extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(ProfileThunks.loadProfile());
+    }
+
+    componentWillUpdate(nextProps) {
+        if (nextProps.userState.data.isApplicationSubmitted) {
+            this.context.router.history.push(routes.PROFILE);
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const userData = this.props.userState.data.user;
+        const nextUserData = nextProps.userState.data.user;
+
+        if (nextProps.userState.fetching) {
+            return;
+        }
+
+        if (userData.birthday !== nextUserData ||
+            userData.university !== nextUserData.university ||
+            userData.major !== nextUserData.major ||
+            userData.isResumeUploaded !== nextUserData.isResumeUploaded) {
+                this.setState({
+                    birthday: nextUserData.birthday ? new Date(nextUserData.birthday).toISOString().split('T')[0] : '',
+                    university: nextUserData.university || '',
+                    major: nextUserData.major || '',
+                    isResumeUploaded: userData.isResumeUploaded || false
+                });
+            }
     }
 
     // Generic function for changing state
@@ -89,24 +152,22 @@ class Apply extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
-        const userData = this.props.userState.data.user;
-        var profile = {};
+        var application = {};
+        var files = {};
 
-        const inputBirthday = new Date(this.state.birthday);
+        const inputBirthday = (new Date(this.state.birthday)).getTime();
 
-        if (inputBirthday && inputBirthday !== userData.birthday) {
-            profile.birthday = inputBirthday;
+        application.birthday = inputBirthday;
+        application.major = this.state.major;
+        application.university = this.state.university;
+        application.tshirt_size = this.state.tshirt;
+        application.experience = this.state.hackathonExperience;
+
+        if (this.state.resume) {
+            files['resume'] = this.state.resume;
         }
 
-        if (this.state.major !== userData.major) {
-            profile.major = this.state.major;
-        }
-
-        if (this.state.university !== userData.university) {
-            profile.university = this.state.university;
-        }
-
-        this.props.dispatch(ProfileThunks.updateProfile(profile));
+        this.props.dispatch(ApplicationThunks.uploadApplication(application, files));
     }
 
     render() {
@@ -123,56 +184,76 @@ class Apply extends React.Component {
                             </AlertContainer> :
                             null
                         }
-                        <p>Update your profile with some info about yourself. This will be automatically populated into your application and persist through hackathons!</p>
                         <Flexer>
                             <InputContainer>
-                                <Input
-                                    id="birthday"
-                                    type="date"
-                                    name="birthday"
-                                    placeholder="01/01/1970"
-                                    value={this.state.birthday}
-                                    onChange={this.handleAttributeChange}
-                                />
-                                <Input
-                                    id="university"
-                                    type="text"
-                                    name="university"
-                                    placeholder="University of Michigan"
-                                    value={this.state.university}
-                                    onChange={this.handleAttributeChange}
-                                />
-                                <Input
-                                    id="major"
-                                    type="text"
-                                    name="major"
-                                    placeholder="Underwater Basket Weaving"
-                                    value={this.state.major}
-                                    onChange={this.handleAttributeChange}
-                                />
-                                <select name="tshirt">
-                                    <option value="xs">XS</option>
-                                    <option value="s">S</option>
-                                    <option value="m">M</option>
-                                    <option value="l">L</option>
-                                    <option value="xl">XL</option>
-                                    <option value="2xl">2XL</option>
-                                    <option value="3xl">3XL</option>
-                                </select>
-                                <Input
-                                    id="major"
-                                    type="text"
-                                    name="major"
-                                    placeholder="Underwater Basket Weaving"
-                                    value={this.state.major}
-                                    onChange={this.handleAttributeChange}
-                                />
+                                <InputField>
+                                    <p>Date of Birth</p>
+                                    <input
+                                        id="birthday"
+                                        type="date"
+                                        name="birthday"
+                                        placeholder="01/01/1970"
+                                        value={this.state.birthday}
+                                        onChange={this.handleAttributeChange}
+                                    />
+                                </InputField>
+                                <InputField>
+                                    <p>University</p>
+                                    <input
+                                        id="university"
+                                        type="text"
+                                        name="university"
+                                        placeholder="University of Michigan"
+                                        value={this.state.university}
+                                        onChange={this.handleAttributeChange}
+                                    />
+                                </InputField>
+                                <InputField>
+                                    <p>Major</p>
+                                    <input
+                                        id="major"
+                                        type="text"
+                                        name="major"
+                                        placeholder="Underwater Basket Weaving"
+                                        value={this.state.major}
+                                        onChange={this.handleAttributeChange}
+                                    />
+                                </InputField>
+                                <InputField>
+                                    <p>T-Shirt Size</p>
+                                    <select
+                                        name="tshirt"
+                                        value={this.state.tshirt}
+                                        onChange={this.handleAttributeChange}
+                                    >
+                                        <option value="xs">XS</option>
+                                        <option value="s">S</option>
+                                        <option value="m">M</option>
+                                        <option value="l">L</option>
+                                        <option value="xl">XL</option>
+                                        <option value="2xl">2XL</option>
+                                        <option value="3xl">3XL</option>
+                                    </select>
+                                </InputField>
+                                <InputField>
+                                    <p>Hackathons Attended</p>
+                                    <select
+                                        name="hackathonExperience"
+                                        value={this.state.hackathonExperience}
+                                        onChange={this.handleAttributeChange}
+                                    >
+                                        <option value="novice">0-1 (Novice)</option>
+                                        <option value="experienced">2-5 (Experienced)</option>
+                                        <option value="veteran">6+ (Veteran)</option>
+                                    </select>
+                                </InputField>
                                 <FileUploadContainer>
                                     <FileUpload
-                                        defaultColor={this.props.theme.primary}
+                                        defaultColor={this.props.userState.data.user.isResumeUploaded ? this.props.theme.success : this.props.theme.primary}
                                         hoverColor={this.props.theme.secondary}
                                         activeColor={this.props.theme.success}
                                         onFileSelect={this.handleFileUpload}
+                                        defaultText={this.props.userState.data.user.isResumeUploaded ? 'Resume Uploaded' : null}
                                     />
                                 </FileUploadContainer>
                             </InputContainer>
@@ -184,6 +265,9 @@ class Apply extends React.Component {
                                 Submit
                                 </RoundedButton>
                             </ButtonGroup>
+                            <LegalText>
+                                By applying to MHacks Nano, you agree to the MHacks <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">Code of Conduct</LegalLink>.
+                            </LegalText>
                         </Flexer>
                     </form>
                 </FormContainer>
@@ -191,6 +275,10 @@ class Apply extends React.Component {
         );
     }
 }
+
+Apply.contextTypes = {
+    router: React.PropTypes.object
+};
 
 function mapStateToProps(state) {
     return {
