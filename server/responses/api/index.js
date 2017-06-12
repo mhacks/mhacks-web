@@ -1,5 +1,6 @@
 var authResponses = require('./auth.js'),
     emailResponses = require('./email.js'),
+    applicationResponse = require('./deploy.js'),
     deployResponse = require('./deploy.js');
 
 var Responses = {
@@ -14,5 +15,6 @@ var Responses = {
 Responses.Auth = authResponses;
 Responses.Email = emailResponses;
 Responses.Deploy = deployResponse;
+Responses.Application = applicationResponse;
 
 module.exports = Responses;

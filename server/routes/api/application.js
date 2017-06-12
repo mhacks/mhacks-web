@@ -37,6 +37,11 @@ router.post(
                         status: false,
                         message: Responses.MISSING_PARAMETERS
                     });
+                } else if (user.application_submitted) {
+                    res.status(500).send({
+                        status: false,
+                        message: Responses.Application.ALREADY_SUBMITTED
+                    });
                 } else {
                     Application.create({
                         user: user.email,
