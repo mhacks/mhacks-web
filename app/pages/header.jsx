@@ -40,10 +40,20 @@ const Logo = styled.img`
     display: block;
 `;
 
+const HeaderNavLink = styled(NavLink)`
+    margin: auto;
+    ${devices.small`
+        marginLeft: 0;
+    `}
+`;
+
 const NavContainer = styled.div`
     display: flex;
     alignItems: center;
     justifyContent: flex-end;
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    marginRight: 0;
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -55,15 +65,19 @@ const StyledNavLink = styled(NavLink)`
     borderRadius: 5px;
     textDecoration: none;
     transition: all 0.3s;
+    marginTop: 10px;
 
     &:hover {
         backgroundColor: ${props => props.primaryColor};
         color: white;
     }
 
+
     &:first-child {
         margin: 0;
+        marginTop: 10px;
     }
+
 `;
 
 class Header extends React.Component {
@@ -74,7 +88,7 @@ class Header extends React.Component {
             <Wrapper>
                 <Container>
                     <FlexWrapper>
-                        <NavLink to={routes.HOME}><Logo src={HeaderLogoImage} /></NavLink>
+                        <HeaderNavLink to={routes.HOME}><Logo src={HeaderLogoImage} /></HeaderNavLink>
                         <NavContainer>
                             {!isLoggedIn || !isEmailVerified || isApplied ?
                                 null :
