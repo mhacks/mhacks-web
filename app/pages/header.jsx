@@ -21,10 +21,18 @@ const Wrapper = styled.div`
     zIndex: 100;
 
     display: flex;
-    height: 90px;
+    height: 140px;
     alignItems: center;
     justifyContent: flex-start;
     background: white;
+
+    ${devices.small`
+        height: 120px;
+    `}
+
+    ${devices.tablet`
+        height: 90px;
+    `}
 `;
 
 const FlexWrapper = styled.div`
@@ -45,6 +53,7 @@ const Logo = styled.img`
 
 const HeaderNavLink = styled(NavLink)`
     margin: auto;
+
     ${devices.small`
         marginLeft: 0;
     `}
@@ -74,7 +83,6 @@ const StyledNavLink = styled(NavLink)`
         backgroundColor: ${props => props.primaryColor};
         color: white;
     }
-
 
     &:first-child {
         margin: 0;
