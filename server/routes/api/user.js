@@ -107,6 +107,7 @@ router.get('/profile', function(req, res) {
                 user: {
                     email: user.email,
                     email_verified: user.email_verified,
+                    application_submitted: user.application_submitted,
                     full_name: user.full_name,
                     birthday: user.birthday,
                     major: user.major,

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ProfileThunks } from '../actions';
 
-import { RoundedButton, FileUpload } from '../components';
+import { RoundedButton, FileUpload, Alert } from '../components';
 
 /* Containers */
 const Page = styled.div`
@@ -51,6 +51,10 @@ const FileUploadContainer = styled.div`
     marginTop: 10px;
 `;
 
+const AlertContainer = styled.div`
+    marginTop: 30px;
+`;
+
 class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -84,11 +88,13 @@ class Profile extends React.Component {
 
         if (userData.birthday !== nextUserData ||
             userData.university !== nextUserData.university ||
-            userData.major !== nextUserData.major) {
+            userData.major !== nextUserData.major ||
+            userData.isResumeUploaded !== nextUserData.isResumeUploaded) {
                 this.setState({
                     birthday: nextUserData.birthday ? new Date(nextUserData.birthday).toISOString().split('T')[0] : '',
                     university: nextUserData.university || '',
-                    major: nextUserData.major || ''
+                    major: nextUserData.major || '',
+                    isResumeUploaded: userData.isResumeUploaded || false
                 });
             }
     }
@@ -113,7 +119,7 @@ class Profile extends React.Component {
         var profile = {};
         var files = {};
 
-        const inputBirthday = new Date(this.state.birthday);
+        const inputBirthday = (new Date(this.state.birthday)).getTime();
 
         profile.birthday = inputBirthday;
         profile.major = this.state.major;
@@ -138,6 +144,14 @@ class Profile extends React.Component {
                             {this.props.userState.error ?
                                 <AlertContainer>
                                     <Alert message={this.props.userState.message} />
+                                </AlertContainer> :
+                                null
+                            }
+                            {this.props.userState.data.isApplicationSubmitted ?
+                                <AlertContainer>
+                                    <Alert
+                                        message={'Your application is submitted! Thanks for applying to MHacks Nano'}
+                                    />
                                 </AlertContainer> :
                                 null
                             }
