@@ -19,16 +19,12 @@ var schema = new mongoose.Schema({
 
 // Allow us to query by token
 schema.query.byToken = function(findToken) {
-    const Application = this;
-
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
         User.find()
             .byToken(findToken)
             .exec()
             .then(user => {
-                const app = Application.findOne({ user: user.email });
-                console.log('app', app);
-                resolve(app);
+                resolve(this.findOne({ user: user.email }));
             })
             .catch(() => {
                 reject();

@@ -119,7 +119,7 @@ class Profile extends React.Component {
         var profile = {};
         var files = {};
 
-        const inputBirthday = + new Date(this.state.birthday);
+        const inputBirthday = (new Date(this.state.birthday)).getTime();
 
         profile.birthday = inputBirthday;
         profile.major = this.state.major;
@@ -147,7 +147,7 @@ class Profile extends React.Component {
                                 </AlertContainer> :
                                 null
                             }
-                            {this.props.userState.data.isApplied ?
+                            {this.props.userState.data.isApplicationSubmitted ?
                                 <AlertContainer>
                                     <Alert
                                         message={'Your application is submitted! Thanks for applying to MHacks Nano'}

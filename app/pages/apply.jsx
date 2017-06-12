@@ -99,7 +99,7 @@ class Apply extends React.Component {
     }
 
     componentWillUpdate(nextProps) {
-        if (nextProps.userState.data.isApplied) {
+        if (nextProps.userState.data.isApplicationSubmitted) {
             this.context.router.history.push(routes.PROFILE);
         }
     }
@@ -145,7 +145,7 @@ class Apply extends React.Component {
         var application = {};
         var files = {};
 
-        const inputBirthday = + new Date(this.state.birthday);
+        const inputBirthday = (new Date(this.state.birthday)).getTime();
 
         application.birthday = inputBirthday;
         application.major = this.state.major;

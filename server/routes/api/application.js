@@ -2,7 +2,6 @@ var router = require('express').Router(),
     Responses = require('../../responses/api'),
     User = require('../../db/model/User.js'),
     Application = require('../../db/model/Application.js'),
-    authMiddleware = require('../../middleware/auth.js'),
     config = require('../../../config/default.js'),
     uploadHelper = require('../../interactors/multer-s3.js')(
         config.AWS_BUCKET_NAME
@@ -10,7 +9,6 @@ var router = require('express').Router(),
 
 router.post(
     '/',
-    authMiddleware('any', 'api', true),
     uploadHelper.fields([{ name: 'resume' }]),
     function(req, res) {
         User.find()
@@ -33,12 +31,12 @@ router.post(
                         experience &&
                         (user.resume || (req.files && req.files.resume)))
                 ) {
-                    res.status(500).send({
+                    res.status(400).send({
                         status: false,
                         message: Responses.MISSING_PARAMETERS
                     });
                 } else if (user.application_submitted) {
-                    res.status(500).send({
+                    res.status(400).send({
                         status: false,
                         message: Responses.Application.ALREADY_SUBMITTED
                     });
