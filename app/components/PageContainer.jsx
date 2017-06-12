@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { devices } from '../styles';
 
-const verticalMargin = 90;
+const verticalMargin = 130;
 
 const PageContainer = styled.div`
     display: flex;
