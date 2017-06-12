@@ -162,7 +162,7 @@ class Profile extends React.Component {
                                         id="birthday"
                                         type="date"
                                         name="birthday"
-                                        placeholder="01/01/1970"
+                                        placeholder="Birthday (e.g. 01/01/1970)"
                                         value={this.state.birthday}
                                         onChange={this.handleAttributeChange}
                                     />
@@ -170,7 +170,7 @@ class Profile extends React.Component {
                                         id="university"
                                         type="text"
                                         name="university"
-                                        placeholder="University of Michigan"
+                                        placeholder="School (e.g. University of Michigan)"
                                         value={this.state.university}
                                         onChange={this.handleAttributeChange}
                                     />
@@ -178,7 +178,7 @@ class Profile extends React.Component {
                                         id="major"
                                         type="text"
                                         name="major"
-                                        placeholder="Underwater Basket Weaving"
+                                        placeholder="Area of Study (e.g. Underwater Basket Weaving)"
                                         value={this.state.major}
                                         onChange={this.handleAttributeChange}
                                     />
