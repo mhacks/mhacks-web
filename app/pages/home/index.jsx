@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { devices } from '../../styles';
+import { PageContainer } from '../../components';
 
 const Favicon = require('../../../static/blackout/favicon.png');
 
@@ -13,25 +14,7 @@ import Rules from './rules.jsx';
 import Schedule from './schedule.jsx';
 import Sponsorship from './sponsorship.jsx'
 
-const contentHeight = 130;
 const sidebarWidth = 200;
-
-const Container = styled.div`
-    display: flex;
-    height: 100%;
-    width: 80%;
-    margin: ${contentHeight}px auto;
-    overflowX: hidden;
-
-    ${devices.tablet`
-        height: calc(100vh - ${contentHeight*2}px);
-    `}
-
-    ${devices.desktop`
-        width: 60%;
-        height: calc(100vh - ${contentHeight*2}px);
-    `}
-`;
 
 const Sidebar = styled.div`
     display: None;
@@ -85,7 +68,7 @@ class HomePage extends React.Component {
                     <link rel="icon" type="image/x-icon" href={Favicon} />
                 </Helmet>
 
-                <Container>
+                <PageContainer>
                     <Sidebar>
                         <nav>
                             <SidebarLinks>
@@ -123,7 +106,7 @@ class HomePage extends React.Component {
                             <Apply />
                         </div>
                     </Content>
-                </Container>
+                </PageContainer>
             </div>
         );
     }
