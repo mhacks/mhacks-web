@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { slide as Menu } from 'react-burger-menu'
 import { routes } from '../constants';
 import { Container } from '../components';
-import { devices } from '../styles';
+import { devices, burger_styles } from '../styles';
 
 const HeaderLogoImage = require('../../static/icons/nano-logo.png');
 const Favicon = require('../../static/nano/favicon.png');
@@ -21,18 +22,10 @@ const Wrapper = styled.div`
     zIndex: 100;
 
     display: flex;
-    height: 140px;
+    height: 90;
     alignItems: center;
     justifyContent: flex-start;
     background: white;
-
-    ${devices.small`
-        height: 120px;
-    `}
-
-    ${devices.tablet`
-        height: 90px;
-    `}
 `;
 
 const FlexWrapper = styled.div`
@@ -51,21 +44,18 @@ const Logo = styled.img`
     display: block;
 `;
 
-const HeaderNavLink = styled(NavLink)`
-    margin: auto;
-
-    ${devices.small`
-        marginLeft: 0;
+const NavContainer = styled.div`
+    display: none;
+    alignItems: center;
+    justifyContent: flex-end;
+    ${devices.tablet`
+        display: flex;
     `}
 `;
 
-const NavContainer = styled.div`
-    display: flex;
-    alignItems: center;
-    justifyContent: flex-end;
-    flex-wrap: wrap;
-    -webkit-flex-wrap: wrap;
-    marginRight: 0;
+const HeaderNavLink = styled(NavLink)`
+    margin: auto;
+    marginLeft: 0;
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -74,6 +64,7 @@ const StyledNavLink = styled(NavLink)`
     marginLeft: 15px;
     border: 2px solid ${props => props.primaryColor};
     color: ${props => props.primaryColor};
+    backgroundColor: white;
     borderRadius: 5px;
     textDecoration: none;
     transition: all 0.3s;
@@ -87,8 +78,14 @@ const StyledNavLink = styled(NavLink)`
     &:first-child {
         margin: 0;
         marginTop: 10px;
+        marginLeft: 15px;
     }
+`;
 
+const Burger = styled.div`
+    ${devices.tablet`
+        display: none;
+    `}
 `;
 
 class Header extends React.Component {
@@ -140,6 +137,42 @@ class Header extends React.Component {
                                     </StyledNavLink>
                                 }
                             </NavContainer>
+                            <Burger>
+                                <Menu right styles={ burger_styles }>
+                                    {!isLoggedIn || !isEmailVerified || isApplicationSubmitted ?
+                                        null :
+                                        <StyledNavLink
+                                            to={routes.APPLY}
+                                            primaryColor={this.props.theme.primary}
+                                        >
+                                        Apply
+                                        </StyledNavLink>
+                                    }
+                                    {isLoggedIn ?
+                                        <StyledNavLink
+                                            to={routes.PROFILE}
+                                            primaryColor={this.props.theme.primary}
+                                        >
+                                        Profile
+                                        </StyledNavLink> :
+                                        null
+                                    }
+                                    {isLoggedIn ?
+                                        <StyledNavLink
+                                            to={routes.LOGOUT}
+                                            primaryColor={this.props.theme.primary}
+                                        >
+                                        Log Out
+                                        </StyledNavLink> :
+                                        <StyledNavLink
+                                            to={routes.LOGIN}
+                                            primaryColor={this.props.theme.primary}
+                                        >
+                                        Log In
+                                        </StyledNavLink>
+                                    }
+                                </Menu>
+                            </Burger>
                         </FlexWrapper>
                     </Container>
                 </Wrapper>
