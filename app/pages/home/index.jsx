@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { devices } from '../../styles';
+import { SectionHeader, SectionBody } from './section_components.jsx';
 
 const Favicon = require('../../../static/blackout/favicon.png');
 
@@ -9,6 +10,7 @@ import Faq from './faq.jsx';
 import About from './about.jsx';
 import Apply from './apply.jsx';
 import WhatIsMHacksNano from './what_is_mhacks_nano.jsx';
+import Schedule from './schedule.jsx';
 import Sponsorship from './sponsorship.jsx'
 
 const contentHeight = 130;
@@ -90,6 +92,7 @@ class HomePage extends React.Component {
                             <SidebarLinks>
                                 <SidebarLink><a href="#about">About MHacks</a></SidebarLink>
                                 <SidebarLink><a href="#what-is-mhacks-nano">MHacks Nano</a></SidebarLink>
+                                <SidebarLink><a href="#schedule">Schedule</a></SidebarLink>
                                 <SidebarLink><a href="#faq">FAQ</a></SidebarLink>
                                 <SidebarLink><a href="#sponsorship">Sponsorship</a></SidebarLink>
                                 <SidebarLink><a href="#apply">Apply</a></SidebarLink>
@@ -103,6 +106,9 @@ class HomePage extends React.Component {
                         </div>
                         <div id="what-is-mhacks-nano">
                             <WhatIsMHacksNano />
+                        </div>
+                        <div id="schedule">
+                            <Schedule />
                         </div>
                         <div id="faq">
                             <Faq />
