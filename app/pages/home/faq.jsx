@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ExpandingItem } from '../../components';
+import { SectionHeader } from './section_components.jsx';
+
 
 const FaqSectionHeader = styled.h2`
     fontSize: 20px;
@@ -38,6 +40,7 @@ class Faq extends React.Component {
     render() {
         return (
             <div>
+                <SectionHeader>Frequently Asked Questions</SectionHeader>
                 <FaqSectionHeader>General</FaqSectionHeader>
                     <Section>
                         <FaqItem
@@ -82,7 +85,7 @@ class Faq extends React.Component {
                         />
                         <FaqItem
                             header="Can we apply as a team?"
-                            body="Yes! Add your teammates to your application to form a team."
+                            body="You can form a team when submitting your hack."
                         />
                     </Section>
                 <FaqSectionHeader>Hacking</FaqSectionHeader>

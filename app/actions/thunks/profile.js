@@ -16,6 +16,7 @@ export default class ProfileThunks {
                             ProfilePureActions.loadProfileSuccess(
                                 {
                                     isEmailVerified: user.email_verified,
+                                    isApplicationSubmitted: user.application_submitted,
                                     user: {
                                         name: user.full_name,
                                         birthday: user.birthday,

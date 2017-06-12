@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ProfileThunks } from '../actions';
 
-import { RoundedButton, FileUpload } from '../components';
+import { RoundedButton, FileUpload, Alert } from '../components';
 
 /* Containers */
 const Page = styled.div`
@@ -51,6 +51,10 @@ const FileUploadContainer = styled.div`
     marginTop: 10px;
 `;
 
+const AlertContainer = styled.div`
+    marginTop: 30px;
+`;
+
 class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -84,11 +88,13 @@ class Profile extends React.Component {
 
         if (userData.birthday !== nextUserData ||
             userData.university !== nextUserData.university ||
-            userData.major !== nextUserData.major) {
+            userData.major !== nextUserData.major ||
+            userData.isResumeUploaded !== nextUserData.isResumeUploaded) {
                 this.setState({
                     birthday: nextUserData.birthday ? new Date(nextUserData.birthday).toISOString().split('T')[0] : '',
                     university: nextUserData.university || '',
-                    major: nextUserData.major || ''
+                    major: nextUserData.major || '',
+                    isResumeUploaded: userData.isResumeUploaded || false
                 });
             }
     }
@@ -113,7 +119,7 @@ class Profile extends React.Component {
         var profile = {};
         var files = {};
 
-        const inputBirthday = new Date(this.state.birthday);
+        const inputBirthday = (new Date(this.state.birthday)).getTime();
 
         profile.birthday = inputBirthday;
         profile.major = this.state.major;
@@ -141,6 +147,14 @@ class Profile extends React.Component {
                                 </AlertContainer> :
                                 null
                             }
+                            {this.props.userState.data.isApplicationSubmitted ?
+                                <AlertContainer>
+                                    <Alert
+                                        message={'Your application is submitted! Thanks for applying to MHacks Nano'}
+                                    />
+                                </AlertContainer> :
+                                null
+                            }
                             <p>Update your profile with some info about yourself. This will be automatically populated into your application and persist through hackathons!</p>
                             <Flexer>
                                 <InputContainer>
@@ -148,7 +162,7 @@ class Profile extends React.Component {
                                         id="birthday"
                                         type="date"
                                         name="birthday"
-                                        placeholder="01/01/1970"
+                                        placeholder="Birthday (e.g. 01/01/1970)"
                                         value={this.state.birthday}
                                         onChange={this.handleAttributeChange}
                                     />
@@ -156,7 +170,7 @@ class Profile extends React.Component {
                                         id="university"
                                         type="text"
                                         name="university"
-                                        placeholder="University of Michigan"
+                                        placeholder="School (e.g. University of Michigan)"
                                         value={this.state.university}
                                         onChange={this.handleAttributeChange}
                                     />
@@ -164,7 +178,7 @@ class Profile extends React.Component {
                                         id="major"
                                         type="text"
                                         name="major"
-                                        placeholder="Underwater Basket Weaving"
+                                        placeholder="Area of Study (e.g. Underwater Basket Weaving)"
                                         value={this.state.major}
                                         onChange={this.handleAttributeChange}
                                     />

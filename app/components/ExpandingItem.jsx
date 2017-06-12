@@ -7,8 +7,10 @@ const Wrapper = styled.div`
 
 const Header = styled.h3`
     display: inline-block;
-    -webkit-margin-before: 0px;
-    -webkit-margin-after: 0px;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    marginTop: 0;
+    marginBottom: 0;
     color: ${props => props.color};
     fontSize: 18px;
     flex: 1;
@@ -16,6 +18,8 @@ const Header = styled.h3`
 
 const Body = styled.p`
     paddingLeft: 25px;
+    marginTop: 5px;
+    marginBottom: 5px;
     -webkit-margin-before: 5px;
     -webkit-margin-after: 5px;
     color: ${props => props.color};

@@ -45,6 +45,16 @@ const AlertContainer = styled.div`
     marginTop: 30px;
 `;
 
+const LegalText = styled.p`
+    fontSize: 15px;
+    color: gray;
+`;
+
+const LegalLink = styled.a`
+    color: ${props => props.theme.teal};
+    textDecoration: none;
+`;
+
 /* Login Component */
 class Login extends React.Component {
     constructor() {
@@ -128,7 +138,7 @@ class Login extends React.Component {
                                         id="name"
                                         type="text"
                                         name="name"
-                                        placeholder="Hacker mcHackerface"
+                                        placeholder="Name (e.g. Hacker McHackerface)"
                                         value={this.state.name}
                                         onChange={this.handleAttributeChange.bind(this)}
                                     /> :
@@ -138,7 +148,7 @@ class Login extends React.Component {
                                     id="email"
                                     type="email"
                                     name="email"
-                                    placeholder="hacker@umich.edu"
+                                    placeholder="Email (e.g. hacker@umich.edu)"
                                     value={this.state.email}
                                     onChange={this.handleAttributeChange.bind(this)}
                                 />
@@ -146,7 +156,7 @@ class Login extends React.Component {
                                     id="password"
                                     type="password"
                                     name="password"
-                                    placeholder="hunter2"
+                                    placeholder="Password (e.g. hunter2)"
                                     value={this.state.password}
                                     onChange={this.handleAttributeChange.bind(this)}
                                 />
@@ -159,6 +169,12 @@ class Login extends React.Component {
                                 Confirm
                                 </RoundedButton>
                             </ButtonGroup>
+                            {this.state.isRegistering ?
+                                <LegalText>
+                                    By signing up for an MHacks account, you agree to the MHacks <LegalLink href="https://docs.google.com/document/d/11a34FHFftUKiN7DF3Fi_nTKCbiOXBbKTFwJfeqqZZmA/pub">Privacy Policy</LegalLink> and <LegalLink href="https://docs.google.com/document/d/1b-NwrHVRvct-1Fqx7QdjMWgERC1Isy8dHtE0q3v5tZA/pub">Terms of Service</LegalLink>.
+                                </LegalText> :
+                                undefined
+                            }
                         </Flexer>
                     </form>
                 </FormContainer>

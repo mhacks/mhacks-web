@@ -15,6 +15,9 @@ import reducers from './reducers';
 import { routes } from './constants';
 import { Navigator, HomePage, Login, Logout, Profile, Apply } from './pages';
 
+// polyfill Promise for IE browsers
+require('es6-promise').polyfill();
+
 /* uncomment to view redux logs in console */
 // import logger from 'redux-logger'
 

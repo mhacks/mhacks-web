@@ -16,6 +16,7 @@ var schema = new mongoose.Schema({
         }
     },
     email_verified: Boolean,
+    application_submitted: Boolean,
     verification_tokens: [
         {
             created_at: {
