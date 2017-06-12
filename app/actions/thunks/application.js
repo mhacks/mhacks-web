@@ -2,10 +2,11 @@ import { ApplicationPureActions } from '../pure';
 import { ApplicationRequests } from '../requests';
 
 export default class ApplicationThunks {
-
     static uploadApplication(application, files) {
         return (dispatch, getState) => {
-            dispatch(ApplicationPureActions.uploadApplicationRequest(application));
+            dispatch(
+                ApplicationPureActions.uploadApplicationRequest(application)
+            );
 
             const token = getState().userState.data.token;
 

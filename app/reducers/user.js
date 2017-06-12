@@ -108,7 +108,7 @@ export function userState(state = initialUserState, action) {
                     ...state.data,
                     ...action.data
                 }
-            }
+            };
         default:
             return state;
     }

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ProfileThunks, ApplicationThunks } from '../actions';
-
+import { routes } from '../constants';
 import { RoundedButton, FileUpload, Alert } from '../components';
 
 /* Containers */
@@ -98,6 +98,12 @@ class Apply extends React.Component {
         this.props.dispatch(ProfileThunks.loadProfile());
     }
 
+    componentWillUpdate(nextProps) {
+        if (nextProps.userState.data.isApplied) {
+            this.context.router.history.push(routes.PROFILE);
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
         const userData = this.props.userState.data.user;
         const nextUserData = nextProps.userState.data.user;
@@ -139,13 +145,13 @@ class Apply extends React.Component {
         var application = {};
         var files = {};
 
-        const inputBirthday = new Date(this.state.birthday);
+        const inputBirthday = + new Date(this.state.birthday);
 
         application.birthday = inputBirthday;
         application.major = this.state.major;
         application.university = this.state.university;
-        application.tshirt = this.state.tshirt;
-        application.hackathonExperience = this.state.hackathonExperience;
+        application.tshirt_size = this.state.tshirt;
+        application.experience = this.state.hackathonExperience;
 
         if (this.state.resume) {
             files['resume'] = this.state.resume;
@@ -256,6 +262,10 @@ class Apply extends React.Component {
         );
     }
 }
+
+Apply.contextTypes = {
+    router: React.PropTypes.object
+};
 
 function mapStateToProps(state) {
     return {

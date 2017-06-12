@@ -1,27 +1,69 @@
 var router = require('express').Router(),
     Responses = require('../../responses/api'),
-    Application = require('../../db/model/Application.js');
+    User = require('../../db/model/User.js'),
+    Application = require('../../db/model/Application.js'),
+    authMiddleware = require('../../middleware/auth.js'),
+    config = require('../../../config/default.js'),
+    uploadHelper = require('../../interactors/multer-s3.js')(
+        config.AWS_BUCKET_NAME
+    );
 
-router.post('/', function(req, res) {
-    Application.find().byToken(req.authToken).then(query => {
-        query
+router.post(
+    '/',
+    authMiddleware('any', 'api', true),
+    uploadHelper.fields([{ name: 'resume' }]),
+    function(req, res) {
+        User.find()
+            .byToken(req.authToken)
             .exec()
-            .then(application => {
-                var updateable_fields = ['experience'];
-                var fields = {};
+            .then(user => {
+                const {
+                    birthday,
+                    university,
+                    major,
+                    tshirt_size,
+                    experience
+                } = req.body;
 
-                for (var i in req.body) {
-                    if (updateable_fields.indexOf(i) !== -1) {
-                        fields[i] = req.body[i];
-                    }
+                if (
+                    !(birthday &&
+                        university &&
+                        major &&
+                        tshirt_size &&
+                        experience &&
+                        (user.resume || (req.files && req.files.resume)))
+                ) {
+                    res.status(500).send({
+                        status: false,
+                        message: Responses.MISSING_PARAMETERS
+                    });
+                } else {
+                    Application.create({
+                        user: user.email,
+                        birthday,
+                        university,
+                        major,
+                        tshirt_size,
+                        experience,
+                        resume: user.resume || req.files.resume[0].location
+                    })
+                        .then(application => {
+                            user.application_submitted = true;
+                            user.save();
+
+                            res.send({
+                                status: true,
+                                app: application
+                            });
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            res.status(500).send({
+                                status: false,
+                                message: Responses.UNKNOWN_ERROR
+                            });
+                        });
                 }
-
-                application.updateFields(fields);
-
-                res.send({
-                    status: false,
-                    message: fields
-                });
             })
             .catch(() => {
                 res.send({
@@ -29,14 +71,8 @@ router.post('/', function(req, res) {
                     message: Responses.UNKNOWN_ERROR
                 });
             });
-    })
-    .catch(() => {
-        res.send({
-            status: false,
-            message: Responses.UNKNOWN_ERROR
-        });
-    });
-});
+    }
+);
 
 router.get('/', function(req, res) {
     Application.find()
