@@ -360,15 +360,22 @@ schema.methods.updateFields = function(fields) {
 };
 
 schema.methods.getAvatars = function() {
-    return [
-        config.host + '/v1/artifact/avatar/' + this.email,
+    var avatars = [];
+
+    if (this.avatar) {
+        avatars.push(config.host + '/v1/artifact/avatar/' + this.email);
+    }
+
+    avatars = avatars.concat([
         'https://www.gravatar.com/avatar/' +
             crypto.createHash('md5').update(this.email).digest('hex') +
             '?d=404',
         'https://api-avatar.trove.com/v1/avatar/' +
             this.email +
             '?fallback=true'
-    ];
+    ]);
+
+    return avatars;
 };
 
 schema.methods.getResume = function() {
