@@ -8,9 +8,20 @@ html(lang='en')
         title Unchained Admin
         script(src="https://code.jquery.com/jquery-3.2.1.min.js")
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin="anonymous")
+        script(src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js")
+        script(src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js")
+        script(src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js")
+        script(src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js")
+
         link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
         link(href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel="stylesheet", integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin="anonymous")
+        link(href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css", rel="stylesheet")
+        link(href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css", rel="stylesheet")
         script.
+            $(document).ready(function () {
+                $('#user-table').DataTable();
+                $('#application-table').DataTable();
+            });
             function sendVerificationEmail(email) {
                 $.post('/v1/auth/verify', {email: email}, function (data) {
                 });
@@ -43,7 +54,7 @@ html(lang='en')
             .row
                 div#users
                     h2='Users:'
-                    table.table.table-responsive
+                    table#user-table.table.table-responsive.table-striped.table-bordered.dt-responsive.nowrap(cellspacing='0', width='100%')
                         thead#table-head-unchained
                             tr#table-head-row-unchained
                                 th='#'
@@ -88,9 +99,12 @@ html(lang='en')
                                             - var resume = val.getResume()
                                             - var name = val.resume.split('.').pop().toUpperCase()
                                             a(href=resume) #{name}
+                                    else
+                                        td
+                                            i.fa.fa-times(style='color: #FF4136')
                 div#applications
                     h2='Applications:'
-                    table.table.table-responsive
+                    table#application-table.table.table-responsive.table-striped.table-bordered.dt-responsive.nowrap(cellspacing='0', width='100%')
                         thead#table-head-unchained-2
                             tr#table-head-row-unchained-2
                                 th='#'
@@ -120,3 +134,6 @@ html(lang='en')
                                             - var resume = val.getResume()
                                             - var name = val.resume.split('.').pop().toUpperCase()
                                             a(href=resume) #{name}
+                                    else
+                                        td
+                                            i.fa.fa-times(style='color: #FF4136')
