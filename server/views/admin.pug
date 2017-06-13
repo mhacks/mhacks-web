@@ -13,7 +13,6 @@ html(lang='en')
         script.
             function sendVerificationEmail(email) {
                 $.post('/v1/auth/verify', {email: email}, function (data) {
-                    console.log(data);
                 });
             }
     body
@@ -70,7 +69,7 @@ html(lang='en')
                                         if val.email_verified
                                             i.fa.fa-check(style='color: #2ECC40')
                                         else
-                                            a(onclick='sendVerificationEmail("' + val.email + '");')
+                                            a(style='cursor: pointer;' onclick='sendVerificationEmail("' + val.email + '");')
                                                 i.fa.fa-times(style='color: #FF4136')
                                     td
                                         if val.application_submitted

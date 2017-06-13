@@ -44,6 +44,11 @@ const Subhead = styled.p`
     margin: 20px 0 0 0;
 `;
 
+const Link = styled.a`
+    color: ${props => props.color};
+    cursor: pointer;
+`;
+
 class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -61,6 +66,7 @@ class Profile extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.handleAttributeChange = this.handleAttributeChange.bind(this);
         this.handleFileUpload = this.handleFileUpload.bind(this);
+        this.onClickRequestEmailVerification = this.onClickRequestEmailVerification.bind(this);
     }
 
     componentDidMount() {
@@ -119,6 +125,14 @@ class Profile extends React.Component {
         }
 
         this.props.dispatch(ProfileThunks.updateProfile(profile, files));
+    }
+
+    onClickRequestEmailVerification(e) {
+        e.preventDefault();
+
+        var email = this.props.userState.data.user.email;
+
+        this.props.dispatch(ProfileThunks.sendVerificationEmail(email));
     }
 
     render() {
@@ -203,7 +217,7 @@ class Profile extends React.Component {
                                 </ButtonGroup>
                             </Flexer>
                         </form> :
-                        <p>You should receive a verification email at {this.props.userState.data.email}. After you verify your email you can continue setting up your profile!</p>
+                        <p>You should have received a verification email at {this.props.userState.data.email}. If not, you can request another one <Link onClick={this.onClickRequestEmailVerification} color={this.props.theme.primary}>here</Link>. After you verify your email you can continue setting up your profile!</p>
                     }
                 </FormContainer>
             </PageContainer>

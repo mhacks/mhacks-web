@@ -33,4 +33,15 @@ export default class ProfileRequests {
             body: formData
         });
     }
+
+    static sendVerificationEmail(token, email) {
+        return fetch(endpoints.VERIFY, {
+            method: 'post',
+            headers: new Headers({
+                Authorization: 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify({ email })
+        });
+    }
 }

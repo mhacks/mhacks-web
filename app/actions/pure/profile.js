@@ -47,4 +47,27 @@ export default class ProfilePureActions {
             message
         };
     }
+
+    static sendVerificationEmailRequest(data) {
+        return {
+            type: reduxActions.SEND_VERIFICATION_REQUEST,
+            data
+        };
+    }
+
+    static sendVerificationEmailError(error, message) {
+        return {
+            type: reduxActions.SEND_VERIFICATION_ERROR,
+            error,
+            message
+        };
+    }
+
+    static sendVerificationEmailSuccess(data, message) {
+        return {
+            type: reduxActions.SEND_VERIFICATION_SUCCESS,
+            data,
+            message
+        };
+    }
 }

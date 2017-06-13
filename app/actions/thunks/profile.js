@@ -82,4 +82,37 @@ export default class ProfileThunks {
             });
         };
     }
+
+    static sendVerificationEmail(email) {
+        return (dispatch, getState) => {
+            dispatch(ProfilePureActions.sendVerificationEmailRequest(email));
+
+            const token = getState().userState.data.token;
+
+            return ProfileRequests.sendVerificationEmail(
+                token,
+                email
+            ).then(response => {
+                if (response.status == 200) {
+                    response.json().then(json => {
+                        dispatch(
+                            ProfilePureActions.sendVerificationEmailSuccess({
+                                email,
+                                message: json.message
+                            })
+                        );
+                    });
+                } else {
+                    response.json().then(json => {
+                        dispatch(
+                            ProfilePureActions.sendVerificationEmailError(
+                                response.status,
+                                json.message
+                            )
+                        );
+                    });
+                }
+            });
+        };
+    }
 }
