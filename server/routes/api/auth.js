@@ -135,6 +135,36 @@ router.post('/register', function(req, res) {
     }
 });
 
+router.post('/verify', function(req, res) {
+    if (req.body.email && validator.isEmail(req.body.email)) {
+        User.find()
+            .byEmail(req.body.email)
+            .exec()
+            .then(user => {
+                if (user && !user.email_verified) {
+                    user.sendVerificationEmail();
+                    res.send({
+                        status: true
+                    });
+                } else {
+                    res.send({
+                        status: false
+                    });
+                }
+            })
+            .catch(() => {
+                res.send({
+                    status: false
+                });
+            });
+    } else {
+        res.send({
+            status: false,
+            message: Responses.PARAMS_NOT_FOUND
+        });
+    }
+});
+
 router.get('/verify/:token', function(req, res) {
     User.find()
         .byVerificationToken(req.params.token)
@@ -155,7 +185,7 @@ router.get('/verify/:token', function(req, res) {
     res.redirect('/profile');
 });
 
-router.post('/passwordreset', function(req, res) {
+router.post('/password', function(req, res) {
     if (req.body.email && validator.isEmail(req.body.email)) {
         User.find()
             .byEmail(req.body.email)
@@ -185,7 +215,7 @@ router.post('/passwordreset', function(req, res) {
     }
 });
 
-router.post('/passwordreset/:token', function(req, res) {
+router.post('/password/:token', function(req, res) {
     if (req.body.password) {
         User.find()
             .byVerificationToken(req.params.token)
