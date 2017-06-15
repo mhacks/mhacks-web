@@ -5,11 +5,9 @@ import Theme from './theme.js';
 injectGlobal`
 body {
     margin: 0px;
-    background-color: #F5F5F5;
     font-family: ${Theme.primaryFont}, sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
-    background-color: black;
 }
 
 *:focus { outline: none; }
@@ -51,7 +49,7 @@ h4, h5, h6 {
     margin-bottom: 10px;
 }
 
-h1 { 
+h1 {
     font-size: 36px;
     margin-bottom: 10px;
     font-weight: 500;

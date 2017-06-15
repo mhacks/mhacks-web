@@ -27,7 +27,6 @@ const Text = styled.h2`
     textAlign: center;
     minWidth: 100%;
     order: 1;
-
     ${devices.tablet`
         textAlign: left;
         minWidth: 0;
@@ -47,11 +46,9 @@ const Flexer = styled.div`
     display: flex;
     justifyContent: center;
     minWidth: 100%;
-
     ${devices.tablet`
         textAlign: left;
         minWidth: 0;
-
         ${props => (props.right ? 'justifyContent: flex-end;' : '')}
     `}
 `;

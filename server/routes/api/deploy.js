@@ -68,6 +68,10 @@ router.post('/webhook/github', function(req, res) {
 router.post('/webhook/slack', function(req, res) {
     if (req.body.token === config.deployment_secret) {
         if (config.deployment_users.indexOf(req.body.user_name) !== -1) {
+            if (req.body.text) {
+                req.body.text = req.body.text.toLowerCase();
+            }
+
             if (req.body.text === 'production') {
                 if (req.hostname === 'mhacks.org') {
                     request.post({
@@ -98,6 +102,56 @@ router.post('/webhook/slack', function(req, res) {
                                 text: 'Error: ```' +
                                     deploy.formatResponse(err) +
                                     '```'
+                            });
+                        });
+                }
+            } else if (req.body.text.indexOf('damage report') !== -1) {
+                if (req.body.text.indexOf('production') !== -1) {
+                    res.send({
+                        response_type: 'in_channel',
+                        text: 'Retrieving damage report from production'
+                    });
+
+                    deploy
+                        .productionDamageReport()
+                        .then(result => {
+                            slack.postSnippet(config.slack_token, {
+                                channels: req.body.channel_id,
+                                content: deploy.formatResponse(result),
+                                title: new Date().toString() +
+                                    ' Production Damage Report'
+                            });
+                        })
+                        .catch(err => {
+                            slack.postSnippet(config.slack_token, {
+                                channels: req.body.channel_id,
+                                content: deploy.formatResponse(err),
+                                title: new Date().toString() +
+                                    ' Production Damage Report Error'
+                            });
+                        });
+                } else {
+                    res.send({
+                        response_type: 'in_channel',
+                        text: 'Retrieving damage report from staging'
+                    });
+
+                    deploy
+                        .stagingDamageReport()
+                        .then(result => {
+                            slack.postSnippet(config.slack_token, {
+                                channels: req.body.channel_id,
+                                content: deploy.formatResponse(result),
+                                title: new Date().toString() +
+                                    ' Staging Damage Report'
+                            });
+                        })
+                        .catch(err => {
+                            slack.postSnippet(config.slack_token, {
+                                channels: req.body.channel_id,
+                                content: deploy.formatResponse(err),
+                                title: new Date().toString() +
+                                    ' Staging Damage Report Error'
                             });
                         });
                 }

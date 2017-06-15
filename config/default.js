@@ -45,5 +45,8 @@ module.exports = {
         '#notifications',
     socket_messages_threshold: process.env.SOCKET_MESSAGES_THRESHOLD || 3,
     socket_messages_ttl: process.env.SOCKET_MESSAGES_TTL || 1,
-    only_one_chat_client: process.env.ONLY_ONE_CHAT_CLIENT || true
+    only_one_chat_client: process.env.ONLY_ONE_CHAT_CLIENT || true,
+    AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || '',
+    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || '',
+    AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME || 'mhacks-nano'
 };

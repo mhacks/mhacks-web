@@ -15,6 +15,14 @@ var http = require('http'),
     config = require('./config/default.js'),
     sharedsession = require("express-socket.io-session");
 
+// Force https
+app.use(function(req, res, next) {
+    if (!req.secure && req.get('x-forwarded-proto') !== 'https' && app.get('env') !== 'development') {
+        return res.redirect(config.host + req.url);
+    }
+    next();
+});
+
 // Logging
 morgan.token('remote-addr', function(req, res) {
     return req.headers['x-forwarded-for'] || req.ip;
