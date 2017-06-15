@@ -54,6 +54,22 @@ const Content = styled.div`
     `}
 `;
 
+const VerticalLine = styled.div`
+    display: None;
+
+    ${devices.tablet`
+        display: inline;
+        width: 5px;
+
+        background: -moz-linear-gradient(top, rgba(255,214,94,1) 0%, rgba(254,191,4,0) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, rgba(255,214,94,1) 0%,rgba(254,191,4,0) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, rgba(255,214,94,1) 0%,rgba(254,191,4,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd65e', endColorstr='#00febf04',GradientType=0 ); /* IE6-9 */
+
+        marginRight: 50px;
+    `}
+`;
+
 /* Page Component */
 class HomePage extends React.Component {
     render() {
@@ -72,6 +88,8 @@ class HomePage extends React.Component {
                         </SidebarLinks>
                     </nav>
                 </Sidebar>
+
+                <VerticalLine />
 
                 <Content>
                     <div id="about">
