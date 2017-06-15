@@ -5,7 +5,7 @@ class Schedule extends React.Component {
     render() {
         return (
             <div>
-                <SectionHeader>Schedule (EST)</SectionHeader>
+                <SectionHeader>Schedule (EDT)</SectionHeader>
                 <SectionBody>Monday, June 19th, 9pm - Nano Begins</SectionBody>
                 <SectionBody>Thursday, June 22nd, 9pm - Nano Submissions Open</SectionBody>
                 <SectionBody>Saturday, June 24th, 9pm - Nano Submissions Close</SectionBody>
