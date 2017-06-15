@@ -291,10 +291,13 @@ schema.methods.sendVerificationEmail = function() {
         Email.sendEmailTemplate(
             config.confirmation_email_template,
             {
-                confirmation_url: config.host +
-                    '/v1/auth/verify/' +
-                    this.generateEmailVerificationToken(),
-                FIRST_NAME: this.full_name ? this.full_name.split(' ')[0] : 'Hacker'
+                confirmation_url:
+                    config.host +
+                        '/v1/auth/verify/' +
+                        this.generateEmailVerificationToken(),
+                FIRST_NAME: this.full_name
+                    ? this.full_name.split(' ')[0]
+                    : 'Hacker'
             },
             config.confirmation_email_subject,
             this.email,
@@ -319,9 +322,10 @@ schema.methods.sendPasswordResetEmail = function() {
         Email.sendEmailTemplate(
             config.password_reset_email_template,
             {
-                update_password_url: config.host +
-                    '/auth/passwordreset/' +
-                    this.generatePasswordResetToken()
+                update_password_url:
+                    config.host +
+                        '/auth/passwordreset/' +
+                        this.generatePasswordResetToken()
             },
             config.password_reset_email_subject,
             this.email,

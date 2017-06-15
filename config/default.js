@@ -16,14 +16,16 @@ module.exports = {
     mandrill_token: process.env.MANDRILL_TOKEN || '',
     email_from: process.env.EMAIL_FROM || 'hackathon@umich.edu',
     email_from_name: process.env.EMAIL_FROM_NAME || 'MHacks',
-    confirmation_email_template: process.env.CONFIRMATION_EMAIL_TEMPLATE ||
-        'confirmation_instructions',
-    confirmation_email_subject: process.env.CONFIRMATION_EMAIL_SUBJECT ||
-        'Confirm Your Email for MHacks',
-    password_reset_email_template: process.env.PASSWORD_RESET_EMAIL_TEMPLATE ||
-        'change_password',
-    password_reset_email_subject: process.env.PASSWORD_RESEST_EMAIL_SUBJECT ||
-        'Reset Your MHacks Password',
+    confirmation_email_template:
+        process.env.CONFIRMATION_EMAIL_TEMPLATE || 'confirmation_instructions',
+    confirmation_email_subject:
+        process.env.CONFIRMATION_EMAIL_SUBJECT ||
+            'Confirm Your Email for MHacks',
+    password_reset_email_template:
+        process.env.PASSWORD_RESET_EMAIL_TEMPLATE || 'change_password',
+    password_reset_email_subject:
+        process.env.PASSWORD_RESEST_EMAIL_SUBJECT ||
+            'Reset Your MHacks Password',
     deployment_secret: process.env.DEPLOYMENT_SECRET || 'some_secret',
     deployment_users: (process.env.DEPLOYMENT_USERS ||
         'antoniomika,konnor,roball')
@@ -41,8 +43,8 @@ module.exports = {
         }
     },
     slack_token: process.env.SLACK_TOKEN || '',
-    slack_notifications_channel: process.env.SLACK_NOTIFICATIONS_CHANNEL ||
-        '#notifications',
+    slack_notifications_channel:
+        process.env.SLACK_NOTIFICATIONS_CHANNEL || '#notifications',
     socket_messages_threshold: process.env.SOCKET_MESSAGES_THRESHOLD || 3,
     socket_messages_ttl: process.env.SOCKET_MESSAGES_TTL || 1,
     only_one_chat_client: process.env.ONLY_ONE_CHAT_CLIENT || true,

@@ -5,7 +5,8 @@ var authResponses = require('./auth.js'),
 
 var Responses = {
     METHOD_NOT_ALLOWED: 'Method not allowed',
-    UNKNOWN_ERROR: 'An unknown error occurred. Get in contact at hackathon@umich.edu',
+    UNKNOWN_ERROR:
+        'An unknown error occurred. Get in contact at hackathon@umich.edu',
     MISSING_CONFIG: 'The configuration is missing necessary values',
     NOT_FOUND: 'Not found',
     INVALID_TYPE: 'Invalid type.',

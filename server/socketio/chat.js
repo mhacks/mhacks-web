@@ -1,10 +1,6 @@
 var Responses = require('../responses/socketio/index.js');
 
 module.exports = function(io) {
-    setInterval(function() {
-        //console.log('Channel Members', getChannelMembers(io, '#general'));
-    }, 1000);
-
     io.on('connection', function(socket) {
         chatHandler(io, socket);
     });

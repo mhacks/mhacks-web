@@ -21,12 +21,14 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
             } = req.body;
 
             if (
-                !(birthday &&
+                !(
+                    birthday &&
                     university &&
                     major &&
                     tshirt_size &&
                     experience &&
-                    (user.resume || (req.files && req.files.resume)))
+                    (user.resume || (req.files && req.files.resume))
+                )
             ) {
                 res.status(400).send({
                     status: false,
