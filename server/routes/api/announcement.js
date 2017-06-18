@@ -1,5 +1,6 @@
 var router = require('express').Router(),
     Announcement = require('../../db/model/Announcement.js'),
+    authMiddleware = require('../../middleware/auth.js'),
     Responses = require('../../responses/api/announcement.js');
 
 function sortByDate(a, b) {
@@ -46,7 +47,7 @@ router.get('/', function(req, res) {
     }
 });
 
-router.post('/', function(req, res) {
+router.post('/', authMiddleware('admin', 'web'), function(req, res) {
     if (req.session.loggedIn) {
         if (req.body.title && req.body.body && req.body.category) {
             Announcement.create({
@@ -83,7 +84,7 @@ router.post('/', function(req, res) {
     }
 });
 
-router.put('/', function(req, res) {
+router.put('/', authMiddleware('admin', 'web'), function(req, res) {
     if (req.session.loggedIn && req.session.can_edit_announcement) {
         if (req.body.id) {
             Announcement.findById(req.body.id)
@@ -121,7 +122,7 @@ router.put('/', function(req, res) {
     }
 });
 
-router.patch('/', function(req, res) {
+router.patch('/', authMiddleware('admin', 'web'), function(req, res) {
     if (req.session.loggedIn && req.session.can_edit_announcement) {
         if (req.body.id) {
             Announcement.updateOne({ _id: req.body.id }, req.body, {
