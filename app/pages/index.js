@@ -7,4 +7,13 @@ import Profile from './profile.jsx';
 import Apply from './apply.jsx';
 import LivePage from './live';
 
-export { Navigator, HomePage, BlackoutPage, Login, Logout, Profile, Apply, LivePage };
+export {
+    Navigator,
+    HomePage,
+    BlackoutPage,
+    Login,
+    Logout,
+    Profile,
+    Apply,
+    LivePage
+};
