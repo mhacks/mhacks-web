@@ -13,7 +13,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import reducers from './reducers';
 import { routes } from './constants';
-import { Navigator, HomePage, Login, Logout, Profile, Apply } from './pages';
+import { Navigator, HomePage, Login, Logout, Profile, Apply, BlackoutPage } from './pages';
 
 // polyfill Promise for IE browsers
 require('es6-promise').polyfill();
@@ -123,6 +123,11 @@ class AppProvider extends React.Component {
 
                                     return <Redirect to={routes.LOGIN} />;
                                 }}
+                            />
+                            <Route
+                                exact
+                                path={routes.SUBSCRIBE}
+                                component={BlackoutPage}
                             />
                             <Route
                                 component={HomePage}
