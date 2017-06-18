@@ -2,7 +2,8 @@ import {
     SubscribeThunks,
     AuthThunks,
     ProfileThunks,
-    ApplicationThunks
+    ApplicationThunks,
+    AnnouncementsThunks
 } from './thunks';
 
-export { SubscribeThunks, AuthThunks, ProfileThunks, ApplicationThunks };
+export { SubscribeThunks, AuthThunks, ProfileThunks, ApplicationThunks, AnnouncementsThunks };

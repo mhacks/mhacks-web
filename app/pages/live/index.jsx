@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { devices } from '../../styles';
-import { PageContainer } from '../../components';
+import Announcements from './announcements.jsx';
 
 const Content = styled.div`
     width: 100%;
@@ -16,26 +16,26 @@ const Content = styled.div`
 `;
 
 const AnnouncementsContainer = styled.div`
-    width: 25%;
+    width: 33%;
 `;
 
 const ChatContainer = styled.div`
-    width: 75%;
+    width: 67%;
 `;
 
 class LivePage extends React.Component {
     render() {
         return (
-            <PageContainer>
+            <div>
                 <Content>
                     <AnnouncementsContainer>
-                        <p>Announcements</p>
+                        <Announcements />
                     </AnnouncementsContainer>
                     <ChatContainer>
                         <p>Chat</p>
                     </ChatContainer>
                 </Content>
-            </PageContainer>
+            </div>
         );
     }
 }
