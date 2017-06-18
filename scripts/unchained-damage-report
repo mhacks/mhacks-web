@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd ~/mhacks-web/ && git status && git --no-pager log --stat -n 2
+
+cd ~/mhacks-web/deploy/ && /opt/bin/docker-compose -f production.yml logs --tail 100

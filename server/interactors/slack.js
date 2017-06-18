@@ -22,6 +22,20 @@ function sendMessage(location, message) {
     }
 }
 
+function postSnippet(token, message) {
+    return request({
+        method: 'POST',
+        uri: 'https://slack.com/api/files.upload',
+        form: {
+            token: token,
+            channels: message.channels,
+            content: message.content,
+            title: message.title
+        }
+    });
+}
+
 module.exports = {
-    sendMessage
+    sendMessage,
+    postSnippet
 };
