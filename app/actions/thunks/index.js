@@ -4,4 +4,10 @@ import ProfileThunks from './profile.js';
 import ApplicationThunks from './application.js';
 import AnnouncementsThunks from './announcements.js';
 
-export { SubscribeThunks, AuthThunks, ProfileThunks, ApplicationThunks, AnnouncementsThunks };
+export {
+    SubscribeThunks,
+    AuthThunks,
+    ProfileThunks,
+    ApplicationThunks,
+    AnnouncementsThunks
+};

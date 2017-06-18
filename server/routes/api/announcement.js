@@ -13,7 +13,6 @@ router.get('/', function(req, res) {
             .exec()
             .then(announcements => {
                 announcements.sort(sortByDate);
-                console.log(announcements);
                 res.send({
                     status: true,
                     announcements: announcements
@@ -32,7 +31,6 @@ router.get('/', function(req, res) {
             .exec()
             .then(announcements => {
                 announcements.sort(sortByDate);
-                console.log(announcements);
                 res.send({
                     status: true,
                     announcements: announcements
@@ -49,7 +47,7 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-    if (req.session.loggedIn && req.session.can_edit_announcement) {
+    if (req.session.loggedIn) {
         if (req.body.title && req.body.body && req.body.category) {
             Announcement.create({
                 title: req.body.title,

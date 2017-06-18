@@ -31,36 +31,30 @@ class Announcements extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(AnnouncementsThunks.loadAnnouncements());
+
+        this.poll = setInterval(() => {
+            this.props.dispatch(AnnouncementsThunks.loadAnnouncements());
+        }, 5000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.poll);
     }
 
     render() {
+        const announcements = this.props.announcementsState.data;
+
         return (
             <List>
-                <ListItem>
-                    <ListItemHeader>Header</ListItemHeader>
-                    <ListItemTimestamp><FormattedRelative value={Date.now()} /></ListItemTimestamp>
-                    <ListItemDescription>If you plan to ride on one of the two MHacks Buses to your school, please take all your belongings with you to closing ceremony - the buses will leave directly from the auditorium!</ListItemDescription>
-                </ListItem>
-                <ListItem>
-                    <h2>Header</h2>
-                    <p>If you plan to ride on one of the two MHacks Buses to your school, please take all your belongings with you to closing ceremony - the buses will leave directly from the auditorium!</p>
-                </ListItem>
-                <ListItem>
-                    <h2>Header</h2>
-                    <p>If you plan to ride on one of the two MHacks Buses to your school, please take all your belongings with you to closing ceremony - the buses will leave directly from the auditorium!</p>
-                </ListItem>
-                <ListItem>
-                    <h2>Header</h2>
-                    <p>If you plan to ride on one of the two MHacks Buses to your school, please take all your belongings with you to closing ceremony - the buses will leave directly from the auditorium!</p>
-                </ListItem>
-                <ListItem>
-                    <h2>Header</h2>
-                    <p>If you plan to ride on one of the two MHacks Buses to your school, please take all your belongings with you to closing ceremony - the buses will leave directly from the auditorium!</p>
-                </ListItem>
-                <ListItem>
-                    <h2>Header</h2>
-                    <p>If you plan to ride on one of the two MHacks Buses to your school, please take all your belongings with you to closing ceremony - the buses will leave directly from the auditorium!</p>
-                </ListItem>
+                {announcements.map(function (announcement, i) {
+                    return (
+                        <ListItem key={i}>
+                            <ListItemHeader>{announcement.title}</ListItemHeader>
+                            <ListItemTimestamp><FormattedRelative value={announcement.broadcastTime} /></ListItemTimestamp>
+                            <ListItemDescription>{announcement.body}</ListItemDescription>
+                        </ListItem>
+                    );
+                })}
             </List>
         );
     }
@@ -68,7 +62,7 @@ class Announcements extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        userState: state.userState
+        announcementsState: state.announcementsState
     };
 }
 
