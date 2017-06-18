@@ -3,6 +3,25 @@ import styled from 'styled-components';
 import { devices } from '../../styles';
 import Announcements from './announcements.jsx';
 
+const verticalMargin = 130;
+
+const Container = styled.div`
+    display: flex;
+    height: 100%;
+    width: calc(100% - 40px);
+    margin: ${verticalMargin}px auto 0 auto;
+    overflowX: hidden;
+
+    ${devices.small`
+        width: calc(100% - 60px);
+    `}
+
+    ${devices.tablet`
+        height: calc(100vh - ${verticalMargin*2}px);
+        margin: ${verticalMargin}px auto;
+    `}
+`;
+
 const Content = styled.div`
     width: 100%;
     height: 100%;
@@ -26,7 +45,7 @@ const ChatContainer = styled.div`
 class LivePage extends React.Component {
     render() {
         return (
-            <div>
+            <Container>
                 <Content>
                     <AnnouncementsContainer>
                         <Announcements />
@@ -35,7 +54,7 @@ class LivePage extends React.Component {
                         <p>Chat</p>
                     </ChatContainer>
                 </Content>
-            </div>
+            </Container>
         );
     }
 }
