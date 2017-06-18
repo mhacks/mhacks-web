@@ -13,7 +13,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import reducers from './reducers';
 import { routes } from './constants';
-import { Navigator, HomePage, Login, Logout, Profile, Apply, BlackoutPage } from './pages';
+import { Navigator, HomePage, Login, Logout, Profile, Apply, LivePage, BlackoutPage } from './pages';
 
 // polyfill Promise for IE browsers
 require('es6-promise').polyfill();
@@ -73,6 +73,11 @@ class AppProvider extends React.Component {
                                 exact
                                 path={routes.HOME}
                                 component={HomePage}
+                            />
+                            <Route
+                                exact
+                                path={routes.LIVE}
+                                component={LivePage}
                             />
                             <Route
                                 exact
