@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { devices } from '../../styles';
 import Announcements from './announcements.jsx';
+import { Countdown } from '../../components';
 
 const verticalMargin = 130;
 
@@ -11,6 +12,7 @@ const Container = styled.div`
     width: calc(100% - 40px);
     margin: ${verticalMargin}px auto 0 auto;
     overflowX: hidden;
+    flexDirection: column;
 
     ${devices.small`
         width: calc(100% - 60px);
@@ -46,6 +48,10 @@ class LivePage extends React.Component {
     render() {
         return (
             <Container>
+                <Countdown
+                    date={'Thur, 24 June 2017 21:00:00 EDT'}
+                    fallback="Submissions Closed!"
+                />
                 <Content>
                     <AnnouncementsContainer>
                         <Announcements />
