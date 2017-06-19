@@ -4,10 +4,6 @@ var router = require('express').Router(),
     Application = require('../db/model/Application.js'),
     path = require('path');
 
-router.get('/chat', function(req, res) {
-    res.sendFile(path.resolve('server/views/chat.html'));
-});
-
 router.get('/admin', authMiddleware('admin', 'web'), function(req, res) {
     User.find()
         .byToken(req.authToken)
