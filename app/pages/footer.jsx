@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { Container } from '../components';
 import { devices } from '../styles';
+import { routes } from '../constants';
 
 const InstagramImg = require('../../static/icons/instagram.png');
 const FacebookImg = require('../../static/icons/facebook.png');
@@ -85,34 +86,39 @@ const ImgButton = props => (
 class Footer extends React.Component {
     render() {
         return (
-            <Container>
-                <FooterWrapper>
-                    <HomeFooter>
-                        <Text>© MHacks 2017</Text>
-                        <Flexer>
-                            <ImgButton
-                                src={FacebookImg}
-                                alt="Facebook"
-                                align="middle"
-                                href="https://www.facebook.com/MHacksHackathon"
-                            />
-                            <ImgButton
-                                src={InstagramImg}
-                                alt="Instagram"
-                                align="middle"
-                                href="https://www.instagram.com/mhacks_"
-                            />
-                            <ImgButton
-                                src={TwitterImg}
-                                alt="Twitter"
-                                align="middle"
-                                href="https://twitter.com/mhacks"
-                            />
-                        </Flexer>
-                        <Flexer/>
-                    </HomeFooter>
-                </FooterWrapper>
-            </Container>
+            <div>
+                { window.location.pathname == routes.SUBSCRIBE ?
+                    null :
+                    <Container>
+                        <FooterWrapper>
+                            <HomeFooter>
+                                <Text>© MHacks 2017</Text>
+                                <Flexer>
+                                    <ImgButton
+                                        src={FacebookImg}
+                                        alt="Facebook"
+                                        align="middle"
+                                        href="https://www.facebook.com/MHacksHackathon"
+                                    />
+                                    <ImgButton
+                                        src={InstagramImg}
+                                        alt="Instagram"
+                                        align="middle"
+                                        href="https://www.instagram.com/mhacks_"
+                                    />
+                                    <ImgButton
+                                        src={TwitterImg}
+                                        alt="Twitter"
+                                        align="middle"
+                                        href="https://twitter.com/mhacks"
+                                    />
+                                </Flexer>
+                                <Flexer/>
+                            </HomeFooter>
+                        </FooterWrapper>
+                    </Container>
+                }
+            </div>
         );
     }
 }

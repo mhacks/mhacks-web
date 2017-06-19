@@ -2,6 +2,7 @@ var router = require('express').Router(),
     authHandler = require('./api/auth.js'),
     emailHandler = require('./api/email.js'),
     userHandler = require('./api/user.js'),
+    announcementHandler = require('./api/announcement.js'),
     applicationHandler = require('./api/application.js'),
     deployHandler = require('./api/deploy.js'),
     authMiddleware = require('../middleware/auth.js'),
@@ -9,6 +10,7 @@ var router = require('express').Router(),
 
 router.use('/auth', authHandler);
 router.use('/email', emailHandler);
+router.use('/announcements', announcementHandler);
 router.use('/user', authMiddleware('any', 'api', false), userHandler);
 router.use('/application', authMiddleware('any', 'api'), applicationHandler);
 router.use('/deploy', deployHandler);

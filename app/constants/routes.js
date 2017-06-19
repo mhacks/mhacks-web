@@ -5,5 +5,6 @@ export default {
     LOGIN: '/login',
     LOGOUT: '/logout',
     APPLY: '/apply',
-    PROFILE: '/profile'
+    PROFILE: '/profile',
+    LIVE: '/live'
 };

@@ -9,6 +9,7 @@ import FileUpload from './FileUpload.jsx';
 import Alert from './Alert.jsx';
 import LabeledInput from './LabeledInput.jsx';
 import PageContainer from './PageContainer.jsx';
+import Countdown from './Countdown.jsx';
 
 export {
     TextSubmit,
@@ -21,5 +22,6 @@ export {
     FileUpload,
     Alert,
     LabeledInput,
-    PageContainer
+    PageContainer,
+    Countdown
 };

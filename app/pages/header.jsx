@@ -148,90 +148,95 @@ class Header extends React.Component {
 
         return (
             <div>
-                <Helmet>
-                    <title>MHacks Nano</title>
+                { window.location.pathname == routes.SUBSCRIBE ?
+                    null :
+                    <div>
+                        <Helmet>
+                            <title>MHacks Nano</title>
 
-                    <link rel="icon" type="image/x-icon" href={Favicon} />
-                </Helmet>
-                <Wrapper>
-                    <Container>
-                        <FlexWrapper>
-                            <HeaderNavLink to={routes.HOME}><Logo src={HeaderLogoImage} /></HeaderNavLink>
-                            <NavContainer>
-                                {!isLoggedIn || !isEmailVerified || isApplicationSubmitted ?
-                                    null :
-                                    <StyledNavLink
-                                        to={routes.APPLY}
+                            <link rel="icon" type="image/x-icon" href={Favicon} />
+                        </Helmet>
+                        <Wrapper>
+                            <Container>
+                                <FlexWrapper>
+                                    <HeaderNavLink to={routes.HOME}><Logo src={HeaderLogoImage} /></HeaderNavLink>
+                                    <NavContainer>
+                                        {!isLoggedIn || !isEmailVerified || isApplicationSubmitted ?
+                                            null :
+                                            <StyledNavLink
+                                                to={routes.APPLY}
+                                                primaryColor={this.props.theme.primary}
+                                            >
+                                            Apply
+                                            </StyledNavLink>
+                                        }
+                                        {isLoggedIn ?
+                                            <StyledNavLink
+                                                to={routes.PROFILE}
+                                                primaryColor={this.props.theme.primary}
+                                            >
+                                            Profile
+                                            </StyledNavLink> :
+                                            null
+                                        }
+                                        {isLoggedIn ?
+                                            <StyledNavLink
+                                                to={routes.LOGOUT}
+                                                primaryColor={this.props.theme.primary}
+                                            >
+                                            Log Out
+                                            </StyledNavLink> :
+                                            <StyledNavLink
+                                                to={routes.LOGIN}
+                                                primaryColor={this.props.theme.primary}
+                                            >
+                                            Log In
+                                            </StyledNavLink>
+                                        }
+                                    </NavContainer>
+                                    <Burger
                                         primaryColor={this.props.theme.primary}
                                     >
-                                    Apply
-                                    </StyledNavLink>
-                                }
-                                {isLoggedIn ?
-                                    <StyledNavLink
-                                        to={routes.PROFILE}
-                                        primaryColor={this.props.theme.primary}
-                                    >
-                                    Profile
-                                    </StyledNavLink> :
-                                    null
-                                }
-                                {isLoggedIn ?
-                                    <StyledNavLink
-                                        to={routes.LOGOUT}
-                                        primaryColor={this.props.theme.primary}
-                                    >
-                                    Log Out
-                                    </StyledNavLink> :
-                                    <StyledNavLink
-                                        to={routes.LOGIN}
-                                        primaryColor={this.props.theme.primary}
-                                    >
-                                    Log In
-                                    </StyledNavLink>
-                                }
-                            </NavContainer>
-                            <Burger
-                                primaryColor={this.props.theme.primary}
-                            >
-                                <Menu right>
-                                    {!isLoggedIn || !isEmailVerified || isApplicationSubmitted ?
-                                        null :
-                                        <StyledNavLink
-                                            to={routes.APPLY}
-                                            primaryColor={this.props.theme.primary}
-                                        >
-                                        Apply
-                                        </StyledNavLink>
-                                    }
-                                    {isLoggedIn ?
-                                        <StyledNavLink
-                                            to={routes.PROFILE}
-                                            primaryColor={this.props.theme.primary}
-                                        >
-                                        Profile
-                                        </StyledNavLink> :
-                                        null
-                                    }
-                                    {isLoggedIn ?
-                                        <StyledNavLink
-                                            to={routes.LOGOUT}
-                                            primaryColor={this.props.theme.primary}
-                                        >
-                                        Log Out
-                                        </StyledNavLink> :
-                                        <StyledNavLink
-                                            to={routes.LOGIN}
-                                            primaryColor={this.props.theme.primary}
-                                        >
-                                        Log In
-                                        </StyledNavLink>
-                                    }
-                                </Menu>
-                            </Burger>
-                        </FlexWrapper>
-                    </Container>
-                </Wrapper>
+                                        <Menu right>
+                                            {!isLoggedIn || !isEmailVerified || isApplicationSubmitted ?
+                                                null :
+                                                <StyledNavLink
+                                                    to={routes.APPLY}
+                                                    primaryColor={this.props.theme.primary}
+                                                >
+                                                Apply
+                                                </StyledNavLink>
+                                            }
+                                            {isLoggedIn ?
+                                                <StyledNavLink
+                                                    to={routes.PROFILE}
+                                                    primaryColor={this.props.theme.primary}
+                                                >
+                                                Profile
+                                                </StyledNavLink> :
+                                                null
+                                            }
+                                            {isLoggedIn ?
+                                                <StyledNavLink
+                                                    to={routes.LOGOUT}
+                                                    primaryColor={this.props.theme.primary}
+                                                >
+                                                Log Out
+                                                </StyledNavLink> :
+                                                <StyledNavLink
+                                                    to={routes.LOGIN}
+                                                    primaryColor={this.props.theme.primary}
+                                                >
+                                                Log In
+                                                </StyledNavLink>
+                                            }
+                                        </Menu>
+                                    </Burger>
+                                </FlexWrapper>
+                            </Container>
+                        </Wrapper>
+                    </div>
+                }
             </div>
         );
     }
