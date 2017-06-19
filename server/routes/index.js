@@ -1,8 +1,7 @@
 var router = require('express').Router(),
     authMiddleware = require('../middleware/auth.js'),
     User = require('../db/model/User.js'),
-    Application = require('../db/model/Application.js'),
-    path = require('path');
+    Application = require('../db/model/Application.js');
 
 router.get('/admin', authMiddleware('admin', 'web'), function(req, res) {
     User.find()
