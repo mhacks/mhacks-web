@@ -45,7 +45,7 @@ router.post(
                             continue;
                         } else {
                             sendVerificationEmail = true;
-                            req.body.email = req.body.email;
+                            req.email = req.body.email;
                         }
                     }
 
@@ -95,12 +95,6 @@ router.get('/profile', function(req, res) {
         .byToken(req.authToken)
         .exec()
         .then(user => {
-            var groups = [];
-
-            user.groups.forEach(function(data) {
-                groups.push(data.name);
-            });
-
             res.send({
                 status: true,
                 user: {
@@ -109,10 +103,10 @@ router.get('/profile', function(req, res) {
                     application_submitted: user.application_submitted,
                     full_name: user.full_name,
                     birthday: user.birthday,
+                    groups: user.getGroupsList(),
                     major: user.major,
                     university: user.university,
-                    groups: groups,
-                    resume_uploaded: user.resume ? true : false,
+                    resume_uploaded: !!user.resume,
                     avatar: user.getAvatars()
                 }
             });

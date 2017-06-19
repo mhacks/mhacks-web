@@ -4,6 +4,7 @@ var http = require('http'),
     express = require('express'),
     app = express(),
     server = http.createServer(app),
+    io = require('socket.io')(server, {wsEngine: 'uws'}),
     session = require('express-session'),
     bodyParser = require('body-parser'),
     MongoStore = require('connect-mongo')(session),
@@ -11,7 +12,8 @@ var http = require('http'),
     csrfProtection = csrf(),
     apiRouter = require('./server/routes/api.js'),
     indexRouter = require('./server/routes/index.js'),
-    config = require('./config/default.js');
+    config = require('./config/default.js'),
+    sharedsession = require("express-socket.io-session");
 
 // Force https
 app.use(function(req, res, next) {
@@ -43,11 +45,17 @@ var sessionStore = new MongoStore({
     url: 'mongodb://' + config.mongo_hostname + '/' + config.sessions_db
 });
 
-app.use(session({
+var sessionMiddleware = session({
     secret: config.secret,
     store: sessionStore,
     resave: false,
     saveUninitialized: false
+});
+
+app.use(sessionMiddleware);
+
+io.use(sharedsession(sessionMiddleware, {
+    autoSave: true
 }));
 
 // Set an xsrf-token for the session if it's enabled
@@ -93,6 +101,8 @@ if (app.get('env') !== 'production' && !config.api_work) {
         res.sendFile(__dirname + '/build/index.html');
     });
 }
+
+var ioHandler = require('./server/socketio/index.js')(io);
 
 // Now we start the server
 server.listen(config.server_port);

@@ -1,3 +1,4 @@
 module.exports = {
-    UNAUTHORIZED: 'Unauthorized'
+    UNAUTHORIZED: 'Unauthorized',
+    USER_ALREADY_CONNECTED: 'User is already connected.'
 };

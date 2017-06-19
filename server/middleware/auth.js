@@ -20,7 +20,12 @@ module.exports = function(groupName, checkType, verifiedEmail) {
                                     .then(() => {
                                         groupCheck(groupName, user)
                                             .then(() => {
-                                                callNext(req, token, next);
+                                                callNext(
+                                                    req,
+                                                    user,
+                                                    token,
+                                                    next
+                                                );
                                             })
                                             .catch(result => {
                                                 returnFailure(
@@ -48,7 +53,7 @@ module.exports = function(groupName, checkType, verifiedEmail) {
                 .catch(() => {
                     returnFailure(res, checkType, Responses.UNAUTHORIZED);
                 });
-        } else if (req.session.loggedIn) {
+        } else if (req.session && req.session.loggedIn) {
             User.find()
                 .byEmail(req.session.email)
                 .exec()
@@ -60,6 +65,7 @@ module.exports = function(groupName, checkType, verifiedEmail) {
                                     .then(() => {
                                         callNext(
                                             req,
+                                            user,
                                             user.tokens[0].token,
                                             next
                                         );
@@ -116,7 +122,10 @@ function groupCheck(groupName, user) {
     });
 }
 
-function callNext(req, token, next) {
+function callNext(req, user, token, next) {
+    req.name = user.name;
+    req.email = user.email;
+    req.groups = user.getGroupsList();
     req.authToken = token;
     next();
 }

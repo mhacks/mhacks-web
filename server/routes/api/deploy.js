@@ -38,17 +38,19 @@ router.post('/webhook/github', function(req, res) {
                         .then(result => {
                             slack.sendMessage(config.slack_token, {
                                 channel: config.slack_notifications_channel,
-                                text: 'Success: ```' +
-                                    deploy.formatResponse(result) +
-                                    '```'
+                                text:
+                                    'Success: ```' +
+                                        deploy.formatResponse(result) +
+                                        '```'
                             });
                         })
                         .catch(err => {
                             slack.sendMessage(config.slack_token, {
                                 channel: config.slack_notifications_channel,
-                                text: 'Error: ```' +
-                                    deploy.formatResponse(err) +
-                                    '```'
+                                text:
+                                    'Error: ```' +
+                                        deploy.formatResponse(err) +
+                                        '```'
                             });
                         });
                 }
@@ -83,7 +85,8 @@ router.post('/webhook/slack', function(req, res) {
 
                     res.send({
                         response_type: 'in_channel',
-                        text: 'Deploying master to production. Crossing over to staging to complete update.'
+                        text:
+                            'Deploying master to production. Crossing over to staging to complete update.'
                     });
                 } else {
                     deploy
@@ -91,17 +94,19 @@ router.post('/webhook/slack', function(req, res) {
                         .then(result => {
                             slack.sendMessage(req.body.response_url, {
                                 response_type: 'in_channel',
-                                text: 'Success: ```' +
-                                    deploy.formatResponse(result) +
-                                    '```'
+                                text:
+                                    'Success: ```' +
+                                        deploy.formatResponse(result) +
+                                        '```'
                             });
                         })
                         .catch(err => {
                             slack.sendMessage(req.body.response_url, {
                                 response_type: 'in_channel',
-                                text: 'Error: ```' +
-                                    deploy.formatResponse(err) +
-                                    '```'
+                                text:
+                                    'Error: ```' +
+                                        deploy.formatResponse(err) +
+                                        '```'
                             });
                         });
                 }
@@ -118,16 +123,18 @@ router.post('/webhook/slack', function(req, res) {
                             slack.postSnippet(config.slack_token, {
                                 channels: req.body.channel_id,
                                 content: deploy.formatResponse(result),
-                                title: new Date().toString() +
-                                    ' Production Damage Report'
+                                title:
+                                    new Date().toString() +
+                                        ' Production Damage Report'
                             });
                         })
                         .catch(err => {
                             slack.postSnippet(config.slack_token, {
                                 channels: req.body.channel_id,
                                 content: deploy.formatResponse(err),
-                                title: new Date().toString() +
-                                    ' Production Damage Report Error'
+                                title:
+                                    new Date().toString() +
+                                        ' Production Damage Report Error'
                             });
                         });
                 } else {
@@ -142,16 +149,18 @@ router.post('/webhook/slack', function(req, res) {
                             slack.postSnippet(config.slack_token, {
                                 channels: req.body.channel_id,
                                 content: deploy.formatResponse(result),
-                                title: new Date().toString() +
-                                    ' Staging Damage Report'
+                                title:
+                                    new Date().toString() +
+                                        ' Staging Damage Report'
                             });
                         })
                         .catch(err => {
                             slack.postSnippet(config.slack_token, {
                                 channels: req.body.channel_id,
                                 content: deploy.formatResponse(err),
-                                title: new Date().toString() +
-                                    ' Staging Damage Report Error'
+                                title:
+                                    new Date().toString() +
+                                        ' Staging Damage Report Error'
                             });
                         });
                 }
@@ -166,17 +175,19 @@ router.post('/webhook/slack', function(req, res) {
                     .then(result => {
                         slack.sendMessage(req.body.response_url, {
                             response_type: 'in_channel',
-                            text: 'Success: ```' +
-                                deploy.formatResponse(result) +
-                                '```'
+                            text:
+                                'Success: ```' +
+                                    deploy.formatResponse(result) +
+                                    '```'
                         });
                     })
                     .catch(err => {
                         slack.sendMessage(req.body.response_url, {
                             response_type: 'in_channel',
-                            text: 'Error: ```' +
-                                deploy.formatResponse(err) +
-                                '```'
+                            text:
+                                'Error: ```' +
+                                    deploy.formatResponse(err) +
+                                    '```'
                         });
                     });
             }
