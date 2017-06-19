@@ -6,5 +6,6 @@ export default {
     LOGIN: '/v1/auth/login',
     LOGOUT: '/v1/auth/logout',
     PROFILE: '/v1/user/profile',
-    APPLICATION: '/v1/application'
+    APPLICATION: '/v1/application',
+    ANNOUNCEMENTS: '/v1/announcements'
 };
