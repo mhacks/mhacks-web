@@ -6,8 +6,7 @@ import { FormattedRelative } from 'react-intl';
 
 import InputBar from './InputBar.jsx';
 
-const Wrapper = styled.div`
-    overflow: hidden;
+const Wrapper = styled.div` 
 `
 
 const Header = styled.div`
@@ -24,6 +23,8 @@ const HeaderText = styled.h3`
 const List = styled.div`
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    height: 100%;
 `;
 
 const ListItem = styled.div`
@@ -141,8 +142,10 @@ class Chat extends React.Component {
                     </Header>
                     <List>
                         {this.state.messages.map(function (message, i) {
+                            var element = document.getElementById('lastItem')
+                            element && element.scrollIntoView(false);
                             return (
-                                <ListItem key={i}>
+                                <ListItem key={i} id={i == this.state.messages.length - 1 && 'lastItem'}>
                                     <ListItemHeader>{message.user.name} 
                                         <ListItemTimestamp>
                                             <FormattedRelative value={message.time} />
@@ -151,7 +154,7 @@ class Chat extends React.Component {
                                     <ListItemDescription>{message.message}</ListItemDescription>
                                 </ListItem>
                             );
-                        })}
+                        }.bind(this))}
                     </List>
                     <InputBar onSubmit={this.inputSubmit} />
                 </Wrapper>
