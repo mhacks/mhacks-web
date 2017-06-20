@@ -27,21 +27,31 @@ const List = styled.div`
 `;
 
 const ListItem = styled.div`
+    backgroundColor: #EFEFEF;
+    borderBottom: 0.5px solid black;
+    padding: 10px;
 `;
 
 const ListItemHeader = styled.h2`
     color: darkorange;
     margin: 0;
-    fontSize: 12px;
+    fontSize: 14px;
 `;
 
-const ListItemTimestamp = styled.p`
+const ListItemTimestamp = styled.span`
+    display: inline;
     fontWeight: bold;
     color: gray;
+    fontSize: 12px;
+    margin: 0;
+    marginLeft: 5px;
+    position: relative;
+    top: -1px;
 `;
 
 const ListItemDescription = styled.p`
     color: gray;
+    margin: 0;
 `;
 
 class Chat extends React.Component {
@@ -133,8 +143,11 @@ class Chat extends React.Component {
                         {this.state.messages.map(function (message, i) {
                             return (
                                 <ListItem key={i}>
-                                    <ListItemHeader>{message.user.name}</ListItemHeader>
-                                    <ListItemTimestamp><FormattedRelative value={message.time} /></ListItemTimestamp>
+                                    <ListItemHeader>{message.user.name} 
+                                        <ListItemTimestamp>
+                                            <FormattedRelative value={message.time} />
+                                        </ListItemTimestamp>
+                                    </ListItemHeader>
                                     <ListItemDescription>{message.message}</ListItemDescription>
                                 </ListItem>
                             );
