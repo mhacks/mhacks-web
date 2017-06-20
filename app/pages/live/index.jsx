@@ -10,12 +10,12 @@ const verticalMargin = 130;
 
 const Container = styled.div`
     display: flex;
-    height: 100%;
     width: calc(100% - 40px);
     margin: ${verticalMargin}px auto 0 auto;
     overflowX: hidden;
     flexDirection: column;
     position: relative;
+    height: calc(100vh - ${verticalMargin*2}px);
 
     ${devices.small`
         width: calc(100% - 60px);
@@ -31,10 +31,7 @@ const Content = styled.div`
     display: flex;
     height: 100%;
     width: 100%;
-
-    ${devices.tablet`
-        overflowX: hidden;
-    `}
+    overflowX: hidden;
 `;
 
 const AnnouncementsContainer = styled.div`
@@ -46,7 +43,7 @@ const ChatContainer = styled.div`
     width: 67%;
     height: 100%;
     borderRadius: 8px;
-    backgroundColor: ${props => props.bgcolor};
+    backgroundColor: #999999;
     position: relative;
 `;
 

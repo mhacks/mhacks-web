@@ -13,6 +13,7 @@ const Header = styled.div`
     backgroundColor: #E6E6E6;
     borderRadius: 8px 8px 0 0;
     padding: 10px;
+    border: 1px solid gray;
 `
 
 const HeaderText = styled.h3`
