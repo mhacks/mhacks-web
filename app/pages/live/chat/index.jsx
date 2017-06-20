@@ -2,7 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
 
+import InputBar from './InputBar.jsx';
+
 class Chat extends React.Component {
+
     componentDidMount() {
         this.socket = io.connect(window.location.origin, {
             reconnection: false
@@ -57,9 +60,15 @@ class Chat extends React.Component {
         this.socket.disconnect();
     }
 
+    inputSubmit(message) {
+        console.log(message)
+    }
+
     render(){
         return (
-            <div>chat here</div>
+            <div>chat here
+                <InputBar onSubmit={this.inputSubmit} />
+            </div>
         );
     }
 }
