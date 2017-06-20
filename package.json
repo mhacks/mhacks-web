@@ -78,6 +78,7 @@
         "request": "^2.81.0",
         "request-promise-native": "^1.0.4",
         "socket.io": "^2.0.1",
+        "socket.io-client": "^2.0.3",
         "style-loader": "^0.16.0",
         "styled-components": "^1.4.4",
         "url-loader": "^0.5.8",

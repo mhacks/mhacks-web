@@ -18,7 +18,9 @@ function chatHandler(io, socket) {
             if (
                 data instanceof Object &&
                 'message' in data &&
-                'channel' in data
+                data.message &&
+                'channel' in data &&
+                data.channel
             ) {
                 if (
                     data.channel in io.sockets.adapter.rooms &&
@@ -28,6 +30,7 @@ function chatHandler(io, socket) {
                         status: true,
                         message: data.message,
                         channel: data.channel,
+                        time: new Date().getTime(),
                         user: {
                             name: socket.handshake.name,
                             email: socket.handshake.email

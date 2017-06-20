@@ -1,18 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { devices } from '../../styles';
 import Announcements from './announcements.jsx';
 import { Countdown } from '../../components';
+import Chat from './chat';
 
 const verticalMargin = 130;
 
 const Container = styled.div`
     display: flex;
-    height: 100%;
     width: calc(100% - 40px);
     margin: ${verticalMargin}px auto 0 auto;
     overflowX: hidden;
     flexDirection: column;
+    position: relative;
+    height: calc(100vh - ${verticalMargin*2}px);
 
     ${devices.small`
         width: calc(100% - 60px);
@@ -25,23 +28,23 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-    width: 100%;
-    height: 100%;
     display: flex;
-
-    ${devices.tablet`
-        width: 100%;
-        overflowX: hidden;
-        overflowY: scroll;
-    `}
+    height: 100%;
+    width: 100%;
+    overflowX: hidden;
 `;
 
 const AnnouncementsContainer = styled.div`
     width: 33%;
+    overflowY: scroll;
 `;
 
 const ChatContainer = styled.div`
     width: 67%;
+    height: 100%;
+    borderRadius: 8px;
+    backgroundColor: #999999;
+    position: relative;
 `;
 
 class LivePage extends React.Component {
@@ -56,8 +59,8 @@ class LivePage extends React.Component {
                     <AnnouncementsContainer>
                         <Announcements />
                     </AnnouncementsContainer>
-                    <ChatContainer>
-                        <p>Chat</p>
+                    <ChatContainer bgcolor={this.props.theme.teal}>
+                        <Chat />
                     </ChatContainer>
                 </Content>
             </Container>
@@ -65,4 +68,10 @@ class LivePage extends React.Component {
     }
 }
 
-export default LivePage;
+function mapStateToProps(state){
+    return {
+        theme: state.theme.data
+    }
+}
+
+export default connect(mapStateToProps)(LivePage);

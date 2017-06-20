@@ -6,7 +6,7 @@ while true; do
 
     if [ -n "$output" ]
     then
-        read -t 10 -p "Do you wish to install this program? [y/n]" yn
+        read -t 10 -p "Do you wish to run prettier on these files? [y/n]" yn
 
         case $yn in
             [Yy]* ) prettier --single-quote --trailing-comma none --tab-width 4 "{app,config,server}/**/*.js" --write; exit $?;;
