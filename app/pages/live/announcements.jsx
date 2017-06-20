@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 
 const List = styled.div`
     display: flex;
+    overflowY: scroll;
+    height: 100%;
     flex-direction: column;
 `;
 

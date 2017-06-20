@@ -11,18 +11,17 @@ const verticalMargin = 130;
 const Container = styled.div`
     display: flex;
     width: calc(100% - 40px);
+    height: calc(100vh - ${verticalMargin*2}px);
     margin: ${verticalMargin}px auto 0 auto;
     overflowX: hidden;
     flexDirection: column;
     position: relative;
-    height: calc(100vh - ${verticalMargin*2}px);
 
     ${devices.small`
         width: calc(100% - 60px);
     `}
 
     ${devices.tablet`
-        height: calc(100vh - ${verticalMargin*2}px);
         margin: ${verticalMargin}px auto;
     `}
 `;
@@ -32,11 +31,12 @@ const Content = styled.div`
     height: 100%;
     width: 100%;
     overflowX: hidden;
+    overflowY: hidden;
 `;
 
 const AnnouncementsContainer = styled.div`
     width: 33%;
-    overflowY: scroll;
+    height: 100%;
 `;
 
 const ChatContainer = styled.div`
@@ -44,7 +44,6 @@ const ChatContainer = styled.div`
     height: 100%;
     borderRadius: 8px;
     backgroundColor: #999999;
-    position: relative;
 `;
 
 class LivePage extends React.Component {

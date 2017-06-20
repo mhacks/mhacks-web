@@ -6,8 +6,9 @@ import { FormattedRelative } from 'react-intl';
 
 import InputBar from './InputBar.jsx';
 
-const Wrapper = styled.div` 
-`
+const Wrapper = styled.div`
+    height: 100%;
+`;
 
 const Header = styled.div`
     backgroundColor: #E6E6E6;
@@ -23,8 +24,9 @@ const HeaderText = styled.h3`
 const List = styled.div`
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    height: 100%;
+    overflowY: scroll;
+    height: calc(100% - 50px);
+    padding-bottom: 35px;
 `;
 
 const ListItem = styled.div`
@@ -131,6 +133,10 @@ class Chat extends React.Component {
         this.sendMessage(message, '#general');
     }
 
+    componentDidUpdate() {
+        document.getElementById('lastItem').scrollIntoView();
+    }
+
     render(){
         if (!this.props || !this.props.shouldRender) {
             return null;
@@ -142,11 +148,10 @@ class Chat extends React.Component {
                     </Header>
                     <List>
                         {this.state.messages.map(function (message, i) {
-                            var element = document.getElementById('lastItem')
-                            element && element.scrollIntoView(false);
+                            var propId = (i === this.state.messages.length - 1) ? 'lastItem' : '';
                             return (
-                                <ListItem key={i} id={i == this.state.messages.length - 1 && 'lastItem'}>
-                                    <ListItemHeader>{message.user.name} 
+                                <ListItem key={i} id={propId}>
+                                    <ListItemHeader>{message.user.name}
                                         <ListItemTimestamp>
                                             <FormattedRelative value={message.time} />
                                         </ListItemTimestamp>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 const Input = styled.input`
-    width: 100%;
+    width: 67%;
     height: 35px;
     border: 3px solid ${props => props.borderColor};
     borderTop: 5px solid ${props => props.borderColor};
