@@ -62,7 +62,7 @@ class Chat extends React.Component {
     constructor() {
         super();
 
-        this.state = {messages: []};
+        this.state = {messages: [], users: []};
 
         this.inputSubmit = this.inputSubmit.bind(this);
     }
@@ -89,18 +89,41 @@ class Chat extends React.Component {
 
         this.socket.on('status', function (data) {
             console.log('Status', data);
+            if (!data.status) {
+                alert(data.message);
+            }
+        });
+
+        this.socket.on('disconnect', function (data) {
+            console.log('Disconnect', data);
+            alert('You have been disconnected.');
         });
 
         this.socket.on('chat', function (data) {
             console.log('Chat', data);
 
             component.setState(state => ({
-                messages: [...state.messages, data]
+                messages: [...state.messages, data],
+                users: state.users
             }));
         });
 
         this.socket.on('channels', function (data) {
             console.log('Channels', data);
+
+            data.channels.forEach(function(channel) {
+                if (channel.name === '#general') {
+                    var users = [];
+                    for (var i in channel.members) {
+                        users.push(channel.members[i]);
+                    }
+
+                    component.setState(state => ({
+                        users: [...state.users, ...users],
+                        messages: state.messages
+                    }));
+                }
+            });
         });
     }
 
@@ -134,17 +157,31 @@ class Chat extends React.Component {
     }
 
     componentDidUpdate() {
-        document.getElementById('lastItem').scrollIntoView();
+        var element = document.getElementById('lastItem');
+        if (element) {
+            element.scrollIntoView();
+        }
     }
 
     render(){
         if (!this.props || !this.props.shouldRender) {
-            return null;
-        } else {
             return (
                 <Wrapper>
                     <Header>
-                        <HeaderText>Chat</HeaderText>
+                        <HeaderText>Login to Access Chat</HeaderText>
+                    </Header>
+                </Wrapper>
+            );
+        } else {
+            var users = [];
+            this.state.users.forEach(function(data) {
+                users.push(data.name);
+            });
+
+            return (
+                <Wrapper>
+                    <Header>
+                        <HeaderText>Chat {users.length > 0 ? 'with ' + users.join(', ') : ''}</HeaderText>
                     </Header>
                     <List>
                         {this.state.messages.map(function (message, i) {

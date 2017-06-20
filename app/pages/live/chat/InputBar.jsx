@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
@@ -28,7 +27,6 @@ class InputBar extends React.Component {
 
     handleKeyPress(e) {
         if (e.key == 'Enter') {
-            ReactDOM.findDOMNode(this.refs.textField).blur();
             this.props.onSubmit(this.state.text);
             this.setState({text: ''});
         }
@@ -50,6 +48,7 @@ class InputBar extends React.Component {
                     onChange={e => {this.handleChange(e)}}
                     onKeyDown={e => {this.handleKeyPress(e)}}
                     borderColor={this.props.theme.primary}
+                    placeholder="Type here and press enter to send a message..."
                 />
             </div>
         );
