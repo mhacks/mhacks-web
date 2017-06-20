@@ -1,8 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
+import styled from 'styled-components';
 
 import InputBar from './InputBar.jsx';
+
+const Wrapper = styled.div`
+    overflow: hidden;
+`
+
+const Header = styled.div`
+    backgroundColor: #E6E6E6;
+    borderRadius: 8px 8px 0 0;
+    padding: 10px;
+`
+
+const HeaderText = styled.h3`
+    margin: 0;
+`
 
 class Chat extends React.Component {
 
@@ -66,16 +81,20 @@ class Chat extends React.Component {
 
     render(){
         return (
-            <div>chat here
+            <Wrapper>
+                <Header>
+                    <HeaderText>Chat</HeaderText>
+                </Header>
                 <InputBar onSubmit={this.inputSubmit} />
-            </div>
+            </Wrapper>
         );
     }
 }
 
 function mapStateToProps(state){
     return {
-        token: state.userState.data.token
+        token: state.userState.data.token,
+        theme: state.theme.data
     }
 }
 

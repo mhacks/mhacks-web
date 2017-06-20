@@ -7,8 +7,10 @@ const Input = styled.input`
     width: 100%;
     height: 35px;
     border: 2px solid ${props => props.borderColor};
-    borderRadius: 8px;
+    borderRadius: 0 0 8px 8px;
     padding: 10px;
+    position: absolute;
+    bottom: 0;
 `
 
 class InputBar extends React.Component {
