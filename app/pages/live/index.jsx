@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { devices } from '../../styles';
 import Announcements from './announcements.jsx';
 import { Countdown } from '../../components';
+import Chat from './chat';
 
 const verticalMargin = 130;
 
@@ -57,7 +58,7 @@ class LivePage extends React.Component {
                         <Announcements />
                     </AnnouncementsContainer>
                     <ChatContainer>
-                        <p>Chat</p>
+                        <Chat />
                     </ChatContainer>
                 </Content>
             </Container>
