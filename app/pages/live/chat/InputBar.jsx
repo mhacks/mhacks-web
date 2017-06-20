@@ -6,7 +6,8 @@ import styled from 'styled-components';
 const Input = styled.input`
     width: 100%;
     height: 35px;
-    border: 2px solid ${props => props.borderColor};
+    border: 3px solid ${props => props.borderColor};
+    borderTop: 5px solid ${props => props.borderColor};
     borderRadius: 0 0 8px 8px;
     padding: 10px;
     position: absolute;
