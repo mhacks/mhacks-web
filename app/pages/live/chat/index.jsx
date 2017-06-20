@@ -119,7 +119,7 @@ class Chat extends React.Component {
                     }
 
                     component.setState(state => ({
-                        users: [...state.users, ...users],
+                        users: users,
                         messages: state.messages
                     }));
                 }
