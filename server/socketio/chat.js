@@ -17,8 +17,10 @@ function chatHandler(io, socket) {
         socket.on('chat', function(data) {
             if (
                 data instanceof Object &&
-                'message' in data && data.message &&
-                'channel' in data && data.channel
+                'message' in data &&
+                data.message &&
+                'channel' in data &&
+                data.channel
             ) {
                 if (
                     data.channel in io.sockets.adapter.rooms &&
