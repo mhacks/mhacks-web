@@ -21,7 +21,17 @@ const HeaderText = styled.h3`
 
 class Chat extends React.Component {
 
+    constructor() {
+        super();
+
+        this.inputSubmit = this.inputSubmit.bind(this);
+    }
+
     componentDidMount() {
+        if (!this.props || !this.props.shouldRender) {
+            return false;
+        }
+
         this.socket = io.connect(window.location.origin, {
             reconnection: false
         });
@@ -31,7 +41,7 @@ class Chat extends React.Component {
         this.socket.on('authenticate', function (data) {
             console.log('Authenticate', data);
             if (!data) {
-                component.authenticate(this.props.token);
+                component.authenticate(component.props.token);
             } else {
                 component.retrieveProfile();
             }
@@ -76,25 +86,30 @@ class Chat extends React.Component {
     }
 
     inputSubmit(message) {
-        console.log(message)
+        this.sendMessage(message, '#general');
     }
 
     render(){
-        return (
-            <Wrapper>
-                <Header>
-                    <HeaderText>Chat</HeaderText>
-                </Header>
-                <InputBar onSubmit={this.inputSubmit} />
-            </Wrapper>
-        );
+        if (!this.props || !this.props.shouldRender) {
+            return null;
+        } else {
+            return (
+                <Wrapper>
+                    <Header>
+                        <HeaderText>Chat</HeaderText>
+                    </Header>
+                    <InputBar onSubmit={this.inputSubmit} />
+                </Wrapper>
+            );
+        }
     }
 }
 
 function mapStateToProps(state){
     return {
         token: state.userState.data.token,
-        theme: state.theme.data
+        theme: state.theme.data,
+        shouldRender: !!state.userState.data.token
     }
 }
 
