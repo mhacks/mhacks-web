@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
 import styled from 'styled-components';
+import { FormattedRelative } from 'react-intl';
 
 import InputBar from './InputBar.jsx';
 
@@ -19,10 +20,35 @@ const HeaderText = styled.h3`
     margin: 0;
 `
 
+const List = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const ListItem = styled.div`
+`;
+
+const ListItemHeader = styled.h2`
+    color: darkorange;
+    margin: 0;
+    fontSize: 12px;
+`;
+
+const ListItemTimestamp = styled.p`
+    fontWeight: bold;
+    color: gray;
+`;
+
+const ListItemDescription = styled.p`
+    color: gray;
+`;
+
 class Chat extends React.Component {
 
     constructor() {
         super();
+
+        this.state = {messages: []};
 
         this.inputSubmit = this.inputSubmit.bind(this);
     }
@@ -53,6 +79,10 @@ class Chat extends React.Component {
 
         this.socket.on('chat', function (data) {
             console.log('Chat', data);
+
+            component.setState(state => ({
+                messages: [...state.messages, data]
+            }));
         });
 
         this.socket.on('channels', function (data) {
@@ -98,6 +128,17 @@ class Chat extends React.Component {
                     <Header>
                         <HeaderText>Chat</HeaderText>
                     </Header>
+                    <List>
+                        {this.state.messages.map(function (message, i) {
+                            return (
+                                <ListItem key={i}>
+                                    <ListItemHeader>{message.user.name}</ListItemHeader>
+                                    <ListItemTimestamp><FormattedRelative value={message.time} /></ListItemTimestamp>
+                                    <ListItemDescription>{message.message}</ListItemDescription>
+                                </ListItem>
+                            );
+                        })}
+                    </List>
                     <InputBar onSubmit={this.inputSubmit} />
                 </Wrapper>
             );
