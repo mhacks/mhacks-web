@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import io from 'socket.io-client';
 import styled from 'styled-components';
 import { FormattedRelative } from 'react-intl';
+import Favicon from '../../../../static/nano/favicon.png';
 
 import InputBar from './InputBar.jsx';
 
@@ -102,10 +103,24 @@ class Chat extends React.Component {
         this.socket.on('chat', function (data) {
             console.log('Chat', data);
 
-            component.setState(state => ({
-                messages: [...state.messages, data],
-                users: state.users
-            }));
+            if (data.channel === '#general') {
+                if (!document.hasFocus() && 'Notification' in window) {
+                    if (Notification.permission === 'granted') {
+                        component.createNotification(data);
+                    } else if (Notification.permission !== 'denied') {
+                        Notification.requestPermission(function (permission) {
+                            if (permission === 'granted') {
+                                component.createNotification(data);
+                            }
+                        });
+                    }
+                }
+
+                component.setState(state => ({
+                    messages: [...state.messages, data],
+                    users: state.users
+                }));
+            }
         });
 
         this.socket.on('channels', function (data) {
@@ -125,6 +140,26 @@ class Chat extends React.Component {
                 }
             });
         });
+    }
+
+    createNotification(data) {
+        var notification = new Notification('#general: ' + data.user.name, {
+            icon: Favicon,
+            body: data.message,
+
+        });
+
+        notification.onclick = function(event) {
+            event.preventDefault();
+            window.focus();
+            notification.close();
+        };
+
+        setTimeout(function() {
+            notification.close();
+        }, 5000);
+
+        return notification;
     }
 
     sendMessage(message, channel) {
