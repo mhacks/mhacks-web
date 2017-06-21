@@ -43,10 +43,10 @@ class Announcements extends React.Component {
     componentDidMount() {
         this.props.dispatch(AnnouncementsThunks.loadAnnouncements());
 
-        // refresh announcements every 60 seconds
+        // refresh announcements every 20 seconds
         this.poll = setInterval(() => {
             this.props.dispatch(AnnouncementsThunks.loadAnnouncements());
-        }, 60 * 1000);
+        }, 20 * 1000);
     }
 
     componentWillUnmount() {

@@ -9,29 +9,13 @@ function sortByDate(a, b) {
 
 // Handles get requests for /v1/announcements
 router.get('/', function(req, res) {
-    if (req.session.loggedIn && req.session.can_edit_announcement) {
-        Announcement.find()
-            .exec()
-            .then(announcements => {
-                announcements.sort(sortByDate);
-                res.send({
-                    status: true,
-                    announcements: announcements
-                });
-            })
-            .catch(err => {
-                console.error(err);
-                res.send({
-                    status: false,
-                    message: Responses.UNKNOWN_ERROR
-                });
-            });
-    } else {
-        Announcement.find()
+    authMiddleware('admin', 'api', true, function() {
+        Announcement.find({}, '-_id -__v')
             .byIsPublic()
             .exec()
             .then(announcements => {
                 announcements.sort(sortByDate);
+
                 res.send({
                     status: true,
                     announcements: announcements
@@ -44,10 +28,27 @@ router.get('/', function(req, res) {
                     message: Responses.UNKNOWN_ERROR
                 });
             });
-    }
+    })(req, res, function() {
+        Announcement.find({}, '-_id -__v')
+            .exec()
+            .then(announcements => {
+                announcements.sort(sortByDate);
+                res.send({
+                    status: true,
+                    announcements: announcements
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                res.send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
+            });
+    });
 });
 
-router.post('/', authMiddleware('admin', 'web'), function(req, res) {
+router.post('/', authMiddleware('admin', 'api'), function(req, res) {
     if (req.session.loggedIn) {
         if (req.body.title && req.body.body && req.body.category) {
             Announcement.create({
@@ -84,18 +85,18 @@ router.post('/', authMiddleware('admin', 'web'), function(req, res) {
     }
 });
 
-router.put('/', authMiddleware('admin', 'web'), function(req, res) {
-    if (req.session.loggedIn && req.session.can_edit_announcement) {
+router.put('/', authMiddleware('admin', 'api'), function(req, res) {
+    if (req.session.loggedIn) {
         if (req.body.id) {
             Announcement.findById(req.body.id)
                 .exec()
                 .then(announcement => {
-                    announcement.title = req.body.title;
-                    announcement.body = req.body.body;
-                    announcement.broadcastTime = req.body.broadcastTime;
-                    announcement.category = req.body.category;
-                    announcement.isApproved = req.body.isApproved;
-                    announcement.isSent = req.body.isSent;
+                    announcement.title = req.body.title || announcement.title;
+                    announcement.body = req.body.body || announcement.body;
+                    announcement.broadcastTime = req.body.broadcastTime || announcement.broadcastTime;
+                    announcement.category = req.body.category || announcement.category;
+                    announcement.isApproved = req.body.isApproved || announcement.isApproved;
+                    announcement.isSent = req.body.isSent || announcement.isSent;
                     announcement.save();
                     res.send({
                         status: true
@@ -122,8 +123,8 @@ router.put('/', authMiddleware('admin', 'web'), function(req, res) {
     }
 });
 
-router.patch('/', authMiddleware('admin', 'web'), function(req, res) {
-    if (req.session.loggedIn && req.session.can_edit_announcement) {
+router.patch('/', authMiddleware('admin', 'api'), function(req, res) {
+    if (req.session.loggedIn) {
         if (req.body.id) {
             Announcement.updateOne({ _id: req.body.id }, req.body, {
                 runValidators: true

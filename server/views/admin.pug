@@ -41,11 +41,73 @@ html(lang='en')
                     ]
                 });
                 application_table.buttons().container().appendTo('#application-table_wrapper .col-sm-6:eq(0)');
+
+                announcements_table = $('#announcements-table').DataTable({
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+                announcements_table.buttons().container().appendTo('#announcements-table_wrapper .col-sm-6:eq(0)');
+
+                $('#createAction').click(function(e) {
+                    e.preventDefault();
+
+                    $.post('/v1/announcements', {
+                        title: $('#title').val(),
+                        body: $('#body').val(),
+                        broadcastTime: $('#broadcastTime').val() || new Date(),
+                        category: $('#category').val(),
+                        isApproved: $('#approved').is(':checked'),
+                        isSent: $('#sent').is(':checked')
+                    }, function (data) {
+                        console.log(data);
+                        window.location.reload();
+                    });
+                });
             });
+
             function sendVerificationEmail(email) {
-                $.post('/v1/auth/verify', {email: email}, function (data) {
+                $.post('/v1/auth/verify', {
+                    email: email
+                }, function (data) {
+                    console.log(data);
                 });
             }
+
+            function setIsSent(id, sent) {
+                $.ajax({
+                    url: '/v1/announcements',
+                    type: 'PUT',
+                    json: true,
+                    data: {
+                        id: id,
+                        isSent: sent
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        window.location.reload();
+                    }
+                });
+                console.log(id, sent);
+            }
+
+            function setIsApproved(id, approved) {
+                $.ajax({
+                    url: '/v1/announcements',
+                    type: 'PUT',
+                    json: true,
+                    data: {
+                        id: id,
+                        isApproved: approved
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        window.location.reload();
+                    }
+                });
+                console.log(id, approved);
+            }
+
     body
         // Fixed navbar
         .navbar.navbar-default.navbar-fixed-top(role='navigation')
@@ -159,14 +221,61 @@ html(lang='en')
                                             i.fa.fa-times(style='color: #FF4136')
                 div#announcements
                     h2='Announcements:'
-                    form(method='POST' action='/v1/announcements')
-                         div.form-group
-                           label(for='title') Title:
-                           input#title.form-control(type='text', placeholder='Super Announcement' name='title')
-                         div.form-group
-                           label(for='body') Body:
-                           input#body.form-control(type='text', placeholder='Super Body' name='body')
-                         div.form-group
-                           label(for='category') Category:
-                           input#category.form-control(type='text', placeholder='Category' value='Logistics' name='category')
-                         button.btn.btn-primary(type='submit') Create
+                    table#announcements-table.table.table-responsive.table-striped.table-bordered.dt-responsive.nowrap(cellspacing='0', width='100%')
+                        thead#table-head-unchained-3
+                            tr#table-head-row-unchained-3
+                                th='#'
+                                th='Title'
+                                th='Body'
+                                th='Category'
+                                th='Sent'
+                                th='Approved'
+                                th='Broadcast Time'
+                        tbody
+                            each val, index in announcements
+                                - var broadcastTime = new Date(val.broadcastTime)
+                                tr#table-body-row-unchained
+                                    th=(index + 1)
+                                    td=val.title
+                                    td=val.body
+                                    td=val.category
+                                    td
+                                        if val.isSent
+                                            a(style='cursor: pointer;' onclick='setIsSent("' + val._id + '", false);')
+                                                i.fa.fa-check(style='color: #2ECC40')
+                                        else
+                                            a(style='cursor: pointer;' onclick='setIsSent("' + val._id + '", true);')
+                                                i.fa.fa-times(style='color: #FF4136')
+                                    td
+                                        if val.isApproved
+                                            a(style='cursor: pointer;' onclick='setIsApproved("' + val._id + '", false);')
+                                                i.fa.fa-check(style='color: #2ECC40')
+                                        else
+                                            a(style='cursor: pointer;' onclick='setIsApproved("' + val._id + '", true);')
+                                                i.fa.fa-times(style='color: #FF4136')
+                                    td=broadcastTime
+                    form()
+                        div.form-group
+                            label(for='title') Title:
+                            input#title.form-control(type='text', placeholder='Super Announcement' name='title')
+                        div.form-group
+                            label(for='body') Body:
+                            input#body.form-control(type='text', placeholder='Super Body' name='body')
+                        div.form-group
+                            label(for='broadcastTime') Broadcast Time:
+                            input#broadcastTime.form-control(type='text', placeholder=new Date() name='broadcastTime')
+                        div.form-group
+                            label(for='category') Category:
+                            select#category.form-control(name='category')
+                                option(value="Emergency") Emergency
+                                option(value="Logistics") Logistics
+                                option(value="Food") Food
+                                option(value="Event") Event
+                                option(value="Sponsored") Sponsored
+                        div.form-group
+                            label(for='sent') Sent:
+                            input#sent.form-control(type="checkbox" checked name="sent")
+                        div.form-group
+                            label(for='approved') Approved:
+                            input#approved.form-control(type="checkbox" checked name="approved")
+                        button.btn.btn-primary(type='submit' id="createAction") Create
