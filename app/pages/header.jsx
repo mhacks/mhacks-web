@@ -66,8 +66,8 @@ const StyledNavLink = styled(NavLink)`
     fontSize: 18px;
     padding: 5px 25px;
     marginLeft: 15px;
-    border: 2px solid ${props => props.primaryColor};
-    color: ${props => props.primaryColor};
+    border: 2px solid ${props => props.color};
+    color: ${props => props.color};
     backgroundColor: white;
     borderRadius: 5px;
     textDecoration: none;
@@ -75,7 +75,7 @@ const StyledNavLink = styled(NavLink)`
     marginTop: 10px;
 
     &:hover {
-        backgroundColor: ${props => props.primaryColor};
+        backgroundColor: ${props => props.color};
         color: white;
     }
 
@@ -165,7 +165,7 @@ class Header extends React.Component {
                                             null :
                                             <StyledNavLink
                                                 to={routes.APPLY}
-                                                primaryColor={this.props.theme.primary}
+                                                color={this.props.theme.primary}
                                             >
                                             Apply
                                             </StyledNavLink>
@@ -173,7 +173,7 @@ class Header extends React.Component {
                                         {isLoggedIn ?
                                             <StyledNavLink
                                                 to={routes.PROFILE}
-                                                primaryColor={this.props.theme.primary}
+                                                color={this.props.theme.primary}
                                             >
                                             Profile
                                             </StyledNavLink> :
@@ -182,13 +182,13 @@ class Header extends React.Component {
                                         {isLoggedIn ?
                                             <StyledNavLink
                                                 to={routes.LOGOUT}
-                                                primaryColor={this.props.theme.primary}
+                                                color={this.props.theme.primary}
                                             >
                                             Log Out
                                             </StyledNavLink> :
                                             <StyledNavLink
                                                 to={routes.LOGIN}
-                                                primaryColor={this.props.theme.primary}
+                                                color={this.props.theme.primary}
                                             >
                                             Log In
                                             </StyledNavLink>
@@ -202,7 +202,7 @@ class Header extends React.Component {
                                                 null :
                                                 <StyledNavLink
                                                     to={routes.APPLY}
-                                                    primaryColor={this.props.theme.primary}
+                                                    color={this.props.theme.primary}
                                                 >
                                                 Apply
                                                 </StyledNavLink>
@@ -210,7 +210,7 @@ class Header extends React.Component {
                                             {isLoggedIn ?
                                                 <StyledNavLink
                                                     to={routes.PROFILE}
-                                                    primaryColor={this.props.theme.primary}
+                                                    color={this.props.theme.primary}
                                                 >
                                                 Profile
                                                 </StyledNavLink> :
@@ -219,13 +219,13 @@ class Header extends React.Component {
                                             {isLoggedIn ?
                                                 <StyledNavLink
                                                     to={routes.LOGOUT}
-                                                    primaryColor={this.props.theme.primary}
+                                                    color={this.props.theme.primary}
                                                 >
                                                 Log Out
                                                 </StyledNavLink> :
                                                 <StyledNavLink
                                                     to={routes.LOGIN}
-                                                    primaryColor={this.props.theme.primary}
+                                                    color={this.props.theme.primary}
                                                 >
                                                 Log In
                                                 </StyledNavLink>

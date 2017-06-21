@@ -26,8 +26,7 @@ const List = styled.div`
     display: flex;
     flex-direction: column;
     overflowY: scroll;
-    height: calc(100% - 50px);
-    padding-bottom: 35px;
+    height: calc(100% - 48px - 35px);
 `;
 
 const ListItem = styled.div`
@@ -199,6 +198,11 @@ class Chat extends React.Component {
     }
 
     inputSubmit(message) {
+        this.setState(state => ({
+            users: state.users,
+            messages: state.messages,
+            topPadding: '23px'
+        }));
         this.sendMessage(message, '#general');
     }
 
@@ -226,7 +230,7 @@ class Chat extends React.Component {
 
             return (
                 <Wrapper>
-                    <Header>
+                    <Header style={{marginTop: this.state.topPadding}}>
                         <HeaderText>Chat {users.length > 0 ? 'with ' + users.join(', ') : ''}</HeaderText>
                     </Header>
                     <List>

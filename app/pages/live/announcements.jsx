@@ -12,7 +12,7 @@ const List = styled.div`
     display: flex;
     flex-direction: column;
     overflowY: scroll;
-    height: 100%;
+    height: calc(100% - 3 * 24px);
 `;
 
 const ListHeader = styled.h3`

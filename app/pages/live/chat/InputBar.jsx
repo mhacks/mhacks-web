@@ -26,7 +26,7 @@ class InputBar extends React.Component {
     }
 
     handleKeyPress(e) {
-        if (e.key == 'Enter') {
+        if (e.key === 'Enter') {
             this.props.onSubmit(this.state.text);
             this.setState({text: ''});
         }
