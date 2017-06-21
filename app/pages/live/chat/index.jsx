@@ -73,6 +73,10 @@ class Chat extends React.Component {
             return false;
         }
 
+        this.requestPermissions(function() {
+            console.log('Got permissions');
+        });
+
         this.socket = io.connect(window.location.origin, {
             reconnection: false
         });
@@ -108,10 +112,8 @@ class Chat extends React.Component {
                     if (Notification.permission === 'granted') {
                         component.createNotification(data);
                     } else if (Notification.permission !== 'denied') {
-                        Notification.requestPermission(function (permission) {
-                            if (permission === 'granted') {
-                                component.createNotification(data);
-                            }
+                        component.requestPermissions(function() {
+                            component.createNotification(data);
                         });
                     }
                 }
@@ -142,11 +144,20 @@ class Chat extends React.Component {
         });
     }
 
+    requestPermissions(func) {
+        if ('Notification' in window) {
+            Notification.requestPermission(function (permission) {
+                if (permission === 'granted') {
+                    func();
+                }
+            });
+        }
+    }
+
     createNotification(data) {
         var notification = new Notification('#general: ' + data.user.name, {
             icon: Favicon,
-            body: data.message,
-
+            body: data.message
         });
 
         notification.onclick = function(event) {
