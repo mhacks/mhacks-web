@@ -45,14 +45,29 @@ module.exports = function(groupName, checkType, verifiedEmail, nextError) {
                                     });
                             })
                             .catch(result => {
-                                returnFailure(res, checkType, result, nextError);
+                                returnFailure(
+                                    res,
+                                    checkType,
+                                    result,
+                                    nextError
+                                );
                             });
                     } else {
-                        returnFailure(res, checkType, Responses.UNAUTHORIZED, nextError);
+                        returnFailure(
+                            res,
+                            checkType,
+                            Responses.UNAUTHORIZED,
+                            nextError
+                        );
                     }
                 })
                 .catch(() => {
-                    returnFailure(res, checkType, Responses.UNAUTHORIZED, nextError);
+                    returnFailure(
+                        res,
+                        checkType,
+                        Responses.UNAUTHORIZED,
+                        nextError
+                    );
                 });
         } else if (req.session && req.session.loggedIn) {
             User.find()
@@ -89,11 +104,21 @@ module.exports = function(groupName, checkType, verifiedEmail, nextError) {
                                 );
                             });
                     } else {
-                        returnFailure(res, checkType, Responses.UNAUTHORIZED, nextError);
+                        returnFailure(
+                            res,
+                            checkType,
+                            Responses.UNAUTHORIZED,
+                            nextError
+                        );
                     }
                 })
                 .catch(() => {
-                    returnFailure(res, checkType, Responses.UNAUTHORIZED, nextError);
+                    returnFailure(
+                        res,
+                        checkType,
+                        Responses.UNAUTHORIZED,
+                        nextError
+                    );
                 });
         } else {
             returnFailure(res, checkType, Responses.UNAUTHORIZED, nextError);

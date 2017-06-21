@@ -93,10 +93,14 @@ router.put('/', authMiddleware('admin', 'api'), function(req, res) {
                 .then(announcement => {
                     announcement.title = req.body.title || announcement.title;
                     announcement.body = req.body.body || announcement.body;
-                    announcement.broadcastTime = req.body.broadcastTime || announcement.broadcastTime;
-                    announcement.category = req.body.category || announcement.category;
-                    announcement.isApproved = req.body.isApproved || announcement.isApproved;
-                    announcement.isSent = req.body.isSent || announcement.isSent;
+                    announcement.broadcastTime =
+                        req.body.broadcastTime || announcement.broadcastTime;
+                    announcement.category =
+                        req.body.category || announcement.category;
+                    announcement.isApproved =
+                        req.body.isApproved || announcement.isApproved;
+                    announcement.isSent =
+                        req.body.isSent || announcement.isSent;
                     announcement.save();
                     res.send({
                         status: true

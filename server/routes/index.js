@@ -15,24 +15,27 @@ router.get('/admin', authMiddleware('admin', 'web'), function(req, res) {
                     Application.find()
                         .exec()
                         .then(applications => {
-                            Announcement.find().exec().then(announcements => {
-                                res.render('admin', {
-                                    user: User,
-                                    application: Application,
-                                    announcement: Announcement,
-                                    users: users,
-                                    applications: applications,
-                                    announcements: announcements,
-                                    currentUser: user
-                                });
-                            }).catch(err => {
-                                console.error(err);
+                            Announcement.find()
+                                .exec()
+                                .then(announcements => {
+                                    res.render('admin', {
+                                        user: User,
+                                        application: Application,
+                                        announcement: Announcement,
+                                        users: users,
+                                        applications: applications,
+                                        announcements: announcements,
+                                        currentUser: user
+                                    });
+                                })
+                                .catch(err => {
+                                    console.error(err);
 
-                                res.send({
-                                    status: false,
-                                    message: err
+                                    res.send({
+                                        status: false,
+                                        message: err
+                                    });
                                 });
-                            });;
                         })
                         .catch(err => {
                             console.error(err);
