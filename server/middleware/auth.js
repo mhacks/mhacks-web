@@ -1,13 +1,13 @@
 var User = require('../db/model/User.js'),
     Responses = require('../responses/middleware/auth.js');
 
-module.exports = function(groupName, checkType, verifiedEmail) {
+module.exports = function(groupName, checkType, verifiedEmail, nextError) {
     groupName = groupName || 'any';
     verifiedEmail = typeof verifiedEmail === 'boolean' ? verifiedEmail : true;
     return function(req, res, next) {
         if (req.get('Authorization')) {
             var authorization = req.get('Authorization');
-            var token = authorization.replace(/Bearer /g, '');
+            var token = authorization.replace(/Bearer /gi, '');
             User.find()
                 .byToken(token)
                 .exec()
@@ -31,7 +31,8 @@ module.exports = function(groupName, checkType, verifiedEmail) {
                                                 returnFailure(
                                                     res,
                                                     checkType,
-                                                    result
+                                                    result,
+                                                    nextError
                                                 );
                                             });
                                     })
@@ -44,14 +45,29 @@ module.exports = function(groupName, checkType, verifiedEmail) {
                                     });
                             })
                             .catch(result => {
-                                returnFailure(res, checkType, result);
+                                returnFailure(
+                                    res,
+                                    checkType,
+                                    result,
+                                    nextError
+                                );
                             });
                     } else {
-                        returnFailure(res, checkType, Responses.UNAUTHORIZED);
+                        returnFailure(
+                            res,
+                            checkType,
+                            Responses.UNAUTHORIZED,
+                            nextError
+                        );
                     }
                 })
                 .catch(() => {
-                    returnFailure(res, checkType, Responses.UNAUTHORIZED);
+                    returnFailure(
+                        res,
+                        checkType,
+                        Responses.UNAUTHORIZED,
+                        nextError
+                    );
                 });
         } else if (req.session && req.session.loggedIn) {
             User.find()
@@ -74,7 +90,8 @@ module.exports = function(groupName, checkType, verifiedEmail) {
                                         returnFailure(
                                             res,
                                             checkType,
-                                            Responses.UNAUTHORIZED
+                                            Responses.UNAUTHORIZED,
+                                            nextError
                                         );
                                     });
                             })
@@ -82,18 +99,29 @@ module.exports = function(groupName, checkType, verifiedEmail) {
                                 returnFailure(
                                     res,
                                     checkType,
-                                    Responses.UNAUTHORIZED
+                                    Responses.UNAUTHORIZED,
+                                    nextError
                                 );
                             });
                     } else {
-                        returnFailure(res, checkType, Responses.UNAUTHORIZED);
+                        returnFailure(
+                            res,
+                            checkType,
+                            Responses.UNAUTHORIZED,
+                            nextError
+                        );
                     }
                 })
                 .catch(() => {
-                    returnFailure(res, checkType, Responses.UNAUTHORIZED);
+                    returnFailure(
+                        res,
+                        checkType,
+                        Responses.UNAUTHORIZED,
+                        nextError
+                    );
                 });
         } else {
-            returnFailure(res, checkType, Responses.UNAUTHORIZED);
+            returnFailure(res, checkType, Responses.UNAUTHORIZED, nextError);
         }
     };
 };
@@ -137,10 +165,14 @@ function returnAPIFailure(res, message) {
     });
 }
 
-function returnFailure(res, checkType, message) {
-    if (checkType === 'api') {
-        return returnAPIFailure(res, message);
+function returnFailure(res, checkType, message, nextError) {
+    if (nextError) {
+        nextError();
     } else {
-        res.redirect('/');
+        if (checkType === 'api') {
+            returnAPIFailure(res, message);
+        } else {
+            res.redirect('/');
+        }
     }
 }

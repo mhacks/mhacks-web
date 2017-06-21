@@ -95,21 +95,28 @@ router.get('/profile', function(req, res) {
         .byToken(req.authToken)
         .exec()
         .then(user => {
-            res.send({
-                status: true,
-                user: {
-                    email: user.email,
-                    email_verified: user.email_verified,
-                    application_submitted: user.application_submitted,
-                    full_name: user.full_name,
-                    birthday: user.birthday,
-                    groups: user.getGroupsList(),
-                    major: user.major,
-                    university: user.university,
-                    resume_uploaded: !!user.resume,
-                    avatar: user.getAvatars()
-                }
-            });
+            if (user) {
+                res.send({
+                    status: true,
+                    user: {
+                        email: user.email,
+                        email_verified: user.email_verified,
+                        application_submitted: user.application_submitted,
+                        full_name: user.full_name,
+                        birthday: user.birthday,
+                        groups: user.getGroupsList(),
+                        major: user.major,
+                        university: user.university,
+                        resume_uploaded: !!user.resume,
+                        avatar: user.getAvatars()
+                    }
+                });
+            } else {
+                res.send({
+                    status: false,
+                    user: {}
+                });
+            }
         })
         .catch(() => {
             res.send({
