@@ -157,3 +157,16 @@ html(lang='en')
                                     else
                                         td
                                             i.fa.fa-times(style='color: #FF4136')
+                div#announcements
+                    h2='Announcements:'
+                    form(method='POST' action='/v1/announcements')
+                         div.form-group
+                           label(for='title') Title:
+                           input#title.form-control(type='text', placeholder='Super Announcement' name='title')
+                         div.form-group
+                           label(for='body') Body:
+                           input#body.form-control(type='text', placeholder='Super Body' name='body')
+                         div.form-group
+                           label(for='category') Category:
+                           input#category.form-control(type='text', placeholder='Category' value='Logistics' name='category')
+                         button.btn.btn-primary(type='submit') Create

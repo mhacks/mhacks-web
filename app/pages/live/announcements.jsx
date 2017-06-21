@@ -4,11 +4,20 @@ import { FormattedRelative } from 'react-intl';
 import { AnnouncementsThunks } from '../../actions';
 import { connect } from 'react-redux';
 
+const Wrapper = styled.div`
+    height: 100%;
+`;
+
 const List = styled.div`
     display: flex;
+    flex-direction: column;
     overflowY: scroll;
     height: 100%;
-    flex-direction: column;
+`;
+
+const ListHeader = styled.h3`
+    color: darkorange;
+    fontSize: 24px;
 `;
 
 const ListItem = styled.div`
@@ -17,7 +26,7 @@ const ListItem = styled.div`
 const ListItemHeader = styled.h2`
     color: darkorange;
     margin: 0;
-    fontSize: 24px;
+    fontSize: 20px;
 `;
 
 const ListItemTimestamp = styled.p`
@@ -34,9 +43,10 @@ class Announcements extends React.Component {
     componentDidMount() {
         this.props.dispatch(AnnouncementsThunks.loadAnnouncements());
 
+        // refresh announcements every 60 seconds
         this.poll = setInterval(() => {
             this.props.dispatch(AnnouncementsThunks.loadAnnouncements());
-        }, 5000);
+        }, 60 * 1000);
     }
 
     componentWillUnmount() {
@@ -47,17 +57,20 @@ class Announcements extends React.Component {
         const announcements = this.props.announcementsState.data;
 
         return (
-            <List>
-                {announcements.map(function (announcement, i) {
-                    return (
-                        <ListItem key={i}>
-                            <ListItemHeader>{announcement.title}</ListItemHeader>
-                            <ListItemTimestamp><FormattedRelative value={announcement.broadcastTime} /></ListItemTimestamp>
-                            <ListItemDescription>{announcement.body}</ListItemDescription>
-                        </ListItem>
-                    );
-                })}
-            </List>
+            <Wrapper>
+                <ListHeader>Announcements</ListHeader>
+                <List>
+                    {announcements.map(function (announcement, i) {
+                        return (
+                            <ListItem key={i}>
+                                <ListItemHeader>{announcement.title}</ListItemHeader>
+                                <ListItemTimestamp><FormattedRelative value={announcement.broadcastTime} /></ListItemTimestamp>
+                                <ListItemDescription>{announcement.body}</ListItemDescription>
+                            </ListItem>
+                        );
+                    })}
+                </List>
+            </Wrapper>
         );
     }
 }
