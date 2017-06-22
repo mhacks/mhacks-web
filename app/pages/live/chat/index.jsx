@@ -20,6 +20,7 @@ const Header = styled.div`
 
 const HeaderText = styled.h3`
     margin: 0;
+    fontSize: 22px;
 `
 
 const List = styled.div`
@@ -230,8 +231,8 @@ class Chat extends React.Component {
 
             return (
                 <Wrapper>
-                    <Header style={{marginTop: this.state.topPadding}}>
-                        <HeaderText>Chat {users.length > 0 ? 'with ' + users.join(', ') : ''}</HeaderText>
+                    <Header>
+                        <HeaderText>Chat with {users.length > 0 ? users.length - 1 : '0'} other users</HeaderText>
                     </Header>
                     <List>
                         {this.state.messages.map(function (message, i) {
