@@ -6,7 +6,6 @@ const Input = styled.input`
     width: 67%;
     height: 35px;
     border: 3px solid ${props => props.borderColor};
-    borderTop: 5px solid ${props => props.borderColor};
     borderRadius: 0 0 8px 8px;
     padding: 10px;
     position: absolute;
@@ -14,7 +13,7 @@ const Input = styled.input`
 `
 
 class InputBar extends React.Component {
-    
+
     constructor() {
         super();
         this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -41,7 +40,7 @@ class InputBar extends React.Component {
     render() {
         return (
             <div>
-                <Input 
+                <Input
                     type="text"
                     ref="textField"
                     value={this.state.text}
