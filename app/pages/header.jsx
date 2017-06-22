@@ -179,6 +179,12 @@ class Header extends React.Component {
                                             </StyledNavLink> :
                                             null
                                         }
+                                        <StyledNavLink
+                                            to={routes.LIVE}
+                                            color={this.props.theme.primary}
+                                        >
+                                        Live
+                                        </StyledNavLink>
                                         {isLoggedIn ?
                                             <StyledNavLink
                                                 to={routes.LOGOUT}

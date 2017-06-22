@@ -99,9 +99,11 @@ class Chat extends React.Component {
             }
         });
 
-        this.socket.on('disconnect', function (data) {
+        this.socket.on('disconnect', (data) => {
             console.log('Disconnect', data);
-            alert('You have been disconnected.');
+            this.setState({
+                isDisconnected: true
+            });
         });
 
         this.socket.on('chat', function (data) {
@@ -232,7 +234,12 @@ class Chat extends React.Component {
             return (
                 <Wrapper>
                     <Header>
-                        <HeaderText>Chat with {users.length > 0 ? users.length - 1 : '0'} other users</HeaderText>
+                        { this.state.isDisconnected ?
+                            <HeaderText>You have been disconnected.</HeaderText> :
+                            <HeaderText>
+                                Chat with {users.length > 0 ? users.length - 1 : '0'} other {users.length - 1 === 1 ? 'user' : 'users'}
+                            </HeaderText>
+                        }
                     </Header>
                     <List>
                         {this.state.messages.map(function (message, i) {
