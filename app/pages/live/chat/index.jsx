@@ -97,7 +97,7 @@ class Chat extends React.Component {
             }
         });
 
-        this.socket.on('disconnect', (data) => {
+        this.socket.on('disconnect', () => {
             this.setState({
                 isDisconnected: true
             });
