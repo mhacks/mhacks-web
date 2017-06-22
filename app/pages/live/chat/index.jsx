@@ -84,7 +84,6 @@ class Chat extends React.Component {
         let component = this;
 
         this.socket.on('authenticate', function (data) {
-            console.log('Authenticate', data);
             if (!data) {
                 component.authenticate(component.props.token);
             } else {
@@ -93,22 +92,18 @@ class Chat extends React.Component {
         });
 
         this.socket.on('status', function (data) {
-            console.log('Status', data);
             if (!data.status) {
                 alert(data.message);
             }
         });
 
         this.socket.on('disconnect', (data) => {
-            console.log('Disconnect', data);
             this.setState({
                 isDisconnected: true
             });
         });
 
         this.socket.on('chat', function (data) {
-            console.log('Chat', data);
-
             if (data.channel === '#general') {
                 if (!document.hasFocus() && 'Notification' in window) {
                     if (Notification.permission === 'granted') {
@@ -128,8 +123,6 @@ class Chat extends React.Component {
         });
 
         this.socket.on('channels', function (data) {
-            console.log('Channels', data);
-
             data.channels.forEach(function(channel) {
                 if (channel.name === '#general') {
                     var users = [];
