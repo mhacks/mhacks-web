@@ -1,3 +1,10 @@
+var config = require('./config/default.js');
+
+if (config.newrelic_enabled) {
+    require('newrelic');
+    require('@newrelic/native-metrics');
+}
+
 var http = require('http'),
     mongoose = require('./server/db/index.js'),
     morgan = require('morgan'),
@@ -12,8 +19,7 @@ var http = require('http'),
     csrfProtection = csrf(),
     apiRouter = require('./server/routes/api.js'),
     indexRouter = require('./server/routes/index.js'),
-    config = require('./config/default.js'),
-    sharedsession = require("express-socket.io-session");
+    sharedsession = require('express-socket.io-session');
 
 // Force https
 app.use(function(req, res, next) {
