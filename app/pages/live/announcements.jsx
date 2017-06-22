@@ -18,7 +18,7 @@ const List = styled.div`
 const ListHeader = styled.h3`
     color: darkorange;
     fontSize: 24px;
-    margin: 0;
+    margin: 0 0 20px 0;
 `;
 
 const ListItem = styled.div`
