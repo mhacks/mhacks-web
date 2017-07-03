@@ -7,5 +7,6 @@ export default {
     LOGOUT: '/v1/auth/logout',
     PROFILE: '/v1/user/profile',
     APPLICATION: '/v1/application',
-    ANNOUNCEMENTS: '/v1/announcements'
+    ANNOUNCEMENTS: '/v1/announcements',
+    CONFIGURATION: '/v1/configuration'
 };

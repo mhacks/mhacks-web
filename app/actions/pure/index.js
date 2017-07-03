@@ -3,11 +3,13 @@ import AuthPureActions from './auth.js';
 import ProfilePureActions from './profile.js';
 import ApplicationPureActions from './application.js';
 import AnnouncementsPureActions from './announcements.js';
+import ConfigurationPureActions from './configuration.js';
 
 export {
     SubscribePureActions,
     AuthPureActions,
     ProfilePureActions,
     ApplicationPureActions,
-    AnnouncementsPureActions
+    AnnouncementsPureActions,
+    ConfigurationPureActions
 };
