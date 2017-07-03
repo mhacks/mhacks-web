@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 import { devices } from '../../styles';
+import theme from '../../styles/theme.js';
 
 const SectionHeader = styled.h2`
-    fontSize: 40px;
-    color: darkorange;
-    fontWeight: 400;
+    fontSize: 48px;
+    color: ${theme.highlight};
+    textTransform: uppercase;
+    text-align: center;
+    fontWeight: 500;
     textAlign: center;
 
     ${devices.tablet`
@@ -13,8 +16,8 @@ const SectionHeader = styled.h2`
 `;
 
 const SectionBody = styled.p`
-    color: gray;
-    fontSize: 20px;
+    color: white;
+    fontSize: 16px;
 `;
 
 export { SectionHeader, SectionBody };
