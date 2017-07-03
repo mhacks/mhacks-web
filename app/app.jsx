@@ -7,29 +7,25 @@ import createHistory from 'history/createBrowserHistory';
 
 import { compose, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { persistStore, autoRehydrate } from 'redux-persist';
-import createFilter from 'redux-persist-transform-filter';
 import thunkMiddleware from 'redux-thunk';
 
 import reducers from './reducers';
 import { routes } from './constants';
 import { Navigator, HomePage, Login, Logout, Profile, Apply, LivePage, BlackoutPage } from './pages';
+import { ConfigurationThunks } from './actions';
 
 // polyfill Promise for IE browsers
 require('es6-promise').polyfill();
 
 /* uncomment to view redux logs in console */
-// import logger from 'redux-logger'
+//import logger from 'redux-logger';
 
 const history = createHistory();
 const middleware = routerMiddleware(history);
 const store = createStore(
     reducers,
     undefined,
-    compose(
-        applyMiddleware(thunkMiddleware, middleware),
-        autoRehydrate()
-    )
+    compose(applyMiddleware(thunkMiddleware, middleware))
 );
 
 window.s = store;
@@ -45,18 +41,7 @@ class AppProvider extends React.Component {
     }
 
     componentWillMount() {
-        const dataWhitelistFilter = createFilter(
-            'userState',
-            ['data']
-        );
-
-        persistStore(store, {
-            transforms: [
-                dataWhitelistFilter
-            ]
-        }, () => {
-            this.setState({ rehydrated: true });
-        });
+        this.props.dispatch(ConfigurationThunks.loadConfiguration());
     }
 
     render() {

@@ -8,7 +8,7 @@ export default class ApplicationThunks {
                 ApplicationPureActions.uploadApplicationRequest(application)
             );
 
-            const token = getState().userState.data.token;
+            const token = localStorage.getItem('jwt');
 
             return ApplicationRequests.uploadApplication(
                 token,

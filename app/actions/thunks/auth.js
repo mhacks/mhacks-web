@@ -13,6 +13,8 @@ export default class AuthThunks {
             }).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
+                        localStorage.setItem('jwt', json.token);
+
                         dispatch(
                             AuthPureActions.registerSuccess(
                                 {

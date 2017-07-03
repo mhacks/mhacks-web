@@ -6,7 +6,7 @@ export default class ProfileThunks {
         return (dispatch, getState) => {
             dispatch(ProfilePureActions.loadProfileRequest());
 
-            const token = getState().userState.data.token;
+            const token = localStorage.getItem('jwt');
 
             return ProfileRequests.loadProfile(token).then(response => {
                 if (response.status == 200) {
