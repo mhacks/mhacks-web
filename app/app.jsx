@@ -13,6 +13,7 @@ import reducers from './reducers';
 import { routes } from './constants';
 import { Navigator, HomePage, Login, Logout, Profile, Apply, LivePage, BlackoutPage } from './pages';
 import { ConfigurationThunks } from './actions';
+import { connect } from 'react-redux';
 
 // polyfill Promise for IE browsers
 require('es6-promise').polyfill();
@@ -34,18 +35,12 @@ window.s = store;
 // has rehydrated to prevent redirects and other
 // weird effects
 class AppProvider extends React.Component {
-    constructor() {
-        super();
-
-        this.state = { rehydrated: false };
-    }
-
     componentWillMount() {
         this.props.dispatch(ConfigurationThunks.loadConfiguration());
     }
 
     render() {
-        if (!this.state.rehydrated) {
+        if (!this.props.configurationState.fetched) {
             return (<div></div>);
         }
 
@@ -130,7 +125,16 @@ class AppProvider extends React.Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        configurationState: state.configurationState
+    };
+}
+
+
 render(
-    <AppProvider />,
+    React.createElement(connect(mapStateToProps)(AppProvider), {
+        store
+    }),
     document.getElementById('app')
 );

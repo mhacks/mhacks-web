@@ -3,32 +3,42 @@ import { ConfigurationRequests } from '../requests';
 
 export default class ConfigurationThunks {
     static loadConfiguration() {
-        return (dispatch, getState) => {
+        return (dispatch) => {
             dispatch(ConfigurationPureActions.loadConfigurationRequest());
 
-            const token = getState().userState.data.token;
+            const token = localStorage.getItem('jwt');
 
             return ConfigurationRequests.loadConfiguration(token).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
-                        const { user } = json;
+                        const {user, configuration} = json;
+
+                        const state = {
+                            configuration
+                        }
+
+                        if (user) {
+                            state['userData'] = {
+                                isEmailVerified: user.email_verified,
+                                isApplicationSubmitted:
+                                    user.application_submitted,
+                                isLoggedIn: true,
+                                user: {
+                                    name: user.full_name,
+                                    birthday: user.birthday,
+                                    major: user.major,
+                                    university: user.university,
+                                    email: user.email,
+                                    groups: user.groups,
+                                    avatars: user.avatar,
+                                    isResumeUploaded: user.resume_uploaded
+                                }
+                            }
+                        }
+
                         dispatch(
                             ConfigurationPureActions.loadConfigurationSuccess(
-                                {
-                                    isEmailVerified: user.email_verified,
-                                    isApplicationSubmitted:
-                                        user.application_submitted,
-                                    user: {
-                                        name: user.full_name,
-                                        birthday: user.birthday,
-                                        major: user.major,
-                                        university: user.university,
-                                        email: user.email,
-                                        groups: user.groups,
-                                        avatars: user.avatar,
-                                        isResumeUploaded: user.resume_uploaded
-                                    }
-                                },
+                                state,
                                 json.message
                             )
                         );

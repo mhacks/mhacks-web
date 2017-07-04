@@ -49,6 +49,8 @@ export default class AuthThunks {
             return AuthRequests.login(user).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
+                        localStorage.setItem('jwt', json.token);
+
                         dispatch(
                             AuthPureActions.loginSuccess(
                                 {
@@ -86,6 +88,8 @@ export default class AuthThunks {
                     });
                 } else {
                     response.json().then(json => {
+                        localStorage.removeItem('jwt');
+                        
                         dispatch(
                             AuthPureActions.logoutError(
                                 response.status,
