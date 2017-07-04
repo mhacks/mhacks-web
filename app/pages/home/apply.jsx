@@ -3,9 +3,14 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { routes } from '../../constants';
 import { devices } from '../../styles';
-
+import { Container } from '../../components';
 import { NavLink } from 'react-router-dom';
 import { SectionHeader, SectionBody } from './section_components.jsx';
+
+const Wrapper = styled.div`
+    backgroundColor: ${props => props.theme.primary}
+    padding: 80px 0;
+`;
 
 const StyledNavLink = styled(NavLink)`
     display: inline-block;
@@ -39,26 +44,28 @@ const StyledNavLinkWrapper = styled.div`
 class Apply extends React.Component {
     render() {
         return (
-            <div>
-                <SectionHeader>Apply</SectionHeader>
-                <SectionBody>Apply to MHacks Nano! We will just ask you a couple quick questions. Nothing long or difficult :)</SectionBody>
-                <StyledNavLinkWrapper>
-                    {this.props.userState.data.isLoggedIn ?
-                        <StyledNavLink
-                            to={routes.APPLY}
-                            primaryColor={this.props.theme.primary}
-                        >
-                        Apply
-                        </StyledNavLink> :
-                        <StyledNavLink
-                            to={routes.LOGIN}
-                            primaryColor={this.props.theme.primary}
-                        >
-                        Log In
-                        </StyledNavLink>
-                    }
-                </StyledNavLinkWrapper>
-            </div>
+            <Wrapper>
+                <Container>
+                    <SectionHeader>Apply</SectionHeader>
+                    <SectionBody>Apply to MHacks Nano! We will just ask you a couple quick questions. Nothing long or difficult :)</SectionBody>
+                    <StyledNavLinkWrapper>
+                        {this.props.userState.data.isLoggedIn ?
+                            <StyledNavLink
+                                to={routes.APPLY}
+                                primaryColor="white"
+                            >
+                            Apply
+                            </StyledNavLink> :
+                            <StyledNavLink
+                                to={routes.LOGIN}
+                                primaryColor={this.props.theme.highlight}
+                            >
+                            Log In
+                            </StyledNavLink>
+                        }
+                    </StyledNavLinkWrapper>
+                </Container>
+            </Wrapper>
         );
     }
 }
