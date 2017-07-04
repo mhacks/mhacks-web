@@ -3,7 +3,7 @@ import { ApplicationRequests } from '../requests';
 
 export default class ApplicationThunks {
     static uploadApplication(application, files) {
-        return (dispatch) => {
+        return dispatch => {
             dispatch(
                 ApplicationPureActions.uploadApplicationRequest(application)
             );

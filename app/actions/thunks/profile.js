@@ -3,7 +3,7 @@ import { ProfileRequests } from '../requests';
 
 export default class ProfileThunks {
     static loadProfile() {
-        return (dispatch) => {
+        return dispatch => {
             dispatch(ProfilePureActions.loadProfileRequest());
 
             const token = localStorage.getItem('jwt');
@@ -49,7 +49,7 @@ export default class ProfileThunks {
     }
 
     static updateProfile(profile, files) {
-        return (dispatch) => {
+        return dispatch => {
             dispatch(ProfilePureActions.updateProfileRequest(profile));
 
             const token = localStorage.getItem('jwt');
@@ -85,7 +85,7 @@ export default class ProfileThunks {
     }
 
     static sendVerificationEmail(email) {
-        return (dispatch) => {
+        return dispatch => {
             dispatch(ProfilePureActions.sendVerificationEmailRequest(email));
 
             const token = localStorage.getItem('jwt');

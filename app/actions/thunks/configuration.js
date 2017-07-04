@@ -3,19 +3,21 @@ import { ConfigurationRequests } from '../requests';
 
 export default class ConfigurationThunks {
     static loadConfiguration() {
-        return (dispatch) => {
+        return dispatch => {
             dispatch(ConfigurationPureActions.loadConfigurationRequest());
 
             const token = localStorage.getItem('jwt');
 
-            return ConfigurationRequests.loadConfiguration(token).then(response => {
+            return ConfigurationRequests.loadConfiguration(
+                token
+            ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
-                        const {user, configuration} = json;
+                        const { user, configuration } = json;
 
                         const state = {
                             configuration
-                        }
+                        };
 
                         if (user) {
                             state['userData'] = {
@@ -33,7 +35,7 @@ export default class ConfigurationThunks {
                                     avatars: user.avatar,
                                     isResumeUploaded: user.resume_uploaded
                                 }
-                            }
+                            };
                         }
 
                         dispatch(

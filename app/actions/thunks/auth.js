@@ -89,7 +89,7 @@ export default class AuthThunks {
                 } else {
                     response.json().then(json => {
                         localStorage.removeItem('jwt');
-                        
+
                         dispatch(
                             AuthPureActions.logoutError(
                                 response.status,

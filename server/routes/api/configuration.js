@@ -21,14 +21,15 @@ router.get('/', function(req, res) {
                     user: user.getProfile(),
                     configuration
                 });
-            }).catch(() => {
+            })
+            .catch(() => {
                 configuration['should_logout'] = true;
 
                 res.send({
                     status: false,
                     configuration
                 });
-            })
+            });
     } else {
         res.send({
             status: false,

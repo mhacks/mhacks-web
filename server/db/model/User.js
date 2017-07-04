@@ -416,7 +416,7 @@ schema.methods.getProfile = function() {
         resume_uploaded: !!this.resume,
         avatar: this.getAvatars()
     };
-}
+};
 
 // Password middleware to update passwords with bcrypt when needed
 var passwordMiddleware = function(next) {

@@ -7,7 +7,7 @@ const initialState = {
     message: null,
     is_livepage_enabled: false,
     is_applications_open: false
-}
+};
 
 export function configurationState(state = initialState, action) {
     switch (action.type) {
