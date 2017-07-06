@@ -21,7 +21,34 @@ var schema = new mongoose.Schema({
     created_at: {
         type: Date,
         default: Date.now
-    }
+    },
+    github: String,
+    linkedin: String,
+    devpost: String,
+    portfolio: String,
+    race: {
+        type: String,
+        enum: [
+            'unselected',
+            'white',
+            'black',
+            'am-indian-alaskan',
+            'asian',
+            'hispanic',
+            'other',
+            'prefer-not'
+        ]
+    },
+    sex: {
+        type: String,
+        enum: ['unselected', 'male', 'female', 'non-binary', 'prefer-not']
+    },
+    why_mhacks: String,
+    favorite_memory: String,
+    anything_else: String,
+    needs_reimbursement: Boolean,
+    departing_from: String,
+    requested_reimbursement: Number
 });
 
 // Allow us to query by token

@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ProfileThunks, ApplicationThunks } from '../actions';
 import { routes } from '../constants';
-import { PageContainer, RoundedButton, FileUpload, Alert, LabeledInput } from '../components';
+import { PageContainer, RoundedButton, Alert, LabeledInput, LabeledTextarea } from '../components';
+import { FieldTypes, ProfileFields, HackerApplicationFields } from '../constants/forms';
 
 const FormContainer = styled.div`
     maxWidth: 500px;
@@ -32,8 +33,11 @@ const SectionHeader = styled.h2`
     margin: 0;
 `;
 
-const FileUploadContainer = styled.div`
-    marginTop: 30px;
+const SubsectionHeader = styled.h3`
+    fontSize: 22px;
+    color: ${props => props.color};
+    fontWeight: 500;
+    margin: 26px 0 0 0;
 `;
 
 const AlertContainer = styled.div`
@@ -57,14 +61,31 @@ class Apply extends React.Component {
         const userData = this.props.userState.data.user;
 
         this.state = {
-            birthday: userData.birthday ? new Date(userData.birthday).toISOString().split('T')[0] : '',
-            university: userData.university || '',
-            major: userData.major || '',
-            isResumeUploaded: userData.isResumeUploaded || false,
-            tshirt: userData.tshirt || 'm',
-            hackathonExperience: userData.hackathonExperience || 'novice',
-            resume: null
+            isResumeUploaded: userData.isResumeUploaded || false
         };
+
+        for (const key of Object.keys(ProfileFields)) {
+            if (ProfileFields[key] === FieldTypes.TEXT || ProfileFields[key] === FieldTypes.LINK) {
+                this.state[key] = userData[key] || '';
+            } else if (ProfileFields[key] === FieldTypes.SELECT) {
+                this.state[key] = userData[key] || 'unselected';
+            } else if (ProfileFields[key] === FieldTypes.DATE) {
+                this.state[key] = userData[key] ? new Date(userData[key]).toISOString().split('T')[0] : ''
+            }
+        }
+
+        for (const field of HackerApplicationFields) {
+            if (!Object.keys(ProfileFields).includes(field.key)) {
+                if (field.type === FieldTypes.TEXT ||
+                    field.type === FieldTypes.ESSAY) {
+                    this.state[field.key] = '';
+                } else if (field.type === FieldTypes.SELECT) {
+                    this.state[field.key] = field.values[0].key;
+                } else if (field.type === FieldTypes.INTEGER) {
+                    this.state[field.key] = 0;
+                }
+            }
+        }
 
         this.onSubmit = this.onSubmit.bind(this);
         this.handleAttributeChange = this.handleAttributeChange.bind(this);
@@ -82,24 +103,9 @@ class Apply extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const userData = this.props.userState.data.user;
-        const nextUserData = nextProps.userState.data.user;
-
         if (nextProps.userState.fetching) {
             return;
         }
-
-        if (userData.birthday !== nextUserData ||
-            userData.university !== nextUserData.university ||
-            userData.major !== nextUserData.major ||
-            userData.isResumeUploaded !== nextUserData.isResumeUploaded) {
-                this.setState({
-                    birthday: nextUserData.birthday ? new Date(nextUserData.birthday).toISOString().split('T')[0] : '',
-                    university: nextUserData.university || '',
-                    major: nextUserData.major || '',
-                    isResumeUploaded: userData.isResumeUploaded || false
-                });
-            }
     }
 
     // Generic function for changing state
@@ -122,16 +128,20 @@ class Apply extends React.Component {
         var application = {};
         var files = {};
 
-        const inputBirthday = (new Date(this.state.birthday)).getTime();
-
-        application.birthday = inputBirthday;
-        application.major = this.state.major;
-        application.university = this.state.university;
-        application.tshirt_size = this.state.tshirt;
-        application.experience = this.state.hackathonExperience;
-
         if (this.state.resume) {
             files['resume'] = this.state.resume;
+        }
+
+        for (const field of HackerApplicationFields) {
+            if (field.type === FieldTypes.TEXT ||
+                field.type === FieldTypes.LINK ||
+                field.type === FieldTypes.SELECT ||
+                field.type === FieldTypes.INTEGER ||
+                field.type === FieldTypes.ESSAY) {
+                application[field.key] = this.state[field.key];
+            } else if (field.type === FieldTypes.DATE) {
+                application[field.key] = (new Date(this.state[field.key])).getTime();
+            }
         }
 
         this.props.dispatch(ApplicationThunks.uploadApplication(application, files));
@@ -153,80 +163,117 @@ class Apply extends React.Component {
                         }
                         <Flexer>
                             <InputContainer>
-                                <LabeledInput
-                                    label="Date of Birth"
-                                >
-                                    <input
-                                        id="birthday"
-                                        type="date"
-                                        name="birthday"
-                                        value={this.state.birthday}
-                                        onChange={this.handleAttributeChange}
-                                    />
-                                </LabeledInput>
-                                <LabeledInput
-                                    label="University"
-                                >
-                                    <input
-                                        id="university"
-                                        type="text"
-                                        name="university"
-                                        placeholder="e.g. University of Michigan"
-                                        value={this.state.university}
-                                        onChange={this.handleAttributeChange}
-                                    />
-                                </LabeledInput>
-                                <LabeledInput
-                                    label="Major"
-                                >
-                                    <input
-                                        id="major"
-                                        type="text"
-                                        name="major"
-                                        placeholder="e.g. Underwater Basket Weaving"
-                                        value={this.state.major}
-                                        onChange={this.handleAttributeChange}
-                                    />
-                                </LabeledInput>
-                                <LabeledInput
-                                    label="T-Shirt Size"
-                                >
-                                    <select
-                                        name="tshirt"
-                                        value={this.state.tshirt}
-                                        onChange={this.handleAttributeChange}
-                                    >
-                                        <option value="xs">XS</option>
-                                        <option value="s">S</option>
-                                        <option value="m">M</option>
-                                        <option value="l">L</option>
-                                        <option value="xl">XL</option>
-                                        <option value="2xl">2XL</option>
-                                        <option value="3xl">3XL</option>
-                                    </select>
-                                </LabeledInput>
-                                <LabeledInput
-                                    label="Experience"
-                                >
-                                    <select
-                                        name="hackathonExperience"
-                                        value={this.state.hackathonExperience}
-                                        onChange={this.handleAttributeChange}
-                                    >
-                                        <option value="novice">0-1 Hackathons (Novice)</option>
-                                        <option value="experienced">2-5 Hackathons (Experienced)</option>
-                                        <option value="veteran">6+ Hackathons (Veteran)</option>
-                                    </select>
-                                </LabeledInput>
-                                <FileUploadContainer>
-                                    <FileUpload
-                                        defaultColor={this.props.userState.data.user.isResumeUploaded ? this.props.theme.success : this.props.theme.primary}
-                                        hoverColor={this.props.theme.secondary}
-                                        activeColor={this.props.theme.success}
-                                        onFileSelect={this.handleFileUpload}
-                                        defaultText={this.props.userState.data.user.isResumeUploaded ? 'Resume Uploaded' : null}
-                                    />
-                                </FileUploadContainer>
+                                { HackerApplicationFields.map((field) => {
+                                    if ((field.key === 'departing_from' ||
+                                        field.key === 'requested_reimbursement') &&
+                                        this.state.needs_reimbursement === 'n'
+                                    ) {
+                                        return;
+                                    }
+
+                                    switch (field.type) {
+                                        case FieldTypes.TEXT:
+                                        case FieldTypes.LINK:
+                                            return (
+                                                <LabeledInput
+                                                    label={field.label}
+                                                    labelWidth={field.wideLabel ? '150px' : '100px'}
+                                                    key={field.key}
+                                                >
+                                                    <input
+                                                        id={field.key}
+                                                        type="text"
+                                                        name={field.key}
+                                                        placeholder={field.placeholder}
+                                                        value={this.state[field.key]}
+                                                        onChange={this.handleAttributeChange}
+                                                    />
+                                                </LabeledInput>
+                                            );
+                                        case FieldTypes.ESSAY:
+                                            return (
+                                                <LabeledTextarea
+                                                    label={field.label}
+                                                    key={field.key}
+                                                >
+                                                    <textarea
+                                                        id={field.key}
+                                                        name={field.key}
+                                                        placeholder={field.placeholder}
+                                                        value={this.state[field.key]}
+                                                        onChange={this.handleAttributeChange}
+                                                    />
+                                                </LabeledTextarea>
+                                            )
+                                        case FieldTypes.DATE:
+                                            return (
+                                                <LabeledInput
+                                                    label={field.label}
+                                                    labelWidth={field.wideLabel ? '150px' : '100px'}
+                                                    key={field.key}
+                                                >
+                                                    <input
+                                                        id={field.key}
+                                                        type="date"
+                                                        name={field.key}
+                                                        placeholder={field.placeholder}
+                                                        value={this.state[field.key]}
+                                                        onChange={this.handleAttributeChange}
+                                                    />
+                                                </LabeledInput>
+                                            );
+                                        case FieldTypes.INTEGER:
+                                            return (
+                                                <LabeledInput
+                                                    label={field.label}
+                                                    labelWidth={field.wideLabel ? '150px' : '100px'}
+                                                    key={field.key}
+                                                >
+                                                    <input
+                                                        id={field.key}
+                                                        type="number"
+                                                        name={field.key}
+                                                        value={this.state[field.key]}
+                                                        onChange={this.handleAttributeChange}
+                                                    />
+                                                </LabeledInput>
+                                            );
+                                        case FieldTypes.SELECT:
+                                            return (
+                                                <LabeledInput
+                                                    label={field.label}
+                                                    labelWidth={field.wideLabel ? '150px' : '100px'}
+                                                    key={field.key}
+                                                >
+                                                    <select
+                                                        name={field.key}
+                                                        value={this.state[field.key]}
+                                                        onChange={this.handleAttributeChange}
+                                                    >
+                                                        {field.values.map((tuple) => {
+                                                            return (
+                                                                <option
+                                                                    value={tuple.key}
+                                                                    key={tuple.key}
+                                                                >
+                                                                    {tuple.value}
+                                                                </option>
+                                                            )
+                                                        })}
+                                                    </select>
+                                                </LabeledInput>
+                                            );
+                                        case FieldTypes.SECTIONHEADER:
+                                            return (
+                                                <SubsectionHeader
+                                                    color={this.props.theme.primary}
+                                                    key={field.title}
+                                                >
+                                                    {field.title}
+                                                </SubsectionHeader>
+                                            );
+                                    }
+                                })}
                             </InputContainer>
                             <ButtonGroup>
                                 <RoundedButton
