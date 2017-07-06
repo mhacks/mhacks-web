@@ -8,7 +8,7 @@ import { routes } from '../constants';
 import { Container } from '../components';
 import { devices } from '../styles';
 
-const HeaderLogoImage = require('../../static/icons/nano-logo.png');
+const HeaderLogoImage = require('../../static/icons/x-logo.png');
 const Favicon = require('../../static/nano/favicon.png');
 
 /* Header Section */

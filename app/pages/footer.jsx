@@ -11,13 +11,7 @@ const TwitterImg = require('../../static/icons/twitter.png');
 
 /* Footer Style */
 const FooterWrapper = styled.div`
-    marginTop: 40px;
-    ${devices.tablet`
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-    `}
+    backgroundColor: ${props => props.theme.secondary}
 `;
 
 const HomeFooter = styled.footer`
@@ -30,7 +24,7 @@ const HomeFooter = styled.footer`
 `;
 
 const Text = styled.h2`
-    color: gray;
+    color: white;
     fontSize: 12px;
     marginBottom: 0;
     textAlign: left;
@@ -89,8 +83,8 @@ class Footer extends React.Component {
             <div>
                 { window.location.pathname == routes.SUBSCRIBE ?
                     null :
-                    <Container>
-                        <FooterWrapper>
+                    <FooterWrapper>
+                        <Container>
                             <HomeFooter>
                                 <Text>© MHacks 2017</Text>
                                 <Flexer>
@@ -115,8 +109,8 @@ class Footer extends React.Component {
                                 </Flexer>
                                 <Flexer/>
                             </HomeFooter>
-                        </FooterWrapper>
-                    </Container>
+                        </Container>
+                    </FooterWrapper>
                 }
             </div>
         );
