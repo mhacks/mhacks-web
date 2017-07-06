@@ -4,7 +4,7 @@ import { PageContainer } from '../../components';
 import Faq from './faq.jsx';
 import Apply from './apply.jsx';
 import Welcome from './welcome.jsx';
-import Sponsorship from './sponsorship.jsx'
+import Sponsorship from './sponsorship.jsx';
 import HackingCategories from './hacking_categories.jsx';
 
 /* Page Component */

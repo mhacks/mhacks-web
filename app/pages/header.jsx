@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { slide as Menu } from 'react-burger-menu'
+import { slide as Menu } from 'react-burger-menu';
 import { routes } from '../constants';
 import { Container } from '../components';
 import { devices } from '../styles';
@@ -144,110 +144,138 @@ const Burger = styled.div`
 
 class Header extends React.Component {
     render() {
-        const { isLoggedIn, isApplicationSubmitted, isEmailVerified } = this.props.userState.data;
+        const {
+            isLoggedIn,
+            isApplicationSubmitted,
+            isEmailVerified
+        } = this.props.userState.data;
 
         return (
             <div>
-                { window.location.pathname == routes.SUBSCRIBE ?
-                    null :
-                    <div>
-                        <Helmet>
-                            <title>MHacks Nano</title>
+                {window.location.pathname == routes.SUBSCRIBE
+                    ? null
+                    : <div>
+                          <Helmet>
+                              <title>MHacks Nano</title>
 
-                            <link rel="icon" type="image/x-icon" href={Favicon} />
-                        </Helmet>
-                        <Wrapper>
-                            <Container>
-                                <FlexWrapper>
-                                    <HeaderNavLink to={routes.HOME}><Logo src={HeaderLogoImage} /></HeaderNavLink>
-                                    <NavContainer>
-                                        {!isLoggedIn || !isEmailVerified || isApplicationSubmitted ?
-                                            null :
-                                            <StyledNavLink
-                                                to={routes.APPLY}
-                                                color={this.props.theme.primary}
-                                            >
-                                            Apply
-                                            </StyledNavLink>
-                                        }
-                                        {isLoggedIn ?
-                                            <StyledNavLink
-                                                to={routes.PROFILE}
-                                                color={this.props.theme.primary}
-                                            >
-                                            Profile
-                                            </StyledNavLink> :
-                                            null
-                                        }
-                                        <StyledNavLink
-                                            to={routes.LIVE}
-                                            color={this.props.theme.primary}
-                                        >
-                                        Live
-                                        </StyledNavLink>
-                                        {isLoggedIn ?
-                                            <StyledNavLink
-                                                to={routes.LOGOUT}
-                                                color={this.props.theme.primary}
-                                            >
-                                            Log Out
-                                            </StyledNavLink> :
-                                            <StyledNavLink
-                                                to={routes.LOGIN}
-                                                color={this.props.theme.primary}
-                                            >
-                                            Log In
-                                            </StyledNavLink>
-                                        }
-                                    </NavContainer>
-                                    <Burger
-                                        primaryColor={this.props.theme.primary}
-                                    >
-                                        <Menu right>
-                                            {!isLoggedIn || !isEmailVerified || isApplicationSubmitted ?
-                                                null :
-                                                <StyledNavLink
+                              <link
+                                  rel="icon"
+                                  type="image/x-icon"
+                                  href={Favicon}
+                              />
+                          </Helmet>
+                          <Wrapper>
+                              <Container>
+                                  <FlexWrapper>
+                                      <HeaderNavLink to={routes.HOME}>
+                                          <Logo src={HeaderLogoImage} />
+                                      </HeaderNavLink>
+                                      <NavContainer>
+                                          {!isLoggedIn ||
+                                              !isEmailVerified ||
+                                              isApplicationSubmitted
+                                              ? null
+                                              : <StyledNavLink
                                                     to={routes.APPLY}
-                                                    color={this.props.theme.primary}
+                                                    color={
+                                                        this.props.theme.primary
+                                                    }
                                                 >
-                                                Apply
-                                                </StyledNavLink>
-                                            }
-                                            {isLoggedIn ?
-                                                <StyledNavLink
+                                                    Apply
+                                                </StyledNavLink>}
+                                          {isLoggedIn
+                                              ? <StyledNavLink
                                                     to={routes.PROFILE}
-                                                    color={this.props.theme.primary}
+                                                    color={
+                                                        this.props.theme.primary
+                                                    }
                                                 >
-                                                Profile
-                                                </StyledNavLink> :
-                                                null
-                                            }
-                                            {isLoggedIn ?
-                                                <StyledNavLink
-                                                    to={routes.LOGOUT}
-                                                    color={this.props.theme.primary}
-                                                >
-                                                Log Out
-                                                </StyledNavLink> :
-                                                <StyledNavLink
-                                                    to={routes.LOGIN}
-                                                    color={this.props.theme.primary}
-                                                >
-                                                Log In
+                                                    Profile
                                                 </StyledNavLink>
-                                            }
-                                        </Menu>
-                                    </Burger>
-                                </FlexWrapper>
-                            </Container>
-                        </Wrapper>
-                    </div>
-                }
+                                              : null}
+                                          <StyledNavLink
+                                              to={routes.LIVE}
+                                              color={this.props.theme.primary}
+                                          >
+                                              Live
+                                          </StyledNavLink>
+                                          {isLoggedIn
+                                              ? <StyledNavLink
+                                                    to={routes.LOGOUT}
+                                                    color={
+                                                        this.props.theme.primary
+                                                    }
+                                                >
+                                                    Log Out
+                                                </StyledNavLink>
+                                              : <StyledNavLink
+                                                    to={routes.LOGIN}
+                                                    color={
+                                                        this.props.theme.primary
+                                                    }
+                                                >
+                                                    Log In
+                                                </StyledNavLink>}
+                                      </NavContainer>
+                                      <Burger
+                                          primaryColor={
+                                              this.props.theme.primary
+                                          }
+                                      >
+                                          <Menu right>
+                                              {!isLoggedIn ||
+                                                  !isEmailVerified ||
+                                                  isApplicationSubmitted
+                                                  ? null
+                                                  : <StyledNavLink
+                                                        to={routes.APPLY}
+                                                        color={
+                                                            this.props.theme
+                                                                .primary
+                                                        }
+                                                    >
+                                                        Apply
+                                                    </StyledNavLink>}
+                                              {isLoggedIn
+                                                  ? <StyledNavLink
+                                                        to={routes.PROFILE}
+                                                        color={
+                                                            this.props.theme
+                                                                .primary
+                                                        }
+                                                    >
+                                                        Profile
+                                                    </StyledNavLink>
+                                                  : null}
+                                              {isLoggedIn
+                                                  ? <StyledNavLink
+                                                        to={routes.LOGOUT}
+                                                        color={
+                                                            this.props.theme
+                                                                .primary
+                                                        }
+                                                    >
+                                                        Log Out
+                                                    </StyledNavLink>
+                                                  : <StyledNavLink
+                                                        to={routes.LOGIN}
+                                                        color={
+                                                            this.props.theme
+                                                                .primary
+                                                        }
+                                                    >
+                                                        Log In
+                                                    </StyledNavLink>}
+                                          </Menu>
+                                      </Burger>
+                                  </FlexWrapper>
+                              </Container>
+                          </Wrapper>
+                      </div>}
             </div>
         );
     }
 }
-
 
 function mapStateToProps(state) {
     return {

@@ -3,7 +3,13 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ProfileThunks, ApplicationThunks } from '../actions';
 import { routes } from '../constants';
-import { PageContainer, RoundedButton, FileUpload, Alert, LabeledInput } from '../components';
+import {
+    PageContainer,
+    RoundedButton,
+    FileUpload,
+    Alert,
+    LabeledInput
+} from '../components';
 
 const FormContainer = styled.div`
     maxWidth: 500px;
@@ -57,7 +63,9 @@ class Apply extends React.Component {
         const userData = this.props.userState.data.user;
 
         this.state = {
-            birthday: userData.birthday ? new Date(userData.birthday).toISOString().split('T')[0] : '',
+            birthday: userData.birthday
+                ? new Date(userData.birthday).toISOString().split('T')[0]
+                : '',
             university: userData.university || '',
             major: userData.major || '',
             isResumeUploaded: userData.isResumeUploaded || false,
@@ -89,17 +97,23 @@ class Apply extends React.Component {
             return;
         }
 
-        if (userData.birthday !== nextUserData ||
+        if (
+            userData.birthday !== nextUserData ||
             userData.university !== nextUserData.university ||
             userData.major !== nextUserData.major ||
-            userData.isResumeUploaded !== nextUserData.isResumeUploaded) {
-                this.setState({
-                    birthday: nextUserData.birthday ? new Date(nextUserData.birthday).toISOString().split('T')[0] : '',
-                    university: nextUserData.university || '',
-                    major: nextUserData.major || '',
-                    isResumeUploaded: userData.isResumeUploaded || false
-                });
-            }
+            userData.isResumeUploaded !== nextUserData.isResumeUploaded
+        ) {
+            this.setState({
+                birthday: nextUserData.birthday
+                    ? new Date(nextUserData.birthday)
+                          .toISOString()
+                          .split('T')[0]
+                    : '',
+                university: nextUserData.university || '',
+                major: nextUserData.major || '',
+                isResumeUploaded: userData.isResumeUploaded || false
+            });
+        }
     }
 
     // Generic function for changing state
@@ -122,7 +136,7 @@ class Apply extends React.Component {
         var application = {};
         var files = {};
 
-        const inputBirthday = (new Date(this.state.birthday)).getTime();
+        const inputBirthday = new Date(this.state.birthday).getTime();
 
         application.birthday = inputBirthday;
         application.major = this.state.major;
@@ -134,7 +148,9 @@ class Apply extends React.Component {
             files['resume'] = this.state.resume;
         }
 
-        this.props.dispatch(ApplicationThunks.uploadApplication(application, files));
+        this.props.dispatch(
+            ApplicationThunks.uploadApplication(application, files)
+        );
     }
 
     render() {
@@ -145,17 +161,16 @@ class Apply extends React.Component {
                         Application
                     </SectionHeader>
                     <form onSubmit={this.onSubmit}>
-                        {this.props.userState.error ?
-                            <AlertContainer>
-                                <Alert message={this.props.userState.message} />
-                            </AlertContainer> :
-                            null
-                        }
+                        {this.props.userState.error
+                            ? <AlertContainer>
+                                  <Alert
+                                      message={this.props.userState.message}
+                                  />
+                              </AlertContainer>
+                            : null}
                         <Flexer>
                             <InputContainer>
-                                <LabeledInput
-                                    label="Date of Birth"
-                                >
+                                <LabeledInput label="Date of Birth">
                                     <input
                                         id="birthday"
                                         type="date"
@@ -164,9 +179,7 @@ class Apply extends React.Component {
                                         onChange={this.handleAttributeChange}
                                     />
                                 </LabeledInput>
-                                <LabeledInput
-                                    label="University"
-                                >
+                                <LabeledInput label="University">
                                     <input
                                         id="university"
                                         type="text"
@@ -176,9 +189,7 @@ class Apply extends React.Component {
                                         onChange={this.handleAttributeChange}
                                     />
                                 </LabeledInput>
-                                <LabeledInput
-                                    label="Major"
-                                >
+                                <LabeledInput label="Major">
                                     <input
                                         id="major"
                                         type="text"
@@ -188,9 +199,7 @@ class Apply extends React.Component {
                                         onChange={this.handleAttributeChange}
                                     />
                                 </LabeledInput>
-                                <LabeledInput
-                                    label="T-Shirt Size"
-                                >
+                                <LabeledInput label="T-Shirt Size">
                                     <select
                                         name="tshirt"
                                         value={this.state.tshirt}
@@ -205,26 +214,40 @@ class Apply extends React.Component {
                                         <option value="3xl">3XL</option>
                                     </select>
                                 </LabeledInput>
-                                <LabeledInput
-                                    label="Experience"
-                                >
+                                <LabeledInput label="Experience">
                                     <select
                                         name="hackathonExperience"
                                         value={this.state.hackathonExperience}
                                         onChange={this.handleAttributeChange}
                                     >
-                                        <option value="novice">0-1 Hackathons (Novice)</option>
-                                        <option value="experienced">2-5 Hackathons (Experienced)</option>
-                                        <option value="veteran">6+ Hackathons (Veteran)</option>
+                                        <option value="novice">
+                                            0-1 Hackathons (Novice)
+                                        </option>
+                                        <option value="experienced">
+                                            2-5 Hackathons (Experienced)
+                                        </option>
+                                        <option value="veteran">
+                                            6+ Hackathons (Veteran)
+                                        </option>
                                     </select>
                                 </LabeledInput>
                                 <FileUploadContainer>
                                     <FileUpload
-                                        defaultColor={this.props.userState.data.user.isResumeUploaded ? this.props.theme.success : this.props.theme.primary}
+                                        defaultColor={
+                                            this.props.userState.data.user
+                                                .isResumeUploaded
+                                                ? this.props.theme.success
+                                                : this.props.theme.primary
+                                        }
                                         hoverColor={this.props.theme.secondary}
                                         activeColor={this.props.theme.success}
                                         onFileSelect={this.handleFileUpload}
-                                        defaultText={this.props.userState.data.user.isResumeUploaded ? 'Resume Uploaded' : null}
+                                        defaultText={
+                                            this.props.userState.data.user
+                                                .isResumeUploaded
+                                                ? 'Resume Uploaded'
+                                                : null
+                                        }
                                     />
                                 </FileUploadContainer>
                             </InputContainer>
@@ -233,11 +256,15 @@ class Apply extends React.Component {
                                     type="submit"
                                     color={this.props.theme.primary}
                                 >
-                                Submit
+                                    Submit
                                 </RoundedButton>
                             </ButtonGroup>
                             <LegalText>
-                                By applying to MHacks Nano, you agree to the MHacks <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">Code of Conduct</LegalLink>.
+                                By applying to MHacks Nano, you agree to the
+                                MHacks{' '}
+                                <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
+                                    Code of Conduct
+                                </LegalLink>.
                             </LegalText>
                         </Flexer>
                     </form>

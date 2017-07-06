@@ -53,7 +53,7 @@ const Flexbox = styled.div`
     display: flex;
     flexWrap: wrap;
     justifyContent: space-between;
-`
+`;
 
 const Flex1 = styled.div`
     display: flex;
@@ -67,18 +67,18 @@ const Flex1 = styled.div`
     ${devices.tablet`
         width: calc(33.333% - 40px); 
     `}
-`
+`;
 
 const Img100 = styled.img`
     width: auto;
     height: 60px;
-`
+`;
 
 const NoImage = styled.div`
     width: 100px;
     height: 100px;
     border: 1px solid ${props => props.theme.highlight};
-`
+`;
 
 const Caption = styled.p`
     display: block;
@@ -87,7 +87,6 @@ const Caption = styled.p`
 `;
 
 class HackingCategories extends React.Component {
-
     render() {
         return (
             <Wrapper>
@@ -95,7 +94,7 @@ class HackingCategories extends React.Component {
                     <Flexbox>
                         <SectionHeader>Hacking <br />Categories</SectionHeader>
                         <Flex1>
-                            <NoImage/>
+                            <NoImage />
                             <Caption>Hardware</Caption>
                         </Flex1>
                         <Flex1>
@@ -103,23 +102,23 @@ class HackingCategories extends React.Component {
                             <Caption>Ai/Machine <br />Learning</Caption>
                         </Flex1>
                         <Flex1>
-                            <Img100 src={ArVr}/>
+                            <Img100 src={ArVr} />
                             <Caption>Augmented/Virtual <br />Reality</Caption>
                         </Flex1>
                         <Flex1>
-                            <Img100 src={GameDev}/>
+                            <Img100 src={GameDev} />
                             <Caption>Game <br />Development</Caption>
                         </Flex1>
                         <Flex1>
-                            <Img100 src={Ios}/>
+                            <Img100 src={Ios} />
                             <Caption>iOS <br />Development</Caption>
                         </Flex1>
                         <Flex1>
-                            <Img100 src={WebDev}/>
+                            <Img100 src={WebDev} />
                             <Caption>Web <br />Development</Caption>
                         </Flex1>
                         <Flex1>
-                            <Img100 src={Android}/>
+                            <Img100 src={Android} />
                             <Caption>Android <br />Development</Caption>
                         </Flex1>
                     </Flexbox>

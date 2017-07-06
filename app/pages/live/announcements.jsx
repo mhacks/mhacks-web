@@ -40,7 +40,6 @@ const ListItemDescription = styled.p`
 `;
 
 class Announcements extends React.Component {
-
     componentDidMount() {
         this.props.dispatch(AnnouncementsThunks.loadAnnouncements());
 
@@ -61,12 +60,20 @@ class Announcements extends React.Component {
             <Wrapper>
                 <ListHeader>Announcements</ListHeader>
                 <List>
-                    {announcements.map(function (announcement, i) {
+                    {announcements.map(function(announcement, i) {
                         return (
                             <ListItem key={i}>
-                                <ListItemHeader>{announcement.title}</ListItemHeader>
-                                <ListItemTimestamp><FormattedRelative value={announcement.broadcastTime} /></ListItemTimestamp>
-                                <ListItemDescription>{announcement.body}</ListItemDescription>
+                                <ListItemHeader>
+                                    {announcement.title}
+                                </ListItemHeader>
+                                <ListItemTimestamp>
+                                    <FormattedRelative
+                                        value={announcement.broadcastTime}
+                                    />
+                                </ListItemTimestamp>
+                                <ListItemDescription>
+                                    {announcement.body}
+                                </ListItemDescription>
                             </ListItem>
                         );
                     })}
