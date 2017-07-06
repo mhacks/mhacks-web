@@ -3,12 +3,12 @@ import { ApplicationRequests } from '../requests';
 
 export default class ApplicationThunks {
     static uploadApplication(application, files) {
-        return (dispatch, getState) => {
+        return dispatch => {
             dispatch(
                 ApplicationPureActions.uploadApplicationRequest(application)
             );
 
-            const token = getState().userState.data.token;
+            const token = localStorage.getItem('jwt');
 
             return ApplicationRequests.uploadApplication(
                 token,

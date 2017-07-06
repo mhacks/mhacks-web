@@ -3,11 +3,13 @@ import AuthThunks from './auth.js';
 import ProfileThunks from './profile.js';
 import ApplicationThunks from './application.js';
 import AnnouncementsThunks from './announcements.js';
+import ConfigurationThunks from './configuration.js';
 
 export {
     SubscribeThunks,
     AuthThunks,
     ProfileThunks,
     ApplicationThunks,
-    AnnouncementsThunks
+    AnnouncementsThunks,
+    ConfigurationThunks
 };

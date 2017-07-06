@@ -109,6 +109,18 @@ export function userState(state = initialUserState, action) {
                     ...action.data
                 }
             };
+
+        case reduxActions.LOAD_CONFIGURATION_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data.userData
+                },
+                message: action.message
+            };
         default:
             return state;
     }

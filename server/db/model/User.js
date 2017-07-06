@@ -153,7 +153,7 @@ schema.methods.generateNewToken = function() {
         },
         secret,
         {
-            expiresIn: '14d'
+            expiresIn: '28d'
         }
     );
 
@@ -401,6 +401,21 @@ schema.methods.getAvatars = function() {
 
 schema.methods.getResume = function() {
     return config.host + '/v1/artifact/resume/' + this.email;
+};
+
+schema.methods.getProfile = function() {
+    return {
+        email: this.email,
+        email_verified: this.email_verified,
+        application_submitted: this.application_submitted,
+        full_name: this.full_name,
+        birthday: this.birthday,
+        groups: this.getGroupsList(),
+        major: this.major,
+        university: this.university,
+        resume_uploaded: !!this.resume,
+        avatar: this.getAvatars()
+    };
 };
 
 // Password middleware to update passwords with bcrypt when needed

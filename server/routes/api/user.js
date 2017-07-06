@@ -98,18 +98,7 @@ router.get('/profile', function(req, res) {
             if (user) {
                 res.send({
                     status: true,
-                    user: {
-                        email: user.email,
-                        email_verified: user.email_verified,
-                        application_submitted: user.application_submitted,
-                        full_name: user.full_name,
-                        birthday: user.birthday,
-                        groups: user.getGroupsList(),
-                        major: user.major,
-                        university: user.university,
-                        resume_uploaded: !!user.resume,
-                        avatar: user.getAvatars()
-                    }
+                    user: user.getProfile()
                 });
             } else {
                 res.send({

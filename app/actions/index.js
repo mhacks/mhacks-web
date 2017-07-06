@@ -3,7 +3,8 @@ import {
     AuthThunks,
     ProfileThunks,
     ApplicationThunks,
-    AnnouncementsThunks
+    AnnouncementsThunks,
+    ConfigurationThunks
 } from './thunks';
 
 export {
@@ -11,5 +12,6 @@ export {
     AuthThunks,
     ProfileThunks,
     ApplicationThunks,
-    AnnouncementsThunks
+    AnnouncementsThunks,
+    ConfigurationThunks
 };
