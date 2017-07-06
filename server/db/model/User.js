@@ -91,14 +91,8 @@ var schema = new mongoose.Schema({
     },
     sex: {
         type: String,
-        enum: [
-            'unselected',
-            'male',
-            'female',
-            'non-binary',
-            'prefer-not'
-        ]
-    },
+        enum: ['unselected', 'male', 'female', 'non-binary', 'prefer-not']
+    }
 });
 
 // Allow us to query by name
