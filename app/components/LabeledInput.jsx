@@ -8,6 +8,7 @@ const InputField = styled.div`
     display: flex;
     flexDirection: column;
     justifyContent: space-between;
+    alignItems: center;
 
     ${devices.small`
         flexDirection: row;

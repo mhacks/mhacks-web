@@ -1,5 +1,6 @@
 import { ConfigurationPureActions } from '../pure';
 import { ConfigurationRequests } from '../requests';
+import { ProfileFields } from '../../constants/forms';
 
 export default class ConfigurationThunks {
     static loadConfiguration() {
@@ -20,22 +21,24 @@ export default class ConfigurationThunks {
                         };
 
                         if (user) {
-                            state['userData'] = {
+                            state.userData = {
                                 isEmailVerified: user.email_verified,
                                 isApplicationSubmitted:
                                     user.application_submitted,
                                 isLoggedIn: true,
                                 user: {
                                     name: user.full_name,
-                                    birthday: user.birthday,
-                                    major: user.major,
-                                    university: user.university,
-                                    email: user.email,
                                     groups: user.groups,
                                     avatars: user.avatar,
                                     isResumeUploaded: user.resume_uploaded
                                 }
                             };
+
+                            for (const key of Object.keys(ProfileFields)) {
+                                if (user.hasOwnProperty(key)) {
+                                    state.userData.user[key] = user[key];
+                                }
+                            }
                         }
 
                         dispatch(
