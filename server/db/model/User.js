@@ -72,6 +72,7 @@ var schema = new mongoose.Schema({
     github: String,
     linkedin: String,
     devpost: String,
+    portfolio: String,
     tshirt: {
         type: String,
         enum: ['unselected', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl']
@@ -438,7 +439,14 @@ schema.methods.getProfile = function() {
         major: this.major,
         university: this.university,
         resume_uploaded: !!this.resume,
-        avatar: this.getAvatars()
+        avatar: this.getAvatars(),
+        github: this.github,
+        linkedin: this.linkedin,
+        devpost: this.devpost,
+        portfolio: this.portfolio,
+        tshirt: this.tshirt,
+        race: this.race,
+        sex: this.sex
     };
 };
 

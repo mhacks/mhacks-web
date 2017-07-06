@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ProfileThunks } from '../actions';
+import { FieldTypes, ProfileFields } from '../constants/forms';
 
 import { PageContainer, RoundedButton, FileUpload, Alert, LabeledInput } from '../components';
 
@@ -57,27 +58,6 @@ const Link = styled.a`
     cursor: pointer;
 `;
 
-const Types = {
-    TEXT: 0,
-    LINK: 1,
-    DATE: 2,
-    SELECT: 3
-};
-
-const fields = {
-    name: Types.TEXT,
-    university: Types.TEXT,
-    major: Types.TEXT,
-    github: Types.LINK,
-    linkedin: Types.LINK,
-    devpost: Types.LINK,
-    portfolio: Types.LINK,
-    tshirt: Types.SELECT,
-    race: Types.SELECT,
-    sex: Types.SELECT,
-    birthday: Types.DATE
-};
-
 class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -89,12 +69,12 @@ class Profile extends React.Component {
             isResumeUploaded: userData.isResumeUploaded || false
         };
 
-        for (const key of Object.keys(fields)) {
-            if (fields[key] === Types.TEXT || fields[key] === Types.LINK) {
+        for (const key of Object.keys(ProfileFields)) {
+            if (ProfileFields[key] === FieldTypes.TEXT || ProfileFields[key] === FieldTypes.LINK) {
                 this.state[key] = userData[key] || '';
-            } else if (fields[key] === Types.SELECT) {
+            } else if (ProfileFields[key] === FieldTypes.SELECT) {
                 this.state[key] = userData[key] || 'unselected';
-            } else if (fields[key] === Types.DATE) {
+            } else if (ProfileFields[key] === FieldTypes.DATE) {
                 this.state[key] = userData[key] ? new Date(userData[key]).toISOString().split('T')[0] : ''
             }
         }
@@ -139,10 +119,10 @@ class Profile extends React.Component {
             files['resume'] = this.state.resume;
         }
 
-        for (const key of Object.keys(fields)) {
-            if (fields[key] === Types.TEXT || fields[key] === Types.LINK || fields[key] === Types.SELECT) {
+        for (const key of Object.keys(ProfileFields)) {
+            if (ProfileFields[key] === FieldTypes.TEXT || ProfileFields[key] === FieldTypes.LINK || ProfileFields[key] === FieldTypes.SELECT) {
                 profile[key] = this.state[key];
-            } else if (fields[key] === Types.DATE) {
+            } else if (ProfileFields[key] === FieldTypes.DATE) {
                 profile[key] = (new Date(this.state[key])).getTime();
             }
         }

@@ -1,5 +1,6 @@
 import { ProfilePureActions } from '../pure';
 import { ProfileRequests } from '../requests';
+import { ProfileFields } from '../../constants/forms';
 
 export default class ProfileThunks {
     static loadProfile() {
@@ -12,23 +13,28 @@ export default class ProfileThunks {
                 if (response.status == 200) {
                     response.json().then(json => {
                         const { user } = json;
+
+                        const state = {
+                            isEmailVerified: user.email_verified,
+                            isApplicationSubmitted: user.application_submitted,
+                            isLoggedIn: true,
+                            user: {
+                                name: user.full_name,
+                                groups: user.groups,
+                                avatars: user.avatar,
+                                isResumeUploaded: user.resume_uploaded
+                            }
+                        };
+
+                        for (const key of Object.keys(ProfileFields)) {
+                            if (user.hasOwnProperty(key)) {
+                                state.user[key] = user[key];
+                            }
+                        }
+
                         dispatch(
                             ProfilePureActions.loadProfileSuccess(
-                                {
-                                    isEmailVerified: user.email_verified,
-                                    isApplicationSubmitted:
-                                        user.application_submitted,
-                                    user: {
-                                        name: user.full_name,
-                                        birthday: user.birthday,
-                                        major: user.major,
-                                        university: user.university,
-                                        email: user.email,
-                                        groups: user.groups,
-                                        avatars: user.avatar,
-                                        isResumeUploaded: user.resume_uploaded
-                                    }
-                                },
+                                state,
                                 json.message
                             )
                         );
