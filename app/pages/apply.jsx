@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import {connect} from 'react-redux';
-import {ProfileThunks, ApplicationThunks} from '../actions';
-import {routes} from '../constants';
+import { connect } from 'react-redux';
+import { ProfileThunks, ApplicationThunks } from '../actions';
+import { routes } from '../constants';
 import {
     PageContainer,
     RoundedButton,
@@ -11,7 +11,11 @@ import {
     LabeledInput,
     LabeledTextarea
 } from '../components';
-import {FieldTypes, ProfileFields, HackerApplicationFields} from '../constants/forms';
+import {
+    FieldTypes,
+    ProfileFields,
+    HackerApplicationFields
+} from '../constants/forms';
 
 const FormContainer = styled.div`
     maxWidth: 500px;
@@ -84,19 +88,26 @@ class Apply extends React.Component {
         };
 
         for (const key of Object.keys(ProfileFields)) {
-            if (ProfileFields[key] === FieldTypes.TEXT || ProfileFields[key] === FieldTypes.LINK) {
+            if (
+                ProfileFields[key] === FieldTypes.TEXT ||
+                ProfileFields[key] === FieldTypes.LINK
+            ) {
                 this.state[key] = userData[key] || '';
             } else if (ProfileFields[key] === FieldTypes.SELECT) {
                 this.state[key] = userData[key] || 'unselected';
             } else if (ProfileFields[key] === FieldTypes.DATE) {
-                this.state[key] = userData[key] ? new Date(userData[key]).toISOString().split('T')[0] : ''
+                this.state[key] = userData[key]
+                    ? new Date(userData[key]).toISOString().split('T')[0]
+                    : '';
             }
         }
 
         for (const field of HackerApplicationFields) {
             if (!Object.keys(ProfileFields).includes(field.key)) {
-                if (field.type === FieldTypes.TEXT ||
-                    field.type === FieldTypes.ESSAY) {
+                if (
+                    field.type === FieldTypes.TEXT ||
+                    field.type === FieldTypes.ESSAY
+                ) {
                     this.state[field.key] = '';
                 } else if (field.type === FieldTypes.SELECT) {
                     this.state[field.key] = field.values[0].key;
@@ -138,8 +149,8 @@ class Apply extends React.Component {
             this.setState({
                 birthday: nextUserData.birthday
                     ? new Date(nextUserData.birthday)
-                        .toISOString()
-                        .split('T')[0]
+                          .toISOString()
+                          .split('T')[0]
                     : '',
                 university: nextUserData.university || '',
                 major: nextUserData.major || '',
@@ -184,18 +195,24 @@ class Apply extends React.Component {
             ApplicationThunks.uploadApplication(application, files)
         );
         for (const field of HackerApplicationFields) {
-            if (field.type === FieldTypes.TEXT ||
+            if (
+                field.type === FieldTypes.TEXT ||
                 field.type === FieldTypes.LINK ||
                 field.type === FieldTypes.SELECT ||
                 field.type === FieldTypes.INTEGER ||
-                field.type === FieldTypes.ESSAY) {
+                field.type === FieldTypes.ESSAY
+            ) {
                 application[field.key] = this.state[field.key];
             } else if (field.type === FieldTypes.DATE) {
-                application[field.key] = (new Date(this.state[field.key])).getTime();
+                application[field.key] = new Date(
+                    this.state[field.key]
+                ).getTime();
             }
         }
 
-        this.props.dispatch(ApplicationThunks.uploadApplication(application, files));
+        this.props.dispatch(
+            ApplicationThunks.uploadApplication(application, files)
+        );
     }
 
     render() {
@@ -208,16 +225,18 @@ class Apply extends React.Component {
                     <form onSubmit={this.onSubmit}>
                         {this.props.userState.error
                             ? <AlertContainer>
-                                <Alert
-                                    message={this.props.userState.message}
-                                />
-                            </AlertContainer>
+                                  <Alert
+                                      message={this.props.userState.message}
+                                  />
+                              </AlertContainer>
                             : null}
                         <Flexer>
                             <InputContainer>
-                                { HackerApplicationFields.map((field) => {
-                                    if ((field.key === 'departing_from' ||
-                                        field.key === 'requested_reimbursement') &&
+                                {HackerApplicationFields.map(field => {
+                                    if (
+                                        (field.key === 'departing_from' ||
+                                            field.key ===
+                                                'requested_reimbursement') &&
                                         this.state.needs_reimbursement === 'n'
                                     ) {
                                         return;
@@ -229,16 +248,29 @@ class Apply extends React.Component {
                                             return (
                                                 <LabeledInput
                                                     label={field.label}
-                                                    labelWidth={field.wideLabel ? '150px' : '100px'}
+                                                    labelWidth={
+                                                        field.wideLabel
+                                                            ? '150px'
+                                                            : '100px'
+                                                    }
                                                     key={field.key}
                                                 >
                                                     <input
                                                         id={field.key}
                                                         type="text"
                                                         name={field.key}
-                                                        placeholder={field.placeholder}
-                                                        value={this.state[field.key]}
-                                                        onChange={this.handleAttributeChange}
+                                                        placeholder={
+                                                            field.placeholder
+                                                        }
+                                                        value={
+                                                            this.state[
+                                                                field.key
+                                                            ]
+                                                        }
+                                                        onChange={
+                                                            this
+                                                                .handleAttributeChange
+                                                        }
                                                     />
                                                 </LabeledInput>
                                             );
@@ -251,26 +283,48 @@ class Apply extends React.Component {
                                                     <textarea
                                                         id={field.key}
                                                         name={field.key}
-                                                        placeholder={field.placeholder}
-                                                        value={this.state[field.key]}
-                                                        onChange={this.handleAttributeChange}
+                                                        placeholder={
+                                                            field.placeholder
+                                                        }
+                                                        value={
+                                                            this.state[
+                                                                field.key
+                                                            ]
+                                                        }
+                                                        onChange={
+                                                            this
+                                                                .handleAttributeChange
+                                                        }
                                                     />
                                                 </LabeledTextarea>
-                                            )
+                                            );
                                         case FieldTypes.DATE:
                                             return (
                                                 <LabeledInput
                                                     label={field.label}
-                                                    labelWidth={field.wideLabel ? '150px' : '100px'}
+                                                    labelWidth={
+                                                        field.wideLabel
+                                                            ? '150px'
+                                                            : '100px'
+                                                    }
                                                     key={field.key}
                                                 >
                                                     <input
                                                         id={field.key}
                                                         type="date"
                                                         name={field.key}
-                                                        placeholder={field.placeholder}
-                                                        value={this.state[field.key]}
-                                                        onChange={this.handleAttributeChange}
+                                                        placeholder={
+                                                            field.placeholder
+                                                        }
+                                                        value={
+                                                            this.state[
+                                                                field.key
+                                                            ]
+                                                        }
+                                                        onChange={
+                                                            this
+                                                                .handleAttributeChange
+                                                        }
                                                     />
                                                 </LabeledInput>
                                             );
@@ -278,15 +332,26 @@ class Apply extends React.Component {
                                             return (
                                                 <LabeledInput
                                                     label={field.label}
-                                                    labelWidth={field.wideLabel ? '150px' : '100px'}
+                                                    labelWidth={
+                                                        field.wideLabel
+                                                            ? '150px'
+                                                            : '100px'
+                                                    }
                                                     key={field.key}
                                                 >
                                                     <input
                                                         id={field.key}
                                                         type="number"
                                                         name={field.key}
-                                                        value={this.state[field.key]}
-                                                        onChange={this.handleAttributeChange}
+                                                        value={
+                                                            this.state[
+                                                                field.key
+                                                            ]
+                                                        }
+                                                        onChange={
+                                                            this
+                                                                .handleAttributeChange
+                                                        }
                                                     />
                                                 </LabeledInput>
                                             );
@@ -294,31 +359,50 @@ class Apply extends React.Component {
                                             return (
                                                 <LabeledInput
                                                     label={field.label}
-                                                    labelWidth={field.wideLabel ? '150px' : '100px'}
+                                                    labelWidth={
+                                                        field.wideLabel
+                                                            ? '150px'
+                                                            : '100px'
+                                                    }
                                                     key={field.key}
                                                 >
                                                     <select
                                                         name={field.key}
-                                                        value={this.state[field.key]}
-                                                        onChange={this.handleAttributeChange}
+                                                        value={
+                                                            this.state[
+                                                                field.key
+                                                            ]
+                                                        }
+                                                        onChange={
+                                                            this
+                                                                .handleAttributeChange
+                                                        }
                                                     >
-                                                        {field.values.map((tuple) => {
-                                                            return (
-                                                                <option
-                                                                    value={tuple.key}
-                                                                    key={tuple.key}
-                                                                >
-                                                                    {tuple.value}
-                                                                </option>
-                                                            )
-                                                        })}
+                                                        {field.values.map(
+                                                            tuple => {
+                                                                return (
+                                                                    <option
+                                                                        value={
+                                                                            tuple.key
+                                                                        }
+                                                                        key={
+                                                                            tuple.key
+                                                                        }
+                                                                    >
+                                                                        {tuple.value}
+                                                                    </option>
+                                                                );
+                                                            }
+                                                        )}
                                                     </select>
                                                 </LabeledInput>
                                             );
                                         case FieldTypes.SECTIONHEADER:
                                             return (
                                                 <SubsectionHeader
-                                                    color={this.props.theme.primary}
+                                                    color={
+                                                        this.props.theme.primary
+                                                    }
                                                     key={field.title}
                                                 >
                                                     {field.title}
@@ -357,8 +441,7 @@ class Apply extends React.Component {
                             <LegalText>
                                 By applying to MHacks Nano, you agree to the
                                 MHacks{' '}
-                                <LegalLink
-                                    href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
+                                <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
                                     Code of Conduct
                                 </LegalLink>.
                             </LegalText>

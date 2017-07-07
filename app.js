@@ -19,6 +19,7 @@ var http = require('http'),
     csrfProtection = csrf(),
     apiRouter = require('./server/routes/api.js'),
     indexRouter = require('./server/routes/index.js'),
+    shortenerRouter = require('./server/routes/shortener.js'),
     sharedsession = require('express-socket.io-session');
 
 // Force https
@@ -74,38 +75,42 @@ app.use(function(req, res, next) {
 });
 
 // Other route middleware (modules in `routes/`)
-app.use('/', indexRouter);
-app.use('/v1', apiRouter);
-
-// Intiialize development webpack (hot reloading, etc);
-if (app.get('env') !== 'production' && !config.api_work) {
-    var webpack = require('webpack'),
-        webpackDevMiddleware = require('webpack-dev-middleware'),
-        webpackHotMiddleware = require('webpack-hot-middleware'),
-        historyApiFallback = require('connect-history-api-fallback'),
-        webpackConfig = require('./webpack.dev.config'),
-        webpackCompiler = webpack(webpackConfig),
-        webpackMiddlewareInstance = webpackDevMiddleware(webpackCompiler, {
-            publicPath: webpackConfig.output.publicPath,
-            stats: {
-                colors: true
-            }
-        });
-
-    app.use(webpackMiddlewareInstance);
-    app.use(historyApiFallback());
-    app.use(webpackMiddlewareInstance);
-
-    app.use(webpackHotMiddleware(webpackCompiler, {
-        log: console.log
-    }));
+if (config.service === 'shortener') {
+    app.use('/', shortenerRouter);
 } else {
-    // Static files middleware
-    app.use(express.static('build'));
+    app.use('/', indexRouter);
+    app.use('/v1', apiRouter);
 
-    app.use(function(req, res, next) {
-        res.sendFile(__dirname + '/build/index.html');
-    });
+    // Intiialize development webpack (hot reloading, etc);
+    if (app.get('env') !== 'production' && !config.api_work) {
+        var webpack = require('webpack'),
+            webpackDevMiddleware = require('webpack-dev-middleware'),
+            webpackHotMiddleware = require('webpack-hot-middleware'),
+            historyApiFallback = require('connect-history-api-fallback'),
+            webpackConfig = require('./webpack.dev.config'),
+            webpackCompiler = webpack(webpackConfig),
+            webpackMiddlewareInstance = webpackDevMiddleware(webpackCompiler, {
+                publicPath: webpackConfig.output.publicPath,
+                stats: {
+                    colors: true
+                }
+            });
+
+        app.use(webpackMiddlewareInstance);
+        app.use(historyApiFallback());
+        app.use(webpackMiddlewareInstance);
+
+        app.use(webpackHotMiddleware(webpackCompiler, {
+            log: console.log
+        }));
+    } else {
+        // Static files middleware
+        app.use(express.static('build'));
+
+        app.use(function(req, res, next) {
+            res.sendFile(__dirname + '/build/index.html');
+        });
+    }
 }
 
 var ioHandler = require('./server/socketio/index.js')(io);

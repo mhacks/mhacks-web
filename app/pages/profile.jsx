@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import {connect} from 'react-redux';
-import {ProfileThunks} from '../actions';
-import {FieldTypes, ProfileFields} from '../constants/forms';
+import { connect } from 'react-redux';
+import { ProfileThunks } from '../actions';
+import { FieldTypes, ProfileFields } from '../constants/forms';
 
 import {
     PageContainer,
@@ -80,12 +80,17 @@ class Profile extends React.Component {
         };
 
         for (const key of Object.keys(ProfileFields)) {
-            if (ProfileFields[key] === FieldTypes.TEXT || ProfileFields[key] === FieldTypes.LINK) {
+            if (
+                ProfileFields[key] === FieldTypes.TEXT ||
+                ProfileFields[key] === FieldTypes.LINK
+            ) {
                 this.state[key] = userData[key] || '';
             } else if (ProfileFields[key] === FieldTypes.SELECT) {
                 this.state[key] = userData[key] || 'unselected';
             } else if (ProfileFields[key] === FieldTypes.DATE) {
-                this.state[key] = userData[key] ? new Date(userData[key]).toISOString().split('T')[0] : ''
+                this.state[key] = userData[key]
+                    ? new Date(userData[key]).toISOString().split('T')[0]
+                    : '';
             }
         }
 
@@ -118,8 +123,8 @@ class Profile extends React.Component {
             this.setState({
                 birthday: nextUserData.birthday
                     ? new Date(nextUserData.birthday)
-                        .toISOString()
-                        .split('T')[0]
+                          .toISOString()
+                          .split('T')[0]
                     : '',
                 university: nextUserData.university || '',
                 major: nextUserData.major || '',
@@ -159,10 +164,14 @@ class Profile extends React.Component {
         }
 
         for (const key of Object.keys(ProfileFields)) {
-            if (ProfileFields[key] === FieldTypes.TEXT || ProfileFields[key] === FieldTypes.LINK || ProfileFields[key] === FieldTypes.SELECT) {
+            if (
+                ProfileFields[key] === FieldTypes.TEXT ||
+                ProfileFields[key] === FieldTypes.LINK ||
+                ProfileFields[key] === FieldTypes.SELECT
+            ) {
                 profile[key] = this.state[key];
             } else if (ProfileFields[key] === FieldTypes.DATE) {
-                profile[key] = (new Date(this.state[key])).getTime();
+                profile[key] = new Date(this.state[key]).getTime();
             }
         }
 
@@ -186,246 +195,277 @@ class Profile extends React.Component {
                             ? 'Profile'
                             : 'Unverified Email'}
                     </SectionHeader>
-                    {this.props.userState.data.isEmailVerified ?
-                        <form onSubmit={this.onSubmit}>
-                            {this.props.userState.error ?
-                                <AlertContainer>
-                                    <Alert message={this.props.userState.message}/>
-                                </AlertContainer> :
-                                null
-                            }
-                            {this.props.userState.data.isApplicationSubmitted ?
-                                <AlertContainer>
-                                    <Alert
-                                        message={'Your application is submitted! Thanks for applying to MHacks Nano'}
-                                    />
-                                </AlertContainer> :
-                                null
-                            }
-                            <Subhead>Update your profile with some info about yourself. This will be automatically
-                                populated into your application and persist through hackathons!</Subhead>
-                            <Flexer>
-                                <InputContainer>
-                                    <SubsectionHeader color={this.props.theme.primary}>
-                                        General
-                                    </SubsectionHeader>
-                                    <LabeledInput
-                                        label="Name"
-                                    >
-                                        <input
-                                            id="name"
-                                            type="text"
-                                            name="name"
-                                            placeholder="Hack mcHacker"
-                                            value={this.state.name}
-                                            onChange={this.handleAttributeChange}
-                                        />
-                                    </LabeledInput>
-                                    <LabeledInput
-                                        label="University"
-                                    >
-                                        <input
-                                            id="university"
-                                            type="text"
-                                            name="university"
-                                            placeholder="e.g. University of Michigan"
-                                            value={this.state.university}
-                                            onChange={this.handleAttributeChange}
-                                        />
-                                    </LabeledInput>
-                                    <LabeledInput
-                                        label="Major"
-                                    >
-                                        <input
-                                            id="major"
-                                            type="text"
-                                            name="major"
-                                            placeholder="e.g. Underwater Basket Weaving"
-                                            value={this.state.major}
-                                            onChange={this.handleAttributeChange}
-                                        />
-                                    </LabeledInput>
-                                    <FileUploadContainer>
-                                        <FileUpload
-                                            defaultColor={
-                                                this.props.userState.data.user
-                                                    .isResumeUploaded
-                                                    ? this.props.theme.success
-                                                    : this.props.theme.primary
-                                            }
-                                            hoverColor={
-                                                this.props.theme.secondary
-                                            }
-                                            activeColor={
-                                                this.props.theme.success
-                                            }
-                                            onFileSelect={
-                                                this.handleFileUpload
-                                            }
-                                            defaultText={
-                                                this.props.userState.data.user
-                                                    .isResumeUploaded
-                                                    ? 'Resume Uploaded'
-                                                    : null
+                    {this.props.userState.data.isEmailVerified
+                        ? <form onSubmit={this.onSubmit}>
+                              {this.props.userState.error
+                                  ? <AlertContainer>
+                                        <Alert
+                                            message={
+                                                this.props.userState.message
                                             }
                                         />
-                                    </FileUploadContainer>
-                                    <SubsectionHeader color={this.props.theme.primary}>
-                                        Links
-                                    </SubsectionHeader>
-                                    <LabeledInput
-                                        label="GitHub"
-                                    >
-                                        <input
-                                            id="github"
-                                            type="text"
-                                            name="github"
-                                            placeholder="https://github.com/"
-                                            value={this.state.github}
-                                            onChange={this.handleAttributeChange}
+                                    </AlertContainer>
+                                  : null}
+                              {this.props.userState.data.isApplicationSubmitted
+                                  ? <AlertContainer>
+                                        <Alert
+                                            message={
+                                                'Your application is submitted! Thanks for applying to MHacks Nano'
+                                            }
                                         />
-                                    </LabeledInput>
-                                    <LabeledInput
-                                        label="LinkedIn"
-                                    >
-                                        <input
-                                            id="linkedin"
-                                            type="text"
-                                            name="linkedin"
-                                            placeholder="https://www.linkedin.com/in/"
-                                            value={this.state.linkedin}
-                                            onChange={this.handleAttributeChange}
-                                        />
-                                    </LabeledInput>
-                                    <LabeledInput
-                                        label="DevPost"
-                                    >
-                                        <input
-                                            id="devpost"
-                                            type="text"
-                                            name="devpost"
-                                            placeholder="https://devpost.com/"
-                                            value={this.state.devpost}
-                                            onChange={this.handleAttributeChange}
-                                        />
-                                    </LabeledInput>
-                                    <LabeledInput
-                                        label="Portfolio"
-                                    >
-                                        <input
-                                            id="portfolio"
-                                            type="text"
-                                            name="portfolio"
-                                            placeholder="https://"
-                                            value={this.state.portfolio}
-                                            onChange={this.handleAttributeChange}
-                                        />
-                                    </LabeledInput>
-                                    <SubsectionHeader color={this.props.theme.primary}>
-                                        Private
-                                    </SubsectionHeader>
-                                    <LabeledInput
-                                        label="Date of Birth"
-                                    >
-                                        <input
-                                            id="birthday"
-                                            type="date"
-                                            name="birthday"
-                                            placeholder="mm/dd/yyyy"
-                                            value={this.state.birthday}
-                                            onChange={this.handleAttributeChange}
-                                        />
-                                    </LabeledInput>
-                                    <LabeledInput
-                                        label="T-Shirt Size"
-                                    >
-                                        <select
-                                            name="tshirt"
-                                            value={this.state.tshirt}
-                                            onChange={this.handleAttributeChange}
-                                        >
-                                            <option value="unselected">Select</option>
-                                            <option value="xs">XS</option>
-                                            <option value="s">S</option>
-                                            <option value="m">M</option>
-                                            <option value="l">L</option>
-                                            <option value="xl">XL</option>
-                                            <option value="2xl">2XL</option>
-                                            <option value="3xl">3XL</option>
-                                        </select>
-                                    </LabeledInput>
-                                    <LabeledInput
-                                        label="Race"
-                                    >
-                                        <select
-                                            name="race"
-                                            value={this.state.race}
-                                            onChange={this.handleAttributeChange}
-                                        >
-                                            <option value="unselected">Select</option>
-                                            <option value="white">White</option>
-                                            <option value="black">Black</option>
-                                            <option value="am-indian-alaskan">American Indian or Alaskan Native
-                                            </option>
-                                            <option value="asian">Asian or Pacific Islander</option>
-                                            <option value="hispanic">Hispanic</option>
-                                            <option value="other">Other</option>
-                                            <option value="prefer-not">Prefer not to answer</option>
-                                        </select>
-                                    </LabeledInput>
-                                    <LabeledInput
-                                        label="Sex"
-                                    >
-                                        <select
-                                            name="sex"
-                                            value={this.state.sex}
-                                            onChange={this.handleAttributeChange}
-                                        >
-                                            <option value="unselected">Select</option>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                            <option value="non-binary">Non Binary</option>
-                                            <option value="prefer-not">Prefer not to answer</option>
-                                        </select>
-                                    </LabeledInput>
-                                    {this.props.userState.data.isApplicationSubmitted
-                                        ? <AlertContainer>
-                                            <Alert
-                                                message={
-                                                    'Your application is submitted! Thanks for applying to MHacks Nano'
-                                                }
-                                            />
-                                        </AlertContainer>
-                                        : null}
-                                    <Subhead>
-                                        Update your profile with some info about
-                                        yourself. This will be automatically populated
-                                        into your application and persist through
-                                        hackathons!
-                                    </Subhead>
-                                </InputContainer>
-                                <ButtonGroup>
-                                    <RoundedButton
-                                        type="submit"
-                                        color={this.props.theme.primary}
-                                    >
-                                        Save
-                                    </RoundedButton>
-                                </ButtonGroup>
-                            </Flexer>
-                        </form>
+                                    </AlertContainer>
+                                  : null}
+                              <Subhead>
+                                  Update your profile with some info about
+                                  yourself. This will be automatically
+                                  populated into your application and persist
+                                  through hackathons!
+                              </Subhead>
+                              <Flexer>
+                                  <InputContainer>
+                                      <SubsectionHeader
+                                          color={this.props.theme.primary}
+                                      >
+                                          General
+                                      </SubsectionHeader>
+                                      <LabeledInput label="Name">
+                                          <input
+                                              id="name"
+                                              type="text"
+                                              name="name"
+                                              placeholder="Hack mcHacker"
+                                              value={this.state.name}
+                                              onChange={
+                                                  this.handleAttributeChange
+                                              }
+                                          />
+                                      </LabeledInput>
+                                      <LabeledInput label="University">
+                                          <input
+                                              id="university"
+                                              type="text"
+                                              name="university"
+                                              placeholder="e.g. University of Michigan"
+                                              value={this.state.university}
+                                              onChange={
+                                                  this.handleAttributeChange
+                                              }
+                                          />
+                                      </LabeledInput>
+                                      <LabeledInput label="Major">
+                                          <input
+                                              id="major"
+                                              type="text"
+                                              name="major"
+                                              placeholder="e.g. Underwater Basket Weaving"
+                                              value={this.state.major}
+                                              onChange={
+                                                  this.handleAttributeChange
+                                              }
+                                          />
+                                      </LabeledInput>
+                                      <FileUploadContainer>
+                                          <FileUpload
+                                              defaultColor={
+                                                  this.props.userState.data.user
+                                                      .isResumeUploaded
+                                                      ? this.props.theme.success
+                                                      : this.props.theme.primary
+                                              }
+                                              hoverColor={
+                                                  this.props.theme.secondary
+                                              }
+                                              activeColor={
+                                                  this.props.theme.success
+                                              }
+                                              onFileSelect={
+                                                  this.handleFileUpload
+                                              }
+                                              defaultText={
+                                                  this.props.userState.data.user
+                                                      .isResumeUploaded
+                                                      ? 'Resume Uploaded'
+                                                      : null
+                                              }
+                                          />
+                                      </FileUploadContainer>
+                                      <SubsectionHeader
+                                          color={this.props.theme.primary}
+                                      >
+                                          Links
+                                      </SubsectionHeader>
+                                      <LabeledInput label="GitHub">
+                                          <input
+                                              id="github"
+                                              type="text"
+                                              name="github"
+                                              placeholder="https://github.com/"
+                                              value={this.state.github}
+                                              onChange={
+                                                  this.handleAttributeChange
+                                              }
+                                          />
+                                      </LabeledInput>
+                                      <LabeledInput label="LinkedIn">
+                                          <input
+                                              id="linkedin"
+                                              type="text"
+                                              name="linkedin"
+                                              placeholder="https://www.linkedin.com/in/"
+                                              value={this.state.linkedin}
+                                              onChange={
+                                                  this.handleAttributeChange
+                                              }
+                                          />
+                                      </LabeledInput>
+                                      <LabeledInput label="DevPost">
+                                          <input
+                                              id="devpost"
+                                              type="text"
+                                              name="devpost"
+                                              placeholder="https://devpost.com/"
+                                              value={this.state.devpost}
+                                              onChange={
+                                                  this.handleAttributeChange
+                                              }
+                                          />
+                                      </LabeledInput>
+                                      <LabeledInput label="Portfolio">
+                                          <input
+                                              id="portfolio"
+                                              type="text"
+                                              name="portfolio"
+                                              placeholder="https://"
+                                              value={this.state.portfolio}
+                                              onChange={
+                                                  this.handleAttributeChange
+                                              }
+                                          />
+                                      </LabeledInput>
+                                      <SubsectionHeader
+                                          color={this.props.theme.primary}
+                                      >
+                                          Private
+                                      </SubsectionHeader>
+                                      <LabeledInput label="Date of Birth">
+                                          <input
+                                              id="birthday"
+                                              type="date"
+                                              name="birthday"
+                                              placeholder="mm/dd/yyyy"
+                                              value={this.state.birthday}
+                                              onChange={
+                                                  this.handleAttributeChange
+                                              }
+                                          />
+                                      </LabeledInput>
+                                      <LabeledInput label="T-Shirt Size">
+                                          <select
+                                              name="tshirt"
+                                              value={this.state.tshirt}
+                                              onChange={
+                                                  this.handleAttributeChange
+                                              }
+                                          >
+                                              <option value="unselected">Select</option>
+                                              <option value="xs">XS</option>
+                                              <option value="s">S</option>
+                                              <option value="m">M</option>
+                                              <option value="l">L</option>
+                                              <option value="xl">XL</option>
+                                              <option value="2xl">2XL</option>
+                                              <option value="3xl">3XL</option>
+                                          </select>
+                                      </LabeledInput>
+                                      <LabeledInput label="Race">
+                                          <select
+                                              name="race"
+                                              value={this.state.race}
+                                              onChange={
+                                                  this.handleAttributeChange
+                                              }
+                                          >
+                                              <option value="unselected">Select</option>
+                                              <option value="white">White</option>
+                                              <option value="black">Black</option>
+                                              <option value="am-indian-alaskan">
+                                                  American Indian or Alaskan
+                                                  Native
+                                              </option>
+                                              <option value="asian">
+                                                  Asian or Pacific Islander
+                                              </option>
+                                              <option value="hispanic">Hispanic</option>
+                                              <option value="other">Other</option>
+                                              <option value="prefer-not">
+                                                  Prefer not to answer
+                                              </option>
+                                          </select>
+                                      </LabeledInput>
+                                      <LabeledInput label="Sex">
+                                          <select
+                                              name="sex"
+                                              value={this.state.sex}
+                                              onChange={
+                                                  this.handleAttributeChange
+                                              }
+                                          >
+                                              <option value="unselected">Select</option>
+                                              <option value="male">Male</option>
+                                              <option value="female">
+                                                  Female
+                                              </option>
+                                              <option value="non-binary">
+                                                  Non
+                                                  Binary
+                                              </option>
+                                              <option value="prefer-not">
+                                                  Prefer not to answer
+                                              </option>
+                                          </select>
+                                      </LabeledInput>
+                                      {this.props.userState.data
+                                          .isApplicationSubmitted
+                                          ? <AlertContainer>
+                                                <Alert
+                                                    message={
+                                                        'Your application is submitted! Thanks for applying to MHacks Nano'
+                                                    }
+                                                />
+                                            </AlertContainer>
+                                          : null}
+                                      <Subhead>
+                                          Update your profile with some info
+                                          about
+                                          yourself. This will be automatically
+                                          populated
+                                          into your application and persist
+                                          through
+                                          hackathons!
+                                      </Subhead>
+                                  </InputContainer>
+                                  <ButtonGroup>
+                                      <RoundedButton
+                                          type="submit"
+                                          color={this.props.theme.primary}
+                                      >
+                                          Save
+                                      </RoundedButton>
+                                  </ButtonGroup>
+                              </Flexer>
+                          </form>
                         : <p>
-                            You should have received a verification email at{' '}
-                            {this.props.userState.data.email}. If not, you can
-                            request another one{' '}
-                            <Link
-                                onClick={this.onClickRequestEmailVerification}
-                                color={this.props.theme.primary}
-                            >
-                                here
-                            </Link>. After you verify your email you can
-                            continue setting up your profile!
-                        </p>}
+                              You should have received a verification email at{' '}
+                              {this.props.userState.data.email}. If not, you can
+                              request another one{' '}
+                              <Link
+                                  onClick={this.onClickRequestEmailVerification}
+                                  color={this.props.theme.primary}
+                              >
+                                  here
+                              </Link>. After you verify your email you can
+                              continue setting up your profile!
+                          </p>}
                 </FormContainer>
             </PageContainer>
         );

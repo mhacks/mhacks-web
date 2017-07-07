@@ -2,7 +2,8 @@ var router = require('express').Router(),
     authMiddleware = require('../middleware/auth.js'),
     User = require('../db/model/User.js'),
     Application = require('../db/model/Application.js'),
-    Announcement = require('../db/model/Announcement.js');
+    Announcement = require('../db/model/Announcement.js'),
+    Shortener = require('../db/model/Shortener.js');
 
 router.get('/admin', authMiddleware('admin', 'web'), function(req, res) {
     User.find()
@@ -18,15 +19,29 @@ router.get('/admin', authMiddleware('admin', 'web'), function(req, res) {
                             Announcement.find()
                                 .exec()
                                 .then(announcements => {
-                                    res.render('admin', {
-                                        user: User,
-                                        application: Application,
-                                        announcement: Announcement,
-                                        users: users,
-                                        applications: applications,
-                                        announcements: announcements,
-                                        currentUser: user
-                                    });
+                                    Shortener.find()
+                                        .exec()
+                                        .then(shorteners => {
+                                            res.render('admin', {
+                                                user: User,
+                                                application: Application,
+                                                announcement: Announcement,
+                                                shortener: Shortener,
+                                                users: users,
+                                                applications: applications,
+                                                announcements: announcements,
+                                                shorteners: shorteners,
+                                                currentUser: user
+                                            });
+                                        })
+                                        .catch(err => {
+                                            console.error(err);
+
+                                            res.send({
+                                                status: false,
+                                                message: err
+                                            });
+                                        });
                                 })
                                 .catch(err => {
                                     console.error(err);

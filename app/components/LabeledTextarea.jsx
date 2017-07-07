@@ -17,11 +17,10 @@ const InputField = styled.div`
     }
 `;
 
-const LabeledTextarea = (props) => (
+const LabeledTextarea = props =>
     <InputField>
         <p>{props.label}</p>
         {React.Children.toArray(props.children)}
-    </InputField>
-);
+    </InputField>;
 
 export default LabeledTextarea;

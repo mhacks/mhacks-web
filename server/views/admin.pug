@@ -49,6 +49,13 @@ html(lang='en')
                 });
                 announcements_table.buttons().container().appendTo('#announcements-table_wrapper .col-sm-6:eq(0)');
 
+                shorteners_table = $('#shorteners-table').DataTable({
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+                shorteners_table.buttons().container().appendTo('#shorteners-table_wrapper .col-sm-6:eq(0)');
+
                 $('#createAction').click(function(e) {
                     e.preventDefault();
 
@@ -59,6 +66,17 @@ html(lang='en')
                         category: $('#category').val(),
                         isApproved: $('#approved').is(':checked'),
                         isSent: $('#sent').is(':checked')
+                    }, function (data) {
+                        console.log(data);
+                        window.location.reload();
+                    });
+                });
+
+                $('#createShortener').click(function (e) {
+                    e.preventDefault();
+
+                    $.post('/v1/shortener', {
+                        url: $('#url').val()
                     }, function (data) {
                         console.log(data);
                         window.location.reload();
@@ -279,3 +297,31 @@ html(lang='en')
                             label(for='approved') Approved:
                             input#approved.form-control(type="checkbox" checked name="approved")
                         button.btn.btn-primary(type='submit' id="createAction") Create
+                div#shorteners
+                    h2='Shorteners:'
+                    table#shorteners-table.table.table-responsive.table-striped.table-bordered.dt-responsive.nowrap(cellspacing='0', width='100%')
+                        thead#table-head-unchained-4
+                            tr#table-head-row-unchained-4
+                                th='#'
+                                th='Code'
+                                th='Short URL'
+                                th='Long URL'
+                                th='Clicks'
+                                th='Created At'
+                        tbody
+                            each val, index in shorteners
+                                - var createdTime = new Date(val.created_at)
+                                tr#table-body-row-unchained
+                                    th=(index + 1)
+                                    td=val.short_code
+                                    td
+                                        a(href=val.short_url)=val.short_url
+                                    td
+                                        a(href=val.long_url)=val.long_url
+                                    td=val.clicks.length
+                                    td=createdTime
+                    form()
+                        div.form-group
+                            label(for='url') Long URL:
+                            input#url.form-control(type='text', placeholder='https://google.com' name='url')
+                        button.btn.btn-primary(type='submit' id="createShortener") Create

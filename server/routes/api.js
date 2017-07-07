@@ -5,6 +5,7 @@ var router = require('express').Router(),
     announcementHandler = require('./api/announcement.js'),
     applicationHandler = require('./api/application.js'),
     configurationHandler = require('./api/configuration.js'),
+    shortenerHandler = require('./api/shortener.js'),
     deployHandler = require('./api/deploy.js'),
     authMiddleware = require('../middleware/auth.js'),
     artifactHandler = require('./api/artifact.js');
@@ -17,6 +18,7 @@ router.use('/application', authMiddleware('any', 'api'), applicationHandler);
 router.use('/deploy', deployHandler);
 router.use('/artifact', artifactHandler);
 router.use('/configuration', configurationHandler);
+router.use('/shortener', shortenerHandler);
 
 router.get('/', function(req, res) {
     res.send('API');
