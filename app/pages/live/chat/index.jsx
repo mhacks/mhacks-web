@@ -232,9 +232,7 @@ class Chat extends React.Component {
                               </HeaderText>
                             : <HeaderText>
                                   Chat with{' '}
-                                  {users.length > 0
-                                      ? users.length - 1
-                                      : '0'}{' '}
+                                  {users.length > 0 ? users.length - 1 : '0'}{' '}
                                   other{' '}
                                   {users.length - 1 === 1 ? 'user' : 'users'}
                               </HeaderText>}

@@ -19,6 +19,7 @@ var http = require('http'),
     csrfProtection = csrf(),
     apiRouter = require('./server/routes/api.js'),
     indexRouter = require('./server/routes/index.js'),
+    shortenerRouter = require('./server/routes/shortener.js'),
     sharedsession = require('express-socket.io-session');
 
 // Force https
@@ -74,8 +75,12 @@ app.use(function(req, res, next) {
 });
 
 // Other route middleware (modules in `routes/`)
-app.use('/', indexRouter);
-app.use('/v1', apiRouter);
+if (config.service === 'shortener') {
+    app.use('/', shortenerRouter);
+} else {
+    app.use('/', indexRouter);
+    app.use('/v1', apiRouter);
+}
 
 // Intiialize development webpack (hot reloading, etc);
 if (app.get('env') !== 'production' && !config.api_work) {

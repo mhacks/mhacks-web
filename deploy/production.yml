@@ -21,3 +21,16 @@ services:
     volumes:
       - ..:/usr/src/app
     command: sh -c "yarn install && yarn run startprod"
+  mhacks_shortener:
+    extends:
+      file: docker-compose.yml
+      service: mhacks_website
+    links:
+      - mhacks_db
+    env_file:
+      - production.env
+    environment:
+      - SERVICE:shortener
+    volumes:
+      - ..:/usr/src/app
+    command: sh -c "yarn install && yarn run startprod"
