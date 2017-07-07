@@ -62,22 +62,24 @@ const StyledContainer = styled(Container)`
     `}
 `;
 
-export default () => (
+export default () =>
     <StyledContainer>
         <Header>Sponsorship</Header>
         <FlexBox>
             <div>
                 <Body>
-                    MHacks is the gateway between you and the top tech talent in the world. Whether you come to network,
-                    promote brand awareness, or get feedback on a product or API, we'll provide the tools you need to make the
+                    MHacks is the gateway between you and the top tech talent in
+                    the world. Whether you come to network,
+                    promote brand awareness, or get feedback on a product or
+                    API, we'll provide the tools you need to make the
                     most out of your experience.
                 </Body>
                 <EmailBody>
-                    Interested in sponsoring? Want more information? Shoot us an email at <Link
-                    href="mailto:kevin@mhacks.org">kevin@mhacks.org</Link>
+                    Interested in sponsoring? Want more information? Shoot us an
+                    email at{' '}
+                    <Link href="mailto:kevin@mhacks.org">kevin@mhacks.org</Link>
                 </EmailBody>
             </div>
             <Orb src={OrbImage} />
         </FlexBox>
-    </StyledContainer>
-);
+    </StyledContainer>;

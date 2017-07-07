@@ -69,49 +69,47 @@ const ImgButtonWrapper = styled.div`
     display: block;
 `;
 
-const ImgButton = props => (
+const ImgButton = props =>
     <ImgButtonWrapper>
         <a href={props.href}>
             <Img100 {...props} />
         </a>
-    </ImgButtonWrapper>
-);
+    </ImgButtonWrapper>;
 
 class Footer extends React.Component {
     render() {
         return (
             <div>
-                { window.location.pathname == routes.SUBSCRIBE ?
-                    null :
-                    <FooterWrapper>
-                        <Container>
-                            <HomeFooter>
-                                <Text>© MHacks 2017</Text>
-                                <Flexer>
-                                    <ImgButton
-                                        src={FacebookImg}
-                                        alt="Facebook"
-                                        align="middle"
-                                        href="https://www.facebook.com/MHacksHackathon"
-                                    />
-                                    <ImgButton
-                                        src={InstagramImg}
-                                        alt="Instagram"
-                                        align="middle"
-                                        href="https://www.instagram.com/mhacks_"
-                                    />
-                                    <ImgButton
-                                        src={TwitterImg}
-                                        alt="Twitter"
-                                        align="middle"
-                                        href="https://twitter.com/mhacks"
-                                    />
-                                </Flexer>
-                                <Flexer/>
-                            </HomeFooter>
-                        </Container>
-                    </FooterWrapper>
-                }
+                {window.location.pathname == routes.SUBSCRIBE
+                    ? null
+                    : <FooterWrapper>
+                          <Container>
+                              <HomeFooter>
+                                  <Text>© MHacks 2017</Text>
+                                  <Flexer>
+                                      <ImgButton
+                                          src={FacebookImg}
+                                          alt="Facebook"
+                                          align="middle"
+                                          href="https://www.facebook.com/MHacksHackathon"
+                                      />
+                                      <ImgButton
+                                          src={InstagramImg}
+                                          alt="Instagram"
+                                          align="middle"
+                                          href="https://www.instagram.com/mhacks_"
+                                      />
+                                      <ImgButton
+                                          src={TwitterImg}
+                                          alt="Twitter"
+                                          align="middle"
+                                          href="https://twitter.com/mhacks"
+                                      />
+                                  </Flexer>
+                                  <Flexer />
+                              </HomeFooter>
+                          </Container>
+                      </FooterWrapper>}
             </div>
         );
     }

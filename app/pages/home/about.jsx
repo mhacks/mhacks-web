@@ -4,7 +4,7 @@ import { SectionHeader, SectionBody } from './section_components.jsx';
 import { Container } from '../../components';
 
 const Wrapper = styled.div`
-    backgroundColor: ${props => props.theme.secondary};
+    background: ${props => props.theme.gradientOverlay}, ${props => props.theme.secondary}
     padding: 80px 0;
 `;
 
