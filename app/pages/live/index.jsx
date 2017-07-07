@@ -11,7 +11,7 @@ const verticalMargin = 130;
 const Container = styled.div`
     display: flex;
     width: calc(100% - 40px);
-    height: calc(100vh - ${verticalMargin*2}px);
+    height: calc(100vh - ${verticalMargin * 2}px);
     margin: ${verticalMargin}px auto 0 auto;
     overflowX: hidden;
     flexDirection: column;
@@ -67,10 +67,10 @@ class LivePage extends React.Component {
     }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         theme: state.theme.data
-    }
+    };
 }
 
 export default connect(mapStateToProps)(LivePage);

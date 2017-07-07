@@ -16,12 +16,12 @@ const Header = styled.div`
     borderRadius: 8px 8px 0 0;
     padding: 10px;
     border: 1px solid gray;
-`
+`;
 
 const HeaderText = styled.h3`
     margin: 0;
     fontSize: 22px;
-`
+`;
 
 const List = styled.div`
     display: flex;
@@ -59,11 +59,10 @@ const ListItemDescription = styled.p`
 `;
 
 class Chat extends React.Component {
-
     constructor() {
         super();
 
-        this.state = {messages: [], users: []};
+        this.state = { messages: [], users: [] };
 
         this.inputSubmit = this.inputSubmit.bind(this);
     }
@@ -83,7 +82,7 @@ class Chat extends React.Component {
 
         let component = this;
 
-        this.socket.on('authenticate', function (data) {
+        this.socket.on('authenticate', function(data) {
             if (!data) {
                 component.authenticate(component.props.token);
             } else {
@@ -91,7 +90,7 @@ class Chat extends React.Component {
             }
         });
 
-        this.socket.on('status', function (data) {
+        this.socket.on('status', function(data) {
             if (!data.status) {
                 alert(data.message);
             }
@@ -103,7 +102,7 @@ class Chat extends React.Component {
             });
         });
 
-        this.socket.on('chat', function (data) {
+        this.socket.on('chat', function(data) {
             if (data.channel === '#general') {
                 if (!document.hasFocus() && 'Notification' in window) {
                     if (Notification.permission === 'granted') {
@@ -122,7 +121,7 @@ class Chat extends React.Component {
             }
         });
 
-        this.socket.on('channels', function (data) {
+        this.socket.on('channels', function(data) {
             data.channels.forEach(function(channel) {
                 if (channel.name === '#general') {
                     var users = [];
@@ -141,7 +140,7 @@ class Chat extends React.Component {
 
     requestPermissions(func) {
         if ('Notification' in window) {
-            Notification.requestPermission(function (permission) {
+            Notification.requestPermission(function(permission) {
                 if (permission === 'granted') {
                     func();
                 }
@@ -177,7 +176,7 @@ class Chat extends React.Component {
 
     retrieveProfile() {
         this.socket.emit('profile');
-        this.socket.on('profile', function (data) {
+        this.socket.on('profile', function(data) {
             console.log('Profile', data);
             this.profileData = data;
         });
@@ -209,7 +208,7 @@ class Chat extends React.Component {
         }
     }
 
-    render(){
+    render() {
         if (!this.props || !this.props.shouldRender) {
             return (
                 <Wrapper>
@@ -227,27 +226,41 @@ class Chat extends React.Component {
             return (
                 <Wrapper>
                     <Header>
-                        { this.state.isDisconnected ?
-                            <HeaderText>You have been disconnected.</HeaderText> :
-                            <HeaderText>
-                                Chat with {users.length > 0 ? users.length - 1 : '0'} other {users.length - 1 === 1 ? 'user' : 'users'}
-                            </HeaderText>
-                        }
+                        {this.state.isDisconnected
+                            ? <HeaderText>
+                                  You have been disconnected.
+                              </HeaderText>
+                            : <HeaderText>
+                                  Chat with{' '}
+                                  {users.length > 0
+                                      ? users.length - 1
+                                      : '0'}{' '}
+                                  other{' '}
+                                  {users.length - 1 === 1 ? 'user' : 'users'}
+                              </HeaderText>}
                     </Header>
                     <List>
-                        {this.state.messages.map(function (message, i) {
-                            var propId = (i === this.state.messages.length - 1) ? 'lastItem' : '';
-                            return (
-                                <ListItem key={i} id={propId}>
-                                    <ListItemHeader>{message.user.name}
-                                        <ListItemTimestamp>
-                                            <FormattedRelative value={message.time} />
-                                        </ListItemTimestamp>
-                                    </ListItemHeader>
-                                    <ListItemDescription>{message.message}</ListItemDescription>
-                                </ListItem>
-                            );
-                        }.bind(this))}
+                        {this.state.messages.map(
+                            function(message, i) {
+                                var propId = i ===
+                                    this.state.messages.length - 1
+                                    ? 'lastItem'
+                                    : '';
+                                return (
+                                    <ListItem key={i} id={propId}>
+                                        <ListItemHeader>
+                                            {message.user.name}
+                                            <ListItemTimestamp>
+                                                <FormattedRelative value={message.time} />
+                                            </ListItemTimestamp>
+                                        </ListItemHeader>
+                                        <ListItemDescription>
+                                            {message.message}
+                                        </ListItemDescription>
+                                    </ListItem>
+                                );
+                            }.bind(this)
+                        )}
                     </List>
                     <InputBar onSubmit={this.inputSubmit} />
                 </Wrapper>
@@ -256,12 +269,12 @@ class Chat extends React.Component {
     }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         token: state.userState.data.token,
         theme: state.theme.data,
         shouldRender: !!state.userState.data.token
-    }
+    };
 }
 
 export default connect(mapStateToProps)(Chat);

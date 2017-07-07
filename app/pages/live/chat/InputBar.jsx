@@ -10,10 +10,9 @@ const Input = styled.input`
     padding: 10px;
     position: absolute;
     bottom: 0;
-`
+`;
 
 class InputBar extends React.Component {
-
     constructor() {
         super();
         this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -21,20 +20,20 @@ class InputBar extends React.Component {
 
         this.state = {
             text: ''
-        }
+        };
     }
 
     handleKeyPress(e) {
         if (e.key === 'Enter') {
             this.props.onSubmit(this.state.text);
-            this.setState({text: ''});
+            this.setState({ text: '' });
         }
     }
 
     handleChange(e) {
         this.setState({
             text: e.target.value
-        })
+        });
     }
 
     render() {
@@ -44,8 +43,12 @@ class InputBar extends React.Component {
                     type="text"
                     ref="textField"
                     value={this.state.text}
-                    onChange={e => {this.handleChange(e)}}
-                    onKeyDown={e => {this.handleKeyPress(e)}}
+                    onChange={e => {
+                        this.handleChange(e);
+                    }}
+                    onKeyDown={e => {
+                        this.handleKeyPress(e);
+                    }}
                     borderColor={this.props.theme.primary}
                     placeholder="Type here and press enter to send a message..."
                 />
@@ -54,10 +57,10 @@ class InputBar extends React.Component {
     }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         theme: state.theme.data
-    }
+    };
 }
 
-export default connect (mapStateToProps)(InputBar);
+export default connect(mapStateToProps)(InputBar);

@@ -11,9 +11,10 @@ const Group = styled.div`
 const TabItem = styled.div`
     flex: 1;
     textAlign: center;
-    backgroundColor: ${props => props.active ? props.activeColor : 'transparent'};
+    backgroundColor: ${props =>
+        props.active ? props.activeColor : 'transparent'};
     border: 3px solid ${props => props.activeColor};
-    color: ${props => props.active ? 'white' : props.activeColor};
+    color: ${props => (props.active ? 'white' : props.activeColor)};
     padding: 14px 0;
     fontSize: 18px;
     fontWeight: 500;
@@ -50,7 +51,7 @@ class TabGroup extends React.Component {
                 activeIndex: index
             });
             func(index);
-        }
+        };
     }
 
     render() {
@@ -64,7 +65,7 @@ class TabGroup extends React.Component {
                     activeColor={this.props.primaryColor}
                     active={i === this.state.activeIndex}
                 >
-                {tab.title}
+                    {tab.title}
                 </TabItem>
             );
         });

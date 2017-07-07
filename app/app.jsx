@@ -11,7 +11,16 @@ import thunkMiddleware from 'redux-thunk';
 
 import reducers from './reducers';
 import { routes } from './constants';
-import { Navigator, HomePage, Login, Logout, Profile, Apply, LivePage, BlackoutPage } from './pages';
+import {
+    Navigator,
+    HomePage,
+    Login,
+    Logout,
+    Profile,
+    Apply,
+    LivePage,
+    BlackoutPage
+} from './pages';
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';
 
@@ -41,7 +50,7 @@ class AppProvider extends React.Component {
 
     render() {
         if (!this.props.configurationState.fetched) {
-            return (<div></div>);
+            return <div />;
         }
 
         return (
@@ -63,7 +72,8 @@ class AppProvider extends React.Component {
                                 exact
                                 path={routes.LOGIN}
                                 render={() => {
-                                    const userData = store.getState().userState.data;
+                                    const userData = store.getState().userState
+                                        .data;
 
                                     if (userData.isLoggedIn) {
                                         return <Redirect to={routes.PROFILE} />;
@@ -83,7 +93,8 @@ class AppProvider extends React.Component {
                                 exact
                                 path={routes.PROFILE}
                                 render={() => {
-                                    const userData = store.getState().userState.data;
+                                    const userData = store.getState().userState
+                                        .data;
 
                                     if (userData.isLoggedIn) {
                                         return <Profile />;
@@ -96,13 +107,20 @@ class AppProvider extends React.Component {
                                 exact
                                 path={routes.APPLY}
                                 render={() => {
-                                    const userData = store.getState().userState.data;
+                                    const userData = store.getState().userState
+                                        .data;
 
-                                    if (userData.isLoggedIn && userData.isEmailVerified) {
+                                    if (
+                                        userData.isLoggedIn &&
+                                        userData.isEmailVerified
+                                    ) {
                                         return <Apply />;
                                     }
 
-                                    if (userData.isLoggedIn && !userData.isEmailVerified) {
+                                    if (
+                                        userData.isLoggedIn &&
+                                        !userData.isEmailVerified
+                                    ) {
                                         return <Redirect to={routes.PROFILE} />;
                                     }
 
@@ -114,9 +132,7 @@ class AppProvider extends React.Component {
                                 path={routes.SUBSCRIBE}
                                 component={BlackoutPage}
                             />
-                            <Route
-                                component={HomePage}
-                            />
+                            <Route component={HomePage} />
                         </Switch>
                     </Navigator>
                 </ConnectedRouter>
@@ -130,7 +146,6 @@ function mapStateToProps(state) {
         configurationState: state.configurationState
     };
 }
-
 
 render(
     React.createElement(connect(mapStateToProps)(AppProvider), {
