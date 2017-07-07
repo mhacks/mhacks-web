@@ -53,5 +53,17 @@ module.exports = {
     AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME || 'mhacks-nano',
     newrelic_enabled: process.env.NEWRELIC_ENABLED || false,
     newrelic_license_key: process.env.NEWRELIC_LICENSE_KEY || '',
-    newrelic_app_name: process.env.NEWRELIC_APP_NAME || 'mhacks-web'
+    newrelic_app_name: process.env.NEWRELIC_APP_NAME || 'mhacks-web',
+    form_types: {
+        TEXT: 0,
+        LINK: 1,
+        DATE: 2,
+        SELECT: 3,
+        NUMBER: 4,
+        ESSAY: 5,
+        BOOLEAN: 6,
+        SECTIONHEADER: 7,
+        BUFFER: 8,
+        ARRAY: 9
+    }
 };

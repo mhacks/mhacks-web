@@ -10,16 +10,26 @@ var bcrypt = require('bcrypt'),
 
 // Define the document Schema
 var schema = new mongoose.Schema({
-    full_name: String,
+    full_name: {
+        type: String,
+        user_editable: true
+    },
     email: {
         type: String,
         required: true,
         index: {
             unique: true
-        }
+        },
+        user_editable: true
     },
-    email_verified: Boolean,
-    application_submitted: Boolean,
+    email_verified: {
+        type: Boolean,
+        user_editable: false
+    },
+    application_submitted: {
+        type: Boolean,
+        user_editable: false
+    },
     verification_tokens: [
         {
             created_at: {
@@ -32,7 +42,8 @@ var schema = new mongoose.Schema({
     ],
     password: {
         type: String,
-        required: true
+        required: true,
+        user_editable: true
     },
     tokens: [
         {
@@ -56,9 +67,18 @@ var schema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    birthday: Date,
-    major: String,
-    university: String,
+    birthday: {
+        type: Date,
+        user_editable: true
+    },
+    major: {
+        type: String,
+        user_editable: true
+    },
+    university: {
+        type: String,
+        user_editable: true
+    },
     groups: [
         {
             name: String
@@ -67,15 +87,34 @@ var schema = new mongoose.Schema({
     meta: {
         ip: String
     },
-    avatar: String,
-    resume: String,
-    github: String,
-    linkedin: String,
-    devpost: String,
-    portfolio: String,
+    avatar: {
+        type: String,
+        user_editable: true
+    },
+    resume: {
+        type: String,
+        user_editable: true
+    },
+    github: {
+        type: String,
+        user_editable: true
+    },
+    linkedin: {
+        type: String,
+        user_editable: true
+    },
+    devpost: {
+        type: String,
+        user_editable: true
+    },
+    portfolio: {
+        type: String,
+        user_editable: true
+    },
     tshirt: {
         type: String,
-        enum: ['unselected', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl']
+        enum: ['unselected', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
+        user_editable: true
     },
     race: {
         type: String,
@@ -88,11 +127,13 @@ var schema = new mongoose.Schema({
             'hispanic',
             'other',
             'prefer-not'
-        ]
+        ],
+        user_editable: true
     },
     sex: {
         type: String,
-        enum: ['unselected', 'male', 'female', 'non-binary', 'prefer-not']
+        enum: ['unselected', 'male', 'female', 'non-binary', 'prefer-not'],
+        user_editable: true
     }
 });
 
@@ -400,7 +441,9 @@ schema.methods.getGroupsList = function() {
 
 schema.methods.updateFields = function(fields) {
     for (var param in fields) {
-        this[param] = fields[param];
+        if (schema.obj[param].user_editable) {
+            this[param] = fields[param];
+        }
     }
     this.save();
 };
