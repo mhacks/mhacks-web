@@ -2,6 +2,10 @@ var router = require('express').Router(),
     Shortener = require('../db/model/Shortener.js'),
     config = require('../../config/default.js');
 
+router.get('/', function(req, res) {
+    res.redirect(config.host);
+});
+
 router.get('/:id', function(req, res) {
     if (req.params.id) {
         Shortener.find()
