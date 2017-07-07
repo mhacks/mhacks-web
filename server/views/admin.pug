@@ -76,7 +76,8 @@ html(lang='en')
                     e.preventDefault();
 
                     $.post('/v1/shortener', {
-                        url: $('#url').val()
+                        url: $('#url').val(),
+                        short_code: $('#short_code').val()
                     }, function (data) {
                         console.log(data);
                         window.location.reload();
@@ -324,4 +325,7 @@ html(lang='en')
                         div.form-group
                             label(for='url') Long URL:
                             input#url.form-control(type='text', placeholder='https://google.com' name='url')
+                        div.form-group
+                            label(for='short_code') Short Code:
+                            input#short_code.form-control(type='text', placeholder='INCLUDE THIS ONLY IF YOU WANT TO CHOOSE THE SHORT CODE' name='short_code')
                         button.btn.btn-primary(type='submit' id="createShortener") Create

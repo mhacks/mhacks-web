@@ -26,7 +26,7 @@ router.get('/', authMiddleware('admin', 'api'), function(req, res) {
 
 router.post('/', authMiddleware('admin', 'api'), function(req, res) {
     if (req.body.url) {
-        createShortenedURL(req.body.url, res);
+        createShortenedURL(req.body.short_code, req.body.url, res);
     } else {
         res.send({
             status: false,
@@ -55,16 +55,22 @@ router.get('/:id', function(req, res) {
 });
 
 // Async/Await pls
-function createShortenedURL(long_url, res) {
+function createShortenedURL(short_code, long_url, res) {
     if (!interval) {
         interval = setInterval(function() {
-            createShortenedURL(long_url, res);
+            createShortenedURL(short_code, long_url, res);
         }, 500);
     }
 
-    Shortener.create({
+    var create_fields = {
         long_url: long_url
-    })
+    };
+
+    if (short_code) {
+        create_fields.short_code = short_code;
+    }
+
+    Shortener.create(create_fields)
         .then(short_url => {
             if (short_url) {
                 res.send({
