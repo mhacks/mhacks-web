@@ -25,7 +25,14 @@ router.post(
                     'birthday',
                     'university',
                     'major',
-                    'resume'
+                    'resume',
+                    'github',
+                    'linkedin',
+                    'devpost',
+                    'portfolio',
+                    'tshirt',
+                    'race',
+                    'sex'
                 ];
                 var fields = {};
                 var sendVerificationEmail = false;

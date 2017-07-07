@@ -68,7 +68,32 @@ var schema = new mongoose.Schema({
         ip: String
     },
     avatar: String,
-    resume: String
+    resume: String,
+    github: String,
+    linkedin: String,
+    devpost: String,
+    portfolio: String,
+    tshirt: {
+        type: String,
+        enum: ['unselected', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl']
+    },
+    race: {
+        type: String,
+        enum: [
+            'unselected',
+            'white',
+            'black',
+            'am-indian-alaskan',
+            'asian',
+            'hispanic',
+            'other',
+            'prefer-not'
+        ]
+    },
+    sex: {
+        type: String,
+        enum: ['unselected', 'male', 'female', 'non-binary', 'prefer-not']
+    }
 });
 
 // Allow us to query by name
@@ -414,7 +439,14 @@ schema.methods.getProfile = function() {
         major: this.major,
         university: this.university,
         resume_uploaded: !!this.resume,
-        avatar: this.getAvatars()
+        avatar: this.getAvatars(),
+        github: this.github,
+        linkedin: this.linkedin,
+        devpost: this.devpost,
+        portfolio: this.portfolio,
+        tshirt: this.tshirt,
+        race: this.race,
+        sex: this.sex
     };
 };
 

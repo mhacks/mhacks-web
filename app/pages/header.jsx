@@ -9,7 +9,7 @@ import { Container } from '../components';
 import { devices } from '../styles';
 
 const HeaderLogoImage = require('../../static/icons/x-logo.png');
-const Favicon = require('../../static/nano/favicon.png');
+const Favicon = require('../../static/icons/x-logo.png');
 
 /* Header Section */
 const Wrapper = styled.div`
@@ -156,7 +156,7 @@ class Header extends React.Component {
                     ? null
                     : <div>
                           <Helmet>
-                              <title>MHacks Nano</title>
+                              <title>MHacks X</title>
 
                               <link
                                   rel="icon"
