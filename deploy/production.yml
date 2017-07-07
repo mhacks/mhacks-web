@@ -30,7 +30,8 @@ services:
     env_file:
       - production.env
     environment:
-      - SERVICE:shortener
+      - SERVICE=shortener
+      - VIRTUAL_HOST=mha.cx
     volumes:
       - ..:/usr/src/app
     command: sh -c "yarn install && yarn run startprod"
