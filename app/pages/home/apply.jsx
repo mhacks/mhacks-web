@@ -47,22 +47,24 @@ class Apply extends React.Component {
             <Wrapper>
                 <Container>
                     <SectionHeader>Apply</SectionHeader>
-                    <SectionBody>Apply to MHacks Nano! We will just ask you a couple quick questions. Nothing long or difficult :)</SectionBody>
+                    <SectionBody>
+                        Apply to MHacks Nano! We will just ask you a couple
+                        quick questions. Nothing long or difficult :)
+                    </SectionBody>
                     <StyledNavLinkWrapper>
-                        {this.props.userState.data.isLoggedIn ?
-                            <StyledNavLink
-                                to={routes.APPLY}
-                                primaryColor="white"
-                            >
-                            Apply
-                            </StyledNavLink> :
-                            <StyledNavLink
-                                to={routes.LOGIN}
-                                primaryColor={this.props.theme.highlight}
-                            >
-                            Log In
-                            </StyledNavLink>
-                        }
+                        {this.props.userState.data.isLoggedIn
+                            ? <StyledNavLink
+                                  to={routes.APPLY}
+                                  primaryColor="white"
+                              >
+                                  Apply
+                              </StyledNavLink>
+                            : <StyledNavLink
+                                  to={routes.LOGIN}
+                                  primaryColor={this.props.theme.highlight}
+                              >
+                                  Log In
+                              </StyledNavLink>}
                     </StyledNavLinkWrapper>
                 </Container>
             </Wrapper>

@@ -40,13 +40,10 @@ const InputField = styled.div`
     }
 `;
 
-const LabeledInput = (props) => (
-    <InputField
-        labelWidth={props.labelWidth || '100px'}
-    >
+const LabeledInput = props =>
+    <InputField labelWidth={props.labelWidth || '100px'}>
         <p>{props.label}</p>
         {React.Children.toArray(props.children)}
-    </InputField>
-);
+    </InputField>;
 
 export default LabeledInput;

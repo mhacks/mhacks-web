@@ -58,7 +58,6 @@ const Input = styled.input`
     padding: 0;
 `;
 
-
 class FileUpload extends React.Component {
     constructor() {
         super();
@@ -83,21 +82,29 @@ class FileUpload extends React.Component {
     }
 
     render() {
-        const {defaultColor, hoverColor, activeColor} = this.props;
+        const { defaultColor, hoverColor, activeColor } = this.props;
 
         return (
             <Container>
                 <SelectionContainer
-                    defaultColor={this.state.fileSelected ? activeColor : defaultColor}
+                    defaultColor={
+                        this.state.fileSelected ? activeColor : defaultColor
+                    }
                     hoverColor={hoverColor}
                 >
                     <Button
                         className="upload-button"
-                        backgroundColor={this.state.fileSelected ? activeColor : defaultColor}
+                        backgroundColor={
+                            this.state.fileSelected ? activeColor : defaultColor
+                        }
                     >
-                    Upload Resume
+                        Upload Resume
                     </Button>
-                    <FileName>{this.state.fileSelected ? this.state.fileName : this.props.defaultText || 'No file chosen...'}</FileName>
+                    <FileName>
+                        {this.state.fileSelected
+                            ? this.state.fileName
+                            : this.props.defaultText || 'No file chosen...'}
+                    </FileName>
                     <Input
                         type="file"
                         name="chooseFile"
