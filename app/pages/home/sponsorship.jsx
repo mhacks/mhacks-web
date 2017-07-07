@@ -56,18 +56,14 @@ class Sponsorship extends React.Component {
                             <QuoteText> “This was one of the most well organized student-run hackathons that we’ve ever sponsored.” </QuoteText>
                             <CompanyName> Google </CompanyName>
                         </QuoteWrapper>
-
                         <QuoteWrapper>
                             <QuoteText> “The caliber and number of students that MHacks attracts is like no other hacking event.” </QuoteText>
                             <CompanyName> Walmart </CompanyName>
                         </QuoteWrapper>
                     </FlexBox>
+
                     <SectionBody> We have an awesome lineup of sponsors for you. Check back soon for company logos. </SectionBody>
-
-                    <FlexBox>
-                    </FlexBox>
                 </Container>
-
 			</Wrapper>
 		);
 	}
