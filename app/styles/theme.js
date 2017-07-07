@@ -11,6 +11,9 @@ export default {
     backgroundGradient:
         '-webkit-linear-gradient(45deg, rgba(240,47,23,1) 0%, rgba(246,41,12,1) 0%, rgba(241,111,92,1) 0%, rgba(253,177,154,1) 0%, rgba(197,99,250,1) 100%)',
 
+    gradientOverlay:
+        '-webkit-linear-gradient(left, rgba(244,164,168,.2) 0%,rgba(199,102,245,.2) 100%)',
+
     // Font sizes
     headerFontSize: '50px',
     fontSize: '1.5em'
