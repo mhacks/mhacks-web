@@ -245,18 +245,6 @@ class Profile extends React.Component {
                                             onChange={this.handleAttributeChange}
                                         />
                                     </LabeledInput>
-                                    <LabeledInput label="Date of Birth">
-                                        <input
-                                            id="birthday"
-                                            type="date"
-                                            name="birthday"
-                                            placeholder="mm/dd/yyyy"
-                                            value={this.state.birthday}
-                                            onChange={
-                                                this.handleAttributeChange
-                                            }
-                                        />
-                                    </LabeledInput>
                                     <FileUploadContainer>
                                         <FileUpload
                                             defaultColor={
