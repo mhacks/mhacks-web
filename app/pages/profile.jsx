@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ProfileThunks } from '../actions';
 import { FieldTypes, ProfileFields } from '../constants/forms';
+import Autocomplete from 'react-autocomplete';
+const Majors = require('../../static/misc/majors.json');
+const Universities = require('../../static/misc/universities.json');
 
 import {
     PageContainer,
@@ -63,6 +66,17 @@ const Link = styled.a`
     cursor: pointer;
 `;
 
+const autocompleteMenuStyle = {
+    borderRadius: '3px',
+    boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+    background: 'rgba(255, 255, 255, 0.9)',
+    padding: '2px 0',
+    fontSize: '90%',
+    position: 'fixed',
+    overflow: 'auto',
+    maxHeight: '50%',
+};
+
 class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -100,6 +114,8 @@ class Profile extends React.Component {
         this.onClickRequestEmailVerification = this.onClickRequestEmailVerification.bind(
             this
         );
+        this.handleSortItems = this.handleSortItems.bind(this);
+        this.handleItemShouldRender = this.handleItemShouldRender.bind(this);
     }
 
     componentDidMount() {
@@ -145,6 +161,24 @@ class Profile extends React.Component {
         this.setState({
             resume: file
         });
+    }
+
+    handleSortItems(a, b, value) {
+        const aLower = a.toLowerCase();
+        const bLower = b.toLowerCase();
+        const valueLower = value.toLowerCase();
+        const queryPosA = aLower.indexOf(valueLower);
+        const queryPosB = bLower.indexOf(valueLower);
+        if (queryPosA !== queryPosB) {
+            return queryPosA - queryPosB
+        }
+        return aLower < bLower ? -1 : 1
+    }
+
+    handleItemShouldRender(current, value) {
+        return (
+            current.toLowerCase().indexOf(value.toLowerCase()) !== -1
+        )
     }
 
     onSubmit(e) {
@@ -241,26 +275,84 @@ class Profile extends React.Component {
                                           />
                                       </LabeledInput>
                                       <LabeledInput label="University">
-                                          <input
-                                              id="university"
-                                              type="text"
-                                              name="university"
-                                              placeholder="e.g. University of Michigan"
+                                          <Autocomplete
+                                              getItemValue={(item) => item}
+                                              items={
+                                                  Universities
+                                              }
+                                              shouldItemRender={
+                                                  this.handleItemShouldRender
+                                              }
+                                              renderItem={(item, isHighlighted) =>
+                                                  <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                                                      {item}
+                                                  </div>
+                                              }
+                                              inputProps={{
+                                                  placeholder: 'e.g. University of Michigan',
+                                                  name: 'university',
+                                                  id: 'university'
+                                              }}
+                                              sortItems={
+                                                  this.handleSortItems
+                                              }
                                               value={this.state.university}
                                               onChange={
                                                   this.handleAttributeChange
                                               }
+                                              onSelect={(e) => {
+                                                  var fakeEvent = {
+                                                      target: {
+                                                          name: 'university',
+                                                          value: e
+                                                      }
+                                                  };
+
+                                                  this.handleAttributeChange(fakeEvent);
+                                              }}
+                                              menuStyle={
+                                                  autocompleteMenuStyle
+                                              }
                                           />
                                       </LabeledInput>
                                       <LabeledInput label="Major">
-                                          <input
-                                              id="major"
-                                              type="text"
-                                              name="major"
-                                              placeholder="e.g. Underwater Basket Weaving"
+                                          <Autocomplete
+                                              getItemValue={(item) => item}
+                                              items={
+                                                  Majors
+                                              }
+                                              shouldItemRender={
+                                                  this.handleItemShouldRender
+                                              }
+                                              renderItem={(item, isHighlighted) =>
+                                                  <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                                                      {item}
+                                                  </div>
+                                              }
+                                              inputProps={{
+                                                  placeholder: 'e.g. Underwater Basket Weaving',
+                                                  name: 'major',
+                                                  id: 'major'
+                                              }}
+                                              sortItems={
+                                                  this.handleSortItems
+                                              }
                                               value={this.state.major}
                                               onChange={
                                                   this.handleAttributeChange
+                                              }
+                                              onSelect={(e) => {
+                                                  var fakeEvent = {
+                                                      target: {
+                                                          name: 'major',
+                                                          value: e
+                                                      }
+                                                  };
+
+                                                  this.handleAttributeChange(fakeEvent);
+                                              }}
+                                              menuStyle={
+                                                  autocompleteMenuStyle
                                               }
                                           />
                                       </LabeledInput>
