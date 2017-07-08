@@ -5,6 +5,7 @@ export default {
     primary: '#5d3e6e',
     secondary: '#43374e',
     highlight: '#f4a4a8',
+    highlightSecondary: '#ebcdd1',
     success: '#2ecc71',
     teal: '#1CA3A3',
     darkPink: '#CA2171',
