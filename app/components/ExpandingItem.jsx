@@ -18,8 +18,8 @@ const Header = styled.h3`
 
 const Body = styled.p`
     paddingLeft: 25px;
-    paddingTop: 15px;
-    paddingBottom: 15px;
+    paddingTop: 10px;
+    paddingBottom: 10px;
     marginBottom: 5px;
     -webkit-margin-before: 5px;
     -webkit-margin-after: 5px;
