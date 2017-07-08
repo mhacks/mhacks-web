@@ -18,12 +18,13 @@ const Header = styled.h3`
 
 const Body = styled.p`
     paddingLeft: 25px;
-    marginTop: 5px;
+    paddingTop: 15px;
+    paddingBottom: 15px;
     marginBottom: 5px;
     -webkit-margin-before: 5px;
     -webkit-margin-after: 5px;
     color: ${props => props.color};
-    fontSize: 17px;
+    fontSize: 15px;
 `;
 
 const Flexbox = styled.div`
@@ -74,6 +75,7 @@ const PlusWrapper = styled.div`
     marginLeft: 10px;
     height: 15px;
     width: 15px;
+    zIndex: 1;
 `;
 
 const PlusLine = styled.div`
