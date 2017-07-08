@@ -83,7 +83,7 @@ const autocompleteMenuStyle = {
     left: '20px',
     top: '45px',
     overflow: 'auto',
-    zIndex: 10
+    zIndex: 101
 };
 
 const autocompleteWrapperStyle = {
@@ -132,6 +132,7 @@ class Profile extends React.Component {
         );
         this.handleSortItems = this.handleSortItems.bind(this);
         this.handleItemShouldRender = this.handleItemShouldRender.bind(this);
+        this.handleRenderMenu = this.handleRenderMenu.bind(this);
     }
 
     componentDidMount() {
@@ -193,6 +194,17 @@ class Profile extends React.Component {
 
     handleItemShouldRender(current, value) {
         return current.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+    }
+
+    handleRenderMenu(items, value, style) {
+        return (
+            <div
+                style={{ ...style, ...autocompleteMenuStyle }}
+                children={
+                    value.length > 2 ? items : 'Start typing for autocomplete'
+                }
+            />
+        );
     }
 
     onSubmit(e) {
@@ -258,7 +270,7 @@ class Profile extends React.Component {
                                   ? <AlertContainer>
                                         <Alert
                                             message={
-                                                'Your application is submitted! Thanks for applying to MHacks Nano'
+                                                'Your application is submitted! Thanks for applying to MHacks X'
                                             }
                                         />
                                     </AlertContainer>
@@ -335,6 +347,7 @@ class Profile extends React.Component {
                                               wrapperStyle={
                                                   autocompleteWrapperStyle
                                               }
+                                              renderMenu={this.handleRenderMenu}
                                           />
                                       </LabeledInput>
                                       <LabeledInput label="Major">
@@ -551,7 +564,7 @@ class Profile extends React.Component {
                                           ? <AlertContainer>
                                                 <Alert
                                                     message={
-                                                        'Your application is submitted! Thanks for applying to MHacks Nano'
+                                                        'Your application is submitted! Thanks for applying to MHacks X'
                                                     }
                                                 />
                                             </AlertContainer>
