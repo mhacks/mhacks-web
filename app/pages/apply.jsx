@@ -17,6 +17,8 @@ import {
     HackerApplicationFields
 } from '../constants/forms';
 
+import Autocomplete from 'react-autocomplete';
+
 const FormContainer = styled.div`
     maxWidth: 500px;
     margin: 0 auto;
@@ -69,6 +71,33 @@ const LegalLink = styled.a`
     textDecoration: none;
 `;
 
+const autocompleteMenuStyle = {
+    borderRadius: '3px',
+    boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+    background: 'rgba(255, 255, 255, 0.9)',
+    padding: '2px 0',
+    fontSize: '90%',
+    position: 'absolute',
+    maxHeight:
+        Math.max(
+            document.documentElement.clientHeight,
+            window.innerHeight || 0
+        ) /
+            2 +
+            'px',
+    left: '20px',
+    top: '45px',
+    overflow: 'auto',
+    zIndex: 101
+};
+
+const autocompleteWrapperStyle = {
+    display: 'inherit',
+    paddingLeft: '20px',
+    width: '100%',
+    position: 'relative'
+};
+
 class Apply extends React.Component {
     constructor(props) {
         super(props);
@@ -120,6 +149,10 @@ class Apply extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.handleAttributeChange = this.handleAttributeChange.bind(this);
         this.handleFileUpload = this.handleFileUpload.bind(this);
+        this.handleSortItems = this.handleSortItems.bind(this);
+        this.handleItemShouldRender = this.handleItemShouldRender.bind(this);
+        this.handleRenderMenu = this.handleRenderMenu.bind(this);
+        this.defaultHandleRenderMenu = this.defaultHandleRenderMenu.bind(this);
     }
 
     componentDidMount() {
@@ -171,6 +204,42 @@ class Apply extends React.Component {
         this.setState({
             resume: file
         });
+    }
+
+    handleSortItems(a, b, value) {
+        const aLower = a.toLowerCase();
+        const bLower = b.toLowerCase();
+        const valueLower = value.toLowerCase();
+        const queryPosA = aLower.indexOf(valueLower);
+        const queryPosB = bLower.indexOf(valueLower);
+        if (queryPosA !== queryPosB) {
+            return queryPosA - queryPosB;
+        }
+        return aLower < bLower ? -1 : 1;
+    }
+
+    handleItemShouldRender(current, value) {
+        return current.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+    }
+
+    handleRenderMenu(items, value, style) {
+        return (
+            <div
+                style={{ ...style, ...autocompleteMenuStyle }}
+                children={
+                    value.length > 2 ? items : 'Start typing for autocomplete'
+                }
+            />
+        );
+    }
+
+    defaultHandleRenderMenu(items, value, style) {
+        return (
+            <div
+                style={{ ...style, ...autocompleteMenuStyle }}
+                children={items}
+            />
+        );
     }
 
     onSubmit(e) {
@@ -255,23 +324,95 @@ class Apply extends React.Component {
                                                     }
                                                     key={field.key}
                                                 >
-                                                    <input
-                                                        id={field.key}
-                                                        type="text"
-                                                        name={field.key}
-                                                        placeholder={
-                                                            field.placeholder
-                                                        }
-                                                        value={
-                                                            this.state[
-                                                                field.key
-                                                            ]
-                                                        }
-                                                        onChange={
-                                                            this
-                                                                .handleAttributeChange
-                                                        }
-                                                    />
+                                                    {field.autocomplete
+                                                        ? <Autocomplete
+                                                              getItemValue={item =>
+                                                                  item}
+                                                              items={
+                                                                  field.autocomplete
+                                                              }
+                                                              shouldItemRender={
+                                                                  this
+                                                                      .handleItemShouldRender
+                                                              }
+                                                              renderItem={(
+                                                                  item,
+                                                                  isHighlighted
+                                                              ) =>
+                                                                  <div
+                                                                      style={{
+                                                                          background: isHighlighted
+                                                                              ? 'lightgray'
+                                                                              : 'white'
+                                                                      }}
+                                                                  >
+                                                                      {item}
+                                                                  </div>}
+                                                              inputProps={{
+                                                                  placeholder:
+                                                                      field.placeholder,
+                                                                  name:
+                                                                      field.key,
+                                                                  id: field.key
+                                                              }}
+                                                              sortItems={
+                                                                  this
+                                                                      .handleSortItems
+                                                              }
+                                                              value={
+                                                                  this.state[
+                                                                      field.key
+                                                                  ]
+                                                              }
+                                                              onChange={
+                                                                  this
+                                                                      .handleAttributeChange
+                                                              }
+                                                              onSelect={e => {
+                                                                  var fakeEvent = {
+                                                                      target: {
+                                                                          name:
+                                                                              field.key,
+                                                                          value: e
+                                                                      }
+                                                                  };
+
+                                                                  this.handleAttributeChange(
+                                                                      fakeEvent
+                                                                  );
+                                                              }}
+                                                              menuStyle={
+                                                                  autocompleteMenuStyle
+                                                              }
+                                                              wrapperStyle={
+                                                                  autocompleteWrapperStyle
+                                                              }
+                                                              renderMenu={
+                                                                  field.key ===
+                                                                      'university'
+                                                                      ? this
+                                                                            .handleRenderMenu
+                                                                      : this
+                                                                            .defaultHandleRenderMenu
+                                                              }
+                                                          />
+                                                        : <input
+                                                              id={field.key}
+                                                              type="text"
+                                                              name={field.key}
+                                                              placeholder={
+                                                                  field.placeholder
+                                                              }
+                                                              value={
+                                                                  this.state[
+                                                                      field.key
+                                                                  ]
+                                                              }
+                                                              onChange={
+                                                                  this
+                                                                      .handleAttributeChange
+                                                              }
+                                                          />}
                                                 </LabeledInput>
                                             );
                                         case FieldTypes.ESSAY:
@@ -439,7 +580,7 @@ class Apply extends React.Component {
                                 </RoundedButton>
                             </ButtonGroup>
                             <LegalText>
-                                By applying to MHacks Nano, you agree to the
+                                By applying to MHacks X, you agree to the
                                 MHacks{' '}
                                 <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
                                     Code of Conduct
