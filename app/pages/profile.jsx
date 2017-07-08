@@ -73,7 +73,13 @@ const autocompleteMenuStyle = {
     padding: '2px 0',
     fontSize: '90%',
     position: 'absolute',
-    maxHeight: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)/2 +'px',
+    maxHeight:
+        Math.max(
+            document.documentElement.clientHeight,
+            window.innerHeight || 0
+        ) /
+            2 +
+            'px',
     left: '20px',
     top: '45px',
     overflow: 'auto',
@@ -180,15 +186,13 @@ class Profile extends React.Component {
         const queryPosA = aLower.indexOf(valueLower);
         const queryPosB = bLower.indexOf(valueLower);
         if (queryPosA !== queryPosB) {
-            return queryPosA - queryPosB
+            return queryPosA - queryPosB;
         }
-        return aLower < bLower ? -1 : 1
+        return aLower < bLower ? -1 : 1;
     }
 
     handleItemShouldRender(current, value) {
-        return (
-            current.toLowerCase().indexOf(value.toLowerCase()) !== -1
-        )
+        return current.toLowerCase().indexOf(value.toLowerCase()) !== -1;
     }
 
     onSubmit(e) {
@@ -286,31 +290,36 @@ class Profile extends React.Component {
                                       </LabeledInput>
                                       <LabeledInput label="University">
                                           <Autocomplete
-                                              getItemValue={(item) => item}
-                                              items={
-                                                  Universities
-                                              }
+                                              getItemValue={item => item}
+                                              items={Universities}
                                               shouldItemRender={
                                                   this.handleItemShouldRender
                                               }
-                                              renderItem={(item, isHighlighted) =>
-                                                  <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                                              renderItem={(
+                                                  item,
+                                                  isHighlighted
+                                              ) =>
+                                                  <div
+                                                      style={{
+                                                          background: isHighlighted
+                                                              ? 'lightgray'
+                                                              : 'white'
+                                                      }}
+                                                  >
                                                       {item}
-                                                  </div>
-                                              }
+                                                  </div>}
                                               inputProps={{
-                                                  placeholder: 'e.g. University of Michigan',
+                                                  placeholder:
+                                                      'e.g. University of Michigan',
                                                   name: 'university',
                                                   id: 'university'
                                               }}
-                                              sortItems={
-                                                  this.handleSortItems
-                                              }
+                                              sortItems={this.handleSortItems}
                                               value={this.state.university}
                                               onChange={
                                                   this.handleAttributeChange
                                               }
-                                              onSelect={(e) => {
+                                              onSelect={e => {
                                                   var fakeEvent = {
                                                       target: {
                                                           name: 'university',
@@ -318,11 +327,11 @@ class Profile extends React.Component {
                                                       }
                                                   };
 
-                                                  this.handleAttributeChange(fakeEvent);
+                                                  this.handleAttributeChange(
+                                                      fakeEvent
+                                                  );
                                               }}
-                                              menuStyle={
-                                                  autocompleteMenuStyle
-                                              }
+                                              menuStyle={autocompleteMenuStyle}
                                               wrapperStyle={
                                                   autocompleteWrapperStyle
                                               }
@@ -330,31 +339,36 @@ class Profile extends React.Component {
                                       </LabeledInput>
                                       <LabeledInput label="Major">
                                           <Autocomplete
-                                              getItemValue={(item) => item}
-                                              items={
-                                                  Majors
-                                              }
+                                              getItemValue={item => item}
+                                              items={Majors}
                                               shouldItemRender={
                                                   this.handleItemShouldRender
                                               }
-                                              renderItem={(item, isHighlighted) =>
-                                                  <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                                              renderItem={(
+                                                  item,
+                                                  isHighlighted
+                                              ) =>
+                                                  <div
+                                                      style={{
+                                                          background: isHighlighted
+                                                              ? 'lightgray'
+                                                              : 'white'
+                                                      }}
+                                                  >
                                                       {item}
-                                                  </div>
-                                              }
+                                                  </div>}
                                               inputProps={{
-                                                  placeholder: 'e.g. Underwater Basket Weaving',
+                                                  placeholder:
+                                                      'e.g. Underwater Basket Weaving',
                                                   name: 'major',
                                                   id: 'major'
                                               }}
-                                              sortItems={
-                                                  this.handleSortItems
-                                              }
+                                              sortItems={this.handleSortItems}
                                               value={this.state.major}
                                               onChange={
                                                   this.handleAttributeChange
                                               }
-                                              onSelect={(e) => {
+                                              onSelect={e => {
                                                   var fakeEvent = {
                                                       target: {
                                                           name: 'major',
@@ -362,11 +376,11 @@ class Profile extends React.Component {
                                                       }
                                                   };
 
-                                                  this.handleAttributeChange(fakeEvent);
+                                                  this.handleAttributeChange(
+                                                      fakeEvent
+                                                  );
                                               }}
-                                              menuStyle={
-                                                  autocompleteMenuStyle
-                                              }
+                                              menuStyle={autocompleteMenuStyle}
                                               wrapperStyle={
                                                   autocompleteWrapperStyle
                                               }

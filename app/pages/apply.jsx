@@ -78,7 +78,13 @@ const autocompleteMenuStyle = {
     padding: '2px 0',
     fontSize: '90%',
     position: 'absolute',
-    maxHeight: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)/2 +'px',
+    maxHeight:
+        Math.max(
+            document.documentElement.clientHeight,
+            window.innerHeight || 0
+        ) /
+            2 +
+            'px',
     left: '20px',
     top: '45px',
     overflow: 'auto',
@@ -205,15 +211,13 @@ class Apply extends React.Component {
         const queryPosA = aLower.indexOf(valueLower);
         const queryPosB = bLower.indexOf(valueLower);
         if (queryPosA !== queryPosB) {
-            return queryPosA - queryPosB
+            return queryPosA - queryPosB;
         }
-        return aLower < bLower ? -1 : 1
+        return aLower < bLower ? -1 : 1;
     }
 
     handleItemShouldRender(current, value) {
-        return (
-            current.toLowerCase().indexOf(value.toLowerCase()) !== -1
-        )
+        return current.toLowerCase().indexOf(value.toLowerCase()) !== -1;
     }
 
     onSubmit(e) {
@@ -298,72 +302,87 @@ class Apply extends React.Component {
                                                     }
                                                     key={field.key}
                                                 >
-                                                    {
-                                                        field.autocomplete
-                                                            ?
-                                                            <Autocomplete
-                                                                getItemValue={(item) => item}
-                                                                items={
-                                                                    field.autocomplete
-                                                                }
-                                                                shouldItemRender={
-                                                                    this.handleItemShouldRender
-                                                                }
-                                                                renderItem={(item, isHighlighted) =>
-                                                                    <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-                                                                        {item}
-                                                                    </div>
-                                                                }
-                                                                inputProps={{
-                                                                    placeholder: field.placeholder,
-                                                                    name: field.key,
-                                                                    id: field.key
-                                                                }}
-                                                                sortItems={
-                                                                    this.handleSortItems
-                                                                }
-                                                                value={this.state[
-                                                                    field.key
-                                                                    ]}
-                                                                onChange={
-                                                                    this.handleAttributeChange
-                                                                }
-                                                                onSelect={(e) => {
-                                                                    var fakeEvent = {
-                                                                        target: {
-                                                                            name: field.key,
-                                                                            value: e
-                                                                        }
-                                                                    };
+                                                    {field.autocomplete
+                                                        ? <Autocomplete
+                                                              getItemValue={item =>
+                                                                  item}
+                                                              items={
+                                                                  field.autocomplete
+                                                              }
+                                                              shouldItemRender={
+                                                                  this
+                                                                      .handleItemShouldRender
+                                                              }
+                                                              renderItem={(
+                                                                  item,
+                                                                  isHighlighted
+                                                              ) =>
+                                                                  <div
+                                                                      style={{
+                                                                          background: isHighlighted
+                                                                              ? 'lightgray'
+                                                                              : 'white'
+                                                                      }}
+                                                                  >
+                                                                      {item}
+                                                                  </div>}
+                                                              inputProps={{
+                                                                  placeholder:
+                                                                      field.placeholder,
+                                                                  name:
+                                                                      field.key,
+                                                                  id: field.key
+                                                              }}
+                                                              sortItems={
+                                                                  this
+                                                                      .handleSortItems
+                                                              }
+                                                              value={
+                                                                  this.state[
+                                                                      field.key
+                                                                  ]
+                                                              }
+                                                              onChange={
+                                                                  this
+                                                                      .handleAttributeChange
+                                                              }
+                                                              onSelect={e => {
+                                                                  var fakeEvent = {
+                                                                      target: {
+                                                                          name:
+                                                                              field.key,
+                                                                          value: e
+                                                                      }
+                                                                  };
 
-                                                                    this.handleAttributeChange(fakeEvent);
-                                                                }}
-                                                                menuStyle={
-                                                                    autocompleteMenuStyle
-                                                                }
-                                                                wrapperStyle={
-                                                                    autocompleteWrapperStyle
-                                                                }
-                                                            />
-                                                            :
-                                                            <input
-                                                                id={field.key}
-                                                                type="text"
-                                                                name={field.key}
-                                                                placeholder={
-                                                                    field.placeholder
-                                                                }
-                                                                value={
-                                                                    this.state[
-                                                                        field.key
-                                                                        ]
-                                                                }
-                                                                onChange={
-                                                                    this
-                                                                        .handleAttributeChange
-                                                                }
-                                                            />
-                                                    }
+                                                                  this.handleAttributeChange(
+                                                                      fakeEvent
+                                                                  );
+                                                              }}
+                                                              menuStyle={
+                                                                  autocompleteMenuStyle
+                                                              }
+                                                              wrapperStyle={
+                                                                  autocompleteWrapperStyle
+                                                              }
+                                                          />
+                                                        : <input
+                                                              id={field.key}
+                                                              type="text"
+                                                              name={field.key}
+                                                              placeholder={
+                                                                  field.placeholder
+                                                              }
+                                                              value={
+                                                                  this.state[
+                                                                      field.key
+                                                                  ]
+                                                              }
+                                                              onChange={
+                                                                  this
+                                                                      .handleAttributeChange
+                                                              }
+                                                          />}
                                                 </LabeledInput>
                                             );
                                         case FieldTypes.ESSAY:
