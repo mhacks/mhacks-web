@@ -7,6 +7,7 @@ import AiMl from '../../../static/mx/ai-ml.png';
 import Android from '../../../static/mx/android.png';
 import ArVr from '../../../static/mx/ar-vr.png';
 import GameDev from '../../../static/mx/game-dev.png';
+import Hardware from '../../../static/mx/hardware.png';
 import Ios from '../../../static/mx/ios.png';
 import WebDev from '../../../static/mx/web-dev.png';
 
@@ -71,13 +72,9 @@ const Flex1 = styled.div`
 
 const Img100 = styled.img`
     width: auto;
-    height: 60px;
-`;
-
-const NoImage = styled.div`
-    width: 100px;
-    height: 100px;
-    border: 1px solid ${props => props.theme.highlight};
+    height: auto;
+    max-width: 140px;
+    max-height: 80px;
 `;
 
 const Caption = styled.p`
@@ -92,18 +89,18 @@ class HackingCategories extends React.Component {
             <Wrapper>
                 <Container>
                     <Flexbox>
-                        <SectionHeader>Hacking <br />Categories</SectionHeader>
+                        <SectionHeader>Hacking <br />Cortices</SectionHeader>
                         <Flex1>
-                            <NoImage />
+                            <Img100 src={Hardware} />
                             <Caption>Hardware</Caption>
                         </Flex1>
                         <Flex1>
                             <Img100 src={AiMl} />
-                            <Caption>Ai/Machine <br />Learning</Caption>
+                            <Caption>AI/ML</Caption>
                         </Flex1>
                         <Flex1>
                             <Img100 src={ArVr} />
-                            <Caption>Augmented/Virtual <br />Reality</Caption>
+                            <Caption>AR/VR</Caption>
                         </Flex1>
                         <Flex1>
                             <Img100 src={GameDev} />

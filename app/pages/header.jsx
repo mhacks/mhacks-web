@@ -7,6 +7,7 @@ import { slide as Menu } from 'react-burger-menu';
 import { routes } from '../constants';
 import { Container } from '../components';
 import { devices } from '../styles';
+import theme from '../styles/theme.js';
 
 const HeaderLogoImage = require('../../static/icons/x-logo.png');
 const Favicon = require('../../static/icons/x-logo.png');
@@ -17,15 +18,15 @@ const Wrapper = styled.div`
     top: 0;
     left: 0;
     right: 0;
-    paddingTop: 30px
-    paddingBottom: 30px
+    paddingTop: 15px
+    paddingBottom: 15px
     zIndex: 100;
 
     display: flex;
-    height: 90;
+    height: 80px;
     alignItems: center;
     justifyContent: flex-start;
-    background: white;
+    background: ${theme.primary};
 `;
 
 const FlexWrapper = styled.div`
@@ -44,7 +45,7 @@ const Logo = styled.img`
     display: block;
 
     ${devices.small`
-        height: 70px;
+        height: 50px;
     `}
 `;
 
@@ -63,16 +64,16 @@ const HeaderNavLink = styled(NavLink)`
 `;
 
 const StyledNavLink = styled(NavLink)`
-    fontSize: 18px;
-    padding: 5px 25px;
+    fontSize: 16px;
+    padding: 2px 20px;
     marginLeft: 15px;
     border: 2px solid ${props => props.color};
     color: ${props => props.color};
-    backgroundColor: white;
-    borderRadius: 5px;
+    backgroundColor: ${theme.primary};
+    borderRadius: 25px;
     textDecoration: none;
     transition: all 0.3s;
-    marginTop: 10px;
+    text-transform: uppercase;
 
     &:hover {
         backgroundColor: ${props => props.color};
@@ -81,7 +82,6 @@ const StyledNavLink = styled(NavLink)`
 
     &:first-child {
         margin: 0;
-        marginTop: 10px;
         marginLeft: 15px;
     }
 `;
@@ -92,7 +92,7 @@ const Burger = styled.div`
       width: 36px;
       height: 30px;
       right: 36px;
-      top: 40px;
+      top: 25px;
     }
 
     .bm-burger-bars {
@@ -109,7 +109,7 @@ const Burger = styled.div`
     }
 
     .bm-menu {
-      background: white;
+      backgroundColor: ${theme.primary};
       padding: 2.5em 1.5em 0;
       font-size: 1.15em;
     }
@@ -125,17 +125,13 @@ const Burger = styled.div`
 
     .bm-overlay {
       background: rgba(0, 0, 0, 0.3);
+      top: 0;
+      left: 0;
     }
 
     .bm-menu-wrap {
         top: 0;
     }
-
-    ${devices.small`
-        .bm-burger-button {
-            top: 50px;
-        }
-    `}
 
     ${devices.tablet`
         display: none;
@@ -178,7 +174,7 @@ class Header extends React.Component {
                                               : <StyledNavLink
                                                     to={routes.APPLY}
                                                     color={
-                                                        this.props.theme.primary
+                                                        this.props.theme.highlight
                                                     }
                                                 >
                                                     Apply
@@ -187,7 +183,7 @@ class Header extends React.Component {
                                               ? <StyledNavLink
                                                     to={routes.PROFILE}
                                                     color={
-                                                        this.props.theme.primary
+                                                        this.props.theme.highlight
                                                     }
                                                 >
                                                     Profile
@@ -197,7 +193,7 @@ class Header extends React.Component {
                                               ? <StyledNavLink
                                                     to={routes.LOGOUT}
                                                     color={
-                                                        this.props.theme.primary
+                                                        this.props.theme.highlight
                                                     }
                                                 >
                                                     Log Out
@@ -205,7 +201,7 @@ class Header extends React.Component {
                                               : <StyledNavLink
                                                     to={routes.LOGIN}
                                                     color={
-                                                        this.props.theme.primary
+                                                        this.props.theme.highlight
                                                     }
                                                 >
                                                     Log In
@@ -213,7 +209,7 @@ class Header extends React.Component {
                                       </NavContainer>
                                       <Burger
                                           primaryColor={
-                                              this.props.theme.primary
+                                              this.props.theme.highlight
                                           }
                                       >
                                           <Menu right>
@@ -225,7 +221,7 @@ class Header extends React.Component {
                                                         to={routes.APPLY}
                                                         color={
                                                             this.props.theme
-                                                                .primary
+                                                                .highlight
                                                         }
                                                     >
                                                         Apply
@@ -235,7 +231,7 @@ class Header extends React.Component {
                                                         to={routes.PROFILE}
                                                         color={
                                                             this.props.theme
-                                                                .primary
+                                                                .highlight
                                                         }
                                                     >
                                                         Profile
@@ -246,7 +242,7 @@ class Header extends React.Component {
                                                         to={routes.LOGOUT}
                                                         color={
                                                             this.props.theme
-                                                                .primary
+                                                                .highlight
                                                         }
                                                     >
                                                         Log Out
@@ -255,7 +251,7 @@ class Header extends React.Component {
                                                         to={routes.LOGIN}
                                                         color={
                                                             this.props.theme
-                                                                .primary
+                                                                .highlight
                                                         }
                                                     >
                                                         Log In

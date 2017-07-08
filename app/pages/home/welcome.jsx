@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { SectionHeader, SectionBody } from './section_components.jsx';
-import { Container } from '../../components';
+import { CenteredContainer, SectionHeader, SectionBody, Brick } from './section_components.jsx';
 
 const Wrapper = styled.div`
     background: ${props => props.theme.gradientOverlay}, ${props =>
@@ -14,7 +13,8 @@ class Welcome extends React.Component {
     render() {
         return (
             <Wrapper>
-                <Container>
+                <CenteredContainer>
+                    <Brick />
                     <SectionHeader>Welcome <br />to MHacks X</SectionHeader>
                     <SectionBody>
                         During MHacks X, we're taking a look back at where
@@ -32,7 +32,7 @@ class Welcome extends React.Component {
                         to provide you with the holistically best experience
                         you've had at an MHacks yet.
                     </SectionBody>
-                </Container>
+                </CenteredContainer>
             </Wrapper>
         );
     }
