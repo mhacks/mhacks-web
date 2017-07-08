@@ -223,11 +223,23 @@ class Apply extends React.Component {
     }
 
     handleRenderMenu(items, value, style) {
-        return <div style={{ ...style, ...autocompleteMenuStyle }} children={value.length > 2 ? items : 'Start typing for autocomplete'}/>
+        return (
+            <div
+                style={{ ...style, ...autocompleteMenuStyle }}
+                children={
+                    value.length > 2 ? items : 'Start typing for autocomplete'
+                }
+            />
+        );
     }
 
     defaultHandleRenderMenu(items, value, style) {
-        return <div style={{ ...style, ...autocompleteMenuStyle }} children={items}/>
+        return (
+            <div
+                style={{ ...style, ...autocompleteMenuStyle }}
+                children={items}
+            />
+        );
     }
 
     onSubmit(e) {
@@ -375,7 +387,14 @@ class Apply extends React.Component {
                                                               wrapperStyle={
                                                                   autocompleteWrapperStyle
                                                               }
-                                                              renderMenu={field.key === 'university' ? this.handleRenderMenu : this.defaultHandleRenderMenu}
+                                                              renderMenu={
+                                                                  field.key ===
+                                                                      'university'
+                                                                      ? this
+                                                                            .handleRenderMenu
+                                                                      : this
+                                                                            .defaultHandleRenderMenu
+                                                              }
                                                           />
                                                         : <input
                                                               id={field.key}

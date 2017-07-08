@@ -197,7 +197,14 @@ class Profile extends React.Component {
     }
 
     handleRenderMenu(items, value, style) {
-        return <div style={{ ...style, ...autocompleteMenuStyle }} children={value.length > 2 ? items : 'Start typing for autocomplete'}/>
+        return (
+            <div
+                style={{ ...style, ...autocompleteMenuStyle }}
+                children={
+                    value.length > 2 ? items : 'Start typing for autocomplete'
+                }
+            />
+        );
     }
 
     onSubmit(e) {
@@ -337,7 +344,9 @@ class Profile extends React.Component {
                                                   );
                                               }}
                                               menuStyle={autocompleteMenuStyle}
-                                              wrapperStyle={autocompleteWrapperStyle}
+                                              wrapperStyle={
+                                                  autocompleteWrapperStyle
+                                              }
                                               renderMenu={this.handleRenderMenu}
                                           />
                                       </LabeledInput>
