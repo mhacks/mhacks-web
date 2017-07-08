@@ -31,6 +31,7 @@ const Link = styled.a`
 `;
 
 const ExpandingItemWrapper = styled.div`
+    marginTop: 20px;
     
 `;
 
@@ -286,7 +287,6 @@ class Faq extends React.Component {
                         </ FaqBody>
                     </FaqColumn>
                     </FlexBox>
->>>>>>> centered some of the columns
                 </Container>
                 </Wrapper>
         );
