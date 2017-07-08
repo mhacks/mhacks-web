@@ -88,7 +88,7 @@ const autocompleteMenuStyle = {
     left: '20px',
     top: '45px',
     overflow: 'auto',
-    zIndex: 10
+    zIndex: 101
 };
 
 const autocompleteWrapperStyle = {
@@ -151,6 +151,8 @@ class Apply extends React.Component {
         this.handleFileUpload = this.handleFileUpload.bind(this);
         this.handleSortItems = this.handleSortItems.bind(this);
         this.handleItemShouldRender = this.handleItemShouldRender.bind(this);
+        this.handleRenderMenu = this.handleRenderMenu.bind(this);
+        this.defaultHandleRenderMenu = this.defaultHandleRenderMenu.bind(this);
     }
 
     componentDidMount() {
@@ -218,6 +220,14 @@ class Apply extends React.Component {
 
     handleItemShouldRender(current, value) {
         return current.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+    }
+
+    handleRenderMenu(items, value, style) {
+        return <div style={{ ...style, ...autocompleteMenuStyle }} children={value.length > 2 ? items : 'Start typing for autocomplete'}/>
+    }
+
+    defaultHandleRenderMenu(items, value, style) {
+        return <div style={{ ...style, ...autocompleteMenuStyle }} children={items}/>
     }
 
     onSubmit(e) {
@@ -365,6 +375,7 @@ class Apply extends React.Component {
                                                               wrapperStyle={
                                                                   autocompleteWrapperStyle
                                                               }
+                                                              renderMenu={field.key === 'university' ? this.handleRenderMenu : this.defaultHandleRenderMenu}
                                                           />
                                                         : <input
                                                               id={field.key}
@@ -550,7 +561,7 @@ class Apply extends React.Component {
                                 </RoundedButton>
                             </ButtonGroup>
                             <LegalText>
-                                By applying to MHacks Nano, you agree to the
+                                By applying to MHacks X, you agree to the
                                 MHacks{' '}
                                 <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
                                     Code of Conduct
