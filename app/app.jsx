@@ -18,7 +18,6 @@ import {
     Logout,
     Profile,
     Apply,
-    LivePage,
     BlackoutPage
 } from './pages';
 import { ConfigurationThunks } from './actions';
@@ -62,11 +61,6 @@ class AppProvider extends React.Component {
                                 exact
                                 path={routes.HOME}
                                 component={HomePage}
-                            />
-                            <Route
-                                exact
-                                path={routes.LIVE}
-                                component={LivePage}
                             />
                             <Route
                                 exact

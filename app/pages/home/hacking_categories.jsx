@@ -3,12 +3,15 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { devices } from '../../styles';
 
-import AiMl from '../../../static/mx/ai-ml.png';
-import Android from '../../../static/mx/android.png';
-import ArVr from '../../../static/mx/ar-vr.png';
-import GameDev from '../../../static/mx/game-dev.png';
-import Ios from '../../../static/mx/ios.png';
-import WebDev from '../../../static/mx/web-dev.png';
+const Images = {
+    'AI/ML': require('../../../static/mx/ai-ml.png'),
+    'Android <br />Development': require('../../../static/mx/android.png'),
+    'AR/VR': require('../../../static/mx/ar-vr.png'),
+    'Game <br />Development': require('../../../static/mx/game-dev.png'),
+    Hardware: require('../../../static/mx/hardware.png'),
+    'iOS <br />Development': require('../../../static/mx/ios.png'),
+    'Web <br />Development': require('../../../static/mx/web-dev.png')
+};
 
 const Wrapper = styled.div`
     backgroundColor: ${props => props.theme.secondary};
@@ -71,13 +74,9 @@ const Flex1 = styled.div`
 
 const Img100 = styled.img`
     width: auto;
-    height: 60px;
-`;
-
-const NoImage = styled.div`
-    width: 100px;
-    height: 100px;
-    border: 1px solid ${props => props.theme.highlight};
+    height: auto;
+    max-width: 140px;
+    max-height: 80px;
 `;
 
 const Caption = styled.p`
@@ -92,35 +91,19 @@ class HackingCategories extends React.Component {
             <Wrapper>
                 <Container>
                     <Flexbox>
-                        <SectionHeader>Hacking <br />Categories</SectionHeader>
-                        <Flex1>
-                            <NoImage />
-                            <Caption>Hardware</Caption>
-                        </Flex1>
-                        <Flex1>
-                            <Img100 src={AiMl} />
-                            <Caption>Ai/Machine <br />Learning</Caption>
-                        </Flex1>
-                        <Flex1>
-                            <Img100 src={ArVr} />
-                            <Caption>Augmented/Virtual <br />Reality</Caption>
-                        </Flex1>
-                        <Flex1>
-                            <Img100 src={GameDev} />
-                            <Caption>Game <br />Development</Caption>
-                        </Flex1>
-                        <Flex1>
-                            <Img100 src={Ios} />
-                            <Caption>iOS <br />Development</Caption>
-                        </Flex1>
-                        <Flex1>
-                            <Img100 src={WebDev} />
-                            <Caption>Web <br />Development</Caption>
-                        </Flex1>
-                        <Flex1>
-                            <Img100 src={Android} />
-                            <Caption>Android <br />Development</Caption>
-                        </Flex1>
+                        <SectionHeader>Hacking <br />Cortices</SectionHeader>
+                        {Object.keys(Images).map(function(name, index) {
+                            return (
+                                <Flex1 key={index}>
+                                    <Img100 src={Images[name]} />
+                                    <Caption
+                                        dangerouslySetInnerHTML={{
+                                            __html: name
+                                        }}
+                                    />
+                                </Flex1>
+                            );
+                        })}
                     </Flexbox>
                 </Container>
             </Wrapper>
