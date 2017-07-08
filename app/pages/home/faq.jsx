@@ -52,7 +52,14 @@ class Faq extends React.Component {
                             header="What happens at a hackathon?"
                             body={
                                 <span>
-                                    Participants (“hackers”) spend 36 hours working in teams of 1 - 4 people to build or code or design projects (“hacks”) that they’re excited about. There are workshops, mentors, food, swag, and buckets of coffee to guide you along the way. You bring your ideas, and we give you everything you need to make them come to life.
+                                    Participants (“hackers”) spend 36 hours
+                                    working in teams of 1 - 4 people to build or
+                                    code or design projects (“hacks”) that
+                                    they’re excited about. There are workshops,
+                                    mentors, food, swag, and buckets of coffee
+                                    to guide you along the way. You bring your
+                                    ideas, and we give you everything you need
+                                    to make them come to life.
                                 </span>
                             }
                         />
@@ -60,7 +67,11 @@ class Faq extends React.Component {
                             header="What do people normally make?"
                             body={
                                 <span>
-                                    Hacks generally fall under one (or more) of the seven cortices: Web Development, Android, iOS, AI/ML, AR/VR, Game Development, and Hardware. Check out the hacks from MHacks 9 on &nbsp;
+                                    Hacks generally fall under one (or more) of
+                                    the seven cortices: Web Development,
+                                    Android, iOS, AI/ML, AR/VR, Game
+                                    Development, and Hardware. Check out the
+                                    hacks from MHacks 9 on &nbsp;
                                     <Link
                                         href="https://mhacks9.devpost.com/submissions"
                                         target="_blank"
@@ -137,16 +148,25 @@ class Faq extends React.Component {
                             header="What if I’m an International Student?"
                             body={
                                 <span>
-                                    If you go to school in Canada, we may be sending a bus to your university or one near you. If you are traveling from another country, the first step is to make sure you have a valid travel visa. Please refer to
+                                    If you go to school in Canada, we may be
+                                    sending a bus to your university or one near
+                                    you. If you are traveling from another
+                                    country, the first step is to make sure you
+                                    have a valid travel visa. Please refer to
                                     &nbsp;<Link
                                         href="https://www.visahq.com"
                                         target="_blank"
                                     >
                                         this website
                                     </Link>&nbsp;
-                                    to make sure you meet the requirements and get started on the process if you haven’t already. If you need anything from the organizers, such as a letter of invitation, please contact us as soon as possible at hackathon@umich.edu.
+                                    to make sure you meet the requirements and
+                                    get started on the process if you haven’t
+                                    already. If you need anything from the
+                                    organizers, such as a letter of invitation,
+                                    please contact us as soon as possible at
+                                    hackathon@umich.edu.
                                 </span>
-                                }
+                            }
                         />
                         <FaqItem
                             header="Will you be offering travel reimbursements?"

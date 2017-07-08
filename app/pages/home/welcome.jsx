@@ -1,7 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { CenteredContainer, SectionHeader, SectionBody, Brick } from './section_components.jsx';
+import {
+    CenteredContainer,
+    SectionHeader,
+    SectionBody,
+    Brick
+} from './section_components.jsx';
 
 const Wrapper = styled.div`
     background: ${props => props.theme.gradientOverlay}, ${props =>

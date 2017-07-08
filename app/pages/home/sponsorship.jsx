@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { devices } from '../../styles';
-import { CenteredContainer, SectionHeader, Brick } from './section_components.jsx';
+import {
+    CenteredContainer,
+    SectionHeader,
+    Brick
+} from './section_components.jsx';
 import theme from '../../styles/theme.js';
 
 const Wrapper = styled.div`

@@ -174,7 +174,8 @@ class Header extends React.Component {
                                               : <StyledNavLink
                                                     to={routes.APPLY}
                                                     color={
-                                                        this.props.theme.highlight
+                                                        this.props.theme
+                                                            .highlight
                                                     }
                                                 >
                                                     Apply
@@ -183,7 +184,8 @@ class Header extends React.Component {
                                               ? <StyledNavLink
                                                     to={routes.PROFILE}
                                                     color={
-                                                        this.props.theme.highlight
+                                                        this.props.theme
+                                                            .highlight
                                                     }
                                                 >
                                                     Profile
@@ -193,7 +195,8 @@ class Header extends React.Component {
                                               ? <StyledNavLink
                                                     to={routes.LOGOUT}
                                                     color={
-                                                        this.props.theme.highlight
+                                                        this.props.theme
+                                                            .highlight
                                                     }
                                                 >
                                                     Log Out
@@ -201,7 +204,8 @@ class Header extends React.Component {
                                               : <StyledNavLink
                                                     to={routes.LOGIN}
                                                     color={
-                                                        this.props.theme.highlight
+                                                        this.props.theme
+                                                            .highlight
                                                     }
                                                 >
                                                     Log In

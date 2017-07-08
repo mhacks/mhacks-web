@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { devices } from '../../styles';
 
-import AiMl from '../../../static/mx/ai-ml.png';
-import Android from '../../../static/mx/android.png';
-import ArVr from '../../../static/mx/ar-vr.png';
-import GameDev from '../../../static/mx/game-dev.png';
-import Hardware from '../../../static/mx/hardware.png';
-import Ios from '../../../static/mx/ios.png';
-import WebDev from '../../../static/mx/web-dev.png';
+const Images = {
+    'AI/ML': require('../../../static/mx/ai-ml.png'),
+    'Android <br />Development': require('../../../static/mx/android.png'),
+    'AR/VR': require('../../../static/mx/ar-vr.png'),
+    'Game <br />Development': require('../../../static/mx/game-dev.png'),
+    Hardware: require('../../../static/mx/hardware.png'),
+    'iOS <br />Development': require('../../../static/mx/ios.png'),
+    'Web <br />Development': require('../../../static/mx/web-dev.png')
+};
 
 const Wrapper = styled.div`
     backgroundColor: ${props => props.theme.secondary};
@@ -90,34 +92,18 @@ class HackingCategories extends React.Component {
                 <Container>
                     <Flexbox>
                         <SectionHeader>Hacking <br />Cortices</SectionHeader>
-                        <Flex1>
-                            <Img100 src={Hardware} />
-                            <Caption>Hardware</Caption>
-                        </Flex1>
-                        <Flex1>
-                            <Img100 src={AiMl} />
-                            <Caption>AI/ML</Caption>
-                        </Flex1>
-                        <Flex1>
-                            <Img100 src={ArVr} />
-                            <Caption>AR/VR</Caption>
-                        </Flex1>
-                        <Flex1>
-                            <Img100 src={GameDev} />
-                            <Caption>Game <br />Development</Caption>
-                        </Flex1>
-                        <Flex1>
-                            <Img100 src={Ios} />
-                            <Caption>iOS <br />Development</Caption>
-                        </Flex1>
-                        <Flex1>
-                            <Img100 src={WebDev} />
-                            <Caption>Web <br />Development</Caption>
-                        </Flex1>
-                        <Flex1>
-                            <Img100 src={Android} />
-                            <Caption>Android <br />Development</Caption>
-                        </Flex1>
+                        {Object.keys(Images).map(function(name, index) {
+                            return (
+                                <Flex1 key={index}>
+                                    <Img100 src={Images[name]} />
+                                    <Caption
+                                        dangerouslySetInnerHTML={{
+                                            __html: name
+                                        }}
+                                    />
+                                </Flex1>
+                            );
+                        })}
                     </Flexbox>
                 </Container>
             </Wrapper>
