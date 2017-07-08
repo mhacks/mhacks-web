@@ -32,7 +32,6 @@ const Link = styled.a`
 
 const ExpandingItemWrapper = styled.div`
     marginTop: 20px;
-    
 `;
 
 const FlexBox = styled.div`
@@ -59,7 +58,7 @@ const FaqItem = (props => (
             colorOn="darkorange"
             colorOff="gray"
         />
-    </ExpandingItemWrapper>;
+    </ExpandingItemWrapper>));
 
 class Faq extends React.Component {
     render() {
@@ -240,6 +239,9 @@ class Faq extends React.Component {
                             />
                             <FaqItem
                                 header="How will I get there from other schools?"
+                            />
+                            <FaqItem
+                                header="How will I get there from other schools?"
                                 body={<span>Not to worry, most people don't! Check out the
                                         <Link href="https://www.facebook.com/groups/1900638676819691/?ref=br_rs" target="_blank"> MHacks&nbsp;Nano&nbsp;Facebook&nbsp;Event </Link>
                                          to get started!
@@ -247,6 +249,13 @@ class Faq extends React.Component {
                             />
                             <FaqItem
                                 header="Will you be offering travel reimbursements?"
+                                body={<span>Not to worry, most people don't! Check out the
+                                        <Link href="https://www.facebook.com/groups/1900638676819691/?ref=br_rs" target="_blank"> MHacks&nbsp;Nano&nbsp;Facebook&nbsp;Event </Link>
+                                         to get started!
+                                    </span>}
+                            />
+                            <FaqItem
+                                header="What shouldn't I bring?"
                                 body={<span>Not to worry, most people don't! Check out the
                                         <Link href="https://www.facebook.com/groups/1900638676819691/?ref=br_rs" target="_blank"> MHacks&nbsp;Nano&nbsp;Facebook&nbsp;Event </Link>
                                          to get started!
