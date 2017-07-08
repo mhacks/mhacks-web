@@ -72,9 +72,19 @@ const autocompleteMenuStyle = {
     background: 'rgba(255, 255, 255, 0.9)',
     padding: '2px 0',
     fontSize: '90%',
-    position: 'fixed',
+    position: 'absolute',
+    maxHeight: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)/2 +'px',
+    left: '20px',
+    top: '45px',
     overflow: 'auto',
-    maxHeight: '50%',
+    zIndex: 10
+};
+
+const autocompleteWrapperStyle = {
+    display: 'inherit',
+    paddingLeft: '20px',
+    width: '100%',
+    position: 'relative'
 };
 
 class Profile extends React.Component {
@@ -313,6 +323,9 @@ class Profile extends React.Component {
                                               menuStyle={
                                                   autocompleteMenuStyle
                                               }
+                                              wrapperStyle={
+                                                  autocompleteWrapperStyle
+                                              }
                                           />
                                       </LabeledInput>
                                       <LabeledInput label="Major">
@@ -353,6 +366,9 @@ class Profile extends React.Component {
                                               }}
                                               menuStyle={
                                                   autocompleteMenuStyle
+                                              }
+                                              wrapperStyle={
+                                                  autocompleteWrapperStyle
                                               }
                                           />
                                       </LabeledInput>

@@ -43,14 +43,16 @@ export const HackerApplicationFields = [
         label: 'University',
         placeholder: 'e.g. University of Michigan',
         key: 'university',
-        required
+        required,
+        autocomplete: require('../../static/misc/universities.json')
     },
     {
         type: FieldTypes.TEXT,
         label: 'Major',
         placeholder: 'e.g. Computer Science',
         key: 'major',
-        required
+        required,
+        autocomplete: require('../../static/misc/majors.json')
     },
     {
         type: FieldTypes.SELECT,
