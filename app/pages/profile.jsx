@@ -157,8 +157,8 @@ class Profile extends React.Component {
                 if (i === 'birthday') {
                     nextUserData[i] = nextUserData.birthday
                         ? new Date(nextUserData.birthday)
-                        .toISOString()
-                        .split('T')[0]
+                              .toISOString()
+                              .split('T')[0]
                         : '';
                 }
 
