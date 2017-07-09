@@ -43,15 +43,12 @@ const FlexBox = styled.div`
 `;
 
 const FaqColumn = styled.div`
-    display: flex;
-    flexDirection: column;
-    alignItems: center;
-    flexGrow: 1;
-    flexBasis: 0;
+    
 `;
+
 const FaqBody = styled.div`
      maxWidth: 75%;
-     marginTop: 30px;
+     margin: 30px auto 0;
 `;
 
 const FaqItem = props =>
