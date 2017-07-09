@@ -203,7 +203,7 @@ class Apply extends React.Component {
 
         var updateData = {};
         for (var i in nextUserData) {
-            if (
+            if (userData &&
                 (i in userData && nextUserData[i] !== userData[i]) ||
                 !(i in userData)
             ) {
@@ -313,6 +313,7 @@ class Apply extends React.Component {
         if (!this.checkError(key)) {
             this.validationErrors.push(key);
         }
+        this.removeError(null);
     }
 
     removeError(key) {
@@ -321,7 +322,13 @@ class Apply extends React.Component {
             this.validationErrors.splice(errorIndex, 1);
         }
 
-        return true;
+        var self = this;
+
+        this.validationErrors.forEach(function(key, elem) {
+            if (self.state[key]) {
+                self.validationErrors.splice(elem, 1);
+            }
+        });
     }
 
     render() {
@@ -345,6 +352,10 @@ class Apply extends React.Component {
                                       message={
                                           'Your application is submitted but you can make changes on this page and update your application! Thanks for applying to MHacks X.'
                                       }
+                                      style={{
+                                          backgroundColor: '#01FF70',
+                                          color: '#3D9970'
+                                      }}
                                   />
                               </AlertContainer>
                             : null}
@@ -545,7 +556,9 @@ class Apply extends React.Component {
                                                                   {this.addError(field.key)}
                                                                   <Alert message={'The field above is required'} />
                                                               </AlertContainer>
-                                                            : ''}
+                                                            : this.removeError(
+                                                                field.key
+                                                            )}
                                                     </div>
                                                 );
                                             case FieldTypes.ESSAY:
@@ -601,7 +614,9 @@ class Apply extends React.Component {
                                                                   {this.addError(field.key)}
                                                                   <Alert message={'The field above is required'} />
                                                               </AlertContainer>
-                                                            : ''}
+                                                            : this.removeError(
+                                                                field.key
+                                                            )}
                                                     </LabeledTextarea>
                                                 );
                                             case FieldTypes.DATE:
@@ -659,15 +674,14 @@ class Apply extends React.Component {
                                                         {(!this.state[
                                                             field.key
                                                         ] &&
-                                                            field.required) ||
-                                                            this.checkError(
-                                                                field.key
-                                                            )
+                                                            field.required)
                                                             ? <AlertContainer>
                                                                   {this.addError(field.key)}
                                                                   <Alert message={'The field above is required'} />
                                                               </AlertContainer>
-                                                            : ''}
+                                                            : this.removeError(
+                                                                field.key
+                                                            )}
                                                     </div>
                                                 );
                                             case FieldTypes.INTEGER:
@@ -730,7 +744,9 @@ class Apply extends React.Component {
                                                                   {this.addError(field.key)}
                                                                   <Alert message={'The field above is required'} />
                                                               </AlertContainer>
-                                                            : ''}
+                                                            : this.removeError(
+                                                                field.key
+                                                            )}
                                                     </div>
                                                 );
                                             case FieldTypes.SELECT:
@@ -813,7 +829,9 @@ class Apply extends React.Component {
                                                                   {this.addError(field.key)}
                                                                   <Alert message={'The field above is required'} />
                                                               </AlertContainer>
-                                                            : ''}
+                                                            : this.removeError(
+                                                                field.key
+                                                            )}
                                                     </div>
                                                 );
                                             case FieldTypes.SECTIONHEADER:
@@ -863,8 +881,9 @@ class Apply extends React.Component {
                                             }
                                         />
 
-                                        {!this.state.resume ||
-                                            this.checkError('choosefile')
+                                        {((!this.state.resume ||
+                                            this.checkError('choosefile')) && !this.props.userState.data.user
+                                                .isResumeUploaded)
                                             ? <AlertContainer>
                                                   {this.addError('choosefile')}
                                                   <Alert
@@ -873,7 +892,9 @@ class Apply extends React.Component {
                                                       }
                                                   />
                                               </AlertContainer>
-                                            : ''}
+                                            : this.removeError(
+                                                'choosefile'
+                                            )}
                                     </FileUploadContainer>
                                 </InputContainer>
                                 <ButtonGroup>
@@ -892,7 +913,10 @@ class Apply extends React.Component {
                                                 : {}
                                         }
                                         hover={
-                                            'color: ' + this.props.theme.primary
+                                            this.validationErrors.length > 0
+                                                ?
+                                                'color: ' + this.props.theme.primary
+                                                : ''
                                         }
                                     >
                                         {this.validationErrors.length > 0

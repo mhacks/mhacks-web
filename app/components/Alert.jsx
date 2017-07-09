@@ -16,7 +16,7 @@ const Message = styled.p`
 class Alert extends React.Component {
     render() {
         return (
-            <Wrapper>
+            <Wrapper style={{...this.props.style}}>
                 <Message>{this.props.message}</Message>
             </Wrapper>
         );

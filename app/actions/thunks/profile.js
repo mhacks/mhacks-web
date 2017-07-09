@@ -1,6 +1,5 @@
 import { ProfilePureActions } from '../pure';
 import { ProfileRequests } from '../requests';
-import { ProfileFields } from '../../constants/forms';
 
 export default class ProfileThunks {
     static loadProfile() {
@@ -22,15 +21,10 @@ export default class ProfileThunks {
                                 name: user.full_name,
                                 groups: user.groups,
                                 avatars: user.avatar,
-                                isResumeUploaded: user.resume_uploaded
+                                isResumeUploaded: user.resume_uploaded,
+                                ...user
                             }
                         };
-
-                        for (const key of Object.keys(ProfileFields)) {
-                            if (user.hasOwnProperty(key)) {
-                                state.user[key] = user[key];
-                            }
-                        }
 
                         dispatch(
                             ProfilePureActions.loadProfileSuccess(
