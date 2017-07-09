@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ProfileThunks, ApplicationThunks } from '../actions';
-import { routes } from '../constants';
 import {
     PageContainer,
     RoundedButton,
@@ -103,6 +102,7 @@ class Apply extends React.Component {
         super(props);
 
         const userData = this.props.userState.data.user;
+        const appData = this.props.userState.data.app || {};
 
         this.state = {
             birthday: userData.birthday
@@ -133,15 +133,17 @@ class Apply extends React.Component {
 
         for (const field of HackerApplicationFields) {
             if (!Object.keys(ProfileFields).includes(field.key)) {
+                console.log(field, appData[field.key]);
                 if (
                     field.type === FieldTypes.TEXT ||
                     field.type === FieldTypes.ESSAY
                 ) {
-                    this.state[field.key] = '';
+                    this.state[field.key] = appData[field.key] || '';
                 } else if (field.type === FieldTypes.SELECT) {
-                    this.state[field.key] = field.values[0].key;
+                    this.state[field.key] =
+                        appData[field.key] || field.values[0].key;
                 } else if (field.type === FieldTypes.INTEGER) {
-                    this.state[field.key] = 0;
+                    this.state[field.key] = appData[field.key] || 0;
                 }
             }
         }
@@ -157,12 +159,6 @@ class Apply extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(ProfileThunks.loadProfile());
-    }
-
-    componentWillUpdate(nextProps) {
-        if (nextProps.userState.data.isApplicationSubmitted) {
-            this.context.router.history.push(routes.PROFILE);
-        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -248,21 +244,6 @@ class Apply extends React.Component {
         var application = {};
         var files = {};
 
-        const inputBirthday = new Date(this.state.birthday).getTime();
-
-        application.birthday = inputBirthday;
-        application.major = this.state.major;
-        application.university = this.state.university;
-        application.tshirt_size = this.state.tshirt;
-        application.experience = this.state.hackathonExperience;
-
-        if (this.state.resume) {
-            files['resume'] = this.state.resume;
-        }
-
-        this.props.dispatch(
-            ApplicationThunks.uploadApplication(application, files)
-        );
         for (const field of HackerApplicationFields) {
             if (
                 field.type === FieldTypes.TEXT ||
@@ -296,6 +277,15 @@ class Apply extends React.Component {
                             ? <AlertContainer>
                                   <Alert
                                       message={this.props.userState.message}
+                                  />
+                              </AlertContainer>
+                            : null}
+                        {this.props.userState.data.isApplicationSubmitted
+                            ? <AlertContainer>
+                                  <Alert
+                                      message={
+                                          'Your application is submitted but you can make changes on this page and update your application! Thanks for applying to MHacks X.'
+                                      }
                                   />
                               </AlertContainer>
                             : null}

@@ -12,62 +12,65 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
         .byToken(req.authToken)
         .exec()
         .then(user => {
-            const {
-                birthday,
-                university,
-                major,
-                tshirt_size,
-                experience
-            } = req.body;
+            var updateable_fields = [
+                'birthday',
+                'university',
+                'major',
+                'tshirt_size',
+                'experience',
+                'resume',
+                'github',
+                'linkedin',
+                'devpost',
+                'portfolio',
+                'race',
+                'sex',
+                'why_mhacks',
+                'favorite_memory',
+                'anything_else',
+                'needs_reimbursement',
+                'departing_from',
+                'requested_reimbursement'
+            ];
+            var fields = {};
 
-            if (
-                !(
-                    birthday &&
-                    university &&
-                    major &&
-                    tshirt_size &&
-                    experience &&
-                    (user.resume || (req.files && req.files.resume))
-                )
-            ) {
-                res.status(400).send({
-                    status: false,
-                    message: Responses.MISSING_PARAMETERS
-                });
-            } else if (user.application_submitted) {
-                res.status(400).send({
-                    status: false,
-                    message: Responses.Application.ALREADY_SUBMITTED
-                });
-            } else {
-                Application.create({
-                    user: user.email,
-                    birthday,
-                    university,
-                    major,
-                    tshirt_size,
-                    experience,
-                    resume: user.resume || req.files.resume[0].location
-                })
-                    .then(application => {
-                        user.application_submitted = true;
-                        user.save();
-
-                        res.send({
-                            status: true,
-                            app: application
-                        });
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        res.status(500).send({
-                            status: false,
-                            message: Responses.UNKNOWN_ERROR
-                        });
-                    });
+            if (req.files && req.files.resume) {
+                req.body.resume = req.files.resume[0].location;
             }
+
+            for (var i in req.body) {
+                if (updateable_fields.indexOf(i) !== -1) {
+                    fields[i] = req.body[i];
+                }
+            }
+
+            Application.find().byToken(req.authToken).then(application => {
+                if (application) {
+                    application.updateFields(fields);
+                } else {
+                    fields.email = user.email;
+                    Application.create(fields)
+                        .then(application => {
+                            user.application_submitted = true;
+                            user.save();
+
+                            res.send({
+                                status: true,
+                                app: application
+                            });
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            res.status(500).send({
+                                status: false,
+                                message: Responses.UNKNOWN_ERROR
+                            });
+                        });
+                }
+            });
         })
-        .catch(() => {
+        .catch(err => {
+            console.error(err);
             res.send({
                 status: false,
                 message: Responses.UNKNOWN_ERROR
