@@ -2,10 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Container, ExpandingItem } from '../../components';
-import {
-    CenteredContainer,
-    SectionHeader
-} from './section_components.jsx';
+import { CenteredContainer, SectionHeader } from './section_components.jsx';
 import { devices } from '../../styles';
 
 const Wrapper = styled.div`
@@ -210,16 +207,32 @@ class Faq extends React.Component {
                                         <FaqItem
                                             header="What if I’m an International Student?"
                                             body={
-                                                <span>If you go to school in Canada, we may be sending a bus to your university or one near you. If you are traveling from another country,
-                                                     the first step is to make sure you have a valid travel visa. Please refer to <Link
-                                                    href="https://www.visahq.com"
+                                                <span>
+                                                    If you go to school in
+                                                    Canada, we may be sending a
+                                                    bus to your university or
+                                                    one near you. If you are
+                                                    traveling from another
+                                                    country,
+                                                    the first step is to make
+                                                    sure you have a valid travel
+                                                    visa. Please refer to{' '}
+                                                    <Link
+                                                        href="https://www.visahq.com"
                                                         target="_blank"
                                                     >
                                                         this website
                                                     </Link>
                                                     to make sure you meet
-                                                     the requirements and get started on the process if you haven’t already. If you need anything from the organizers, such as a letter of invitation,
-                                                     please contact us as soon as possible at hackathon@umich.edu.
+                                                    the requirements and get
+                                                    started on the process if
+                                                    you haven’t already. If you
+                                                    need anything from the
+                                                    organizers, such as a letter
+                                                    of invitation,
+                                                    please contact us as soon as
+                                                    possible at
+                                                    hackathon@umich.edu.
                                                 </span>
                                             }
                                         />

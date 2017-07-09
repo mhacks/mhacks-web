@@ -53,17 +53,13 @@ var schema = new mongoose.Schema({
 
 // Allow us to query by token
 schema.query.byToken = function(findToken) {
-    return new Promise((resolve, reject) => {
-        User.find()
-            .byToken(findToken)
-            .exec()
-            .then(user => {
-                resolve(this.findOne({ user: user.email }));
-            })
-            .catch(() => {
-                reject();
-            });
-    });
+    return User.find()
+        .byToken(findToken)
+        .exec()
+        .then(user => {
+            return this.findOne({ user: user.email }).exec();
+        })
+        .catch(() => {});
 };
 
 schema.methods.updateFields = function(fields) {
