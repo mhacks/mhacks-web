@@ -66,7 +66,7 @@ const HeaderNavLink = styled(NavLink)`
 const StyledNavLink = styled(NavLink)`
     fontSize: 16px;
     padding: 2px 20px;
-    marginLeft: 15px;
+    margin: 10px 0 10px 15px;
     border: 2px solid ${props => props.color};
     color: ${props => props.color};
     backgroundColor: ${theme.primary};

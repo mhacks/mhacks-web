@@ -18,6 +18,8 @@ import {
 const FormContainer = styled.div`
     maxWidth: 500px;
     margin: 0 auto;
+    minHeight: calc(100vh - 30px - 2rem - 80px);
+    padding: 20px 0 50px;
 `;
 
 const Flexer = styled.div`
@@ -40,6 +42,7 @@ const SectionHeader = styled.h2`
     color: ${props => props.color};
     fontWeight: 500;
     margin: 0;
+    padding: 20px 0;
 `;
 
 const SubsectionHeader = styled.h3`
@@ -59,6 +62,7 @@ const AlertContainer = styled.div`
 
 const Subhead = styled.p`
     margin: 20px 0 0 0;
+    color: ${props => props.theme.secondary};
 `;
 
 const Link = styled.a`
@@ -551,8 +555,7 @@ class Profile extends React.Component {
                                                   Female
                                               </option>
                                               <option value="non-binary">
-                                                  Non
-                                                  Binary
+                                                  Other
                                               </option>
                                               <option value="prefer-not">
                                                   Prefer not to answer
@@ -569,15 +572,6 @@ class Profile extends React.Component {
                                                 />
                                             </AlertContainer>
                                           : null}
-                                      <Subhead>
-                                          Update your profile with some info
-                                          about
-                                          yourself. This will be automatically
-                                          populated
-                                          into your application and persist
-                                          through
-                                          hackathons!
-                                      </Subhead>
                                   </InputContainer>
                                   <ButtonGroup>
                                       <RoundedButton
@@ -595,7 +589,7 @@ class Profile extends React.Component {
                               request another one{' '}
                               <Link
                                   onClick={this.onClickRequestEmailVerification}
-                                  color={this.props.theme.primary}
+                                  color={this.props.theme.highlight}
                               >
                                   here
                               </Link>. After you verify your email you can

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-const Logo = require('../../../static/icons/x-logo.png');
+const Logo = require('../../../static/icons/x-logo-title.png');
 import { devices } from '../../styles';
 
 const Wrapper = styled.div`
@@ -40,11 +40,11 @@ const LogoImage = styled.img`
     max-height: 50%;
     max-width: 90%;
     
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 `;
 
 const Text = styled.h2`
-    fontSize: 24px;
+    fontSize: 22px;
     color: white;
     text-align: center;
     fontWeight: 500;
@@ -53,7 +53,7 @@ const Text = styled.h2`
     margin: 5px 0;
     
     ${devices.tablet`
-        fontSize: 32px;
+        fontSize: 28px;
     `}
 `;
 
@@ -63,7 +63,6 @@ class Landing extends React.Component {
             <Wrapper>
                 <Container>
                     <LogoImage src={Logo} />
-                    <Text>MHacks X</Text>
                     <Text>September 22nd - 24th, 2017</Text>
                     <Text>University of Michigan North Campus</Text>
                 </Container>

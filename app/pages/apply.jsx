@@ -22,6 +22,8 @@ import Autocomplete from 'react-autocomplete';
 const FormContainer = styled.div`
     maxWidth: 500px;
     margin: 0 auto;
+    minHeight: calc(100vh - 30px - 2rem - 80px);
+    padding: 20px 0 50px;
 `;
 
 const Flexer = styled.div`
@@ -67,8 +69,13 @@ const LegalText = styled.p`
 `;
 
 const LegalLink = styled.a`
-    color: ${props => props.theme.teal};
+    color: ${props => props.theme.highlight};
     textDecoration: none;
+`;
+
+const Subhead = styled.p`
+    margin: 20px 0 0 0;
+    color: ${props => props.theme.secondary};
 `;
 
 const autocompleteMenuStyle = {
@@ -299,6 +306,9 @@ class Apply extends React.Component {
                                   />
                               </AlertContainer>
                             : null}
+                        <Subhead>
+                            Apply for MHacks X! MHacks X will be held on the University of Michigan's North Campus in Ann Arbor from September 22nd to 24th. If you already have teammates in mind, include their names and emails in the "anything else" question.
+                        </Subhead>
                         <Flexer>
                             <InputContainer>
                                 {HackerApplicationFields.map(field => {
