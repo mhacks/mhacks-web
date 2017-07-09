@@ -167,9 +167,7 @@ class Header extends React.Component {
                                           <Logo src={HeaderLogoImage} />
                                       </HeaderNavLink>
                                       <NavContainer>
-                                          {!isLoggedIn ||
-                                              !isEmailVerified ||
-                                              isApplicationSubmitted
+                                          {!isLoggedIn || !isEmailVerified
                                               ? null
                                               : <StyledNavLink
                                                     to={routes.APPLY}
@@ -178,7 +176,7 @@ class Header extends React.Component {
                                                             .highlight
                                                     }
                                                 >
-                                                    Apply
+                                                    {isApplicationSubmitted ? 'Application' : 'Apply'}
                                                 </StyledNavLink>}
                                           {isLoggedIn
                                               ? <StyledNavLink
@@ -217,9 +215,7 @@ class Header extends React.Component {
                                           }
                                       >
                                           <Menu right>
-                                              {!isLoggedIn ||
-                                                  !isEmailVerified ||
-                                                  isApplicationSubmitted
+                                              {!isLoggedIn || !isEmailVerified
                                                   ? null
                                                   : <StyledNavLink
                                                         to={routes.APPLY}
@@ -228,7 +224,7 @@ class Header extends React.Component {
                                                                 .highlight
                                                         }
                                                     >
-                                                        Apply
+                                                        {isApplicationSubmitted ? 'Application' : 'Apply'}
                                                     </StyledNavLink>}
                                               {isLoggedIn
                                                   ? <StyledNavLink

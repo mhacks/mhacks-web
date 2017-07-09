@@ -274,7 +274,7 @@ class Profile extends React.Component {
                                   ? <AlertContainer>
                                         <Alert
                                             message={
-                                                'Your application is submitted! Thanks for applying to MHacks X'
+                                                'Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to MHacks X'
                                             }
                                         />
                                     </AlertContainer>
@@ -562,16 +562,6 @@ class Profile extends React.Component {
                                               </option>
                                           </select>
                                       </LabeledInput>
-                                      {this.props.userState.data
-                                          .isApplicationSubmitted
-                                          ? <AlertContainer>
-                                                <Alert
-                                                    message={
-                                                        'Your application is submitted! Thanks for applying to MHacks X'
-                                                    }
-                                                />
-                                            </AlertContainer>
-                                          : null}
                                   </InputContainer>
                                   <ButtonGroup>
                                       <RoundedButton
