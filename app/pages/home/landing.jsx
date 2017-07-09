@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-const Logo = require('../../../static/icons/x-logo.png');
+const Logo = require('../../../static/icons/x-logo-title.png');
 import { devices } from '../../styles';
 
 const Wrapper = styled.div`
@@ -40,11 +40,11 @@ const LogoImage = styled.img`
     max-height: 50%;
     max-width: 90%;
     
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 `;
 
 const Text = styled.h2`
-    fontSize: 24px;
+    fontSize: 22px;
     color: white;
     text-align: center;
     fontWeight: 500;
@@ -53,17 +53,38 @@ const Text = styled.h2`
     margin: 5px 0;
     
     ${devices.tablet`
-        fontSize: 32px;
+        fontSize: 28px;
     `}
+`;
+
+const MLHBanner = styled.a`
+    display:block;
+    max-width:60px;
+    position:fixed;
+    left:10px;
+    top:80px;
+    z-index:99
+`;
+
+const MLHBannerImage = styled.img`
+    width:100%;
 `;
 
 class Landing extends React.Component {
     render() {
         return (
             <Wrapper>
+                <MLHBanner
+                    href="https://mlh.io/seasons/na-2018/events?utm_source=na-2018&utm_medium=TrustBadge&utm_campaign=na-2018&utm_content=gray"
+                    target="_blank"
+                >
+                    <MLHBannerImage
+                        src="https://s3.amazonaws.com/logged-assets/trust-badge/2018/gray.svg"
+                        alt="Major League Hacking 2017 Hackathon Season"
+                    />
+                </MLHBanner>
                 <Container>
                     <LogoImage src={Logo} />
-                    <Text>MHacks X</Text>
                     <Text>September 22nd - 24th, 2017</Text>
                     <Text>University of Michigan North Campus</Text>
                 </Container>
