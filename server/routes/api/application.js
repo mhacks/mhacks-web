@@ -39,6 +39,12 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
             }
 
             for (var i in req.body) {
+                if (i === 'birthday') {
+                    if (!parseInt(req.body[i])) {
+                        continue;
+                    }
+                }
+
                 if (updateable_fields.indexOf(i) !== -1) {
                     fields[i] = req.body[i];
                 }

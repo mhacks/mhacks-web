@@ -176,23 +176,26 @@ class Apply extends React.Component {
             return;
         }
 
-        if (
-            userData.birthday !== nextUserData ||
-            userData.university !== nextUserData.university ||
-            userData.major !== nextUserData.major ||
-            userData.isResumeUploaded !== nextUserData.isResumeUploaded
-        ) {
-            this.setState({
-                birthday: nextUserData.birthday
-                    ? new Date(nextUserData.birthday)
-                          .toISOString()
-                          .split('T')[0]
-                    : '',
-                university: nextUserData.university || '',
-                major: nextUserData.major || '',
-                isResumeUploaded: userData.isResumeUploaded || false
-            });
+        var updateData = {};
+        for (var i in userData) {
+            if (i in nextUserData && nextUserData[i] !== userData[i]) {
+                if (i === 'birthday') {
+                    nextUserData[i] = nextUserData.birthday
+                        ? new Date(nextUserData.birthday)
+                            .toISOString()
+                            .split('T')[0]
+                        : '';
+                }
+
+                updateData[i] = nextUserData[i];
+            }
         }
+
+        if (!('isResumeUploaded' in updateData)) {
+            updateData.isResumeUploaded = false;
+        }
+
+        this.setState(updateData);
     }
 
     // Generic function for changing state

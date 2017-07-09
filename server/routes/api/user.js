@@ -67,6 +67,12 @@ router.post(
                         }
                     }
 
+                    if (i === 'birthday') {
+                        if (!parseInt(req.body[i])) {
+                            continue;
+                        }
+                    }
+
                     if (updateable_fields.indexOf(i) !== -1) {
                         fields[i] = req.body[i];
                     }
