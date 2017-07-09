@@ -20,7 +20,8 @@ export default class ApplicationThunks {
                         dispatch(
                             ApplicationPureActions.uploadApplicationSuccess(
                                 {
-                                    isApplicationSubmitted: true
+                                    isApplicationSubmitted: true,
+                                    app: json.app
                                 },
                                 json.message
                             )

@@ -106,7 +106,9 @@ export function userState(state = initialUserState, action) {
                 fetched: true,
                 data: {
                     ...state.data,
-                    ...action.data
+                    app: {
+                        ...action.data.app
+                    }
                 }
             };
 
