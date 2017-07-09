@@ -35,7 +35,9 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
             var fields = {};
 
             if (req.files && req.files.resume) {
-                req.body.resume = req.files.resume[0].location || '/uploads/' + req.files.resume[0].filename;
+                req.body.resume =
+                    req.files.resume[0].location ||
+                    '/uploads/' + req.files.resume[0].filename;
             }
 
             for (var i in req.body) {

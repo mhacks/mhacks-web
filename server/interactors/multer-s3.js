@@ -41,7 +41,9 @@ module.exports = function(bucket_name) {
                                     return cb(false, '');
                                 }
 
-                                var fileType = file.originalname.split('.').pop();
+                                var fileType = file.originalname
+                                    .split('.')
+                                    .pop();
                                 var fileName =
                                     directory +
                                     '/' +
@@ -66,7 +68,7 @@ module.exports = function(bucket_name) {
     } else {
         multeropts = {
             storage: multer.diskStorage({
-                destination: function (req, file, cb) {
+                destination: function(req, file, cb) {
                     var directory = '';
 
                     if (file.fieldname === 'resume') {
@@ -89,13 +91,15 @@ module.exports = function(bucket_name) {
 
                     cb(null, fullDirectory);
                 },
-                filename: function (req, file, cb) {
+                filename: function(req, file, cb) {
                     if (req.authToken) {
                         User.find()
                             .byToken(req.authToken)
                             .exec()
                             .then(user => {
-                                var fileType = file.originalname.split('.').pop();
+                                var fileType = file.originalname
+                                    .split('.')
+                                    .pop();
                                 var fileName =
                                     crypto
                                         .createHash('sha512')

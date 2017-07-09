@@ -203,8 +203,9 @@ class Apply extends React.Component {
 
         var updateData = {};
         for (var i in nextUserData) {
-            if (userData &&
-                (i in userData && nextUserData[i] !== userData[i]) ||
+            if (
+                (userData &&
+                    (i in userData && nextUserData[i] !== userData[i])) ||
                 !(i in userData)
             ) {
                 if (i === 'birthday') {
@@ -557,8 +558,8 @@ class Apply extends React.Component {
                                                                   <Alert message={'The field above is required'} />
                                                               </AlertContainer>
                                                             : this.removeError(
-                                                                field.key
-                                                            )}
+                                                                  field.key
+                                                              )}
                                                     </div>
                                                 );
                                             case FieldTypes.ESSAY:
@@ -615,8 +616,8 @@ class Apply extends React.Component {
                                                                   <Alert message={'The field above is required'} />
                                                               </AlertContainer>
                                                             : this.removeError(
-                                                                field.key
-                                                            )}
+                                                                  field.key
+                                                              )}
                                                     </LabeledTextarea>
                                                 );
                                             case FieldTypes.DATE:
@@ -671,17 +672,16 @@ class Apply extends React.Component {
                                                                 }}
                                                             />
                                                         </LabeledInput>
-                                                        {(!this.state[
+                                                        {!this.state[
                                                             field.key
-                                                        ] &&
-                                                            field.required)
+                                                        ] && field.required
                                                             ? <AlertContainer>
                                                                   {this.addError(field.key)}
                                                                   <Alert message={'The field above is required'} />
                                                               </AlertContainer>
                                                             : this.removeError(
-                                                                field.key
-                                                            )}
+                                                                  field.key
+                                                              )}
                                                     </div>
                                                 );
                                             case FieldTypes.INTEGER:
@@ -745,8 +745,8 @@ class Apply extends React.Component {
                                                                   <Alert message={'The field above is required'} />
                                                               </AlertContainer>
                                                             : this.removeError(
-                                                                field.key
-                                                            )}
+                                                                  field.key
+                                                              )}
                                                     </div>
                                                 );
                                             case FieldTypes.SELECT:
@@ -830,8 +830,8 @@ class Apply extends React.Component {
                                                                   <Alert message={'The field above is required'} />
                                                               </AlertContainer>
                                                             : this.removeError(
-                                                                field.key
-                                                            )}
+                                                                  field.key
+                                                              )}
                                                     </div>
                                                 );
                                             case FieldTypes.SECTIONHEADER:
@@ -881,9 +881,10 @@ class Apply extends React.Component {
                                             }
                                         />
 
-                                        {((!this.state.resume ||
-                                            this.checkError('choosefile')) && !this.props.userState.data.user
-                                                .isResumeUploaded)
+                                        {(!this.state.resume ||
+                                            this.checkError('choosefile')) &&
+                                            !this.props.userState.data.user
+                                                .isResumeUploaded
                                             ? <AlertContainer>
                                                   {this.addError('choosefile')}
                                                   <Alert
@@ -892,9 +893,7 @@ class Apply extends React.Component {
                                                       }
                                                   />
                                               </AlertContainer>
-                                            : this.removeError(
-                                                'choosefile'
-                                            )}
+                                            : this.removeError('choosefile')}
                                     </FileUploadContainer>
                                 </InputContainer>
                                 <ButtonGroup>
@@ -914,8 +913,8 @@ class Apply extends React.Component {
                                         }
                                         hover={
                                             this.validationErrors.length > 0
-                                                ?
-                                                'color: ' + this.props.theme.primary
+                                                ? 'color: ' +
+                                                      this.props.theme.primary
                                                 : ''
                                         }
                                     >
