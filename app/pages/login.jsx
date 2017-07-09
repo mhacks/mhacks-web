@@ -8,16 +8,15 @@ import { TabGroup, RoundedButton, Alert } from '../components';
 
 /* Containers */
 const Page = styled.div`
-    display: flex;
-    alignItems: center;
-    justifyContent: center;
-    height: 100vh;
+    margin: 80px auto 0 auto;
 `;
 
 const FormContainer = styled.div`
     width: 500px;
     maxWidth: calc(100% - 40px);
-    margin: 40px auto;
+    minHeight: calc(100vh - 30px - 2rem - 80px);
+    padding: 20px 0 50px;
+    margin: 0 auto;
 `;
 
 const Flexer = styled.div`

@@ -59,8 +59,8 @@ const Text = styled.h2`
 
 const MLHBanner = styled.a`
     display:block;
-    max-width:60px;
-    position:fixed;
+    width:60px;
+    position:absolute;
     left:10px;
     top:80px;
     z-index:99

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Container, ExpandingItem } from '../../components';
-import { CenteredContainer, SectionHeader } from './section_components.jsx';
+import { SectionHeader } from './section_components.jsx';
 import { devices } from '../../styles';
 
 const Wrapper = styled.div`
@@ -69,7 +69,6 @@ class Faq extends React.Component {
         return (
             <Wrapper>
                 <Container>
-                    <CenteredContainer>
                         <SectionHeader>FAQ</SectionHeader>
                         <FlexBox>
                             <FaqColumn>
@@ -271,7 +270,6 @@ class Faq extends React.Component {
                                 </FaqBody>
                             </FaqColumn>
                         </FlexBox>
-                    </CenteredContainer>
                 </Container>
             </Wrapper>
         );
