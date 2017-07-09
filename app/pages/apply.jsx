@@ -297,7 +297,11 @@ class Apply extends React.Component {
                               </AlertContainer>
                             : null}
                         <Subhead>
-                            Apply for MHacks X! MHacks X will be held on the University of Michigan's North Campus in Ann Arbor from September 22nd to 24th. If you already have teammates in mind, include their names and emails in the "anything else" question.
+                            Apply for MHacks X! MHacks X will be held on the
+                            University of Michigan's North Campus in Ann Arbor
+                            from September 22nd to 24th. If you already have
+                            teammates in mind, include their names and emails in
+                            the "anything else" question.
                         </Subhead>
                         <Flexer>
                             <InputContainer>
