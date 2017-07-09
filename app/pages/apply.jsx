@@ -299,6 +299,10 @@ class Apply extends React.Component {
             }
         }
 
+        if (this.state.resume) {
+            application.resume = this.state.resume;
+        }
+
         this.props.dispatch(
             ApplicationThunks.uploadApplication(application, files)
         );
