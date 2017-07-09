@@ -54,7 +54,7 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
                 if (application) {
                     application.updateFields(fields);
                 } else {
-                    fields.email = user.email;
+                    fields.user = user.email;
                     Application.create(fields)
                         .then(application => {
                             user.application_submitted = true;
@@ -87,7 +87,6 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
 router.get('/', function(req, res) {
     Application.find()
         .byToken(req.authToken)
-        .exec()
         .then(application => {
             res.send({
                 status: true,

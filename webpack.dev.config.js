@@ -1,15 +1,10 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
-
-var cssExtractor = new ExtractTextWebpackPlugin('./[name].css');
-var lifecycleEvent = process.env.npm_lifecycle_event;
 
 var devConfig = {
     entry: [
+        'babel-polyfill',
         './app/app.jsx',
         'webpack/hot/dev-server',
         'webpack-hot-middleware/client'
