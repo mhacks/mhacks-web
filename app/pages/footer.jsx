@@ -133,10 +133,10 @@ class Footer extends React.Component {
                                       />
                                   </Flexer>
                                   <LegalLinks>
-                                      <LegalLink  href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
+                                      <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
                                           MHacks CoC
                                       </LegalLink>
-                                      <LegalLink  href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
+                                      <LegalLink href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
                                           MLH CoC
                                       </LegalLink>
                                   </LegalLinks>

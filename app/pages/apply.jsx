@@ -203,7 +203,10 @@ class Apply extends React.Component {
 
         var updateData = {};
         for (var i in nextUserData) {
-            if ((i in userData && nextUserData[i] !== userData[i]) || !(i in userData)) {
+            if (
+                (i in userData && nextUserData[i] !== userData[i]) ||
+                !(i in userData)
+            ) {
                 if (i === 'birthday') {
                     nextUserData[i] = nextUserData.birthday
                         ? new Date(nextUserData.birthday)
@@ -355,506 +358,505 @@ class Apply extends React.Component {
                         <Flexer>
                             <div>
                                 <InputContainer>
-                                    {HackerApplicationFields.map(
-                                        field => {
-                                            if (
-                                                (field.key ===
-                                                'departing_from' ||
+                                    {HackerApplicationFields.map(field => {
+                                        if (
+                                            (field.key === 'departing_from' ||
                                                 field.key ===
-                                                'requested_reimbursement') &&
-                                                this.state
-                                                    .needs_reimbursement ===
+                                                    'requested_reimbursement') &&
+                                            this.state.needs_reimbursement ===
                                                 'n'
-                                            ) {
-                                                return;
-                                            }
+                                        ) {
+                                            return;
+                                        }
 
-                                            switch (field.type) {
-                                                case FieldTypes.TEXT:
-                                                case FieldTypes.LINK:
-                                                    return (
-                                                        <div
-                                                            key={
-                                                                field.key
-                                                            }
-                                                        >
-                                                            <LabeledInput
-                                                                label={
-                                                                    field.label +
-                                                                    (field.required
-                                                                        ? '*'
-                                                                        : '')
-                                                                }
-                                                                labelWidth={
-                                                                    field.wideLabel
-                                                                        ? '150px'
-                                                                        : '100px'
-                                                                }
-                                                                key={
-                                                                    field.key
-                                                                }
-                                                            >
-                                                                {field.autocomplete
-                                                                    ? <Autocomplete
-                                                                        getItemValue={item =>
-                                                                            item}
-                                                                        items={
-                                                                            field.autocomplete
-                                                                        }
-                                                                        shouldItemRender={
-                                                                            this
-                                                                                .handleItemShouldRender
-                                                                        }
-                                                                        renderItem={(
-                                                                            item,
-                                                                            isHighlighted
-                                                                        ) =>
-                                                                            <div
-                                                                                style={{
-                                                                                    background: isHighlighted
-                                                                                        ? 'lightgray'
-                                                                                        : 'white'
-                                                                                }}
-                                                                            >
-                                                                                {item}
-                                                                            </div>}
-                                                                        inputProps={{
-                                                                            placeholder:
-                                                                            field.placeholder,
-                                                                            name:
-                                                                            field.key,
-                                                                            id:
-                                                                            field.key
-                                                                        }}
-                                                                        sortItems={
-                                                                            this
-                                                                                .handleSortItems
-                                                                        }
-                                                                        value={
-                                                                            this
-                                                                                .state[
-                                                                                field
-                                                                                    .key
-                                                                                ]
-                                                                        }
-                                                                        onChange={e => {
-                                                                            if (!e.target.value && field.required) {
-                                                                                this.addError(field.key);
-                                                                            } else {
-                                                                                this.removeError(field.key)
-                                                                            }
-
-                                                                            this.handleAttributeChange(
-                                                                                e
-                                                                            );
-                                                                        }}
-                                                                        onSelect={e => {
-                                                                            var fakeEvent = {
-                                                                                target: {
-                                                                                    name:
-                                                                                    field.key,
-                                                                                    value: e
-                                                                                }
-                                                                            };
-
-                                                                            if (!fakeEvent.target.value && field.required) {
-                                                                                this.addError(field.key);
-                                                                            } else {
-                                                                                this.removeError(field.key)
-                                                                            }
-
-                                                                            this.handleAttributeChange(
-                                                                                fakeEvent
-                                                                            );
-                                                                        }}
-                                                                        menuStyle={
-                                                                            autocompleteMenuStyle
-                                                                        }
-                                                                        wrapperStyle={
-                                                                            autocompleteWrapperStyle
-                                                                        }
-                                                                        renderMenu={
-                                                                            field.key ===
-                                                                            'university'
-                                                                                ? this
-                                                                                .handleRenderMenu
-                                                                                : this
-                                                                                .defaultHandleRenderMenu
-                                                                        }
-                                                                    />
-                                                                    : <input
-                                                                        id={
-                                                                            field.key
-                                                                        }
-                                                                        type="text"
-                                                                        name={
-                                                                            field.key
-                                                                        }
-                                                                        placeholder={
-                                                                            field.placeholder
-                                                                        }
-                                                                        value={
-                                                                            this
-                                                                                .state[
-                                                                                field
-                                                                                    .key
-                                                                                ]
-                                                                        }
-                                                                        onChange={e => {
-                                                                            if (!e.target.value && field.required) {
-                                                                                this.addError(field.key);
-                                                                            } else {
-                                                                                this.removeError(field.key)
-                                                                            }
-
-                                                                            this.handleAttributeChange(
-                                                                                e
-                                                                            );
-                                                                        }}
-                                                                    />}
-                                                            </LabeledInput>
-                                                            {(!this
-                                                                .state[
-                                                                field
-                                                                    .key
-                                                                ] &&
-                                                            field.required) ||
-                                                            (this.checkError(field.key))
-                                                                ? <AlertContainer
-                                                                >
-                                                                    {this.addError(field.key)}
-                                                                    <Alert message={'The field above is required'} />
-                                                                </AlertContainer>
-                                                                : ''}
-                                                        </div>
-                                                    );
-                                                case FieldTypes.ESSAY:
-                                                    return (
-                                                        <LabeledTextarea
+                                        switch (field.type) {
+                                            case FieldTypes.TEXT:
+                                            case FieldTypes.LINK:
+                                                return (
+                                                    <div key={field.key}>
+                                                        <LabeledInput
                                                             label={
                                                                 field.label +
                                                                 (field.required
                                                                     ? '*'
                                                                     : '')
                                                             }
-                                                            key={
-                                                                field.key
+                                                            labelWidth={
+                                                                field.wideLabel
+                                                                    ? '150px'
+                                                                    : '100px'
                                                             }
+                                                            key={field.key}
                                                         >
-                                                                    <textarea
-                                                                        id={
+                                                            {field.autocomplete
+                                                                ? <Autocomplete
+                                                                      getItemValue={item =>
+                                                                          item}
+                                                                      items={
+                                                                          field.autocomplete
+                                                                      }
+                                                                      shouldItemRender={
+                                                                          this
+                                                                              .handleItemShouldRender
+                                                                      }
+                                                                      renderItem={(
+                                                                          item,
+                                                                          isHighlighted
+                                                                      ) =>
+                                                                          <div
+                                                                              style={{
+                                                                                  background: isHighlighted
+                                                                                      ? 'lightgray'
+                                                                                      : 'white'
+                                                                              }}
+                                                                          >
+                                                                              {item}
+                                                                          </div>}
+                                                                      inputProps={{
+                                                                          placeholder:
+                                                                              field.placeholder,
+                                                                          name:
+                                                                              field.key,
+                                                                          id:
+                                                                              field.key
+                                                                      }}
+                                                                      sortItems={
+                                                                          this
+                                                                              .handleSortItems
+                                                                      }
+                                                                      value={
+                                                                          this
+                                                                              .state[
+                                                                              field
+                                                                                  .key
+                                                                          ]
+                                                                      }
+                                                                      onChange={e => {
+                                                                          if (
+                                                                              !e
+                                                                                  .target
+                                                                                  .value &&
+                                                                              field.required
+                                                                          ) {
+                                                                              this.addError(
+                                                                                  field.key
+                                                                              );
+                                                                          } else {
+                                                                              this.removeError(
+                                                                                  field.key
+                                                                              );
+                                                                          }
+
+                                                                          this.handleAttributeChange(
+                                                                              e
+                                                                          );
+                                                                      }}
+                                                                      onSelect={e => {
+                                                                          var fakeEvent = {
+                                                                              target: {
+                                                                                  name:
+                                                                                      field.key,
+                                                                                  value: e
+                                                                              }
+                                                                          };
+
+                                                                          if (
+                                                                              !fakeEvent
+                                                                                  .target
+                                                                                  .value &&
+                                                                              field.required
+                                                                          ) {
+                                                                              this.addError(
+                                                                                  field.key
+                                                                              );
+                                                                          } else {
+                                                                              this.removeError(
+                                                                                  field.key
+                                                                              );
+                                                                          }
+
+                                                                          this.handleAttributeChange(
+                                                                              fakeEvent
+                                                                          );
+                                                                      }}
+                                                                      menuStyle={
+                                                                          autocompleteMenuStyle
+                                                                      }
+                                                                      wrapperStyle={
+                                                                          autocompleteWrapperStyle
+                                                                      }
+                                                                      renderMenu={
+                                                                          field.key ===
+                                                                              'university'
+                                                                              ? this
+                                                                                    .handleRenderMenu
+                                                                              : this
+                                                                                    .defaultHandleRenderMenu
+                                                                      }
+                                                                  />
+                                                                : <input
+                                                                      id={
+                                                                          field.key
+                                                                      }
+                                                                      type="text"
+                                                                      name={
+                                                                          field.key
+                                                                      }
+                                                                      placeholder={
+                                                                          field.placeholder
+                                                                      }
+                                                                      value={
+                                                                          this
+                                                                              .state[
+                                                                              field
+                                                                                  .key
+                                                                          ]
+                                                                      }
+                                                                      onChange={e => {
+                                                                          if (
+                                                                              !e
+                                                                                  .target
+                                                                                  .value &&
+                                                                              field.required
+                                                                          ) {
+                                                                              this.addError(
+                                                                                  field.key
+                                                                              );
+                                                                          } else {
+                                                                              this.removeError(
+                                                                                  field.key
+                                                                              );
+                                                                          }
+
+                                                                          this.handleAttributeChange(
+                                                                              e
+                                                                          );
+                                                                      }}
+                                                                  />}
+                                                        </LabeledInput>
+                                                        {(!this.state[
+                                                            field.key
+                                                        ] &&
+                                                            field.required) ||
+                                                            this.checkError(
+                                                                field.key
+                                                            )
+                                                            ? <AlertContainer>
+                                                                  {this.addError(field.key)}
+                                                                  <Alert message={'The field above is required'} />
+                                                              </AlertContainer>
+                                                            : ''}
+                                                    </div>
+                                                );
+                                            case FieldTypes.ESSAY:
+                                                return (
+                                                    <LabeledTextarea
+                                                        label={
+                                                            field.label +
+                                                            (field.required
+                                                                ? '*'
+                                                                : '')
+                                                        }
+                                                        key={field.key}
+                                                    >
+                                                        <textarea
+                                                            id={field.key}
+                                                            name={field.key}
+                                                            placeholder={
+                                                                field.placeholder
+                                                            }
+                                                            value={
+                                                                this.state[
+                                                                    field.key
+                                                                ]
+                                                            }
+                                                            onChange={e => {
+                                                                if (
+                                                                    !e.target
+                                                                        .value &&
+                                                                    field.required
+                                                                ) {
+                                                                    this.addError(
+                                                                        field.key
+                                                                    );
+                                                                } else {
+                                                                    this.removeError(
+                                                                        field.key
+                                                                    );
+                                                                }
+
+                                                                this.handleAttributeChange(
+                                                                    e
+                                                                );
+                                                            }}
+                                                        />
+                                                        {(!this.state[
+                                                            field.key
+                                                        ] &&
+                                                            field.required) ||
+                                                            this.checkError(
+                                                                field.key
+                                                            )
+                                                            ? <AlertContainer>
+                                                                  {this.addError(field.key)}
+                                                                  <Alert message={'The field above is required'} />
+                                                              </AlertContainer>
+                                                            : ''}
+                                                    </LabeledTextarea>
+                                                );
+                                            case FieldTypes.DATE:
+                                                return (
+                                                    <div key={field.key}>
+                                                        <LabeledInput
+                                                            label={
+                                                                field.label +
+                                                                (field.required
+                                                                    ? '*'
+                                                                    : '')
+                                                            }
+                                                            labelWidth={
+                                                                field.wideLabel
+                                                                    ? '150px'
+                                                                    : '100px'
+                                                            }
+                                                            key={field.key}
+                                                        >
+                                                            <input
+                                                                id={field.key}
+                                                                type="date"
+                                                                name={field.key}
+                                                                placeholder={
+                                                                    field.placeholder
+                                                                }
+                                                                value={
+                                                                    this.state[
+                                                                        field
+                                                                            .key
+                                                                    ]
+                                                                }
+                                                                onChange={e => {
+                                                                    if (
+                                                                        !e
+                                                                            .target
+                                                                            .value &&
+                                                                        field.required
+                                                                    ) {
+                                                                        this.addError(
                                                                             field.key
-                                                                        }
-                                                                        name={
+                                                                        );
+                                                                    } else {
+                                                                        this.removeError(
                                                                             field.key
-                                                                        }
-                                                                        placeholder={
-                                                                            field.placeholder
-                                                                        }
-                                                                        value={
-                                                                            this
-                                                                                .state[
-                                                                                field
-                                                                                    .key
-                                                                                ]
-                                                                        }
-                                                                        onChange={e => {
-                                                                            if (!e.target.value && field.required) {
-                                                                                this.addError(field.key);
-                                                                            } else {
-                                                                                this.removeError(field.key)
-                                                                            }
-
-                                                                            this.handleAttributeChange(
-                                                                                e
-                                                                            );
-                                                                        }}
-                                                                    />
-                                                            {(!this
-                                                                .state[
-                                                                field
-                                                                    .key
-                                                                ] &&
-                                                            field.required) ||
-                                                            (this.checkError(field.key))
-                                                                ? <AlertContainer
-                                                                >
-                                                                    {this.addError(field.key)}
-                                                                    <Alert message={'The field above is required'} />
-                                                                </AlertContainer>
-                                                                : ''}
-                                                        </LabeledTextarea>
-                                                    );
-                                                case FieldTypes.DATE:
-                                                    return (
-                                                        <div
-                                                            key={
-                                                                field.key
-                                                            }
-                                                        >
-                                                            <LabeledInput
-                                                                label={
-                                                                    field.label +
-                                                                    (field.required
-                                                                        ? '*'
-                                                                        : '')
-                                                                }
-                                                                labelWidth={
-                                                                    field.wideLabel
-                                                                        ? '150px'
-                                                                        : '100px'
-                                                                }
-                                                                key={
-                                                                    field.key
-                                                                }
-                                                            >
-                                                                <input
-                                                                    id={
-                                                                        field.key
-                                                                    }
-                                                                    type="date"
-                                                                    name={
-                                                                        field.key
-                                                                    }
-                                                                    placeholder={
-                                                                        field.placeholder
-                                                                    }
-                                                                    value={
-                                                                        this
-                                                                            .state[
-                                                                            field
-                                                                                .key
-                                                                            ]
-                                                                    }
-                                                                    onChange={e => {
-                                                                        if (!e.target.value && field.required) {
-                                                                            this.addError(field.key);
-                                                                        } else {
-                                                                            this.removeError(field.key)
-                                                                        }
-
-                                                                        this.handleAttributeChange(
-                                                                            e
                                                                         );
-                                                                    }}
-                                                                />
-                                                            </LabeledInput>
-                                                            {(!this
-                                                                .state[
-                                                                field
-                                                                    .key
-                                                                ] &&
-                                                            field.required) ||
-                                                            (this.checkError(field.key))
-                                                                ? <AlertContainer
-                                                                >
-                                                                    {this.addError(field.key)}
-                                                                    <Alert message={'The field above is required'} />
-                                                                </AlertContainer>
-                                                                : ''}
-                                                        </div>
-                                                    );
-                                                case FieldTypes.INTEGER:
-                                                    return (
-                                                        <div
-                                                            key={
-                                                                field.key
-                                                            }
-                                                        >
-                                                            <LabeledInput
-                                                                label={
-                                                                    field.label +
-                                                                    (field.required
-                                                                        ? '*'
-                                                                        : '')
-                                                                }
-                                                                labelWidth={
-                                                                    field.wideLabel
-                                                                        ? '150px'
-                                                                        : '100px'
-                                                                }
-                                                                key={
-                                                                    field.key
-                                                                }
-                                                            >
-                                                                <input
-                                                                    id={
-                                                                        field.key
                                                                     }
-                                                                    type="number"
-                                                                    name={
-                                                                        field.key
-                                                                    }
-                                                                    value={
-                                                                        this
-                                                                            .state[
-                                                                            field
-                                                                                .key
-                                                                            ]
-                                                                    }
-                                                                    onChange={e => {
-                                                                        if (!e.target.value && field.required) {
-                                                                            this.addError(field.key);
-                                                                        } else {
-                                                                            this.removeError(field.key)
-                                                                        }
 
-                                                                        this.handleAttributeChange(
-                                                                            e
-                                                                        );
-                                                                    }}
-                                                                />
-                                                            </LabeledInput>
-                                                            {(!this
-                                                                .state[
-                                                                field
-                                                                    .key
-                                                                ] &&
+                                                                    this.handleAttributeChange(
+                                                                        e
+                                                                    );
+                                                                }}
+                                                            />
+                                                        </LabeledInput>
+                                                        {(!this.state[
+                                                            field.key
+                                                        ] &&
                                                             field.required) ||
-                                                            (this.checkError(field.key))
-                                                                ? <AlertContainer
-                                                                >
-                                                                    {this.addError(field.key)}
-                                                                    <Alert message={'The field above is required'} />
-                                                                </AlertContainer>
-                                                                : ''}
-                                                        </div>
-                                                    );
-                                                case FieldTypes.SELECT:
-                                                    return (
-                                                        <div
-                                                            key={
+                                                            this.checkError(
                                                                 field.key
+                                                            )
+                                                            ? <AlertContainer>
+                                                                  {this.addError(field.key)}
+                                                                  <Alert message={'The field above is required'} />
+                                                              </AlertContainer>
+                                                            : ''}
+                                                    </div>
+                                                );
+                                            case FieldTypes.INTEGER:
+                                                return (
+                                                    <div key={field.key}>
+                                                        <LabeledInput
+                                                            label={
+                                                                field.label +
+                                                                (field.required
+                                                                    ? '*'
+                                                                    : '')
                                                             }
+                                                            labelWidth={
+                                                                field.wideLabel
+                                                                    ? '150px'
+                                                                    : '100px'
+                                                            }
+                                                            key={field.key}
                                                         >
-                                                            <LabeledInput
-                                                                label={
-                                                                    field.label +
-                                                                    (field.required
-                                                                        ? '*'
-                                                                        : '')
+                                                            <input
+                                                                id={field.key}
+                                                                type="number"
+                                                                name={field.key}
+                                                                value={
+                                                                    this.state[
+                                                                        field
+                                                                            .key
+                                                                    ]
                                                                 }
-                                                                labelWidth={
-                                                                    field.wideLabel
-                                                                        ? '150px'
-                                                                        : '100px'
-                                                                }
-                                                                key={
-                                                                    field.key
-                                                                }
-                                                            >
-                                                                <select
-                                                                    name={
-                                                                        field.key
-                                                                    }
-                                                                    value={
-                                                                        this
-                                                                            .state[
-                                                                            field
-                                                                                .key
-                                                                            ]
-                                                                    }
-                                                                    onChange={e => {
-                                                                        if (!e.target.value && field.required) {
-                                                                            this.addError(field.key);
-                                                                        } else {
-                                                                            this.removeError(field.key)
-                                                                        }
-
-                                                                        this.handleAttributeChange(
-                                                                            e
+                                                                onChange={e => {
+                                                                    if (
+                                                                        !e
+                                                                            .target
+                                                                            .value &&
+                                                                        field.required
+                                                                    ) {
+                                                                        this.addError(
+                                                                            field.key
                                                                         );
-                                                                    }}
-                                                                >
-                                                                    {field.values.map(
-                                                                        tuple => {
-                                                                            return (
-                                                                                <option
-                                                                                    value={
-                                                                                        tuple.key
-                                                                                    }
-                                                                                    key={
-                                                                                        tuple.key
-                                                                                    }
-                                                                                >
-                                                                                    {tuple.value}
-                                                                                </option>
-                                                                            );
-                                                                        }
-                                                                    )}
-                                                                </select>
-                                                            </LabeledInput>
-                                                            {(!this
-                                                                .state[
-                                                                field
-                                                                    .key
-                                                                ] &&
+                                                                    } else {
+                                                                        this.removeError(
+                                                                            field.key
+                                                                        );
+                                                                    }
+
+                                                                    this.handleAttributeChange(
+                                                                        e
+                                                                    );
+                                                                }}
+                                                            />
+                                                        </LabeledInput>
+                                                        {(!this.state[
+                                                            field.key
+                                                        ] &&
                                                             field.required) ||
-                                                            (this
-                                                                .state[
-                                                                field
-                                                                    .key
-                                                                ] ===
-                                                            'unselected' &&
-                                                            field.required) ||
-                                                            (this.checkError(field.key))
-                                                                ? <AlertContainer
-                                                                >
-                                                                    {this.addError(field.key)}
-                                                                    <Alert message={'The field above is required'} />
-                                                                </AlertContainer>
-                                                                : ''}
-                                                        </div>
-                                                    );
-                                                case FieldTypes.SECTIONHEADER:
-                                                    return (
-                                                        <SubsectionHeader
-                                                            color={
-                                                                this
-                                                                    .props
-                                                                    .theme
-                                                                    .primary
+                                                            this.checkError(
+                                                                field.key
+                                                            )
+                                                            ? <AlertContainer>
+                                                                  {this.addError(field.key)}
+                                                                  <Alert message={'The field above is required'} />
+                                                              </AlertContainer>
+                                                            : ''}
+                                                    </div>
+                                                );
+                                            case FieldTypes.SELECT:
+                                                return (
+                                                    <div key={field.key}>
+                                                        <LabeledInput
+                                                            label={
+                                                                field.label +
+                                                                (field.required
+                                                                    ? '*'
+                                                                    : '')
                                                             }
-                                                            key={
-                                                                field.title
+                                                            labelWidth={
+                                                                field.wideLabel
+                                                                    ? '150px'
+                                                                    : '100px'
                                                             }
+                                                            key={field.key}
                                                         >
-                                                            {field.title}
-                                                        </SubsectionHeader>
-                                                    );
-                                            }
+                                                            <select
+                                                                name={field.key}
+                                                                value={
+                                                                    this.state[
+                                                                        field
+                                                                            .key
+                                                                    ]
+                                                                }
+                                                                onChange={e => {
+                                                                    if (
+                                                                        !e
+                                                                            .target
+                                                                            .value &&
+                                                                        field.required
+                                                                    ) {
+                                                                        this.addError(
+                                                                            field.key
+                                                                        );
+                                                                    } else {
+                                                                        this.removeError(
+                                                                            field.key
+                                                                        );
+                                                                    }
+
+                                                                    this.handleAttributeChange(
+                                                                        e
+                                                                    );
+                                                                }}
+                                                            >
+                                                                {field.values.map(
+                                                                    tuple => {
+                                                                        return (
+                                                                            <option
+                                                                                value={
+                                                                                    tuple.key
+                                                                                }
+                                                                                key={
+                                                                                    tuple.key
+                                                                                }
+                                                                            >
+                                                                                {tuple.value}
+                                                                            </option>
+                                                                        );
+                                                                    }
+                                                                )}
+                                                            </select>
+                                                        </LabeledInput>
+                                                        {(!this.state[
+                                                            field.key
+                                                        ] &&
+                                                            field.required) ||
+                                                            (this.state[
+                                                                field.key
+                                                            ] ===
+                                                                'unselected' &&
+                                                                field.required) ||
+                                                            this.checkError(
+                                                                field.key
+                                                            )
+                                                            ? <AlertContainer>
+                                                                  {this.addError(field.key)}
+                                                                  <Alert message={'The field above is required'} />
+                                                              </AlertContainer>
+                                                            : ''}
+                                                    </div>
+                                                );
+                                            case FieldTypes.SECTIONHEADER:
+                                                return (
+                                                    <SubsectionHeader
+                                                        color={
+                                                            this.props.theme
+                                                                .primary
+                                                        }
+                                                        key={field.title}
+                                                    >
+                                                        {field.title}
+                                                    </SubsectionHeader>
+                                                );
                                         }
-                                    )}
+                                    })}
                                     <FileUploadContainer>
                                         <FileUpload
                                             defaultColor={
-                                                this.props.userState
-                                                    .data.user
+                                                this.props.userState.data.user
                                                     .isResumeUploaded
-                                                    ? this.props.theme
-                                                    .success
-                                                    : this.props.theme
-                                                    .primary
+                                                    ? this.props.theme.success
+                                                    : this.props.theme.primary
                                             }
                                             hoverColor={
-                                                this.props.theme
-                                                    .secondary
+                                                this.props.theme.secondary
                                             }
                                             activeColor={
                                                 this.props.theme.success
                                             }
                                             onFileSelect={e => {
                                                 if (e) {
-                                                    this.removeError('choosefile');
+                                                    this.removeError(
+                                                        'choosefile'
+                                                    );
                                                 } else {
-                                                    this.addError('choosefile')
+                                                    this.addError('choosefile');
                                                 }
 
-                                                this.handleFileUpload(e)
+                                                this.handleFileUpload(e);
                                             }}
                                             defaultText={
-                                                this.props.userState
-                                                    .data.user
+                                                this.props.userState.data.user
                                                     .isResumeUploaded
                                                     ? 'Resume Uploaded'
                                                     : null
@@ -862,11 +864,15 @@ class Apply extends React.Component {
                                         />
 
                                         {!this.state.resume ||
-                                        (this.checkError('choosefile'))
+                                            this.checkError('choosefile')
                                             ? <AlertContainer>
-                                                {this.addError('choosefile')}
-                                                <Alert message={'The field above is required'} />
-                                            </AlertContainer>
+                                                  {this.addError('choosefile')}
+                                                  <Alert
+                                                      message={
+                                                          'The field above is required'
+                                                      }
+                                                  />
+                                              </AlertContainer>
                                             : ''}
                                     </FileUploadContainer>
                                 </InputContainer>
@@ -874,22 +880,25 @@ class Apply extends React.Component {
                                     <RoundedButton
                                         type="submit"
                                         color={this.props.theme.primary}
-                                        disabled={this.validationErrors.length > 0}
+                                        disabled={
+                                            this.validationErrors.length > 0
+                                        }
                                         style={
-                                            (this.validationErrors.length > 0)
+                                            this.validationErrors.length > 0
                                                 ? {
-                                                backgroundColor: this
-                                                    .props.theme
-                                                    .secondary
-                                            }
+                                                      backgroundColor: this
+                                                          .props.theme.secondary
+                                                  }
                                                 : {}
                                         }
                                         hover={
-                                            'color: ' +
-                                            this.props.theme.primary
+                                            'color: ' + this.props.theme.primary
                                         }
                                     >
-                                        {this.validationErrors.length > 0 ? `${this.validationErrors.length} Error(s)` : 'Save'}
+                                        {this.validationErrors.length > 0
+                                            ? `${this.validationErrors
+                                                  .length} Error(s)`
+                                            : 'Save'}
                                     </RoundedButton>
                                 </ButtonGroup>
                                 <LegalText>
