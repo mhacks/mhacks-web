@@ -306,6 +306,10 @@ class Profile extends React.Component {
                                             message={
                                                 'Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to MHacks X'
                                             }
+                                            style={{
+                                                backgroundColor: '#01FF70',
+                                                color: '#3D9970'
+                                            }}
                                         />
                                     </AlertContainer>
                                   : null}

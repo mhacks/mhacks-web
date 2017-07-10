@@ -16,7 +16,7 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
                 'birthday',
                 'university',
                 'major',
-                'tshirt_size',
+                'tshirt',
                 'experience',
                 'resume',
                 'github',
@@ -35,7 +35,9 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
             var fields = {};
 
             if (req.files && req.files.resume) {
-                req.body.resume = req.files.resume[0].location;
+                req.body.resume =
+                    req.files.resume[0].location ||
+                    '/uploads/' + req.files.resume[0].filename;
             }
 
             for (var i in req.body) {
@@ -53,6 +55,11 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
             Application.find().byToken(req.authToken).then(application => {
                 if (application) {
                     application.updateFields(fields);
+
+                    res.send({
+                        status: true,
+                        app: application
+                    });
                 } else {
                     fields.user = user.email;
                     Application.create(fields)

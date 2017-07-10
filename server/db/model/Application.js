@@ -9,7 +9,7 @@ var schema = new mongoose.Schema({
     birthday: Date,
     university: String,
     major: String,
-    tshirt_size: {
+    tshirt: {
         type: String,
         enum: ['xs', 's', 'm', 'l', 'xl', '2xl', '3xl']
     },

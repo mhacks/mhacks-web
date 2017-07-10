@@ -52,6 +52,7 @@
         "mailchimp-api-v3": "^1.7.0",
         "mandrill-api": "^1.0.45",
         "mime": "^1.3.6",
+        "mkdirp": "^0.5.1",
         "mongoose": "^4.9.2",
         "mongoose-sanitizer-plugin": "^1.1.0",
         "morgan": "^1.8.1",
