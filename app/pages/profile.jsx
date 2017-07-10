@@ -15,6 +15,9 @@ import {
     RoundedButton
 } from '../components';
 
+import { NotificationStack } from 'react-notification';
+import { OrderedSet } from 'immutable';
+
 const FormContainer = styled.div`
     maxWidth: 500px;
     margin: 0 auto;
@@ -110,7 +113,8 @@ class Profile extends React.Component {
             university: userData.university || '',
             major: userData.major || '',
             avatars: userData.avatars || [],
-            isResumeUploaded: userData.isResumeUploaded || false
+            isResumeUploaded: userData.isResumeUploaded || false,
+            notifications: OrderedSet()
         };
 
         for (const key of Object.keys(ProfileFields)) {
@@ -137,6 +141,27 @@ class Profile extends React.Component {
         this.handleSortItems = this.handleSortItems.bind(this);
         this.handleItemShouldRender = this.handleItemShouldRender.bind(this);
         this.handleRenderMenu = this.handleRenderMenu.bind(this);
+    }
+
+    addNotification(message, key, action) {
+        return this.setState({
+            notifications: this.state.notifications.add({
+                message,
+                key,
+                action: action || 'Dismiss',
+                onClick: (notification, deactivate) => {
+                    deactivate();
+                    this.removeNotification(key);
+                },
+                dismissAfter: 5000
+            })
+        });
+    }
+
+    removeNotification(key) {
+        this.setState({
+            notifications: this.state.notifications.filter(n => n.key !== key)
+        });
     }
 
     componentDidMount() {
@@ -243,6 +268,8 @@ class Profile extends React.Component {
         }
 
         this.props.dispatch(ProfileThunks.updateProfile(profile, files));
+
+        this.addNotification('Profile Saved!', 'save');
     }
 
     onClickRequestEmailVerification(e) {
@@ -279,6 +306,10 @@ class Profile extends React.Component {
                                             message={
                                                 'Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to MHacks X'
                                             }
+                                            style={{
+                                                backgroundColor: '#01FF70',
+                                                color: '#3D9970'
+                                            }}
                                         />
                                     </AlertContainer>
                                   : null}
@@ -589,6 +620,15 @@ class Profile extends React.Component {
                               continue setting up your profile!
                           </p>}
                 </FormContainer>
+                <NotificationStack
+                    notifications={this.state.notifications.toArray()}
+                    onDismiss={notification =>
+                        this.setState({
+                            notifications: this.state.notifications.delete(
+                                notification
+                            )
+                        })}
+                />
             </PageContainer>
         );
     }

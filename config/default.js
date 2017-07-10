@@ -52,7 +52,7 @@ module.exports = {
     only_one_chat_client: process.env.ONLY_ONE_CHAT_CLIENT || true,
     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || '',
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || '',
-    AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME || 'mhacks-nano',
+    AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME || 'mhacks-x',
     newrelic_enabled: process.env.NEWRELIC_ENABLED || false,
     newrelic_license_key: process.env.NEWRELIC_LICENSE_KEY || '',
     newrelic_app_name: process.env.NEWRELIC_APP_NAME || 'mhacks-web'

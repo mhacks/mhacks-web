@@ -5,6 +5,8 @@ const Container = styled.div`
     width: calc(100% - 60px);
     maxWidth: 1200px;
     margin: 0 auto;
+    
+    z-index: 98;
 
     ${devices.tablet`
         width: calc(100% - 100px);

@@ -108,7 +108,7 @@ class Footer extends React.Component {
             <div>
                 {window.location.pathname == routes.SUBSCRIBE
                     ? null
-                    : <FooterWrapper>
+                    : <FooterWrapper id="asdfFooter">
                           <Container>
                               <HomeFooter>
                                   <Text>© MHacks 2017</Text>

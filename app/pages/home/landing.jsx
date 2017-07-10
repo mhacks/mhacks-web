@@ -8,6 +8,7 @@ const Wrapper = styled.div`
     background: ${props => props.theme.secondary};
     padding: 0;
     height: calc(100vh - 80px);
+    zIndex: 98;
 `;
 
 const Container = styled.div`
@@ -59,8 +60,8 @@ const Text = styled.h2`
 
 const MLHBanner = styled.a`
     display:block;
-    max-width:60px;
-    position:fixed;
+    width:60px;
+    position:absolute;
     left:10px;
     top:80px;
     z-index:99
