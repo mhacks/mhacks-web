@@ -218,7 +218,7 @@ html(lang='en')
                                         a(href=val.devpost) #{val.devpost}
                                     td
                                         a(href=val.portfolio) #{val.portfolio}
-                                    td=val.tshirt.toUpperCase()
+                                    td=val.tshirt ? val.tshirt.toUpperCase() : ''
                                     td=val.race
                                     td=val.sex
                 div#applications
@@ -258,7 +258,7 @@ html(lang='en')
                                     td=(created_at.getUTCMonth() + 1) + '/' + created_at.getUTCDate() + '/' + created_at.getUTCFullYear()
                                     td=val.major ? val.major.substr(0, 30) + (val.major.substr(0, 30).length < val.major.length ? '...' : '') : ''
                                     td=val.university ? val.university.substr(0, 30) + (val.university.substr(0, 30).length < val.university.length ? '...' : '') : ''
-                                    td=val.tshirt.toUpperCase()
+                                    td=val.tshirt ? val.tshirt.toUpperCase() : ''
                                     td=val.experience
                                     if val.resume
                                         td

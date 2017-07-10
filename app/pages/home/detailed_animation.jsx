@@ -46,7 +46,7 @@ class Animations extends React.Component {
     }
 
     randomSquares() {
-        var squaresPer1000 = 20;
+        var squaresPer1000 = 12;
         var squaresList = [];
         var height = this.state.pageHeight;
         for (var i = 0; i < Math.ceil(height / 1000) * squaresPer1000; i++) {
