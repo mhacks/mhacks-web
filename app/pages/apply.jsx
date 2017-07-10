@@ -878,15 +878,16 @@ class Apply extends React.Component {
                                                 this.handleFileUpload(e);
                                             }}
                                             defaultText={
-                                                this.props.userState.data.user
-                                                    .isResumeUploaded
+                                                this.props.userState.data.app
+                                                    .resume
                                                     ? 'Resume Uploaded'
                                                     : null
                                             }
                                         />
 
-                                        {(!this.state.resume ||
-                                            this.checkError('choosefile'))
+                                        {!this.props.userState.data.app
+                                            .resume ||
+                                            this.checkError('choosefile')
                                             ? <AlertContainer>
                                                   {this.addError('choosefile')}
                                                   <Alert
