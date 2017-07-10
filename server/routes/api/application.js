@@ -97,7 +97,7 @@ router.get('/', function(req, res) {
         .then(application => {
             res.send({
                 status: true,
-                application: application
+                application: application || {}
             });
         })
         .catch(() => {
