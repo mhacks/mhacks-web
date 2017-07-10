@@ -3,7 +3,12 @@ var router = require('express').Router(),
     User = require('../db/model/User.js'),
     Application = require('../db/model/Application.js'),
     Announcement = require('../db/model/Announcement.js'),
-    Shortener = require('../db/model/Shortener.js');
+    Shortener = require('../db/model/Shortener.js'),
+    path = require('path');
+
+router.get('/logo.png', function(req, res) {
+    res.sendFile(path.join(__dirname, '../../build/logo.png'));
+});
 
 router.get('/admin', authMiddleware('admin', 'web'), function(req, res) {
     User.find()
