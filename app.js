@@ -25,7 +25,11 @@ var http = require('http'),
 // Force https
 app.use(function(req, res, next) {
     if (!req.secure && req.get('x-forwarded-proto') !== 'https' && app.get('env') !== 'development') {
-        return res.redirect(config.host + req.url);
+        if (config.service === 'shortener') {
+            return res.redirect(config.shortener_host + req.url);
+        } else {
+            return res.redirect(config.host + req.url);
+        }
     }
     next();
 });
