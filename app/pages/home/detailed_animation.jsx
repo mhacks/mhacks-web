@@ -49,12 +49,29 @@ class Animations extends React.Component {
         var squaresPer1000 = 20;
         var squaresList = [];
         var height = this.state.pageHeight;
-        for(var i = 0; i < Math.ceil(height / 1000) * squaresPer1000; i++){
+        for (var i = 0; i < Math.ceil(height / 1000) * squaresPer1000; i++) {
             var id = 'square-' + i;
             var dim = Math.floor(Math.random() * 9) * 5 + 40;
-            var topPos = Math.floor(Math.random() * Math.min(height - 1000 * Math.ceil(i / squaresPer1000), 1000) + 1000 * (Math.floor(i / squaresPer1000)));
+            var topPos = Math.floor(
+                Math.random() *
+                    Math.min(
+                        height - 1000 * Math.ceil(i / squaresPer1000),
+                        1000
+                    ) +
+                    1000 * Math.floor(i / squaresPer1000)
+            );
             squaresList.push(
-                <Square width={dim} height={dim} top={topPos} left={Math.floor(Math.random() * this.state.pageWidth)} sOpacity={(topPos - 300 < 0) ? 0.28 : (height - topPos) / (height - 300) * 0.23 + 0.05}>
+                <Square
+                    width={dim}
+                    height={dim}
+                    top={topPos}
+                    left={Math.floor(Math.random() * this.state.pageWidth)}
+                    sOpacity={
+                        topPos - 300 < 0
+                            ? 0.28
+                            : (height - topPos) / (height - 300) * 0.23 + 0.05
+                    }
+                >
                     <rect id={id} x="0" y="0" width={dim} height={dim} />
                 </Square>
             );
