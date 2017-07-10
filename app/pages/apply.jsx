@@ -206,7 +206,7 @@ class Apply extends React.Component {
             if (
                 (userData &&
                     (i in userData && nextUserData[i] !== userData[i])) ||
-                !(i in userData)
+                (userData && !(i in userData))
             ) {
                 if (i === 'birthday') {
                     nextUserData[i] = nextUserData.birthday
@@ -886,9 +886,7 @@ class Apply extends React.Component {
                                         />
 
                                         {(!this.state.resume ||
-                                            this.checkError('choosefile')) &&
-                                            !this.props.userState.data.user
-                                                .isResumeUploaded
+                                            this.checkError('choosefile'))
                                             ? <AlertContainer>
                                                   {this.addError('choosefile')}
                                                   <Alert
