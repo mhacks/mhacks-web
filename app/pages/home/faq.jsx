@@ -31,6 +31,7 @@ const Link = styled.a`
 
 const ExpandingItemWrapper = styled.div`
     marginTop: 5px;
+    zIndex: 10;
 `;
 
 const FlexBox = styled.div`
