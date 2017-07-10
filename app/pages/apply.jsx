@@ -885,8 +885,9 @@ class Apply extends React.Component {
                                             }
                                         />
 
-                                        {this.props.userState.data.app
-                                            .resume ? this.removeError('choosefile') : this.addError('choosefile')}
+                                        {this.props.userState.data.app.resume
+                                            ? this.removeError('choosefile')
+                                            : this.addError('choosefile')}
 
                                         {!this.props.userState.data.app
                                             .resume ||
