@@ -27,7 +27,7 @@ const Quote = styled.div`
     position: relative;
     color: ${props => props.color};
     float: ${props => (props.position === 'left' ? 'left' : 'right')};
-    zIndex: 1;
+    zIndex: 10;
     letter-spacing: 3px;
     fontSize: 2.0em;
     textAlign: left;
@@ -45,7 +45,7 @@ const StartWrapper = styled.img`
     position: absolute;
     height: 20%;
     width: auto;
-    zIndex: 1;
+    zIndex: 10;
     visibility: hidden;
     left: 0;
     top: 0;

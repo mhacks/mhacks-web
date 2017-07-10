@@ -8,6 +8,7 @@ const Wrapper = styled.div`
     background: ${props => props.theme.secondary};
     padding: 0;
     height: calc(100vh - 80px);
+    zIndex: 98;
 `;
 
 const Container = styled.div`
