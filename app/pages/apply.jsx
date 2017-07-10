@@ -855,8 +855,8 @@ class Apply extends React.Component {
                                     <FileUploadContainer>
                                         <FileUpload
                                             defaultColor={
-                                                this.props.userState.data.user
-                                                    .isResumeUploaded
+                                                this.props.userState.data.app
+                                                    .resume
                                                     ? this.props.theme.success
                                                     : this.props.theme.primary
                                             }
@@ -884,6 +884,9 @@ class Apply extends React.Component {
                                                     : null
                                             }
                                         />
+
+                                        {this.props.userState.data.app
+                                            .resume ? this.removeError('choosefile') : this.addError('choosefile')}
 
                                         {!this.props.userState.data.app
                                             .resume ||
