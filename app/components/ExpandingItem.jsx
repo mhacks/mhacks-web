@@ -13,6 +13,7 @@ const Header = styled.h3`
     marginBottom: 0;
     color: ${props => props.color};
     fontSize: 18px;
+    zIndex: 10;
 `;
 
 const Body = styled.p`
@@ -74,6 +75,7 @@ const PlusWrapper = styled.div`
     marginLeft: 10px;
     height: 15px;
     width: 15px;
+    zIndex: 10;
 `;
 
 const PlusLine = styled.div`
