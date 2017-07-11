@@ -37,20 +37,20 @@ router.post('/webhook/github', function(req, res) {
                         .deployStaging()
                         .then(result => {
                             slack.postSnippet(config.slack_token, {
-                                channels: req.body.channel_id,
+                                channels: config.slack_notifications_channel,
                                 content: deploy.formatResponse(result),
                                 title:
-                                new Date().toString() +
-                                ' Staging Deploy Success'
+                                    new Date().toString() +
+                                        ' Staging Deploy Success'
                             });
                         })
                         .catch(err => {
                             slack.postSnippet(config.slack_token, {
-                                channels: req.body.channel_id,
+                                channels: config.slack_notifications_channel,
                                 content: deploy.formatResponse(err),
                                 title:
-                                new Date().toString() +
-                                ' Staging Deploy Error'
+                                    new Date().toString() +
+                                        ' Staging Deploy Error'
                             });
                         });
                 }
@@ -96,8 +96,8 @@ router.post('/webhook/slack', function(req, res) {
                                 channels: req.body.channel_id,
                                 content: deploy.formatResponse(result),
                                 title:
-                                new Date().toString() +
-                                ' Production Deploy Success'
+                                    new Date().toString() +
+                                        ' Production Deploy Success'
                             });
                         })
                         .catch(err => {
@@ -105,8 +105,8 @@ router.post('/webhook/slack', function(req, res) {
                                 channels: req.body.channel_id,
                                 content: deploy.formatResponse(err),
                                 title:
-                                new Date().toString() +
-                                ' Production Deploy Error'
+                                    new Date().toString() +
+                                        ' Production Deploy Error'
                             });
                         });
                 }
@@ -177,8 +177,8 @@ router.post('/webhook/slack', function(req, res) {
                             channels: req.body.channel_id,
                             content: deploy.formatResponse(result),
                             title:
-                            new Date().toString() +
-                            ' Staging Deploy Success'
+                                new Date().toString() +
+                                    ' Staging Deploy Success'
                         });
                     })
                     .catch(err => {
@@ -186,8 +186,7 @@ router.post('/webhook/slack', function(req, res) {
                             channels: req.body.channel_id,
                             content: deploy.formatResponse(err),
                             title:
-                            new Date().toString() +
-                            ' Staging Deploy Error'
+                                new Date().toString() + ' Staging Deploy Error'
                         });
                     });
             }
