@@ -126,11 +126,11 @@ append pageContent
                                 else
                                     td
                                         i.fa.fa-times(style='color: #FF4136')
-                                td!='<br>' + val.why_mhacks.match(/.{1,50}/g).join('<br>')
-                                td!='<br>' + val.favorite_memory.match(/.{1,50}/g).join('<br>')
-                                td!='<br>' + val.anything_else.match(/.{1,50}/g).join('<br>')
+                                td!=val.why_mhacks ? '<br>' + val.why_mhacks.match(/.{1,50}/g).join('<br>') : ''
+                                td!=val.favorite_memory ? '<br>' + val.favorite_memory.match(/.{1,50}/g).join('<br>') : ''
+                                td!=val.anything_else ? '<br>' + val.anything_else.match(/.{1,50}/g).join('<br>') : ''
                                 td=val.departing_from
                                 td=val.requested_reimbursement
                                 td=val.tshirt ? val.tshirt.toUpperCase() : ''
-                                td=val.major || ''
-                                td=val.university || ''
+                                td=val.major
+                                td=val.university
