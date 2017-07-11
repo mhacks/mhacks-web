@@ -388,6 +388,22 @@ schema.methods.addGroup = function(groupName) {
     }
 };
 
+schema.methods.removeGroup = function(groupName) {
+    var self = this;
+    if (this.checkGroup(groupName)) {
+        this.groups.forEach(function(group, elem) {
+            if (group.name === groupName) {
+                self.groups.splice(elem, 1);
+            }
+        });
+        this.save();
+
+        return true;
+    } else {
+        return true;
+    }
+};
+
 schema.methods.getGroupsList = function() {
     var groups = [];
 

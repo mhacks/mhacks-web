@@ -4,7 +4,7 @@ block title
     title Unchained Applications
 
 block mainScript
-    script.
+    script(type='text/javascript').
         $(document).ready(function () {
             application_table = $('#application-table').DataTable({
                 buttons: [
@@ -20,6 +20,11 @@ block mainScript
             }, function (data) {
                 console.log(data);
             });
+        }
+    style(type='text/css').
+        .dtr-data {
+            max-width: 200px;
+            word-wrap: break-word;
         }
 
 append navigation
@@ -37,60 +42,95 @@ append pageContent
                     thead#table-head-unchained-2
                         tr#table-head-row-unchained-2
                             th='#'
-                            th='User'
-                            th='Birthday'
                             th='Application Submitted'
-                            th='Major'
-                            th='University'
-                            th='T-Shirt'
+                            th='Name'
                             th='Experience'
-                            th='Resume'
-                            th='GitHub'
-                            th='LinkedIn'
-                            th='Devpost'
-                            th='Portfolio'
-                            th='Race'
-                            th='Sex'
+                            th='Birthday (Adult)'
+                            th
+                                i.fa.fa-paperclip
+                            th
+                                i.fa.fa-github
+                            th
+                                i.fa.fa-linkedin-square
+                            th
+                                img(src='https://cdn.rawgit.com/nealrs/868af1e0ff6d60b7d638/raw/9500aac7536bd3a4652e63617aaf418d8cfa0a08/devpost-icon-black.svg', width='12px')
+                            th
+                                i.fa.fa-user
                             th='Why MHacks?'
                             th='Favorite memory?'
                             th='Anything else?'
-                            th='Needs Reimbursement?'
                             th='Departing From'
                             th='Requested Reimbursement'
+                            th='T-Shirt'
+                            th='Major'
+                            th='University'
                     tbody
                         each val, index in applications
                             - var birthday = new Date(val.birthday)
                             - var created_at = new Date(val.created_at)
+                            - var full_name = null
+                            - users.forEach(function(user) { if (user.email === val.user) { full_name = user.full_name; }})
                             tr#table-body-row-unchained
                                 th=(index + 1)
-                                td=val.user
-                                td=val.birthday ? (birthday.getUTCMonth() + 1) + '/' + birthday.getUTCDate() + '/' + birthday.getUTCFullYear() : ''
                                 td=(created_at.getUTCMonth() + 1) + '/' + created_at.getUTCDate() + '/' + created_at.getUTCFullYear()
-                                td=val.major ? val.major.substr(0, 30) + (val.major.substr(0, 30).length < val.major.length ? '...' : '') : ''
-                                td=val.university ? val.university.substr(0, 30) + (val.university.substr(0, 30).length < val.university.length ? '...' : '') : ''
-                                td=val.tshirt ? val.tshirt.toUpperCase() : ''
+                                td=full_name
                                 td=val.experience
+                                if val.birthday
+                                    - var date = (birthday.getUTCMonth() + 1) + '/' + birthday.getUTCDate() + '/' + birthday.getUTCFullYear()
+                                    if new Date().getTime() - val.birthday < 567648000000
+                                        td
+                                            =date + ' '
+                                            i.fa.fa-times(style='color: #FF4136')
+                                    else
+                                        td
+                                            =date + ' '
+                                            i.fa.fa-check(style='color: #2ECC40')
+                                else
+                                    td
+                                        i.fa.fa-times(style='color: #FF4136')
+
                                 if val.resume
                                     td
                                         - var resume = val.getResume()
                                         - var name = val.resume.split('.').pop().toUpperCase()
-                                        a(href=resume) #{name}
+                                        a(href=resume target='_blank')
+                                            i.fa.fa-check(style='color: #2ECC40')
                                 else
                                     td
                                         i.fa.fa-times(style='color: #FF4136')
-                                td
-                                    a(href=val.github) #{val.github}
-                                td
-                                    a(href=val.linkedin) #{val.linkedin}
-                                td
-                                    a(href=val.devpost) #{val.devpost}
-                                td
-                                    a(href=val.portfolio) #{val.portfolio}
-                                td=val.race
-                                td=val.sex
-                                td=val.why_mhacks
-                                td=val.favorite_memory
-                                td=val.anything_else
-                                td=val.needs_reimbursement
+                                if val.github
+                                    td
+                                        a(href=val.github target='_blank')
+                                            i.fa.fa-check(style='color: #2ECC40')
+                                else
+                                    td
+                                        i.fa.fa-times(style='color: #FF4136')
+                                if val.linkedin
+                                    td
+                                        a(href=val.linkedin target = '_blank')
+                                            i.fa.fa-check(style='color: #2ECC40')
+                                else
+                                    td
+                                        i.fa.fa-times(style='color: #FF4136')
+                                if val.devpost
+                                    td
+                                        a(href=val.devpost target = '_blank')
+                                            i.fa.fa-check(style='color: #2ECC40')
+                                else
+                                    td
+                                        i.fa.fa-times(style='color: #FF4136')
+                                if val.portfolio
+                                    td
+                                        a(href=val.portfolio target='_blank')
+                                            i.fa.fa-check(style='color: #2ECC40')
+                                else
+                                    td
+                                        i.fa.fa-times(style='color: #FF4136')
+                                td!='<br>' + val.why_mhacks.match(/.{1,50}/g).join('<br>')
+                                td!='<br>' + val.favorite_memory.match(/.{1,50}/g).join('<br>')
+                                td!='<br>' + val.anything_else.match(/.{1,50}/g).join('<br>')
                                 td=val.departing_from
                                 td=val.requested_reimbursement
+                                td=val.tshirt ? val.tshirt.toUpperCase() : ''
+                                td=val.major || ''
+                                td=val.university || ''

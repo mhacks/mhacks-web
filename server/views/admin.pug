@@ -58,6 +58,31 @@ block mainScript
                     window.location.reload();
                 });
             });
+
+            $('#addUserGroup').click(function (e) {
+                e.preventDefault();
+
+                $.post('/v1/admin/user/groups', {
+                    email: $('#email').val(),
+                    group: $('#group_name').val()
+                }, function (data) {
+                    console.log(data);
+                    window.location.reload();
+                });
+            });
+
+            $('#removeUserGroup').click(function (e) {
+                e.preventDefault();
+
+                $.post('/v1/admin/user/groups', {
+                    email: $('#email').val(),
+                    group: $('#group_name').val(),
+                    remove: true
+                }, function (result) {
+                    console.log(result);
+                    window.location.reload();
+                });
+            });
         });
 
         function sendVerificationEmail(email) {
@@ -140,6 +165,7 @@ append pageContent
                             th='T-Shirt'
                             th='Race'
                             th='Sex'
+                            th='Groups'
                     tbody
                         each val, index in users
                             - var birthday = new Date(val.birthday)
@@ -152,7 +178,7 @@ append pageContent
                                     if val.email_verified
                                         i.fa.fa-check(style='color: #2ECC40')
                                     else
-                                        a(style='cursor: pointer;' onclick='sendVerificationEmail("' + val.email + '");')
+                                        a(style='cursor: pointer;' onclick='sendVerificationEmail(\'' + val.email + '\');')
                                             i.fa.fa-times(style='color: #FF4136')
                                 td
                                     if val.application_submitted
@@ -185,6 +211,7 @@ append pageContent
                                 td=val.tshirt ? val.tshirt.toUpperCase() : ''
                                 td=val.race
                                 td=val.sex
+                                td=val.getGroupsList().join(', ')
             div#applications
                 h2='Applications:'
                 table#application-table.table.table-responsive.table-striped.table-bordered.dt-responsive.nowrap(cellspacing='0', width='100%')
@@ -270,17 +297,17 @@ append pageContent
                                 td=val.category
                                 td
                                     if val.isSent
-                                        a(style='cursor: pointer;' onclick='setIsSent("' + val._id + '", false);')
+                                        a(style='cursor: pointer;' onclick='setIsSent(\'' + val._id + '\', false);')
                                             i.fa.fa-check(style='color: #2ECC40')
                                     else
-                                        a(style='cursor: pointer;' onclick='setIsSent("' + val._id + '", true);')
+                                        a(style='cursor: pointer;' onclick='setIsSent(\'' + val._id + '\', true);')
                                             i.fa.fa-times(style='color: #FF4136')
                                 td
                                     if val.isApproved
-                                        a(style='cursor: pointer;' onclick='setIsApproved("' + val._id + '", false);')
+                                        a(style='cursor: pointer;' onclick='setIsApproved(\'' + val._id + '\', false);')
                                             i.fa.fa-check(style='color: #2ECC40')
                                     else
-                                        a(style='cursor: pointer;' onclick='setIsApproved("' + val._id + '", true);')
+                                        a(style='cursor: pointer;' onclick='setIsApproved(\'' + val._id + '\', true);')
                                             i.fa.fa-times(style='color: #FF4136')
                                 td=broadcastTime
                 form()
@@ -296,18 +323,18 @@ append pageContent
                     div.form-group
                         label(for='category') Category:
                         select#category.form-control(name='category')
-                            option(value="Emergency") Emergency
-                            option(value="Logistics") Logistics
-                            option(value="Food") Food
-                            option(value="Event") Event
-                            option(value="Sponsored") Sponsored
+                            option(value='Emergency') Emergency
+                            option(value='Logistics') Logistics
+                            option(value='Food') Food
+                            option(value='Event') Event
+                            option(value='Sponsored') Sponsored
                     div.form-group
                         label(for='sent') Sent:
-                        input#sent.form-control(type="checkbox" checked name="sent")
+                        input#sent.form-control(type='checkbox' checked name='sent')
                     div.form-group
                         label(for='approved') Approved:
-                        input#approved.form-control(type="checkbox" checked name="approved")
-                    button.btn.btn-primary(type='submit' id="createAction") Create
+                        input#approved.form-control(type='checkbox' checked name='approved')
+                    button.btn.btn-primary(type='submit' id='createAction') Create
             div#shorteners
                 h2='Shorteners:'
                 table#shorteners-table.table.table-responsive.table-striped.table-bordered.dt-responsive.nowrap(cellspacing='0', width='100%')
@@ -338,4 +365,16 @@ append pageContent
                     div.form-group
                         label(for='short_code') Short Code:
                         input#short_code.form-control(type='text', placeholder='INCLUDE THIS ONLY IF YOU WANT TO CHOOSE THE SHORT CODE' name='short_code')
-                    button.btn.btn-primary(type='submit' id="createShortener") Create
+                    button.btn.btn-primary(type='submit' id='createShortener') Create
+            div#user_groups
+                h2='User Groups:'
+                form()
+                    div.form-group
+                        label(for='email') Email:
+                        input#email.form-control(type='text', placeholder='tech@mhacks.org' name='email')
+                    div.form-group
+                        label(for='group_name') Group Name:
+                        input#group_name.form-control(type='text', placeholder='admin, sponsor, reader, etc.' name='group_name')
+                    div.btn-toolbar
+                        button.btn.btn-primary(type='submit' id='addUserGroup') Add Group
+                        button.btn.btn-danger(type='submit' id='removeUserGroup') Delete Group

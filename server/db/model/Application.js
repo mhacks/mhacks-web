@@ -75,6 +75,10 @@ schema.methods.getResume = function() {
     );
 };
 
+schema.methods.getUser = function() {
+    return User.find().byEmail(this.user).exec();
+};
+
 schema.plugin(sanitizerPlugin);
 
 // Initialize the model with the schema, and export it
