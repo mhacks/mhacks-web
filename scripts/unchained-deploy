@@ -2,6 +2,8 @@
 
 cd ~/mhacks-web/ && git pull
 
-cd deploy/ && /opt/bin/docker-compose -f production.yml restart mhacks_website mhacks_shortener
+cd deploy/ && \
+    /opt/bin/docker-compose -f production.yml build mhacks_website mhacks_shortener && \
+    /opt/bin/docker-compose -f production.yml up --no-deps -d mhacks_website mhacks_shortener
 
 cd ~/mhacks-web/ && git --no-pager log --stat -n 2

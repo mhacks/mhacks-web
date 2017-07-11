@@ -18,9 +18,6 @@ services:
       - mhacks_db
     env_file:
       - production.env
-    volumes:
-      - ..:/usr/src/app
-    command: sh -c "yarn install && yarn run startprod"
   mhacks_shortener:
     extends:
       file: docker-compose.yml
@@ -32,6 +29,3 @@ services:
     environment:
       - SERVICE=shortener
       - VIRTUAL_HOST=mha.cx
-    volumes:
-      - ..:/usr/src/app
-    command: sh -c "yarn install && yarn run startprod"
