@@ -1,9 +1,7 @@
 var router = require('express').Router(),
     authMiddleware = require('../../middleware/auth.js'),
     User = require('../../db/model/User.js'),
-    Application = require('../../db/model/Application.js'),
-    Announcement = require('../../db/model/Announcement.js'),
-    Shortener = require('../../db/model/Shortener.js');
+    Application = require('../../db/model/Application.js');
 
 router.get('/', authMiddleware('sponsor admin', 'web'), function(req, res) {
     User.find()
