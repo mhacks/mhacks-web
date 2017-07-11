@@ -71,6 +71,7 @@ class Animations extends React.Component {
                             ? 0.28
                             : (height - topPos) / (height - 300) * 0.23 + 0.05
                     }
+                    key={i}
                 >
                     <rect id={id} x="0" y="0" width={dim} height={dim} />
                 </Square>

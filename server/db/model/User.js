@@ -368,7 +368,7 @@ schema.methods.checkGroup = function(checkGroup) {
     } else {
         var returnVal = false;
         this.groups.forEach(function(data) {
-            if (data.name === checkGroup) {
+            if (checkGroup.indexOf(data.name) !== -1) {
                 returnVal = true;
             }
         });
