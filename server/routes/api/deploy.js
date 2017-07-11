@@ -36,21 +36,21 @@ router.post('/webhook/github', function(req, res) {
                     deploy
                         .deployStaging()
                         .then(result => {
-                            slack.sendMessage(config.slack_token, {
-                                channel: config.slack_notifications_channel,
-                                text:
-                                    'Success: ```' +
-                                        deploy.formatResponse(result) +
-                                        '```'
+                            slack.postSnippet(config.slack_token, {
+                                channels: req.body.channel_id,
+                                content: deploy.formatResponse(result),
+                                title:
+                                new Date().toString() +
+                                ' Staging Deploy Success'
                             });
                         })
                         .catch(err => {
-                            slack.sendMessage(config.slack_token, {
-                                channel: config.slack_notifications_channel,
-                                text:
-                                    'Error: ```' +
-                                        deploy.formatResponse(err) +
-                                        '```'
+                            slack.postSnippet(config.slack_token, {
+                                channels: req.body.channel_id,
+                                content: deploy.formatResponse(err),
+                                title:
+                                new Date().toString() +
+                                ' Staging Deploy Error'
                             });
                         });
                 }
@@ -92,21 +92,21 @@ router.post('/webhook/slack', function(req, res) {
                     deploy
                         .deployProduction()
                         .then(result => {
-                            slack.sendMessage(req.body.response_url, {
-                                response_type: 'in_channel',
-                                text:
-                                    'Success: ```' +
-                                        deploy.formatResponse(result) +
-                                        '```'
+                            slack.postSnippet(config.slack_token, {
+                                channels: req.body.channel_id,
+                                content: deploy.formatResponse(result),
+                                title:
+                                new Date().toString() +
+                                ' Production Deploy Success'
                             });
                         })
                         .catch(err => {
-                            slack.sendMessage(req.body.response_url, {
-                                response_type: 'in_channel',
-                                text:
-                                    'Error: ```' +
-                                        deploy.formatResponse(err) +
-                                        '```'
+                            slack.postSnippet(config.slack_token, {
+                                channels: req.body.channel_id,
+                                content: deploy.formatResponse(err),
+                                title:
+                                new Date().toString() +
+                                ' Production Deploy Error'
                             });
                         });
                 }
@@ -173,21 +173,21 @@ router.post('/webhook/slack', function(req, res) {
                 deploy
                     .deployStaging()
                     .then(result => {
-                        slack.sendMessage(req.body.response_url, {
-                            response_type: 'in_channel',
-                            text:
-                                'Success: ```' +
-                                    deploy.formatResponse(result) +
-                                    '```'
+                        slack.postSnippet(config.slack_token, {
+                            channels: req.body.channel_id,
+                            content: deploy.formatResponse(result),
+                            title:
+                            new Date().toString() +
+                            ' Staging Deploy Success'
                         });
                     })
                     .catch(err => {
-                        slack.sendMessage(req.body.response_url, {
-                            response_type: 'in_channel',
-                            text:
-                                'Error: ```' +
-                                    deploy.formatResponse(err) +
-                                    '```'
+                        slack.postSnippet(config.slack_token, {
+                            channels: req.body.channel_id,
+                            content: deploy.formatResponse(err),
+                            title:
+                            new Date().toString() +
+                            ' Staging Deploy Error'
                         });
                     });
             }
