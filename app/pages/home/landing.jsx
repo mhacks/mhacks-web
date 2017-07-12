@@ -42,6 +42,7 @@ const LogoImage = styled.img`
     max-width: 90%;
     
     margin-bottom: 20px;
+    z-index: 99;
 `;
 
 const Text = styled.h2`
