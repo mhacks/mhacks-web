@@ -13,6 +13,7 @@ const Wrapper = styled.div`
 
     background: rgba(0,0,0,0);
     zIndex: 5;
+    pointer-events: none;
 `;
 
 const Square = styled.svg`
@@ -26,7 +27,6 @@ const Square = styled.svg`
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-opacity: ${props => props.sOpacity};
-    pointer-events: none;
 `;
 
 class Animations extends React.Component {
