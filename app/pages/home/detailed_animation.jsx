@@ -25,7 +25,8 @@ const Square = styled.svg`
     fill-opacity:0;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-opacity: ${props => props.sOpacity}
+    stroke-opacity: ${props => props.sOpacity};
+    pointer-events: none;
 `;
 
 class Animations extends React.Component {
