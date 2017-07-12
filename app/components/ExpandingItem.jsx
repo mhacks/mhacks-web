@@ -13,6 +13,7 @@ const Header = styled.h3`
     marginBottom: 0;
     color: ${props => props.color};
     fontSize: 18px;
+    zIndex: 10;
 `;
 
 const Body = styled.p`
