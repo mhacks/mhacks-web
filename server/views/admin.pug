@@ -178,7 +178,7 @@ append pageContent
                                     if val.email_verified
                                         i.fa.fa-check(style='color: #2ECC40')
                                     else
-                                        a(style='cursor: pointer;' onclick='sendVerificationEmail(\'' + val.email + '\');')
+                                        a(style='cursor: pointer;' onclick='sendVerificationEmail("' + val.email + '");')
                                             i.fa.fa-times(style='color: #FF4136')
                                 td
                                     if val.application_submitted
@@ -297,17 +297,17 @@ append pageContent
                                 td=val.category
                                 td
                                     if val.isSent
-                                        a(style='cursor: pointer;' onclick='setIsSent(\'' + val._id + '\', false);')
+                                        a(style='cursor: pointer;' onclick='setIsSent("' + val._id + '", false);')
                                             i.fa.fa-check(style='color: #2ECC40')
                                     else
-                                        a(style='cursor: pointer;' onclick='setIsSent(\'' + val._id + '\', true);')
+                                        a(style='cursor: pointer;' onclick='setIsSent("' + val._id + '", true);')
                                             i.fa.fa-times(style='color: #FF4136')
                                 td
                                     if val.isApproved
-                                        a(style='cursor: pointer;' onclick='setIsApproved(\'' + val._id + '\', false);')
+                                        a(style='cursor: pointer;' onclick='setIsApproved("' + val._id + '", false);')
                                             i.fa.fa-check(style='color: #2ECC40')
                                     else
-                                        a(style='cursor: pointer;' onclick='setIsApproved(\'' + val._id + '\', true);')
+                                        a(style='cursor: pointer;' onclick='setIsApproved("' + val._id + '", true);')
                                             i.fa.fa-times(style='color: #FF4136')
                                 td=broadcastTime
                 form()
