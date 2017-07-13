@@ -8,6 +8,16 @@ import {
 } from './section_components.jsx';
 import theme from '../../styles/theme.js';
 
+const BloombergImg = require('../../../static/logos/bloomberg.png');
+const DRWImg = require('../../../static/logos/drw.png');
+const FacebookImg = require('../../../static/logos/facebook.png');
+const ICSImg = require('../../../static/logos/ics.png');
+const LTSImg = require('../../../static/logos/lts.png');
+const LyftImg = require('../../../static/logos/lyft.png');
+const MicrosoftImg = require('../../../static/logos/microsoft.png');
+const NSAImg = require('../../../static/logos/nsa.png');
+const PalantirImg = require('../../../static/logos/palantir.jpg');
+
 const Wrapper = styled.div`
     backgroundColor: white;
     padding: 80px 0;
@@ -16,15 +26,14 @@ const Wrapper = styled.div`
 const SectionBody = styled.p`
     color: ${theme.secondary};
     fontSize: 16px;
-    max-width: 600px;
+    maxWidth: 600px;
 `;
 
 const FlexBox = styled.div`
     display: flex;
     justifyContent: center;
     flexWrap: wrap;
-    
-    max-width: 640px;
+    maxWidth: 640px;
 
     ${devices.tablet`
         flexWrap: nowrap;
@@ -52,6 +61,28 @@ const CompanyName = styled.div`
 const Link = styled.a`
     color: ${theme.secondary};
 `;
+
+const SponsorsFlexBox = styled.div`
+    display: flex;
+    flexWrap: wrap;
+    maxWidth: 850px;
+    justifyContent: center;
+`;
+
+const LogoWrapper = styled.div`
+    margin: 25px;
+`;
+
+const LogoImg = styled.img`
+    height: 75px;
+    width: auto;
+    maxWidth: 100%;
+`;
+
+const Logo = props =>
+    <LogoWrapper>
+        <LogoImg src={props.src} />
+    </LogoWrapper>;
 
 class Sponsorship extends React.Component {
     render() {
@@ -95,10 +126,17 @@ class Sponsorship extends React.Component {
                         </QuoteWrapper>
                     </FlexBox>
 
-                    <SectionBody>
-                        {' '}We have an awesome lineup of sponsors for you.
-                        Check back soon for company logos.{' '}
-                    </SectionBody>
+                    <SponsorsFlexBox>
+                        <Logo src={BloombergImg} />
+                        <Logo src={DRWImg} />
+                        <Logo src={FacebookImg} />
+                        <Logo src={ICSImg} />
+                        <Logo src={LTSImg} />
+                        <Logo src={LyftImg} />
+                        <Logo src={MicrosoftImg} />
+                        <Logo src={NSAImg} />
+                        <Logo src={PalantirImg} />
+                    </SponsorsFlexBox>
                 </CenteredContainer>
             </Wrapper>
         );
