@@ -66,7 +66,30 @@ const HeaderNavLink = styled(NavLink)`
 const StyledNavLink = styled(NavLink)`
     fontSize: 16px;
     padding: 2px 20px;
-    marginLeft: 15px;
+    margin: 10px 0 10px 15px;
+    border: 2px solid ${props => props.color};
+    color: ${props => props.color};
+    backgroundColor: ${theme.primary};
+    borderRadius: 25px;
+    textDecoration: none;
+    transition: all 0.3s;
+    text-transform: uppercase;
+
+    &:hover {
+        backgroundColor: ${props => props.color};
+        color: white;
+    }
+
+    &:first-child {
+        margin: 0;
+        marginLeft: 15px;
+    }
+`;
+
+const StyledALink = styled.a`
+    fontSize: 16px;
+    padding: 2px 20px;
+    margin: 10px 0 10px 15px;
     border: 2px solid ${props => props.color};
     color: ${props => props.color};
     backgroundColor: ${theme.primary};
@@ -167,6 +190,63 @@ class Header extends React.Component {
                                           <Logo src={HeaderLogoImage} />
                                       </HeaderNavLink>
                                       <NavContainer>
+                                          {isLoggedIn &&
+                                              this.props.userState.data.user &&
+                                              this.props.userState.data.user
+                                                  .groups &&
+                                              this.props.userState.data.user.groups.indexOf(
+                                                  'admin'
+                                              ) !== -1
+                                              ? <StyledALink
+                                                    href={routes.ADMIN_PORTAL}
+                                                    color={
+                                                        this.props.theme
+                                                            .highlight
+                                                    }
+                                                >
+                                                    Admin
+                                                </StyledALink>
+                                              : null}
+                                          {isLoggedIn &&
+                                              this.props.userState.data.user &&
+                                              this.props.userState.data.user
+                                                  .groups &&
+                                              (this.props.userState.data.user.groups.indexOf(
+                                                  'sponsor'
+                                              ) !== -1 ||
+                                                  this.props.userState.data.user.groups.indexOf(
+                                                      'admin'
+                                                  ) !== -1)
+                                              ? <StyledALink
+                                                    href={routes.SPONSOR_PORTAL}
+                                                    color={
+                                                        this.props.theme
+                                                            .highlight
+                                                    }
+                                                >
+                                                    Sponsor
+                                                </StyledALink>
+                                              : null}
+                                          {isLoggedIn &&
+                                              this.props.userState.data.user &&
+                                              this.props.userState.data.user
+                                                  .groups &&
+                                              (this.props.userState.data.user.groups.indexOf(
+                                                  'reader'
+                                              ) !== -1 ||
+                                                  this.props.userState.data.user.groups.indexOf(
+                                                      'admin'
+                                                  ) !== -1)
+                                              ? <StyledALink
+                                                    href={routes.READER_PORTAL}
+                                                    color={
+                                                        this.props.theme
+                                                            .highlight
+                                                    }
+                                                >
+                                                    Reader
+                                                </StyledALink>
+                                              : null}
                                           {!isLoggedIn || !isEmailVerified
                                               ? null
                                               : <StyledNavLink
@@ -215,6 +295,72 @@ class Header extends React.Component {
                                           }
                                       >
                                           <Menu right>
+                                              {isLoggedIn &&
+                                                  this.props.userState.data
+                                                      .user &&
+                                                  this.props.userState.data.user
+                                                      .groups &&
+                                                  this.props.userState.data.user.groups.indexOf(
+                                                      'admin'
+                                                  ) !== -1
+                                                  ? <StyledALink
+                                                        href={
+                                                            routes.ADMIN_PORTAL
+                                                        }
+                                                        color={
+                                                            this.props.theme
+                                                                .highlight
+                                                        }
+                                                    >
+                                                        Admin
+                                                    </StyledALink>
+                                                  : null}
+                                              {isLoggedIn &&
+                                                  this.props.userState.data
+                                                      .user &&
+                                                  this.props.userState.data.user
+                                                      .groups &&
+                                                  (this.props.userState.data.user.groups.indexOf(
+                                                      'sponsor'
+                                                  ) !== -1 ||
+                                                      this.props.userState.data.user.groups.indexOf(
+                                                          'admin'
+                                                      ) !== -1)
+                                                  ? <StyledALink
+                                                        href={
+                                                            routes.SPONSOR_PORTAL
+                                                        }
+                                                        color={
+                                                            this.props.theme
+                                                                .highlight
+                                                        }
+                                                    >
+                                                        Sponsor
+                                                    </StyledALink>
+                                                  : null}
+                                              {isLoggedIn &&
+                                                  this.props.userState.data
+                                                      .user &&
+                                                  this.props.userState.data.user
+                                                      .groups &&
+                                                  (this.props.userState.data.user.groups.indexOf(
+                                                      'reader'
+                                                  ) !== -1 ||
+                                                      this.props.userState.data.user.groups.indexOf(
+                                                          'admin'
+                                                      ) !== -1)
+                                                  ? <StyledALink
+                                                        href={
+                                                            routes.READER_PORTAL
+                                                        }
+                                                        color={
+                                                            this.props.theme
+                                                                .highlight
+                                                        }
+                                                    >
+                                                        Reader
+                                                    </StyledALink>
+                                                  : null}
                                               {!isLoggedIn || !isEmailVerified
                                                   ? null
                                                   : <StyledNavLink

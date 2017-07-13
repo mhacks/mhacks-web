@@ -368,7 +368,7 @@ schema.methods.checkGroup = function(checkGroup) {
     } else {
         var returnVal = false;
         this.groups.forEach(function(data) {
-            if (data.name === checkGroup) {
+            if (checkGroup.indexOf(data.name) !== -1) {
                 returnVal = true;
             }
         });
@@ -385,6 +385,22 @@ schema.methods.addGroup = function(groupName) {
         return true;
     } else {
         return false;
+    }
+};
+
+schema.methods.removeGroup = function(groupName) {
+    var self = this;
+    if (this.checkGroup(groupName)) {
+        this.groups.forEach(function(group, elem) {
+            if (group.name === groupName) {
+                self.groups.splice(elem, 1);
+            }
+        });
+        this.save();
+
+        return true;
+    } else {
+        return true;
     }
 };
 

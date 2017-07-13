@@ -15,9 +15,14 @@ import {
     RoundedButton
 } from '../components';
 
+import { NotificationStack } from 'react-notification';
+import { OrderedSet } from 'immutable';
+
 const FormContainer = styled.div`
     maxWidth: 500px;
     margin: 0 auto;
+    minHeight: calc(100vh - 30px - 2rem - 80px);
+    padding: 20px 0 50px;
 `;
 
 const Flexer = styled.div`
@@ -40,6 +45,7 @@ const SectionHeader = styled.h2`
     color: ${props => props.color};
     fontWeight: 500;
     margin: 0;
+    padding: 20px 0;
 `;
 
 const SubsectionHeader = styled.h3`
@@ -59,6 +65,7 @@ const AlertContainer = styled.div`
 
 const Subhead = styled.p`
     margin: 20px 0 0 0;
+    color: ${props => props.theme.secondary};
 `;
 
 const Link = styled.a`
@@ -106,7 +113,8 @@ class Profile extends React.Component {
             university: userData.university || '',
             major: userData.major || '',
             avatars: userData.avatars || [],
-            isResumeUploaded: userData.isResumeUploaded || false
+            isResumeUploaded: userData.isResumeUploaded || false,
+            notifications: OrderedSet()
         };
 
         for (const key of Object.keys(ProfileFields)) {
@@ -135,6 +143,27 @@ class Profile extends React.Component {
         this.handleRenderMenu = this.handleRenderMenu.bind(this);
     }
 
+    addNotification(message, key, action) {
+        return this.setState({
+            notifications: this.state.notifications.add({
+                message,
+                key,
+                action: action || 'Dismiss',
+                onClick: (notification, deactivate) => {
+                    deactivate();
+                    this.removeNotification(key);
+                },
+                dismissAfter: 5000
+            })
+        });
+    }
+
+    removeNotification(key) {
+        this.setState({
+            notifications: this.state.notifications.filter(n => n.key !== key)
+        });
+    }
+
     componentDidMount() {
         this.props.dispatch(ProfileThunks.loadProfile());
     }
@@ -147,23 +176,26 @@ class Profile extends React.Component {
             return;
         }
 
-        if (
-            userData.birthday !== nextUserData ||
-            userData.university !== nextUserData.university ||
-            userData.major !== nextUserData.major ||
-            userData.isResumeUploaded !== nextUserData.isResumeUploaded
-        ) {
-            this.setState({
-                birthday: nextUserData.birthday
-                    ? new Date(nextUserData.birthday)
-                          .toISOString()
-                          .split('T')[0]
-                    : '',
-                university: nextUserData.university || '',
-                major: nextUserData.major || '',
-                isResumeUploaded: userData.isResumeUploaded || false
-            });
+        var updateData = {};
+        for (var i in userData) {
+            if (i in nextUserData && nextUserData[i] !== userData[i]) {
+                if (i === 'birthday') {
+                    nextUserData[i] = nextUserData.birthday
+                        ? new Date(nextUserData.birthday)
+                              .toISOString()
+                              .split('T')[0]
+                        : '';
+                }
+
+                updateData[i] = nextUserData[i];
+            }
         }
+
+        if (!('isResumeUploaded' in updateData)) {
+            updateData.isResumeUploaded = false;
+        }
+
+        this.setState(updateData);
     }
 
     // Generic function for changing state
@@ -236,6 +268,8 @@ class Profile extends React.Component {
         }
 
         this.props.dispatch(ProfileThunks.updateProfile(profile, files));
+
+        this.addNotification('Profile Saved!', 'save');
     }
 
     onClickRequestEmailVerification(e) {
@@ -272,6 +306,10 @@ class Profile extends React.Component {
                                             message={
                                                 'Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to MHacks X'
                                             }
+                                            style={{
+                                                backgroundColor: '#01FF70',
+                                                color: '#3D9970'
+                                            }}
                                         />
                                     </AlertContainer>
                                   : null}
@@ -551,23 +589,13 @@ class Profile extends React.Component {
                                                   Female
                                               </option>
                                               <option value="non-binary">
-                                                  Non
-                                                  Binary
+                                                  Other
                                               </option>
                                               <option value="prefer-not">
                                                   Prefer not to answer
                                               </option>
                                           </select>
                                       </LabeledInput>
-                                      <Subhead>
-                                          Update your profile with some info
-                                          about
-                                          yourself. This will be automatically
-                                          populated
-                                          into your application and persist
-                                          through
-                                          hackathons!
-                                      </Subhead>
                                   </InputContainer>
                                   <ButtonGroup>
                                       <RoundedButton
@@ -585,13 +613,22 @@ class Profile extends React.Component {
                               request another one{' '}
                               <Link
                                   onClick={this.onClickRequestEmailVerification}
-                                  color={this.props.theme.primary}
+                                  color={this.props.theme.highlight}
                               >
                                   here
                               </Link>. After you verify your email you can
                               continue setting up your profile!
                           </p>}
                 </FormContainer>
+                <NotificationStack
+                    notifications={this.state.notifications.toArray()}
+                    onDismiss={notification =>
+                        this.setState({
+                            notifications: this.state.notifications.delete(
+                                notification
+                            )
+                        })}
+                />
             </PageContainer>
         );
     }

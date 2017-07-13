@@ -250,11 +250,11 @@ export const HackerApplicationFields = [
         wideLabel: true,
         values: [
             {
-                key: 'n',
+                key: 'false',
                 value: 'No'
             },
             {
-                key: 'y',
+                key: 'true',
                 value: 'Yes'
             }
         ],

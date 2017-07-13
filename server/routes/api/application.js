@@ -16,7 +16,7 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
                 'birthday',
                 'university',
                 'major',
-                'tshirt_size',
+                'tshirt',
                 'experience',
                 'resume',
                 'github',
@@ -35,10 +35,18 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
             var fields = {};
 
             if (req.files && req.files.resume) {
-                req.body.resume = req.files.resume[0].location;
+                req.body.resume =
+                    req.files.resume[0].location ||
+                    '/uploads/' + req.files.resume[0].filename;
             }
 
             for (var i in req.body) {
+                if (i === 'birthday') {
+                    if (!parseInt(req.body[i])) {
+                        continue;
+                    }
+                }
+
                 if (updateable_fields.indexOf(i) !== -1) {
                     fields[i] = req.body[i];
                 }
@@ -47,8 +55,13 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
             Application.find().byToken(req.authToken).then(application => {
                 if (application) {
                     application.updateFields(fields);
+
+                    res.send({
+                        status: true,
+                        app: application
+                    });
                 } else {
-                    fields.email = user.email;
+                    fields.user = user.email;
                     Application.create(fields)
                         .then(application => {
                             user.application_submitted = true;
@@ -81,11 +94,10 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
 router.get('/', function(req, res) {
     Application.find()
         .byToken(req.authToken)
-        .exec()
         .then(application => {
             res.send({
                 status: true,
-                application: application
+                application: application || {}
             });
         })
         .catch(() => {

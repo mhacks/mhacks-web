@@ -28,7 +28,8 @@ const initialUserState = {
         isApplicationSubmitted: false,
         token: null,
         email: null,
-        user: {}
+        user: {},
+        app: {}
     }
 };
 

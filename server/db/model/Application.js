@@ -9,7 +9,7 @@ var schema = new mongoose.Schema({
     birthday: Date,
     university: String,
     major: String,
-    tshirt_size: {
+    tshirt: {
         type: String,
         enum: ['xs', 's', 'm', 'l', 'xl', '2xl', '3xl']
     },
@@ -48,7 +48,11 @@ var schema = new mongoose.Schema({
     anything_else: String,
     needs_reimbursement: Boolean,
     departing_from: String,
-    requested_reimbursement: Number
+    requested_reimbursement: Number,
+    status: {
+        type: String,
+        enum: ['unread', 'waitlisted', 'accepted']
+    }
 });
 
 // Allow us to query by token
@@ -73,6 +77,10 @@ schema.methods.getResume = function() {
     return (
         config.host + '/v1/artifact/resume/' + this.user + '?application=true'
     );
+};
+
+schema.methods.getUser = function() {
+    return User.find().byEmail(this.user).exec();
 };
 
 schema.plugin(sanitizerPlugin);

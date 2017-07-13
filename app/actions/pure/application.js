@@ -23,4 +23,28 @@ export default class ApplicationPureActions {
             message
         };
     }
+
+    static loadApplicationRequest(data) {
+        return {
+            type: reduxActions.LOAD_PROFILE_REQUEST,
+            data
+        };
+    }
+
+    static loadApplicationError(data, error, message) {
+        return {
+            type: reduxActions.LOAD_PROFILE_ERROR,
+            data,
+            error,
+            message
+        };
+    }
+
+    static loadApplicationSuccess(data, message) {
+        return {
+            type: reduxActions.LOAD_PROFILE_SUCCESS,
+            data,
+            message
+        };
+    }
 }

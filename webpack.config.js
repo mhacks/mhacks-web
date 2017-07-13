@@ -10,7 +10,7 @@ let cssExtractor = new ExtractTextWebpackPlugin('./[name].css');
 let lifecycleEvent = process.env.npm_lifecycle_event;
 
 let devConfig = {
-    entry: './app/app.jsx',
+    entry: ['babel-polyfill', './app/app.jsx'],
     output: {
         publicPath: '/',
         path: path.resolve('./build'),
@@ -75,7 +75,7 @@ let devConfig = {
 };
 
 let buildConfig = {
-    entry: './app/app.jsx',
+    entry: ['babel-polyfill', './app/app.jsx'],
     output: {
         publicPath: '/',
         path: path.resolve('./build'),
@@ -96,8 +96,8 @@ let buildConfig = {
             {
                 test: /\.css$/,
                 use: cssExtractor.extract({
-                    fallbackLoader: 'style-loader',
-                    loader: 'css-loader',
+                    fallback: 'style-loader',
+                    use: 'css-loader',
                     allChunks: true
                 })
             },
@@ -121,13 +121,14 @@ let buildConfig = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"production"'
         }),
-        new CleanWebpackPlugin(['build/fonts', 'build/js', 'build/styles', 'build/index.html']),
+        new CleanWebpackPlugin(['build/logo.png', 'build/fonts', 'build/js', 'build/styles', 'build/index.html']),
         cssExtractor,
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true,
             minimize: true
         }),
         new CopyWebpackPlugin([
+            { from: './static/icons/x-logo.png', to: './logo.png' },
             {context: './app/favicon/', from: '**/*', to: './favicon/'},
             {context: './app/fonts/', from: '**/*', to: './fonts/'}
         ]),
