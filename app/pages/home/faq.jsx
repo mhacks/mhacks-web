@@ -201,7 +201,7 @@ class Faq extends React.Component {
                                         All bus schedules will be released closer to the event."
                                     />
                                     <FaqItem
-                                        header="What if I’m an International Student?"
+                                        header="What if I’m an international student?"
                                         body={
                                             <span>
                                                 If you go to school in
