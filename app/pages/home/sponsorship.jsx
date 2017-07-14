@@ -81,7 +81,9 @@ const LogoImg = styled.img`
 
 const Logo = props =>
     <LogoWrapper>
-        <LogoImg src={props.src} />
+        <a href={props.href}>
+            <LogoImg src={props.src} />
+        </a>
     </LogoWrapper>;
 
 class Sponsorship extends React.Component {
@@ -128,14 +130,29 @@ class Sponsorship extends React.Component {
 
                     <SponsorsFlexBox>
                         <Logo src={BloombergImg} />
-                        <Logo src={DRWImg} />
-                        <Logo src={FacebookImg} />
-                        <Logo src={ICSImg} />
-                        <Logo src={LTSImg} />
-                        <Logo src={LyftImg} />
-                        <Logo src={MicrosoftImg} />
-                        <Logo src={NSAImg} />
-                        <Logo src={PalantirImg} />
+                        <Logo src={DRWImg} href="https://drw.com/evolve" />
+                        <Logo
+                            src={FacebookImg}
+                            href="https://www.facebook.com/careers/"
+                        />
+                        <Logo
+                            src={ICSImg}
+                            href="http://www.controls-ics.com/"
+                        />
+                        <Logo src={LTSImg} href="https://www.ltsnet.net/" />
+                        <Logo src={LyftImg} href="https://www.lyft.com/jobs" />
+                        <Logo
+                            src={MicrosoftImg}
+                            href="https://careers.microsoft.com/"
+                        />
+                        <Logo
+                            src={NSAImg}
+                            href="https://www.intelligencecareers.gov/nsa/"
+                        />
+                        <Logo
+                            src={PalantirImg}
+                            href="https://www.palantir.com/careers/"
+                        />
                     </SponsorsFlexBox>
                 </CenteredContainer>
             </Wrapper>
