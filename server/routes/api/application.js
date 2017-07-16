@@ -3,6 +3,7 @@ var router = require('express').Router(),
     User = require('../../db/model/User.js'),
     Application = require('../../db/model/Application.js'),
     config = require('../../../config/default.js'),
+    authMiddleware = require('../../middleware/auth.js'),
     uploadHelper = require('../../interactors/multer-s3.js')(
         config.AWS_BUCKET_NAME
     );
@@ -91,21 +92,22 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
         });
 });
 
-router.get('/', function(req, res) {
-    Application.find()
-        .byToken(req.authToken)
-        .then(application => {
-            res.send({
-                status: true,
-                application: application || {}
-            });
-        })
-        .catch(() => {
-            res.send({
-                status: false,
-                message: Responses.UNKNOWN_ERROR
-            });
+// Returns all applications
+router.get('/', authMiddleware('admin', 'api'), function(req, res) {
+    Application.find().then((applications) => {
+        res.send({
+            status: true,
+            applications: applications
         });
+
+    })
+    .catch((err) => {
+        console.error(err);
+        res.send({
+            status: false,
+            message: Responses.UNKNOWN_ERROR
+        });
+    });
 });
 
 module.exports = router;

@@ -6,6 +6,7 @@ import { subscribeState } from './subscribe.js';
 import { userState } from './user.js';
 import { announcementsState } from './announcements.js';
 import { configurationState } from './configuration.js';
+import { adminState } from './admin.js';
 
 const rootReducer = combineReducers({
     router: routerReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     userState,
     announcementsState,
     configurationState,
+    adminState,
     tacoState: {
         wow: true
     }

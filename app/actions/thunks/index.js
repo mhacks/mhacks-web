@@ -4,6 +4,7 @@ import ProfileThunks from './profile.js';
 import ApplicationThunks from './application.js';
 import AnnouncementsThunks from './announcements.js';
 import ConfigurationThunks from './configuration.js';
+import AdminThunks from './admin.js';
 
 export {
     SubscribeThunks,
@@ -11,5 +12,6 @@ export {
     ProfileThunks,
     ApplicationThunks,
     AnnouncementsThunks,
-    ConfigurationThunks
+    ConfigurationThunks,
+    AdminThunks
 };

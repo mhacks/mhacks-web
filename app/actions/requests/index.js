@@ -4,6 +4,7 @@ import ProfileRequests from './profile.js';
 import ApplicationRequests from './application.js';
 import AnnouncementsRequests from './announcements.js';
 import ConfigurationRequests from './configuration.js';
+import AdminRequests from './admin.js';
 
 export {
     SubscribeRequests,
@@ -11,5 +12,6 @@ export {
     ProfileRequests,
     ApplicationRequests,
     AnnouncementsRequests,
-    ConfigurationRequests
+    ConfigurationRequests,
+    AdminRequests
 };

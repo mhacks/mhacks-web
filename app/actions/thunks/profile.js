@@ -17,6 +17,9 @@ export default class ProfileThunks {
                             isEmailVerified: user.email_verified,
                             isApplicationSubmitted: user.application_submitted,
                             isLoggedIn: true,
+                            isAdmin: user.groups && user.groups.indexOf('admin') !== -1,
+                            isReader: user.groups && user.groups.indexOf('reader') !== -1,
+                            isSponsor: user.groups && user.groups.indexOf('sponsor') !== -1,
                             user: {
                                 name: user.full_name,
                                 groups: user.groups,
