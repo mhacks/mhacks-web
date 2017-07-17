@@ -1,6 +1,110 @@
 var router = require('express').Router(),
+    validator = require('validator'),
     Responses = require('../../responses/api'),
-    User = require('../../db/model/User.js');
+    authMiddleware = require('../../middleware/auth.js'),
+    User = require('../../db/model/User.js'),
+    config = require('../../../config/default.js'),
+    uploadHelper = require('../../interactors/multer-s3.js')(
+        config.AWS_BUCKET_NAME
+    );
+
+router.post(
+    '/profile',
+    authMiddleware('any', 'api', true),
+    uploadHelper.fields([{ name: 'avatar' }, { name: 'resume' }]),
+    function(req, res) {
+        User.find()
+            .byToken(req.authToken)
+            .exec()
+            .then(user => {
+                var updateable_fields = [
+                    'full_name',
+                    'email',
+                    'password',
+                    'avatar',
+                    'birthday',
+                    'university',
+                    'major',
+                    'resume',
+                    'github',
+                    'linkedin',
+                    'devpost',
+                    'portfolio',
+                    'tshirt',
+                    'race',
+                    'sex'
+                ];
+                var fields = {};
+                var sendVerificationEmail = false;
+                var sendPasswordChangedEmail = false;
+
+                if (req.files && req.files.resume) {
+                    req.body.resume =
+                        req.files.resume[0].location ||
+                        '/uploads/ ' + req.files.resume[0].filename;
+                }
+
+                if (req.files && req.files.avatar) {
+                    req.body.avatar =
+                        req.files.avatar[0].location ||
+                        '/uploads/ ' + req.files.avatar[0].filename;
+                }
+
+                for (var i in req.body) {
+                    if (i === 'email') {
+                        if (!validator.isEmail(req.body.email)) {
+                            continue;
+                        } else {
+                            sendVerificationEmail = true;
+                            req.email = req.body.email;
+                        }
+                    }
+
+                    if (i === 'password') {
+                        if (
+                            req.body.current_password &&
+                            user.checkPassword(req.body.current_password)
+                        ) {
+                            sendPasswordChangedEmail = true;
+                        } else {
+                            continue;
+                        }
+                    }
+
+                    if (i === 'birthday') {
+                        if (!parseInt(req.body[i])) {
+                            continue;
+                        }
+                    }
+
+                    if (updateable_fields.indexOf(i) !== -1) {
+                        fields[i] = req.body[i];
+                    }
+                }
+
+                user.updateFields(fields);
+
+                if (sendVerificationEmail) {
+                    user.sendVerificationEmail();
+                }
+
+                if (sendPasswordChangedEmail) {
+                    //TODO do stuff
+                }
+
+                res.send({
+                    status: true,
+                    message: fields
+                });
+            })
+            .catch(() => {
+                res.send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
+            });
+    }
+);
 
 // Handles /v1/user/profile
 router.get('/profile', function(req, res) {
@@ -8,21 +112,17 @@ router.get('/profile', function(req, res) {
         .byToken(req.authToken)
         .exec()
         .then(user => {
-            var groups = [];
-
-            user.groups.forEach(function(data) {
-                groups.push(data.name);
-            });
-
-            res.send({
-                status: true,
-                user: {
-                    email: user.email,
-                    full_name: user.full_name,
-                    birthday: user.birthday,
-                    groups: groups
-                }
-            });
+            if (user) {
+                res.send({
+                    status: true,
+                    user: user.getProfile()
+                });
+            } else {
+                res.send({
+                    status: false,
+                    user: {}
+                });
+            }
         })
         .catch(() => {
             res.send({

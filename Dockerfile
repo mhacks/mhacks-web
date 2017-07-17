@@ -1,4 +1,4 @@
-FROM node
+FROM node:8
 
 MAINTAINER MHacks Team
 
@@ -7,12 +7,11 @@ WORKDIR /usr/src/app
 
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
-COPY package.json /usr/src/app/
-COPY yarn.lock /usr/src/app/
-RUN yarn install
-RUN npm install -g nodemon
 COPY . /usr/src/app
+RUN yarn install
+RUN yarn run build
+RUN npm install -g nodemon
 
-CMD ["yarn", "run", "startprod"]
+CMD ["yarn", "start"]
 
 EXPOSE 3000

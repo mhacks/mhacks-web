@@ -1,4 +1,5 @@
-var mongoose = require('mongoose'), config = require('../../config/default.js');
+var mongoose = require('mongoose'),
+    config = require('../../config/default.js');
 
 // Initialize a promise handler (even though we don't currently use them)
 mongoose.Promise = global.Promise;

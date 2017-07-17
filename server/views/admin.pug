@@ -1,0 +1,380 @@
+extends index.pug
+
+block mainScript
+    script.
+        $(document).ready(function () {
+            user_table = $('#user-table').DataTable({
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+            user_table.buttons().container().appendTo('#user-table_wrapper .col-sm-6:eq(0)');
+
+            application_table = $('#application-table').DataTable({
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+            application_table.buttons().container().appendTo('#application-table_wrapper .col-sm-6:eq(0)');
+
+            announcements_table = $('#announcements-table').DataTable({
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+            announcements_table.buttons().container().appendTo('#announcements-table_wrapper .col-sm-6:eq(0)');
+
+            shorteners_table = $('#shorteners-table').DataTable({
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+            shorteners_table.buttons().container().appendTo('#shorteners-table_wrapper .col-sm-6:eq(0)');
+
+            $('#createAction').click(function (e) {
+                e.preventDefault();
+
+                $.post('/v1/announcements', {
+                    title: $('#title').val(),
+                    body: $('#body').val(),
+                    broadcastTime: $('#broadcastTime').val() || new Date(),
+                    category: $('#category').val(),
+                    isApproved: $('#approved').is(':checked'),
+                    isSent: $('#sent').is(':checked')
+                }, function (data) {
+                    console.log(data);
+                    window.location.reload();
+                });
+            });
+
+            $('#createShortener').click(function (e) {
+                e.preventDefault();
+
+                $.post('/v1/shortener', {
+                    url: $('#url').val(),
+                    short_code: $('#short_code').val()
+                }, function (data) {
+                    console.log(data);
+                    window.location.reload();
+                });
+            });
+
+            $('#addUserGroup').click(function (e) {
+                e.preventDefault();
+
+                $.post('/v1/admin/user/groups', {
+                    email: $('#email').val(),
+                    group: $('#group_name').val()
+                }, function (data) {
+                    console.log(data);
+                    window.location.reload();
+                });
+            });
+
+            $('#removeUserGroup').click(function (e) {
+                e.preventDefault();
+
+                $.post('/v1/admin/user/groups', {
+                    email: $('#email').val(),
+                    group: $('#group_name').val(),
+                    remove: true
+                }, function (result) {
+                    console.log(result);
+                    window.location.reload();
+                });
+            });
+        });
+
+        function sendVerificationEmail(email) {
+            $.post('/v1/auth/verify', {
+                email: email
+            }, function (data) {
+                console.log(data);
+            });
+        }
+
+        function setIsSent(id, sent) {
+            $.ajax({
+                url: '/v1/announcements',
+                type: 'PUT',
+                json: true,
+                data: {
+                    id: id,
+                    isSent: sent
+                },
+                success: function (result) {
+                    console.log(result);
+                    window.location.reload();
+                }
+            });
+            console.log(id, sent);
+        }
+
+        function setIsApproved(id, approved) {
+            $.ajax({
+                url: '/v1/announcements',
+                type: 'PUT',
+                json: true,
+                data: {
+                    id: id,
+                    isApproved: approved
+                },
+                success: function (result) {
+                    console.log(result);
+                    window.location.reload();
+                }
+            });
+            console.log(id, approved);
+        }
+
+append navigation
+    li.active
+        a(href='/portal/admin') Home
+    li
+        a(href='/portal/sponsor') Sponsor
+    li
+        a(href='/portal/reader') Reader
+    li
+        a(href='#applications') Applications
+    li
+        a(href='#users') Users
+
+append pageContent
+    .container(style='padding-top: 60px;')
+        .row
+            div#users
+                h2='Users:'
+                table#user-table.table.table-responsive.table-striped.table-bordered.dt-responsive.nowrap(cellspacing='0', width='100%')
+                    thead#table-head-unchained
+                        tr#table-head-row-unchained
+                            th='#'
+                            th='Full Name'
+                            th='Email'
+                            th='Email Verified'
+                            th='Application Submitted'
+                            th='Birthday'
+                            th='Account Created'
+                            th='Major'
+                            th='University'
+                            th='Avatar'
+                            th='Resume'
+                            th='GitHub'
+                            th='LinkedIn'
+                            th='Devpost'
+                            th='Portfolio'
+                            th='T-Shirt'
+                            th='Race'
+                            th='Sex'
+                            th='Groups'
+                    tbody
+                        each val, index in users
+                            - var birthday = new Date(val.birthday)
+                            - var created_at = new Date(val.created_at)
+                            tr#table-body-row-unchained
+                                th=(index + 1)
+                                td=val.full_name ? val.full_name.substr(0, 30) + (val.full_name.substr(0, 30).length < val.full_name.length ? '...' : '') : ''
+                                td=val.email
+                                td
+                                    if val.email_verified
+                                        i.fa.fa-check(style='color: #2ECC40')
+                                    else
+                                        a(style='cursor: pointer;' onclick='sendVerificationEmail("' + val.email + '");')
+                                            i.fa.fa-times(style='color: #FF4136')
+                                td
+                                    if val.application_submitted
+                                        i.fa.fa-check(style='color: #2ECC40')
+                                    else
+                                        i.fa.fa-times(style='color: #FF4136')
+                                td=val.birthday ? (birthday.getUTCMonth() + 1) + '/' + birthday.getUTCDate() + '/' + birthday.getUTCFullYear() : ''
+                                td=(created_at.getUTCMonth() + 1) + '/' + created_at.getUTCDate() + '/' + created_at.getUTCFullYear()
+                                td=val.major ? val.major.substr(0, 30) + (val.major.substr(0, 30).length < val.major.length ? '...' : '') : ''
+                                td=val.university ? val.university.substr(0, 30) + (val.university.substr(0, 30).length < val.university.length ? '...' : '') : ''
+                                td
+                                    each url in val.getAvatars()
+                                        img(src=url, onerror='$(this).hide()', height='50px', width='50px')
+                                if val.resume
+                                    td
+                                        - var resume = val.getResume()
+                                        - var name = val.resume.split('.').pop().toUpperCase()
+                                        a(href=resume) #{name}
+                                else
+                                    td
+                                        i.fa.fa-times(style='color: #FF4136')
+                                td
+                                    a(href=val.github) #{val.github}
+                                td
+                                    a(href=val.linkedin) #{val.linkedin}
+                                td
+                                    a(href=val.devpost) #{val.devpost}
+                                td
+                                    a(href=val.portfolio) #{val.portfolio}
+                                td=val.tshirt ? val.tshirt.toUpperCase() : ''
+                                td=val.race
+                                td=val.sex
+                                td=val.getGroupsList().join(', ')
+            div#applications
+                h2='Applications:'
+                table#application-table.table.table-responsive.table-striped.table-bordered.dt-responsive.nowrap(cellspacing='0', width='100%')
+                    thead#table-head-unchained-2
+                        tr#table-head-row-unchained-2
+                            th='#'
+                            th='User'
+                            th='Birthday'
+                            th='Application Submitted'
+                            th='Major'
+                            th='University'
+                            th='T-Shirt'
+                            th='Experience'
+                            th='Resume'
+                            th='GitHub'
+                            th='LinkedIn'
+                            th='Devpost'
+                            th='Portfolio'
+                            th='Race'
+                            th='Sex'
+                            th='Why MHacks?'
+                            th='Favorite memory?'
+                            th='Anything else?'
+                            th='Needs Reimbursement?'
+                            th='Departing From'
+                            th='Requested Reimbursement'
+                    tbody
+                        each val, index in applications
+                            - var birthday = new Date(val.birthday)
+                            - var created_at = new Date(val.created_at)
+                            tr#table-body-row-unchained
+                                th=(index + 1)
+                                td=val.user
+                                td=val.birthday ? (birthday.getUTCMonth() + 1) + '/' + birthday.getUTCDate() + '/' + birthday.getUTCFullYear() : ''
+                                td=(created_at.getUTCMonth() + 1) + '/' + created_at.getUTCDate() + '/' + created_at.getUTCFullYear()
+                                td=val.major ? val.major.substr(0, 30) + (val.major.substr(0, 30).length < val.major.length ? '...' : '') : ''
+                                td=val.university ? val.university.substr(0, 30) + (val.university.substr(0, 30).length < val.university.length ? '...' : '') : ''
+                                td=val.tshirt ? val.tshirt.toUpperCase() : ''
+                                td=val.experience
+                                if val.resume
+                                    td
+                                        - var resume = val.getResume()
+                                        - var name = val.resume.split('.').pop().toUpperCase()
+                                        a(href=resume) #{name}
+                                else
+                                    td
+                                        i.fa.fa-times(style='color: #FF4136')
+                                td
+                                    a(href=val.github) #{val.github}
+                                td
+                                    a(href=val.linkedin) #{val.linkedin}
+                                td
+                                    a(href=val.devpost) #{val.devpost}
+                                td
+                                    a(href=val.portfolio) #{val.portfolio}
+                                td=val.race
+                                td=val.sex
+                                td=val.why_mhacks
+                                td=val.favorite_memory
+                                td=val.anything_else
+                                td=val.needs_reimbursement
+                                td=val.departing_from
+                                td=val.requested_reimbursement
+            div#announcements
+                h2='Announcements:'
+                table#announcements-table.table.table-responsive.table-striped.table-bordered.dt-responsive.nowrap(cellspacing='0', width='100%')
+                    thead#table-head-unchained-3
+                        tr#table-head-row-unchained-3
+                            th='#'
+                            th='Title'
+                            th='Body'
+                            th='Category'
+                            th='Sent'
+                            th='Approved'
+                            th='Broadcast Time'
+                    tbody
+                        each val, index in announcements
+                            - var broadcastTime = new Date(val.broadcastTime)
+                            tr#table-body-row-unchained
+                                th=(index + 1)
+                                td=val.title
+                                td=val.body
+                                td=val.category
+                                td
+                                    if val.isSent
+                                        a(style='cursor: pointer;' onclick='setIsSent("' + val._id + '", false);')
+                                            i.fa.fa-check(style='color: #2ECC40')
+                                    else
+                                        a(style='cursor: pointer;' onclick='setIsSent("' + val._id + '", true);')
+                                            i.fa.fa-times(style='color: #FF4136')
+                                td
+                                    if val.isApproved
+                                        a(style='cursor: pointer;' onclick='setIsApproved("' + val._id + '", false);')
+                                            i.fa.fa-check(style='color: #2ECC40')
+                                    else
+                                        a(style='cursor: pointer;' onclick='setIsApproved("' + val._id + '", true);')
+                                            i.fa.fa-times(style='color: #FF4136')
+                                td=broadcastTime
+                form()
+                    div.form-group
+                        label(for='title') Title:
+                        input#title.form-control(type='text', placeholder='Super Announcement' name='title')
+                    div.form-group
+                        label(for='body') Body:
+                        input#body.form-control(type='text', placeholder='Super Body' name='body')
+                    div.form-group
+                        label(for='broadcastTime') Broadcast Time:
+                        input#broadcastTime.form-control(type='text', placeholder=new Date() name='broadcastTime')
+                    div.form-group
+                        label(for='category') Category:
+                        select#category.form-control(name='category')
+                            option(value='Emergency') Emergency
+                            option(value='Logistics') Logistics
+                            option(value='Food') Food
+                            option(value='Event') Event
+                            option(value='Sponsored') Sponsored
+                    div.form-group
+                        label(for='sent') Sent:
+                        input#sent.form-control(type='checkbox' checked name='sent')
+                    div.form-group
+                        label(for='approved') Approved:
+                        input#approved.form-control(type='checkbox' checked name='approved')
+                    button.btn.btn-primary(type='submit' id='createAction') Create
+            div#shorteners
+                h2='Shorteners:'
+                table#shorteners-table.table.table-responsive.table-striped.table-bordered.dt-responsive.nowrap(cellspacing='0', width='100%')
+                    thead#table-head-unchained-4
+                        tr#table-head-row-unchained-4
+                            th='#'
+                            th='Code'
+                            th='Short URL'
+                            th='Long URL'
+                            th='Clicks'
+                            th='Created At'
+                    tbody
+                        each val, index in shorteners
+                            - var createdTime = new Date(val.created_at)
+                            tr#table-body-row-unchained
+                                th=(index + 1)
+                                td=val.short_code
+                                td
+                                    a(href=val.short_url)=val.short_url
+                                td
+                                    a(href=val.long_url)=val.long_url
+                                td=val.clicks.length
+                                td=createdTime
+                form()
+                    div.form-group
+                        label(for='url') Long URL:
+                        input#url.form-control(type='text', placeholder='https://google.com' name='url')
+                    div.form-group
+                        label(for='short_code') Short Code:
+                        input#short_code.form-control(type='text', placeholder='INCLUDE THIS ONLY IF YOU WANT TO CHOOSE THE SHORT CODE' name='short_code')
+                    button.btn.btn-primary(type='submit' id='createShortener') Create
+            div#user_groups
+                h2='User Groups:'
+                form()
+                    div.form-group
+                        label(for='email') Email:
+                        input#email.form-control(type='text', placeholder='tech@mhacks.org' name='email')
+                    div.form-group
+                        label(for='group_name') Group Name:
+                        input#group_name.form-control(type='text', placeholder='admin, sponsor, reader, etc.' name='group_name')
+                    div.btn-toolbar
+                        button.btn.btn-primary(type='submit' id='addUserGroup') Add Group
+                        button.btn.btn-danger(type='submit' id='removeUserGroup') Delete Group

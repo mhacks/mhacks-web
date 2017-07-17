@@ -27,7 +27,6 @@ const Text = styled.h2`
     textAlign: center;
     minWidth: 100%;
     order: 1;
-
     ${devices.tablet`
         textAlign: left;
         minWidth: 0;
@@ -47,11 +46,9 @@ const Flexer = styled.div`
     display: flex;
     justifyContent: center;
     minWidth: 100%;
-
     ${devices.tablet`
         textAlign: left;
         minWidth: 0;
-
         ${props => (props.right ? 'justifyContent: flex-end;' : '')}
     `}
 `;
@@ -69,13 +66,12 @@ const ImgButtonWrapper = styled.div`
     display: block;
 `;
 
-const ImgButton = props => (
+const ImgButton = props =>
     <ImgButtonWrapper>
         <a href={props.href}>
             <Img100 {...props} />
         </a>
-    </ImgButtonWrapper>
-);
+    </ImgButtonWrapper>;
 
 class BlackoutFooter extends React.Component {
     render() {

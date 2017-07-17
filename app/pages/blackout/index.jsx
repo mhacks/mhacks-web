@@ -18,6 +18,7 @@ const Page = styled.div`
     width: 100%;
     height: 100%;
     color: #F1F7FF;
+    overflowX: hidden;
 `;
 
 /* Styled elements */

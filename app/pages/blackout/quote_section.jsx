@@ -27,7 +27,7 @@ const Quote = styled.div`
     position: relative;
     color: ${props => props.color};
     float: ${props => (props.position === 'left' ? 'left' : 'right')};
-    zIndex: 1;
+    zIndex: 10;
     letter-spacing: 3px;
     fontSize: 2.0em;
     textAlign: left;
@@ -45,7 +45,7 @@ const StartWrapper = styled.img`
     position: absolute;
     height: 20%;
     width: auto;
-    zIndex: 1;
+    zIndex: 10;
     visibility: hidden;
     left: 0;
     top: 0;
@@ -108,19 +108,20 @@ const CompanyName = styled.div`
     `}
 `;
 
-export default () => (
+export default () =>
     <Wrapper>
         <QuoteSection>
             <StartWrapper src={StartIcon} />
             <EndWrapper src={EndIcon} />
             <Quote color={props => props.theme.darkPink} position="left">
-                This was one of the most well organized student-run hackathons that we’ve ever sponsored.
+                This was one of the most well organized student-run hackathons
+                that we’ve ever sponsored.
             </Quote>
             <CompanyName position="left">Google</CompanyName>
             <Quote color={props => props.theme.darkPink} position="right">
-                The caliber and number of students that MHacks attracts is like no other hacking event.
+                The caliber and number of students that MHacks attracts is like
+                no other hacking event.
             </Quote>
             <CompanyName position="right" dark> Walmart </CompanyName>
         </QuoteSection>
-    </Wrapper>
-);
+    </Wrapper>;

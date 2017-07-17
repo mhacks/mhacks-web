@@ -20,5 +20,10 @@ services:
       - MANDRILL_TOKEN
       - HOST
       - DEPLOYMENT_SECRET
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - NEWRELIC_ENABLED
+      - NEWRELIC_APP_NAME
+      - NEWRELIC_LICENSE_KEY
     links:
       - mhacks_db
