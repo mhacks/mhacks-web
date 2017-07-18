@@ -49,9 +49,16 @@ var schema = new mongoose.Schema({
     needs_reimbursement: Boolean,
     departing_from: String,
     requested_reimbursement: Number,
-    status: {
-        type: String,
-        enum: ['unread', 'waitlisted', 'accepted']
+    review: {
+        status: {
+            type: String,
+            enum: ['unread', 'waitlisted', 'accepted'],
+            default: 'unread'
+        },
+        score: Number,
+        reader: String,
+        reimbursement: Number,
+        review_notes: String
     }
 });
 

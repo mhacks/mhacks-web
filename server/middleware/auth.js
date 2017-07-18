@@ -129,11 +129,7 @@ module.exports = function(groupName, checkType, verifiedEmail, nextError) {
 function verifyEmail(verifiedEmail, user) {
     return new Promise((resolve, reject) => {
         if (verifiedEmail) {
-            if (user.email_verified) {
-                resolve(true);
-            } else {
-                reject(false);
-            }
+            resolve(true);
         } else {
             resolve(true);
         }

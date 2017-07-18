@@ -93,7 +93,26 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
 });
 
 // Returns all applications
-router.get('/', authMiddleware('admin', 'api'), function(req, res) {
+router.get('/', function(req, res) {
+    Application.find({}, '-_id -__v -review')
+        .byToken(req.authToken)
+        .then(application => {
+            res.send({
+                status: true,
+                application: application || {}
+            });
+        })
+        .catch(() => {
+            res.send({
+                status: false,
+                message: Responses.UNKNOWN_ERROR
+            });
+        });
+});
+
+
+// Returns all applications
+router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
     Application.find().then((applications) => {
         res.send({
             status: true,
