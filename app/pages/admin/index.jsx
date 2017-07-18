@@ -42,7 +42,7 @@ class AdminPage extends React.Component {
             score: 0,
             reimbursement: 0,
             selected: []
-        }
+        };
 
         this.handleAttributeChange = this.handleAttributeChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -71,17 +71,30 @@ class AdminPage extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
+
+        const { selected, status, score, reimbursement } = this.state;
+
+        this.props.dispatch(
+            AdminThunks.reviewApplications({
+                users: selected,
+                status,
+                score,
+                reimbursement
+            })
+        );
     }
 
     generateColumns(selected) {
-        return  [
+        return [
             {
                 Header: 'Select',
                 columns: [
                     {
                         Header: '',
-                        Cell: (row) => {
-                            const isSelected = selected.includes(row.original.user);
+                        Cell: row => {
+                            const isSelected = selected.includes(
+                                row.original.user
+                            );
                             return (
                                 <input
                                     type="checkbox"
@@ -102,11 +115,7 @@ class AdminPage extends React.Component {
                     {
                         Header: 'Submitted',
                         accessor: 'created_at',
-                        Cell: (row) => (
-                            <FormattedRelative
-                                value={row.value}
-                            />
-                        )
+                        Cell: row => <FormattedRelative value={row.value} />
                     }
                 ]
             },
@@ -129,7 +138,7 @@ class AdminPage extends React.Component {
                         Header: 'Minor',
                         accessor: 'birthday',
                         width: 60,
-                        Cell: (row) => {
+                        Cell: row => {
                             return isMinor(row.value) ? 'Yes' : 'No';
                         }
                     }
@@ -142,40 +151,46 @@ class AdminPage extends React.Component {
                         Header: 'R',
                         accessor: 'resume',
                         width: 30,
-                        Cell: (row) => (
-                            <A href={row.value}>R</A>
-                        )
+                        Cell: row => <A href={row.value}>R</A>
                     },
                     {
                         Header: 'G',
                         accessor: 'github',
                         width: 30,
-                        Cell: (row) => {
-                            return row.value.length > 0 ? <A href={row.value}>G</A> : null;
+                        Cell: row => {
+                            return row.value.length > 0
+                                ? <A href={row.value}>G</A>
+                                : null;
                         }
                     },
                     {
                         Header: 'L',
                         accessor: 'linkedin',
                         width: 30,
-                        Cell: (row) => {
-                            return row.value.length > 0 ? <A href={row.value}>L</A> : null;
+                        Cell: row => {
+                            return row.value.length > 0
+                                ? <A href={row.value}>L</A>
+                                : null;
                         }
                     },
                     {
                         Header: 'D',
                         accessor: 'devpost',
                         width: 30,
-                        Cell: (row) => {
-                            return row.value.length > 0 ? <A href={row.value}>D</A> : null;
+                        Cell: row => {
+                            return row.value.length > 0
+                                ? <A href={row.value}>D</A>
+                                : null;
                         }
                     },
                     {
                         Header: 'P',
                         accessor: 'portfolio',
                         width: 30,
-                        Cell: (row) => {
-                            return row.value.length > 0 ? <A href={row.value}>P</A> : null;
+                        Cell: row => {
+                            return row.value.length > 0
+                                ? <A href={row.value}>P</A>
+                                : null;
                         }
                     }
                 ]
@@ -183,49 +198,40 @@ class AdminPage extends React.Component {
         ];
     }
 
-
     render() {
         return (
             <PageContainer ref="pagecontainer">
                 <HeaderSection>
                     <div>toggles go here</div>
                     <form onSubmit={this.onSubmit}>
-                      <LabeledInput label="Status">
-                          <select
-                              name="status"
-                              value={this.state.status}
-                              onChange={
-                                  this.handleAttributeChange
-                              }
-                          >
-                              <option value="unread">Unread</option>
-                              <option value="waitlisted">Waitlisted</option>
-                              <option value="accepted">Accepted</option>
-                          </select>
-                      </LabeledInput>
-                      <LabeledInput label="Score">
-                          <input
-                              name="score"
-                              type="number"
-                              value={this.state.score}
-                              onChange={
-                                  this.handleAttributeChange
-                              }
-                          />
-                      </LabeledInput>
-                      <LabeledInput label="Reimbursement">
-                          <input
-                              name="reimbursement"
-                              type="number"
-                              value={this.state.reimbursement}
-                              onChange={
-                                  this.handleAttributeChange
-                              }
-                          />
-                      </LabeledInput>
-                        <RoundedButton
-                            type="submit" 
-                        >
+                        <LabeledInput label="Status">
+                            <select
+                                name="status"
+                                value={this.state.status}
+                                onChange={this.handleAttributeChange}
+                            >
+                                <option value="unread">Unread</option>
+                                <option value="waitlisted">Waitlisted</option>
+                                <option value="accepted">Accepted</option>
+                            </select>
+                        </LabeledInput>
+                        <LabeledInput label="Score">
+                            <input
+                                name="score"
+                                type="number"
+                                value={this.state.score}
+                                onChange={this.handleAttributeChange}
+                            />
+                        </LabeledInput>
+                        <LabeledInput label="Reimbursement">
+                            <input
+                                name="reimbursement"
+                                type="number"
+                                value={this.state.reimbursement}
+                                onChange={this.handleAttributeChange}
+                            />
+                        </LabeledInput>
+                        <RoundedButton type="submit">
                             Save
                         </RoundedButton>
                     </form>
@@ -233,7 +239,7 @@ class AdminPage extends React.Component {
                 <ReactTable
                     data={this.props.adminState.data.applications}
                     columns={this.generateColumns(this.state.selected)}
-                    SubComponent={(row) => {
+                    SubComponent={row => {
                         const data = row.original;
                         return (
                             <div>

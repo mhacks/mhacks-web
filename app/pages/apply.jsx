@@ -857,7 +857,7 @@ class Apply extends React.Component {
                                     <FileUploadContainer>
                                         <FileUpload
                                             defaultColor={
-                                               (app && app.resume)
+                                                app && app.resume
                                                     ? this.props.theme.success
                                                     : this.props.theme.primary
                                             }
@@ -879,7 +879,9 @@ class Apply extends React.Component {
                                                 this.handleFileUpload(e);
                                             }}
                                             defaultText={
-                                                (app && app.resume) ? 'Resume Uploaded' : null
+                                                app && app.resume
+                                                    ? 'Resume Uploaded'
+                                                    : null
                                             }
                                         />
 
@@ -888,7 +890,8 @@ class Apply extends React.Component {
                                             ? this.removeError('choosefile')
                                             : this.addError('choosefile')}
 
-                                        {(!(app && app.resume) && !this.state.resume) ||
+                                        {(!(app && app.resume) &&
+                                            !this.state.resume) ||
                                             this.checkError('choosefile')
                                             ? <AlertContainer>
                                                   {this.addError('choosefile')}

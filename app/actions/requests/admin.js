@@ -10,4 +10,15 @@ export default class AdminRequests {
             })
         });
     }
+
+    static reviewApplications(token, body) {
+        return fetch(endpoints.REVIEW_APPLICATIONS, {
+            method: 'post',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token
+            }),
+            body: JSON.stringify(body)
+        });
+    }
 }

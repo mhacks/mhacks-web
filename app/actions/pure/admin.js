@@ -24,4 +24,28 @@ export default class AdminPureActions {
             message
         };
     }
+
+    static reviewApplicationsRequest(data) {
+        return {
+            type: reduxActions.REVIEW_APPLICATIONS_REQUEST,
+            data
+        };
+    }
+
+    static reviewApplicationsError(data, error, message) {
+        return {
+            type: reduxActions.REVIEW_APPLICATIONS_ERROR,
+            data,
+            error,
+            message
+        };
+    }
+
+    static reviewApplicationsSuccess(data, message) {
+        return {
+            type: reduxActions.REVIEW_APPLICATIONS_SUCCESS,
+            data,
+            message
+        };
+    }
 }

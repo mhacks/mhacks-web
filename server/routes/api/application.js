@@ -110,23 +110,22 @@ router.get('/', function(req, res) {
         });
 });
 
-
 // Returns all applications
 router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
-    Application.find().then((applications) => {
-        res.send({
-            status: true,
-            applications: applications
+    Application.find()
+        .then(applications => {
+            res.send({
+                status: true,
+                applications: applications
+            });
+        })
+        .catch(err => {
+            console.error(err);
+            res.send({
+                status: false,
+                message: Responses.UNKNOWN_ERROR
+            });
         });
-
-    })
-    .catch((err) => {
-        console.error(err);
-        res.send({
-            status: false,
-            message: Responses.UNKNOWN_ERROR
-        });
-    });
 });
 
 module.exports = router;

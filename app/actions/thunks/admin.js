@@ -32,4 +32,36 @@ export default class AdminThunks {
             });
         };
     }
+
+    static reviewApplications(body) {
+        return dispatch => {
+            dispatch(AdminPureActions.reviewApplicationsRequest(body));
+
+            const token = localStorage.getItem('jwt');
+
+            return AdminRequests.reviewApplications(
+                token,
+                body
+            ).then(response => {
+                if (response.status == 200) {
+                    response.json().then(json => {
+                        dispatch(
+                            AdminPureActions.reviewApplicationsSuccess(
+                                json.message
+                            )
+                        );
+                    });
+                } else {
+                    response.json().then(json => {
+                        dispatch(
+                            AdminPureActions.reviewApplicationsError(
+                                response.status,
+                                json.message
+                            )
+                        );
+                    });
+                }
+            });
+        };
+    }
 }

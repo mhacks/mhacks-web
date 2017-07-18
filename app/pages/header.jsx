@@ -167,11 +167,20 @@ class Header extends React.Component {
         const {
             isLoggedIn,
             isApplicationSubmitted,
-            isEmailVerified,
+            isEmailVerified
         } = userData;
-        const isAdmin = userData.user && userData.user.groups && userData.user.groups.indexOf('admin') !== -1;
-        const isSponsor = userData.user && userData.user.groups && userData.user.groups.indexOf('sponsor') !== -1;
-        const isReader = userData.user && userData.user.groups && userData.user.groups.indexOf('reader') !== -1;
+        const isAdmin =
+            userData.user &&
+            userData.user.groups &&
+            userData.user.groups.indexOf('admin') !== -1;
+        const isSponsor =
+            userData.user &&
+            userData.user.groups &&
+            userData.user.groups.indexOf('sponsor') !== -1;
+        const isReader =
+            userData.user &&
+            userData.user.groups &&
+            userData.user.groups.indexOf('reader') !== -1;
 
         return (
             <div>
@@ -288,7 +297,8 @@ class Header extends React.Component {
                                                         Admin
                                                     </StyledALink>
                                                   : null}
-                                              {isLoggedIn && (isSponsor || isAdmin)
+                                              {isLoggedIn &&
+                                                  (isSponsor || isAdmin)
                                                   ? <StyledALink
                                                         href={
                                                             routes.SPONSOR_PORTAL
@@ -301,7 +311,8 @@ class Header extends React.Component {
                                                         Sponsor
                                                     </StyledALink>
                                                   : null}
-                                              {isLoggedIn && (isReader || isAdmin)
+                                              {isLoggedIn &&
+                                                  (isReader || isAdmin)
                                                   ? <StyledALink
                                                         href={
                                                             routes.READER_PORTAL
