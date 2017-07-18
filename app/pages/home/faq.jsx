@@ -36,14 +36,14 @@ const ExpandingItemWrapper = styled.div`
 const FlexBox = styled.div`
     display: flex;
     flexDirection: column;
-    
+
     ${devices.tablet`
         flexDirection: row;
     `}
 `;
 
 const FaqColumn = styled.div`
-    
+
 `;
 
 const FaqBody = styled.div`
@@ -175,8 +175,7 @@ class Faq extends React.Component {
                                 <Section>
                                     <FaqItem
                                         header="What if I don’t have a team or idea?"
-                                        body="Not to worry, most people don’t! We have some great activities planned before and during the event to help
-                                            you meet teammates and start thinking through your ideas."
+                                        body="Not to worry, most people don’t! We have some great activities planned before and during the event to help you meet teammates and start thinking through your ideas."
                                     />
                                     <FaqItem
                                         header="What kind of hardware will there be?"
@@ -227,8 +226,7 @@ class Faq extends React.Component {
                                                 organizers, such as a letter
                                                 of invitation,
                                                 please contact us as soon as
-                                                possible at
-                                                hackathon@umich.edu.
+                                                possible at <Link href="mailto:hackathon@umich.edu>hackathon@umich.edu</Link>.
                                             </span>
                                         }
                                     />
@@ -256,12 +254,14 @@ class Faq extends React.Component {
                                 <Section>
                                     <FaqItem
                                         header="I don’t want to hack, I want to ________!"
-                                        body="If you’re contemplating judging, volunteering, or mentoring, shoot us an email at hackathon@umich.edu. If your company
+                                        body="If you’re contemplating judging, volunteering, or mentoring, shoot us an email at
+                                        <Link href="mailto:hackathon@umich.edu">hackathon@umich.edu</Link>. If your company
                                         is interested in becoming a sponsor, check out the sponsorship section below."
                                     />
                                     <FaqItem
-                                        header="I didn't find my question here..."
-                                        body="If you’ve got something else on your mind, fire it off to hackathon@umich.edu!"
+                                        header="I didn’t find my question here..."
+                                        body="If you’ve got something else on your mind, fire it off to
+                                        <Link href="mailto:hackathon@umich.edu">hackathon@umich.edu</Link>!"
                                     />
                                 </Section>
                             </FaqBody>
