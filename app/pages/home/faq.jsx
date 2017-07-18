@@ -254,14 +254,18 @@ class Faq extends React.Component {
                                 <Section>
                                     <FaqItem
                                         header="I don’t want to hack, I want to ________!"
-                                        body="If you’re contemplating judging, volunteering, or mentoring, shoot us an email at
+                                        body= <span>
+                                          If you’re contemplating judging, volunteering, or mentoring, shoot us an email at
                                         <Link href="mailto:hackathon@umich.edu">hackathon@umich.edu</Link>. If your company
-                                        is interested in becoming a sponsor, check out the sponsorship section below."
+                                        is interested in becoming a sponsor, check out the sponsorship section below.
+                                        </span>
                                     />
                                     <FaqItem
                                         header="I didn’t find my question here..."
-                                        body="If you’ve got something else on your mind, fire it off to
-                                        <Link href="mailto:hackathon@umich.edu">hackathon@umich.edu</Link>!"
+                                        body=<span>
+                                          If you’ve got something else on your mind, fire it off to
+                                          <Link href="mailto:hackathon@umich.edu">hackathon@umich.edu</Link>!
+                                          </span>
                                     />
                                 </Section>
                             </FaqBody>
