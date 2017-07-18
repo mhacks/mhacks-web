@@ -226,7 +226,7 @@ class Faq extends React.Component {
                                                 organizers, such as a letter
                                                 of invitation,
                                                 please contact us as soon as
-                                                possible at <Link href="mailto:hackathon@umich.edu>hackathon@umich.edu</Link>.
+                                                possible at <Link href="mailto:hackathon@umich.edu">hackathon@umich.edu</Link>.
                                             </span>
                                         }
                                     />
