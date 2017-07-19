@@ -3,19 +3,23 @@ var router = require('express').Router(),
     Responses = require('../../responses/api/index.js');
 
 router.post('/', function(req, res) {
-    if (req.body.hasOwnProperty('users') &&
+    if (
+        req.body.hasOwnProperty('users') &&
         req.body.hasOwnProperty('score') &&
         req.body.hasOwnProperty('status') &&
         req.body.hasOwnProperty('reimbursement')
     ) {
         const { users, score, status, reimbursement } = req.body;
-        users.forEach((user) => {
-            Application.findOneAndUpdate({ user }, {
-                status,
-                score,
-                reimbursement,
-                reviewer: req.session.email
-            }).catch((err) => {
+        users.forEach(user => {
+            Application.findOneAndUpdate(
+                { user },
+                {
+                    status,
+                    score,
+                    reimbursement,
+                    reviewer: req.session.email
+                }
+            ).catch(err => {
                 console.error(err);
                 res.send(500).send({
                     status: false,
