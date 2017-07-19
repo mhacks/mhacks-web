@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import { PageContainer, LabeledInput, RoundedButton } from '../../components';
-import { AdminThunks } from '../../actions';
+import { ReaderThunks } from '../../actions';
 import { FormattedRelative } from 'react-intl';
 
 const HeaderSection = styled.div`
@@ -11,6 +11,12 @@ const HeaderSection = styled.div`
     flexDirection: row;
     justifyContent: space-between;
     padding: 10px 20px;
+`;
+
+const SubsectionContainer = styled.div`
+    display: flex;
+    flexDirection: row;
+    padding: 0 20px;
 `;
 
 const A = styled.a`
@@ -33,7 +39,7 @@ function isMinor(birthdate) {
 }
 
 /* Page Component */
-class AdminPage extends React.Component {
+class ReaderPage extends React.Component {
     constructor() {
         super();
 
@@ -50,7 +56,7 @@ class AdminPage extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(AdminThunks.loadApplications());
+        this.props.dispatch(ReaderThunks.loadApplications());
     }
 
     // Generic function for changing state
@@ -63,9 +69,15 @@ class AdminPage extends React.Component {
 
     didSelect(user) {
         return () => {
-            this.setState({
-                selected: this.state.selected.concat(user)
-            });
+            if (this.state.selected.includes(user)) {
+                this.setState({
+                    selected: this.state.selected.filter(ele => ele !== user)
+                });
+            } else {
+                this.setState({
+                    selected: this.state.selected.concat(user)
+                });
+            }
         };
     }
 
@@ -75,7 +87,7 @@ class AdminPage extends React.Component {
         const { selected, status, score, reimbursement } = this.state;
 
         this.props.dispatch(
-            AdminThunks.reviewApplications({
+            ReaderThunks.reviewApplications({
                 users: selected,
                 status,
                 score,
@@ -87,10 +99,11 @@ class AdminPage extends React.Component {
     generateColumns(selected) {
         return [
             {
-                Header: 'Select',
+                Header: '',
                 columns: [
                     {
                         Header: '',
+                        width: 30,
                         Cell: row => {
                             const isSelected = selected.includes(
                                 row.original.user
@@ -116,6 +129,15 @@ class AdminPage extends React.Component {
                         Header: 'Submitted',
                         accessor: 'created_at',
                         Cell: row => <FormattedRelative value={row.value} />
+                    },
+                    {
+                        Header: 'Status',
+                        accessor: 'status'
+                    },
+                    {
+                        Header: 'Score',
+                        accessor: 'score',
+                        width: 60
                     }
                 ]
             },
@@ -123,7 +145,7 @@ class AdminPage extends React.Component {
                 Header: 'User',
                 columns: [
                     {
-                        Header: 'Name',
+                        Header: 'Email',
                         accessor: 'user'
                     },
                     {
@@ -231,25 +253,40 @@ class AdminPage extends React.Component {
                                 onChange={this.handleAttributeChange}
                             />
                         </LabeledInput>
-                        <RoundedButton type="submit">
+                        <RoundedButton
+                            type="submit"
+                            color={this.props.theme.primary}
+                        >
                             Save
                         </RoundedButton>
                     </form>
                 </HeaderSection>
                 <ReactTable
-                    data={this.props.adminState.data.applications}
+                    data={this.props.readerState.data.applications}
                     columns={this.generateColumns(this.state.selected)}
                     SubComponent={row => {
                         const data = row.original;
                         return (
-                            <div>
-                                <h4>Why MHacks?</h4>
-                                <p>{data.why_mhacks}</p>
-                                <h4>Favorite Memory?</h4>
-                                <p>{data.favorite_memory}</p>
-                                <h4>Anything Else?</h4>
-                                <p>{data.anything_else}</p>
-                            </div>
+                            <SubsectionContainer>
+                                <div>
+                                    <h4>Why MHacks?</h4>
+                                    <p>{data.why_mhacks}</p>
+                                    <h4>Favorite Memory?</h4>
+                                    <p>{data.favorite_memory}</p>
+                                    <h4>Anything Else?</h4>
+                                    <p>{data.anything_else}</p>
+                                    <h4>Departing From</h4>
+                                    <p>{data.departing_from}</p>
+                                    <h4>Requested Reimbursement</h4>
+                                    <p>{data.requested_reimbursement}</p>
+                                    <h4>race</h4>
+                                    <p>{data.race}</p>
+                                    <h4>sex</h4>
+                                    <p>{data.sex}</p>
+                                    <h4>tshirt</h4>
+                                    <p>{data.tshirt}</p>
+                                </div>
+                            </SubsectionContainer>
                         );
                     }}
                 />
@@ -260,9 +297,9 @@ class AdminPage extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        adminState: state.adminState,
+        readerState: state.readerState,
         theme: state.theme.data
     };
 }
 
-export default connect(mapStateToProps)(AdminPage);
+export default connect(mapStateToProps)(ReaderPage);

@@ -43,20 +43,4 @@ router.post('/user/groups', function(req, res) {
     }
 });
 
-router.post('/applications', function(req, res) {
-    const { users, score, status, reimbursement } = req.body;
-    if (users && score && status) {
-        // TODO update applications
-        console.log(users, score, status, reimbursement);
-        res.send({
-            status: true
-        });
-    } else {
-        res.send({
-            status: false,
-            message: Responses.MISSING_PARAMETERS
-        });
-    }
-});
-
 module.exports = router;

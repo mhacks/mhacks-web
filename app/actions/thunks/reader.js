@@ -1,19 +1,19 @@
-import { AdminPureActions } from '../pure';
-import { AdminRequests } from '../requests';
+import { ReaderPureActions } from '../pure';
+import { ReaderRequests } from '../requests';
 
-export default class AdminThunks {
+export default class ReaderThunks {
     static loadApplications() {
         return dispatch => {
-            dispatch(AdminPureActions.loadApplicationsRequest());
+            dispatch(ReaderPureActions.loadApplicationsRequest());
 
             const token = localStorage.getItem('jwt');
 
-            return AdminRequests.loadApplications(token).then(response => {
+            return ReaderRequests.loadApplications(token).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         const { applications } = json;
                         dispatch(
-                            AdminPureActions.loadApplicationsSuccess(
+                            ReaderPureActions.loadApplicationsSuccess(
                                 applications,
                                 json.message
                             )
@@ -22,7 +22,7 @@ export default class AdminThunks {
                 } else {
                     response.json().then(json => {
                         dispatch(
-                            AdminPureActions.loadApplicationsError(
+                            ReaderPureActions.loadApplicationsError(
                                 response.status,
                                 json.message
                             )
@@ -33,28 +33,29 @@ export default class AdminThunks {
         };
     }
 
-    static reviewApplications(body) {
+    static reviewApplications(review) {
         return dispatch => {
-            dispatch(AdminPureActions.reviewApplicationsRequest(body));
+            dispatch(ReaderPureActions.reviewApplicationsRequest(review));
 
             const token = localStorage.getItem('jwt');
 
-            return AdminRequests.reviewApplications(
+            return ReaderRequests.reviewApplications(
                 token,
-                body
+                review
             ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch(
-                            AdminPureActions.reviewApplicationsSuccess(
-                                json.message
+                            ReaderPureActions.reviewApplicationsSuccess(
+                                json.message,
+                                review
                             )
                         );
                     });
                 } else {
                     response.json().then(json => {
                         dispatch(
-                            AdminPureActions.reviewApplicationsError(
+                            ReaderPureActions.reviewApplicationsError(
                                 response.status,
                                 json.message
                             )

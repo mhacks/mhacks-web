@@ -8,7 +8,7 @@ export default {
     PROFILE: '/v1/user/profile',
     APPLICATION: '/v1/application',
     ALL_APPLICATIONS: '/v1/application/all',
-    REVIEW_APPLICATIONS: '/v1/admin/applications',
+    READER: '/v1/reader',
     ANNOUNCEMENTS: '/v1/announcements',
     CONFIGURATION: '/v1/configuration'
 };

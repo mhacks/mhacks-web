@@ -19,7 +19,7 @@ import {
     Profile,
     Apply,
     BlackoutPage,
-    AdminPage
+    ReaderPage
 } from './pages';
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';
@@ -124,16 +124,16 @@ class AppProvider extends React.Component {
                             />
                             <Route
                                 exact
-                                path={routes.ADMIN}
+                                path={routes.READER}
                                 render={() => {
                                     const userData = store.getState().userState
                                         .data;
 
                                     if (
                                         userData.isLoggedIn &&
-                                        userData.isAdmin
+                                        (userData.isReader || userData.isAdmin)
                                     ) {
-                                        return <AdminPage />;
+                                        return <ReaderPage />;
                                     }
 
                                     return <Redirect to={routes.LOGIN} />;

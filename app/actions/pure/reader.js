@@ -1,6 +1,6 @@
 import { reduxActions } from '../../constants';
 
-export default class AdminPureActions {
+export default class ReaderPureActions {
     static loadApplicationsRequest(data) {
         return {
             type: reduxActions.LOAD_APPLICATIONS_REQUEST,

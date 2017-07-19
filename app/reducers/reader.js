@@ -9,7 +9,7 @@ const initialState = {
     }
 };
 
-export function adminState(state = initialState, action) {
+export function readerState(state = initialState, action) {
     switch (action.type) {
         case reduxActions.LOAD_APPLICATIONS_REQUEST:
             return {

@@ -7,7 +7,7 @@ export default {
     APPLY: '/apply',
     PROFILE: '/profile',
     LIVE: '/live',
-    ADMIN: '/admin',
+    READER: '/reader',
     ADMIN_PORTAL: '/portal/admin',
     READER_PORTAL: '/portal/reader',
     SPONSOR_PORTAL: '/portal/sponsor'
