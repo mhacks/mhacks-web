@@ -139,7 +139,7 @@ class Faq extends React.Component {
                                     <FaqItem
                                         header="When are applications closing?"
                                         body="Applications will be evaluated on a rolling basis until Monday, September 4th. Space fills up quickly, so apply early!
-                                     &#10;To be eligible for a Travel Reimbursement, you need will need to apply latest by Monday, August 14th, no exceptions will
+                                     &#10;To be eligible for a Travel Reimbursement, you will need to apply latest by Monday, August 14th, no exceptions will
                                       be made. You are eligible for a Travel Reimbursement if there are no MHacks Buses nearby your location and it costs you money
                                       to get to MHacks.&#10;"
                                     />
