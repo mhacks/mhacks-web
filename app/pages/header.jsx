@@ -314,9 +314,7 @@ class Header extends React.Component {
                                               {isLoggedIn &&
                                                   (isReader || isAdmin)
                                                   ? <StyledALink
-                                                        href={
-                                                            routes.READER
-                                                        }
+                                                        href={routes.READER}
                                                         color={
                                                             this.props.theme
                                                                 .highlight
