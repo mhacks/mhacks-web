@@ -18,7 +18,8 @@ import {
     Logout,
     Profile,
     Apply,
-    BlackoutPage
+    BlackoutPage,
+    ReaderPage
 } from './pages';
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';
@@ -116,6 +117,23 @@ class AppProvider extends React.Component {
                                         !userData.isEmailVerified
                                     ) {
                                         return <Redirect to={routes.PROFILE} />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.READER}
+                                render={() => {
+                                    const userData = store.getState().userState
+                                        .data;
+
+                                    if (
+                                        userData.isLoggedIn &&
+                                        (userData.isReader || userData.isAdmin)
+                                    ) {
+                                        return <ReaderPage />;
                                     }
 
                                     return <Redirect to={routes.LOGIN} />;

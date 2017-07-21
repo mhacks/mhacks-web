@@ -163,11 +163,24 @@ const Burger = styled.div`
 
 class Header extends React.Component {
     render() {
+        const userData = this.props.userState.data;
         const {
             isLoggedIn,
             isApplicationSubmitted,
             isEmailVerified
-        } = this.props.userState.data;
+        } = userData;
+        const isAdmin =
+            userData.user &&
+            userData.user.groups &&
+            userData.user.groups.indexOf('admin') !== -1;
+        const isSponsor =
+            userData.user &&
+            userData.user.groups &&
+            userData.user.groups.indexOf('sponsor') !== -1;
+        const isReader =
+            userData.user &&
+            userData.user.groups &&
+            userData.user.groups.indexOf('reader') !== -1;
 
         return (
             <div>
@@ -190,13 +203,7 @@ class Header extends React.Component {
                                           <Logo src={HeaderLogoImage} />
                                       </HeaderNavLink>
                                       <NavContainer>
-                                          {isLoggedIn &&
-                                              this.props.userState.data.user &&
-                                              this.props.userState.data.user
-                                                  .groups &&
-                                              this.props.userState.data.user.groups.indexOf(
-                                                  'admin'
-                                              ) !== -1
+                                          {isLoggedIn && isAdmin
                                               ? <StyledALink
                                                     href={routes.ADMIN_PORTAL}
                                                     color={
@@ -207,16 +214,7 @@ class Header extends React.Component {
                                                     Admin
                                                 </StyledALink>
                                               : null}
-                                          {isLoggedIn &&
-                                              this.props.userState.data.user &&
-                                              this.props.userState.data.user
-                                                  .groups &&
-                                              (this.props.userState.data.user.groups.indexOf(
-                                                  'sponsor'
-                                              ) !== -1 ||
-                                                  this.props.userState.data.user.groups.indexOf(
-                                                      'admin'
-                                                  ) !== -1)
+                                          {isLoggedIn && (isSponsor || isAdmin)
                                               ? <StyledALink
                                                     href={routes.SPONSOR_PORTAL}
                                                     color={
@@ -227,18 +225,9 @@ class Header extends React.Component {
                                                     Sponsor
                                                 </StyledALink>
                                               : null}
-                                          {isLoggedIn &&
-                                              this.props.userState.data.user &&
-                                              this.props.userState.data.user
-                                                  .groups &&
-                                              (this.props.userState.data.user.groups.indexOf(
-                                                  'reader'
-                                              ) !== -1 ||
-                                                  this.props.userState.data.user.groups.indexOf(
-                                                      'admin'
-                                                  ) !== -1)
+                                          {isLoggedIn && (isReader || isAdmin)
                                               ? <StyledALink
-                                                    href={routes.READER_PORTAL}
+                                                    href={routes.READER}
                                                     color={
                                                         this.props.theme
                                                             .highlight
@@ -295,14 +284,7 @@ class Header extends React.Component {
                                           }
                                       >
                                           <Menu right>
-                                              {isLoggedIn &&
-                                                  this.props.userState.data
-                                                      .user &&
-                                                  this.props.userState.data.user
-                                                      .groups &&
-                                                  this.props.userState.data.user.groups.indexOf(
-                                                      'admin'
-                                                  ) !== -1
+                                              {isLoggedIn && isAdmin
                                                   ? <StyledALink
                                                         href={
                                                             routes.ADMIN_PORTAL
@@ -316,16 +298,7 @@ class Header extends React.Component {
                                                     </StyledALink>
                                                   : null}
                                               {isLoggedIn &&
-                                                  this.props.userState.data
-                                                      .user &&
-                                                  this.props.userState.data.user
-                                                      .groups &&
-                                                  (this.props.userState.data.user.groups.indexOf(
-                                                      'sponsor'
-                                                  ) !== -1 ||
-                                                      this.props.userState.data.user.groups.indexOf(
-                                                          'admin'
-                                                      ) !== -1)
+                                                  (isSponsor || isAdmin)
                                                   ? <StyledALink
                                                         href={
                                                             routes.SPONSOR_PORTAL
@@ -339,20 +312,9 @@ class Header extends React.Component {
                                                     </StyledALink>
                                                   : null}
                                               {isLoggedIn &&
-                                                  this.props.userState.data
-                                                      .user &&
-                                                  this.props.userState.data.user
-                                                      .groups &&
-                                                  (this.props.userState.data.user.groups.indexOf(
-                                                      'reader'
-                                                  ) !== -1 ||
-                                                      this.props.userState.data.user.groups.indexOf(
-                                                          'admin'
-                                                      ) !== -1)
+                                                  (isReader || isAdmin)
                                                   ? <StyledALink
-                                                        href={
-                                                            routes.READER_PORTAL
-                                                        }
+                                                        href={routes.READER}
                                                         color={
                                                             this.props.theme
                                                                 .highlight
