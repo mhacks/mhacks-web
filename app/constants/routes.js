@@ -10,6 +10,5 @@ export default {
     READER: '/reader',
     ADMIN_PORTAL: '/portal/admin',
     READER_PORTAL: '/portal/reader',
-    SPONSOR_PORTAL: '/portal/sponsor',
-    READER: '/reader'
+    SPONSOR_PORTAL: '/portal/sponsor'
 };
