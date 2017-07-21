@@ -22,7 +22,7 @@ router.use('/artifact', artifactHandler);
 router.use('/configuration', configurationHandler);
 router.use('/shortener', shortenerHandler);
 router.use('/admin', authMiddleware('admin', 'api'), adminHandler);
-router.use('/reader', authMiddleware('admin', 'api'), readerHandler);
+router.use('/reader', authMiddleware('admin reader', 'api'), readerHandler);
 
 router.get('/', function(req, res) {
     res.send('API');

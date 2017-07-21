@@ -227,7 +227,7 @@ class Header extends React.Component {
                                               : null}
                                           {isLoggedIn && (isReader || isAdmin)
                                               ? <StyledALink
-                                                    href={routes.READER_PORTAL}
+                                                    href={routes.READER}
                                                     color={
                                                         this.props.theme
                                                             .highlight
@@ -315,7 +315,7 @@ class Header extends React.Component {
                                                   (isReader || isAdmin)
                                                   ? <StyledALink
                                                         href={
-                                                            routes.READER_PORTAL
+                                                            routes.READER
                                                         }
                                                         color={
                                                             this.props.theme
