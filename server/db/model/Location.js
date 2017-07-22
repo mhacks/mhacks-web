@@ -28,7 +28,7 @@ schema.method.updateLocation = function (lat, lng) {
     this.latitude = lat;
     this.longitude = lng;
 
-    this.save();
+    return this.save();
 };
 
 // Initialize the model with the schema, and export it
