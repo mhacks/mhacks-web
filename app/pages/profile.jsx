@@ -73,6 +73,11 @@ const Link = styled.a`
     cursor: pointer;
 `;
 
+const Avatar = styled.img`
+    height: 100px;
+    marginRight: 20px;
+`;
+
 const autocompleteMenuStyle = {
     borderRadius: '3px',
     boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
@@ -105,7 +110,6 @@ class Profile extends React.Component {
         super(props);
 
         const userData = this.props.userState.data.user;
-
         this.state = {
             birthday: userData.birthday
                 ? new Date(userData.birthday).toISOString().split('T')[0]
@@ -113,6 +117,7 @@ class Profile extends React.Component {
             university: userData.university || '',
             major: userData.major || '',
             avatars: userData.avatars || [],
+            profilePicture: userData.avatars[0] || '',
             isResumeUploaded: userData.isResumeUploaded || false,
             notifications: OrderedSet()
         };
@@ -135,6 +140,7 @@ class Profile extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.handleAttributeChange = this.handleAttributeChange.bind(this);
         this.handleFileUpload = this.handleFileUpload.bind(this);
+        this.handleImageError = this.handleImageError.bind(this)
         this.onClickRequestEmailVerification = this.onClickRequestEmailVerification.bind(
             this
         );
@@ -239,6 +245,12 @@ class Profile extends React.Component {
         );
     }
 
+    handleImageError(){
+      this.setState({
+        profilePicture: this.state.avatars[1]
+      })
+    }
+
     onSubmit(e) {
         e.preventDefault();
 
@@ -285,6 +297,7 @@ class Profile extends React.Component {
             <PageContainer>
                 <FormContainer>
                     <SectionHeader color={this.props.theme.primary}>
+                      <Avatar onError={this.handleImageError} src = {this.state.profilePicture}/>
                         {this.props.userState.data.isEmailVerified
                             ? 'Profile'
                             : 'Unverified Email'}
