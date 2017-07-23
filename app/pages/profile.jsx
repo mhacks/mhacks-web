@@ -140,7 +140,7 @@ class Profile extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.handleAttributeChange = this.handleAttributeChange.bind(this);
         this.handleFileUpload = this.handleFileUpload.bind(this);
-        this.handleImageError = this.handleImageError.bind(this)
+        this.handleImageError = this.handleImageError.bind(this);
         this.onClickRequestEmailVerification = this.onClickRequestEmailVerification.bind(
             this
         );
@@ -245,10 +245,10 @@ class Profile extends React.Component {
         );
     }
 
-    handleImageError(){
-      this.setState({
-        profilePicture: this.state.avatars[1]
-      })
+    handleImageError() {
+        this.setState({
+            profilePicture: this.state.avatars[1]
+        });
     }
 
     onSubmit(e) {
@@ -297,7 +297,10 @@ class Profile extends React.Component {
             <PageContainer>
                 <FormContainer>
                     <SectionHeader color={this.props.theme.primary}>
-                      <Avatar onError={this.handleImageError} src = {this.state.profilePicture}/>
+                        <Avatar
+                            onError={this.handleImageError}
+                            src={this.state.profilePicture}
+                        />
                         {this.props.userState.data.isEmailVerified
                             ? 'Profile'
                             : 'Unverified Email'}
