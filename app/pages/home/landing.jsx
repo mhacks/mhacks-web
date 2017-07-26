@@ -16,23 +16,19 @@ const Container = styled.div`
     width: calc(100% - 60px);
     maxWidth: 1200px;
     margin: 0 auto;
-    
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
+
     ${devices.tablet`
         width: calc(100% - 100px);
-    `}
-
-    ${devices.desktop`
+    `} ${devices.desktop`
         width: calc(100% - 140px);
-    `}
-
-    ${devices.giant`
+    `} ${devices.giant`
         width: calc(100% - 160px);
-    `}
+    `};
 `;
 
 const LogoImage = styled.img`
@@ -40,7 +36,7 @@ const LogoImage = styled.img`
     width: auto;
     max-height: 50%;
     max-width: 90%;
-    
+
     margin-bottom: 20px;
     z-index: 99;
 `;
@@ -53,24 +49,22 @@ const Text = styled.h2`
     textAlign: center;
     padding: 0 10vw;
     margin: 5px 0;
-    
+
     ${devices.tablet`
         fontSize: 28px;
-    `}
+    `};
 `;
 
 const MLHBanner = styled.a`
-    display:block;
-    width:60px;
-    position:absolute;
-    left:10px;
-    top:80px;
-    z-index:99
+    display: block;
+    width: 60px;
+    position: absolute;
+    left: 10px;
+    top: 80px;
+    z-index: 99;
 `;
 
-const MLHBannerImage = styled.img`
-    width:100%;
-`;
+const MLHBannerImage = styled.img`width: 100%;`;
 
 class Landing extends React.Component {
     render() {

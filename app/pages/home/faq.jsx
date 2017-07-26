@@ -29,26 +29,22 @@ const Link = styled.a`
     textDecoration: none;
 `;
 
-const ExpandingItemWrapper = styled.div`
-    marginTop: 5px;
-`;
+const ExpandingItemWrapper = styled.div`marginTop: 5px;`;
 
 const FlexBox = styled.div`
     display: flex;
     flexDirection: column;
-    
+
     ${devices.tablet`
         flexDirection: row;
-    `}
+    `};
 `;
 
-const FaqColumn = styled.div`
-    
-`;
+const FaqColumn = styled.div``;
 
 const FaqBody = styled.div`
-     maxWidth: 75%;
-     margin: 30px auto 0;
+    maxWidth: 75%;
+    margin: 30px auto 0;
 `;
 
 const FaqItem = props =>
@@ -77,19 +73,17 @@ class Faq extends React.Component {
                                         body={
                                             <span>
                                                 Participants
-                                                (&#8220;hackers&#8221;)
-                                                spend 36 hours working in
-                                                teams of 1 - 4 people
-                                                to build or code or design
-                                                projects
+                                                (&#8220;hackers&#8221;) spend 36
+                                                hours working in teams of 1 - 4
+                                                people to build or code or
+                                                design projects
                                                 (&#8220;hacks&#8221;) that
                                                 they&#8217;re excited about.
-                                                There are workshops,
-                                                mentors, food, swag, and
-                                                buckets of coffee to guide
-                                                you along the way.
-                                                You bring your ideas, and we
-                                                give you everything you need
+                                                There are workshops, mentors,
+                                                food, swag, and buckets of
+                                                coffee to guide you along the
+                                                way. You bring your ideas, and
+                                                we give you everything you need
                                                 to make them come to life.
                                             </span>
                                         }
@@ -98,12 +92,11 @@ class Faq extends React.Component {
                                         header="What do people normally make?"
                                         body={
                                             <span>
-                                                Hacks generally fall under
-                                                one (or more) of the seven
-                                                cortices: Web Development,
-                                                Android, iOS, AI/ML, AR/VR,
-                                                Game Development, and
-                                                Hardware. Check out the
+                                                Hacks generally fall under one
+                                                (or more) of the seven cortices:
+                                                Web Development, Android, iOS,
+                                                AI/ML, AR/VR, Game Development,
+                                                and Hardware. Check out the
                                                 hacks from MHacks 9 on
                                                 <Link
                                                     href="https://mhacks9.devpost.com/submissions"
@@ -127,9 +120,7 @@ class Faq extends React.Component {
                                 </Section>
                             </FaqBody>
                             <FaqBody>
-                                <FaqSectionHeader>
-                                    Application
-                                </FaqSectionHeader>
+                                <FaqSectionHeader>Application</FaqSectionHeader>
                                 <Section>
                                     <FaqItem
                                         header="How do I apply?"
@@ -183,16 +174,13 @@ class Faq extends React.Component {
                                         body="There’ll be tons of cool hardware for you to hack on. We’ll put out a list closer to the event so you can see what’s available.
                                          You can also feel free to bring your own from home or email us with any suggestions."
                                     />
-
                                 </Section>
                             </FaqBody>
                         </FaqColumn>
 
                         <FaqColumn>
                             <FaqBody>
-                                <FaqSectionHeader>
-                                    Logistics
-                                </FaqSectionHeader>
+                                <FaqSectionHeader>Logistics</FaqSectionHeader>
                                 <Section>
                                     <FaqItem
                                         header="How will I get there from other schools?"
@@ -204,31 +192,29 @@ class Faq extends React.Component {
                                         header="What if I’m an international student?"
                                         body={
                                             <span>
-                                                If you go to school in
-                                                Canada, we may be sending a
-                                                bus to your university or
-                                                one near you. If you are
-                                                traveling from another
-                                                country,
-                                                the first step is to make
-                                                sure you have a valid travel
-                                                visa. Please refer to{' '}
+                                                If you go to school in Canada,
+                                                we may be sending a bus to your
+                                                university or one near you. If
+                                                you are traveling from another
+                                                country, the first step is to
+                                                make sure you have a valid
+                                                travel visa. Please refer to{
+                                                    ' '
+                                                }
                                                 <Link
                                                     href="https://www.visahq.com"
                                                     target="_blank"
                                                 >
                                                     this website
                                                 </Link>
-                                                to make sure you meet
-                                                the requirements and get
-                                                started on the process if
-                                                you haven’t already. If you
-                                                need anything from the
-                                                organizers, such as a letter
-                                                of invitation,
-                                                please contact us as soon as
-                                                possible at
-                                                hackathon@umich.edu.
+                                                to make sure you meet the
+                                                requirements and get started on
+                                                the process if you haven’t
+                                                already. If you need anything
+                                                from the organizers, such as a
+                                                letter of invitation, please
+                                                contact us as soon as possible
+                                                at hackathon@umich.edu.
                                             </span>
                                         }
                                     />

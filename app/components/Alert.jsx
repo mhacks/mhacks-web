@@ -17,7 +17,9 @@ class Alert extends React.Component {
     render() {
         return (
             <Wrapper style={{ ...this.props.style }}>
-                <Message>{this.props.message}</Message>
+                <Message>
+                    {this.props.message}
+                </Message>
             </Wrapper>
         );
     }

@@ -6,9 +6,7 @@ import devices from '../../styles/devices';
 import StartIcon from '../../../static/icons/quote_start.png';
 import EndIcon from '../../../static/icons/quote_end.png';
 
-const Wrapper = styled.section`
-    padding: 70px 0;
-`;
+const Wrapper = styled.section`padding: 70px 0;`;
 
 const QuoteSection = styled.div`
     position: relative;
@@ -38,7 +36,7 @@ const Quote = styled.div`
         width: 100%;
         fontSize: 2.5em;
         paddingBottom: 10px;
-    `}
+    `};
 `;
 
 const StartWrapper = styled.img`
@@ -53,11 +51,9 @@ const StartWrapper = styled.img`
     ${devices.tablet`
         height: 20%;
         visibility: visible;
-    `}
-
-    ${devices.giant`
+    `} ${devices.giant`
         height: 25%;
-    `}
+    `};
 `;
 
 const EndWrapper = styled.img`
@@ -73,15 +69,11 @@ const EndWrapper = styled.img`
         visibility: visible;
         right: 3%;
         bottom: 10%;
-    `}
-
-    ${devices.desktop`
+    `} ${devices.desktop`
         bottom: 12%;
-    `}
-
-    ${devices.giant`
+    `} ${devices.giant`
         height: 25%;
-    `}
+    `};
 `;
 
 const CompanyName = styled.div`
@@ -96,16 +88,12 @@ const CompanyName = styled.div`
 
     ${devices.tablet`
       textAlign: ${props => (props.position === 'right' ? 'right' : 'left')};
-    `}
-
-    ${devices.desktop`
+    `} ${devices.desktop`
       fontSize: 2.5em;
       paddingBottom: 30px;
-    `}
-
-    ${devices.giant`
+    `} ${devices.giant`
       paddingBottom: 20px;
-    `}
+    `};
 `;
 
 export default () =>
@@ -122,6 +110,8 @@ export default () =>
                 The caliber and number of students that MHacks attracts is like
                 no other hacking event.
             </Quote>
-            <CompanyName position="right" dark> Walmart </CompanyName>
+            <CompanyName position="right" dark>
+                {' '}Walmart{' '}
+            </CompanyName>
         </QuoteSection>
     </Wrapper>;

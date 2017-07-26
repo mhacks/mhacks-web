@@ -30,9 +30,7 @@ const Flexer = styled.div`
     flexDirection: column;
 `;
 
-const InputContainer = styled.div`
-    marginBottom: 30px;
-`;
+const InputContainer = styled.div`marginBottom: 30px;`;
 
 const ButtonGroup = styled.div`
     display: flex;
@@ -55,13 +53,9 @@ const SubsectionHeader = styled.h3`
     margin: 26px 0 0 0;
 `;
 
-const FileUploadContainer = styled.div`
-    marginTop: 10px;
-`;
+const FileUploadContainer = styled.div`marginTop: 10px;`;
 
-const AlertContainer = styled.div`
-    marginTop: 30px;
-`;
+const AlertContainer = styled.div`marginTop: 30px;`;
 
 const Subhead = styled.p`
     margin: 20px 0 0 0;
@@ -315,9 +309,9 @@ class Profile extends React.Component {
                                   : null}
                               <Subhead>
                                   Update your profile with some info about
-                                  yourself. This will be automatically
-                                  populated into your application and persist
-                                  through hackathons!
+                                  yourself. This will be automatically populated
+                                  into your application and persist through
+                                  hackathons!
                               </Subhead>
                               <Flexer>
                                   <InputContainer>
@@ -540,7 +534,9 @@ class Profile extends React.Component {
                                                   this.handleAttributeChange
                                               }
                                           >
-                                              <option value="unselected">Select</option>
+                                              <option value="unselected">
+                                                  Select
+                                              </option>
                                               <option value="xs">XS</option>
                                               <option value="s">S</option>
                                               <option value="m">M</option>
@@ -558,9 +554,15 @@ class Profile extends React.Component {
                                                   this.handleAttributeChange
                                               }
                                           >
-                                              <option value="unselected">Select</option>
-                                              <option value="white">White</option>
-                                              <option value="black">Black</option>
+                                              <option value="unselected">
+                                                  Select
+                                              </option>
+                                              <option value="white">
+                                                  White
+                                              </option>
+                                              <option value="black">
+                                                  Black
+                                              </option>
                                               <option value="am-indian-alaskan">
                                                   American Indian or Alaskan
                                                   Native
@@ -568,8 +570,12 @@ class Profile extends React.Component {
                                               <option value="asian">
                                                   Asian or Pacific Islander
                                               </option>
-                                              <option value="hispanic">Hispanic</option>
-                                              <option value="other">Other</option>
+                                              <option value="hispanic">
+                                                  Hispanic
+                                              </option>
+                                              <option value="other">
+                                                  Other
+                                              </option>
                                               <option value="prefer-not">
                                                   Prefer not to answer
                                               </option>
@@ -583,7 +589,9 @@ class Profile extends React.Component {
                                                   this.handleAttributeChange
                                               }
                                           >
-                                              <option value="unselected">Select</option>
+                                              <option value="unselected">
+                                                  Select
+                                              </option>
                                               <option value="male">Male</option>
                                               <option value="female">
                                                   Female

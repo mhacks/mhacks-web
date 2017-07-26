@@ -37,7 +37,7 @@ const FlexWrapper = styled.div`
 
     ${devices.tablet`
         justifyContent: space-between;
-    `}
+    `};
 `;
 
 const Logo = styled.img`
@@ -46,7 +46,7 @@ const Logo = styled.img`
 
     ${devices.small`
         height: 50px;
-    `}
+    `};
 `;
 
 const NavContainer = styled.div`
@@ -55,7 +55,7 @@ const NavContainer = styled.div`
     justifyContent: flex-end;
     ${devices.tablet`
         display: flex;
-    `}
+    `};
 `;
 
 const HeaderNavLink = styled(NavLink)`
@@ -111,45 +111,45 @@ const StyledALink = styled.a`
 
 const Burger = styled.div`
     .bm-burger-button {
-      position: fixed;
-      width: 36px;
-      height: 30px;
-      right: 36px;
-      top: 25px;
+        position: fixed;
+        width: 36px;
+        height: 30px;
+        right: 36px;
+        top: 25px;
     }
 
     .bm-burger-bars {
-      background: ${props => props.primaryColor};
+        background: ${props => props.primaryColor};
     }
 
     .bm-cross-button {
-      height: 24px;
-      width: 24px;
+        height: 24px;
+        width: 24px;
     }
 
     .bm-cross {
-      background: ${props => props.primaryColor};
+        background: ${props => props.primaryColor};
     }
 
     .bm-menu {
-      backgroundColor: ${theme.primary};
-      padding: 2.5em 1.5em 0;
-      font-size: 1.15em;
+        backgroundColor: ${theme.primary};
+        padding: 2.5em 1.5em 0;
+        font-size: 1.15em;
     }
 
     .bm-morph-shape {
-      fill: #373a47;
+        fill: #373a47;
     }
 
     .bm-item-list {
-      color: white;
-      padding: 0.8em;
+        color: white;
+        padding: 0.8em;
     }
 
     .bm-overlay {
-      background: rgba(0, 0, 0, 0.3);
-      top: 0;
-      left: 0;
+        background: rgba(0, 0, 0, 0.3);
+        top: 0;
+        left: 0;
     }
 
     .bm-menu-wrap {
@@ -158,7 +158,7 @@ const Burger = styled.div`
 
     ${devices.tablet`
         display: none;
-    `}
+    `};
 `;
 
 class Header extends React.Component {

@@ -32,9 +32,7 @@ const Flexer = styled.div`
     flexDirection: column;
 `;
 
-const InputContainer = styled.div`
-    margin: 20px 0 30px 0;
-`;
+const InputContainer = styled.div`margin: 20px 0 30px 0;`;
 
 const ButtonGroup = styled.div`
     display: flex;
@@ -49,9 +47,7 @@ const SectionHeader = styled.h2`
     margin: 0;
 `;
 
-const FileUploadContainer = styled.div`
-    marginTop: 30px;
-`;
+const FileUploadContainer = styled.div`marginTop: 30px;`;
 
 const SubsectionHeader = styled.h3`
     fontSize: 22px;
@@ -60,9 +56,7 @@ const SubsectionHeader = styled.h3`
     margin: 26px 0 0 0;
 `;
 
-const AlertContainer = styled.div`
-    marginTop: 30px;
-`;
+const AlertContainer = styled.div`marginTop: 30px;`;
 
 const LegalText = styled.p`
     fontSize: 15px;
@@ -933,8 +927,7 @@ class Apply extends React.Component {
                                     </RoundedButton>
                                 </ButtonGroup>
                                 <LegalText>
-                                    By applying to MHacks X, you agree
-                                    to the
+                                    By applying to MHacks X, you agree to the
                                     MHacks{' '}
                                     <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
                                         Code of Conduct

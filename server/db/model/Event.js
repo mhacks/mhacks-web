@@ -1,7 +1,7 @@
 /* eslint-disable */
 var mongoose = require('../index.js'),
     config = require('../../../config/default.js'),
-    Schema = mongoose.Schema
+    Schema = mongoose.Schema;
 Location = require('./Location.js');
 
 // Define the document Schema
@@ -33,34 +33,34 @@ var schema = new mongoose.Schema({
 });
 
 // Allow us to query by name
-schema.query.byName = function (name) {
+schema.query.byName = function(name) {
     return this.findOne({
         name: new RegExp(name, 'i')
     });
 };
 
-schema.query.byLocation = function (name) {
+schema.query.byLocation = function(name) {
     return Location.find()
         .byName(name)
         .exec()
         .then(loc => {
             return this.find({
                 location: loc._id
-            })
+            });
         })
         .catch(err => {
-            console.error(err)
-        })
+            console.error(err);
+        });
 };
 
-schema.method.getCoordinates = function () {
+schema.method.getCoordinates = function() {
     return {
         latitude: this.latitude,
         longitude: this.longitude
-    }
-}
+    };
+};
 
-schema.method.updateLocation = function (lat, lng) {
+schema.method.updateLocation = function(lat, lng) {
     this.latitude = lat;
     this.longitude = lng;
 
@@ -70,4 +70,4 @@ schema.method.updateLocation = function (lat, lng) {
 // Initialize the model with the schema, and export it
 var model = mongoose.model('Event', schema);
 
-module.exports = model
+module.exports = model;
