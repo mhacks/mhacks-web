@@ -254,25 +254,37 @@ class ReaderPage extends React.Component {
 
         const searched = search.length > 0 ? fuse.search(search) : applications;
 
-        return searched.filter((application) => {
-            if (toggle_status !== 'all' && application.status !== toggle_status) {
+        return searched.filter(application => {
+            if (
+                toggle_status !== 'all' &&
+                application.status !== toggle_status
+            ) {
                 return false;
             }
 
-            if (toggle_reimbursement !== 'all' &&
-                ((toggle_reimbursement === 'true' && !application.needs_reimbursement) ||
-                (toggle_reimbursement === 'false' && application.needs_reimbursement))) {
+            if (
+                toggle_reimbursement !== 'all' &&
+                ((toggle_reimbursement === 'true' &&
+                    !application.needs_reimbursement) ||
+                    (toggle_reimbursement === 'false' &&
+                        application.needs_reimbursement))
+            ) {
                 return false;
             }
 
-            if (toggle_minor !== 'all' &&
+            if (
+                toggle_minor !== 'all' &&
                 ((toggle_minor === 'true' && !isMinor(application.birthday)) ||
-                (toggle_minor === 'false' && isMinor(application.birthday)))) {
+                    (toggle_minor === 'false' && isMinor(application.birthday)))
+            ) {
                 return false;
             }
 
             const submitted_since = Date.parse(range_submission_since);
-            if (!isNaN(submitted_since) && new Date(submitted_since) > new Date(application.created_at)) {
+            if (
+                !isNaN(submitted_since) &&
+                new Date(submitted_since) > new Date(application.created_at)
+            ) {
                 return false;
             }
 
@@ -374,7 +386,9 @@ class ReaderPage extends React.Component {
                     </form>
                 </HeaderSection>
                 <ReactTable
-                    data={this.filterApplications(this.props.readerState.data.applications)}
+                    data={this.filterApplications(
+                        this.props.readerState.data.applications
+                    )}
                     columns={this.generateColumns(this.state.selected)}
                     SubComponent={row => {
                         const data = row.original;
@@ -390,7 +404,11 @@ class ReaderPage extends React.Component {
                                     <h4>Departing From</h4>
                                     <p>{data.departing_from}</p>
                                     <h4>Needs Reimbursement</h4>
-                                    <p>{data.needs_reimbursement ? 'true' : 'false'}</p>
+                                    <p>
+                                        {data.needs_reimbursement
+                                            ? 'true'
+                                            : 'false'}
+                                    </p>
                                     <h4>Requested Reimbursement</h4>
                                     <p>{data.requested_reimbursement}</p>
                                     <h4>race</h4>

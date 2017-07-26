@@ -41,17 +41,15 @@ export function readerState(state = initialState, action) {
             };
 
         case reduxActions.REVIEW_APPLICATIONS_SUCCESS: {
-            const {
-                reimbursement,
-                score,
-                status
-            } = action.data;
+            const { reimbursement, score, status } = action.data;
             return {
                 ...state,
                 data: {
                     ...state.data,
-                    applications: state.data.applications.map((application) => {
-                        if (action.data.users.indexOf(application.user) === -1) {
+                    applications: state.data.applications.map(application => {
+                        if (
+                            action.data.users.indexOf(application.user) === -1
+                        ) {
                             return application;
                         }
                         return {
