@@ -51,8 +51,13 @@ var schema = new mongoose.Schema({
     requested_reimbursement: Number,
     status: {
         type: String,
-        enum: ['unread', 'waitlisted', 'accepted']
-    }
+        enum: ['unread', 'waitlisted', 'accepted'],
+        default: 'unread'
+    },
+    score: Number,
+    reader: String,
+    reimbursement: Number,
+    review_notes: String
 });
 
 // Allow us to query by token

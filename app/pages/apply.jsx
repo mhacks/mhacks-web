@@ -337,6 +337,8 @@ class Apply extends React.Component {
     }
 
     render() {
+        const app = this.props.userState.data.app;
+
         return (
             <PageContainer>
                 <FormContainer>
@@ -855,8 +857,7 @@ class Apply extends React.Component {
                                     <FileUploadContainer>
                                         <FileUpload
                                             defaultColor={
-                                                this.props.userState.data.app
-                                                    .resume
+                                                app && app.resume
                                                     ? this.props.theme.success
                                                     : this.props.theme.primary
                                             }
@@ -878,20 +879,18 @@ class Apply extends React.Component {
                                                 this.handleFileUpload(e);
                                             }}
                                             defaultText={
-                                                this.props.userState.data.app
-                                                    .resume
+                                                app && app.resume
                                                     ? 'Resume Uploaded'
                                                     : null
                                             }
                                         />
 
-                                        {this.props.userState.data.app.resume ||
+                                        {(app && app.resume) ||
                                             this.state.resume
                                             ? this.removeError('choosefile')
                                             : this.addError('choosefile')}
 
-                                        {(!this.props.userState.data.app
-                                            .resume &&
+                                        {(!(app && app.resume) &&
                                             !this.state.resume) ||
                                             this.checkError('choosefile')
                                             ? <AlertContainer>

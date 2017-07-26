@@ -4,6 +4,7 @@ import ProfilePureActions from './profile.js';
 import ApplicationPureActions from './application.js';
 import AnnouncementsPureActions from './announcements.js';
 import ConfigurationPureActions from './configuration.js';
+import ReaderPureActions from './reader.js';
 
 export {
     SubscribePureActions,
@@ -11,5 +12,6 @@ export {
     ProfilePureActions,
     ApplicationPureActions,
     AnnouncementsPureActions,
-    ConfigurationPureActions
+    ConfigurationPureActions,
+    ReaderPureActions
 };
