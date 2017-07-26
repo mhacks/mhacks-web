@@ -8,6 +8,7 @@ import { routes } from '../constants';
 import { Container } from '../components';
 import { devices } from '../styles';
 import theme from '../styles/theme.js';
+import { getUserMetadata } from '../util/user.js';
 
 const HeaderLogoImage = require('../../static/icons/x-logo.png');
 const Favicon = require('../../static/icons/x-logo.png');
@@ -161,26 +162,64 @@ const Burger = styled.div`
     `}
 `;
 
+class HeaderLinks extends React.Component {
+    render() {
+        const { color, userMetadata, isCompact } = this.props;
+        const {
+            isLoggedIn,
+            isAdmin,
+            isSponsor,
+            isReader,
+            isEmailVerified,
+            isApplicationSubmitted
+        } = userMetadata;
+
+        // Either render a Menu component for mobile, or NavContainer for desktop as
+        // the parent component for the navigation links.
+        const WrappingComponent = isCompact ? Menu : NavContainer;
+        return (
+            <WrappingComponent right>
+                {isLoggedIn && isAdmin
+                    ? <StyledALink href={routes.ADMIN_PORTAL} color={color}>
+                          Admin
+                      </StyledALink>
+                    : null}
+                {isLoggedIn && (isSponsor || isAdmin)
+                    ? <StyledALink href={routes.SPONSOR_PORTAL} color={color}>
+                          Sponsor
+                      </StyledALink>
+                    : null}
+                {isLoggedIn && (isReader || isAdmin)
+                    ? <StyledALink href={routes.READER} color={color}>
+                          Reader
+                      </StyledALink>
+                    : null}
+                {!isLoggedIn || !isEmailVerified
+                    ? null
+                    : <StyledNavLink to={routes.APPLY} color={color}>
+                          {isApplicationSubmitted ? 'Application' : 'Apply'}
+                      </StyledNavLink>}
+                {isLoggedIn
+                    ? <StyledNavLink to={routes.PROFILE} color={color}>
+                          Profile
+                      </StyledNavLink>
+                    : null}
+                {isLoggedIn
+                    ? <StyledNavLink to={routes.LOGOUT} color={color}>
+                          Log Out
+                      </StyledNavLink>
+                    : <StyledNavLink to={routes.LOGIN} color={color}>
+                          Log In
+                      </StyledNavLink>}
+            </WrappingComponent>
+        );
+    }
+}
+
 class Header extends React.Component {
     render() {
         const userData = this.props.userState.data;
-        const {
-            isLoggedIn,
-            isApplicationSubmitted,
-            isEmailVerified
-        } = userData;
-        const isAdmin =
-            userData.user &&
-            userData.user.groups &&
-            userData.user.groups.indexOf('admin') !== -1;
-        const isSponsor =
-            userData.user &&
-            userData.user.groups &&
-            userData.user.groups.indexOf('sponsor') !== -1;
-        const isReader =
-            userData.user &&
-            userData.user.groups &&
-            userData.user.groups.indexOf('reader') !== -1;
+        const userMetadata = getUserMetadata(userData);
 
         return (
             <div>
@@ -202,169 +241,21 @@ class Header extends React.Component {
                                       <HeaderNavLink to={routes.HOME}>
                                           <Logo src={HeaderLogoImage} />
                                       </HeaderNavLink>
-                                      <NavContainer>
-                                          {isLoggedIn && isAdmin
-                                              ? <StyledALink
-                                                    href={routes.ADMIN_PORTAL}
-                                                    color={
-                                                        this.props.theme
-                                                            .highlight
-                                                    }
-                                                >
-                                                    Admin
-                                                </StyledALink>
-                                              : null}
-                                          {isLoggedIn && (isSponsor || isAdmin)
-                                              ? <StyledALink
-                                                    href={routes.SPONSOR_PORTAL}
-                                                    color={
-                                                        this.props.theme
-                                                            .highlight
-                                                    }
-                                                >
-                                                    Sponsor
-                                                </StyledALink>
-                                              : null}
-                                          {isLoggedIn && (isReader || isAdmin)
-                                              ? <StyledALink
-                                                    href={routes.READER}
-                                                    color={
-                                                        this.props.theme
-                                                            .highlight
-                                                    }
-                                                >
-                                                    Reader
-                                                </StyledALink>
-                                              : null}
-                                          {!isLoggedIn || !isEmailVerified
-                                              ? null
-                                              : <StyledNavLink
-                                                    to={routes.APPLY}
-                                                    color={
-                                                        this.props.theme
-                                                            .highlight
-                                                    }
-                                                >
-                                                    {isApplicationSubmitted ? 'Application' : 'Apply'}
-                                                </StyledNavLink>}
-                                          {isLoggedIn
-                                              ? <StyledNavLink
-                                                    to={routes.PROFILE}
-                                                    color={
-                                                        this.props.theme
-                                                            .highlight
-                                                    }
-                                                >
-                                                    Profile
-                                                </StyledNavLink>
-                                              : null}
-                                          {isLoggedIn
-                                              ? <StyledNavLink
-                                                    to={routes.LOGOUT}
-                                                    color={
-                                                        this.props.theme
-                                                            .highlight
-                                                    }
-                                                >
-                                                    Log Out
-                                                </StyledNavLink>
-                                              : <StyledNavLink
-                                                    to={routes.LOGIN}
-                                                    color={
-                                                        this.props.theme
-                                                            .highlight
-                                                    }
-                                                >
-                                                    Log In
-                                                </StyledNavLink>}
-                                      </NavContainer>
+                                      <HeaderLinks
+                                          userMetadata={userMetadata}
+                                          color={this.props.theme.highlight}
+                                          isCompact={false}
+                                      />
                                       <Burger
                                           primaryColor={
                                               this.props.theme.highlight
                                           }
                                       >
-                                          <Menu right>
-                                              {isLoggedIn && isAdmin
-                                                  ? <StyledALink
-                                                        href={
-                                                            routes.ADMIN_PORTAL
-                                                        }
-                                                        color={
-                                                            this.props.theme
-                                                                .highlight
-                                                        }
-                                                    >
-                                                        Admin
-                                                    </StyledALink>
-                                                  : null}
-                                              {isLoggedIn &&
-                                                  (isSponsor || isAdmin)
-                                                  ? <StyledALink
-                                                        href={
-                                                            routes.SPONSOR_PORTAL
-                                                        }
-                                                        color={
-                                                            this.props.theme
-                                                                .highlight
-                                                        }
-                                                    >
-                                                        Sponsor
-                                                    </StyledALink>
-                                                  : null}
-                                              {isLoggedIn &&
-                                                  (isReader || isAdmin)
-                                                  ? <StyledALink
-                                                        href={routes.READER}
-                                                        color={
-                                                            this.props.theme
-                                                                .highlight
-                                                        }
-                                                    >
-                                                        Reader
-                                                    </StyledALink>
-                                                  : null}
-                                              {!isLoggedIn || !isEmailVerified
-                                                  ? null
-                                                  : <StyledNavLink
-                                                        to={routes.APPLY}
-                                                        color={
-                                                            this.props.theme
-                                                                .highlight
-                                                        }
-                                                    >
-                                                        {isApplicationSubmitted ? 'Application' : 'Apply'}
-                                                    </StyledNavLink>}
-                                              {isLoggedIn
-                                                  ? <StyledNavLink
-                                                        to={routes.PROFILE}
-                                                        color={
-                                                            this.props.theme
-                                                                .highlight
-                                                        }
-                                                    >
-                                                        Profile
-                                                    </StyledNavLink>
-                                                  : null}
-                                              {isLoggedIn
-                                                  ? <StyledNavLink
-                                                        to={routes.LOGOUT}
-                                                        color={
-                                                            this.props.theme
-                                                                .highlight
-                                                        }
-                                                    >
-                                                        Log Out
-                                                    </StyledNavLink>
-                                                  : <StyledNavLink
-                                                        to={routes.LOGIN}
-                                                        color={
-                                                            this.props.theme
-                                                                .highlight
-                                                        }
-                                                    >
-                                                        Log In
-                                                    </StyledNavLink>}
-                                          </Menu>
+                                          <HeaderLinks
+                                              userMetadata={userMetadata}
+                                              color={this.props.theme.highlight}
+                                              isCompact={true}
+                                          />
                                       </Burger>
                                   </FlexWrapper>
                               </Container>
