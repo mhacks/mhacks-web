@@ -4,7 +4,8 @@ import {
     ProfileThunks,
     ApplicationThunks,
     AnnouncementsThunks,
-    ConfigurationThunks
+    ConfigurationThunks,
+    ReaderThunks
 } from './thunks';
 
 export {
@@ -13,5 +14,6 @@ export {
     ProfileThunks,
     ApplicationThunks,
     AnnouncementsThunks,
-    ConfigurationThunks
+    ConfigurationThunks,
+    ReaderThunks
 };
