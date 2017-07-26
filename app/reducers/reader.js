@@ -40,6 +40,31 @@ export function readerState(state = initialState, action) {
                 message: action.message
             };
 
+        case reduxActions.REVIEW_APPLICATIONS_SUCCESS: {
+            const {
+                reimbursement,
+                score,
+                status
+            } = action.data;
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    applications: state.data.applications.map((application) => {
+                        if (action.data.users.indexOf(application.user) === -1) {
+                            return application;
+                        }
+                        return {
+                            ...application,
+                            reimbursement,
+                            score,
+                            status
+                        };
+                    })
+                }
+            };
+        }
+
         default:
             return state;
     }
