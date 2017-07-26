@@ -197,7 +197,9 @@ class Faq extends React.Component {
                                                 you are traveling from another
                                                 country, the first step is to
                                                 make sure you have a valid
-                                                travel visa. Please refer to{' '}
+                                                travel visa. Please refer to{
+                                                    ' '
+                                                }
                                                 <Link
                                                     href="https://www.visahq.com"
                                                     target="_blank"
