@@ -11,7 +11,7 @@ const TwitterImg = require('../../static/icons/twitter.png');
 
 /* Footer Style */
 const FooterWrapper = styled.div`
-    backgroundColor: ${props => props.theme.secondary}
+    backgroundColor: ${props => props.theme.secondary};
 `;
 
 const HomeFooter = styled.footer`
@@ -38,7 +38,7 @@ const Text = styled.h2`
         textIndent: 50px;
         minWidth: 0;
         order: 0;
-    `}
+    `};
 `;
 
 const Flexer = styled.div`
@@ -53,7 +53,7 @@ const Flexer = styled.div`
         minWidth: 0;
 
         ${props => (props.right ? 'justifyContent: flex-end;' : '')}
-    `}
+    `};
 `;
 
 const Img100 = styled.img`
@@ -87,7 +87,7 @@ const LegalLinks = styled.div`
         marginTop: 0;
 
         ${props => (props.right ? 'justifyContent: flex-end;' : '')}
-    `}
+    `};
 `;
 
 const LegalLink = styled.a`

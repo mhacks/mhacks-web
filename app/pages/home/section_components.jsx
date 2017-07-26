@@ -5,24 +5,20 @@ const CenteredContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+
     width: calc(100% - 60px);
     maxWidth: 1200px;
     margin: 0 auto;
-    
+
     z-index: 98;
-    
+
     ${devices.tablet`
         width: calc(100% - 100px);
-    `}
-
-    ${devices.desktop`
+    `} ${devices.desktop`
         width: calc(100% - 140px);
-    `}
-
-    ${devices.giant`
+    `} ${devices.giant`
         width: calc(100% - 160px);
-    `}
+    `};
 `;
 
 const SectionHeader = styled.h2`
@@ -32,10 +28,10 @@ const SectionHeader = styled.h2`
     text-align: center;
     fontWeight: 500;
     textAlign: center;
-    
+
     ${devices.small`
     fontSize: 48px;
-    `}
+    `};
 `;
 
 const SectionBody = styled.p`

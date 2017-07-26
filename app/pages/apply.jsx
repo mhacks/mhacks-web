@@ -32,9 +32,7 @@ const Flexer = styled.div`
     flexDirection: column;
 `;
 
-const InputContainer = styled.div`
-    margin: 20px 0 30px 0;
-`;
+const InputContainer = styled.div`margin: 20px 0 30px 0;`;
 
 const ButtonGroup = styled.div`
     display: flex;
@@ -49,9 +47,7 @@ const SectionHeader = styled.h2`
     margin: 0;
 `;
 
-const FileUploadContainer = styled.div`
-    marginTop: 30px;
-`;
+const FileUploadContainer = styled.div`marginTop: 30px;`;
 
 const SubsectionHeader = styled.h3`
     fontSize: 22px;
@@ -60,9 +56,7 @@ const SubsectionHeader = styled.h3`
     margin: 26px 0 0 0;
 `;
 
-const AlertContainer = styled.div`
-    marginTop: 30px;
-`;
+const AlertContainer = styled.div`marginTop: 30px;`;
 
 const LegalText = styled.p`
     fontSize: 15px;
@@ -92,7 +86,7 @@ const autocompleteMenuStyle = {
             window.innerHeight || 0
         ) /
             2 +
-            'px',
+        'px',
     left: '20px',
     top: '45px',
     overflow: 'auto',
@@ -426,7 +420,9 @@ class Apply extends React.Component {
                                                                                       : 'white'
                                                                               }}
                                                                           >
-                                                                              {item}
+                                                                              {
+                                                                                  item
+                                                                              }
                                                                           </div>}
                                                                       inputProps={{
                                                                           placeholder:
@@ -503,7 +499,7 @@ class Apply extends React.Component {
                                                                       }
                                                                       renderMenu={
                                                                           field.key ===
-                                                                              'university'
+                                                                          'university'
                                                                               ? this
                                                                                     .handleRenderMenu
                                                                               : this
@@ -554,12 +550,18 @@ class Apply extends React.Component {
                                                             field.key
                                                         ] &&
                                                             field.required) ||
-                                                            this.checkError(
-                                                                field.key
-                                                            )
+                                                        this.checkError(
+                                                            field.key
+                                                        )
                                                             ? <AlertContainer>
-                                                                  {this.addError(field.key)}
-                                                                  <Alert message={'The field above is required'} />
+                                                                  {this.addError(
+                                                                      field.key
+                                                                  )}
+                                                                  <Alert
+                                                                      message={
+                                                                          'The field above is required'
+                                                                      }
+                                                                  />
                                                               </AlertContainer>
                                                             : this.removeError(
                                                                   field.key
@@ -612,12 +614,18 @@ class Apply extends React.Component {
                                                             field.key
                                                         ] &&
                                                             field.required) ||
-                                                            this.checkError(
-                                                                field.key
-                                                            )
+                                                        this.checkError(
+                                                            field.key
+                                                        )
                                                             ? <AlertContainer>
-                                                                  {this.addError(field.key)}
-                                                                  <Alert message={'The field above is required'} />
+                                                                  {this.addError(
+                                                                      field.key
+                                                                  )}
+                                                                  <Alert
+                                                                      message={
+                                                                          'The field above is required'
+                                                                      }
+                                                                  />
                                                               </AlertContainer>
                                                             : this.removeError(
                                                                   field.key
@@ -680,8 +688,14 @@ class Apply extends React.Component {
                                                             field.key
                                                         ] && field.required
                                                             ? <AlertContainer>
-                                                                  {this.addError(field.key)}
-                                                                  <Alert message={'The field above is required'} />
+                                                                  {this.addError(
+                                                                      field.key
+                                                                  )}
+                                                                  <Alert
+                                                                      message={
+                                                                          'The field above is required'
+                                                                      }
+                                                                  />
                                                               </AlertContainer>
                                                             : this.removeError(
                                                                   field.key
@@ -741,12 +755,18 @@ class Apply extends React.Component {
                                                             field.key
                                                         ] &&
                                                             field.required) ||
-                                                            this.checkError(
-                                                                field.key
-                                                            )
+                                                        this.checkError(
+                                                            field.key
+                                                        )
                                                             ? <AlertContainer>
-                                                                  {this.addError(field.key)}
-                                                                  <Alert message={'The field above is required'} />
+                                                                  {this.addError(
+                                                                      field.key
+                                                                  )}
+                                                                  <Alert
+                                                                      message={
+                                                                          'The field above is required'
+                                                                      }
+                                                                  />
                                                               </AlertContainer>
                                                             : this.removeError(
                                                                   field.key
@@ -810,7 +830,9 @@ class Apply extends React.Component {
                                                                                     tuple.key
                                                                                 }
                                                                             >
-                                                                                {tuple.value}
+                                                                                {
+                                                                                    tuple.value
+                                                                                }
                                                                             </option>
                                                                         );
                                                                     }
@@ -821,17 +843,22 @@ class Apply extends React.Component {
                                                             field.key
                                                         ] &&
                                                             field.required) ||
-                                                            (this.state[
-                                                                field.key
-                                                            ] ===
-                                                                'unselected' &&
-                                                                field.required) ||
-                                                            this.checkError(
-                                                                field.key
-                                                            )
+                                                        (this.state[
+                                                            field.key
+                                                        ] === 'unselected' &&
+                                                            field.required) ||
+                                                        this.checkError(
+                                                            field.key
+                                                        )
                                                             ? <AlertContainer>
-                                                                  {this.addError(field.key)}
-                                                                  <Alert message={'The field above is required'} />
+                                                                  {this.addError(
+                                                                      field.key
+                                                                  )}
+                                                                  <Alert
+                                                                      message={
+                                                                          'The field above is required'
+                                                                      }
+                                                                  />
                                                               </AlertContainer>
                                                             : this.removeError(
                                                                   field.key
@@ -886,14 +913,14 @@ class Apply extends React.Component {
                                         />
 
                                         {this.props.userState.data.app.resume ||
-                                            this.state.resume
+                                        this.state.resume
                                             ? this.removeError('choosefile')
                                             : this.addError('choosefile')}
 
                                         {(!this.props.userState.data.app
                                             .resume &&
                                             !this.state.resume) ||
-                                            this.checkError('choosefile')
+                                        this.checkError('choosefile')
                                             ? <AlertContainer>
                                                   {this.addError('choosefile')}
                                                   <Alert
@@ -923,7 +950,7 @@ class Apply extends React.Component {
                                         hover={
                                             this.validationErrors.length > 0
                                                 ? 'color: ' +
-                                                      this.props.theme.primary
+                                                  this.props.theme.primary
                                                 : ''
                                         }
                                     >
@@ -934,8 +961,7 @@ class Apply extends React.Component {
                                     </RoundedButton>
                                 </ButtonGroup>
                                 <LegalText>
-                                    By applying to MHacks X, you agree
-                                    to the
+                                    By applying to MHacks X, you agree to the
                                     MHacks{' '}
                                     <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
                                         Code of Conduct

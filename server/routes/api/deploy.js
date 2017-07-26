@@ -41,7 +41,7 @@ router.post('/webhook/github', function(req, res) {
                                 content: deploy.formatResponse(result),
                                 title:
                                     new Date().toString() +
-                                        ' Staging Deploy Success'
+                                    ' Staging Deploy Success'
                             });
                         })
                         .catch(err => {
@@ -50,7 +50,7 @@ router.post('/webhook/github', function(req, res) {
                                 content: deploy.formatResponse(err),
                                 title:
                                     new Date().toString() +
-                                        ' Staging Deploy Error'
+                                    ' Staging Deploy Error'
                             });
                         });
                 }
@@ -97,7 +97,7 @@ router.post('/webhook/slack', function(req, res) {
                                 content: deploy.formatResponse(result),
                                 title:
                                     new Date().toString() +
-                                        ' Production Deploy Success'
+                                    ' Production Deploy Success'
                             });
                         })
                         .catch(err => {
@@ -106,7 +106,7 @@ router.post('/webhook/slack', function(req, res) {
                                 content: deploy.formatResponse(err),
                                 title:
                                     new Date().toString() +
-                                        ' Production Deploy Error'
+                                    ' Production Deploy Error'
                             });
                         });
                 }
@@ -125,7 +125,7 @@ router.post('/webhook/slack', function(req, res) {
                                 content: deploy.formatResponse(result),
                                 title:
                                     new Date().toString() +
-                                        ' Production Damage Report'
+                                    ' Production Damage Report'
                             });
                         })
                         .catch(err => {
@@ -134,7 +134,7 @@ router.post('/webhook/slack', function(req, res) {
                                 content: deploy.formatResponse(err),
                                 title:
                                     new Date().toString() +
-                                        ' Production Damage Report Error'
+                                    ' Production Damage Report Error'
                             });
                         });
                 } else {
@@ -151,7 +151,7 @@ router.post('/webhook/slack', function(req, res) {
                                 content: deploy.formatResponse(result),
                                 title:
                                     new Date().toString() +
-                                        ' Staging Damage Report'
+                                    ' Staging Damage Report'
                             });
                         })
                         .catch(err => {
@@ -160,7 +160,7 @@ router.post('/webhook/slack', function(req, res) {
                                 content: deploy.formatResponse(err),
                                 title:
                                     new Date().toString() +
-                                        ' Staging Damage Report Error'
+                                    ' Staging Damage Report Error'
                             });
                         });
                 }
@@ -178,7 +178,7 @@ router.post('/webhook/slack', function(req, res) {
                             content: deploy.formatResponse(result),
                             title:
                                 new Date().toString() +
-                                    ' Staging Deploy Success'
+                                ' Staging Deploy Success'
                         });
                     })
                     .catch(err => {

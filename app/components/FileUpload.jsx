@@ -36,7 +36,7 @@ const Button = styled.div`
 
     ${devices.small`
         padding: 12px 20px;
-    `}
+    `};
 `;
 
 const FileName = styled.div`

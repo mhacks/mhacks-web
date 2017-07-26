@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     width: 100%;
     overflow-x: hidden;
 
-    background: rgba(0,0,0,0);
+    background: rgba(0, 0, 0, 0);
     zIndex: 5;
     pointer-events: none;
 `;
@@ -20,10 +20,10 @@ const Square = styled.svg`
     position: absolute;
     top: ${props => props.top}px;
     left: ${props => props.left}px;
-    fill: rgba(0,0,0,0);
+    fill: rgba(0, 0, 0, 0);
     stroke: ${theme.highlight};
-    stroke-width:8;
-    fill-opacity:0;
+    stroke-width: 8;
+    fill-opacity: 0;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-opacity: ${props => props.sOpacity};
