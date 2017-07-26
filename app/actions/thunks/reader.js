@@ -47,8 +47,8 @@ export default class ReaderThunks {
                     response.json().then(json => {
                         dispatch(
                             ReaderPureActions.reviewApplicationsSuccess(
-                                json.message,
-                                review
+                                review,
+                                json.message
                             )
                         );
                     });

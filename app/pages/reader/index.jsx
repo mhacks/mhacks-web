@@ -1,16 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
+import { devices } from '../../styles';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import { PageContainer, LabeledInput, RoundedButton } from '../../components';
 import { ReaderThunks } from '../../actions';
 import { FormattedRelative } from 'react-intl';
+import Fuse from 'fuse.js';
 
 const HeaderSection = styled.div`
     display: flex;
-    flexDirection: row;
+    flexDirection: column;
     justifyContent: space-between;
     padding: 10px 20px;
+
+    ${devices.tablet`
+        flexDirection: row;
+    `}
 `;
 
 const SubsectionContainer = styled.div`
@@ -47,12 +53,18 @@ class ReaderPage extends React.Component {
             status: 'unread',
             score: 0,
             reimbursement: 0,
-            selected: []
+            selected: [],
+            toggle_status: 'all',
+            toggle_reimbursement: 'all',
+            toggle_minor: 'all',
+            search: '',
+            range_submission_since: 'mm/dd/yyyy'
         };
 
         this.handleAttributeChange = this.handleAttributeChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.generateColumns = this.generateColumns.bind(this);
+        this.filterApplications = this.filterApplications.bind(this);
     }
 
     componentDidMount() {
@@ -173,7 +185,7 @@ class ReaderPage extends React.Component {
                         Header: 'R',
                         accessor: 'resume',
                         width: 30,
-                        Cell: row => <A href={row.value}>R</A>
+                        Cell: row => <A target="_blank" href={row.value}>R</A>
                     },
                     {
                         Header: 'G',
@@ -181,7 +193,7 @@ class ReaderPage extends React.Component {
                         width: 30,
                         Cell: row => {
                             return row.value.length > 0
-                                ? <A href={row.value}>G</A>
+                                ? <A target="_blank" href={row.value}>G</A>
                                 : null;
                         }
                     },
@@ -191,7 +203,7 @@ class ReaderPage extends React.Component {
                         width: 30,
                         Cell: row => {
                             return row.value.length > 0
-                                ? <A href={row.value}>L</A>
+                                ? <A target="_blank" href={row.value}>L</A>
                                 : null;
                         }
                     },
@@ -201,7 +213,7 @@ class ReaderPage extends React.Component {
                         width: 30,
                         Cell: row => {
                             return row.value.length > 0
-                                ? <A href={row.value}>D</A>
+                                ? <A target="_blank" href={row.value}>D</A>
                                 : null;
                         }
                     },
@@ -211,7 +223,7 @@ class ReaderPage extends React.Component {
                         width: 30,
                         Cell: row => {
                             return row.value.length > 0
-                                ? <A href={row.value}>P</A>
+                                ? <A target="_blank" href={row.value}>P</A>
                                 : null;
                         }
                     }
@@ -220,12 +232,124 @@ class ReaderPage extends React.Component {
         ];
     }
 
+    filterApplications(applications) {
+        const {
+            toggle_status,
+            toggle_reimbursement,
+            toggle_minor,
+            range_submission_since,
+            search
+        } = this.state;
+
+        const fuse = new Fuse(applications, {
+            shouldSort: true,
+            findAllMatches: true,
+            threshold: 0.6,
+            location: 0,
+            distance: 100,
+            maxPatternLength: 32,
+            minMatchCharLength: 1,
+            keys: ['university', 'user']
+        });
+
+        const searched = search.length > 0 ? fuse.search(search) : applications;
+
+        return searched.filter(application => {
+            if (
+                toggle_status !== 'all' &&
+                application.status !== toggle_status
+            ) {
+                return false;
+            }
+
+            if (
+                toggle_reimbursement !== 'all' &&
+                ((toggle_reimbursement === 'true' &&
+                    !application.needs_reimbursement) ||
+                    (toggle_reimbursement === 'false' &&
+                        application.needs_reimbursement))
+            ) {
+                return false;
+            }
+
+            if (
+                toggle_minor !== 'all' &&
+                ((toggle_minor === 'true' && !isMinor(application.birthday)) ||
+                    (toggle_minor === 'false' && isMinor(application.birthday)))
+            ) {
+                return false;
+            }
+
+            const submitted_since = Date.parse(range_submission_since);
+            if (
+                !isNaN(submitted_since) &&
+                new Date(submitted_since) > new Date(application.created_at)
+            ) {
+                return false;
+            }
+
+            return true;
+        });
+    }
+
     render() {
         return (
             <PageContainer ref="pagecontainer">
                 <HeaderSection>
-                    <div>toggles go here</div>
+                    <div>
+                        <LabeledInput label="Status">
+                            <select
+                                name="toggle_status"
+                                value={this.state.toggle_status}
+                                onChange={this.handleAttributeChange}
+                            >
+                                <option value="all">All</option>
+                                <option value="unread">Unread</option>
+                                <option value="waitlisted">Waitlisted</option>
+                                <option value="accepted">Accepted</option>
+                            </select>
+                        </LabeledInput>
+                        <LabeledInput label="Reimbursement">
+                            <select
+                                name="toggle_reimbursement"
+                                value={this.state.toggle_reimbursement}
+                                onChange={this.handleAttributeChange}
+                            >
+                                <option value="all">All</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </LabeledInput>
+                        <LabeledInput label="Minor">
+                            <select
+                                name="toggle_minor"
+                                value={this.state.toggle_minor}
+                                onChange={this.handleAttributeChange}
+                            >
+                                <option value="all">All</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </LabeledInput>
+                        <LabeledInput label="Search">
+                            <input
+                                name="search"
+                                type="text"
+                                value={this.state.search}
+                                onChange={this.handleAttributeChange}
+                            />
+                        </LabeledInput>
+                        <LabeledInput label="Submitted Since">
+                            <input
+                                name="range_submission_since"
+                                type="date"
+                                value={this.state.range_submission_since}
+                                onChange={this.handleAttributeChange}
+                            />
+                        </LabeledInput>
+                    </div>
                     <form onSubmit={this.onSubmit}>
+                        <h2>Review Applications</h2>
                         <LabeledInput label="Status">
                             <select
                                 name="status"
@@ -262,7 +386,9 @@ class ReaderPage extends React.Component {
                     </form>
                 </HeaderSection>
                 <ReactTable
-                    data={this.props.readerState.data.applications}
+                    data={this.filterApplications(
+                        this.props.readerState.data.applications
+                    )}
                     columns={this.generateColumns(this.state.selected)}
                     SubComponent={row => {
                         const data = row.original;
@@ -277,6 +403,12 @@ class ReaderPage extends React.Component {
                                     <p>{data.anything_else}</p>
                                     <h4>Departing From</h4>
                                     <p>{data.departing_from}</p>
+                                    <h4>Needs Reimbursement</h4>
+                                    <p>
+                                        {data.needs_reimbursement
+                                            ? 'true'
+                                            : 'false'}
+                                    </p>
                                     <h4>Requested Reimbursement</h4>
                                     <p>{data.requested_reimbursement}</p>
                                     <h4>race</h4>
