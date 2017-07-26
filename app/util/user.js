@@ -1,7 +1,9 @@
 function getGroup(userData, groupName) {
-    return userData.user &&
+    return (
+        userData.user &&
         userData.user.groups &&
-        userData.user.groups.indexOf(groupName) !== -1;
+        userData.user.groups.indexOf(groupName) !== -1
+    );
 }
 
 export function getUserMetadata(userData) {

@@ -171,7 +171,7 @@ class HeaderLinks extends React.Component {
             isSponsor,
             isReader,
             isEmailVerified,
-            isApplicationSubmitted,
+            isApplicationSubmitted
         } = userMetadata;
 
         // Either render a Menu component for mobile, or NavContainer for desktop as
@@ -180,58 +180,37 @@ class HeaderLinks extends React.Component {
         return (
             <WrappingComponent right>
                 {isLoggedIn && isAdmin
-                    ? <StyledALink
-                    href={routes.ADMIN_PORTAL}
-                    color={color}
-                    >
-                        Admin
-                    </StyledALink>
+                    ? <StyledALink href={routes.ADMIN_PORTAL} color={color}>
+                          Admin
+                      </StyledALink>
                     : null}
                 {isLoggedIn && (isSponsor || isAdmin)
-                    ? <StyledALink
-                        href={routes.SPONSOR_PORTAL}
-                        color={color}
-                    >
-                        Sponsor
-                    </StyledALink>
+                    ? <StyledALink href={routes.SPONSOR_PORTAL} color={color}>
+                          Sponsor
+                      </StyledALink>
                     : null}
                 {isLoggedIn && (isReader || isAdmin)
-                    ? <StyledALink
-                        href={routes.READER}
-                        color={color}
-                    >
-                        Reader
-                    </StyledALink>
+                    ? <StyledALink href={routes.READER} color={color}>
+                          Reader
+                      </StyledALink>
                     : null}
                 {!isLoggedIn || !isEmailVerified
                     ? null
-                    : <StyledNavLink
-                        to={routes.APPLY}
-                        color={color}
-                    >
-                        {isApplicationSubmitted ? 'Application' : 'Apply'}
-                    </StyledNavLink>}
+                    : <StyledNavLink to={routes.APPLY} color={color}>
+                          {isApplicationSubmitted ? 'Application' : 'Apply'}
+                      </StyledNavLink>}
                 {isLoggedIn
-                    ? <StyledNavLink
-                        to={routes.PROFILE}
-                        color={color}
-                    >
-                        Profile
-                    </StyledNavLink>
+                    ? <StyledNavLink to={routes.PROFILE} color={color}>
+                          Profile
+                      </StyledNavLink>
                     : null}
                 {isLoggedIn
-                    ? <StyledNavLink
-                        to={routes.LOGOUT}
-                        color={color}
-                    >
-                        Log Out
-                    </StyledNavLink>
-                    : <StyledNavLink
-                        to={routes.LOGIN}
-                        color={color}
-                    >
-                        Log In
-                    </StyledNavLink>}
+                    ? <StyledNavLink to={routes.LOGOUT} color={color}>
+                          Log Out
+                      </StyledNavLink>
+                    : <StyledNavLink to={routes.LOGIN} color={color}>
+                          Log In
+                      </StyledNavLink>}
             </WrappingComponent>
         );
     }
