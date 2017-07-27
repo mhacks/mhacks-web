@@ -120,7 +120,9 @@ router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
         .then(applications => {
             User.find({
                 email: {
-                    $in: applications.map(application => application.user)
+                    $in: applications
+                        .filter(application => application.user)
+                        .map(application => application.user)
                 }
             })
                 .select('full_name email')
@@ -138,7 +140,7 @@ router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
                 })
                 .catch(err => {
                     console.error(err);
-                    res.send({
+                    res.status(500).send({
                         status: false,
                         message: Responses.UNKNOWN_ERROR
                     });
@@ -146,7 +148,7 @@ router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
         })
         .catch(err => {
             console.error(err);
-            res.send({
+            res.status(500).send({
                 status: false,
                 message: Responses.UNKNOWN_ERROR
             });
