@@ -119,24 +119,30 @@ router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
         .select('-_id -__v')
         .then(applications => {
             User.find({
-                'email': { $in: applications.map(application => application.user) }
-            }).select('full_name email').then((users) => {
-                res.send({
-                    status: true,
-                    applications: applications.map(application => {
-                        return Object.assign({}, application._doc, {
-                            full_name: users.find(user => user.email === application.user).full_name
-                        });
-                    })
-                });
+                email: {
+                    $in: applications.map(application => application.user)
+                }
             })
-            .catch(err => {
-                console.error(err);
-                res.send({
-                    status: false,
-                    message: Responses.UNKNOWN_ERROR
+                .select('full_name email')
+                .then(users => {
+                    res.send({
+                        status: true,
+                        applications: applications.map(application => {
+                            return Object.assign({}, application._doc, {
+                                full_name: users.find(
+                                    user => user.email === application.user
+                                ).full_name
+                            });
+                        })
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    res.send({
+                        status: false,
+                        message: Responses.UNKNOWN_ERROR
+                    });
                 });
-            });
         })
         .catch(err => {
             console.error(err);
