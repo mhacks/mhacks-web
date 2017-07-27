@@ -3,10 +3,14 @@ import styled from 'styled-components';
 import { devices } from '../../styles';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
-import { PageContainer, LabeledInput, RoundedButton } from '../../components';
+import { MHForm, PageContainer } from '../../components';
 import { ReaderThunks } from '../../actions';
 import { FormattedRelative } from 'react-intl';
 import Fuse from 'fuse.js';
+import {
+    ApplicationReaderFiltersSchema,
+    ApplicationReaderSchema
+} from '../../constants/forms';
 
 const HeaderSection = styled.div`
     display: flex;
@@ -53,12 +57,7 @@ class ReaderPage extends React.Component {
             status: 'unread',
             score: 0,
             reimbursement: 0,
-            selected: [],
-            toggle_status: 'all',
-            toggle_reimbursement: 'all',
-            toggle_minor: 'all',
-            search: '',
-            range_submission_since: 'mm/dd/yyyy'
+            selected: []
         };
 
         this.handleAttributeChange = this.handleAttributeChange.bind(this);
@@ -128,15 +127,19 @@ class ReaderPage extends React.Component {
                                 />
                             );
                         }
+                    },
+                    {
+                        expander: true
+                    },
+                    {
+                        Header: 'Name',
+                        accessor: 'full_name'
                     }
                 ]
             },
             {
-                Header: 'App',
+                Header: 'Review',
                 columns: [
-                    {
-                        expander: true
-                    },
                     {
                         Header: 'Submitted',
                         accessor: 'created_at',
@@ -150,6 +153,10 @@ class ReaderPage extends React.Component {
                         Header: 'Score',
                         accessor: 'score',
                         width: 60
+                    },
+                    {
+                        Header: 'Reimbursement',
+                        accessor: 'reimbursement'
                     }
                 ]
             },
@@ -233,18 +240,22 @@ class ReaderPage extends React.Component {
     }
 
     filterApplications(applications) {
+        if (!this.state.filterData) {
+            return applications;
+        }
+
         const {
-            toggle_status,
-            toggle_reimbursement,
-            toggle_minor,
-            range_submission_since,
+            status,
+            reimbursement,
+            minor,
+            since,
             search
-        } = this.state;
+        } = this.state.filterData;
 
         const fuse = new Fuse(applications, {
             shouldSort: true,
             findAllMatches: true,
-            threshold: 0.6,
+            threshold: 0.3,
             location: 0,
             distance: 100,
             maxPatternLength: 32,
@@ -255,32 +266,28 @@ class ReaderPage extends React.Component {
         const searched = search.length > 0 ? fuse.search(search) : applications;
 
         return searched.filter(application => {
-            if (
-                toggle_status !== 'all' &&
-                application.status !== toggle_status
-            ) {
+            if (status !== 'all' && application.status !== status) {
                 return false;
             }
 
             if (
-                toggle_reimbursement !== 'all' &&
-                ((toggle_reimbursement === 'true' &&
+                reimbursement !== 'all' &&
+                ((reimbursement === 'yes' &&
                     !application.needs_reimbursement) ||
-                    (toggle_reimbursement === 'false' &&
-                        application.needs_reimbursement))
+                    (reimbursement === 'no' && application.needs_reimbursement))
             ) {
                 return false;
             }
 
             if (
-                toggle_minor !== 'all' &&
-                ((toggle_minor === 'true' && !isMinor(application.birthday)) ||
-                    (toggle_minor === 'false' && isMinor(application.birthday)))
+                minor !== 'all' &&
+                ((minor === 'yes' && !isMinor(application.birthday)) ||
+                    (minor === 'no' && isMinor(application.birthday)))
             ) {
                 return false;
             }
 
-            const submitted_since = Date.parse(range_submission_since);
+            const submitted_since = Date.parse(since);
             if (
                 !isNaN(submitted_since) &&
                 new Date(submitted_since) > new Date(application.created_at)
@@ -296,94 +303,20 @@ class ReaderPage extends React.Component {
         return (
             <PageContainer ref="pagecontainer">
                 <HeaderSection>
-                    <div>
-                        <LabeledInput label="Status">
-                            <select
-                                name="toggle_status"
-                                value={this.state.toggle_status}
-                                onChange={this.handleAttributeChange}
-                            >
-                                <option value="all">All</option>
-                                <option value="unread">Unread</option>
-                                <option value="waitlisted">Waitlisted</option>
-                                <option value="accepted">Accepted</option>
-                            </select>
-                        </LabeledInput>
-                        <LabeledInput label="Reimbursement">
-                            <select
-                                name="toggle_reimbursement"
-                                value={this.state.toggle_reimbursement}
-                                onChange={this.handleAttributeChange}
-                            >
-                                <option value="all">All</option>
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
-                            </select>
-                        </LabeledInput>
-                        <LabeledInput label="Minor">
-                            <select
-                                name="toggle_minor"
-                                value={this.state.toggle_minor}
-                                onChange={this.handleAttributeChange}
-                            >
-                                <option value="all">All</option>
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
-                            </select>
-                        </LabeledInput>
-                        <LabeledInput label="Search">
-                            <input
-                                name="search"
-                                type="text"
-                                value={this.state.search}
-                                onChange={this.handleAttributeChange}
-                            />
-                        </LabeledInput>
-                        <LabeledInput label="Submitted Since">
-                            <input
-                                name="range_submission_since"
-                                type="date"
-                                value={this.state.range_submission_since}
-                                onChange={this.handleAttributeChange}
-                            />
-                        </LabeledInput>
-                    </div>
-                    <form onSubmit={this.onSubmit}>
-                        <h2>Review Applications</h2>
-                        <LabeledInput label="Status">
-                            <select
-                                name="status"
-                                value={this.state.status}
-                                onChange={this.handleAttributeChange}
-                            >
-                                <option value="unread">Unread</option>
-                                <option value="waitlisted">Waitlisted</option>
-                                <option value="accepted">Accepted</option>
-                            </select>
-                        </LabeledInput>
-                        <LabeledInput label="Score">
-                            <input
-                                name="score"
-                                type="number"
-                                value={this.state.score}
-                                onChange={this.handleAttributeChange}
-                            />
-                        </LabeledInput>
-                        <LabeledInput label="Reimbursement">
-                            <input
-                                name="reimbursement"
-                                type="number"
-                                value={this.state.reimbursement}
-                                onChange={this.handleAttributeChange}
-                            />
-                        </LabeledInput>
-                        <RoundedButton
-                            type="submit"
-                            color={this.props.theme.primary}
-                        >
-                            Save
-                        </RoundedButton>
-                    </form>
+                    <MHForm
+                        schema={ApplicationReaderFiltersSchema}
+                        theme={this.props.theme}
+                        onChange={formState => {
+                            this.setState({
+                                filterData: formState
+                            });
+                        }}
+                    />
+                    <MHForm
+                        schema={ApplicationReaderSchema}
+                        theme={this.props.theme}
+                        onSubmit={this.onSubmit}
+                    />
                 </HeaderSection>
                 <ReactTable
                     data={this.filterApplications(
