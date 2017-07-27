@@ -7,7 +7,10 @@ import { MHForm, PageContainer } from '../../components';
 import { ReaderThunks } from '../../actions';
 import { FormattedRelative } from 'react-intl';
 import Fuse from 'fuse.js';
-import { ApplicationReaderFiltersSchema, ApplicationReaderSchema } from '../../constants/forms';
+import {
+    ApplicationReaderFiltersSchema,
+    ApplicationReaderSchema
+} from '../../constants/forms';
 
 const HeaderSection = styled.div`
     display: flex;
@@ -255,10 +258,7 @@ class ReaderPage extends React.Component {
         const searched = search.length > 0 ? fuse.search(search) : applications;
 
         return searched.filter(application => {
-            if (
-                status !== 'all' &&
-                application.status !== status
-            ) {
+            if (status !== 'all' && application.status !== status) {
                 return false;
             }
 
@@ -266,8 +266,7 @@ class ReaderPage extends React.Component {
                 reimbursement !== 'all' &&
                 ((reimbursement === 'yes' &&
                     !application.needs_reimbursement) ||
-                    (reimbursement === 'no' &&
-                        application.needs_reimbursement))
+                    (reimbursement === 'no' && application.needs_reimbursement))
             ) {
                 return false;
             }
@@ -299,7 +298,7 @@ class ReaderPage extends React.Component {
                     <MHForm
                         schema={ApplicationReaderFiltersSchema}
                         theme={this.props.theme}
-                        onChange={(formState) => {
+                        onChange={formState => {
                             this.setState({
                                 filterData: formState
                             });

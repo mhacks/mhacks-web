@@ -28,7 +28,8 @@ class MHForm extends React.Component {
                     initialState[field.key] = field.default || 'yyyy-mm-dd';
                     break;
                 case FieldTypes.SELECT:
-                    initialState[field.key] = field.default || field.options[0].key;
+                    initialState[field.key] =
+                        field.default || field.options[0].key;
                     break;
                 case FieldTypes.INTEGER:
                     initialState[field.key] = field.default || 0;
@@ -46,11 +47,14 @@ class MHForm extends React.Component {
     // Generic function for changing state
     // -- input using this must have a name attribute
     handleAttributeChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        }, () => {
-            this.props.onChange(this.state);
-        });
+        this.setState(
+            {
+                [e.target.name]: e.target.value
+            },
+            () => {
+                this.props.onChange(this.state);
+            }
+        );
     }
 
     renderLabeledInput(field, contents) {
@@ -71,7 +75,8 @@ class MHForm extends React.Component {
                 {this.props.schema.map(field => {
                     switch (field.type) {
                         case FieldTypes.SELECT:
-                            return this.renderLabeledInput(field, (
+                            return this.renderLabeledInput(
+                                field,
                                 <select
                                     name={field.key}
                                     value={this.state[field.key]}
@@ -88,9 +93,10 @@ class MHForm extends React.Component {
                                         );
                                     })}
                                 </select>
-                            ));
+                            );
                         case FieldTypes.TEXT:
-                            return this.renderLabeledInput(field, (
+                            return this.renderLabeledInput(
+                                field,
                                 <input
                                     name={field.key}
                                     type="text"
@@ -98,18 +104,20 @@ class MHForm extends React.Component {
                                     value={this.state[field.key]}
                                     onChange={this.handleAttributeChange}
                                 />
-                            ));
+                            );
                         case FieldTypes.INTEGER:
-                            return this.renderLabeledInput(field, (
+                            return this.renderLabeledInput(
+                                field,
                                 <input
                                     name={field.key}
                                     type="number"
                                     value={this.state[field.key]}
                                     onChange={this.handleAttributeChange}
                                 />
-                            ));
+                            );
                         case FieldTypes.DATE:
-                            return this.renderLabeledInput(field, (
+                            return this.renderLabeledInput(
+                                field,
                                 <input
                                     name={field.key}
                                     type="date"
@@ -117,7 +125,7 @@ class MHForm extends React.Component {
                                     value={this.state[field.key]}
                                     onChange={this.handleAttributeChange}
                                 />
-                            ));
+                            );
                         case FieldTypes.SECTIONHEADER:
                             return (
                                 <SectionHeader
