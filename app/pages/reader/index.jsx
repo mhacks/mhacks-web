@@ -127,15 +127,19 @@ class ReaderPage extends React.Component {
                                 />
                             );
                         }
+                    },
+                    {
+                        expander: true
+                    },
+                    {
+                        Header: 'Name',
+                        accessor: 'full_name'
                     }
                 ]
             },
             {
-                Header: 'App',
+                Header: 'Review',
                 columns: [
-                    {
-                        expander: true
-                    },
                     {
                         Header: 'Submitted',
                         accessor: 'created_at',
@@ -149,6 +153,10 @@ class ReaderPage extends React.Component {
                         Header: 'Score',
                         accessor: 'score',
                         width: 60
+                    },
+                    {
+                        Header: 'Reimbursement',
+                        accessor: 'reimbursement'
                     }
                 ]
             },

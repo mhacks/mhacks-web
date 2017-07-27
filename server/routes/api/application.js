@@ -116,10 +116,26 @@ router.get('/', function(req, res) {
 // Returns all applications
 router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
     Application.find()
+        .select('-_id -__v')
         .then(applications => {
-            res.send({
-                status: true,
-                applications: applications
+            User.find({
+                'email': { $in: applications.map(application => application.user) }
+            }).select('full_name email').then((users) => {
+                res.send({
+                    status: true,
+                    applications: applications.map(application => {
+                        return Object.assign({}, application._doc, {
+                            full_name: users.find(user => user.email === application.user).full_name
+                        });
+                    })
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                res.send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
             });
         })
         .catch(err => {
