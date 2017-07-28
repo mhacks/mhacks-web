@@ -130,10 +130,14 @@ router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
                     res.send({
                         status: true,
                         applications: applications.map(application => {
+                            const associated_user = users.find(
+                                user => user.email === application.user
+                            );
+                            if (!associated_user) {
+                                return application;
+                            }
                             return Object.assign({}, application._doc, {
-                                full_name: users.find(
-                                    user => user.email === application.user
-                                ).full_name
+                                full_name: associated_user.full_name
                             });
                         })
                     });
