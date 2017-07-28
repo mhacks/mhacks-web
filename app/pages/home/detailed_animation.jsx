@@ -10,7 +10,7 @@ const Wrapper = styled.div`
     height: ${props => props.height}px;
     width: 100%;
     overflow-x: hidden;
-
+	overflow-y: hidden;
     background: rgba(0,0,0,0);
     zIndex: 5;
     pointer-events: none;
