@@ -6,9 +6,9 @@ var mongoose = require('../index.js'),
 // Define the document Schema
 var schema = new mongoose.Schema({
     app_name: String,
-    start_date: Date
+    start_date: Date,
     end_date: Date,
-    is_live_page_enable: {
+    is_live_page_enabled: {
         type: Boolean,
         default: false
     },
@@ -21,7 +21,7 @@ var schema = new mongoose.Schema({
 // Allow us to query by app_name
 schema.query.byAppName = function(app_name) {
     return this.findOne({
-        app_name: new RegExp(app_code, 'i')
+        app_name: new RegExp(app_name, 'i')
     });
 };
 
