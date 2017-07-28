@@ -363,16 +363,20 @@ class ReaderPage extends React.Component {
                     <RoundedButton
                         color={this.props.theme.primary}
                         onClick={() => {
-                            const { applications } = this.props.readerState.data;
+                            const {
+                                applications
+                            } = this.props.readerState.data;
                             if (applications.length === 0) {
                                 return;
                             }
                             const keys = Object.keys(applications[0]);
                             const meta = 'data:text/csv;charset=utf-8,';
                             const keyList = keys.join(',') + '\n';
-                            const data = applications.map(app => {
-                                return keys.map(key => app[key]).join(',');
-                            }).join('\n');
+                            const data = applications
+                                .map(app => {
+                                    return keys.map(key => app[key]).join(',');
+                                })
+                                .join('\n');
                             window.open(encodeURI(meta + keyList + data));
                         }}
                     >
