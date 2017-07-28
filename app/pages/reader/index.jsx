@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { devices } from '../../styles';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
-import { MHForm, PageContainer } from '../../components';
+import { MHForm, PageContainer, RoundedButton } from '../../components';
 import { ReaderThunks } from '../../actions';
 import { FormattedRelative } from 'react-intl';
 import Fuse from 'fuse.js';
@@ -31,6 +31,10 @@ const SubsectionContainer = styled.div`
 
 const A = styled.a`
     text-align: center;
+`;
+
+const UtilityContainer = styled.div`
+    padding: 20px;
 `;
 
 function isMinor(birthdate) {
@@ -355,6 +359,26 @@ class ReaderPage extends React.Component {
                         );
                     }}
                 />
+                <UtilityContainer>
+                    <RoundedButton
+                        color={this.props.theme.primary}
+                        onClick={() => {
+                            const { applications } = this.props.readerState.data;
+                            if (applications.length === 0) {
+                                return;
+                            }
+                            const keys = Object.keys(applications[0]);
+                            const meta = 'data:text/csv;charset=utf-8,';
+                            const keyList = keys.join(',') + '\n';
+                            const data = applications.map(app => {
+                                return keys.map(key => app[key]).join(',');
+                            }).join('\n');
+                            window.open(encodeURI(meta + keyList + data));
+                        }}
+                    >
+                        CSV
+                    </RoundedButton>
+                </UtilityContainer>
             </PageContainer>
         );
     }

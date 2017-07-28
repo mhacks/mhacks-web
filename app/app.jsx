@@ -49,17 +49,14 @@ class AppProvider extends React.Component {
         this.props.dispatch(ConfigurationThunks.loadConfiguration());
     }
 
+    getMetadata() {
+        return getUserMetadata(store.getState().userState.data);
+    }
+
     render() {
         if (!this.props.configurationState.fetched) {
             return <div />;
         }
-
-        const {
-            isLoggedIn,
-            isEmailVerified,
-            isReader,
-            isAdmin
-        } = getUserMetadata(store.getState().userState.data);
 
         return (
             <Provider store={store}>
@@ -75,7 +72,7 @@ class AppProvider extends React.Component {
                                 exact
                                 path={routes.LOGIN}
                                 render={() => {
-                                    if (isLoggedIn) {
+                                    if (this.getMetadata().isLoggedIn) {
                                         return <Redirect to={routes.PROFILE} />;
                                     }
 
@@ -93,7 +90,7 @@ class AppProvider extends React.Component {
                                 exact
                                 path={routes.PROFILE}
                                 render={() => {
-                                    if (isLoggedIn) {
+                                    if (this.getMetadata().isLoggedIn) {
                                         return <Profile />;
                                     }
 
@@ -104,6 +101,10 @@ class AppProvider extends React.Component {
                                 exact
                                 path={routes.APPLY}
                                 render={() => {
+                                    const {
+                                        isLoggedIn,
+                                        isEmailVerified
+                                    } = this.getMetadata();
                                     if (isLoggedIn && isEmailVerified) {
                                         return <Apply />;
                                     }
@@ -119,6 +120,11 @@ class AppProvider extends React.Component {
                                 exact
                                 path={routes.READER}
                                 render={() => {
+                                    const {
+                                        isLoggedIn,
+                                        isReader,
+                                        isAdmin
+                                    } = this.getMetadata();
                                     if (isLoggedIn && (isReader || isAdmin)) {
                                         return <ReaderPage />;
                                     }
