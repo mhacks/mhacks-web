@@ -29,26 +29,22 @@ const Link = styled.a`
     textDecoration: none;
 `;
 
-const ExpandingItemWrapper = styled.div`
-    marginTop: 5px;
-`;
+const ExpandingItemWrapper = styled.div`marginTop: 5px;`;
 
 const FlexBox = styled.div`
     display: flex;
     flexDirection: column;
-    
+
     ${devices.tablet`
         flexDirection: row;
-    `}
+    `};
 `;
 
-const FaqColumn = styled.div`
-    
-`;
+const FaqColumn = styled.div``;
 
 const FaqBody = styled.div`
-     maxWidth: 75%;
-     margin: 30px auto 0;
+    maxWidth: 75%;
+    margin: 30px auto 0;
 `;
 
 const FaqItem = props =>
@@ -77,19 +73,17 @@ class Faq extends React.Component {
                                         body={
                                             <span>
                                                 Participants
-                                                (&#8220;hackers&#8221;)
-                                                spend 36 hours working in
-                                                teams of 1 - 4 people
-                                                to build or code or design
-                                                projects
+                                                (&#8220;hackers&#8221;) spend 36
+                                                hours working in teams of 1 - 4
+                                                people to build or code or
+                                                design projects
                                                 (&#8220;hacks&#8221;) that
                                                 they&#8217;re excited about.
-                                                There are workshops,
-                                                mentors, food, swag, and
-                                                buckets of coffee to guide
-                                                you along the way.
-                                                You bring your ideas, and we
-                                                give you everything you need
+                                                There are workshops, mentors,
+                                                food, swag, and buckets of
+                                                coffee to guide you along the
+                                                way. You bring your ideas, and
+                                                we give you everything you need
                                                 to make them come to life.
                                             </span>
                                         }
@@ -98,12 +92,11 @@ class Faq extends React.Component {
                                         header="What do people normally make?"
                                         body={
                                             <span>
-                                                Hacks generally fall under
-                                                one (or more) of the seven
-                                                cortices: Web Development,
-                                                Android, iOS, AI/ML, AR/VR,
-                                                Game Development, and
-                                                Hardware. Check out the
+                                                Hacks generally fall under one
+                                                (or more) of the seven cortices:
+                                                Web Development, Android, iOS,
+                                                AI/ML, AR/VR, Game Development,
+                                                and Hardware. Check out the
                                                 hacks from MHacks 9 on
                                                 <Link
                                                     href="https://mhacks9.devpost.com/submissions"
@@ -127,9 +120,7 @@ class Faq extends React.Component {
                                 </Section>
                             </FaqBody>
                             <FaqBody>
-                                <FaqSectionHeader>
-                                    Application
-                                </FaqSectionHeader>
+                                <FaqSectionHeader>Application</FaqSectionHeader>
                                 <Section>
                                     <FaqItem
                                         header="How do I apply?"
@@ -139,7 +130,7 @@ class Faq extends React.Component {
                                     <FaqItem
                                         header="When are applications closing?"
                                         body="Applications will be evaluated on a rolling basis until Monday, September 4th. Space fills up quickly, so apply early!
-                                     &#10;To be eligible for a Travel Reimbursement, you need will need to apply latest by Monday, August 14th, no exceptions will
+                                     &#10;To be eligible for a Travel Reimbursement, you will need to apply latest by Monday, August 14th, no exceptions will
                                       be made. You are eligible for a Travel Reimbursement if there are no MHacks Buses nearby your location and it costs you money
                                       to get to MHacks.&#10;"
                                     />
@@ -175,24 +166,20 @@ class Faq extends React.Component {
                                 <Section>
                                     <FaqItem
                                         header="What if I don’t have a team or idea?"
-                                        body="Not to worry, most people don’t! We have some great activities planned before and during the event to help
-                                            you meet teammates and start thinking through your ideas."
+                                        body="Not to worry, most people don’t! We have some great activities planned before and during the event to help you meet teammates and start thinking through your ideas."
                                     />
                                     <FaqItem
                                         header="What kind of hardware will there be?"
                                         body="There’ll be tons of cool hardware for you to hack on. We’ll put out a list closer to the event so you can see what’s available.
                                          You can also feel free to bring your own from home or email us with any suggestions."
                                     />
-
                                 </Section>
                             </FaqBody>
                         </FaqColumn>
 
                         <FaqColumn>
                             <FaqBody>
-                                <FaqSectionHeader>
-                                    Logistics
-                                </FaqSectionHeader>
+                                <FaqSectionHeader>Logistics</FaqSectionHeader>
                                 <Section>
                                     <FaqItem
                                         header="How will I get there from other schools?"
@@ -204,31 +191,32 @@ class Faq extends React.Component {
                                         header="What if I’m an international student?"
                                         body={
                                             <span>
-                                                If you go to school in
-                                                Canada, we may be sending a
-                                                bus to your university or
-                                                one near you. If you are
-                                                traveling from another
-                                                country,
-                                                the first step is to make
-                                                sure you have a valid travel
-                                                visa. Please refer to{' '}
+                                                If you go to school in Canada,
+                                                we may be sending a bus to your
+                                                university or one near you. If
+                                                you are traveling from another
+                                                country, the first step is to
+                                                make sure you have a valid
+                                                travel visa. Please refer to{
+                                                    ' '
+                                                }
                                                 <Link
                                                     href="https://www.visahq.com"
                                                     target="_blank"
                                                 >
                                                     this website
                                                 </Link>
-                                                to make sure you meet
-                                                the requirements and get
-                                                started on the process if
-                                                you haven’t already. If you
-                                                need anything from the
-                                                organizers, such as a letter
-                                                of invitation,
-                                                please contact us as soon as
-                                                possible at
-                                                hackathon@umich.edu.
+                                                to make sure you meet the
+                                                requirements and get started on
+                                                the process if you haven’t
+                                                already. If you need anything
+                                                from the organizers, such as a
+                                                letter of invitation, please
+                                                contact us as soon as possible
+                                                at{' '}
+                                                <Link href="mailto:hackathon@umich.edu">
+                                                    hackathon@umich.edu
+                                                </Link>.
                                             </span>
                                         }
                                     />
@@ -256,12 +244,31 @@ class Faq extends React.Component {
                                 <Section>
                                     <FaqItem
                                         header="I don’t want to hack, I want to ________!"
-                                        body="If you’re contemplating judging, volunteering, or mentoring, shoot us an email at hackathon@umich.edu. If your company
-                                        is interested in becoming a sponsor, check out the sponsorship section below."
+                                        body={
+                                            <span>
+                                                If you’re contemplating judging,
+                                                volunteering, or mentoring,
+                                                shoot us an email at
+                                                <Link href="mailto:hackathon@umich.edu">
+                                                    hackathon@umich.edu
+                                                </Link>. If your company is
+                                                interested in becoming a
+                                                sponsor, check out the
+                                                sponsorship section below.
+                                            </span>
+                                        }
                                     />
                                     <FaqItem
-                                        header="I didn't find my question here..."
-                                        body="If you’ve got something else on your mind, fire it off to hackathon@umich.edu!"
+                                        header="I didn’t find my question here..."
+                                        body={
+                                            <span>
+                                                If you’ve got something else on
+                                                your mind, fire it off to
+                                                <Link href="mailto:hackathon@umich.edu">
+                                                    hackathon@umich.edu
+                                                </Link>!
+                                            </span>
+                                        }
                                     />
                                 </Section>
                             </FaqBody>

@@ -11,6 +11,7 @@ import LabeledInput from './LabeledInput.jsx';
 import LabeledTextarea from './LabeledTextarea.jsx';
 import PageContainer from './PageContainer.jsx';
 import Countdown from './Countdown.jsx';
+import MHForm from './MHForm.jsx';
 
 export {
     TextSubmit,
@@ -25,5 +26,6 @@ export {
     LabeledInput,
     LabeledTextarea,
     PageContainer,
-    Countdown
+    Countdown,
+    MHForm
 };

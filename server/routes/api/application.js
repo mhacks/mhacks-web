@@ -3,6 +3,7 @@ var router = require('express').Router(),
     User = require('../../db/model/User.js'),
     Application = require('../../db/model/Application.js'),
     config = require('../../../config/default.js'),
+    authMiddleware = require('../../middleware/auth.js'),
     uploadHelper = require('../../interactors/multer-s3.js')(
         config.AWS_BUCKET_NAME
     );
@@ -91,8 +92,12 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
         });
 });
 
+// Returns all applications
 router.get('/', function(req, res) {
-    Application.find()
+    Application.find(
+        {},
+        '-_id -__v -status -score -reimbursement -reader -review_notes'
+    )
         .byToken(req.authToken)
         .then(application => {
             res.send({
@@ -102,6 +107,52 @@ router.get('/', function(req, res) {
         })
         .catch(() => {
             res.send({
+                status: false,
+                message: Responses.UNKNOWN_ERROR
+            });
+        });
+});
+
+// Returns all applications
+router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
+    Application.find()
+        .select('-_id -__v')
+        .then(applications => {
+            User.find({
+                email: {
+                    $in: applications
+                        .filter(application => application.user)
+                        .map(application => application.user)
+                }
+            })
+                .select('full_name email')
+                .then(users => {
+                    res.send({
+                        status: true,
+                        applications: applications.map(application => {
+                            const associated_user = users.find(
+                                user => user.email === application.user
+                            );
+                            if (!associated_user) {
+                                return application;
+                            }
+                            return Object.assign({}, application._doc, {
+                                full_name: associated_user.full_name
+                            });
+                        })
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    res.status(500).send({
+                        status: false,
+                        message: Responses.UNKNOWN_ERROR
+                    });
+                });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({
                 status: false,
                 message: Responses.UNKNOWN_ERROR
             });

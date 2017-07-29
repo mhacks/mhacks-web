@@ -26,6 +26,125 @@ export const ProfileFields = {
 const required = true;
 const optional = false;
 
+export const ApplicationReaderFiltersSchema = [
+    {
+        type: FieldTypes.SELECT,
+        label: 'Status',
+        key: 'status',
+        default: 'all',
+        options: [
+            {
+                key: 'all',
+                title: 'All'
+            },
+            {
+                key: 'unread',
+                title: 'Unread'
+            },
+            {
+                key: 'waitlisted',
+                title: 'Waitlisted'
+            },
+            {
+                key: 'accepted',
+                title: 'Accepted'
+            }
+        ]
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Reimbursement',
+        key: 'reimbursement',
+        default: 'all',
+        options: [
+            {
+                key: 'all',
+                title: 'All'
+            },
+            {
+                key: 'yes',
+                title: 'Yes'
+            },
+            {
+                key: 'no',
+                title: 'No'
+            }
+        ]
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Minor',
+        key: 'minor',
+        default: 'all',
+        options: [
+            {
+                key: 'all',
+                title: 'All'
+            },
+            {
+                key: 'yes',
+                title: 'Yes'
+            },
+            {
+                key: 'no',
+                title: 'No'
+            }
+        ]
+    },
+    {
+        type: FieldTypes.TEXT,
+        label: 'Search',
+        key: 'search',
+        placeholder: 'By name, uni, email'
+    },
+    {
+        type: FieldTypes.DATE,
+        label: 'Since',
+        key: 'since'
+    }
+];
+
+export const ApplicationReaderSchema = [
+    {
+        type: FieldTypes.SECTIONHEADER,
+        title: 'Review'
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Status',
+        key: 'status',
+        default: 'unread',
+        options: [
+            {
+                key: 'unread',
+                title: 'Unread'
+            },
+            {
+                key: 'waitlisted',
+                title: 'Waitlisted'
+            },
+            {
+                key: 'accepted',
+                title: 'Accepted'
+            }
+        ]
+    },
+    {
+        type: FieldTypes.INTEGER,
+        label: 'Score',
+        key: 'score'
+    },
+    {
+        type: FieldTypes.INTEGER,
+        label: 'Reimbursement',
+        key: 'reimbursement'
+    },
+    {
+        type: FieldTypes.SUBMIT,
+        title: 'Save'
+    }
+];
+
 export const HackerApplicationFields = [
     {
         type: FieldTypes.SECTIONHEADER,
