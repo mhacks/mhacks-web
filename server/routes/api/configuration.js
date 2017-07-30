@@ -16,10 +16,12 @@ router.get('/', function(req, res) {
             .byToken(token)
             .exec()
             .then(user => {
-                res.send({
-                    status: true,
-                    user: user.getProfile(),
-                    configuration
+                user.getProfile().then(profile => {
+                    res.send({
+                        status: true,
+                        user: user.profile,
+                        configuration
+                    });
                 });
             })
             .catch(() => {

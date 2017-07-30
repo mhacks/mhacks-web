@@ -281,15 +281,18 @@ class Profile extends React.Component {
     }
 
     render() {
+        const userData = this.props.userState.data;
+
         return (
             <PageContainer>
+                {userData.status === 'unread' ? <p>yay</p> : <p>aww</p>}
                 <FormContainer>
                     <SectionHeader color={this.props.theme.primary}>
-                        {this.props.userState.data.isEmailVerified
+                        {userData.isEmailVerified
                             ? 'Profile'
                             : 'Unverified Email'}
                     </SectionHeader>
-                    {this.props.userState.data.isEmailVerified
+                    {userData.isEmailVerified
                         ? <form onSubmit={this.onSubmit}>
                               {this.props.userState.error
                                   ? <AlertContainer>
@@ -300,7 +303,7 @@ class Profile extends React.Component {
                                         />
                                     </AlertContainer>
                                   : null}
-                              {this.props.userState.data.isApplicationSubmitted
+                              {userData.isApplicationSubmitted
                                   ? <AlertContainer>
                                         <Alert
                                             message={
@@ -440,8 +443,7 @@ class Profile extends React.Component {
                                       <FileUploadContainer>
                                           <FileUpload
                                               defaultColor={
-                                                  this.props.userState.data.user
-                                                      .isResumeUploaded
+                                                  userData.user.isResumeUploaded
                                                       ? this.props.theme.success
                                                       : this.props.theme.primary
                                               }
@@ -455,8 +457,7 @@ class Profile extends React.Component {
                                                   this.handleFileUpload
                                               }
                                               defaultText={
-                                                  this.props.userState.data.user
-                                                      .isResumeUploaded
+                                                  userData.user.isResumeUploaded
                                                       ? 'Resume Uploaded'
                                                       : null
                                               }
@@ -609,7 +610,7 @@ class Profile extends React.Component {
                           </form>
                         : <p>
                               You should have received a verification email at{' '}
-                              {this.props.userState.data.email}. If not, you can
+                              {userData.email}. If not, you can
                               request another one{' '}
                               <Link
                                   onClick={this.onClickRequestEmailVerification}

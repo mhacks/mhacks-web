@@ -92,11 +92,11 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
         });
 });
 
-// Returns all applications
+// Returns application for the current user
 router.get('/', function(req, res) {
     Application.find(
         {},
-        '-_id -__v -status -score -reimbursement -reader -review_notes'
+        '-_id -__v -score -reader -review_notes'
     )
         .byToken(req.authToken)
         .then(application => {

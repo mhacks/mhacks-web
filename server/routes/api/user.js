@@ -98,7 +98,7 @@ router.post(
                 });
             })
             .catch(() => {
-                res.send({
+                res.status(500).send({
                     status: false,
                     message: Responses.UNKNOWN_ERROR
                 });
@@ -113,19 +113,21 @@ router.get('/profile', function(req, res) {
         .exec()
         .then(user => {
             if (user) {
-                res.send({
-                    status: true,
-                    user: user.getProfile()
-                });
+                user.getProfile().then(profile => {
+                    res.send({
+                        status: true,
+                        user: profile
+                    });
+                })
             } else {
-                res.send({
+                res.status(401).send({
                     status: false,
-                    user: {}
+                    message: Responses.Auth.UNAUTHORIZED
                 });
             }
         })
         .catch(() => {
-            res.send({
+            res.status(500).send({
                 status: false,
                 message: Responses.UNKNOWN_ERROR
             });
