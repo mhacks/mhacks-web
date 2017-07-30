@@ -178,7 +178,7 @@ schema.methods.generateNewToken = function() {
         },
         secret,
         {
-            expiresIn: '28d'
+            expiresIn: config.token_expiration + 'd'
         }
     );
 

@@ -12,6 +12,7 @@ module.exports = {
     api_work: process.env.APIWORK || false,
     server_port: process.env.PORT || 3000,
     max_tokens: process.env.MAX_TOKENS || 10,
+    token_expiration: process.env.TOKEN_EXPIRATION || 28, // days
     socket_auth_timeout: process.env.SOCKET_AUTH_TIMEOUT || 10000,
     mailchimp_token: process.env.MAILCHIMP_TOKEN || '',
     mailchimp_listid: process.env.MAILCHIMP_LISTID || 'd9245d6d34',
