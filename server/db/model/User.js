@@ -465,20 +465,31 @@ schema.methods.getProfile = function() {
         sex: this.sex
     };
 
-    return new Promise((resolve, reject) => {
-        mongoose.model('Application').find().byEmail(this.email).then(application => {
-            const { status, needs_reimbursement, reimbursement } = application;
+    return new Promise(resolve => {
+        mongoose
+            .model('Application')
+            .find()
+            .byEmail(this.email)
+            .then(application => {
+                const {
+                    status,
+                    needs_reimbursement,
+                    reimbursement
+                } = application;
 
-            profile.application_submitted = true;
-            profile.status = status;
-            profile.needs_reimbursement = needs_reimbursement;
-            profile.reimbursement = needs_reimbursement ? reimbursement : undefined;
+                profile.application_submitted = true;
+                profile.status = status;
+                profile.needs_reimbursement = needs_reimbursement;
+                profile.reimbursement = needs_reimbursement
+                    ? reimbursement
+                    : undefined;
 
-            resolve(profile);
-        }).catch(() => {
-            profile.application_submitted = false;
-            resolve(profile);
-        });
+                resolve(profile);
+            })
+            .catch(() => {
+                profile.application_submitted = false;
+                resolve(profile);
+            });
     });
 };
 

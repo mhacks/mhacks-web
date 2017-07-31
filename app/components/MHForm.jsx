@@ -72,10 +72,12 @@ class MHForm extends React.Component {
     }
 
     handleSelectChange(name) {
-        return (selection) => {
-            const field = this.props.schema[this.props.schema.findIndex(field => {
-                return field.key === name;
-            })];
+        return selection => {
+            const field = this.props.schema[
+                this.props.schema.findIndex(field => {
+                    return field.key === name;
+                })
+            ];
             const completion = () => {
                 if (this.props.onChange) {
                     this.props.onChange(this.state);
@@ -84,11 +86,13 @@ class MHForm extends React.Component {
 
             const newValue = FieldTypes.MULTI ? selection : selection.value;
 
-            this.setState({
+            this.setState(
+                {
                     [name]: selection ? newValue : getFieldDefault(field)
-                }, completion
+                },
+                completion
             );
-        }
+        };
     }
 
     renderLabeledInput(field, contents) {
@@ -105,10 +109,12 @@ class MHForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                this.props.onSubmit(this.state);
-            }}>
+            <form
+                onSubmit={e => {
+                    e.preventDefault();
+                    this.props.onSubmit(this.state);
+                }}
+            >
                 {this.props.schema.map(field => {
                     switch (field.type) {
                         case FieldTypes.SELECT:
@@ -118,7 +124,9 @@ class MHForm extends React.Component {
                                     name={field.key}
                                     value={this.state[field.key]}
                                     options={field.options}
-                                    onChange={this.handleSelectChange(field.key)}
+                                    onChange={this.handleSelectChange(
+                                        field.key
+                                    )}
                                 />
                             );
                         case FieldTypes.MULTI:
@@ -129,7 +137,9 @@ class MHForm extends React.Component {
                                     value={this.state[field.key]}
                                     options={field.options}
                                     multi={true}
-                                    onChange={this.handleSelectChange(field.key)}
+                                    onChange={this.handleSelectChange(
+                                        field.key
+                                    )}
                                 />
                             );
                         case FieldTypes.TEXT:

@@ -118,7 +118,7 @@ router.get('/profile', function(req, res) {
                         status: true,
                         user: profile
                     });
-                })
+                });
             } else {
                 res.status(401).send({
                     status: false,

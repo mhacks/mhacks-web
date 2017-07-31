@@ -95,10 +95,7 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
 
 // Returns application for the current user
 router.get('/', function(req, res) {
-    Application.find(
-        {},
-        '-_id -__v -score -reader -review_notes'
-    )
+    Application.find({}, '-_id -__v -score -reader -review_notes')
         .byToken(req.authToken)
         .then(application => {
             res.send({

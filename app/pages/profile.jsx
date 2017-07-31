@@ -304,7 +304,8 @@ class Profile extends React.Component {
                         Unverified Email
                     </SectionHeader>
                     <p>
-                        You should have received a verification email at{' ' + userData.email}. If not, you can
+                        You should have received a verification email at{' ' + userData.email}.
+                        If not, you can
                         request another one by clicking{' '}
                         <Link
                             onClick={this.onClickRequestEmailVerification}
@@ -321,10 +322,7 @@ class Profile extends React.Component {
 
     renderApplicationReviewSection() {
         const userData = this.props.userState.data;
-        const {
-            isApplicationReviewed,
-            isAccepted
-        } = getUserMetadata(userData);
+        const { isApplicationReviewed, isAccepted } = getUserMetadata(userData);
 
         if (!isApplicationReviewed) {
             return null;
@@ -346,13 +344,12 @@ class Profile extends React.Component {
     }
 
     renderApplicationStatus(isAccepted) {
-        const message = isAccepted ? 'Congratulations! Your application has been reviewed and you have been accepted to attend MHacks X!' : 'Unfortunately, due to limited capacity for MHacks X, you have been waitlisted.';
+        const message = isAccepted
+            ? 'Congratulations! Your application has been reviewed and you have been accepted to attend MHacks X!'
+            : 'Unfortunately, due to limited capacity for MHacks X, you have been waitlisted.';
         return (
             <AlertContainer>
-                <Alert
-                    message={message}
-                    positive={isAccepted}
-                />
+                <Alert message={message} positive={isAccepted} />
             </AlertContainer>
         );
     }
@@ -379,333 +376,301 @@ class Profile extends React.Component {
                     </SectionHeader>
                     <form onSubmit={this.onSubmit}>
                         {this.props.userState.error
-                              ? <AlertContainer>
-                                    <Alert
-                                        message={
-                                            this.props.userState.message
-                                        }
+                            ? <AlertContainer>
+                                  <Alert
+                                      message={this.props.userState.message}
+                                  />
+                              </AlertContainer>
+                            : null}
+                        {isApplicationSubmitted && !isApplicationReviewed
+                            ? <AlertContainer>
+                                  <Alert
+                                      message={
+                                          'Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to MHacks X'
+                                      }
+                                      style={{
+                                          backgroundColor: '#01FF70',
+                                          color: '#3D9970'
+                                      }}
+                                  />
+                              </AlertContainer>
+                            : null}
+                        <Subhead>
+                            Update your profile with some info about
+                            yourself. This will be automatically
+                            populated into your application and persist
+                            through hackathons!
+                        </Subhead>
+                        <Flexer>
+                            <InputContainer>
+                                <SubsectionHeader
+                                    color={this.props.theme.primary}
+                                >
+                                    General
+                                </SubsectionHeader>
+                                <LabeledInput label="Name">
+                                    <Input
+                                        id="name"
+                                        type="text"
+                                        name="name"
+                                        placeholder="Hack mcHacker"
+                                        value={this.state.name}
+                                        onChange={this.handleAttributeChange}
                                     />
-                                </AlertContainer>
-                              : null}
-                          {isApplicationSubmitted && !isApplicationReviewed
-                              ? <AlertContainer>
-                                    <Alert
-                                        message={
-                                            'Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to MHacks X'
+                                </LabeledInput>
+                                <LabeledInput label="University">
+                                    <Autocomplete
+                                        getItemValue={item => item}
+                                        items={Universities}
+                                        shouldItemRender={
+                                            this.handleItemShouldRender
                                         }
-                                        style={{
-                                            backgroundColor: '#01FF70',
-                                            color: '#3D9970'
+                                        renderItem={(item, isHighlighted) =>
+                                            <div
+                                                style={{
+                                                    background: isHighlighted
+                                                        ? 'lightgray'
+                                                        : 'white'
+                                                }}
+                                            >
+                                                {item}
+                                            </div>}
+                                        inputProps={{
+                                            placeholder:
+                                                'e.g. University of Michigan',
+                                            name: 'university',
+                                            id: 'university',
+                                            style: {
+                                                height: '36px',
+                                                width: '100%',
+                                                paddingLeft: '10px',
+                                                border: '1px solid #ccc',
+                                                borderRadius: '4px'
+                                            }
                                         }}
+                                        sortItems={this.handleSortItems}
+                                        value={this.state.university}
+                                        onChange={this.handleAttributeChange}
+                                        onSelect={e => {
+                                            var fakeEvent = {
+                                                target: {
+                                                    name: 'university',
+                                                    value: e
+                                                }
+                                            };
+
+                                            this.handleAttributeChange(
+                                                fakeEvent
+                                            );
+                                        }}
+                                        menuStyle={autocompleteMenuStyle}
+                                        wrapperStyle={autocompleteWrapperStyle}
+                                        renderMenu={this.handleRenderMenu}
                                     />
-                                </AlertContainer>
-                              : null}
-                          <Subhead>
-                              Update your profile with some info about
-                              yourself. This will be automatically
-                              populated into your application and persist
-                              through hackathons!
-                          </Subhead>
-                          <Flexer>
-                              <InputContainer>
-                                  <SubsectionHeader
-                                      color={this.props.theme.primary}
-                                  >
-                                      General
-                                  </SubsectionHeader>
-                                  <LabeledInput label="Name">
-                                      <Input
-                                          id="name"
-                                          type="text"
-                                          name="name"
-                                          placeholder="Hack mcHacker"
-                                          value={this.state.name}
-                                          onChange={
-                                              this.handleAttributeChange
-                                          }
-                                      />
-                                  </LabeledInput>
-                                  <LabeledInput label="University">
-                                      <Autocomplete
-                                          getItemValue={item => item}
-                                          items={Universities}
-                                          shouldItemRender={
-                                              this.handleItemShouldRender
-                                          }
-                                          renderItem={(
-                                              item,
-                                              isHighlighted
-                                          ) =>
-                                              <div
-                                                  style={{
-                                                      background: isHighlighted
-                                                          ? 'lightgray'
-                                                          : 'white'
-                                                  }}
-                                              >
-                                                  {item}
-                                              </div>}
-                                          inputProps={{
-                                              placeholder:
-                                                  'e.g. University of Michigan',
-                                              name: 'university',
-                                              id: 'university',
-                                              style: {
-                                                  height: '36px',
-                                                  width: '100%',
-                                                  paddingLeft: '10px',
-                                                  border: '1px solid #ccc',
-                                                  borderRadius: '4px'
-                                              }
-                                          }}
-                                          sortItems={this.handleSortItems}
-                                          value={this.state.university}
-                                          onChange={
-                                              this.handleAttributeChange
-                                          }
-                                          onSelect={e => {
-                                              var fakeEvent = {
-                                                  target: {
-                                                      name: 'university',
-                                                      value: e
-                                                  }
-                                              };
+                                </LabeledInput>
+                                <LabeledInput label="Major">
+                                    <Autocomplete
+                                        getItemValue={item => item}
+                                        items={Majors}
+                                        shouldItemRender={
+                                            this.handleItemShouldRender
+                                        }
+                                        renderItem={(item, isHighlighted) =>
+                                            <div
+                                                style={{
+                                                    background: isHighlighted
+                                                        ? 'lightgray'
+                                                        : 'white'
+                                                }}
+                                            >
+                                                {item}
+                                            </div>}
+                                        inputProps={{
+                                            placeholder:
+                                                'e.g. Underwater Basket Weaving',
+                                            name: 'major',
+                                            id: 'major',
+                                            style: {
+                                                height: '36px',
+                                                width: '100%',
+                                                paddingLeft: '10px',
+                                                border: '1px solid #ccc',
+                                                borderRadius: '4px'
+                                            }
+                                        }}
+                                        sortItems={this.handleSortItems}
+                                        value={this.state.major}
+                                        onChange={this.handleAttributeChange}
+                                        onSelect={e => {
+                                            var fakeEvent = {
+                                                target: {
+                                                    name: 'major',
+                                                    value: e
+                                                }
+                                            };
 
-                                              this.handleAttributeChange(
-                                                  fakeEvent
-                                              );
-                                          }}
-                                          menuStyle={autocompleteMenuStyle}
-                                          wrapperStyle={
-                                              autocompleteWrapperStyle
-                                          }
-                                          renderMenu={this.handleRenderMenu}
-                                      />
-                                  </LabeledInput>
-                                  <LabeledInput label="Major">
-                                      <Autocomplete
-                                          getItemValue={item => item}
-                                          items={Majors}
-                                          shouldItemRender={
-                                              this.handleItemShouldRender
-                                          }
-                                          renderItem={(
-                                              item,
-                                              isHighlighted
-                                          ) =>
-                                              <div
-                                                  style={{
-                                                      background: isHighlighted
-                                                          ? 'lightgray'
-                                                          : 'white'
-                                                  }}
-                                              >
-                                                  {item}
-                                              </div>}
-                                          inputProps={{
-                                              placeholder:
-                                                  'e.g. Underwater Basket Weaving',
-                                              name: 'major',
-                                              id: 'major',
-                                              style: {
-                                                  height: '36px',
-                                                  width: '100%',
-                                                  paddingLeft: '10px',
-                                                  border: '1px solid #ccc',
-                                                  borderRadius: '4px'
-                                              }
-                                          }}
-                                          sortItems={this.handleSortItems}
-                                          value={this.state.major}
-                                          onChange={
-                                              this.handleAttributeChange
-                                          }
-                                          onSelect={e => {
-                                              var fakeEvent = {
-                                                  target: {
-                                                      name: 'major',
-                                                      value: e
-                                                  }
-                                              };
-
-                                              this.handleAttributeChange(
-                                                  fakeEvent
-                                              );
-                                          }}
-                                          menuStyle={autocompleteMenuStyle}
-                                          wrapperStyle={
-                                              autocompleteWrapperStyle
-                                          }
-                                      />
-                                  </LabeledInput>
-                                  <FileUploadContainer>
-                                      <FileUpload
-                                          defaultColor={
-                                              userData.user.isResumeUploaded
-                                                  ? this.props.theme.success
-                                                  : this.props.theme.primary
-                                          }
-                                          hoverColor={
-                                              this.props.theme.secondary
-                                          }
-                                          activeColor={
-                                              this.props.theme.success
-                                          }
-                                          onFileSelect={
-                                              this.handleFileUpload
-                                          }
-                                          defaultText={
-                                              userData.user.isResumeUploaded
-                                                  ? 'Resume Uploaded'
-                                                  : null
-                                          }
-                                      />
-                                  </FileUploadContainer>
-                                  <SubsectionHeader
-                                      color={this.props.theme.primary}
-                                  >
-                                      Links
-                                  </SubsectionHeader>
-                                  <LabeledInput label="GitHub">
-                                      <Input
-                                          id="github"
-                                          type="text"
-                                          name="github"
-                                          placeholder="https://github.com/"
-                                          value={this.state.github}
-                                          onChange={
-                                              this.handleAttributeChange
-                                          }
-                                      />
-                                  </LabeledInput>
-                                  <LabeledInput label="LinkedIn">
-                                      <Input
-                                          id="linkedin"
-                                          type="text"
-                                          name="linkedin"
-                                          placeholder="https://www.linkedin.com/in/"
-                                          value={this.state.linkedin}
-                                          onChange={
-                                              this.handleAttributeChange
-                                          }
-                                      />
-                                  </LabeledInput>
-                                  <LabeledInput label="DevPost">
-                                      <Input
-                                          id="devpost"
-                                          type="text"
-                                          name="devpost"
-                                          placeholder="https://devpost.com/"
-                                          value={this.state.devpost}
-                                          onChange={
-                                              this.handleAttributeChange
-                                          }
-                                      />
-                                  </LabeledInput>
-                                  <LabeledInput label="Portfolio">
-                                      <Input
-                                          id="portfolio"
-                                          type="text"
-                                          name="portfolio"
-                                          placeholder="https://"
-                                          value={this.state.portfolio}
-                                          onChange={
-                                              this.handleAttributeChange
-                                          }
-                                      />
-                                  </LabeledInput>
-                                  <SubsectionHeader
-                                      color={this.props.theme.primary}
-                                  >
-                                      Private
-                                  </SubsectionHeader>
-                                  <LabeledInput label="Date of Birth">
-                                      <Input
-                                          id="birthday"
-                                          type="date"
-                                          name="birthday"
-                                          placeholder="mm/dd/yyyy"
-                                          value={this.state.birthday}
-                                          onChange={
-                                              this.handleAttributeChange
-                                          }
-                                      />
-                                  </LabeledInput>
-                                  <LabeledInput label="T-Shirt Size">
-                                      <StyledSelect
-                                          name="tshirt"
-                                          value={this.state.tshirt}
-                                          onChange={
-                                              this.handleAttributeChange
-                                          }
-                                      >
-                                          <option value="unselected">Select</option>
-                                          <option value="xs">XS</option>
-                                          <option value="s">S</option>
-                                          <option value="m">M</option>
-                                          <option value="l">L</option>
-                                          <option value="xl">XL</option>
-                                          <option value="2xl">2XL</option>
-                                          <option value="3xl">3XL</option>
-                                      </StyledSelect>
-                                  </LabeledInput>
-                                  <LabeledInput label="Race">
-                                      <StyledSelect
-                                          name="race"
-                                          value={this.state.race}
-                                          onChange={
-                                              this.handleAttributeChange
-                                          }
-                                      >
-                                          <option value="unselected">Select</option>
-                                          <option value="white">White</option>
-                                          <option value="black">Black</option>
-                                          <option value="am-indian-alaskan">
-                                              American Indian or Alaskan
-                                              Native
-                                          </option>
-                                          <option value="asian">
-                                              Asian or Pacific Islander
-                                          </option>
-                                          <option value="hispanic">Hispanic</option>
-                                          <option value="other">Other</option>
-                                          <option value="prefer-not">
-                                              Prefer not to answer
-                                          </option>
-                                      </StyledSelect>
-                                  </LabeledInput>
-                                  <LabeledInput label="Sex">
-                                      <StyledSelect
-                                          name="sex"
-                                          value={this.state.sex}
-                                          onChange={
-                                              this.handleAttributeChange
-                                          }
-                                      >
-                                          <option value="unselected">Select</option>
-                                          <option value="male">Male</option>
-                                          <option value="female">
-                                              Female
-                                          </option>
-                                          <option value="non-binary">
-                                              Other
-                                          </option>
-                                          <option value="prefer-not">
-                                              Prefer not to answer
-                                          </option>
-                                      </StyledSelect>
-                                  </LabeledInput>
-                              </InputContainer>
-                              <ButtonGroup>
-                                  <RoundedButton
-                                      type="submit"
-                                      color={this.props.theme.primary}
-                                  >
-                                      Save
-                                  </RoundedButton>
-                              </ButtonGroup>
-                          </Flexer>
-                      </form>
+                                            this.handleAttributeChange(
+                                                fakeEvent
+                                            );
+                                        }}
+                                        menuStyle={autocompleteMenuStyle}
+                                        wrapperStyle={autocompleteWrapperStyle}
+                                    />
+                                </LabeledInput>
+                                <FileUploadContainer>
+                                    <FileUpload
+                                        defaultColor={
+                                            userData.user.isResumeUploaded
+                                                ? this.props.theme.success
+                                                : this.props.theme.primary
+                                        }
+                                        hoverColor={this.props.theme.secondary}
+                                        activeColor={this.props.theme.success}
+                                        onFileSelect={this.handleFileUpload}
+                                        defaultText={
+                                            userData.user.isResumeUploaded
+                                                ? 'Resume Uploaded'
+                                                : null
+                                        }
+                                    />
+                                </FileUploadContainer>
+                                <SubsectionHeader
+                                    color={this.props.theme.primary}
+                                >
+                                    Links
+                                </SubsectionHeader>
+                                <LabeledInput label="GitHub">
+                                    <Input
+                                        id="github"
+                                        type="text"
+                                        name="github"
+                                        placeholder="https://github.com/"
+                                        value={this.state.github}
+                                        onChange={this.handleAttributeChange}
+                                    />
+                                </LabeledInput>
+                                <LabeledInput label="LinkedIn">
+                                    <Input
+                                        id="linkedin"
+                                        type="text"
+                                        name="linkedin"
+                                        placeholder="https://www.linkedin.com/in/"
+                                        value={this.state.linkedin}
+                                        onChange={this.handleAttributeChange}
+                                    />
+                                </LabeledInput>
+                                <LabeledInput label="DevPost">
+                                    <Input
+                                        id="devpost"
+                                        type="text"
+                                        name="devpost"
+                                        placeholder="https://devpost.com/"
+                                        value={this.state.devpost}
+                                        onChange={this.handleAttributeChange}
+                                    />
+                                </LabeledInput>
+                                <LabeledInput label="Portfolio">
+                                    <Input
+                                        id="portfolio"
+                                        type="text"
+                                        name="portfolio"
+                                        placeholder="https://"
+                                        value={this.state.portfolio}
+                                        onChange={this.handleAttributeChange}
+                                    />
+                                </LabeledInput>
+                                <SubsectionHeader
+                                    color={this.props.theme.primary}
+                                >
+                                    Private
+                                </SubsectionHeader>
+                                <LabeledInput label="Date of Birth">
+                                    <Input
+                                        id="birthday"
+                                        type="date"
+                                        name="birthday"
+                                        placeholder="mm/dd/yyyy"
+                                        value={this.state.birthday}
+                                        onChange={this.handleAttributeChange}
+                                    />
+                                </LabeledInput>
+                                <LabeledInput label="T-Shirt Size">
+                                    <StyledSelect
+                                        name="tshirt"
+                                        value={this.state.tshirt}
+                                        onChange={this.handleAttributeChange}
+                                    >
+                                        <option value="unselected">
+                                            Select
+                                        </option>
+                                        <option value="xs">XS</option>
+                                        <option value="s">S</option>
+                                        <option value="m">M</option>
+                                        <option value="l">L</option>
+                                        <option value="xl">XL</option>
+                                        <option value="2xl">2XL</option>
+                                        <option value="3xl">3XL</option>
+                                    </StyledSelect>
+                                </LabeledInput>
+                                <LabeledInput label="Race">
+                                    <StyledSelect
+                                        name="race"
+                                        value={this.state.race}
+                                        onChange={this.handleAttributeChange}
+                                    >
+                                        <option value="unselected">
+                                            Select
+                                        </option>
+                                        <option value="white">White</option>
+                                        <option value="black">Black</option>
+                                        <option value="am-indian-alaskan">
+                                            American Indian or Alaskan
+                                            Native
+                                        </option>
+                                        <option value="asian">
+                                            Asian or Pacific Islander
+                                        </option>
+                                        <option value="hispanic">
+                                            Hispanic
+                                        </option>
+                                        <option value="other">Other</option>
+                                        <option value="prefer-not">
+                                            Prefer not to answer
+                                        </option>
+                                    </StyledSelect>
+                                </LabeledInput>
+                                <LabeledInput label="Sex">
+                                    <StyledSelect
+                                        name="sex"
+                                        value={this.state.sex}
+                                        onChange={this.handleAttributeChange}
+                                    >
+                                        <option value="unselected">
+                                            Select
+                                        </option>
+                                        <option value="male">Male</option>
+                                        <option value="female">
+                                            Female
+                                        </option>
+                                        <option value="non-binary">
+                                            Other
+                                        </option>
+                                        <option value="prefer-not">
+                                            Prefer not to answer
+                                        </option>
+                                    </StyledSelect>
+                                </LabeledInput>
+                            </InputContainer>
+                            <ButtonGroup>
+                                <RoundedButton
+                                    type="submit"
+                                    color={this.props.theme.primary}
+                                >
+                                    Save
+                                </RoundedButton>
+                            </ButtonGroup>
+                        </Flexer>
+                    </form>
                 </FullscreenColumnContainer>
                 <NotificationStack
                     notifications={this.state.notifications.toArray()}

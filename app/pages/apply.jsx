@@ -448,11 +448,16 @@ class Apply extends React.Component {
                                                                           id:
                                                                               field.key,
                                                                           style: {
-                                                                              height: '36px',
-                                                                              width: '100%',
-                                                                              paddingLeft: '10px',
-                                                                              border: '1px solid #ccc',
-                                                                              borderRadius: '4px'
+                                                                              height:
+                                                                                  '36px',
+                                                                              width:
+                                                                                  '100%',
+                                                                              paddingLeft:
+                                                                                  '10px',
+                                                                              border:
+                                                                                  '1px solid #ccc',
+                                                                              borderRadius:
+                                                                                  '4px'
                                                                           }
                                                                       }}
                                                                       sortItems={

@@ -94,7 +94,9 @@ class ReaderPage extends React.Component {
     }
 
     onSubmit(formData) {
-        this.props.dispatch(ReaderThunks.reviewApplications(this.state.selected, formData));
+        this.props.dispatch(
+            ReaderThunks.reviewApplications(this.state.selected, formData)
+        );
     }
 
     generateColumns(selected) {

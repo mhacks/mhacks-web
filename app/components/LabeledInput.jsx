@@ -32,7 +32,9 @@ const ChildContainer = styled.div`
 const LabeledInput = props =>
     <InputField labelWidth={props.labelWidth || '100px'}>
         <p>{props.label}{props.required ? '*' : ''}</p>
-        <ChildContainer>{React.Children.toArray(props.children)}</ChildContainer>
+        <ChildContainer>
+            {React.Children.toArray(props.children)}
+        </ChildContainer>
     </InputField>;
 
 export default LabeledInput;

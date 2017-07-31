@@ -214,15 +214,17 @@ export const ConfirmAttendanceSchema = [
         type: FieldTypes.SELECT,
         label: 'Graduation Year',
         key: 'graduation',
-        options: range(2017, 2026).map((year) => {
-            return {
-                value: String(year),
-                label: String(year)
-            };
-        }).concat({
-            value: 'later',
-            label: '2026 or later'
-        }),
+        options: range(2017, 2026)
+            .map(year => {
+                return {
+                    value: String(year),
+                    label: String(year)
+                };
+            })
+            .concat({
+                value: 'later',
+                label: '2026 or later'
+            }),
         required
     },
     {
@@ -232,7 +234,7 @@ export const ConfirmAttendanceSchema = [
         options: [
             {
                 value: 'highschool',
-                label: 'High School',
+                label: 'High School'
             },
             {
                 value: 'bachelor',
@@ -256,7 +258,7 @@ export const ConfirmAttendanceSchema = [
         options: [
             {
                 value: 'internship',
-                label: 'Internship',
+                label: 'Internship'
             },
             {
                 value: 'fulltime',
