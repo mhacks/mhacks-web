@@ -6,7 +6,8 @@ export const FieldTypes = {
     INTEGER: 4,
     ESSAY: 5,
     BOOLEAN: 6,
-    SECTIONHEADER: 7
+    SECTIONHEADER: 7,
+    MULTI: 8
 };
 
 export const ProfileFields = {
@@ -23,6 +24,58 @@ export const ProfileFields = {
     birthday: FieldTypes.DATE
 };
 
+const Skills = [
+    '.Net',
+    'Android Development',
+    'Arduino',
+    'ASP',
+    'Bash',
+    'C',
+    'C#',
+    'C++',
+    'CSS',
+    'Data Testing',
+    'Database Experience',
+    'Eclipse',
+    'Hadoop',
+    'Hive',
+    'HTML',
+    'iOS Development',
+    'Java',
+    'JavaScript',
+    'JUnit',
+    'LaTeX',
+    'LINDO',
+    'Linux Development',
+    'Mac OSX Development',
+    'MATLAB',
+    'MySQL',
+    'Node.js',
+    'Objective C',
+    'Oozie',
+    'Perl',
+    'PHP',
+    'Python',
+    'R',
+    'Ruby',
+    'SASS',
+    'SQL',
+    'Sqoop',
+    'Swift',
+    'Visual C++',
+    'Web Development',
+    'Windows Development'
+];
+
+function mapArrayToOptions(array) {
+    return array.map((str, idx) => {
+        return {
+            value: idx,
+            label: str
+        };
+    });
+}
+
 const required = true;
 const optional = false;
 
@@ -31,23 +84,18 @@ export const ApplicationReaderFiltersSchema = [
         type: FieldTypes.SELECT,
         label: 'Status',
         key: 'status',
-        default: 'all',
         options: [
             {
-                key: 'all',
-                title: 'All'
+                value: 'unread',
+                label: 'Unread'
             },
             {
-                key: 'unread',
-                title: 'Unread'
+                value: 'waitlisted',
+                label: 'Waitlisted'
             },
             {
-                key: 'waitlisted',
-                title: 'Waitlisted'
-            },
-            {
-                key: 'accepted',
-                title: 'Accepted'
+                value: 'accepted',
+                label: 'Accepted'
             }
         ]
     },
@@ -55,19 +103,14 @@ export const ApplicationReaderFiltersSchema = [
         type: FieldTypes.SELECT,
         label: 'Reimbursement',
         key: 'reimbursement',
-        default: 'all',
         options: [
             {
-                key: 'all',
-                title: 'All'
+                value: 'yes',
+                label: 'Yes'
             },
             {
-                key: 'yes',
-                title: 'Yes'
-            },
-            {
-                key: 'no',
-                title: 'No'
+                value: 'no',
+                label: 'No'
             }
         ]
     },
@@ -75,19 +118,14 @@ export const ApplicationReaderFiltersSchema = [
         type: FieldTypes.SELECT,
         label: 'Minor',
         key: 'minor',
-        default: 'all',
         options: [
             {
-                key: 'all',
-                title: 'All'
+                value: 'yes',
+                label: 'Yes'
             },
             {
-                key: 'yes',
-                title: 'Yes'
-            },
-            {
-                key: 'no',
-                title: 'No'
+                value: 'no',
+                label: 'No'
             }
         ]
     },
@@ -116,16 +154,16 @@ export const ApplicationReaderSchema = [
         default: 'unread',
         options: [
             {
-                key: 'unread',
-                title: 'Unread'
+                value: 'unread',
+                label: 'Unread'
             },
             {
-                key: 'waitlisted',
-                title: 'Waitlisted'
+                value: 'waitlisted',
+                label: 'Waitlisted'
             },
             {
-                key: 'accepted',
-                title: 'Accepted'
+                value: 'accepted',
+                label: 'Accepted'
             }
         ]
     },
@@ -142,6 +180,96 @@ export const ApplicationReaderSchema = [
     {
         type: FieldTypes.SUBMIT,
         title: 'Save'
+    }
+];
+
+function range(start, end) {
+    return Array(end - start).fill().map((_, idx) => start + idx);
+}
+
+export const ConfirmAttendanceSchema = [
+    {
+        type: FieldTypes.TEXT,
+        label: 'Phone Number',
+        placeholder: '(313)867-5309',
+        key: 'phone',
+        required
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Graduation Year',
+        key: 'graduation',
+        options: range(2017, 2026)
+            .map(year => {
+                return {
+                    value: String(year),
+                    label: String(year)
+                };
+            })
+            .concat({
+                value: 'later',
+                label: '2026 or later'
+            }),
+        required
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Degree Type',
+        key: 'degree',
+        options: [
+            {
+                value: 'highschool',
+                label: 'High School'
+            },
+            {
+                value: 'bachelor',
+                label: 'Bachelors'
+            },
+            {
+                value: 'master',
+                label: 'Masters'
+            },
+            {
+                value: 'doctorate',
+                label: 'Doctorate'
+            }
+        ],
+        required
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Employment Interested',
+        key: 'employment',
+        options: [
+            {
+                value: 'internship',
+                label: 'Internship'
+            },
+            {
+                value: 'fulltime',
+                label: 'Full Time'
+            },
+            {
+                value: 'coop',
+                label: 'Co-op'
+            },
+            {
+                value: 'none',
+                label: 'None'
+            }
+        ],
+        required
+    },
+    {
+        type: FieldTypes.MULTI,
+        label: 'Skills',
+        key: 'skills',
+        default: [],
+        options: mapArrayToOptions(Skills)
+    },
+    {
+        type: FieldTypes.SUBMIT,
+        title: 'Confirm'
     }
 ];
 
