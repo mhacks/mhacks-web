@@ -51,7 +51,6 @@ class AppProvider extends React.Component {
     }
 
     getMetadata() {
-        console.log(store.getState().userState.data);
         return getUserMetadata(store.getState().userState.data);
     }
 

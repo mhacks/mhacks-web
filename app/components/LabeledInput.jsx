@@ -8,7 +8,7 @@ const InputField = styled.div`
     display: flex;
     flexDirection: column;
     justifyContent: space-between;
-    alignItems: center;
+    alignItems: flex-start;
 
     ${devices.small`
         flexDirection: row;
@@ -18,6 +18,7 @@ const InputField = styled.div`
         width: ${props => props.labelWidth};
         marginRight: 30px;
         marginBottom: 4px;
+        overflow: hidden;
 
         ${devices.small`
             marginBottom: 1em;
@@ -27,6 +28,7 @@ const InputField = styled.div`
 
 const ChildContainer = styled.div`
     flexGrow: 1;
+    width: 100%;
 `;
 
 const LabeledInput = props =>

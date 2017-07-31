@@ -64,6 +64,13 @@ class MHForm extends React.Component {
         this.handleAttributeChange = this.handleAttributeChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
+        this.changeCompletion = this.changeCompletion.bind(this);
+    }
+
+    changeCompletion() {
+        if (this.props.onChange) {
+            this.props.onChange(this.formatFormData());
+        }
     }
 
     // Generic function for changing state
@@ -76,11 +83,7 @@ class MHForm extends React.Component {
                     [e.target.name]: e.target.value
                 }
             },
-            () => {
-                if (this.props.onChange) {
-                    this.props.onChange(this.state.formData);
-                }
-            }
+            this.changeCompletion
         );
     }
 
@@ -91,22 +94,19 @@ class MHForm extends React.Component {
                     return field.key === name;
                 })
             ];
-            const completion = () => {
-                if (this.props.onChange) {
-                    this.props.onChange(this.state.formData);
-                }
-            };
-
-            const newValue = FieldTypes.MULTI ? selection : selection.value;
 
             this.setState(
                 {
                     formData: {
                         ...this.state.formData,
-                        [name]: selection ? newValue : getFieldDefault(field)
+                        [name]: selection
+                            ? field.type === FieldTypes.MULTI
+                              ? selection
+                              : selection.value
+                            : getFieldDefault(field)
                     }
                 },
-                completion
+                this.changeCompletion
             );
         };
     }
@@ -160,7 +160,7 @@ class MHForm extends React.Component {
         const errorFields = this.validateFields();
 
         if (errorFields.length === 0) {
-            this.props.onSubmit(this.formatSubmit());
+            this.props.onSubmit(this.formatFormData());
         } else {
             this.setState({
                 errorFields
@@ -168,7 +168,7 @@ class MHForm extends React.Component {
         }
     }
 
-    formatSubmit() {
+    formatFormData() {
         const formatted = {};
         const formData = this.state.formData;
         for (const field of this.props.schema) {
@@ -184,7 +184,7 @@ class MHForm extends React.Component {
                     formatted[field.key] = new Date(formData[field.key]);
                     break;
                 case FieldTypes.SELECT:
-                    formatted[field.key] = formData[field.key].value;
+                    formatted[field.key] = formData[field.key];
                     break;
                 case FieldTypes.MULTI:
                     formatted[field.key] = formData[field.key].map(

@@ -9,7 +9,7 @@ const FormContainer = styled.div`
     maxWidth: 500px;
     margin: 0 auto;
     minHeight: calc(100vh - 30px - 2rem - 80px);
-    padding: 20px 0 50px;
+    padding: 20px 20px 50px 20px;
 `;
 
 class Confirm extends React.Component {

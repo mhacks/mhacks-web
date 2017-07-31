@@ -84,12 +84,7 @@ export const ApplicationReaderFiltersSchema = [
         type: FieldTypes.SELECT,
         label: 'Status',
         key: 'status',
-        default: 'all',
         options: [
-            {
-                value: 'all',
-                label: 'All'
-            },
             {
                 value: 'unread',
                 label: 'Unread'
@@ -108,12 +103,7 @@ export const ApplicationReaderFiltersSchema = [
         type: FieldTypes.SELECT,
         label: 'Reimbursement',
         key: 'reimbursement',
-        default: 'all',
         options: [
-            {
-                value: 'all',
-                label: 'All'
-            },
             {
                 value: 'yes',
                 label: 'Yes'
@@ -128,12 +118,7 @@ export const ApplicationReaderFiltersSchema = [
         type: FieldTypes.SELECT,
         label: 'Minor',
         key: 'minor',
-        default: 'all',
         options: [
-            {
-                value: 'all',
-                label: 'All'
-            },
             {
                 value: 'yes',
                 label: 'Yes'
