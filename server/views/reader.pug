@@ -1,0 +1,253 @@
+extends index.pug
+
+block title
+    title Unchained Applications
+
+block mainScript
+    script(type='text/javascript').
+        $(document).ready(function () {
+            application_table = $('#application-table').DataTable({
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+            application_table.buttons().container().appendTo('#application-table_wrapper');
+
+            $('#application-table_wrapper .col-sm-6:eq(0)').append(`
+                <div class='btn-toolbar' style='width: 1000px;'>
+                    <button class='btn btn-primary' id='cleartoggle'>Clear</button>
+                    <button class='btn btn-primary' id='domaintoggle'>umich.edu</button>
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select class="form-control" id="status">
+                            <option>select</option>
+                            <option>unread</option>
+                            <option>waitlisted</option>
+                            <option>accepted</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">Experience:</label>
+                        <select class="form-control" id="experience">
+                            <option>select</option>
+                            <option value="novice">novice</option>
+                            <option value="experienced">experienced</option>
+                            <option value="veteran">veteran</option>
+                        </select>
+                    </div>
+                    <button class='btn btn-primary' id='minortoggle'>Minor</button>
+                    <button class='btn btn-primary' id='reimbursementtoggle'>Needs Reimbursement</button>
+                </div>
+            `);
+
+            $('#cleartoggle').click(function (e) {
+                e.preventDefault();
+
+                $.fn.dataTable.ext.search = [];
+                application_table.draw();
+            });
+
+            $('#domaintoggle').click(function(e) {
+                e.preventDefault();
+
+                $.fn.dataTable.ext.search = [function(settings, data, dataIndex) {
+                    console.log(data);
+                    if (data[19].indexOf('umich.edu') !== -1) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }];
+
+                application_table.draw();
+            });
+
+            $('#minortoggle').click(function (e) {
+                e.preventDefault();
+
+                $.fn.dataTable.ext.search = [function (settings, data, dataIndex) {
+                    if ((new Date().getTime()) - (new Date(data[4]).getTime()) < 567648000000) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }];
+
+                application_table.draw();
+            });
+
+            $('#reimbursementtoggle').click(function (e) {
+                e.preventDefault();
+
+                $.fn.dataTable.ext.search = [function (settings, data, dataIndex) {
+                    if (data[18] === 'true') {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }];
+
+                application_table.draw();
+            });
+
+            $('#experience').change(function(e) {
+                e.preventDefault();
+
+                $.fn.dataTable.ext.search = [function (settings, data, dataIndex) {
+                    if (data[3] === $('#experience').val() || $('#experience').val() === 'select') {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }];
+
+                application_table.draw();
+            });
+
+            $('#status').change(function (e) {
+                e.preventDefault();
+
+                $.fn.dataTable.ext.search = [function (settings, data, dataIndex) {
+                    if (data[3] === $('#status').val() || $('#status').val() === 'select') {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }];
+
+                application_table.draw();
+            });
+
+            setInterval(function() {
+                if ($('.dtr-data').html() && $('.dtr-data').html().indexOf('<br>') !== 0) {
+                    $('.dtr-data').prepend('<br>');
+                }
+            }, 200);
+        });
+
+        function sendVerificationEmail(email) {
+            $.post('/v1/auth/verify', {
+                email: email
+            }, function (data) {
+                console.log(data);
+            });
+        }
+    style(type='text/css').
+        .dtr-data {
+            max-width: 200px;
+            word-wrap: break-word;
+        }
+
+append navigation
+    li.active
+        a(href='/portal/reader') Home
+    li
+        a(href='#applications') Applications
+
+append pageContent
+    .container(style='padding-top: 60px;')
+        .row
+            div#applications
+                h2='Applications:'
+                table#application-table.table.table-responsive.table-striped.table-bordered.dt-responsive.nowrap(cellspacing='0', width='100%')
+                    thead#table-head-unchained-2
+                        tr#table-head-row-unchained-2
+                            th='#'
+                            th='Application Submitted'
+                            th='Name'
+                            th='Experience'
+                            th='Birthday (Adult)'
+                            th
+                                i.fa.fa-paperclip
+                            th
+                                i.fa.fa-github
+                            th
+                                i.fa.fa-linkedin-square
+                            th
+                                img(src='https://cdn.rawgit.com/nealrs/868af1e0ff6d60b7d638/raw/9500aac7536bd3a4652e63617aaf418d8cfa0a08/devpost-icon-black.svg', width='12px')
+                            th
+                                i.fa.fa-user
+                            th='Why MHacks?'
+                            th='Favorite memory?'
+                            th='Anything else?'
+                            th='Departing From'
+                            th='Requested Reimbursement'
+                            th='T-Shirt'
+                            th='Major'
+                            th='University'
+                            th='Needs Reimbursement'
+                            th='email'
+                            th='status'
+                    tbody
+                        each val, index in applications
+                            - var birthday = new Date(val.birthday)
+                            - var created_at = new Date(val.created_at)
+                            - var full_name = null
+                            - users.forEach(function(user) { if (user.email === val.user) { full_name = user.full_name; }})
+                            tr#table-body-row-unchained
+                                th=(index + 1)
+                                td=(created_at.getUTCMonth() + 1) + '/' + created_at.getUTCDate() + '/' + created_at.getUTCFullYear()
+                                td=full_name
+                                td=val.experience
+                                if val.birthday
+                                    - var date = (birthday.getUTCMonth() + 1) + '/' + birthday.getUTCDate() + '/' + birthday.getUTCFullYear()
+                                    if new Date().getTime() - val.birthday < 567648000000
+                                        td
+                                            =date + ' '
+                                            i.fa.fa-times(style='color: #FF4136')
+                                    else
+                                        td
+                                            =date + ' '
+                                            i.fa.fa-check(style='color: #2ECC40')
+                                else
+                                    td
+                                        i.fa.fa-times(style='color: #FF4136')
+
+                                if val.resume
+                                    td
+                                        - var resume = val.getResume()
+                                        - var name = val.resume.split('.').pop().toUpperCase()
+                                        a(href=resume target='_blank')
+                                            i.fa.fa-check(style='color: #2ECC40')
+                                else
+                                    td
+                                        i.fa.fa-times(style='color: #FF4136')
+                                if val.github
+                                    td
+                                        a(href=val.github target='_blank')
+                                            i.fa.fa-check(style='color: #2ECC40')
+                                else
+                                    td
+                                        i.fa.fa-times(style='color: #FF4136')
+                                if val.linkedin
+                                    td
+                                        a(href=val.linkedin target='_blank')
+                                            i.fa.fa-check(style='color: #2ECC40')
+                                else
+                                    td
+                                        i.fa.fa-times(style='color: #FF4136')
+                                if val.devpost
+                                    td
+                                        a(href=val.devpost target='_blank')
+                                            i.fa.fa-check(style='color: #2ECC40')
+                                else
+                                    td
+                                        i.fa.fa-times(style='color: #FF4136')
+                                if val.portfolio
+                                    td
+                                        a(href=val.portfolio target='_blank')
+                                            i.fa.fa-check(style='color: #2ECC40')
+                                else
+                                    td
+                                        i.fa.fa-times(style='color: #FF4136')
+                                td!=val.why_mhacks ? val.why_mhacks.match(/.{1,50}/g).join('<br>') : ''
+                                td!=val.favorite_memory ? val.favorite_memory.match(/.{1,50}/g).join('<br>') : ''
+                                td!=val.anything_else ? val.anything_else.match(/.{1,50}/g).join('<br>') : ''
+                                td=val.departing_from
+                                td=val.requested_reimbursement
+                                td=val.tshirt ? val.tshirt.toUpperCase() : ''
+                                td=val.major
+                                td=val.university
+                                td=val.needs_reimbursement
+                                td=val.user
+                                td=val.status

@@ -13,17 +13,17 @@ const Header = styled.h3`
     marginBottom: 0;
     color: ${props => props.color};
     fontSize: 18px;
-    flex: 1;
 `;
 
 const Body = styled.p`
     paddingLeft: 25px;
-    marginTop: 5px;
+    paddingTop: 10px;
+    paddingBottom: 10px;
     marginBottom: 5px;
     -webkit-margin-before: 5px;
     -webkit-margin-after: 5px;
     color: ${props => props.color};
-    fontSize: 17px;
+    fontSize: 15px;
 `;
 
 const Flexbox = styled.div`
@@ -54,14 +54,17 @@ const Slider = styled.div`
     overflow: hidden;
     transformOrigin: top center;
     
-    ${props => (props.open ? ` 
+    ${props =>
+        props.open
+            ? ` 
         animation: ${Open} 0.3s ease-in-out;
         animationFillMode: forwards;
-    ` : `
+    `
+            : `
         height: max-content;
         animation: ${Close} 0.3s ease-in-out;
         animationFillMode: forwards;
-    `)}
+    `}
 `;
 
 const PlusWrapper = styled.div`
@@ -71,6 +74,7 @@ const PlusWrapper = styled.div`
     marginLeft: 10px;
     height: 15px;
     width: 15px;
+    zIndex: 10;
 `;
 
 const PlusLine = styled.div`
@@ -83,11 +87,14 @@ const PlusLine = styled.div`
     top: 4px;
     transitionDuration: 0.3s;
 
-    ${props => (!props.vertical ? `
+    ${props =>
+        !props.vertical
+            ? `
         transform: rotate(90deg);
-    ` : `
+    `
+            : `
         transform: rotate(0deg);
-    `)}
+    `}
 `;
 
 const Plus = props => {
@@ -110,13 +117,14 @@ export default class ExpandingItem extends React.Component {
     }
 
     handleClick() {
-        if(this.props.expandColor){
+        if (this.props.expandColor) {
             this.setState(prevState => ({
                 expanded: !prevState.expanded,
-                currentColor: this.state.expanded ? this.props.colorOff : this.props.colorOn
+                currentColor: this.state.expanded
+                    ? this.props.colorOff
+                    : this.props.colorOn
             }));
-        }
-        else{
+        } else {
             this.setState(prevState => ({
                 expanded: !prevState.expanded
             }));
@@ -124,15 +132,21 @@ export default class ExpandingItem extends React.Component {
     }
 
     handlePlusColor() {
-        return this.props.expandColor ? this.state.currentColor : this.props.plusColor
+        return this.props.expandColor
+            ? this.state.currentColor
+            : this.props.plusColor;
     }
 
     handleHeaderColor() {
-        return this.props.expandColor ? this.state.currentColor : this.props.headerColor
+        return this.props.expandColor
+            ? this.state.currentColor
+            : this.props.headerColor;
     }
 
     handleBodyColor() {
-        return this.props.expandColor ? this.state.currentColor : this.props.bodyColor
+        return this.props.expandColor
+            ? this.state.currentColor
+            : this.props.bodyColor;
     }
 
     render() {

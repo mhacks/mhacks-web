@@ -8,7 +8,8 @@ import { NavLink } from 'react-router-dom';
 import { SectionHeader, SectionBody } from './section_components.jsx';
 
 const Wrapper = styled.div`
-    backgroundColor: ${props => props.theme.primary}
+    background: ${props => props.theme.gradientOverlay}, ${props =>
+    props.theme.primary}
     padding: 80px 0;
 `;
 
@@ -47,22 +48,24 @@ class Apply extends React.Component {
             <Wrapper>
                 <Container>
                     <SectionHeader>Apply</SectionHeader>
-                    <SectionBody>Apply to MHacks Nano! We will just ask you a couple quick questions. Nothing long or difficult :)</SectionBody>
+                    <SectionBody>
+                        Apply to MHacks Nano! We will just ask you a couple
+                        quick questions. Nothing long or difficult :)
+                    </SectionBody>
                     <StyledNavLinkWrapper>
-                        {this.props.userState.data.isLoggedIn ?
-                            <StyledNavLink
-                                to={routes.APPLY}
-                                primaryColor="white"
-                            >
-                            Apply
-                            </StyledNavLink> :
-                            <StyledNavLink
-                                to={routes.LOGIN}
-                                primaryColor={this.props.theme.highlight}
-                            >
-                            Log In
-                            </StyledNavLink>
-                        }
+                        {this.props.userState.data.isLoggedIn
+                            ? <StyledNavLink
+                                  to={routes.APPLY}
+                                  primaryColor="white"
+                              >
+                                  Apply
+                              </StyledNavLink>
+                            : <StyledNavLink
+                                  to={routes.LOGIN}
+                                  primaryColor={this.props.theme.highlight}
+                              >
+                                  Log In
+                              </StyledNavLink>}
                     </StyledNavLinkWrapper>
                 </Container>
             </Wrapper>

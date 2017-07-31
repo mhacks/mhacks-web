@@ -1,6 +1,5 @@
 import { ProfilePureActions } from '../pure';
 import { ProfileRequests } from '../requests';
-import { ProfileFields } from '../../constants/forms';
 
 export default class ProfileThunks {
     static loadProfile() {
@@ -18,19 +17,24 @@ export default class ProfileThunks {
                             isEmailVerified: user.email_verified,
                             isApplicationSubmitted: user.application_submitted,
                             isLoggedIn: true,
+                            isAdmin:
+                                user.groups &&
+                                    user.groups.indexOf('admin') !== -1,
+                            isReader:
+                                user.groups &&
+                                    user.groups.indexOf('reader') !== -1,
+                            isSponsor:
+                                user.groups &&
+                                    user.groups.indexOf('sponsor') !== -1,
                             user: {
                                 name: user.full_name,
                                 groups: user.groups,
                                 avatars: user.avatar,
-                                isResumeUploaded: user.resume_uploaded
+                                isResumeUploaded: user.resume_uploaded,
+                                isConfirmed: user.is_confirmed,
+                                ...user
                             }
                         };
-
-                        for (const key of Object.keys(ProfileFields)) {
-                            if (user.hasOwnProperty(key)) {
-                                state.user[key] = user[key];
-                            }
-                        }
 
                         dispatch(
                             ProfilePureActions.loadProfileSuccess(

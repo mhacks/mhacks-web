@@ -39,11 +39,15 @@ router.post(
                 var sendPasswordChangedEmail = false;
 
                 if (req.files && req.files.resume) {
-                    req.body.resume = req.files.resume[0].location;
+                    req.body.resume =
+                        req.files.resume[0].location ||
+                        '/uploads/ ' + req.files.resume[0].filename;
                 }
 
                 if (req.files && req.files.avatar) {
-                    req.body.avatar = req.files.avatar[0].location;
+                    req.body.avatar =
+                        req.files.avatar[0].location ||
+                        '/uploads/ ' + req.files.avatar[0].filename;
                 }
 
                 for (var i in req.body) {
@@ -63,6 +67,12 @@ router.post(
                         ) {
                             sendPasswordChangedEmail = true;
                         } else {
+                            continue;
+                        }
+                    }
+
+                    if (i === 'birthday') {
+                        if (!parseInt(req.body[i])) {
                             continue;
                         }
                     }
@@ -88,7 +98,7 @@ router.post(
                 });
             })
             .catch(() => {
-                res.send({
+                res.status(500).send({
                     status: false,
                     message: Responses.UNKNOWN_ERROR
                 });
@@ -103,19 +113,21 @@ router.get('/profile', function(req, res) {
         .exec()
         .then(user => {
             if (user) {
-                res.send({
-                    status: true,
-                    user: user.getProfile()
+                user.getProfile().then(profile => {
+                    res.send({
+                        status: true,
+                        user: profile
+                    });
                 });
             } else {
-                res.send({
+                res.status(401).send({
                     status: false,
-                    user: {}
+                    message: Responses.Auth.UNAUTHORIZED
                 });
             }
         })
         .catch(() => {
-            res.send({
+            res.status(500).send({
                 status: false,
                 message: Responses.UNKNOWN_ERROR
             });

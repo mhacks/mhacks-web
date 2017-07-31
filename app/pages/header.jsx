@@ -3,13 +3,15 @@ import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { slide as Menu } from 'react-burger-menu'
+import { slide as Menu } from 'react-burger-menu';
 import { routes } from '../constants';
 import { Container } from '../components';
 import { devices } from '../styles';
+import theme from '../styles/theme.js';
+import { getUserMetadata } from '../util/user.js';
 
 const HeaderLogoImage = require('../../static/icons/x-logo.png');
-const Favicon = require('../../static/nano/favicon.png');
+const Favicon = require('../../static/icons/x-logo.png');
 
 /* Header Section */
 const Wrapper = styled.div`
@@ -17,15 +19,15 @@ const Wrapper = styled.div`
     top: 0;
     left: 0;
     right: 0;
-    paddingTop: 30px
-    paddingBottom: 30px
+    paddingTop: 15px
+    paddingBottom: 15px
     zIndex: 100;
 
     display: flex;
-    height: 90;
+    height: 80px;
     alignItems: center;
     justifyContent: flex-start;
-    background: white;
+    background: ${theme.primary};
 `;
 
 const FlexWrapper = styled.div`
@@ -44,7 +46,7 @@ const Logo = styled.img`
     display: block;
 
     ${devices.small`
-        height: 70px;
+        height: 50px;
     `}
 `;
 
@@ -63,16 +65,16 @@ const HeaderNavLink = styled(NavLink)`
 `;
 
 const StyledNavLink = styled(NavLink)`
-    fontSize: 18px;
-    padding: 5px 25px;
-    marginLeft: 15px;
+    fontSize: 16px;
+    padding: 2px 20px;
+    margin: 10px 0 10px 15px;
     border: 2px solid ${props => props.color};
     color: ${props => props.color};
-    backgroundColor: white;
-    borderRadius: 5px;
+    backgroundColor: ${theme.primary};
+    borderRadius: 25px;
     textDecoration: none;
     transition: all 0.3s;
-    marginTop: 10px;
+    text-transform: uppercase;
 
     &:hover {
         backgroundColor: ${props => props.color};
@@ -81,7 +83,29 @@ const StyledNavLink = styled(NavLink)`
 
     &:first-child {
         margin: 0;
-        marginTop: 10px;
+        marginLeft: 15px;
+    }
+`;
+
+const StyledALink = styled.a`
+    fontSize: 16px;
+    padding: 2px 20px;
+    margin: 10px 0 10px 15px;
+    border: 2px solid ${props => props.color};
+    color: ${props => props.color};
+    backgroundColor: ${theme.primary};
+    borderRadius: 25px;
+    textDecoration: none;
+    transition: all 0.3s;
+    text-transform: uppercase;
+
+    &:hover {
+        backgroundColor: ${props => props.color};
+        color: white;
+    }
+
+    &:first-child {
+        margin: 0;
         marginLeft: 15px;
     }
 `;
@@ -92,7 +116,7 @@ const Burger = styled.div`
       width: 36px;
       height: 30px;
       right: 36px;
-      top: 40px;
+      top: 25px;
     }
 
     .bm-burger-bars {
@@ -109,7 +133,7 @@ const Burger = styled.div`
     }
 
     .bm-menu {
-      background: white;
+      backgroundColor: ${theme.primary};
       padding: 2.5em 1.5em 0;
       font-size: 1.15em;
     }
@@ -125,129 +149,122 @@ const Burger = styled.div`
 
     .bm-overlay {
       background: rgba(0, 0, 0, 0.3);
+      top: 0;
+      left: 0;
     }
 
     .bm-menu-wrap {
         top: 0;
     }
 
-    ${devices.small`
-        .bm-burger-button {
-            top: 50px;
-        }
-    `}
-
     ${devices.tablet`
         display: none;
     `}
 `;
 
-class Header extends React.Component {
+class HeaderLinks extends React.Component {
     render() {
-        const { isLoggedIn, isApplicationSubmitted, isEmailVerified } = this.props.userState.data;
+        const { color, userMetadata, isCompact } = this.props;
+        const {
+            isLoggedIn,
+            isAdmin,
+            isSponsor,
+            isReader,
+            isEmailVerified,
+            isApplicationSubmitted
+        } = userMetadata;
 
+        // Either render a Menu component for mobile, or NavContainer for desktop as
+        // the parent component for the navigation links.
+        const WrappingComponent = isCompact ? Menu : NavContainer;
         return (
-            <div>
-                { window.location.pathname == routes.SUBSCRIBE ?
-                    null :
-                    <div>
-                        <Helmet>
-                            <title>MHacks Nano</title>
-
-                            <link rel="icon" type="image/x-icon" href={Favicon} />
-                        </Helmet>
-                        <Wrapper>
-                            <Container>
-                                <FlexWrapper>
-                                    <HeaderNavLink to={routes.HOME}><Logo src={HeaderLogoImage} /></HeaderNavLink>
-                                    <NavContainer>
-                                        {!isLoggedIn || !isEmailVerified || isApplicationSubmitted ?
-                                            null :
-                                            <StyledNavLink
-                                                to={routes.APPLY}
-                                                color={this.props.theme.primary}
-                                            >
-                                            Apply
-                                            </StyledNavLink>
-                                        }
-                                        {isLoggedIn ?
-                                            <StyledNavLink
-                                                to={routes.PROFILE}
-                                                color={this.props.theme.primary}
-                                            >
-                                            Profile
-                                            </StyledNavLink> :
-                                            null
-                                        }
-                                        <StyledNavLink
-                                            to={routes.LIVE}
-                                            color={this.props.theme.primary}
-                                        >
-                                        Live
-                                        </StyledNavLink>
-                                        {isLoggedIn ?
-                                            <StyledNavLink
-                                                to={routes.LOGOUT}
-                                                color={this.props.theme.primary}
-                                            >
-                                            Log Out
-                                            </StyledNavLink> :
-                                            <StyledNavLink
-                                                to={routes.LOGIN}
-                                                color={this.props.theme.primary}
-                                            >
-                                            Log In
-                                            </StyledNavLink>
-                                        }
-                                    </NavContainer>
-                                    <Burger
-                                        primaryColor={this.props.theme.primary}
-                                    >
-                                        <Menu right>
-                                            {!isLoggedIn || !isEmailVerified || isApplicationSubmitted ?
-                                                null :
-                                                <StyledNavLink
-                                                    to={routes.APPLY}
-                                                    color={this.props.theme.primary}
-                                                >
-                                                Apply
-                                                </StyledNavLink>
-                                            }
-                                            {isLoggedIn ?
-                                                <StyledNavLink
-                                                    to={routes.PROFILE}
-                                                    color={this.props.theme.primary}
-                                                >
-                                                Profile
-                                                </StyledNavLink> :
-                                                null
-                                            }
-                                            {isLoggedIn ?
-                                                <StyledNavLink
-                                                    to={routes.LOGOUT}
-                                                    color={this.props.theme.primary}
-                                                >
-                                                Log Out
-                                                </StyledNavLink> :
-                                                <StyledNavLink
-                                                    to={routes.LOGIN}
-                                                    color={this.props.theme.primary}
-                                                >
-                                                Log In
-                                                </StyledNavLink>
-                                            }
-                                        </Menu>
-                                    </Burger>
-                                </FlexWrapper>
-                            </Container>
-                        </Wrapper>
-                    </div>
-                }
-            </div>
+            <WrappingComponent right>
+                {isLoggedIn && isAdmin
+                    ? <StyledALink href={routes.ADMIN_PORTAL} color={color}>
+                          Admin
+                      </StyledALink>
+                    : null}
+                {isLoggedIn && (isSponsor || isAdmin)
+                    ? <StyledALink href={routes.SPONSOR_PORTAL} color={color}>
+                          Sponsor
+                      </StyledALink>
+                    : null}
+                {isLoggedIn && (isReader || isAdmin)
+                    ? <StyledALink href={routes.READER} color={color}>
+                          Reader
+                      </StyledALink>
+                    : null}
+                {!isLoggedIn || !isEmailVerified
+                    ? null
+                    : <StyledNavLink to={routes.APPLY} color={color}>
+                          {isApplicationSubmitted ? 'Application' : 'Apply'}
+                      </StyledNavLink>}
+                {isLoggedIn
+                    ? <StyledNavLink to={routes.PROFILE} color={color}>
+                          Profile
+                      </StyledNavLink>
+                    : null}
+                {isLoggedIn
+                    ? <StyledNavLink to={routes.LOGOUT} color={color}>
+                          Log Out
+                      </StyledNavLink>
+                    : <StyledNavLink to={routes.LOGIN} color={color}>
+                          Log In
+                      </StyledNavLink>}
+            </WrappingComponent>
         );
     }
 }
 
+class Header extends React.Component {
+    render() {
+        const userData = this.props.userState.data;
+        const userMetadata = getUserMetadata(userData);
+
+        return (
+            <div>
+                {window.location.pathname == routes.SUBSCRIBE
+                    ? null
+                    : <div>
+                          <Helmet>
+                              <title>MHacks X</title>
+
+                              <link
+                                  rel="icon"
+                                  type="image/x-icon"
+                                  href={Favicon}
+                              />
+                          </Helmet>
+                          <Wrapper>
+                              <Container>
+                                  <FlexWrapper>
+                                      <HeaderNavLink to={routes.HOME}>
+                                          <Logo src={HeaderLogoImage} />
+                                      </HeaderNavLink>
+                                      <HeaderLinks
+                                          userMetadata={userMetadata}
+                                          color={this.props.theme.highlight}
+                                          isCompact={false}
+                                      />
+                                      <Burger
+                                          primaryColor={
+                                              this.props.theme.highlight
+                                          }
+                                      >
+                                          <HeaderLinks
+                                              userMetadata={userMetadata}
+                                              color={this.props.theme.highlight}
+                                              isCompact={true}
+                                          />
+                                      </Burger>
+                                  </FlexWrapper>
+                              </Container>
+                          </Wrapper>
+                      </div>}
+            </div>
+        );
+    }
+}
 
 function mapStateToProps(state) {
     return {

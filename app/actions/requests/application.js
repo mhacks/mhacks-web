@@ -23,4 +23,14 @@ export default class ApplicationRequests {
             body: formData
         });
     }
+
+    static loadApplication(token) {
+        return fetch(endpoints.APPLICATION, {
+            method: 'get',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token
+            })
+        });
+    }
 }

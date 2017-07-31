@@ -219,7 +219,7 @@ schema.methods.generateNewToken = function() {
         },
         secret,
         {
-            expiresIn: '28d'
+            expiresIn: config.token_expiration + 'd'
         }
     );
 
@@ -409,7 +409,7 @@ schema.methods.checkGroup = function(checkGroup) {
     } else {
         var returnVal = false;
         this.groups.forEach(function(data) {
-            if (data.name === checkGroup) {
+            if (checkGroup.indexOf(data.name) !== -1) {
                 returnVal = true;
             }
         });
@@ -426,6 +426,22 @@ schema.methods.addGroup = function(groupName) {
         return true;
     } else {
         return false;
+    }
+};
+
+schema.methods.removeGroup = function(groupName) {
+    var self = this;
+    if (this.checkGroup(groupName)) {
+        this.groups.forEach(function(group, elem) {
+            if (group.name === groupName) {
+                self.groups.splice(elem, 1);
+            }
+        });
+        this.save();
+
+        return true;
+    } else {
+        return true;
     }
 };
 
@@ -472,7 +488,7 @@ schema.methods.getResume = function() {
 };
 
 schema.methods.getProfile = function() {
-    return {
+    const profile = {
         email: this.email,
         email_verified: this.email_verified,
         application_submitted: this.application_submitted,
@@ -491,6 +507,44 @@ schema.methods.getProfile = function() {
         race: this.race,
         sex: this.sex
     };
+
+    return new Promise(resolve => {
+        mongoose
+            .model('Application')
+            .find()
+            .byEmail(this.email)
+            .then(application => {
+                const {
+                    status,
+                    needs_reimbursement,
+                    reimbursement
+                } = application;
+
+                profile.application_submitted = true;
+                profile.status = status;
+                profile.needs_reimbursement = needs_reimbursement;
+                profile.reimbursement = needs_reimbursement
+                    ? reimbursement
+                    : undefined;
+
+                if (status === 'accepted') {
+                    mongoose
+                        .model('Confirmation')
+                        .findOne({ user: this })
+                        .then(application => {
+                            profile.is_confirmed = application ? true : false;
+                            resolve(profile);
+                        });
+                } else {
+                    profile.is_confirmed = false;
+                    resolve(profile);
+                }
+            })
+            .catch(() => {
+                profile.application_submitted = false;
+                resolve(profile);
+            });
+    });
 };
 
 // Password middleware to update passwords with bcrypt when needed

@@ -1,5 +1,4 @@
 var mongoose = require('../index.js'),
-    User = require('./User.js'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin'),
     config = require('../../../config/default.js');
 
@@ -9,7 +8,7 @@ var schema = new mongoose.Schema({
     birthday: Date,
     university: String,
     major: String,
-    tshirt_size: {
+    tshirt: {
         type: String,
         enum: ['xs', 's', 'm', 'l', 'xl', '2xl', '3xl']
     },
@@ -48,22 +47,41 @@ var schema = new mongoose.Schema({
     anything_else: String,
     needs_reimbursement: Boolean,
     departing_from: String,
-    requested_reimbursement: Number
+    requested_reimbursement: Number,
+    status: {
+        type: String,
+        enum: ['unread', 'waitlisted', 'accepted'],
+        default: 'unread'
+    },
+    score: Number,
+    reader: String,
+    reimbursement: Number,
+    review_notes: String
 });
 
 // Allow us to query by token
 schema.query.byToken = function(findToken) {
-    return new Promise((resolve, reject) => {
-        User.find()
-            .byToken(findToken)
-            .exec()
-            .then(user => {
-                resolve(this.findOne({ user: user.email }));
-            })
-            .catch(() => {
-                reject();
-            });
-    });
+    return mongoose
+        .model('User')
+        .find()
+        .byToken(findToken)
+        .exec()
+        .then(user => {
+            return this.findOne({ user: user.email }).exec();
+        })
+        .catch(() => {});
+};
+
+// Allow us to query by token
+schema.query.byEmail = function(email) {
+    return mongoose
+        .model('User')
+        .find()
+        .byEmail(email)
+        .then(user => {
+            return this.findOne({ user: user.email });
+        })
+        .catch(() => {});
 };
 
 schema.methods.updateFields = function(fields) {
@@ -77,6 +95,10 @@ schema.methods.getResume = function() {
     return (
         config.host + '/v1/artifact/resume/' + this.user + '?application=true'
     );
+};
+
+schema.methods.getUser = function() {
+    return mongoose.model('User').find().byEmail(this.user).exec();
 };
 
 schema.plugin(sanitizerPlugin);
