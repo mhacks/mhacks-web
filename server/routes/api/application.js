@@ -178,44 +178,50 @@ router.post('/confirm', function(req, res) {
                 }
             }
 
-            Confirmation.find().byToken(req.authToken).then(confirmation => {
-                if (confirmation) {
-                    confirmation.updateFields(fields);
+            Confirmation.find()
+                .byToken(req.authToken)
+                .then(confirmation => {
+                    if (confirmation) {
+                        confirmation.updateFields(fields);
 
-                    res.send({
-                        status: true,
-                        confirmation
-                    });
-                } else {
-                    fields.user = user;
-                    Confirmation.create(fields)
-                        .then(confirmation => {
-                            // strip extra info out of response
-                            res.send({
-                                status: true,
-                                confirmation: Object.assign({}, confirmation._doc, {
-                                    user: undefined,
-                                    __v: undefined,
-                                    _id: undefined
-                                })
-                            });
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            res.status(500).send({
-                                status: false,
-                                message: Responses.UNKNOWN_ERROR
-                            });
+                        res.send({
+                            status: true,
+                            confirmation
                         });
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                res.status(500).send({
-                    status: false,
-                    message: Responses.UNKNOWN_ERROR
+                    } else {
+                        fields.user = user;
+                        Confirmation.create(fields)
+                            .then(confirmation => {
+                                // strip extra info out of response
+                                res.send({
+                                    status: true,
+                                    confirmation: Object.assign(
+                                        {},
+                                        confirmation._doc,
+                                        {
+                                            user: undefined,
+                                            __v: undefined,
+                                            _id: undefined
+                                        }
+                                    )
+                                });
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                res.status(500).send({
+                                    status: false,
+                                    message: Responses.UNKNOWN_ERROR
+                                });
+                            });
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    res.status(500).send({
+                        status: false,
+                        message: Responses.UNKNOWN_ERROR
+                    });
                 });
-            });
         })
         .catch(err => {
             console.error(err);
@@ -227,19 +233,21 @@ router.post('/confirm', function(req, res) {
 });
 
 router.get('/confirm', function(req, res) {
-    Confirmation.find().byToken(req.authToken).then(confirmation => {
-        res.send({
-            status: true,
-            confirmation: confirmation || {}
+    Confirmation.find()
+        .byToken(req.authToken)
+        .then(confirmation => {
+            res.send({
+                status: true,
+                confirmation: confirmation || {}
+            });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({
+                status: false,
+                message: Responses.UNKNOWN_ERROR
+            });
         });
-    })
-    .catch(err => {
-        console.error(err);
-        res.status(500).send({
-            status: false,
-            message: Responses.UNKNOWN_ERROR
-        });
-    });
 });
 
 module.exports = router;

@@ -487,7 +487,7 @@ schema.methods.getProfile = function() {
                 if (status === 'accepted') {
                     mongoose
                         .model('Confirmation')
-                        .findOne({user: this})
+                        .findOne({ user: this })
                         .then(application => {
                             profile.is_confirmed = application ? true : false;
                             resolve(profile);

@@ -31,11 +31,9 @@ class Confirm extends React.Component {
         return (
             <PageContainer>
                 <FormContainer>
-                    {this.props.userState.data.user.isConfirmed ?
-                        <Alert
-                            message="You are confirmed!"
-                            positive={true}
-                        /> : null}
+                    {this.props.userState.data.user.isConfirmed
+                        ? <Alert message="You are confirmed!" positive={true} />
+                        : null}
                     <h2>Confirm Attendance at MHacks X!</h2>
                     <MHForm
                         schema={ConfirmAttendanceSchema}
@@ -63,7 +61,6 @@ class Confirm extends React.Component {
         );
     }
 }
-
 
 Confirm.contextTypes = {
     router: React.PropTypes.object

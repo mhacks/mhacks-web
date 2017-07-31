@@ -115,7 +115,9 @@ class MHForm extends React.Component {
         const errors = [];
         const formData = this.state.formData;
         for (const field of this.props.schema) {
-            if (!field.required) { continue; }
+            if (!field.required) {
+                continue;
+            }
 
             switch (field.type) {
                 case FieldTypes.TEXT:
@@ -127,7 +129,7 @@ class MHForm extends React.Component {
                     }
                     break;
                 case FieldTypes.DATE:
-                    if (isNaN((new Date(formData[field.key])).getTime())) {
+                    if (isNaN(new Date(formData[field.key]).getTime())) {
                         errors.push(field.key);
                     }
                     break;
@@ -185,23 +187,22 @@ class MHForm extends React.Component {
                     formatted[field.key] = formData[field.key].value;
                     break;
                 case FieldTypes.MULTI:
-                    formatted[field.key] = formData[field.key].map(obj => obj.label);
+                    formatted[field.key] = formData[field.key].map(
+                        obj => obj.label
+                    );
             }
         }
 
         return formatted;
     }
 
-
     render() {
-        const formData = this.state.formData
+        const formData = this.state.formData;
         return (
             <form onSubmit={this.onSubmit}>
                 {this.state.errorFields.length > 0
                     ? <AlertContainer>
-                          <Alert
-                              message="Missing some required fields!"
-                          />
+                          <Alert message="Missing some required fields!" />
                       </AlertContainer>
                     : null}
                 {this.props.schema.map(field => {

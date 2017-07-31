@@ -8,7 +8,9 @@ export default class ConfirmationThunks {
 
             const token = localStorage.getItem('jwt');
 
-            return ConfirmationRequests.loadConfirmation(token).then(response => {
+            return ConfirmationRequests.loadConfirmation(
+                token
+            ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch(
