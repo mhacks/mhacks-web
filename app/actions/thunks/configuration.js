@@ -39,6 +39,7 @@ export default class ConfigurationThunks {
                                     name: user.full_name,
                                     avatars: user.avatar,
                                     isResumeUploaded: user.resume_uploaded,
+                                    isConfirmed: user.is_confirmed,
                                     ...user
                                 }
                             };

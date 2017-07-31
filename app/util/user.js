@@ -13,6 +13,7 @@ export function getUserMetadata(userData) {
         isApplicationReviewed: userData.user.status !== 'unread',
         isAccepted: userData.user.status === 'accepted',
         isWaitlisted: userData.user.status === 'waitlisted',
+        isConfirmed: userData.user.isConfirmed === true,
         isEmailVerified: userData.isEmailVerified === true,
         isAdmin: getGroup(userData, 'admin'),
         isSponsor: getGroup(userData, 'sponsor'),

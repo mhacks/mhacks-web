@@ -484,7 +484,18 @@ schema.methods.getProfile = function() {
                     ? reimbursement
                     : undefined;
 
-                resolve(profile);
+                if (status === 'accepted') {
+                    mongoose
+                        .model('Confirmation')
+                        .findOne({user: this})
+                        .then(application => {
+                            profile.is_confirmed = application ? true : false;
+                            resolve(profile);
+                        });
+                } else {
+                    profile.is_confirmed = false;
+                    resolve(profile);
+                }
             })
             .catch(() => {
                 profile.application_submitted = false;

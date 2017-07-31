@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { PageContainer, MHForm } from '../components';
+import { ConfirmationThunks } from '../actions';
+import { PageContainer, MHForm, Alert } from '../components';
 import { ConfirmAttendanceSchema } from '../constants/forms';
 
 const FormContainer = styled.div`
@@ -12,15 +13,30 @@ const FormContainer = styled.div`
 `;
 
 class Confirm extends React.Component {
+    constructor() {
+        super();
+
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.dispatch(ConfirmationThunks.loadConfirmation());
+    }
+
     onSubmit(formData) {
-        console.log(formData);
+        this.props.dispatch(ConfirmationThunks.uploadConfirmation(formData));
     }
 
     render() {
         return (
             <PageContainer>
                 <FormContainer>
-                    <h2>Will you be attending MHacks X?</h2>
+                    {this.props.userState.data.user.isConfirmed ?
+                        <Alert
+                            message="You are confirmed!"
+                            positive={true}
+                        /> : null}
+                    <h2>Confirm Attendance at MHacks X!</h2>
                     <MHForm
                         schema={ConfirmAttendanceSchema}
                         theme={this.props.theme}
@@ -47,6 +63,11 @@ class Confirm extends React.Component {
         );
     }
 }
+
+
+Confirm.contextTypes = {
+    router: React.PropTypes.object
+};
 
 function mapStateToProps(state) {
     return {

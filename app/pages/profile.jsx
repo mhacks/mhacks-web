@@ -22,6 +22,23 @@ import {
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
 
+const StyledNavLink = styled(NavLink)`
+    fontSize: 16px;
+    padding: 2px 20px;
+    border: 2px solid ${props => props.theme.primary};
+    color: ${props => props.theme.primary};
+    borderRadius: 25px;
+    textDecoration: none;
+    transition: all 0.3s;
+    text-transform: uppercase;
+
+    &:hover {
+        backgroundColor: ${props => props.theme.primary};
+        color: white;
+    }
+`;
+
+
 const StyledSelect = styled.select`
         background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+) no-repeat 95% 50%;
         paddingLeft: 10px;
@@ -322,35 +339,53 @@ class Profile extends React.Component {
 
     renderApplicationReviewSection() {
         const userData = this.props.userState.data;
-        const { isApplicationReviewed, isAccepted } = getUserMetadata(userData);
+        const {
+            isAccepted,
+            isConfirmed,
+            isWaitlisted
+        } = getUserMetadata(userData);
 
-        if (!isApplicationReviewed) {
+        if (isConfirmed) {
+            return this.renderConfirmed();
+        } else if (isAccepted) {
+            return this.renderAcceptance();
+        } else if (isWaitlisted) {
+            return this.renderWaitlisted();
+        } else {
             return null;
         }
+    }
 
+    renderAcceptance() {
         return (
             <div>
-                {this.renderApplicationStatus(isAccepted)}
-                <ButtonGroup>
-                    <NavLink
-                        color={this.props.theme.primary}
-                        to={routes.CONFIRM}
-                    >
-                        Confirm
-                    </NavLink>
-                </ButtonGroup>
+                <h3>Application Status: Accepted</h3>
+                <p>You’re awesome. We’re awesome. Let’s make some great things together. Head over to the confirmation form to secure your spot at MHacks X!</p>
+                <StyledNavLink
+                    color={this.props.theme.primary}
+                    to={routes.CONFIRM}
+                >
+                    Confirm
+                </StyledNavLink>
             </div>
         );
     }
 
-    renderApplicationStatus(isAccepted) {
-        const message = isAccepted
-            ? 'Congratulations! Your application has been reviewed and you have been accepted to attend MHacks X!'
-            : 'Unfortunately, due to limited capacity for MHacks X, you have been waitlisted.';
+    renderConfirmed() {
         return (
-            <AlertContainer>
-                <Alert message={message} positive={isAccepted} />
-            </AlertContainer>
+            <div>
+                <h4>Application Status: Accepted and Confirmed</h4>
+                <p>We’re excited to see you at MHacks X! We’ve got some great things in store :) In the meantime, we encourage you to connect with other hackers in the HH MHacks Facebook Group. As always, stay tuned to our <a href="http://facebook.com/MHacksHackathon">Facebook</a>, <a href="http://twitter.com/mhacks">Twitter</a>, and <a href="http://instagram.com/mhacks_">Instagram</a> for updates on all things MHacks.</p>
+            </div>
+        );
+    }
+
+    renderWaitlisted() {
+        return (
+            <div>
+                <h4>Application Status: Waitlisted</h4>
+                <p>Unfortunately, we are unable to extend an invitation for MHacks X to you at this time. We hope you will still be a part of our community via <a href="http://facebook.com/MHacksHackathon">Facebook</a>, <a href="http://twitter.com/mhacks">Twitter</a>, <a href="http://instagram.com/mhacks_">Instagram</a>, and and encourage you to apply for the next MHacks event in the winter.</p>
+            </div>
         );
     }
 

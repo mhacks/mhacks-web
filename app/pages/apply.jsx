@@ -369,10 +369,7 @@ class Apply extends React.Component {
                                       message={
                                           'Your application is submitted but you can make changes on this page and update your application! Thanks for applying to MHacks X.'
                                       }
-                                      style={{
-                                          backgroundColor: '#01FF70',
-                                          color: '#3D9970'
-                                      }}
+                                      positive={true}
                                   />
                               </AlertContainer>
                             : null}

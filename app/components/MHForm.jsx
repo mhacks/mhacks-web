@@ -2,9 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import LabeledInput from './LabeledInput.jsx';
 import RoundedButton from './RoundedButton.jsx';
+import Alert from './Alert.jsx';
 import { FieldTypes } from '../constants/forms';
 import Select from 'react-select';
 import 'react-select/dist/react-select.min.css';
+
+const AlertContainer = styled.div`
+    marginTop: 30px;
+`;
 
 const SectionHeader = styled.h3`
     fontSize: 22px;
@@ -43,17 +48,22 @@ class MHForm extends React.Component {
     constructor(props) {
         super(props);
 
-        const initialState = {};
+        const initialState = {
+            errorFields: [],
+            formData: {}
+        };
 
         for (const field of props.schema) {
             const defaultValue = getFieldDefault(field);
             if (defaultValue !== undefined) {
-                initialState[field.key] = defaultValue;
+                initialState.formData[field.key] = defaultValue;
             }
         }
 
         this.state = initialState;
         this.handleAttributeChange = this.handleAttributeChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.handleSelectChange = this.handleSelectChange.bind(this);
     }
 
     // Generic function for changing state
@@ -61,11 +71,14 @@ class MHForm extends React.Component {
     handleAttributeChange(e) {
         this.setState(
             {
-                [e.target.name]: e.target.value
+                formData: {
+                    ...this.state.formData,
+                    [e.target.name]: e.target.value
+                }
             },
             () => {
                 if (this.props.onChange) {
-                    this.props.onChange(this.state);
+                    this.props.onChange(this.state.formData);
                 }
             }
         );
@@ -80,7 +93,7 @@ class MHForm extends React.Component {
             ];
             const completion = () => {
                 if (this.props.onChange) {
-                    this.props.onChange(this.state);
+                    this.props.onChange(this.state.formData);
                 }
             };
 
@@ -88,11 +101,44 @@ class MHForm extends React.Component {
 
             this.setState(
                 {
-                    [name]: selection ? newValue : getFieldDefault(field)
+                    formData: {
+                        ...this.state.formData,
+                        [name]: selection ? newValue : getFieldDefault(field)
+                    }
                 },
                 completion
             );
         };
+    }
+
+    validateFields() {
+        const errors = [];
+        const formData = this.state.formData;
+        for (const field of this.props.schema) {
+            if (!field.required) { continue; }
+
+            switch (field.type) {
+                case FieldTypes.TEXT:
+                case FieldTypes.ESSAY:
+                case FieldTypes.SELECT:
+                case FieldTypes.LINK:
+                    if (formData[field.key] === '') {
+                        errors.push(field.key);
+                    }
+                    break;
+                case FieldTypes.DATE:
+                    if (isNaN((new Date(formData[field.key])).getTime())) {
+                        errors.push(field.key);
+                    }
+                    break;
+                case FieldTypes.MULTI:
+                    if (formData[field.key].length > 0) {
+                        errors.push(field.key);
+                    }
+            }
+        }
+
+        return errors;
     }
 
     renderLabeledInput(field, contents) {
@@ -107,14 +153,57 @@ class MHForm extends React.Component {
         );
     }
 
+    onSubmit(e) {
+        e.preventDefault();
+        const errorFields = this.validateFields();
+
+        if (errorFields.length === 0) {
+            this.props.onSubmit(this.formatSubmit());
+        } else {
+            this.setState({
+                errorFields
+            });
+        }
+    }
+
+    formatSubmit() {
+        const formatted = {};
+        const formData = this.state.formData;
+        for (const field of this.props.schema) {
+            switch (field.type) {
+                case FieldTypes.TEXT:
+                case FieldTypes.ESSAY:
+                case FieldTypes.LINK:
+                case FieldTypes.INTEGER:
+                case FieldTypes.BOOLEAN:
+                    formatted[field.key] = formData[field.key];
+                    break;
+                case FieldTypes.DATE:
+                    formatted[field.key] = new Date(formData[field.key]);
+                    break;
+                case FieldTypes.SELECT:
+                    formatted[field.key] = formData[field.key].value;
+                    break;
+                case FieldTypes.MULTI:
+                    formatted[field.key] = formData[field.key].map(obj => obj.label);
+            }
+        }
+
+        return formatted;
+    }
+
+
     render() {
+        const formData = this.state.formData
         return (
-            <form
-                onSubmit={e => {
-                    e.preventDefault();
-                    this.props.onSubmit(this.state);
-                }}
-            >
+            <form onSubmit={this.onSubmit}>
+                {this.state.errorFields.length > 0
+                    ? <AlertContainer>
+                          <Alert
+                              message="Missing some required fields!"
+                          />
+                      </AlertContainer>
+                    : null}
                 {this.props.schema.map(field => {
                     switch (field.type) {
                         case FieldTypes.SELECT:
@@ -122,7 +211,7 @@ class MHForm extends React.Component {
                                 field,
                                 <Select
                                     name={field.key}
-                                    value={this.state[field.key]}
+                                    value={formData[field.key]}
                                     options={field.options}
                                     onChange={this.handleSelectChange(
                                         field.key
@@ -134,7 +223,7 @@ class MHForm extends React.Component {
                                 field,
                                 <Select
                                     name={field.key}
-                                    value={this.state[field.key]}
+                                    value={formData[field.key]}
                                     options={field.options}
                                     multi={true}
                                     onChange={this.handleSelectChange(
@@ -149,7 +238,7 @@ class MHForm extends React.Component {
                                     name={field.key}
                                     type="text"
                                     placeholder={field.placeholder}
-                                    value={this.state[field.key]}
+                                    value={formData[field.key]}
                                     onChange={this.handleAttributeChange}
                                 />
                             );
@@ -159,7 +248,7 @@ class MHForm extends React.Component {
                                 <Input
                                     name={field.key}
                                     type="number"
-                                    value={this.state[field.key]}
+                                    value={formData[field.key]}
                                     onChange={this.handleAttributeChange}
                                 />
                             );
@@ -170,7 +259,7 @@ class MHForm extends React.Component {
                                     name={field.key}
                                     type="date"
                                     placeholder="yyyy-mm-dd"
-                                    value={this.state[field.key]}
+                                    value={formData[field.key]}
                                     onChange={this.handleAttributeChange}
                                 />
                             );
