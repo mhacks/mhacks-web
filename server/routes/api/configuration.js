@@ -27,38 +27,11 @@ router.get('/', function(req, res) {
                 message: Responses.UNKNOWN_ERROR
             });
         });
-
-    //TODO I don't know what this did so I didn't remove it yet
-    /*
-    if (req.get('Authorization')) {
-        var authorization = req.get('Authorization');
-        var token = authorization.replace(/Bearer /gi, '');
-
-        User.find()
-            .byToken(token)
-            .exec()
-            .then(user => {
-                res.send({
-                    status: true,
-                    user: user.getProfile(),
-                    configuration
-                });
-            })
-            .catch(() => {
-                configuration['should_logout'] = true;
-
-                res.send({
-                    status: false,
-                    configuration
-                });
-            });
-    }
-    */
 });
 
 // Handles post requests for /v1/configuration/control
 //This is on route /configuration/control so it is not easily accessible (it should be limited to one configuration at a time)
-router.post('/contril', authMiddleware('admin', 'api'), function(req, res) {
+router.post('/control', authMiddleware('admin', 'api'), function(req, res) {
     if (req.body.app_name && req.body.start_date && req.body.end_date) {
         ConfigurationSchema.create({
             app_name: req.body.app_name,
