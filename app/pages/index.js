@@ -7,6 +7,7 @@ import Profile from './profile.jsx';
 import Apply from './apply.jsx';
 import LivePage from './live';
 import ReaderPage from './reader';
+import Confirm from './confirm';
 
 export {
     Navigator,
@@ -17,5 +18,6 @@ export {
     Profile,
     Apply,
     LivePage,
-    ReaderPage
+    ReaderPage,
+    Confirm
 };

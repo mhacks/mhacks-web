@@ -5,6 +5,7 @@ import ApplicationThunks from './application.js';
 import AnnouncementsThunks from './announcements.js';
 import ConfigurationThunks from './configuration.js';
 import ReaderThunks from './reader.js';
+import ConfirmationThunks from './confirmation.js';
 
 export {
     SubscribeThunks,
@@ -13,5 +14,6 @@ export {
     ApplicationThunks,
     AnnouncementsThunks,
     ConfigurationThunks,
-    ReaderThunks
+    ReaderThunks,
+    ConfirmationThunks
 };

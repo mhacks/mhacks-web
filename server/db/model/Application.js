@@ -1,5 +1,4 @@
 var mongoose = require('../index.js'),
-    User = require('./User.js'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin'),
     config = require('../../../config/default.js');
 
@@ -62,11 +61,25 @@ var schema = new mongoose.Schema({
 
 // Allow us to query by token
 schema.query.byToken = function(findToken) {
-    return User.find()
+    return mongoose
+        .model('User')
+        .find()
         .byToken(findToken)
         .exec()
         .then(user => {
             return this.findOne({ user: user.email }).exec();
+        })
+        .catch(() => {});
+};
+
+// Allow us to query by token
+schema.query.byEmail = function(email) {
+    return mongoose
+        .model('User')
+        .find()
+        .byEmail(email)
+        .then(user => {
+            return this.findOne({ user: user.email });
         })
         .catch(() => {});
 };
@@ -85,7 +98,7 @@ schema.methods.getResume = function() {
 };
 
 schema.methods.getUser = function() {
-    return User.find().byEmail(this.user).exec();
+    return mongoose.model('User').find().byEmail(this.user).exec();
 };
 
 schema.plugin(sanitizerPlugin);

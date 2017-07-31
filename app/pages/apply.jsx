@@ -7,6 +7,7 @@ import {
     RoundedButton,
     FileUpload,
     Alert,
+    Input,
     LabeledInput,
     LabeledTextarea
 } from '../components';
@@ -19,6 +20,16 @@ import {
 import Autocomplete from 'react-autocomplete';
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
+
+const StyledSelect = styled.select`
+        background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+) no-repeat 95% 50%;
+        paddingLeft: 10px;
+        appearance: none;
+        borderColor: rgb(215, 215, 215);
+        flexGrow: 1;
+        height: 36px;
+        width: 100%;
+`;
 
 const FormContainer = styled.div`
     maxWidth: 500px;
@@ -101,7 +112,6 @@ const autocompleteMenuStyle = {
 
 const autocompleteWrapperStyle = {
     display: 'inherit',
-    paddingLeft: '20px',
     width: '100%',
     position: 'relative'
 };
@@ -359,10 +369,7 @@ class Apply extends React.Component {
                                       message={
                                           'Your application is submitted but you can make changes on this page and update your application! Thanks for applying to MHacks X.'
                                       }
-                                      style={{
-                                          backgroundColor: '#01FF70',
-                                          color: '#3D9970'
-                                      }}
+                                      positive={true}
                                   />
                               </AlertContainer>
                             : null}
@@ -436,7 +443,19 @@ class Apply extends React.Component {
                                                                           name:
                                                                               field.key,
                                                                           id:
-                                                                              field.key
+                                                                              field.key,
+                                                                          style: {
+                                                                              height:
+                                                                                  '36px',
+                                                                              width:
+                                                                                  '100%',
+                                                                              paddingLeft:
+                                                                                  '10px',
+                                                                              border:
+                                                                                  '1px solid #ccc',
+                                                                              borderRadius:
+                                                                                  '4px'
+                                                                          }
                                                                       }}
                                                                       sortItems={
                                                                           this
@@ -512,7 +531,7 @@ class Apply extends React.Component {
                                                                                     .defaultHandleRenderMenu
                                                                       }
                                                                   />
-                                                                : <input
+                                                                : <Input
                                                                       id={
                                                                           field.key
                                                                       }
@@ -643,7 +662,7 @@ class Apply extends React.Component {
                                                             }
                                                             key={field.key}
                                                         >
-                                                            <input
+                                                            <Input
                                                                 id={field.key}
                                                                 type="date"
                                                                 name={field.key}
@@ -707,7 +726,7 @@ class Apply extends React.Component {
                                                             }
                                                             key={field.key}
                                                         >
-                                                            <input
+                                                            <Input
                                                                 id={field.key}
                                                                 type="number"
                                                                 name={field.key}
@@ -772,7 +791,7 @@ class Apply extends React.Component {
                                                             }
                                                             key={field.key}
                                                         >
-                                                            <select
+                                                            <StyledSelect
                                                                 name={field.key}
                                                                 value={
                                                                     this.state[
@@ -817,7 +836,7 @@ class Apply extends React.Component {
                                                                         );
                                                                     }
                                                                 )}
-                                                            </select>
+                                                            </StyledSelect>
                                                         </LabeledInput>
                                                         {(!this.state[
                                                             field.key

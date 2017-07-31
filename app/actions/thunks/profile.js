@@ -31,6 +31,7 @@ export default class ProfileThunks {
                                 groups: user.groups,
                                 avatars: user.avatar,
                                 isResumeUploaded: user.resume_uploaded,
+                                isConfirmed: user.is_confirmed,
                                 ...user
                             }
                         };

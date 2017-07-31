@@ -58,9 +58,6 @@ class ReaderPage extends React.Component {
         super();
 
         this.state = {
-            status: 'unread',
-            score: 0,
-            reimbursement: 0,
             selected: []
         };
 
@@ -96,18 +93,9 @@ class ReaderPage extends React.Component {
         };
     }
 
-    onSubmit(e) {
-        e.preventDefault();
-
-        const { selected, status, score, reimbursement } = this.state;
-
+    onSubmit(formData) {
         this.props.dispatch(
-            ReaderThunks.reviewApplications({
-                users: selected,
-                status,
-                score,
-                reimbursement
-            })
+            ReaderThunks.reviewApplications(this.state.selected, formData)
         );
     }
 

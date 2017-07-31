@@ -123,6 +123,47 @@ export function userState(state = initialUserState, action) {
                 },
                 message: action.message
             };
+
+        case reduxActions.UPLOAD_CONFIRMATION_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data,
+                    user: {
+                        ...state.data.user,
+                        isConfirmed: true
+                    }
+                }
+            };
+
+        case reduxActions.UPLOAD_CONFIRMATION_FAILED:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data,
+                    user: {
+                        ...state.data.user,
+                        isConfirmed: false
+                    }
+                }
+            };
+
+        case reduxActions.LOAD_CONFIRMATION_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
         default:
             return state;
     }
