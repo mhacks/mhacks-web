@@ -8,9 +8,12 @@ function getGroup(userData, groupName) {
 
 export function getUserMetadata(userData) {
     return {
-        isLoggedIn: userData.isLoggedIn,
-        isApplicationSubmitted: userData.isApplicationSubmitted,
-        isEmailVerified: userData.isEmailVerified,
+        isLoggedIn: userData.isLoggedIn === true,
+        isApplicationSubmitted: userData.isApplicationSubmitted === true,
+        isApplicationReviewed: userData.user.status !== 'unread',
+        isAccepted: userData.user.status === 'accepted',
+        isWaitlisted: userData.user.status === 'waitlisted',
+        isEmailVerified: userData.isEmailVerified === true,
         isAdmin: getGroup(userData, 'admin'),
         isSponsor: getGroup(userData, 'sponsor'),
         isReader: getGroup(userData, 'reader')

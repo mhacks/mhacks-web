@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import LabeledInput from './LabeledInput.jsx';
 import RoundedButton from './RoundedButton.jsx';
 import { FieldTypes } from '../constants/forms';
+import Select from 'react-select';
+import 'react-select/dist/react-select.min.css';
 
 const SectionHeader = styled.h3`
     fontSize: 22px;
@@ -11,6 +13,32 @@ const SectionHeader = styled.h3`
     margin: 26px 0 0 0;
 `;
 
+const Input = styled.input`
+    height: 36px;
+    width: 100%;
+    paddingLeft: 10px;
+    border: 1px solid #ccc;
+    borderRadius: 4px;
+`;
+
+function getFieldDefault(field) {
+    switch (field.type) {
+        case FieldTypes.TEXT:
+        case FieldTypes.ESSAY:
+        case FieldTypes.SELECT:
+        case FieldTypes.LINK:
+            return field.default || '';
+        case FieldTypes.DATE:
+            return field.default || 'yyyy-mm-dd';
+        case FieldTypes.INTEGER:
+            return field.default || 0;
+        case FieldTypes.BOOLEAN:
+            return field.default || false;
+        case FieldTypes.MULTI:
+            return field.default || [];
+    }
+}
+
 class MHForm extends React.Component {
     constructor(props) {
         super(props);
@@ -18,25 +46,9 @@ class MHForm extends React.Component {
         const initialState = {};
 
         for (const field of props.schema) {
-            switch (field.type) {
-                case FieldTypes.TEXT:
-                case FieldTypes.ESSAY:
-                case FieldTypes.LINK:
-                    initialState[field.key] = field.default || '';
-                    break;
-                case FieldTypes.DATE:
-                    initialState[field.key] = field.default || 'yyyy-mm-dd';
-                    break;
-                case FieldTypes.SELECT:
-                    initialState[field.key] =
-                        field.default || field.options[0].key;
-                    break;
-                case FieldTypes.INTEGER:
-                    initialState[field.key] = field.default || 0;
-                    break;
-                case FieldTypes.BOOLEAN:
-                    initialState[field.key] = field.default || false;
-                    break;
+            const defaultValue = getFieldDefault(field);
+            if (defaultValue !== undefined) {
+                initialState[field.key] = defaultValue;
             }
         }
 
@@ -52,9 +64,31 @@ class MHForm extends React.Component {
                 [e.target.name]: e.target.value
             },
             () => {
-                this.props.onChange(this.state);
+                if (this.props.onChange) {
+                    this.props.onChange(this.state);
+                }
             }
         );
+    }
+
+    handleSelectChange(name) {
+        return (selection) => {
+            const field = this.props.schema[this.props.schema.findIndex(field => {
+                return field.key === name;
+            })];
+            const completion = () => {
+                if (this.props.onChange) {
+                    this.props.onChange(this.state);
+                }
+            };
+
+            const newValue = FieldTypes.MULTI ? selection : selection.value;
+
+            this.setState({
+                    [name]: selection ? newValue : getFieldDefault(field)
+                }, completion
+            );
+        }
     }
 
     renderLabeledInput(field, contents) {
@@ -71,33 +105,37 @@ class MHForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.props.onSubmit}>
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                this.props.onSubmit(this.state);
+            }}>
                 {this.props.schema.map(field => {
                     switch (field.type) {
                         case FieldTypes.SELECT:
                             return this.renderLabeledInput(
                                 field,
-                                <select
+                                <Select
                                     name={field.key}
                                     value={this.state[field.key]}
-                                    onChange={this.handleAttributeChange}
-                                >
-                                    {field.options.map(option => {
-                                        return (
-                                            <option
-                                                value={option.key}
-                                                key={option.key}
-                                            >
-                                                {option.title}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
+                                    options={field.options}
+                                    onChange={this.handleSelectChange(field.key)}
+                                />
+                            );
+                        case FieldTypes.MULTI:
+                            return this.renderLabeledInput(
+                                field,
+                                <Select
+                                    name={field.key}
+                                    value={this.state[field.key]}
+                                    options={field.options}
+                                    multi={true}
+                                    onChange={this.handleSelectChange(field.key)}
+                                />
                             );
                         case FieldTypes.TEXT:
                             return this.renderLabeledInput(
                                 field,
-                                <input
+                                <Input
                                     name={field.key}
                                     type="text"
                                     placeholder={field.placeholder}
@@ -108,7 +146,7 @@ class MHForm extends React.Component {
                         case FieldTypes.INTEGER:
                             return this.renderLabeledInput(
                                 field,
-                                <input
+                                <Input
                                     name={field.key}
                                     type="number"
                                     value={this.state[field.key]}
@@ -118,7 +156,7 @@ class MHForm extends React.Component {
                         case FieldTypes.DATE:
                             return this.renderLabeledInput(
                                 field,
-                                <input
+                                <Input
                                     name={field.key}
                                     type="date"
                                     placeholder="yyyy-mm-dd"

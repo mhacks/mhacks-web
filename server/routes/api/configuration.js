@@ -19,7 +19,7 @@ router.get('/', function(req, res) {
                 user.getProfile().then(profile => {
                     res.send({
                         status: true,
-                        user: user.profile,
+                        user: profile,
                         configuration
                     });
                 });

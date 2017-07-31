@@ -33,8 +33,13 @@ export default class ReaderThunks {
         };
     }
 
-    static reviewApplications(review) {
+    static reviewApplications(users, formData) {
         return dispatch => {
+            const review = {
+                users,
+                ...formData
+            };
+
             dispatch(ReaderPureActions.reviewApplicationsRequest(review));
 
             const token = localStorage.getItem('jwt');

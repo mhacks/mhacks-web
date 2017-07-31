@@ -37,9 +37,9 @@ export default class ConfigurationThunks {
                                         user.groups.indexOf('sponsor') !== -1,
                                 user: {
                                     name: user.full_name,
-                                    groups: user.groups,
                                     avatars: user.avatar,
-                                    isResumeUploaded: user.resume_uploaded
+                                    isResumeUploaded: user.resume_uploaded,
+                                    ...user
                                 }
                             };
 

@@ -15,6 +15,7 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
         .then(user => {
             var updateable_fields = [
                 'birthday',
+                'full_name',
                 'university',
                 'major',
                 'tshirt',
