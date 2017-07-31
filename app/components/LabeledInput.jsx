@@ -12,6 +12,7 @@ const InputField = styled.div`
 
     ${devices.small`
         flexDirection: row;
+        alignItems: center;
     `}
 
     p {
