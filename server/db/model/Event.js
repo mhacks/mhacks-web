@@ -16,13 +16,7 @@ var schema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: [
-            'General',
-            'Food',
-            'Tech Talk',
-            'Sponsor Event',
-            'Other'
-        ],
+        enum: ['General', 'Food', 'Tech Talk', 'Sponsor Event', 'Other'],
         default: 'General'
     },
     location: {
