@@ -1,4 +1,3 @@
-/* eslint-disable */
 var mongoose = require('../index.js');
 
 // Define the document Schema
