@@ -4,14 +4,12 @@ import { ApplicationRequests } from '../requests';
 export default class ApplicationThunks {
     static loadApplication() {
         return dispatch => {
-
             dispatch({ type: actions.LOAD_PROFILE_REQUEST });
             const token = localStorage.getItem('jwt');
 
             return ApplicationRequests.loadApplication(token).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
-
                         const { application } = json;
                         const state = { app: application };
 
@@ -37,7 +35,6 @@ export default class ApplicationThunks {
 
     static uploadApplication(application, files) {
         return dispatch => {
-
             dispatch({
                 type: actions.UPLOAD_APPLICATION_REQUEST,
                 data: application
