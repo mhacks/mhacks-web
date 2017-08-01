@@ -1,8 +1,6 @@
-/* eslint-disable */
 var mongoose = require('../index.js'),
-    config = require('../../../config/default.js'),
-    Schema = mongoose.Schema;
-Location = require('./Location.js');
+    Schema = mongoose.Schema,
+    Location = require('./Location.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema({
@@ -23,7 +21,7 @@ var schema = new mongoose.Schema({
             'Food',
             'Tech Talk',
             'Sponsor Event',
-            'we should get a config list for this'
+            'Other'
         ],
         default: 'General'
     },
