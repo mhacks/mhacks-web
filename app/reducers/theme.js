@@ -1,4 +1,4 @@
-import { reduxActions } from '../constants';
+import { actions } from '../actions';
 import { objectState } from './initial_states.js';
 import { Theme } from '../styles';
 
@@ -9,16 +9,16 @@ const defaultTheme = {
 
 export function theme(state = defaultTheme, action) {
     switch (action.type) {
-        case reduxActions.GET_THEME_REQUEST:
+        case actions.GET_THEME_REQUEST:
             return { ...state, fetching: true, fetched: false, error: null };
-        case reduxActions.GET_THEME_ERROR:
+        case actions.GET_THEME_ERROR:
             return {
                 ...state,
                 fetching: false,
                 fetched: false,
                 error: action.error.status
             };
-        case reduxActions.RETURN_THEME:
+        case actions.RETURN_THEME:
             return {
                 ...state,
                 fetching: false,

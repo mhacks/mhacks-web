@@ -1,4 +1,4 @@
-import { reduxActions } from '../constants';
+import { actions } from '../actions';
 
 const initialState = {
     fetching: false,
@@ -11,7 +11,7 @@ const initialState = {
 
 export function readerState(state = initialState, action) {
     switch (action.type) {
-        case reduxActions.LOAD_APPLICATIONS_REQUEST:
+        case actions.LOAD_APPLICATIONS_REQUEST:
             return {
                 ...state,
                 fetching: true,
@@ -19,7 +19,7 @@ export function readerState(state = initialState, action) {
                 error: null
             };
 
-        case reduxActions.LOAD_APPLICATIONS_ERROR:
+        case actions.LOAD_APPLICATIONS_ERROR:
             return {
                 ...state,
                 fetching: false,
@@ -28,7 +28,7 @@ export function readerState(state = initialState, action) {
                 message: action.message
             };
 
-        case reduxActions.LOAD_APPLICATIONS_SUCCESS:
+        case actions.LOAD_APPLICATIONS_SUCCESS:
             return {
                 ...state,
                 fetching: false,
@@ -40,7 +40,7 @@ export function readerState(state = initialState, action) {
                 message: action.message
             };
 
-        case reduxActions.REVIEW_APPLICATIONS_SUCCESS: {
+        case actions.REVIEW_APPLICATIONS_SUCCESS: {
             const { reimbursement, score, status } = action.data;
             return {
                 ...state,

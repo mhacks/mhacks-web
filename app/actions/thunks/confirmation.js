@@ -1,10 +1,10 @@
-import { ConfirmationPureActions } from '../pure';
+import { actions } from '../../actions';
 import { ConfirmationRequests } from '../requests';
 
 export default class ConfirmationThunks {
     static loadConfirmation() {
         return dispatch => {
-            dispatch(ConfirmationPureActions.loadConfirmationRequest());
+            dispatch({ type: actions.LOAD_CONFIRMATION_REQUEST });
 
             const token = localStorage.getItem('jwt');
 
@@ -13,22 +13,20 @@ export default class ConfirmationThunks {
             ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
-                        dispatch(
-                            ConfirmationPureActions.loadConfirmationSuccess(
-                                { confirmation: json.confirmation },
-                                json.message
-                            )
-                        );
+                        dispatch({
+                            type: actions.LOAD_CONFIRMATION_SUCCESS,
+                            data: { confirmation: json.confirmation },
+                            message: json.message
+                        });
                     });
                 } else {
                     response.json().then(json => {
-                        dispatch(
-                            ConfirmationPureActions.loadConfirmationError(
-                                token,
-                                response.status,
-                                json.message
-                            )
-                        );
+                        dispatch({
+                            type: actions.LOAD_CONFIRMATION_ERROR,
+                            data: token,
+                            error: response.status,
+                            message: json.message
+                        });
                     });
                 }
             });
@@ -37,9 +35,10 @@ export default class ConfirmationThunks {
 
     static uploadConfirmation(formData) {
         return dispatch => {
-            dispatch(
-                ConfirmationPureActions.uploadConfirmationRequest(formData)
-            );
+            dispatch({
+                type: actions.UPLOAD_CONFIRMATION_REQUEST,
+                data: formData
+            });
 
             const token = localStorage.getItem('jwt');
 
@@ -49,23 +48,19 @@ export default class ConfirmationThunks {
             ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
-                        dispatch(
-                            ConfirmationPureActions.uploadConfirmationSuccess(
-                                {
-                                    confirmation: json.confirmation
-                                },
-                                json.message
-                            )
-                        );
+                        dispatch({
+                            type: actions.UPLOAD_CONFIRMATION_SUCCESS,
+                            data: { confirmation: json.confirmation },
+                            message: json.message
+                        });
                     });
                 } else {
                     response.json().then(json => {
-                        dispatch(
-                            ConfirmationPureActions.uploadConfirmationError(
-                                response.status,
-                                json.message
-                            )
-                        );
+                        dispatch({
+                            type: actions.UPLOAD_CONFIRMATION_ERROR,
+                            error: response.status,
+                            message: json.message
+                        });
                     });
                 }
             });

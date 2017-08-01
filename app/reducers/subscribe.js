@@ -1,9 +1,9 @@
-import { reduxActions } from '../constants';
+import { actions } from '../actions';
 import { objectState } from './initial_states.js';
 
 export function subscribeState(state = objectState, action) {
     switch (action.type) {
-        case reduxActions.SUBSCRIBE_REQUEST:
+        case actions.SUBSCRIBE_REQUEST:
             return {
                 ...state,
                 fetching: true,
@@ -11,7 +11,7 @@ export function subscribeState(state = objectState, action) {
                 error: null
             };
 
-        case reduxActions.SUBSCRIBE_ERROR:
+        case actions.SUBSCRIBE_ERROR:
             return {
                 ...state,
                 fetching: false,
@@ -20,7 +20,7 @@ export function subscribeState(state = objectState, action) {
                 message: action.message
             };
 
-        case reduxActions.SUBSCRIBE_SUCCESS:
+        case actions.SUBSCRIBE_SUCCESS:
             return {
                 ...state,
                 fetching: false,
