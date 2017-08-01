@@ -130,7 +130,7 @@ class Faq extends React.Component {
                                     <FaqItem
                                         header="When are applications closing?"
                                         body="Applications will be evaluated on a rolling basis until Monday, September 4th. Space fills up quickly, so apply early!
-                                     &#10;To be eligible for a Travel Reimbursement, you need will need to apply latest by Monday, August 14th, no exceptions will
+                                     &#10;To be eligible for a Travel Reimbursement, you will need to apply latest by Monday, August 14th, no exceptions will
                                       be made. You are eligible for a Travel Reimbursement if there are no MHacks Buses nearby your location and it costs you money
                                       to get to MHacks.&#10;"
                                     />
@@ -166,8 +166,7 @@ class Faq extends React.Component {
                                 <Section>
                                     <FaqItem
                                         header="What if I don’t have a team or idea?"
-                                        body="Not to worry, most people don’t! We have some great activities planned before and during the event to help
-                                            you meet teammates and start thinking through your ideas."
+                                        body="Not to worry, most people don’t! We have some great activities planned before and during the event to help you meet teammates and start thinking through your ideas."
                                     />
                                     <FaqItem
                                         header="What kind of hardware will there be?"
@@ -214,7 +213,10 @@ class Faq extends React.Component {
                                                 from the organizers, such as a
                                                 letter of invitation, please
                                                 contact us as soon as possible
-                                                at hackathon@umich.edu.
+                                                at{' '}
+                                                <Link href="mailto:hackathon@umich.edu">
+                                                    hackathon@umich.edu
+                                                </Link>.
                                             </span>
                                         }
                                     />
@@ -242,12 +244,31 @@ class Faq extends React.Component {
                                 <Section>
                                     <FaqItem
                                         header="I don’t want to hack, I want to ________!"
-                                        body="If you’re contemplating judging, volunteering, or mentoring, shoot us an email at hackathon@umich.edu. If your company
-                                        is interested in becoming a sponsor, check out the sponsorship section below."
+                                        body={
+                                            <span>
+                                                If you’re contemplating judging,
+                                                volunteering, or mentoring,
+                                                shoot us an email at
+                                                <Link href="mailto:hackathon@umich.edu">
+                                                    hackathon@umich.edu
+                                                </Link>. If your company is
+                                                interested in becoming a
+                                                sponsor, check out the
+                                                sponsorship section below.
+                                            </span>
+                                        }
                                     />
                                     <FaqItem
-                                        header="I didn't find my question here..."
-                                        body="If you’ve got something else on your mind, fire it off to hackathon@umich.edu!"
+                                        header="I didn’t find my question here..."
+                                        body={
+                                            <span>
+                                                If you’ve got something else on
+                                                your mind, fire it off to
+                                                <Link href="mailto:hackathon@umich.edu">
+                                                    hackathon@umich.edu
+                                                </Link>!
+                                            </span>
+                                        }
                                     />
                                 </Section>
                             </FaqBody>

@@ -1,16 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
+import { devices } from '../../styles';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
-import { PageContainer, LabeledInput, RoundedButton } from '../../components';
+import { MHForm, PageContainer } from '../../components';
 import { ReaderThunks } from '../../actions';
 import { FormattedRelative } from 'react-intl';
+import Fuse from 'fuse.js';
+import {
+    ApplicationReaderFiltersSchema,
+    ApplicationReaderSchema
+} from '../../constants/forms';
 
 const HeaderSection = styled.div`
     display: flex;
-    flexDirection: row;
+    flexDirection: column;
     justifyContent: space-between;
     padding: 10px 20px;
+
+    ${devices.tablet`
+        flexDirection: row;
+
+        form {
+            flex: 1;
+
+            &:first-child {
+                marginRight: 40px;
+            }
+        }
+    `}
 `;
 
 const SubsectionContainer = styled.div`
@@ -20,6 +38,32 @@ const SubsectionContainer = styled.div`
 `;
 
 const A = styled.a`text-align: center;`;
+
+const UtilityContainer = styled.div`
+    padding: 0 20px;
+    display: flex;
+    flexWrap: wrap;
+`;
+
+const UtilityButton = styled.button`
+    borderRadius: 20px;
+    backgroundColor: transparent;
+    color: ${props => props.color};
+    fontWeight: 500;
+    fontSize: 16px;
+    padding: 8px 20px;
+    border: 3px solid ${props => props.color};
+    margin: 20px 20px 20px 0;
+
+    &:hover {
+        backgroundColor: ${props => props.color};
+        color: white;
+    }
+
+    &:last-child {
+        marginRight: 0;
+    }
+`;
 
 function isMinor(birthdate) {
     const now = new Date();
@@ -42,27 +86,19 @@ class ReaderPage extends React.Component {
         super();
 
         this.state = {
-            status: 'unread',
-            score: 0,
-            reimbursement: 0,
             selected: []
         };
 
-        this.handleAttributeChange = this.handleAttributeChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.generateColumns = this.generateColumns.bind(this);
+        this.filterApplications = this.filterApplications.bind(this);
+        this.generateCSV = this.generateCSV.bind(this);
+        this.selectAll = this.selectAll.bind(this);
+        this.deselectAll = this.deselectAll.bind(this);
     }
 
     componentDidMount() {
         this.props.dispatch(ReaderThunks.loadApplications());
-    }
-
-    // Generic function for changing state
-    // -- input using this must have a name attribute
-    handleAttributeChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
     }
 
     didSelect(user) {
@@ -79,18 +115,9 @@ class ReaderPage extends React.Component {
         };
     }
 
-    onSubmit(e) {
-        e.preventDefault();
-
-        const { selected, status, score, reimbursement } = this.state;
-
+    onSubmit(formData) {
         this.props.dispatch(
-            ReaderThunks.reviewApplications({
-                users: selected,
-                status,
-                score,
-                reimbursement
-            })
+            ReaderThunks.reviewApplications(this.state.selected, formData)
         );
     }
 
@@ -114,15 +141,19 @@ class ReaderPage extends React.Component {
                                 />
                             );
                         }
+                    },
+                    {
+                        expander: true
+                    },
+                    {
+                        Header: 'Name',
+                        accessor: 'full_name'
                     }
                 ]
             },
             {
-                Header: 'App',
+                Header: 'Review',
                 columns: [
-                    {
-                        expander: true
-                    },
                     {
                         Header: 'Submitted',
                         accessor: 'created_at',
@@ -136,6 +167,10 @@ class ReaderPage extends React.Component {
                         Header: 'Score',
                         accessor: 'score',
                         width: 60
+                    },
+                    {
+                        Header: 'Reimbursement',
+                        accessor: 'reimbursement'
                     }
                 ]
             },
@@ -171,7 +206,7 @@ class ReaderPage extends React.Component {
                         Header: 'R',
                         accessor: 'resume',
                         width: 30,
-                        Cell: row => <A href={row.value}>R</A>
+                        Cell: row => <A target="_blank" href={row.value}>R</A>
                     },
                     {
                         Header: 'G',
@@ -179,7 +214,7 @@ class ReaderPage extends React.Component {
                         width: 30,
                         Cell: row => {
                             return row.value.length > 0
-                                ? <A href={row.value}>G</A>
+                                ? <A target="_blank" href={row.value}>G</A>
                                 : null;
                         }
                     },
@@ -189,7 +224,7 @@ class ReaderPage extends React.Component {
                         width: 30,
                         Cell: row => {
                             return row.value.length > 0
-                                ? <A href={row.value}>L</A>
+                                ? <A target="_blank" href={row.value}>L</A>
                                 : null;
                         }
                     },
@@ -199,7 +234,7 @@ class ReaderPage extends React.Component {
                         width: 30,
                         Cell: row => {
                             return row.value.length > 0
-                                ? <A href={row.value}>D</A>
+                                ? <A target="_blank" href={row.value}>D</A>
                                 : null;
                         }
                     },
@@ -209,7 +244,7 @@ class ReaderPage extends React.Component {
                         width: 30,
                         Cell: row => {
                             return row.value.length > 0
-                                ? <A href={row.value}>P</A>
+                                ? <A target="_blank" href={row.value}>P</A>
                                 : null;
                         }
                     }
@@ -218,49 +253,138 @@ class ReaderPage extends React.Component {
         ];
     }
 
+    filterApplications(applications) {
+        if (!this.state.filterData) {
+            return applications;
+        }
+
+        const {
+            status,
+            reimbursement,
+            minor,
+            since,
+            search
+        } = this.state.filterData;
+
+        const fuse = new Fuse(applications, {
+            shouldSort: true,
+            findAllMatches: true,
+            threshold: 0.3,
+            location: 0,
+            distance: 100,
+            maxPatternLength: 32,
+            minMatchCharLength: 1,
+            keys: ['university', 'user']
+        });
+
+        const searched = search.length > 0 ? fuse.search(search) : applications;
+
+        return searched.filter(application => {
+            if (status && application.status !== status) {
+                return false;
+            }
+
+            if (
+                (reimbursement === 'yes' && !application.needs_reimbursement) ||
+                (reimbursement === 'no' && application.needs_reimbursement)
+            ) {
+                return false;
+            }
+
+            if (
+                (minor === 'yes' && !isMinor(application.birthday)) ||
+                (minor === 'no' && isMinor(application.birthday))
+            ) {
+                return false;
+            }
+
+            const submitted_since = Date.parse(since);
+            if (
+                !isNaN(submitted_since) &&
+                new Date(submitted_since) > new Date(application.created_at)
+            ) {
+                return false;
+            }
+
+            return true;
+        });
+    }
+
+    generateCSV() {
+        const { applications } = this.props.readerState.data;
+        if (applications.length === 0) {
+            return;
+        }
+        const keys = Object.keys(applications[0]);
+        const meta = 'data:text/csv;charset=utf-8,';
+        const keyList = keys.join(',') + '\n';
+        const data = applications
+            .map(app => {
+                return keys.map(key => app[key]).join(',');
+            })
+            .join('\n');
+        window.open(encodeURI(meta + keyList + data));
+    }
+
+    deselectAll() {
+        this.setState({
+            selected: []
+        });
+    }
+
+    selectAll() {
+        const filtered = this.filterApplications(
+            this.props.readerState.data.applications
+        );
+
+        this.setState({
+            selected: filtered.map(application => application.user)
+        });
+    }
+
     render() {
         return (
             <PageContainer ref="pagecontainer">
                 <HeaderSection>
-                    <div>toggles go here</div>
-                    <form onSubmit={this.onSubmit}>
-                        <LabeledInput label="Status">
-                            <select
-                                name="status"
-                                value={this.state.status}
-                                onChange={this.handleAttributeChange}
-                            >
-                                <option value="unread">Unread</option>
-                                <option value="waitlisted">Waitlisted</option>
-                                <option value="accepted">Accepted</option>
-                            </select>
-                        </LabeledInput>
-                        <LabeledInput label="Score">
-                            <input
-                                name="score"
-                                type="number"
-                                value={this.state.score}
-                                onChange={this.handleAttributeChange}
-                            />
-                        </LabeledInput>
-                        <LabeledInput label="Reimbursement">
-                            <input
-                                name="reimbursement"
-                                type="number"
-                                value={this.state.reimbursement}
-                                onChange={this.handleAttributeChange}
-                            />
-                        </LabeledInput>
-                        <RoundedButton
-                            type="submit"
-                            color={this.props.theme.primary}
-                        >
-                            Save
-                        </RoundedButton>
-                    </form>
+                    <MHForm
+                        schema={ApplicationReaderFiltersSchema}
+                        theme={this.props.theme}
+                        onChange={formState => {
+                            this.setState({
+                                filterData: formState
+                            });
+                        }}
+                    />
+                    <MHForm
+                        schema={ApplicationReaderSchema}
+                        theme={this.props.theme}
+                        onSubmit={this.onSubmit}
+                    />
                 </HeaderSection>
+                <UtilityContainer>
+                    <UtilityButton
+                        color={this.props.theme.primary}
+                        onClick={this.selectAll}
+                    >
+                        Select All
+                    </UtilityButton>
+                    <UtilityButton
+                        color={this.props.theme.primary}
+                        onClick={this.deselectAll}
+                    >
+                        Deselect All ({this.state.selected.length})
+                    </UtilityButton>
+                    <UtilityButton
+                        color={this.props.theme.primary}
+                        onClick={this.generateCSV}
+                    >
+                        CSV
+                    </UtilityButton>
+                </UtilityContainer>
                 <ReactTable
-                    data={this.props.readerState.data.applications}
+                    data={this.filterApplications(
+                        this.props.readerState.data.applications
+                    )}
                     columns={this.generateColumns(this.state.selected)}
                     SubComponent={row => {
                         const data = row.original;
@@ -280,8 +404,12 @@ class ReaderPage extends React.Component {
                                         {data.anything_else}
                                     </p>
                                     <h4>Departing From</h4>
+                                    <p>{data.departing_from}</p>
+                                    <h4>Needs Reimbursement</h4>
                                     <p>
-                                        {data.departing_from}
+                                        {data.needs_reimbursement
+                                            ? 'true'
+                                            : 'false'}
                                     </p>
                                     <h4>Requested Reimbursement</h4>
                                     <p>

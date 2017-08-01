@@ -5,6 +5,7 @@ import {
     ApplicationThunks,
     AnnouncementsThunks,
     ConfigurationThunks,
+    ConfirmationThunks,
     ReaderThunks
 } from './thunks';
 
@@ -15,5 +16,6 @@ export {
     ApplicationThunks,
     AnnouncementsThunks,
     ConfigurationThunks,
+    ConfirmationThunks,
     ReaderThunks
 };

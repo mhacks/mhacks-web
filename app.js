@@ -60,7 +60,10 @@ var sessionMiddleware = session({
     secret: config.secret,
     store: sessionStore,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        maxAge: config.token_expiration * 24 * 60 * 60 * 1000
+    }
 });
 
 app.use(sessionMiddleware);

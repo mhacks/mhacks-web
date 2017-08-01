@@ -19,10 +19,12 @@ import {
     Profile,
     Apply,
     BlackoutPage,
-    ReaderPage
+    ReaderPage,
+    Confirm
 } from './pages';
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';
+import { getUserMetadata } from './util/user.js';
 
 // polyfill Promise for IE browsers
 require('es6-promise').polyfill();
@@ -48,6 +50,10 @@ class AppProvider extends React.Component {
         this.props.dispatch(ConfigurationThunks.loadConfiguration());
     }
 
+    getMetadata() {
+        return getUserMetadata(store.getState().userState.data);
+    }
+
     render() {
         if (!this.props.configurationState.fetched) {
             return <div />;
@@ -67,10 +73,7 @@ class AppProvider extends React.Component {
                                 exact
                                 path={routes.LOGIN}
                                 render={() => {
-                                    const userData = store.getState().userState
-                                        .data;
-
-                                    if (userData.isLoggedIn) {
+                                    if (this.getMetadata().isLoggedIn) {
                                         return <Redirect to={routes.PROFILE} />;
                                     }
 
@@ -88,10 +91,7 @@ class AppProvider extends React.Component {
                                 exact
                                 path={routes.PROFILE}
                                 render={() => {
-                                    const userData = store.getState().userState
-                                        .data;
-
-                                    if (userData.isLoggedIn) {
+                                    if (this.getMetadata().isLoggedIn) {
                                         return <Profile />;
                                     }
 
@@ -102,20 +102,15 @@ class AppProvider extends React.Component {
                                 exact
                                 path={routes.APPLY}
                                 render={() => {
-                                    const userData = store.getState().userState
-                                        .data;
-
-                                    if (
-                                        userData.isLoggedIn &&
-                                        userData.isEmailVerified
-                                    ) {
+                                    const {
+                                        isLoggedIn,
+                                        isEmailVerified
+                                    } = this.getMetadata();
+                                    if (isLoggedIn && isEmailVerified) {
                                         return <Apply />;
                                     }
 
-                                    if (
-                                        userData.isLoggedIn &&
-                                        !userData.isEmailVerified
-                                    ) {
+                                    if (isLoggedIn && !isEmailVerified) {
                                         return <Redirect to={routes.PROFILE} />;
                                     }
 
@@ -126,14 +121,32 @@ class AppProvider extends React.Component {
                                 exact
                                 path={routes.READER}
                                 render={() => {
-                                    const userData = store.getState().userState
-                                        .data;
-
-                                    if (
-                                        userData.isLoggedIn &&
-                                        (userData.isReader || userData.isAdmin)
-                                    ) {
+                                    const {
+                                        isLoggedIn,
+                                        isReader,
+                                        isAdmin
+                                    } = this.getMetadata();
+                                    if (isLoggedIn && (isReader || isAdmin)) {
                                         return <ReaderPage />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.CONFIRM}
+                                render={() => {
+                                    const {
+                                        isLoggedIn,
+                                        isAccepted
+                                    } = this.getMetadata();
+                                    if (isLoggedIn && isAccepted) {
+                                        return <Confirm />;
+                                    }
+
+                                    if (isLoggedIn) {
+                                        return <Redirect to={routes.PROFILE} />;
                                     }
 
                                     return <Redirect to={routes.LOGIN} />;

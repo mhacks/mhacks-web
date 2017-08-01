@@ -178,7 +178,7 @@ schema.methods.generateNewToken = function() {
         },
         secret,
         {
-            expiresIn: '28d'
+            expiresIn: config.token_expiration + 'd'
         }
     );
 
@@ -445,7 +445,7 @@ schema.methods.getResume = function() {
 };
 
 schema.methods.getProfile = function() {
-    return {
+    const profile = {
         email: this.email,
         email_verified: this.email_verified,
         application_submitted: this.application_submitted,
@@ -464,6 +464,44 @@ schema.methods.getProfile = function() {
         race: this.race,
         sex: this.sex
     };
+
+    return new Promise(resolve => {
+        mongoose
+            .model('Application')
+            .find()
+            .byEmail(this.email)
+            .then(application => {
+                const {
+                    status,
+                    needs_reimbursement,
+                    reimbursement
+                } = application;
+
+                profile.application_submitted = true;
+                profile.status = status;
+                profile.needs_reimbursement = needs_reimbursement;
+                profile.reimbursement = needs_reimbursement
+                    ? reimbursement
+                    : undefined;
+
+                if (status === 'accepted') {
+                    mongoose
+                        .model('Confirmation')
+                        .findOne({ user: this })
+                        .then(application => {
+                            profile.is_confirmed = application ? true : false;
+                            resolve(profile);
+                        });
+                } else {
+                    profile.is_confirmed = false;
+                    resolve(profile);
+                }
+            })
+            .catch(() => {
+                profile.application_submitted = false;
+                resolve(profile);
+            });
+    });
 };
 
 // Password middleware to update passwords with bcrypt when needed

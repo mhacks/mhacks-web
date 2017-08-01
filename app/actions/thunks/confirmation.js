@@ -1,20 +1,21 @@
-import { ReaderPureActions } from '../pure';
-import { ReaderRequests } from '../requests';
+import { ConfirmationPureActions } from '../pure';
+import { ConfirmationRequests } from '../requests';
 
-export default class ReaderThunks {
-    static loadApplications() {
+export default class ConfirmationThunks {
+    static loadConfirmation() {
         return dispatch => {
-            dispatch(ReaderPureActions.loadApplicationsRequest());
+            dispatch(ConfirmationPureActions.loadConfirmationRequest());
 
             const token = localStorage.getItem('jwt');
 
-            return ReaderRequests.loadApplications(token).then(response => {
+            return ConfirmationRequests.loadConfirmation(
+                token
+            ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
-                        const { applications } = json;
                         dispatch(
-                            ReaderPureActions.loadApplicationsSuccess(
-                                applications,
+                            ConfirmationPureActions.loadConfirmationSuccess(
+                                { confirmation: json.confirmation },
                                 json.message
                             )
                         );
@@ -22,7 +23,8 @@ export default class ReaderThunks {
                 } else {
                     response.json().then(json => {
                         dispatch(
-                            ReaderPureActions.loadApplicationsError(
+                            ConfirmationPureActions.loadConfirmationError(
+                                token,
                                 response.status,
                                 json.message
                             )
@@ -33,26 +35,25 @@ export default class ReaderThunks {
         };
     }
 
-    static reviewApplications(users, formData) {
+    static uploadConfirmation(formData) {
         return dispatch => {
-            const review = {
-                users,
-                ...formData
-            };
-
-            dispatch(ReaderPureActions.reviewApplicationsRequest(review));
+            dispatch(
+                ConfirmationPureActions.uploadConfirmationRequest(formData)
+            );
 
             const token = localStorage.getItem('jwt');
 
-            return ReaderRequests.reviewApplications(
+            return ConfirmationRequests.uploadConfirmation(
                 token,
-                review
+                formData
             ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch(
-                            ReaderPureActions.reviewApplicationsSuccess(
-                                review,
+                            ConfirmationPureActions.uploadConfirmationSuccess(
+                                {
+                                    confirmation: json.confirmation
+                                },
                                 json.message
                             )
                         );
@@ -60,7 +61,7 @@ export default class ReaderThunks {
                 } else {
                     response.json().then(json => {
                         dispatch(
-                            ReaderPureActions.reviewApplicationsError(
+                            ConfirmationPureActions.uploadConfirmationError(
                                 response.status,
                                 json.message
                             )

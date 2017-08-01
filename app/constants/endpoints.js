@@ -7,6 +7,7 @@ export default {
     LOGOUT: '/v1/auth/logout',
     PROFILE: '/v1/user/profile',
     APPLICATION: '/v1/application',
+    CONFIRMATION: '/v1/application/confirm',
     ALL_APPLICATIONS: '/v1/application/all',
     READER: '/v1/reader',
     ANNOUNCEMENTS: '/v1/announcements',
