@@ -1,4 +1,4 @@
-import { reduxActions } from '../constants';
+import { actions } from '../actions';
 
 const initialState = {
     fetching: false,
@@ -11,7 +11,7 @@ const initialState = {
 
 export function configurationState(state = initialState, action) {
     switch (action.type) {
-        case reduxActions.LOAD_CONFIGURATION_REQUEST:
+        case actions.LOAD_CONFIGURATION_REQUEST:
             return {
                 ...state,
                 fetching: true,
@@ -19,7 +19,7 @@ export function configurationState(state = initialState, action) {
                 error: null
             };
 
-        case reduxActions.LOAD_CONFIGURATION_ERROR:
+        case actions.LOAD_CONFIGURATION_ERROR:
             return {
                 ...state,
                 fetching: false,
@@ -28,7 +28,7 @@ export function configurationState(state = initialState, action) {
                 message: action.message
             };
 
-        case reduxActions.LOAD_CONFIGURATION_SUCCESS:
+        case actions.LOAD_CONFIGURATION_SUCCESS:
             return {
                 ...state,
                 fetching: false,

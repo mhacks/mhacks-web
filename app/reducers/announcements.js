@@ -1,9 +1,9 @@
-import { reduxActions } from '../constants';
+import { actions } from '../actions';
 import { arrayState } from './initial_states.js';
 
 export function announcementsState(state = arrayState, action) {
     switch (action.type) {
-        case reduxActions.LOAD_ANNOUNCEMENTS_REQUEST:
+        case actions.LOAD_ANNOUNCEMENTS_REQUEST:
             return {
                 ...state,
                 fetching: true,
@@ -11,7 +11,7 @@ export function announcementsState(state = arrayState, action) {
                 error: null
             };
 
-        case reduxActions.LOAD_ANNOUNCEMENTS_ERROR:
+        case actions.LOAD_ANNOUNCEMENTS_ERROR:
             return {
                 ...state,
                 fetching: false,
@@ -20,7 +20,7 @@ export function announcementsState(state = arrayState, action) {
                 message: action.message
             };
 
-        case reduxActions.LOAD_ANNOUNCEMENTS_SUCCESS:
+        case actions.LOAD_ANNOUNCEMENTS_SUCCESS:
             return {
                 ...state,
                 fetching: false,
