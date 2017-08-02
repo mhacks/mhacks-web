@@ -17,6 +17,7 @@ export function getUserMetadata(userData) {
         isEmailVerified: userData.isEmailVerified === true,
         isAdmin: getGroup(userData, 'admin'),
         isSponsor: getGroup(userData, 'sponsor'),
-        isReader: getGroup(userData, 'reader')
+        isReader: getGroup(userData, 'reader'),
+        needsReimbursement: userData.user.needs_reimbursement === true
     };
 }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { ConfirmationThunks } from '../actions';
 import { PageContainer, MHForm, Alert } from '../components';
 import { ConfirmAttendanceSchema } from '../constants/forms';
+import { getUserMetadata } from '../util/user.js';
 
 const FormContainer = styled.div`
     maxWidth: 500px;
@@ -28,15 +29,23 @@ class Confirm extends React.Component {
     }
 
     render() {
+        const { isConfirmed, needsReimbursement } = getUserMetadata(
+            this.props.userState.data
+        );
+        const hiddenFields = {
+            travel: !needsReimbursement
+        };
+
         return (
             <PageContainer>
                 <FormContainer>
-                    {this.props.userState.data.user.isConfirmed
+                    {isConfirmed
                         ? <Alert message="You are confirmed!" positive={true} />
                         : null}
                     <h2>Confirm Attendance at MHacks X!</h2>
                     <MHForm
                         schema={ConfirmAttendanceSchema}
+                        hidden={hiddenFields}
                         theme={this.props.theme}
                         onSubmit={this.onSubmit}
                     />
