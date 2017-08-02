@@ -51,6 +51,9 @@ app.set('view engine', 'pug');
 app.set('views', './server/views');
 app.set('view cache', false);
 
+// Pretty API Responses
+app.set('json spaces', 4);
+
 // Initialize session
 var sessionStore = new MongoStore({
     url: 'mongodb://' + config.mongo_hostname + '/' + config.sessions_db

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import LabeledInput from './LabeledInput.jsx';
 import RoundedButton from './RoundedButton.jsx';
 import Alert from './Alert.jsx';
-import { FieldTypes } from '../constants/forms';
 import Select from 'react-select';
 import 'react-select/dist/react-select.min.css';
 
@@ -26,24 +25,6 @@ const Input = styled.input`
     borderRadius: 4px;
 `;
 
-function getFieldDefault(field) {
-    switch (field.type) {
-        case FieldTypes.TEXT:
-        case FieldTypes.ESSAY:
-        case FieldTypes.SELECT:
-        case FieldTypes.LINK:
-            return field.default || '';
-        case FieldTypes.DATE:
-            return field.default || 'yyyy-mm-dd';
-        case FieldTypes.INTEGER:
-            return field.default || 0;
-        case FieldTypes.BOOLEAN:
-            return field.default || false;
-        case FieldTypes.MULTI:
-            return field.default || [];
-    }
-}
-
 class MHForm extends React.Component {
     constructor(props) {
         super(props);
@@ -53,8 +34,10 @@ class MHForm extends React.Component {
             formData: {}
         };
 
-        for (const field of props.schema) {
-            const defaultValue = getFieldDefault(field);
+        this.FieldTypes = props.FieldTypes;
+
+        for (const field in props.schema) {
+            const defaultValue = this.getFieldDefault(props.schema[field]);
             if (defaultValue !== undefined) {
                 initialState.formData[field.key] = defaultValue;
             }
@@ -65,6 +48,24 @@ class MHForm extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.changeCompletion = this.changeCompletion.bind(this);
+    }
+
+    getFieldDefault(field) {
+        switch (field.type) {
+            case this.FieldTypes.TEXT:
+            case this.FieldTypes.ESSAY:
+            case this.FieldTypes.SELECT:
+            case this.FieldTypes.LINK:
+                return field.default || '';
+            case this.FieldTypes.DATE:
+                return field.default || 'yyyy-mm-dd';
+            case this.FieldTypes.INTEGER:
+                return field.default || 0;
+            case this.FieldTypes.BOOLEAN:
+                return field.default || false;
+            case this.FieldTypes.MULTI:
+                return field.default || [];
+        }
     }
 
     changeCompletion() {
@@ -100,10 +101,10 @@ class MHForm extends React.Component {
                     formData: {
                         ...this.state.formData,
                         [name]: selection
-                            ? field.type === FieldTypes.MULTI
+                            ? field.type === this.FieldTypes.MULTI
                               ? selection
                               : selection.value
-                            : getFieldDefault(field)
+                            : this.getFieldDefault(field)
                     }
                 },
                 this.changeCompletion
@@ -120,20 +121,20 @@ class MHForm extends React.Component {
             }
 
             switch (field.type) {
-                case FieldTypes.TEXT:
-                case FieldTypes.ESSAY:
-                case FieldTypes.SELECT:
-                case FieldTypes.LINK:
+                case this.FieldTypes.TEXT:
+                case this.FieldTypes.ESSAY:
+                case this.FieldTypes.SELECT:
+                case this.FieldTypes.LINK:
                     if (formData[field.key] === '') {
                         errors.push(field.key);
                     }
                     break;
-                case FieldTypes.DATE:
+                case this.FieldTypes.DATE:
                     if (isNaN(new Date(formData[field.key]).getTime())) {
                         errors.push(field.key);
                     }
                     break;
-                case FieldTypes.MULTI:
+                case this.FieldTypes.MULTI:
                     if (formData[field.key].length > 0) {
                         errors.push(field.key);
                     }
@@ -173,20 +174,20 @@ class MHForm extends React.Component {
         const formData = this.state.formData;
         for (const field of this.props.schema) {
             switch (field.type) {
-                case FieldTypes.TEXT:
-                case FieldTypes.ESSAY:
-                case FieldTypes.LINK:
-                case FieldTypes.INTEGER:
-                case FieldTypes.BOOLEAN:
+                case this.FieldTypes.TEXT:
+                case this.FieldTypes.ESSAY:
+                case this.FieldTypes.LINK:
+                case this.FieldTypes.INTEGER:
+                case this.FieldTypes.BOOLEAN:
                     formatted[field.key] = formData[field.key];
                     break;
-                case FieldTypes.DATE:
+                case this.FieldTypes.DATE:
                     formatted[field.key] = new Date(formData[field.key]);
                     break;
-                case FieldTypes.SELECT:
+                case this.FieldTypes.SELECT:
                     formatted[field.key] = formData[field.key];
                     break;
-                case FieldTypes.MULTI:
+                case this.FieldTypes.MULTI:
                     formatted[field.key] = formData[field.key].map(
                         obj => obj.label
                     );
@@ -205,38 +206,41 @@ class MHForm extends React.Component {
                           <Alert message="Missing some required fields!" />
                       </AlertContainer>
                     : null}
-                {this.props.schema
+                {Object.keys(this.props.schema)
                     .filter(field => {
                         return !this.props.hidden[field.key];
                     })
                     .map(field => {
+                        var fieldKey = field;
+                        field = this.props.schema[field];
+                        field.key = fieldKey;
                         switch (field.type) {
-                            case FieldTypes.SELECT:
+                            case this.FieldTypes.SELECT:
                                 return this.renderLabeledInput(
                                     field,
                                     <Select
                                         name={field.key}
                                         value={formData[field.key]}
-                                        options={field.options}
+                                        options={field.select}
                                         onChange={this.handleSelectChange(
                                             field.key
                                         )}
                                     />
                                 );
-                            case FieldTypes.MULTI:
+                            case this.FieldTypes.ARRAY:
                                 return this.renderLabeledInput(
                                     field,
                                     <Select
                                         name={field.key}
                                         value={formData[field.key]}
-                                        options={field.options}
+                                        options={field.array_select}
                                         multi={true}
                                         onChange={this.handleSelectChange(
                                             field.key
                                         )}
                                     />
                                 );
-                            case FieldTypes.TEXT:
+                            case this.FieldTypes.TEXT:
                                 return this.renderLabeledInput(
                                     field,
                                     <Input
@@ -247,7 +251,7 @@ class MHForm extends React.Component {
                                         onChange={this.handleAttributeChange}
                                     />
                                 );
-                            case FieldTypes.INTEGER:
+                            case this.FieldTypes.NUMBER:
                                 return this.renderLabeledInput(
                                     field,
                                     <Input
@@ -257,7 +261,7 @@ class MHForm extends React.Component {
                                         onChange={this.handleAttributeChange}
                                     />
                                 );
-                            case FieldTypes.DATE:
+                            case this.FieldTypes.DATE:
                                 return this.renderLabeledInput(
                                     field,
                                     <Input
@@ -268,7 +272,7 @@ class MHForm extends React.Component {
                                         onChange={this.handleAttributeChange}
                                     />
                                 );
-                            case FieldTypes.SECTIONHEADER:
+                            case this.FieldTypes.SECTIONHEADER:
                                 return (
                                     <SectionHeader
                                         color={this.props.theme.primary}
@@ -277,7 +281,7 @@ class MHForm extends React.Component {
                                         {field.title}
                                     </SectionHeader>
                                 );
-                            case FieldTypes.SUBMIT:
+                            case this.FieldTypes.SUBMIT:
                                 return (
                                     <RoundedButton
                                         type="submit"
@@ -295,7 +299,18 @@ class MHForm extends React.Component {
 }
 
 MHForm.defaultProps = {
-    hidden: {}
+    hidden: {},
+    FieldTypes: {
+        TEXT: 0,
+        LINK: 1,
+        DATE: 2,
+        SELECT: 3,
+        INTEGER: 4,
+        ESSAY: 5,
+        BOOLEAN: 6,
+        SECTIONHEADER: 7,
+        MULTI: 8
+    }
 };
 
 export default MHForm;

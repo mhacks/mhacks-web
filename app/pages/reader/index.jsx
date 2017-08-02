@@ -68,8 +68,8 @@ const UtilityButton = styled.button`
     }
 `;
 
-const BadMark = <FontAwesome name="times" style={{color: '#FF4136'}} />;
-const GoodMark = <FontAwesome name="check" style={{color: '#2ECC40'}} />;
+const BadMark = <FontAwesome name="times" style={{ color: '#FF4136' }} />;
+const GoodMark = <FontAwesome name="check" style={{ color: '#2ECC40' }} />;
 
 function isMinor(birthdate) {
     const now = new Date();
@@ -212,7 +212,8 @@ class ReaderPage extends React.Component {
                         Header: <FontAwesome name="paperclip" />,
                         accessor: 'resume',
                         width: 30,
-                        Cell: row => <A target="_blank" href={row.value}>{GoodMark}</A>
+                        Cell: row =>
+                            <A target="_blank" href={row.value}>{GoodMark}</A>
                     },
                     {
                         Header: <FontAwesome name="github" />,
@@ -220,7 +221,9 @@ class ReaderPage extends React.Component {
                         width: 30,
                         Cell: row => {
                             return row.value.length > 0
-                                ? <A target="_blank" href={row.value}>{GoodMark}</A>
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
                                 : BadMark;
                         }
                     },
@@ -230,17 +233,23 @@ class ReaderPage extends React.Component {
                         width: 30,
                         Cell: row => {
                             return row.value.length > 0
-                                ? <A target="_blank" href={row.value}>{GoodMark}</A>
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
                                 : BadMark;
                         }
                     },
                     {
-                        Header: <img src="https://cdn.rawgit.com/nealrs/868af1e0ff6d60b7d638/raw/9500aac7536bd3a4652e63617aaf418d8cfa0a08/devpost-icon-black.svg" />,
+                        Header: (
+                            <img src="https://cdn.rawgit.com/nealrs/868af1e0ff6d60b7d638/raw/9500aac7536bd3a4652e63617aaf418d8cfa0a08/devpost-icon-black.svg" />
+                        ),
                         accessor: 'devpost',
                         width: 30,
                         Cell: row => {
                             return row.value.length > 0
-                                ? <A target="_blank" href={row.value}>{GoodMark}</A>
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
                                 : BadMark;
                         }
                     },
@@ -250,7 +259,9 @@ class ReaderPage extends React.Component {
                         width: 30,
                         Cell: row => {
                             return row.value.length > 0
-                                ? <A target="_blank" href={row.value}>{GoodMark}</A>
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
                                 : BadMark;
                         }
                     }

@@ -12,7 +12,11 @@ var bcrypt = require('bcrypt'),
 var schema = new mongoose.Schema({
     full_name: {
         type: String,
-        user_editable: true
+        form: {
+            user_editable: true,
+            label: 'Full Name',
+            placeholder: 'Hacker McHackface'
+        }
     },
     email: {
         type: String,
@@ -20,15 +24,25 @@ var schema = new mongoose.Schema({
         index: {
             unique: true
         },
-        user_editable: true
+        form: {
+            user_editable: true,
+            label: 'Email',
+            placeholder: 'hackathon@umich.edu'
+        }
     },
     email_verified: {
         type: Boolean,
-        user_editable: false
+        form: {
+            user_editable: false,
+            label: 'Email Verified'
+        }
     },
     application_submitted: {
         type: Boolean,
-        user_editable: false
+        form: {
+            user_editable: false,
+            label: 'Application Submitted'
+        }
     },
     verification_tokens: [
         {
@@ -43,7 +57,11 @@ var schema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        user_editable: true
+        form: {
+            user_editable: true,
+            label: 'Password',
+            placeholder: 'hunter2'
+        }
     },
     tokens: [
         {
@@ -69,15 +87,27 @@ var schema = new mongoose.Schema({
     },
     birthday: {
         type: Date,
-        user_editable: true
+        form: {
+            user_editable: true,
+            label: 'Date of Birth',
+            placeholder: 'mm/dd/yyyy'
+        }
     },
     major: {
         type: String,
-        user_editable: true
+        form: {
+            user_editable: true,
+            label: 'Major',
+            placeholder: 'e.g. Computer Science'
+        }
     },
     university: {
         type: String,
-        user_editable: true
+        form: {
+            user_editable: true,
+            label: 'University',
+            placeholder: 'e.g. University of Michigan'
+        }
     },
     groups: [
         {
@@ -89,32 +119,58 @@ var schema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-        user_editable: true
+        form: {
+            user_editable: true,
+            label: 'Avatar'
+        }
     },
     resume: {
         type: String,
-        user_editable: true
+        form: {
+            user_editable: true,
+            label: 'Resume'
+        }
     },
     github: {
         type: String,
-        user_editable: true
+        form: {
+            user_editable: true,
+            label: 'GitHub',
+            placeholder: 'https://github.com/'
+        }
     },
     linkedin: {
         type: String,
-        user_editable: true
+        form: {
+            user_editable: true,
+            label: 'LinkedIn',
+            placeholder: 'https://linkedin.com/in/'
+        }
     },
     devpost: {
         type: String,
-        user_editable: true
+        form: {
+            user_editable: true,
+            label: 'DevPost',
+            placeholder: 'https://devpost.com/'
+        }
     },
     portfolio: {
         type: String,
-        user_editable: true
+        form: {
+            user_editable: true,
+            label: 'Portfolio',
+            placeholder: 'https://'
+        }
     },
     tshirt: {
         type: String,
-        enum: ['unselected', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
-        user_editable: true
+        enum: ['xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
+        form: {
+            user_editable: true,
+            select: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
+            label: 'T-Shirt'
+        }
     },
     race: {
         type: String,
@@ -128,12 +184,29 @@ var schema = new mongoose.Schema({
             'other',
             'prefer-not'
         ],
-        user_editable: true
+        form: {
+            user_editable: true,
+            select: [
+                '',
+                'White',
+                'Black',
+                'American Indian/Alaskan',
+                'Asian',
+                'Hispanic',
+                'Other',
+                'Prefer not to answer'
+            ],
+            label: 'Race'
+        }
     },
     sex: {
         type: String,
         enum: ['unselected', 'male', 'female', 'non-binary', 'prefer-not'],
-        user_editable: true
+        form: {
+            user_editable: true,
+            select: ['', 'Male', 'Female', 'Non Binary', 'Prefer not to answer'],
+            label: 'Sex'
+        }
     }
 });
 

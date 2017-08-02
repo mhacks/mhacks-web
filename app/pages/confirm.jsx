@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ConfirmationThunks } from '../actions';
 import { PageContainer, MHForm, Alert } from '../components';
-import { ConfirmAttendanceSchema } from '../constants/forms';
 import { getUserMetadata } from '../util/user.js';
 
 const FormContainer = styled.div`
@@ -22,6 +21,11 @@ class Confirm extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(ConfirmationThunks.loadConfirmation());
+        this.props.dispatch(ConfirmationThunks.loadForm());
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState(nextProps);
     }
 
     onSubmit(formData) {
@@ -36,7 +40,9 @@ class Confirm extends React.Component {
             travel: !needsReimbursement
         };
 
-        return (
+        console.log(this.props);
+
+        return ( !this.props.userState.data.form ? null :
             <PageContainer>
                 <FormContainer>
                     {isConfirmed
@@ -44,7 +50,8 @@ class Confirm extends React.Component {
                         : null}
                     <h2>Confirm Attendance at MHacks X!</h2>
                     <MHForm
-                        schema={ConfirmAttendanceSchema}
+                        schema={this.props.userState.data.form}
+                        fieldTypes={this.props.userState.data.FieldTypes}
                         hidden={hiddenFields}
                         theme={this.props.theme}
                         onSubmit={this.onSubmit}

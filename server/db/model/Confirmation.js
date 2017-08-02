@@ -1,5 +1,8 @@
 /* eslint-disable */
-var mongoose = require('../index.js');
+var mongoose = require('../index.js'),
+    end = 2026,
+    start = 2017,
+    years = new Array(end - start).fill().map((_, idx) => start + idx);
 
 // Define the document Schema
 var schema = new mongoose.Schema({
@@ -10,41 +13,83 @@ var schema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true
+        required: true,
+        form: {
+            user_editable: true,
+            label: 'Phone Number',
+            placeholder: '(313) 867-5509'
+        }
     },
     graduation: {
         type: String,
-        required: true
+        enum: years,
+        required: true,
+        form: {
+            user_editable: true,
+            label: 'Graduation Year',
+            select: years
+        }
     },
     degree: {
         type: String,
-        required: true
+        enum: ['highschool', 'bachelor', 'master', 'doctorate'],
+        required: true,
+        form: {
+            user_editable: true,
+            label: 'Degree Type',
+            select: ['High School', 'Bachelors', 'Masters', 'Doctorate']
+        }
     },
     employment: {
         type: String,
-        required: true
+        enum: ['internship', 'fulltime', 'coop', 'none'],
+        required: true,
+        form: {
+            user_editable: true,
+            label: 'Job Interest',
+            select: ['Internship', 'Full Time', 'Co-op', 'None']
+        }
     },
-    travel: String,
+    travel: {
+        type: String,
+        enum: ['bus', 'driving', 'fly', 'other'],
+        form: {
+            user_editable: true,
+            label: 'Travel',
+            select: ['MHacks Bus', 'Driving', 'Flying', 'Other']
+        }
+    },
     skills: {
         type: [String],
-        default: []
+        default: [],
+        form: {
+            user_editable: true,
+            label: 'Skills',
+            array_select: require('../../../static/misc/skills.json').map((str, idx) => {
+                return {
+                    value: idx,
+                    label: str
+                };
+            })
+        }
     }
 });
 
 // Allow us to query by token
-schema.query.byToken = function(findToken) {
+schema.query.byToken = function (findToken) {
     return mongoose
         .model('User')
         .find()
         .byToken(findToken)
         .exec()
         .then(user => {
-            return this.findOne({ user: user }).exec();
+            return this.findOne({user: user}).exec();
         })
-        .catch(() => {});
+        .catch(() => {
+        });
 };
 
-schema.methods.updateFields = function(fields) {
+schema.methods.updateFields = function (fields) {
     for (var param in fields) {
         this[param] = fields[param];
     }

@@ -4,27 +4,101 @@ var mongoose = require('../index.js'),
 
 // Define the document Schema
 var schema = new mongoose.Schema({
-    user: String,
-    birthday: Date,
-    university: String,
-    major: String,
+    user: {
+        type: String,
+        required: true,
+        form: {
+            user_editable: false,
+            label: 'Email',
+            placeholder: 'hackathon@umich.edu'
+        }
+    },
+    birthday: {
+        type: Date,
+        required: true,
+        form: {
+            user_editable: true,
+            label: 'Date of Birth',
+            placeholder: 'mm/dd/yyyy'
+        }
+    },
+    university: {
+        type: String,
+        required: true,
+        form: {
+            user_editable: true,
+            label: 'University',
+            placeholder: 'e.g. University of Michigan'
+        }
+    },
+    major: {
+        type: String,
+        required: true,
+        form: {
+            user_editable: true,
+            label: 'Major',
+            placeholder: 'e.g. Computer Science'
+        }
+    },
     tshirt: {
         type: String,
-        enum: ['xs', 's', 'm', 'l', 'xl', '2xl', '3xl']
+        required: true,
+        enum: ['xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
+        form: {
+            user_editable: true,
+            label: 'T-Shirt',
+            select: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL']
+        }
     },
     experience: {
         type: String,
-        enum: ['novice', 'experienced', 'veteran']
+        required: true,
+        enum: ['novice', 'experienced', 'veteran'],
+        form: {
+            user_editable: true,
+            label: 'T-Shirt',
+            select: ['Novice', 'Experienced', 'Veteran']
+        }
     },
-    resume: String,
+    resume: {
+        type: String
+    },
     created_at: {
         type: Date,
         default: Date.now
     },
-    github: String,
-    linkedin: String,
-    devpost: String,
-    portfolio: String,
+    github: {
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'GitHub',
+            placeholder: 'https://github.com/'
+        }
+    },
+    linkedin: {
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'LinkedIn',
+            placeholder: 'https://linkedin.com/in/'
+        }
+    },
+    devpost: {
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'DevPost',
+            placeholder: 'https://devpost.com/'
+        }
+    },
+    portfolio: {
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'Portfolio',
+            placeholder: 'https://'
+        }
+    },
     race: {
         type: String,
         enum: [
@@ -36,27 +110,121 @@ var schema = new mongoose.Schema({
             'hispanic',
             'other',
             'prefer-not'
-        ]
+        ],
+        form: {
+            user_editable: true,
+            select: [
+                '',
+                'White',
+                'Black',
+                'American Indian/Alaskan',
+                'Asian',
+                'Hispanic',
+                'Other',
+                'Prefer not to answer'
+            ],
+            label: 'Race'
+        }
     },
     sex: {
         type: String,
-        enum: ['unselected', 'male', 'female', 'non-binary', 'prefer-not']
+        enum: ['unselected', 'male', 'female', 'non-binary', 'prefer-not'],
+        form: {
+            user_editable: true,
+            select: ['', 'Male', 'Female', 'Non Binary', 'Prefer not to answer'],
+            label: 'Sex'
+        }
     },
-    why_mhacks: String,
-    favorite_memory: String,
-    anything_else: String,
-    needs_reimbursement: Boolean,
-    departing_from: String,
-    requested_reimbursement: Number,
+    why_mhacks: {
+        type: String,
+        required: true,
+        form: {
+            user_editable: true,
+            type_override: 'essay',
+            label: 'Why do you want to come to MHacks?',
+            placeholder: ''
+        }
+    },
+    favorite_memory: {
+        type: String,
+        form: {
+            user_editable: true,
+            type_override: 'essay',
+            label: 'What is your favorite memory from  MHacks (if applicable)?',
+            placeholder: ''
+        }
+    },
+    anything_else: {
+        type: String,
+        form: {
+            user_editable: true,
+            type_override: 'essay',
+            label: 'Anything else you would like to tell us?',
+            placeholder: ''
+        }
+    },
+    needs_reimbursement: {
+        type: Boolean,
+        form: {
+            user_editable: true,
+            label: 'Do you need travel reimbursement?',
+            wideLabel: true
+        }
+    },
+    departing_from: {
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'Departing From',
+            wideLabel: true
+        }
+    },
+    requested_reimbursement: {
+        type: Number,
+        form: {
+            user_editable: true,
+            label: 'How much reimbursement do you expect to need?',
+            wideLabel: true
+        }
+    },
     status: {
         type: String,
         enum: ['unread', 'waitlisted', 'accepted'],
-        default: 'unread'
+        default: 'unread',
+        form: {
+            label: 'Status',
+            select: ['Unread', 'Waitlisted', 'Accepted'],
+            auth_groups: ['admin', 'reader']
+        }
     },
-    score: Number,
-    reader: String,
-    reimbursement: Number,
-    review_notes: String
+    score: {
+        type: Number,
+        form: {
+            label: 'Score',
+            auth_groups: ['admin', 'reader']
+        }
+    },
+    reader: {
+        type: String,
+        form: {
+            label: 'Reader',
+            auth_groups: ['admin', 'reader']
+        }
+    },
+    reimbursement: {
+        type: Number,
+        form: {
+            label: 'Reimbursement',
+            auth_groups: ['admin', 'reader']
+        }
+    },
+    review_notes: {
+        type: String,
+        form: {
+            label: 'Notes',
+            auth_groups: ['admin', 'reader']
+        }
+    }
 });
 
 // Allow us to query by token
