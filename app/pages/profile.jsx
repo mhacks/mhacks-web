@@ -117,6 +117,7 @@ class Profile extends React.Component {
             university: userData.university || '',
             major: userData.major || '',
             avatars: userData.avatars || [],
+            counter: 0,
             profilePicture: userData.avatars[0] || '',
             isResumeUploaded: userData.isResumeUploaded || false,
             notifications: OrderedSet()
@@ -246,8 +247,15 @@ class Profile extends React.Component {
     }
 
     handleImageError() {
-        this.setState({
-            profilePicture: this.state.avatars[1]
+        console.log('old avatar: ' + this.state.avatars[this.state.counter]);
+        console.log('counter old: ' + this.state.counter);
+        this.setState(prevState => {
+            console.log('counter new: ' + (prevState.counter + 1));
+            return { counter: prevState.counter + 1 };
+        });
+        this.setState(prevState => {
+            console.log('new avatar: ' + prevState.avatars[prevState.counter]);
+            return { profilePicture: prevState.avatars[prevState.counter] };
         });
     }
 
