@@ -1,10 +1,18 @@
 var User = require('../db/model/User.js'),
     Responses = require('../responses/middleware/auth.js');
 
-module.exports = function(groupName, checkType, verifiedEmail, nextError, requireAuthToken) {
+module.exports = function(
+    groupName,
+    checkType,
+    verifiedEmail,
+    nextError,
+    requireAuthToken
+) {
     groupName = groupName || 'any';
     verifiedEmail = typeof verifiedEmail === 'boolean' ? verifiedEmail : true;
-    requireAuthToken = typeof verifiedEmail === 'boolean' ? verifiedEmail : true;
+    requireAuthToken = typeof verifiedEmail === 'boolean'
+        ? verifiedEmail
+        : true;
     return function(req, res, next) {
         if (req.get('Authorization')) {
             var authorization = req.get('Authorization');
@@ -122,7 +130,18 @@ module.exports = function(groupName, checkType, verifiedEmail, nextError, requir
                     );
                 });
         } else if (!requireAuthToken) {
-            callNext(req, {name: '', email: '', getGroupsList: function() { return []; }}, '', next);
+            callNext(
+                req,
+                {
+                    name: '',
+                    email: '',
+                    getGroupsList: function() {
+                        return [];
+                    }
+                },
+                '',
+                next
+            );
         } else {
             returnFailure(res, checkType, Responses.UNAUTHORIZED, nextError);
         }

@@ -2,58 +2,59 @@ var router = require('express').Router(),
     fs = require('fs'),
     path = require('path'),
     config = require('../../../config/default.js'),
-    User = require('../../db/model/User.js'),
     authMiddleware = require('../../middleware/auth.js');
 
-router.get('/:model', authMiddleware('any', 'api', false, undefined, false), function(req, res) {
-    var modelName = req.params.model;
-    if (
-        modelName &&
-        fs.existsSync(
-            path.join(
-                __dirname,
-                '../../db/model/' +
-                    modelName.charAt(0).toUpperCase() +
-                    modelName.slice(1) +
-                    '.js'
+router.get(
+    '/:model',
+    authMiddleware('any', 'api', false, undefined, false),
+    function(req, res) {
+        var modelName = req.params.model;
+        if (
+            modelName &&
+            fs.existsSync(
+                path.join(
+                    __dirname,
+                    '../../db/model/' +
+                        modelName.charAt(0).toUpperCase() +
+                        modelName.slice(1) +
+                        '.js'
+                )
             )
-        )
-    ) {
-        var model = require('../../db/model/' +
-            modelName.charAt(0).toUpperCase() +
-            modelName.slice(1) +
-            '.js');
-        var form = {};
+        ) {
+            var model = require('../../db/model/' +
+                modelName.charAt(0).toUpperCase() +
+                modelName.slice(1) +
+                '.js');
+            var form = {};
 
-        var user = null;
+            for (var prop in model.schema.obj) {
+                var prop_val = model.schema.obj[prop];
+                var prop_res = {};
 
-        for (var prop in model.schema.obj) {
-            var prop_val = model.schema.obj[prop];
-            var prop_res = {};
+                if (req.groups) {
+                    prop_res = check_types(prop_val, req.groups);
+                } else {
+                    prop_res = check_types(prop_val);
+                }
 
-            if (req.groups) {
-                prop_res = check_types(prop_val, req.groups);
-            } else {
-                prop_res = check_types(prop_val);
+                if (prop_res) {
+                    form[prop] = prop_res;
+                }
             }
 
-            if (prop_res) {
-                form[prop] = prop_res;
-            }
+            res.send({
+                status: true,
+                types: config.form_types,
+                form: form
+            });
+        } else {
+            res.send({
+                status: false,
+                message: 'Model: ' + modelName + ' not found'
+            });
         }
-
-        res.send({
-            status: true,
-            types: config.form_types,
-            form: form
-        });
-    } else {
-        res.send({
-            status: false,
-            message: 'Model: ' + modelName + ' not found'
-        });
     }
-});
+);
 
 function check_types(prop_val, groups) {
     if (Array.isArray(prop_val) || !prop_val.form) {
@@ -63,7 +64,10 @@ function check_types(prop_val, groups) {
     var inGroup = false;
     if (groups) {
         groups.forEach(function(group) {
-            if ('auth_groups' in prop_val.form && prop_val.form.auth_groups.indexOf(group) !== -1) {
+            if (
+                'auth_groups' in prop_val.form &&
+                prop_val.form.auth_groups.indexOf(group) !== -1
+            ) {
                 inGroup = true;
             }
         });
@@ -113,11 +117,11 @@ function check_types(prop_val, groups) {
     if ('enum' in prop_val) {
         var select = [];
         prop_val.enum.forEach(function(data, elem) {
-            select.push({label: prop_val.form.select[elem], value: data});
+            select.push({ label: prop_val.form.select[elem], value: data });
         });
 
         val_types.type = config.form_types.SELECT;
-        val_types.select = select
+        val_types.select = select;
     }
 
     if (prop_val.form.label) {

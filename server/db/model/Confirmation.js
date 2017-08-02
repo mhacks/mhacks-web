@@ -2,7 +2,13 @@
 var mongoose = require('../index.js'),
     end = 2026,
     start = 2017,
-    years = new Array(end - start).fill().map((_, idx) => start + idx);
+    years = new Array(end - start).fill().map((_, idx) => start + idx),
+    skills = require('../../../static/misc/skills.json').map((str, idx) => {
+        return {
+            value: idx,
+            label: str
+        };
+    });
 
 // Define the document Schema
 var schema = new mongoose.Schema({
@@ -65,31 +71,25 @@ var schema = new mongoose.Schema({
         form: {
             user_editable: true,
             label: 'Skills',
-            array_select: require('../../../static/misc/skills.json').map((str, idx) => {
-                return {
-                    value: idx,
-                    label: str
-                };
-            })
+            array_select: skills
         }
     }
 });
 
 // Allow us to query by token
-schema.query.byToken = function (findToken) {
+schema.query.byToken = function(findToken) {
     return mongoose
         .model('User')
         .find()
         .byToken(findToken)
         .exec()
         .then(user => {
-            return this.findOne({user: user}).exec();
+            return this.findOne({ user: user }).exec();
         })
-        .catch(() => {
-        });
+        .catch(() => {});
 };
 
-schema.methods.updateFields = function (fields) {
+schema.methods.updateFields = function(fields) {
     for (var param in fields) {
         this[param] = fields[param];
     }

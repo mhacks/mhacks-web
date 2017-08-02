@@ -131,7 +131,13 @@ var schema = new mongoose.Schema({
         enum: ['unselected', 'male', 'female', 'non-binary', 'prefer-not'],
         form: {
             user_editable: true,
-            select: ['', 'Male', 'Female', 'Non Binary', 'Prefer not to answer'],
+            select: [
+                '',
+                'Male',
+                'Female',
+                'Non Binary',
+                'Prefer not to answer'
+            ],
             label: 'Sex'
         }
     },

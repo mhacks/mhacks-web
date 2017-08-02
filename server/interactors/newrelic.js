@@ -27,7 +27,7 @@ var addCustomParameter = function(name, value) {
     return false;
 };
 
-var addCustomParameters = function(parms) {
+var addCustomParameters = function(params) {
     if (newrelic) {
         return newrelic.addCustomParameters(params);
     }
