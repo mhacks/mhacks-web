@@ -1,6 +1,4 @@
-var mongoose = require('../index.js'),
-    Schema = mongoose.Schema,
-    Location = require('./Location.js');
+var mongoose = require('../index.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema({
@@ -20,7 +18,8 @@ var schema = new mongoose.Schema({
         default: 'General'
     },
     location: {
-        type: Schema.Types.ObjectId
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Location'
     }
 });
 
@@ -32,7 +31,8 @@ schema.query.byName = function(name) {
 };
 
 schema.query.byLocation = function(name) {
-    return Location.find()
+    return mongoose.model('Location')
+        .find()
         .byName(name)
         .exec()
         .then(loc => {

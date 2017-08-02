@@ -1,11 +1,10 @@
-var mongoose = require('../index.js'),
-    Schema = mongoose.Schema;
+var mongoose = require('../index.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema({
     name: String,
-    latitude: Schema.Types.Decimal128,
-    longitude: Schema.Types.Decimal128
+    latitude: mongoose.Schema.Types.Decimal128,
+    longitude: mongoose.Schema.Types.Decimal128
 });
 
 // Allow us to query by name
