@@ -168,6 +168,7 @@ router.post('/confirm', function(req, res) {
                 'graduation',
                 'employment',
                 'degree',
+                'travel',
                 'skills'
             ];
             var fields = {};
