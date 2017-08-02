@@ -31,7 +31,8 @@ schema.query.byName = function(name) {
 };
 
 schema.query.byLocation = function(name) {
-    return mongoose.model('Location')
+    return mongoose
+        .model('Location')
         .find()
         .byName(name)
         .exec()
