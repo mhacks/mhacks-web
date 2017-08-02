@@ -5,7 +5,8 @@ var mongoose = require('../index.js');
 var schema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     phone: {
         type: String,
@@ -23,6 +24,7 @@ var schema = new mongoose.Schema({
         type: String,
         required: true
     },
+    travel: String,
     skills: {
         type: [String],
         default: []
