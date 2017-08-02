@@ -13,7 +13,7 @@ const RoundedButton = styled.button`
     &:hover {
         backgroundColor: ${props => props.color};
         color: white;
-        ${props => props.hover}
+        ${props => props.hover};
     }
 `;
 

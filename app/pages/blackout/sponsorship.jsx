@@ -18,7 +18,7 @@ const Orb = styled.img`
         position: relative;
         left: 16%;
         top: -200px;
-    `}
+    `};
 `;
 
 const FlexBox = styled.div`
@@ -28,7 +28,7 @@ const FlexBox = styled.div`
 
     ${devices.tablet`
         flexWrap: nowrap;
-    `}
+    `};
 `;
 
 const Header = styled(SectionHeader)`
@@ -52,9 +52,7 @@ const EmailBody = styled(Body)`
     fontWeight: 500;
 `;
 
-const Link = styled.a`
-    color: white;
-`;
+const Link = styled.a`color: white;`;
 
 const StyledContainer = styled(Container)`
     ${devices.tablet`
@@ -69,10 +67,10 @@ export default () =>
             <div>
                 <Body>
                     MHacks is the gateway between you and the top tech talent in
-                    the world. Whether you come to network,
-                    promote brand awareness, or get feedback on a product or
-                    API, we'll provide the tools you need to make the
-                    most out of your experience.
+                    the world. Whether you come to network, promote brand
+                    awareness, or get feedback on a product or API, we'll
+                    provide the tools you need to make the most out of your
+                    experience.
                 </Body>
                 <EmailBody>
                     Interested in sponsoring? Want more information? Shoot us an

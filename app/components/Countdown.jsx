@@ -45,7 +45,11 @@ class Countdown extends React.Component {
     }
 
     render() {
-        return <Timer>{this.generateDateTimestamp()}</Timer>;
+        return (
+            <Timer>
+                {this.generateDateTimestamp()}
+            </Timer>
+        );
     }
 }
 

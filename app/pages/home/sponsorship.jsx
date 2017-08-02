@@ -37,7 +37,7 @@ const FlexBox = styled.div`
 
     ${devices.tablet`
         flexWrap: nowrap;
-    `}
+    `};
 `;
 
 const QuoteWrapper = styled.div`
@@ -58,9 +58,7 @@ const CompanyName = styled.div`
     textAlign: right;
 `;
 
-const Link = styled.a`
-    color: ${theme.secondary};
-`;
+const Link = styled.a`color: ${theme.secondary};`;
 
 const SponsorsFlexBox = styled.div`
     display: flex;
@@ -69,9 +67,7 @@ const SponsorsFlexBox = styled.div`
     justifyContent: center;
 `;
 
-const LogoWrapper = styled.div`
-    margin: 25px;
-`;
+const LogoWrapper = styled.div`margin: 25px;`;
 
 const LogoImg = styled.img`
     height: 75px;

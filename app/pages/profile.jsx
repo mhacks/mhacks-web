@@ -60,9 +60,7 @@ const Flexer = styled.div`
     flexDirection: column;
 `;
 
-const InputContainer = styled.div`
-    marginBottom: 30px;
-`;
+const InputContainer = styled.div`marginBottom: 30px;`;
 
 const ButtonGroup = styled.div`
     display: flex;
@@ -85,13 +83,9 @@ const SubsectionHeader = styled.h3`
     margin: 26px 0 0 0;
 `;
 
-const FileUploadContainer = styled.div`
-    marginTop: 10px;
-`;
+const FileUploadContainer = styled.div`marginTop: 10px;`;
 
-const AlertContainer = styled.div`
-    marginTop: 30px;
-`;
+const AlertContainer = styled.div`marginTop: 30px;`;
 
 const Subhead = styled.p`
     margin: 20px 0 0 0;

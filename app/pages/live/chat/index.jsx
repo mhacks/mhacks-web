@@ -7,12 +7,10 @@ import Favicon from '../../../../static/nano/favicon.png';
 
 import InputBar from './InputBar.jsx';
 
-const Wrapper = styled.div`
-    height: 100%;
-`;
+const Wrapper = styled.div`height: 100%;`;
 
 const Header = styled.div`
-    backgroundColor: #E6E6E6;
+    backgroundColor: #e6e6e6;
     borderRadius: 8px 8px 0 0;
     padding: 10px;
     border: 1px solid gray;
@@ -31,7 +29,7 @@ const List = styled.div`
 `;
 
 const ListItem = styled.div`
-    backgroundColor: #EFEFEF;
+    backgroundColor: #efefef;
     borderBottom: 0.5px solid black;
     padding: 10px;
 `;

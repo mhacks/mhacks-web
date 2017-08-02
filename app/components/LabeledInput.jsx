@@ -23,7 +23,7 @@ const InputField = styled.div`
 
         ${devices.small`
             marginBottom: 1em;
-        `}
+        `};
     }
 `;
 
