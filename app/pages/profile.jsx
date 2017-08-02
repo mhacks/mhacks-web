@@ -396,7 +396,9 @@ class Profile extends React.Component {
                 Please plan to arrive in Ann Arbor before 6pm on Friday,
                 September 22nd. Registration will begin at 4pm and end at 6pm.
                 Late registration will be available at the Help Desk. Closing
-                Ceremonies will last until about 5pm on Sunday, September 24th.{' '}
+                Ceremonies will last until about 5pm on Sunday, September 24th.{
+                    ' '
+                }
                 <br /> <br />
                 <strong>MHacks Buses</strong>: We will be sending buses to
                 several campuses across the nation, stay tuned for more details
@@ -423,7 +425,9 @@ class Profile extends React.Component {
                 <p>
                     To remain eligible for your reimbursement, you must email
                     flymhacks@umich.edu with any relevant receipts, ticket
-                    confirmations, etc. within 5 days of application acceptance.{' '}
+                    confirmations, etc. within 5 days of application acceptance.{
+                        ' '
+                    }
                     <br /> <br />If you are driving, please indicate as such on
                     the confirmation form - you will have until September 30th
                     to send a single email to flymhacks@umich.edu with all costs
