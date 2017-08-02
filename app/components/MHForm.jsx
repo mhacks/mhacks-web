@@ -294,4 +294,8 @@ class MHForm extends React.Component {
     }
 }
 
+MHForm.defaultProps = {
+    hidden: {}
+};
+
 export default MHForm;
