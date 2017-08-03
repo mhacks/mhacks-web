@@ -67,6 +67,7 @@ module.exports = {
         BOOLEAN: 6,
         SECTIONHEADER: 7,
         BUFFER: 8,
-        ARRAY: 9
+        ARRAY: 9,
+        SUBMIT: 10
     }
 };

@@ -4,6 +4,13 @@ var mongoose = require('../index.js'),
 
 // Define the document Schema
 var schema = new mongoose.Schema({
+    general_header: {
+        type: String,
+        form: {
+            label: 'General',
+            type_override: 'sectionheader'
+        }
+    },
     user: {
         type: String,
         required: true,
@@ -60,6 +67,13 @@ var schema = new mongoose.Schema({
             select: ['Novice', 'Experienced', 'Veteran']
         }
     },
+    links_header: {
+        type: String,
+        form: {
+            label: 'Links',
+            type_override: 'sectionheader'
+        }
+    },
     resume: {
         type: String
     },
@@ -97,6 +111,13 @@ var schema = new mongoose.Schema({
             user_editable: true,
             label: 'Portfolio',
             placeholder: 'https://'
+        }
+    },
+    demographics_header: {
+        type: String,
+        form: {
+            label: 'Demographics',
+            type_override: 'sectionheader'
         }
     },
     race: {
@@ -139,6 +160,13 @@ var schema = new mongoose.Schema({
                 'Prefer not to answer'
             ],
             label: 'Sex'
+        }
+    },
+    short_answer_headers: {
+        type: String,
+        form: {
+            label: 'Short Answer',
+            type_override: 'sectionheader'
         }
     },
     why_mhacks: {
@@ -224,12 +252,54 @@ var schema = new mongoose.Schema({
             auth_groups: ['admin', 'reader']
         }
     },
-    review_notes: {
-        type: String,
-        form: {
-            label: 'Notes',
+    reader_filter: {
+        type: Object,
+        form: [{
+            key: 'status',
+            label: 'Status'
+        }, {
+            key: 'needs_reimbursement',
+            label: 'Needs Reimbursement'
+        }, {
+            key: 'minor',
+            label: 'Minor',
+            type: Boolean,
             auth_groups: ['admin', 'reader']
-        }
+        }, {
+            key: 'search',
+            label: 'Search',
+            type: String,
+            placeholder: 'By name, uni, email',
+            auth_groups: ['admin', 'reader']
+        }, {
+            key: 'since',
+            label: 'Since',
+            type: Date,
+            auth_groups: ['admin', 'reader']
+        }]
+    },
+    reader_schema: {
+        type: Object,
+        form: [{
+            key: 'review_header',
+            label: 'Review',
+            type: 'sectionheader',
+            auth_groups: ['admin', 'reader']
+        }, {
+            key: 'status',
+            label: 'Status'
+        }, {
+            key: 'score',
+            label: 'Score'
+        }, {
+            key: 'reimbursement',
+            label: 'Reimbursement'
+        }, {
+            key: 'save_button',
+            label: 'Save',
+            type: 'submit',
+            auth_groups: ['admin', 'reader']
+        }]
     }
 });
 

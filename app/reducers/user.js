@@ -182,6 +182,42 @@ export function userState(state = initialUserState, action) {
                 error: action.error,
                 message: action.message
             };
+        case actions.LOAD_APPLICATIONS_FORM_SUCCESS_FORM_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_APPLICATIONS_FORM_ERROR_FORM_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                fetched: false,
+                error: action.error,
+                message: action.message
+            };
+        case actions.LOAD_PROFILE_FORM_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_PROFILE_FORM_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                fetched: false,
+                error: action.error,
+                message: action.message
+            };
         default:
             return state;
     }

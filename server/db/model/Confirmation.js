@@ -2,10 +2,10 @@
 var mongoose = require('../index.js'),
     end = 2026,
     start = 2017,
-    years = new Array(end - start).fill().map((_, idx) => start + idx),
-    skills = require('../../../static/misc/skills.json').map((str, idx) => {
+    years = new Array(end - start).fill().map((_, idx) => start + idx).concat(['later']),
+    skills = require('../../../static/misc/skills.json').map((str, _) => {
         return {
-            value: idx,
+            value: str,
             label: str
         };
     });
@@ -33,7 +33,7 @@ var schema = new mongoose.Schema({
         form: {
             user_editable: true,
             label: 'Graduation Year',
-            select: years
+            select: years.slice(0, -1).concat([end + ' or later'])
         }
     },
     degree: {
@@ -72,6 +72,13 @@ var schema = new mongoose.Schema({
             user_editable: true,
             label: 'Skills',
             array_select: skills
+        }
+    },
+    confirm_button: {
+        type: String,
+        form: {
+            label: 'Confirm',
+            type_override: 'submit'
         }
     }
 });

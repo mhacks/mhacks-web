@@ -276,9 +276,9 @@ class MHForm extends React.Component {
                                 return (
                                     <SectionHeader
                                         color={this.props.theme.primary}
-                                        key={field.title}
+                                        key={field.label}
                                     >
-                                        {field.title}
+                                        {field.label}
                                     </SectionHeader>
                                 );
                             case this.FieldTypes.SUBMIT:
@@ -286,9 +286,9 @@ class MHForm extends React.Component {
                                     <RoundedButton
                                         type="submit"
                                         color={this.props.theme.primary}
-                                        key={field.title}
+                                        key={field.label}
                                     >
-                                        {field.title}
+                                        {field.label}
                                     </RoundedButton>
                                 );
                         }

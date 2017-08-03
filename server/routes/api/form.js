@@ -4,29 +4,58 @@ var router = require('express').Router(),
     config = require('../../../config/default.js'),
     authMiddleware = require('../../middleware/auth.js');
 
-router.get(
-    '/:model',
-    authMiddleware('any', 'api', false, undefined, false),
-    function(req, res) {
-        var modelName = req.params.model;
-        if (
-            modelName &&
-            fs.existsSync(
-                path.join(
-                    __dirname,
-                    '../../db/model/' +
-                        modelName.charAt(0).toUpperCase() +
-                        modelName.slice(1) +
-                        '.js'
-                )
-            )
-        ) {
-            var model = require('../../db/model/' +
+function handler(req, res) {
+    var modelName = req.params.model;
+    if (
+        modelName &&
+        fs.existsSync(
+            path.join(
+                __dirname,
+                '../../db/model/' +
                 modelName.charAt(0).toUpperCase() +
                 modelName.slice(1) +
-                '.js');
-            var form = {};
+                '.js'
+            )
+        )
+    ) {
+        var model = require('../../db/model/' +
+            modelName.charAt(0).toUpperCase() +
+            modelName.slice(1) +
+            '.js');
+        var form = {};
 
+        if (req.params.submodel) {
+            if (req.params.submodel in model.schema.obj) {
+                var submodel = model.schema.obj[req.params.submodel];
+
+                submodel.form.forEach(function(prop) {
+                    var org_prop = prop;
+
+                    if (prop.key in model.schema.obj) {
+                        prop = model.schema.obj[prop.key];
+                    } else {
+                        prop.form = JSON.parse(JSON.stringify(prop));
+                    }
+
+                    console.log(org_prop, prop);
+
+                    var prop_res = {};
+
+                    if (req.groups) {
+                        prop_res = check_types(prop, req.groups);
+                    } else {
+                        prop_res = check_types(prop);
+                    }
+
+                    if (prop_res) {
+                        form[org_prop.key] = prop_res;
+                    }
+                });
+            } else {
+                delete req.params.submodel;
+                return handler(req, res);
+            }
+        } else {
             for (var prop in model.schema.obj) {
                 var prop_val = model.schema.obj[prop];
                 var prop_res = {};
@@ -41,20 +70,23 @@ router.get(
                     form[prop] = prop_res;
                 }
             }
-
-            res.send({
-                status: true,
-                types: config.form_types,
-                form: form
-            });
-        } else {
-            res.send({
-                status: false,
-                message: 'Model: ' + modelName + ' not found'
-            });
         }
+
+        res.send({
+            status: true,
+            types: config.form_types,
+            form: form
+        });
+    } else {
+        res.send({
+            status: false,
+            message: 'Model: ' + modelName + ' not found'
+        });
     }
-);
+}
+
+router.get('/:model', authMiddleware('any', 'api', false, undefined, false), handler);
+router.get('/:model/:submodel', authMiddleware('any', 'api', false, undefined, false), handler);
 
 function check_types(prop_val, groups) {
     if (Array.isArray(prop_val) || !prop_val.form) {
@@ -73,9 +105,7 @@ function check_types(prop_val, groups) {
         });
     }
 
-    console.log('HERERERERER', inGroup, groups);
-
-    if (!inGroup && !prop_val.form.user_editable) {
+    if (!inGroup && !prop_val.form.user_editable && prop_val.form.type_override !== 'sectionheader' && prop_val.form.type_override !== 'submit') {
         return undefined;
     }
 
@@ -111,6 +141,12 @@ function check_types(prop_val, groups) {
             break;
         case 'essay':
             val_types.type = config.form_types.ESSAY;
+            break;
+        case 'sectionheader':
+            val_types.type = config.form_types.SECTIONHEADER;
+            break;
+        case 'submit':
+            val_types.type = config.form_types.SUBMIT;
             break;
     }
 
