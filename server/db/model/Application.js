@@ -254,52 +254,64 @@ var schema = new mongoose.Schema({
     },
     reader_filter: {
         type: Object,
-        form: [{
-            key: 'status',
-            label: 'Status'
-        }, {
-            key: 'needs_reimbursement',
-            label: 'Needs Reimbursement'
-        }, {
-            key: 'minor',
-            label: 'Minor',
-            type: Boolean,
-            auth_groups: ['admin', 'reader']
-        }, {
-            key: 'search',
-            label: 'Search',
-            type: String,
-            placeholder: 'By name, uni, email',
-            auth_groups: ['admin', 'reader']
-        }, {
-            key: 'since',
-            label: 'Since',
-            type: Date,
-            auth_groups: ['admin', 'reader']
-        }]
+        form: [
+            {
+                key: 'status',
+                label: 'Status'
+            },
+            {
+                key: 'needs_reimbursement',
+                label: 'Needs Reimbursement'
+            },
+            {
+                key: 'minor',
+                label: 'Minor',
+                type: Boolean,
+                auth_groups: ['admin', 'reader']
+            },
+            {
+                key: 'search',
+                label: 'Search',
+                type: String,
+                placeholder: 'By name, uni, email',
+                auth_groups: ['admin', 'reader']
+            },
+            {
+                key: 'since',
+                label: 'Since',
+                type: Date,
+                auth_groups: ['admin', 'reader']
+            }
+        ]
     },
     reader_schema: {
         type: Object,
-        form: [{
-            key: 'review_header',
-            label: 'Review',
-            type: 'sectionheader',
-            auth_groups: ['admin', 'reader']
-        }, {
-            key: 'status',
-            label: 'Status'
-        }, {
-            key: 'score',
-            label: 'Score'
-        }, {
-            key: 'reimbursement',
-            label: 'Reimbursement'
-        }, {
-            key: 'save_button',
-            label: 'Save',
-            type: 'submit',
-            auth_groups: ['admin', 'reader']
-        }]
+        form: [
+            {
+                key: 'review_header',
+                label: 'Review',
+                type: 'sectionheader',
+                auth_groups: ['admin', 'reader']
+            },
+            {
+                key: 'status',
+                label: 'Status'
+            },
+            {
+                key: 'score',
+                label: 'Score'
+            },
+            {
+                key: 'reimbursement',
+                label: 'Reimbursement'
+            },
+            {
+                key: 'save_button',
+                label: 'Save',
+                type: 'submit',
+                auth_groups: ['admin', 'reader']
+            }
+        ]
     }
 });
 

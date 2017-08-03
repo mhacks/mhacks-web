@@ -241,7 +241,11 @@ class ReaderPage extends React.Component {
                     },
                     {
                         Header: (
-                            <img src="https://cdn.rawgit.com/nealrs/868af1e0ff6d60b7d638/raw/9500aac7536bd3a4652e63617aaf418d8cfa0a08/devpost-icon-black.svg" height="14px" width="14px"/>
+                            <img
+                                src="https://cdn.rawgit.com/nealrs/868af1e0ff6d60b7d638/raw/9500aac7536bd3a4652e63617aaf418d8cfa0a08/devpost-icon-black.svg"
+                                height="14px"
+                                width="14px"
+                            />
                         ),
                         accessor: 'devpost',
                         width: 30,

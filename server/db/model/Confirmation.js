@@ -2,7 +2,10 @@
 var mongoose = require('../index.js'),
     end = 2026,
     start = 2017,
-    years = new Array(end - start).fill().map((_, idx) => start + idx).concat(['later']),
+    years = new Array(end - start)
+        .fill()
+        .map((_, idx) => start + idx)
+        .concat(['later']),
     skills = require('../../../static/misc/skills.json').map((str, _) => {
         return {
             value: str,

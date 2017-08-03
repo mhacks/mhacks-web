@@ -12,9 +12,9 @@ function handler(req, res) {
             path.join(
                 __dirname,
                 '../../db/model/' +
-                modelName.charAt(0).toUpperCase() +
-                modelName.slice(1) +
-                '.js'
+                    modelName.charAt(0).toUpperCase() +
+                    modelName.slice(1) +
+                    '.js'
             )
         )
     ) {
@@ -85,8 +85,16 @@ function handler(req, res) {
     }
 }
 
-router.get('/:model', authMiddleware('any', 'api', false, undefined, false), handler);
-router.get('/:model/:submodel', authMiddleware('any', 'api', false, undefined, false), handler);
+router.get(
+    '/:model',
+    authMiddleware('any', 'api', false, undefined, false),
+    handler
+);
+router.get(
+    '/:model/:submodel',
+    authMiddleware('any', 'api', false, undefined, false),
+    handler
+);
 
 function check_types(prop_val, groups) {
     if (Array.isArray(prop_val) || !prop_val.form) {
@@ -105,7 +113,12 @@ function check_types(prop_val, groups) {
         });
     }
 
-    if (!inGroup && !prop_val.form.user_editable && prop_val.form.type_override !== 'sectionheader' && prop_val.form.type_override !== 'submit') {
+    if (
+        !inGroup &&
+        !prop_val.form.user_editable &&
+        prop_val.form.type_override !== 'sectionheader' &&
+        prop_val.form.type_override !== 'submit'
+    ) {
         return undefined;
     }
 
