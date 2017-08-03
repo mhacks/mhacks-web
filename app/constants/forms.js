@@ -238,7 +238,7 @@ export const ConfirmAttendanceSchema = [
     },
     {
         type: FieldTypes.SELECT,
-        label: 'Employment Interested',
+        label: 'Job Interest',
         key: 'employment',
         options: [
             {
@@ -266,6 +266,29 @@ export const ConfirmAttendanceSchema = [
         key: 'skills',
         default: [],
         options: mapArrayToOptions(Skills)
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Travel',
+        key: 'travel',
+        options: [
+            {
+                value: 'bus',
+                label: 'MHacks Bus'
+            },
+            {
+                value: 'driving',
+                label: 'Driving'
+            },
+            {
+                value: 'fly',
+                label: 'Flying'
+            },
+            {
+                value: 'other',
+                label: 'Other'
+            }
+        ]
     },
     {
         type: FieldTypes.SUBMIT,

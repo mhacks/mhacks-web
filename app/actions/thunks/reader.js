@@ -1,10 +1,10 @@
-import { ReaderPureActions } from '../pure';
+import { actions } from '../../actions';
 import { ReaderRequests } from '../requests';
 
 export default class ReaderThunks {
     static loadApplications() {
         return dispatch => {
-            dispatch(ReaderPureActions.loadApplicationsRequest());
+            dispatch({ type: actions.LOAD_APPLICATIONS_REQUEST });
 
             const token = localStorage.getItem('jwt');
 
@@ -12,21 +12,19 @@ export default class ReaderThunks {
                 if (response.status == 200) {
                     response.json().then(json => {
                         const { applications } = json;
-                        dispatch(
-                            ReaderPureActions.loadApplicationsSuccess(
-                                applications,
-                                json.message
-                            )
-                        );
+                        dispatch({
+                            type: actions.LOAD_APPLICATIONS_SUCCESS,
+                            data: applications,
+                            message: json.message
+                        });
                     });
                 } else {
                     response.json().then(json => {
-                        dispatch(
-                            ReaderPureActions.loadApplicationsError(
-                                response.status,
-                                json.message
-                            )
-                        );
+                        dispatch({
+                            type: actions.LOAD_APPLICATIONS_ERROR,
+                            error: response.status,
+                            message: json.message
+                        });
                     });
                 }
             });
@@ -40,7 +38,10 @@ export default class ReaderThunks {
                 ...formData
             };
 
-            dispatch(ReaderPureActions.reviewApplicationsRequest(review));
+            dispatch({
+                type: actions.REVIEW_APPLICATIONS_REQUEST,
+                data: review
+            });
 
             const token = localStorage.getItem('jwt');
 
@@ -50,21 +51,19 @@ export default class ReaderThunks {
             ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
-                        dispatch(
-                            ReaderPureActions.reviewApplicationsSuccess(
-                                review,
-                                json.message
-                            )
-                        );
+                        dispatch({
+                            type: actions.REVIEW_APPLICATIONS_SUCCESS,
+                            data: review,
+                            message: json.message
+                        });
                     });
                 } else {
                     response.json().then(json => {
-                        dispatch(
-                            ReaderPureActions.reviewApplicationsError(
-                                response.status,
-                                json.message
-                            )
-                        );
+                        dispatch({
+                            type: actions.REVIEW_APPLICATIONS_ERROR,
+                            error: response.status,
+                            message: json.message
+                        });
                     });
                 }
             });

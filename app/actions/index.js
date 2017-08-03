@@ -1,21 +1,10 @@
-import {
-    SubscribeThunks,
-    AuthThunks,
-    ProfileThunks,
-    ApplicationThunks,
-    AnnouncementsThunks,
-    ConfigurationThunks,
-    ConfirmationThunks,
-    ReaderThunks
-} from './thunks';
+export { default as actions } from './pure';
 
-export {
-    SubscribeThunks,
-    AuthThunks,
-    ProfileThunks,
-    ApplicationThunks,
-    AnnouncementsThunks,
-    ConfigurationThunks,
-    ConfirmationThunks,
-    ReaderThunks
-};
+export { default as SubscribeThunks } from './thunks/subscribe.js';
+export { default as AuthThunks } from './thunks/auth.js';
+export { default as ProfileThunks } from './thunks/profile.js';
+export { default as ApplicationThunks } from './thunks/application.js';
+export { default as AnnouncementsThunks } from './thunks/announcements.js';
+export { default as ConfigurationThunks } from './thunks/configuration.js';
+export { default as ReaderThunks } from './thunks/reader.js';
+export { default as ConfirmationThunks } from './thunks/confirmation.js';

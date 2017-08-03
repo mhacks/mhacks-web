@@ -215,7 +215,7 @@ class ReaderPage extends React.Component {
                         accessor: 'github',
                         width: 30,
                         Cell: row => {
-                            return row.value.length > 0
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>G</A>
                                 : null;
                         }
@@ -225,7 +225,7 @@ class ReaderPage extends React.Component {
                         accessor: 'linkedin',
                         width: 30,
                         Cell: row => {
-                            return row.value.length > 0
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>L</A>
                                 : null;
                         }
@@ -235,7 +235,7 @@ class ReaderPage extends React.Component {
                         accessor: 'devpost',
                         width: 30,
                         Cell: row => {
-                            return row.value.length > 0
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>D</A>
                                 : null;
                         }
@@ -245,7 +245,7 @@ class ReaderPage extends React.Component {
                         accessor: 'portfolio',
                         width: 30,
                         Cell: row => {
-                            return row.value.length > 0
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>P</A>
                                 : null;
                         }
