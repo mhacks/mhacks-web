@@ -4,7 +4,7 @@ var mongoose = require('../index.js'),
     start = 2017,
     years = new Array(end - start)
         .fill()
-        .map((_, idx) => start + idx)
+        .map((_, idx) => (start + idx).toString())
         .concat(['later']),
     skills = require('../../../static/misc/skills.json').map((str, _) => {
         return {

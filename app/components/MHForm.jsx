@@ -31,7 +31,8 @@ class MHForm extends React.Component {
 
         const initialState = {
             errorFields: [],
-            formData: {}
+            formData: {},
+            firstLoad: false
         };
 
         this.FieldTypes = props.FieldTypes;
@@ -39,7 +40,7 @@ class MHForm extends React.Component {
         for (const field in props.schema) {
             const defaultValue = this.getFieldDefault(props.schema[field]);
             if (defaultValue !== undefined) {
-                initialState.formData[field.key] = defaultValue;
+                initialState.formData[field] = defaultValue;
             }
         }
 
@@ -58,14 +59,37 @@ class MHForm extends React.Component {
             case this.FieldTypes.LINK:
                 return field.default || '';
             case this.FieldTypes.DATE:
-                return field.default || 'yyyy-mm-dd';
-            case this.FieldTypes.INTEGER:
+                return field.default || 'yyyy-MM-dd';
+            case this.FieldTypes.NUMBER:
                 return field.default || 0;
             case this.FieldTypes.BOOLEAN:
                 return field.default || false;
-            case this.FieldTypes.MULTI:
+            case this.FieldTypes.ARRAY:
                 return field.default || [];
         }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        var formData = {};
+
+        if (!this.state.firstLoad) {
+            for (const field in nextProps.schema) {
+                var defaultValue = this.getFieldDefault(
+                    nextProps.schema[field]
+                );
+                if (defaultValue !== undefined) {
+                    formData[field] = defaultValue;
+                }
+            }
+        }
+
+        this.setState({
+            formData: {
+                ...this.state.formData,
+                ...formData
+            },
+            firstLoad: true
+        });
     }
 
     changeCompletion() {
@@ -90,11 +114,7 @@ class MHForm extends React.Component {
 
     handleSelectChange(name) {
         return selection => {
-            const field = this.props.schema[
-                this.props.schema.findIndex(field => {
-                    return field.key === name;
-                })
-            ];
+            const field = this.props.schema[name];
 
             this.setState(
                 {
@@ -115,7 +135,8 @@ class MHForm extends React.Component {
     validateFields() {
         const errors = [];
         const formData = this.state.formData;
-        for (const field of this.props.schema) {
+        for (const key in this.props.schema) {
+            var field = this.props.schema[key];
             if (!field.required) {
                 continue;
             }
@@ -134,7 +155,7 @@ class MHForm extends React.Component {
                         errors.push(field.key);
                     }
                     break;
-                case this.FieldTypes.MULTI:
+                case this.FieldTypes.ARRAY:
                     if (formData[field.key].length > 0) {
                         errors.push(field.key);
                     }
@@ -172,25 +193,25 @@ class MHForm extends React.Component {
     formatFormData() {
         const formatted = {};
         const formData = this.state.formData;
-        for (const field of this.props.schema) {
+        for (const key in this.props.schema) {
+            var field = this.props.schema[key];
+
             switch (field.type) {
                 case this.FieldTypes.TEXT:
                 case this.FieldTypes.ESSAY:
                 case this.FieldTypes.LINK:
-                case this.FieldTypes.INTEGER:
+                case this.FieldTypes.NUMBER:
                 case this.FieldTypes.BOOLEAN:
-                    formatted[field.key] = formData[field.key];
+                    formatted[key] = formData[key];
                     break;
                 case this.FieldTypes.DATE:
-                    formatted[field.key] = new Date(formData[field.key]);
+                    formatted[key] = new Date(formData[key]);
                     break;
                 case this.FieldTypes.SELECT:
-                    formatted[field.key] = formData[field.key];
+                    formatted[key] = formData[key];
                     break;
-                case this.FieldTypes.MULTI:
-                    formatted[field.key] = formData[field.key].map(
-                        obj => obj.label
-                    );
+                case this.FieldTypes.ARRAY:
+                    formatted[key] = formData[key].map(obj => obj.label);
             }
         }
 
@@ -199,102 +220,124 @@ class MHForm extends React.Component {
 
     render() {
         const formData = this.state.formData;
-        return (
-            <form onSubmit={this.onSubmit}>
-                {this.state.errorFields.length > 0
-                    ? <AlertContainer>
-                          <Alert message="Missing some required fields!" />
-                      </AlertContainer>
-                    : null}
-                {Object.keys(this.props.schema)
-                    .filter(field => {
-                        return !this.props.hidden[field.key];
-                    })
-                    .map(field => {
-                        var fieldKey = field;
-                        field = this.props.schema[field];
-                        field.key = fieldKey;
-                        switch (field.type) {
-                            case this.FieldTypes.SELECT:
-                                return this.renderLabeledInput(
-                                    field,
-                                    <Select
-                                        name={field.key}
-                                        value={formData[field.key]}
-                                        options={field.select}
-                                        onChange={this.handleSelectChange(
-                                            field.key
-                                        )}
-                                    />
-                                );
-                            case this.FieldTypes.ARRAY:
-                                return this.renderLabeledInput(
-                                    field,
-                                    <Select
-                                        name={field.key}
-                                        value={formData[field.key]}
-                                        options={field.array_select}
-                                        multi={true}
-                                        onChange={this.handleSelectChange(
-                                            field.key
-                                        )}
-                                    />
-                                );
-                            case this.FieldTypes.TEXT:
-                                return this.renderLabeledInput(
-                                    field,
-                                    <Input
-                                        name={field.key}
-                                        type="text"
-                                        placeholder={field.placeholder}
-                                        value={formData[field.key]}
-                                        onChange={this.handleAttributeChange}
-                                    />
-                                );
-                            case this.FieldTypes.NUMBER:
-                                return this.renderLabeledInput(
-                                    field,
-                                    <Input
-                                        name={field.key}
-                                        type="number"
-                                        value={formData[field.key]}
-                                        onChange={this.handleAttributeChange}
-                                    />
-                                );
-                            case this.FieldTypes.DATE:
-                                return this.renderLabeledInput(
-                                    field,
-                                    <Input
-                                        name={field.key}
-                                        type="date"
-                                        placeholder="yyyy-mm-dd"
-                                        value={formData[field.key]}
-                                        onChange={this.handleAttributeChange}
-                                    />
-                                );
-                            case this.FieldTypes.SECTIONHEADER:
-                                return (
-                                    <SectionHeader
-                                        color={this.props.theme.primary}
-                                        key={field.label}
-                                    >
-                                        {field.label}
-                                    </SectionHeader>
-                                );
-                            case this.FieldTypes.SUBMIT:
-                                return (
-                                    <RoundedButton
-                                        type="submit"
-                                        color={this.props.theme.primary}
-                                        key={field.label}
-                                    >
-                                        {field.label}
-                                    </RoundedButton>
-                                );
-                        }
-                    })}
-            </form>
-        );
+        return !this.props.schema
+            ? null
+            : <form onSubmit={this.onSubmit}>
+                  {this.state.errorFields.length > 0
+                      ? <AlertContainer>
+                            <Alert message="Missing some required fields!" />
+                        </AlertContainer>
+                      : null}
+                  {Object.keys(this.props.schema)
+                      .filter(field => {
+                          return !this.props.hidden[field.key];
+                      })
+                      .map(field => {
+                          var fieldKey = field;
+                          field = this.props.schema[field];
+                          field.key = fieldKey;
+                          switch (field.type) {
+                              case this.FieldTypes.SELECT:
+                                  return this.renderLabeledInput(
+                                      field,
+                                      <Select
+                                          name={field.key}
+                                          value={formData[field.key]}
+                                          options={field.select}
+                                          onChange={this.handleSelectChange(
+                                              field.key
+                                          )}
+                                      />
+                                  );
+                              case this.FieldTypes.ARRAY:
+                                  return this.renderLabeledInput(
+                                      field,
+                                      <Select
+                                          name={field.key}
+                                          value={formData[field.key]}
+                                          options={field.array_select}
+                                          multi={true}
+                                          onChange={this.handleSelectChange(
+                                              field.key
+                                          )}
+                                      />
+                                  );
+                              case this.FieldTypes.LINK:
+                              case this.FieldTypes.TEXT:
+                                  return this.renderLabeledInput(
+                                      field,
+                                      <Input
+                                          name={field.key}
+                                          type="text"
+                                          placeholder={field.placeholder}
+                                          value={formData[field.key]}
+                                          onChange={this.handleAttributeChange}
+                                      />
+                                  );
+                              case this.FieldTypes.NUMBER:
+                                  return this.renderLabeledInput(
+                                      field,
+                                      <Input
+                                          name={field.key}
+                                          type="number"
+                                          value={formData[field.key]}
+                                          onChange={this.handleAttributeChange}
+                                      />
+                                  );
+                              case this.FieldTypes.DATE:
+                                  return this.renderLabeledInput(
+                                      field,
+                                      <Input
+                                          name={field.key}
+                                          type="date"
+                                          placeholder="yyyy-mm-dd"
+                                          value={formData[field.key]}
+                                          onChange={this.handleAttributeChange}
+                                      />
+                                  );
+                              case this.FieldTypes.SECTIONHEADER:
+                                  return (
+                                      <SectionHeader
+                                          color={this.props.theme.primary}
+                                          key={field.label}
+                                      >
+                                          {field.label}
+                                      </SectionHeader>
+                                  );
+                              case this.FieldTypes.SUBMIT:
+                                  return (
+                                      <RoundedButton
+                                          type="submit"
+                                          color={this.props.theme.primary}
+                                          key={field.label}
+                                      >
+                                          {field.label}
+                                      </RoundedButton>
+                                  );
+                              case this.FieldTypes.BOOLEAN:
+                                  return this.renderLabeledInput(
+                                      field,
+                                      <Select
+                                          name={field.key}
+                                          value={formData[field.key]}
+                                          options={[
+                                              {
+                                                  value: 'yes',
+                                                  label: 'Yes'
+                                              },
+                                              {
+                                                  value: 'no',
+                                                  label: 'No'
+                                              }
+                                          ]}
+                                          onChange={this.handleSelectChange(
+                                              field.key
+                                          )}
+                                      />
+                                  );
+                          }
+                      })}
+              </form>;
     }
 }
 
@@ -305,11 +348,13 @@ MHForm.defaultProps = {
         LINK: 1,
         DATE: 2,
         SELECT: 3,
-        INTEGER: 4,
+        NUMBER: 4,
         ESSAY: 5,
         BOOLEAN: 6,
         SECTIONHEADER: 7,
-        MULTI: 8
+        BUFFER: 8,
+        ARRAY: 9,
+        SUBMIT: 10
     }
 };
 
