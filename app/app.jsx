@@ -23,7 +23,8 @@ import {
     Confirm,
     Sponsor,
     MentorApply,
-    SpeakerApply
+    SpeakerApply,
+    Sponsor
 } from './pages';
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';

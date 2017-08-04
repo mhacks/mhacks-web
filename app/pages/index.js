@@ -11,6 +11,7 @@ import Confirm from './confirm';
 import Sponsor from './sponsor';
 import MentorApply from './mentor/apply';
 import SpeakerApply from './speaker/apply';
+import Sponsor from './sponsor';
 
 export {
     Navigator,
@@ -25,5 +26,6 @@ export {
     Confirm,
     Sponsor,
     MentorApply,
-    SpeakerApply
+    SpeakerApply,
+    Sponsor
 };

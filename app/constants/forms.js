@@ -104,7 +104,7 @@ export const SponsorPortalFiltersSchema = [
             .concat({
                 value: 'later',
                 label: '2026 or later'
-            })
+            }),
     },
     {
         type: FieldTypes.SELECT,
@@ -134,7 +134,7 @@ export const SponsorPortalFiltersSchema = [
         label: 'Skills',
         key: 'skills',
         options: mapArrayToOptions(Skills)
-    }
+    },
 ];
 
 export const ApplicationReaderFiltersSchema = [

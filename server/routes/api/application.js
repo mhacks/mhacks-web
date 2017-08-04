@@ -106,7 +106,6 @@ router.get('/all', authMiddleware('reader admin', 'api'), function(req, res) {
             })
                 .select('_id full_name email')
                 .then(users => {
-<<<<<<< HEAD
                     Confirmation.find()
                         .select('-_id -__v')
                         .then(confirmations => {
@@ -120,7 +119,6 @@ router.get('/all', authMiddleware('reader admin', 'api'), function(req, res) {
                                     if (!associated_user) {
                                         return application;
                                     }
-
 
                                     const user_doc = {
                                         full_name: associated_user.full_name
