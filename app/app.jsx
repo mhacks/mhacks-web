@@ -20,7 +20,8 @@ import {
     Apply,
     BlackoutPage,
     ReaderPage,
-    Confirm
+    Confirm,
+    Sponsor
 } from './pages';
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';
@@ -128,6 +129,22 @@ class AppProvider extends React.Component {
                                     } = this.getMetadata();
                                     if (isLoggedIn && (isReader || isAdmin)) {
                                         return <ReaderPage />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.SPONSOR}
+                                render={() => {
+                                    const {
+                                        isLoggedIn,
+                                        isSponsor,
+                                        isAdmin
+                                    } = this.getMetadata();
+                                    if (isLoggedIn && (isSponsor || isAdmin)) {
+                                        return <Sponsor />;
                                     }
 
                                     return <Redirect to={routes.LOGIN} />;

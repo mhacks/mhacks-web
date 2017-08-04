@@ -124,22 +124,43 @@ router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
                         .map(application => application.user)
                 }
             })
-                .select('full_name email')
+                .select('_id full_name email')
                 .then(users => {
-                    res.send({
-                        status: true,
-                        applications: applications.map(application => {
-                            const associated_user = users.find(
-                                user => user.email === application.user
-                            );
-                            if (!associated_user) {
-                                return application;
-                            }
-                            return Object.assign({}, application._doc, {
-                                full_name: associated_user.full_name
+                    Confirmation.find()
+                        .select('-_id -__v')
+                        .then(confirmations => {
+                            res.send({
+                                status: true,
+                                applications: applications.map(application => {
+                                    const associated_user = users.find(
+                                        user => user.email === application.user
+                                    );
+
+                                    if (!associated_user) {
+                                        return application;
+                                    }
+
+                                    const associated_confirmation = confirmations.find(confirmation => confirmation.user.equals(associated_user._id));
+
+                                    if (!associated_confirmation) {
+                                        return Object.assign({}, application._doc, {
+                                            full_name: associated_user.full_name,
+                                        });
+                                    }
+
+                                    return Object.assign({}, application._doc, {
+                                        full_name: associated_user.full_name,
+                                    }, Object.assign({}, associated_confirmation._doc, { user: undefined }));
+                                })
                             });
                         })
-                    });
+                        .catch(err => {
+                            console.error(err);
+                            res.status(500).send({
+                                status: false,
+                                message: Responses.UNKNOWN_ERROR
+                            });
+                        });
                 })
                 .catch(err => {
                     console.error(err);

@@ -8,6 +8,7 @@ export default {
     PROFILE: '/profile',
     LIVE: '/live',
     READER: '/reader',
+    SPONSOR: '/sponsor',
     CONFIRM: '/confirm',
     ADMIN_PORTAL: '/portal/admin',
     READER_PORTAL: '/portal/reader',
