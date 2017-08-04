@@ -6,9 +6,7 @@ import ReactTable from 'react-table';
 import { MHForm, PageContainer } from '../../components';
 import { ReaderThunks } from '../../actions';
 import Fuse from 'fuse.js';
-import {
-    SponsorPortalFiltersSchema
-} from '../../constants/forms';
+import { SponsorPortalFiltersSchema } from '../../constants/forms';
 
 const HeaderSection = styled.div`
     display: flex;
@@ -275,7 +273,12 @@ class ReaderPage extends React.Component {
                         const data = row.original;
                         return (
                             <SubsectionContainer>
-                                <p>Skills: {data.skills ? data.skills.join(', ') : 'undefined as user has not confirmed attendance yet.'}</p>
+                                <p>
+                                    Skills:{' '}
+                                    {data.skills
+                                        ? data.skills.join(', ')
+                                        : 'undefined as user has not confirmed attendance yet.'}
+                                </p>
                             </SubsectionContainer>
                         );
                     }}

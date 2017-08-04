@@ -140,17 +140,36 @@ router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
                                         return application;
                                     }
 
-                                    const associated_confirmation = confirmations.find(confirmation => confirmation.user.equals(associated_user._id));
+                                    const associated_confirmation = confirmations.find(
+                                        confirmation =>
+                                            confirmation.user.equals(
+                                                associated_user._id
+                                            )
+                                    );
 
                                     if (!associated_confirmation) {
-                                        return Object.assign({}, application._doc, {
-                                            full_name: associated_user.full_name,
-                                        });
+                                        return Object.assign(
+                                            {},
+                                            application._doc,
+                                            {
+                                                full_name:
+                                                    associated_user.full_name
+                                            }
+                                        );
                                     }
 
-                                    return Object.assign({}, application._doc, {
-                                        full_name: associated_user.full_name,
-                                    }, Object.assign({}, associated_confirmation._doc, { user: undefined }));
+                                    return Object.assign(
+                                        {},
+                                        application._doc,
+                                        {
+                                            full_name: associated_user.full_name
+                                        },
+                                        Object.assign(
+                                            {},
+                                            associated_confirmation._doc,
+                                            { user: undefined }
+                                        )
+                                    );
                                 })
                             });
                         })
