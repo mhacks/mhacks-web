@@ -76,10 +76,11 @@ class Confirm extends React.Component {
     }
 
     render() {
-        if (!this.state.userState ||
+        if (
+            !this.state.userState ||
             !this.state.userState.data ||
             (!this.state.userState.data.form &&
-            !this.state.userState.data.confirmation)
+                !this.state.userState.data.confirmation)
         ) {
             return null;
         }
