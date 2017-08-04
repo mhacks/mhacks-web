@@ -362,90 +362,95 @@ class ReaderPage extends React.Component {
     }
 
     render() {
-        return this.props.readerState.data.form &&
-            Object.values(this.props.readerState.data.form).length > 1
-            ? <PageContainer ref="pagecontainer">
-                  <HeaderSection>
-                      <MHForm
-                          schema={
-                              this.props.readerState.data.form.reader_filter
-                          }
-                          FieldTypes={this.props.readerState.data.FieldTypes}
-                          theme={this.props.theme}
-                          onChange={formState => {
-                              this.setState({
-                                  filterData: formState
-                              });
-                          }}
-                      />
-                      <MHForm
-                          schema={
-                              this.props.readerState.data.form.reader_schema
-                          }
-                          FieldTypes={this.props.readerState.data.FieldTypes}
-                          theme={this.props.theme}
-                          onSubmit={this.onSubmit}
-                      />
-                  </HeaderSection>
-                  <UtilityContainer>
-                      <UtilityButton
-                          color={this.props.theme.primary}
-                          onClick={this.selectAll}
-                      >
-                          Select All
-                      </UtilityButton>
-                      <UtilityButton
-                          color={this.props.theme.primary}
-                          onClick={this.deselectAll}
-                      >
-                          Deselect All ({this.state.selected.length})
-                      </UtilityButton>
-                      <UtilityButton
-                          color={this.props.theme.primary}
-                          onClick={this.generateCSV}
-                      >
-                          CSV
-                      </UtilityButton>
-                  </UtilityContainer>
-                  <ReactTable
-                      data={this.filterApplications(
-                          this.props.readerState.data.applications
-                      )}
-                      columns={this.generateColumns(this.state.selected)}
-                      SubComponent={row => {
-                          const data = row.original;
-                          return (
-                              <SubsectionContainer>
-                                  <div>
-                                      <h4>Why MHacks?</h4>
-                                      <p>{data.why_mhacks}</p>
-                                      <h4>Favorite Memory?</h4>
-                                      <p>{data.favorite_memory}</p>
-                                      <h4>Anything Else?</h4>
-                                      <p>{data.anything_else}</p>
-                                      <h4>Departing From</h4>
-                                      <p>{data.departing_from}</p>
-                                      <h4>Needs Reimbursement</h4>
-                                      <p>
-                                          {data.needs_reimbursement
-                                              ? 'true'
-                                              : 'false'}
-                                      </p>
-                                      <h4>Requested Reimbursement</h4>
-                                      <p>{data.requested_reimbursement}</p>
-                                      <h4>race</h4>
-                                      <p>{data.race}</p>
-                                      <h4>sex</h4>
-                                      <p>{data.sex}</p>
-                                      <h4>tshirt</h4>
-                                      <p>{data.tshirt}</p>
-                                  </div>
-                              </SubsectionContainer>
-                          );
-                      }}
-                  />
-              </PageContainer>
-            : null;
+        if (
+            !this.props.readerState.data.form &&
+            !(
+                this.props.readerState.data.form &&
+                !(Object.values(this.props.readerState.data.form).length > 1)
+            )
+        ) {
+            return null;
+        }
+
+        return (
+            <PageContainer ref="pagecontainer">
+                <HeaderSection>
+                    <MHForm
+                        schema={this.props.readerState.data.form.reader_filter}
+                        FieldTypes={this.props.readerState.data.FieldTypes}
+                        theme={this.props.theme}
+                        onChange={formState => {
+                            this.setState({
+                                filterData: formState
+                            });
+                        }}
+                    />
+                    <MHForm
+                        schema={this.props.readerState.data.form.reader_schema}
+                        FieldTypes={this.props.readerState.data.FieldTypes}
+                        theme={this.props.theme}
+                        onSubmit={this.onSubmit}
+                    />
+                </HeaderSection>
+                <UtilityContainer>
+                    <UtilityButton
+                        color={this.props.theme.primary}
+                        onClick={this.selectAll}
+                    >
+                        Select All
+                    </UtilityButton>
+                    <UtilityButton
+                        color={this.props.theme.primary}
+                        onClick={this.deselectAll}
+                    >
+                        Deselect All ({this.state.selected.length})
+                    </UtilityButton>
+                    <UtilityButton
+                        color={this.props.theme.primary}
+                        onClick={this.generateCSV}
+                    >
+                        CSV
+                    </UtilityButton>
+                </UtilityContainer>
+                <ReactTable
+                    data={this.filterApplications(
+                        this.props.readerState.data.applications
+                    )}
+                    columns={this.generateColumns(this.state.selected)}
+                    SubComponent={row => {
+                        const data = row.original;
+                        return (
+                            <SubsectionContainer>
+                                <div>
+                                    <h4>Why MHacks?</h4>
+                                    <p>{data.why_mhacks}</p>
+                                    <h4>Favorite Memory?</h4>
+                                    <p>{data.favorite_memory}</p>
+                                    <h4>Anything Else?</h4>
+                                    <p>{data.anything_else}</p>
+                                    <h4>Departing From</h4>
+                                    <p>{data.departing_from}</p>
+                                    <h4>Needs Reimbursement</h4>
+                                    <p>
+                                        {data.needs_reimbursement
+                                            ? 'true'
+                                            : 'false'}
+                                    </p>
+                                    <h4>Requested Reimbursement</h4>
+                                    <p>{data.requested_reimbursement}</p>
+                                    <h4>race</h4>
+                                    <p>{data.race}</p>
+                                    <h4>sex</h4>
+                                    <p>{data.sex}</p>
+                                    <h4>tshirt</h4>
+                                    <p>{data.tshirt}</p>
+                                </div>
+                            </SubsectionContainer>
+                        );
+                    }}
+                />
+            </PageContainer>
+        );
     }
 }
 

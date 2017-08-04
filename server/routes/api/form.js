@@ -4,7 +4,9 @@ var router = require('express').Router(),
     config = require('../../../config/default.js'),
     authMiddleware = require('../../middleware/auth.js');
 
+// Handles both routes
 function handler(req, res) {
+    // Check if the requested model exists
     var modelName = req.params.model;
     if (
         modelName &&
@@ -24,13 +26,16 @@ function handler(req, res) {
             '.js');
         var form = {};
 
+        // Check if there is a submodel for this form
         if (req.params.submodel) {
             if (req.params.submodel in model.schema.obj) {
                 var submodel = model.schema.obj[req.params.submodel];
 
+                // Go through each submodel form property
                 submodel.form.forEach(function(prop) {
                     var org_prop = prop;
 
+                    // Check if the key exists in the parent model, if it does, use the parent models form value
                     if (prop.key in model.schema.obj) {
                         prop = model.schema.obj[prop.key];
                     } else {
@@ -83,6 +88,7 @@ function handler(req, res) {
     }
 }
 
+// Routes use the authMiddleware to initialize request tokens/groups without stopping logged out users
 router.get(
     '/:model',
     authMiddleware('any', 'api', false, undefined, false),
@@ -94,11 +100,14 @@ router.get(
     handler
 );
 
+// Check the type on the schema value for a form
 function check_types(prop_val, groups) {
+    // Don't include if it's an array or doesn't contain the form object
     if (Array.isArray(prop_val) || !prop_val.form) {
         return undefined;
     }
 
+    // Check if the user is in the auth_groups for the schema value
     var inGroup = false;
     if (groups) {
         groups.forEach(function(group) {
@@ -111,6 +120,7 @@ function check_types(prop_val, groups) {
         });
     }
 
+    // Check if anything is satisfied
     if (
         !inGroup &&
         !prop_val.form.user_editable &&
@@ -123,6 +133,7 @@ function check_types(prop_val, groups) {
     var type = prop_val;
     var val_types = {};
 
+    // Set the type or override it by a form understandable one
     if ('type' in prop_val) {
         type = prop_val.type;
 
@@ -161,6 +172,7 @@ function check_types(prop_val, groups) {
             break;
     }
 
+    // If there's an enum, it's a select group
     if ('enum' in prop_val) {
         var select = [];
         prop_val.enum.forEach(function(data, elem) {
@@ -171,6 +183,7 @@ function check_types(prop_val, groups) {
         val_types.select = select;
     }
 
+    // Set form attributes
     if (prop_val.form.label) {
         val_types.label = prop_val.form.label;
     }

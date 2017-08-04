@@ -61,12 +61,13 @@ var schema = new mongoose.Schema({
     },
     travel: {
         type: String,
-        enum: ['bus', 'driving', 'fly', 'other'],
+        enum: ['bus', 'driving', 'fly', 'walking', 'other'],
         form: {
             user_editable: true,
             label: 'Travel',
-            select: ['MHacks Bus', 'Driving', 'Flying', 'Other']
-        }
+            select: ['MHacks Bus', 'Driving', 'Flying', 'Walking', 'Other']
+        },
+        required: true
     },
     skills: {
         type: [String],
