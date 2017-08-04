@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ConfirmationThunks } from '../actions';
 import { PageContainer, MHForm, Alert } from '../components';
-import { ConfirmAttendanceSchema } from '../constants/forms';
 import { getUserMetadata } from '../util/user.js';
+import { NotificationStack } from 'react-notification';
+import { OrderedSet } from 'immutable';
 
 const FormContainer = styled.div`
     maxWidth: 500px;
@@ -17,24 +18,74 @@ class Confirm extends React.Component {
     constructor() {
         super();
 
+        this.state = {
+            notifications: OrderedSet()
+        };
+
         this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    addNotification(message, key, action) {
+        return this.setState({
+            notifications: this.state.notifications.add({
+                message,
+                key,
+                action: action || 'Dismiss',
+                onClick: (notification, deactivate) => {
+                    deactivate();
+                    this.removeNotification(key);
+                },
+                dismissAfter: 5000
+            })
+        });
+    }
+
+    removeNotification(key) {
+        this.setState({
+            notifications: this.state.notifications.filter(n => n.key !== key)
+        });
     }
 
     componentDidMount() {
         this.props.dispatch(ConfirmationThunks.loadConfirmation());
+        this.props.dispatch(ConfirmationThunks.loadForm());
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (
+            nextProps.userState.data.form &&
+            nextProps.userState.data.confirmation
+        ) {
+            for (var i in nextProps.userState.data.confirmation) {
+                if (i in nextProps.userState.data.form) {
+                    nextProps.userState.data.form[i].default =
+                        nextProps.userState.data.confirmation[i];
+                }
+            }
+        }
+
+        this.setState({
+            userState: nextProps.userState
+        });
     }
 
     onSubmit(formData) {
         this.props.dispatch(ConfirmationThunks.uploadConfirmation(formData));
+
+        this.addNotification('Confirmation Saved!', 'save');
     }
 
     render() {
-        const { isConfirmed, needsReimbursement } = getUserMetadata(
-            this.props.userState.data
-        );
-        const hiddenFields = {
-            travel: !needsReimbursement
-        };
+        if (
+            !this.state.userState ||
+            !this.state.userState.data ||
+            (!this.state.userState.data.form &&
+                !this.state.userState.data.confirmation)
+        ) {
+            return null;
+        }
+
+        const { isConfirmed } = getUserMetadata(this.state.userState.data);
 
         return (
             <PageContainer>
@@ -44,13 +95,14 @@ class Confirm extends React.Component {
                         : null}
                     <h2>Confirm Attendance at MHacks X!</h2>
                     <MHForm
-                        schema={ConfirmAttendanceSchema}
-                        hidden={hiddenFields}
+                        schema={this.state.userState.data.form}
+                        FieldTypes={this.state.userState.data.FieldTypes}
                         theme={this.props.theme}
                         onSubmit={this.onSubmit}
                     />
                     <p>
-                        By confirming attendance, you also confirm you have read
+                        By confirming attendance, you also confirm you have
+                        read
                         and agree to the{' '}
                         <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
                             MLH Code of Conduct
@@ -66,6 +118,15 @@ class Confirm extends React.Component {
                         </a>.
                     </p>
                 </FormContainer>
+                <NotificationStack
+                    notifications={this.state.notifications.toArray()}
+                    onDismiss={notification =>
+                        this.setState({
+                            notifications: this.state.notifications.delete(
+                                notification
+                            )
+                        })}
+                />
             </PageContainer>
         );
     }

@@ -11,5 +11,6 @@ export default {
     ALL_APPLICATIONS: '/v1/application/all',
     READER: '/v1/reader',
     ANNOUNCEMENTS: '/v1/announcements',
-    CONFIGURATION: '/v1/configuration'
+    CONFIGURATION: '/v1/configuration',
+    FORM: '/v1/form/'
 };
