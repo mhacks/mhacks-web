@@ -75,7 +75,8 @@ var schema = new mongoose.Schema({
         form: {
             user_editable: true,
             label: 'Skills',
-            array_select: skills
+            array_select: skills,
+            type_override: 'array'
         }
     },
     confirm_button: {

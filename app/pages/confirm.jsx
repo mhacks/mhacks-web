@@ -64,7 +64,10 @@ class Confirm extends React.Component {
             }
         }
 
-        this.setState(nextProps);
+        this.setState({
+            ...this.state,
+            userState: nextProps.userState
+        });
     }
 
     onSubmit(formData) {

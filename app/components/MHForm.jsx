@@ -121,7 +121,7 @@ class MHForm extends React.Component {
                     formData: {
                         ...this.state.formData,
                         [name]: selection
-                            ? field.type === this.FieldTypes.MULTI
+                            ? field.type === this.FieldTypes.ARRAY
                               ? selection
                               : selection.value
                             : this.getFieldDefault(field)

@@ -170,6 +170,9 @@ function check_types(prop_val, groups) {
         case 'submit':
             val_types.type = config.form_types.SUBMIT;
             break;
+        case 'array':
+            val_types.type = config.form_types.ARRAY;
+            break;
     }
 
     // If there's an enum, it's a select group
