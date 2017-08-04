@@ -33,4 +33,14 @@ export default class ApplicationRequests {
             })
         });
     }
+
+    static loadForm(token) {
+        return fetch(endpoints.FORM + 'application', {
+            method: 'get',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token
+            })
+        });
+    }
 }

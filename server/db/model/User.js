@@ -10,16 +10,40 @@ var bcrypt = require('bcrypt'),
 
 // Define the document Schema
 var schema = new mongoose.Schema({
-    full_name: String,
+    full_name: {
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'Full Name',
+            placeholder: 'Hacker McHackface'
+        }
+    },
     email: {
         type: String,
         required: true,
         index: {
             unique: true
+        },
+        form: {
+            user_editable: true,
+            label: 'Email',
+            placeholder: 'hackathon@umich.edu'
         }
     },
-    email_verified: Boolean,
-    application_submitted: Boolean,
+    email_verified: {
+        type: Boolean,
+        form: {
+            user_editable: false,
+            label: 'Email Verified'
+        }
+    },
+    application_submitted: {
+        type: Boolean,
+        form: {
+            user_editable: false,
+            label: 'Application Submitted'
+        }
+    },
     verification_tokens: [
         {
             created_at: {
@@ -32,7 +56,12 @@ var schema = new mongoose.Schema({
     ],
     password: {
         type: String,
-        required: true
+        required: true,
+        form: {
+            user_editable: true,
+            label: 'Password',
+            placeholder: 'hunter2'
+        }
     },
     tokens: [
         {
@@ -56,9 +85,30 @@ var schema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    birthday: Date,
-    major: String,
-    university: String,
+    birthday: {
+        type: Date,
+        form: {
+            user_editable: true,
+            label: 'Date of Birth',
+            placeholder: 'mm/dd/yyyy'
+        }
+    },
+    major: {
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'Major',
+            placeholder: 'e.g. Computer Science'
+        }
+    },
+    university: {
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'University',
+            placeholder: 'e.g. University of Michigan'
+        }
+    },
     groups: [
         {
             name: String
@@ -67,15 +117,60 @@ var schema = new mongoose.Schema({
     meta: {
         ip: String
     },
-    avatar: String,
-    resume: String,
-    github: String,
-    linkedin: String,
-    devpost: String,
-    portfolio: String,
+    avatar: {
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'Avatar'
+        }
+    },
+    resume: {
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'Resume'
+        }
+    },
+    github: {
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'GitHub',
+            placeholder: 'https://github.com/'
+        }
+    },
+    linkedin: {
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'LinkedIn',
+            placeholder: 'https://linkedin.com/in/'
+        }
+    },
+    devpost: {
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'DevPost',
+            placeholder: 'https://devpost.com/'
+        }
+    },
+    portfolio: {
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'Portfolio',
+            placeholder: 'https://'
+        }
+    },
     tshirt: {
         type: String,
-        enum: ['unselected', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl']
+        enum: ['xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
+        form: {
+            user_editable: true,
+            select: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
+            label: 'T-Shirt'
+        }
     },
     race: {
         type: String,
@@ -88,11 +183,36 @@ var schema = new mongoose.Schema({
             'hispanic',
             'other',
             'prefer-not'
-        ]
+        ],
+        form: {
+            user_editable: true,
+            select: [
+                '',
+                'White',
+                'Black',
+                'American Indian/Alaskan',
+                'Asian',
+                'Hispanic',
+                'Other',
+                'Prefer not to answer'
+            ],
+            label: 'Race'
+        }
     },
     sex: {
         type: String,
-        enum: ['unselected', 'male', 'female', 'non-binary', 'prefer-not']
+        enum: ['unselected', 'male', 'female', 'non-binary', 'prefer-not'],
+        form: {
+            user_editable: true,
+            select: [
+                '',
+                'Male',
+                'Female',
+                'Non Binary',
+                'Prefer not to answer'
+            ],
+            label: 'Sex'
+        }
     }
 });
 
@@ -416,7 +536,9 @@ schema.methods.getGroupsList = function() {
 
 schema.methods.updateFields = function(fields) {
     for (var param in fields) {
-        this[param] = fields[param];
+        if (schema.obj[param].user_editable) {
+            this[param] = fields[param];
+        }
     }
     this.save();
 };
@@ -502,6 +624,31 @@ schema.methods.getProfile = function() {
                 resolve(profile);
             });
     });
+};
+
+schema.statics.getUpdateableFields = function(groups) {
+    var updateables = [];
+
+    for (var key in schema.obj) {
+        var field = schema.obj[key];
+
+        if (field.form) {
+            if (field.form.user_editable) {
+                updateables.push(key);
+            } else if (groups) {
+                groups.forEach(function(group) {
+                    if (
+                        field.form.auth_groups &&
+                        field.form.auth_groups.indexOf(group) !== -1
+                    ) {
+                        updateables.push(key);
+                    }
+                });
+            }
+        }
+    }
+
+    return updateables;
 };
 
 // Password middleware to update passwords with bcrypt when needed

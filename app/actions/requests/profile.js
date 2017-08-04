@@ -44,4 +44,14 @@ export default class ProfileRequests {
             body: JSON.stringify({ email })
         });
     }
+
+    static loadForm(token) {
+        return fetch(endpoints.FORM + 'user', {
+            method: 'get',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token
+            })
+        });
+    }
 }

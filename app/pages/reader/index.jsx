@@ -7,10 +7,7 @@ import { MHForm, PageContainer } from '../../components';
 import { ReaderThunks } from '../../actions';
 import { FormattedRelative } from 'react-intl';
 import Fuse from 'fuse.js';
-import {
-    ApplicationReaderFiltersSchema,
-    ApplicationReaderSchema
-} from '../../constants/forms';
+import FontAwesome from 'react-fontawesome';
 
 const HeaderSection = styled.div`
     display: flex;
@@ -67,6 +64,9 @@ const UtilityButton = styled.button`
     }
 `;
 
+const BadMark = <FontAwesome name="times" style={{ color: '#FF4136' }} />;
+const GoodMark = <FontAwesome name="check" style={{ color: '#2ECC40' }} />;
+
 function isMinor(birthdate) {
     const now = new Date();
     const birth = new Date(birthdate);
@@ -101,6 +101,8 @@ class ReaderPage extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(ReaderThunks.loadApplications());
+        this.props.dispatch(ReaderThunks.loadForm('reader_filter'));
+        this.props.dispatch(ReaderThunks.loadForm('reader_schema'));
     }
 
     didSelect(user) {
@@ -192,11 +194,11 @@ class ReaderPage extends React.Component {
                         accessor: 'experience'
                     },
                     {
-                        Header: 'Minor',
+                        Header: 'Adult',
                         accessor: 'birthday',
                         width: 60,
                         Cell: row => {
-                            return isMinor(row.value) ? 'Yes' : 'No';
+                            return isMinor(row.value) ? BadMark : GoodMark;
                         }
                     }
                 ]
@@ -205,49 +207,64 @@ class ReaderPage extends React.Component {
                 Header: 'Links',
                 columns: [
                     {
-                        Header: 'R',
+                        Header: <FontAwesome name="paperclip" />,
                         accessor: 'resume',
                         width: 30,
-                        Cell: row => <A target="_blank" href={row.value}>R</A>
+                        Cell: row =>
+                            <A target="_blank" href={row.value}>{GoodMark}</A>
                     },
                     {
-                        Header: 'G',
+                        Header: <FontAwesome name="github" />,
                         accessor: 'github',
                         width: 30,
                         Cell: row => {
-                            return row.value && row.value.length > 0
-                                ? <A target="_blank" href={row.value}>G</A>
-                                : null;
+                            return row.value.length > 0
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
+                                : BadMark;
                         }
                     },
                     {
-                        Header: 'L',
+                        Header: <FontAwesome name="linkedin-square" />,
                         accessor: 'linkedin',
                         width: 30,
                         Cell: row => {
-                            return row.value && row.value.length > 0
-                                ? <A target="_blank" href={row.value}>L</A>
-                                : null;
+                            return row.value.length > 0
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
+                                : BadMark;
                         }
                     },
                     {
-                        Header: 'D',
+                        Header: (
+                            <img
+                                src="https://cdn.rawgit.com/nealrs/868af1e0ff6d60b7d638/raw/9500aac7536bd3a4652e63617aaf418d8cfa0a08/devpost-icon-black.svg"
+                                height="14px"
+                                width="14px"
+                            />
+                        ),
                         accessor: 'devpost',
                         width: 30,
                         Cell: row => {
-                            return row.value && row.value.length > 0
-                                ? <A target="_blank" href={row.value}>D</A>
-                                : null;
+                            return row.value.length > 0
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
+                                : BadMark;
                         }
                     },
                     {
-                        Header: 'P',
+                        Header: <FontAwesome name="user" />,
                         accessor: 'portfolio',
                         width: 30,
                         Cell: row => {
-                            return row.value && row.value.length > 0
-                                ? <A target="_blank" href={row.value}>P</A>
-                                : null;
+                            return row.value.length > 0
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
+                                : BadMark;
                         }
                     }
                 ]
@@ -345,11 +362,22 @@ class ReaderPage extends React.Component {
     }
 
     render() {
+        if (
+            !this.props.readerState.data.form &&
+            !(
+                this.props.readerState.data.form &&
+                !(Object.values(this.props.readerState.data.form).length > 1)
+            )
+        ) {
+            return null;
+        }
+
         return (
             <PageContainer ref="pagecontainer">
                 <HeaderSection>
                     <MHForm
-                        schema={ApplicationReaderFiltersSchema}
+                        schema={this.props.readerState.data.form.reader_filter}
+                        FieldTypes={this.props.readerState.data.FieldTypes}
                         theme={this.props.theme}
                         onChange={formState => {
                             this.setState({
@@ -358,7 +386,8 @@ class ReaderPage extends React.Component {
                         }}
                     />
                     <MHForm
-                        schema={ApplicationReaderSchema}
+                        schema={this.props.readerState.data.form.reader_schema}
+                        FieldTypes={this.props.readerState.data.FieldTypes}
                         theme={this.props.theme}
                         onSubmit={this.onSubmit}
                     />

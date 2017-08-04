@@ -17,23 +17,7 @@ router.post(
             .byToken(req.authToken)
             .exec()
             .then(user => {
-                var updateable_fields = [
-                    'full_name',
-                    'email',
-                    'password',
-                    'avatar',
-                    'birthday',
-                    'university',
-                    'major',
-                    'resume',
-                    'github',
-                    'linkedin',
-                    'devpost',
-                    'portfolio',
-                    'tshirt',
-                    'race',
-                    'sex'
-                ];
+                var updateable_fields = User.getUpdateableFields(req.groups);
                 var fields = {};
                 var sendVerificationEmail = false;
                 var sendPasswordChangedEmail = false;
