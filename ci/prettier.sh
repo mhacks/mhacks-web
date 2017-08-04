@@ -1,7 +1,7 @@
 #!/bin/bash
 
 while true; do
-    output=$(prettier --single-quote --trailing-comma none --tab-width 4 "{app,config,server}/**/*.js*" -l)
+    output=$(prettier --single-quote --trailing-comma none --tab-width 4 "{app,config,server}/**/*.js*" "app.js"  -l)
     echo "$output"
 
     if [ -n "$output" ]

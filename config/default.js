@@ -74,5 +74,7 @@ module.exports = {
         BUFFER: 8,
         ARRAY: 9,
         SUBMIT: 10
-    }
+    },
+    color_dark: process.env.COLOR_DARK || '#5d3e6e',
+    color_light: process.env.COLOR_LIGHT || ''
 };

@@ -1,7 +1,4 @@
-/* eslint-disable */
-var mongoose = require('../index.js'),
-    config = require('../../../config/default.js'),
-    Schema = mongoose.Schema;
+var mongoose = require('../index.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema({

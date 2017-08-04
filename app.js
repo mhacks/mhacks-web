@@ -6,7 +6,7 @@ if (config.newrelic_enabled) {
 }
 
 var http = require('http'),
-    mongoose = require('./server/db/index.js'),
+    mongoose = require('./server/db/index.js'), // eslint-disable-line
     morgan = require('morgan'),
     express = require('express'),
     app = express(),
@@ -16,7 +16,7 @@ var http = require('http'),
     bodyParser = require('body-parser'),
     MongoStore = require('connect-mongo')(session),
     csrf = require('csurf'),
-    csrfProtection = csrf(),
+    csrfProtection = csrf(), // eslint-disable-line
     apiRouter = require('./server/routes/api.js'),
     indexRouter = require('./server/routes/index.js'),
     shortenerRouter = require('./server/routes/shortener.js'),
@@ -35,7 +35,7 @@ app.use(function(req, res, next) {
 });
 
 // Logging
-morgan.token('remote-addr', function(req, res) {
+morgan.token('remote-addr', function(req) {
     return req.headers['x-forwarded-for'] || req.ip;
 });
 app.use(morgan('combined'));
@@ -117,13 +117,13 @@ if (config.service === 'shortener') {
         // Static files middleware
         app.use(express.static('build'));
 
-        app.use(function(req, res, next) {
+        app.use(function(req, res) {
             res.sendFile(__dirname + '/build/index.html');
         });
     }
 }
 
-var ioHandler = require('./server/socketio/index.js')(io);
+var ioHandler = require('./server/socketio/index.js')(io); // eslint-disable-line
 
 // Now we start the server
 server.listen(config.server_port);

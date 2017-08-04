@@ -65,11 +65,7 @@ module.exports = function(
                         callNext(
                             req,
                             {
-                                name: '',
-                                email: '',
-                                getGroupsList: function() {
-                                    return [];
-                                }
+                                fakeUser: true
                             },
                             '',
                             next
@@ -146,11 +142,7 @@ module.exports = function(
             callNext(
                 req,
                 {
-                    name: '',
-                    email: '',
-                    getGroupsList: function() {
-                        return [];
-                    }
+                    fakeUser: true
                 },
                 '',
                 next
@@ -186,10 +178,18 @@ function groupCheck(groupName, user) {
 }
 
 function callNext(req, user, token, next) {
-    req.name = user.name;
-    req.email = user.email;
-    req.groups = user.getGroupsList();
     req.authToken = token;
+    if (user.fakeUser) {
+        req.name = '';
+        req.email = '';
+        req.groups = [];
+    } else {
+        req.name = user.name;
+        req.email = user.email;
+        req.groups = user.getGroupsList();
+        req.user = user;
+    }
+
     next();
 }
 
