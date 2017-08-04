@@ -76,14 +76,15 @@ class Confirm extends React.Component {
     }
 
     render() {
-        const { isConfirmed } = getUserMetadata(this.state.userState.data);
-
-        if (
-            !this.state.userState.data.form &&
-            !this.state.userState.data.confirmation
+        if (!this.state.userState ||
+            !this.state.userState.data ||
+            (!this.state.userState.data.form &&
+            !this.state.userState.data.confirmation)
         ) {
             return null;
         }
+
+        const { isConfirmed } = getUserMetadata(this.state.userState.data);
 
         return (
             <PageContainer>
