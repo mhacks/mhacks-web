@@ -3,7 +3,7 @@ import BlackoutPage from './blackout';
 import HomePage from './home';
 import Login from './login.jsx';
 import Logout from './logout.jsx';
-import Profile from './profile.jsx';
+import Profile from './profile';
 import Apply from './apply.jsx';
 import LivePage from './live';
 import ReaderPage from './reader';

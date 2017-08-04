@@ -2,13 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ProfileThunks } from '../actions';
-import { FieldTypes, ProfileFields } from '../constants/forms';
-import { routes } from '../constants';
+import { ProfileThunks } from '../../actions';
+import { FieldTypes, ProfileFields } from '../../constants/forms';
+import { routes } from '../../constants';
 import Autocomplete from 'react-autocomplete';
-import { getUserMetadata } from '../util/user.js';
-const Majors = require('../../static/misc/majors.json');
-const Universities = require('../../static/misc/universities.json');
+import { getUserMetadata } from '../../util/user.js';
+import ProfilePreview from './profile_preview.jsx';
+const Majors = require('../../../static/misc/majors.json');
+const Universities = require('../../../static/misc/universities.json');
 
 import {
     PageContainer,
@@ -17,7 +18,7 @@ import {
     Input,
     LabeledInput,
     RoundedButton
-} from '../components';
+} from '../../components';
 
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
@@ -71,11 +72,10 @@ const ButtonGroup = styled.div`
 `;
 
 const SectionHeader = styled.h2`
-    fontSize: 40px;
+    textTransform: uppercase;
+    fontSize: 24px;
     color: ${props => props.color};
-    fontWeight: 500;
     margin: 0;
-    padding: 20px 0;
 `;
 
 const SubsectionHeader = styled.h3`
@@ -480,10 +480,15 @@ class Profile extends React.Component {
         return (
             <PageContainer>
                 <FullscreenColumnContainer>
+                    <SectionHeader color={this.props.theme.primary}>
+                        Profile
+                    </SectionHeader>
+                    <ProfilePreview user={this.props.userState.data.user} />
+
                     {this.renderApplicationReviewSection()}
 
                     <SectionHeader color={this.props.theme.primary}>
-                        Profile
+                        Edit Profile
                     </SectionHeader>
                     <form onSubmit={this.onSubmit}>
                         {this.props.userState.error
