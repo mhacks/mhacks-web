@@ -66,4 +66,34 @@ export default class ConfirmationThunks {
             });
         };
     }
+
+    static loadForm() {
+        return dispatch => {
+            dispatch({
+                type: actions.LOAD_CONFIRMATION_FORM_REQUEST
+            });
+
+            const token = localStorage.getItem('jwt');
+
+            return ConfirmationRequests.loadForm(token).then(response => {
+                if (response.status == 200) {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.LOAD_CONFIRMATION_FORM_SUCCESS,
+                            data: { form: json.form, FieldTypes: json.types },
+                            message: json.message
+                        });
+                    });
+                } else {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.LOAD_CONFIRMATION_FORM_ERROR,
+                            error: json.status,
+                            message: json.message
+                        });
+                    });
+                }
+            });
+        };
+    }
 }

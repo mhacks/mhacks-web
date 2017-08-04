@@ -1,5 +1,17 @@
 /* eslint-disable */
-var mongoose = require('../index.js');
+var mongoose = require('../index.js'),
+    end = 2026,
+    start = 2017,
+    years = new Array(end - start)
+        .fill()
+        .map((_, idx) => (start + idx).toString())
+        .concat(['later']),
+    skills = require('../../../static/misc/skills.json').map((str, _) => {
+        return {
+            value: str,
+            label: str
+        };
+    });
 
 // Define the document Schema
 var schema = new mongoose.Schema({
@@ -10,24 +22,69 @@ var schema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true
+        required: true,
+        form: {
+            user_editable: true,
+            label: 'Phone Number',
+            placeholder: '(313) 867-5509'
+        }
     },
     graduation: {
         type: String,
-        required: true
+        enum: years,
+        required: true,
+        form: {
+            user_editable: true,
+            label: 'Graduation Year',
+            select: years.slice(0, -1).concat([end + ' or later'])
+        }
     },
     degree: {
         type: String,
-        required: true
+        enum: ['highschool', 'bachelor', 'master', 'doctorate'],
+        required: true,
+        form: {
+            user_editable: true,
+            label: 'Degree Type',
+            select: ['High School', 'Bachelors', 'Masters', 'Doctorate']
+        }
     },
     employment: {
         type: String,
+        enum: ['internship', 'fulltime', 'coop', 'none'],
+        required: true,
+        form: {
+            user_editable: true,
+            label: 'Job Interest',
+            select: ['Internship', 'Full Time', 'Co-op', 'None']
+        }
+    },
+    travel: {
+        type: String,
+        enum: ['bus', 'driving', 'fly', 'walking', 'other'],
+        form: {
+            user_editable: true,
+            label: 'Travel',
+            select: ['MHacks Bus', 'Driving', 'Flying', 'Walking', 'Other']
+        },
         required: true
     },
-    travel: String,
     skills: {
         type: [String],
-        default: []
+        default: [],
+        form: {
+            user_editable: true,
+            label: 'Skills',
+            array_select: skills,
+            type_override: 'array'
+        }
+    },
+    confirm_button: {
+        type: String,
+        form: {
+            label: 'Confirm',
+            type_override: 'submit'
+        }
     }
 });
 
@@ -49,6 +106,31 @@ schema.methods.updateFields = function(fields) {
         this[param] = fields[param];
     }
     this.save();
+};
+
+schema.statics.getUpdateableFields = function(groups) {
+    var updateables = [];
+
+    for (var key in schema.obj) {
+        var field = schema.obj[key];
+
+        if (field.form) {
+            if (field.form.user_editable) {
+                updateables.push(key);
+            } else if (groups) {
+                groups.forEach(function(group) {
+                    if (
+                        field.form.auth_groups &&
+                        field.form.auth_groups.indexOf(group) !== -1
+                    ) {
+                        updateables.push(key);
+                    }
+                });
+            }
+        }
+    }
+
+    return updateables;
 };
 
 // Initialize the model with the schema, and export it

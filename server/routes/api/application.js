@@ -14,27 +14,7 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
         .byToken(req.authToken)
         .exec()
         .then(user => {
-            var updateable_fields = [
-                'birthday',
-                'full_name',
-                'university',
-                'major',
-                'tshirt',
-                'experience',
-                'resume',
-                'github',
-                'linkedin',
-                'devpost',
-                'portfolio',
-                'race',
-                'sex',
-                'why_mhacks',
-                'favorite_memory',
-                'anything_else',
-                'needs_reimbursement',
-                'departing_from',
-                'requested_reimbursement'
-            ];
+            var updateable_fields = Application.getUpdateableFields(req.groups);
             var fields = {};
 
             if (req.files && req.files.resume) {
@@ -203,14 +183,7 @@ router.post('/confirm', function(req, res) {
         .byToken(req.authToken)
         .exec()
         .then(user => {
-            var updateable_fields = [
-                'phone',
-                'graduation',
-                'employment',
-                'degree',
-                'travel',
-                'skills'
-            ];
+            var updateable_fields = Confirmation.getUpdateableFields();
             var fields = {};
 
             for (var i in req.body) {

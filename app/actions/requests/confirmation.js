@@ -22,4 +22,14 @@ export default class ConfirmationRequests {
             })
         });
     }
+
+    static loadForm(token) {
+        return fetch(endpoints.FORM + 'confirmation', {
+            method: 'get',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token
+            })
+        });
+    }
 }

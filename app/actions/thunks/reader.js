@@ -69,4 +69,38 @@ export default class ReaderThunks {
             });
         };
     }
+
+    static loadForm(subform) {
+        return dispatch => {
+            dispatch({
+                type: actions.LOAD_READER_FORM_REQUEST
+            });
+
+            const token = localStorage.getItem('jwt');
+
+            return ReaderRequests.loadForm(token, subform).then(response => {
+                if (response.status == 200) {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.LOAD_READER_FORM_SUCCESS,
+                            data: {
+                                form: json.form,
+                                FieldTypes: json.types,
+                                form_name: subform
+                            },
+                            message: json.message
+                        });
+                    });
+                } else {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.LOAD_READER_FORM_ERROR,
+                            error: json.status,
+                            message: json.message
+                        });
+                    });
+                }
+            });
+        };
+    }
 }
