@@ -4,7 +4,7 @@ var mongoose = require('../index.js'),
     start = 2017,
     years = new Array(end - start)
         .fill()
-        .map((_, idx) => start + idx)
+        .map((_, idx) => (start + idx).toString())
         .concat(['later']),
     skills = require('../../../static/misc/skills.json').map((str, _) => {
         return {
@@ -104,6 +104,31 @@ schema.methods.updateFields = function(fields) {
         this[param] = fields[param];
     }
     this.save();
+};
+
+schema.statics.getUpdateableFields = function(groups) {
+    var updateables = [];
+
+    for (var key in schema.obj) {
+        var field = schema.obj[key];
+
+        if (field.form) {
+            if (field.form.user_editable) {
+                updateables.push(key);
+            } else if (groups) {
+                groups.forEach(function(group) {
+                    if (
+                        field.form.auth_groups &&
+                        field.form.auth_groups.indexOf(group) !== -1
+                    ) {
+                        updateables.push(key);
+                    }
+                });
+            }
+        }
+    }
+
+    return updateables;
 };
 
 // Initialize the model with the schema, and export it

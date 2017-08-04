@@ -63,6 +63,22 @@ export function readerState(state = initialState, action) {
             };
         }
 
+        case actions.LOAD_READER_FORM_SUCCESS:
+            var form = state.data.form || {};
+            form[action.data.form_name] = action.data.form;
+
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    form,
+                    FieldTypes: action.data.FieldTypes
+                },
+                message: action.message
+            };
+
         default:
             return state;
     }

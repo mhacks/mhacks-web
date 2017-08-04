@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { ConfirmationThunks } from '../actions';
 import { PageContainer, MHForm, Alert } from '../components';
 import { getUserMetadata } from '../util/user.js';
+import { NotificationStack } from 'react-notification';
+import { OrderedSet } from 'immutable';
 
 const FormContainer = styled.div`
     maxWidth: 500px;
@@ -16,7 +18,32 @@ class Confirm extends React.Component {
     constructor() {
         super();
 
+        this.state = {
+            notifications: OrderedSet()
+        };
+
         this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    addNotification(message, key, action) {
+        return this.setState({
+            notifications: this.state.notifications.add({
+                message,
+                key,
+                action: action || 'Dismiss',
+                onClick: (notification, deactivate) => {
+                    deactivate();
+                    this.removeNotification(key);
+                },
+                dismissAfter: 5000
+            })
+        });
+    }
+
+    removeNotification(key) {
+        this.setState({
+            notifications: this.state.notifications.filter(n => n.key !== key)
+        });
     }
 
     componentDidMount() {
@@ -25,11 +52,25 @@ class Confirm extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (
+            nextProps.userState.data.form &&
+            nextProps.userState.data.confirmation
+        ) {
+            for (var i in nextProps.userState.data.confirmation) {
+                if (i in nextProps.userState.data.form) {
+                    nextProps.userState.data.form[i].default =
+                        nextProps.userState.data.confirmation[i];
+                }
+            }
+        }
+
         this.setState(nextProps);
     }
 
     onSubmit(formData) {
         this.props.dispatch(ConfirmationThunks.uploadConfirmation(formData));
+
+        this.addNotification('Confirmation Saved!', 'save');
     }
 
     render() {
@@ -40,9 +81,8 @@ class Confirm extends React.Component {
             travel: !needsReimbursement
         };
 
-        console.log(this.props);
-
-        return !this.props.userState.data.form
+        return !this.props.userState.data.form &&
+            !this.props.userState.data.confirmation
             ? null
             : <PageContainer>
                   <FormContainer>
@@ -55,7 +95,7 @@ class Confirm extends React.Component {
                       <h2>Confirm Attendance at MHacks X!</h2>
                       <MHForm
                           schema={this.props.userState.data.form}
-                          fieldTypes={this.props.userState.data.FieldTypes}
+                          FieldTypes={this.props.userState.data.FieldTypes}
                           hidden={hiddenFields}
                           theme={this.props.theme}
                           onSubmit={this.onSubmit}
@@ -78,6 +118,15 @@ class Confirm extends React.Component {
                           </a>.
                       </p>
                   </FormContainer>
+                  <NotificationStack
+                      notifications={this.state.notifications.toArray()}
+                      onDismiss={notification =>
+                          this.setState({
+                              notifications: this.state.notifications.delete(
+                                  notification
+                              )
+                          })}
+                  />
               </PageContainer>;
     }
 }

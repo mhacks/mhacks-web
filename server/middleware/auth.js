@@ -10,8 +10,8 @@ module.exports = function(
 ) {
     groupName = groupName || 'any';
     verifiedEmail = typeof verifiedEmail === 'boolean' ? verifiedEmail : true;
-    requireAuthToken = typeof verifiedEmail === 'boolean'
-        ? verifiedEmail
+    requireAuthToken = typeof requireAuthToken === 'boolean'
+        ? requireAuthToken
         : true;
     return function(req, res, next) {
         if (req.get('Authorization')) {
@@ -61,6 +61,19 @@ module.exports = function(
                                     nextError
                                 );
                             });
+                    } else if (!requireAuthToken) {
+                        callNext(
+                            req,
+                            {
+                                name: '',
+                                email: '',
+                                getGroupsList: function() {
+                                    return [];
+                                }
+                            },
+                            '',
+                            next
+                        );
                     } else {
                         returnFailure(
                             res,

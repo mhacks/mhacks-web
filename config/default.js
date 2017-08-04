@@ -1,4 +1,9 @@
 module.exports = {
+    app_name: process.env.APP_NAME || 'MHacks X',
+    start_date: new Date(process.env.START_DATE || '9-22-17'),
+    end_date: new Date(process.env.END_DATE || '9-24-17'),
+    is_live_page_enabled: process.env.IS_LIVE_PAGE_ENABLED || false,
+    is_application_open: process.env.IS_APPLICATION_OPEN || true,
     env: process.env.NODE_ENV || 'development',
     development: process.env.NODE_ENV !== 'production',
     production: process.env.NODE_ENV === 'production',
