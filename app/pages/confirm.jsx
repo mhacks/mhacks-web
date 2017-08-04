@@ -65,7 +65,6 @@ class Confirm extends React.Component {
         }
 
         this.setState({
-            ...this.state,
             userState: nextProps.userState
         });
     }
@@ -77,11 +76,11 @@ class Confirm extends React.Component {
     }
 
     render() {
-        const { isConfirmed } = getUserMetadata(this.props.userState.data);
+        const { isConfirmed } = getUserMetadata(this.state.userState.data);
 
         if (
-            !this.props.userState.data.form &&
-            !this.props.userState.data.confirmation
+            !this.state.userState.data.form &&
+            !this.state.userState.data.confirmation
         ) {
             return null;
         }
@@ -94,8 +93,8 @@ class Confirm extends React.Component {
                         : null}
                     <h2>Confirm Attendance at MHacks X!</h2>
                     <MHForm
-                        schema={this.props.userState.data.form}
-                        FieldTypes={this.props.userState.data.FieldTypes}
+                        schema={this.state.userState.data.form}
+                        FieldTypes={this.state.userState.data.FieldTypes}
                         theme={this.props.theme}
                         onSubmit={this.onSubmit}
                     />
