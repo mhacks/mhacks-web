@@ -299,9 +299,7 @@ class Profile extends React.Component {
             <PageContainer>
                 <FormContainer>
                     <SectionHeader color={this.props.theme.primary}>
-                        <ProfilePicture
-                          avatars = {this.state.avatars}
-                        />
+                        <ProfilePicture avatars={this.state.avatars} />
                         {this.props.userState.data.isEmailVerified
                             ? 'Profile'
                             : 'Unverified Email'}
@@ -451,6 +449,18 @@ class Profile extends React.Component {
                                               menuStyle={autocompleteMenuStyle}
                                               wrapperStyle={
                                                   autocompleteWrapperStyle
+                                              }
+                                          />
+                                      </LabeledInput>
+                                      <LabeledInput label="Avatar">
+                                          <input
+                                              id="avatar"
+                                              type="text"
+                                              name="avatar"
+                                              placeholder="image url"
+                                              value={this.state.avatar}
+                                              onChange={
+                                                  this.handleAttributeChange
                                               }
                                           />
                                       </LabeledInput>
