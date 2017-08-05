@@ -12,7 +12,8 @@ import {
     FileUpload,
     Alert,
     LabeledInput,
-    RoundedButton
+    RoundedButton,
+    ProfilePicture
 } from '../components';
 
 import { NotificationStack } from 'react-notification';
@@ -73,11 +74,6 @@ const Link = styled.a`
     cursor: pointer;
 `;
 
-const Avatar = styled.img`
-    height: 100px;
-    marginRight: 20px;
-`;
-
 const autocompleteMenuStyle = {
     borderRadius: '3px',
     boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
@@ -117,8 +113,6 @@ class Profile extends React.Component {
             university: userData.university || '',
             major: userData.major || '',
             avatars: userData.avatars || [],
-            counter: 0,
-            profilePicture: userData.avatars[0] || '',
             isResumeUploaded: userData.isResumeUploaded || false,
             notifications: OrderedSet()
         };
@@ -305,9 +299,8 @@ class Profile extends React.Component {
             <PageContainer>
                 <FormContainer>
                     <SectionHeader color={this.props.theme.primary}>
-                        <Avatar
-                            onError={this.handleImageError}
-                            src={this.state.profilePicture}
+                        <ProfilePicture
+                          avatars = {this.state.avatars}
                         />
                         {this.props.userState.data.isEmailVerified
                             ? 'Profile'
