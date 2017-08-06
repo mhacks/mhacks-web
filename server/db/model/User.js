@@ -213,7 +213,8 @@ var schema = new mongoose.Schema({
             ],
             label: 'Sex'
         }
-    }
+    },
+    push_id: String
 });
 
 // Allow us to query by name

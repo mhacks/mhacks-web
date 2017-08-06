@@ -23,6 +23,10 @@ var schema = new mongoose.Schema({
     isSent: {
         type: Boolean,
         default: false
+    },
+    users: {
+        type: [String],
+        default: []
     }
 });
 
@@ -84,7 +88,17 @@ schema.query.byIsPublic = function() {
     });
 };
 
+schema.query.byIsReadyToSend = function() {
+    return this.find({
+        isApproved: true,
+        isSent: false,
+        broadcastTime: {
+            $lte: Date.now()
+        }
+    });
+};
+
 // Initialize the model with the schema, and export it
-var model = mongoose.model('Announcement', schema);
+var model = mongoose.model('PushNotification', schema);
 
 module.exports = model;

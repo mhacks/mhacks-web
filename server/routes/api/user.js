@@ -146,59 +146,77 @@ router.get('/ticket', authMiddleware('any', 'api', true), function(req, res) {
     }
 });
 
-router.get('/ticket/verify', authMiddleware('scanner', 'api', true), function(req, res) {
+router.get('/ticket/verify', authMiddleware('scanner', 'api', true), function(
+    req,
+    res
+) {
     if (req.body.email) {
         User.find().byEmail(req.body.email).exec().then(user => {
             if (user) {
                 ScanEvent.findOne({
                     user: user,
                     event: 'register'
-                }).exec().then(event => {
-                    if (event) {
-                        res.status(400).send({
-                            status: false,
-                            message: Responses.Application.ALREADY_REGISTERED
-                        });
-                    } else {
-                        Application.find().byEmail(req.body.email).exec().then(application => {
-                            if (application) {
-                                if (application.status === 'accepted') {
-                                    Confirmation.findOne({ user: req.body.email })
-                                        .exec()
-                                        .then(confirmation => {
-                                            if (confirmation) {
-                                                ScanEvent.create({
-                                                    user,
-                                                    scanner: req.user,
-                                                    event: 'register'
-                                                }).then(scanevent => {
-                                                    res.send({
-                                                        status: true,
-                                                        scanevent
-                                                    })
+                })
+                    .exec()
+                    .then(event => {
+                        if (event) {
+                            res.status(400).send({
+                                status: false,
+                                message:
+                                    Responses.Application.ALREADY_REGISTERED
+                            });
+                        } else {
+                            Application.find()
+                                .byEmail(req.body.email)
+                                .exec()
+                                .then(application => {
+                                    if (application) {
+                                        if (application.status === 'accepted') {
+                                            Confirmation.findOne({
+                                                user: req.body.email
+                                            })
+                                                .exec()
+                                                .then(confirmation => {
+                                                    if (confirmation) {
+                                                        ScanEvent.create({
+                                                            user,
+                                                            scanner: req.user,
+                                                            event: 'register'
+                                                        }).then(scanevent => {
+                                                            res.send({
+                                                                status: true,
+                                                                scanevent
+                                                            });
+                                                        });
+                                                    } else {
+                                                        res.status(400).send({
+                                                            status: false,
+                                                            message:
+                                                                Responses
+                                                                    .Application
+                                                                    .NOT_CONFIRMED
+                                                        });
+                                                    }
                                                 });
-                                            } else {
-                                                res.status(400).send({
-                                                    status: false,
-                                                    message: Responses.Application.NOT_CONFIRMED
-                                                });
-                                            }
+                                        } else {
+                                            res.status(400).send({
+                                                status: false,
+                                                message:
+                                                    Responses.Application
+                                                        .NOT_ACCEPTED
+                                            });
+                                        }
+                                    } else {
+                                        res.status(400).send({
+                                            status: false,
+                                            message:
+                                                Responses.Application
+                                                    .NOT_SUBMITTED
                                         });
-                                } else {
-                                    res.status(400).send({
-                                        status: false,
-                                        message: Responses.Application.NOT_ACCEPTED
-                                    });
-                                }
-                            } else {
-                                res.status(400).send({
-                                    status: false,
-                                    message: Responses.Application.NOT_SUBMITTED
+                                    }
                                 });
-                            }
-                        });
-                    }
-                });
+                        }
+                    });
             } else {
                 res.status(400).send({
                     status: false,

@@ -2,23 +2,45 @@ var PushNotifications = require('node-pushnotifications'),
     config = require('../../config/default.js'),
     push = PushNotifications({
         gcm: {
-            id: config.gcm_id
+            id: new Buffer(
+                crypto.decrypt(config.push_notifications.gcm.id),
+                'base64'
+            ).toString('ascii')
         },
         apn: {
             token: {
-                key: './certs/key.p8', // optionally: fs.readFileSync('./certs/key.p8')
-                keyId: 'ABCD',
-                teamId: 'EFGH',
-            },
-            ...
-        },
-        /*adm: {
-            client_id: null,
-            client_secret: null
-        },
-        wns: {
-            client_id: null,
-            client_secret: null,
-            notificationMethod: 'sendTileSquareBlock'
-        }*/
+                key: new Buffer(
+                    crypto.decrypt(config.push_notifications.apns.key),
+                    'base64'
+                ).toString('ascii'),
+                keyId: new Buffer(
+                    crypto.decrypt(config.push_notifications.apns.key_id),
+                    'base64'
+                ).toString('ascii'),
+                teamId: new Buffer(
+                    crypto.decrypt(config.push_notifications.apns.team_id),
+                    'base64'
+                ).toString('ascii')
+            }
+        }
     });
+
+function sendNotification(devices, title, message) {
+    if (config.push_notifications.enabled) {
+        var data = {
+            title: title,
+            body: message,
+            retries: 5
+        };
+
+        return push.send(devices, data);
+    } else {
+        return new Promise(resolve => {
+            resolve(true);
+        });
+    }
+}
+
+module.exports = {
+    sendNotification
+};

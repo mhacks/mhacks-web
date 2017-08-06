@@ -76,5 +76,16 @@ module.exports = {
         SUBMIT: 10
     },
     color_dark: process.env.COLOR_DARK || '#5d3e6e',
-    color_light: process.env.COLOR_LIGHT || ''
+    color_light: process.env.COLOR_LIGHT || '',
+    push_notifications: {
+        enabled: process.env.PUSH_NOTIS_ENABLED || false,
+        apns: {
+            token: process.env.APNS_KEY || '',
+            key_id: process.env.APNS_KEY_ID || '',
+            team_id: process.env.APNS_TEAM_ID || ''
+        },
+        gcm: {
+            id: process.env.GCM_ID || ''
+        }
+    }
 };

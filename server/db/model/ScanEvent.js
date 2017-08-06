@@ -36,7 +36,7 @@ schema.query.byToken = function(findToken) {
 };
 
 schema.query.byUser = function(user) {
-    return this.findOne({user: user});
+    return this.findOne({ user: user });
 };
 
 schema.methods.updateFields = function(fields) {
