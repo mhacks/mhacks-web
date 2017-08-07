@@ -11,7 +11,7 @@ var http = require('http'),
     express = require('express'),
     app = express(),
     server = http.createServer(app),
-    io = require('socket.io')(server, {wsEngine: 'uws'}),
+    io = require('socket.io')(server, { wsEngine: 'uws' }),
     session = require('express-session'),
     bodyParser = require('body-parser'),
     MongoStore = require('connect-mongo')(session),
@@ -24,7 +24,11 @@ var http = require('http'),
 
 // Force https
 app.use(function(req, res, next) {
-    if (!req.secure && req.get('x-forwarded-proto') !== 'https' && app.get('env') !== 'development') {
+    if (
+        !req.secure &&
+        req.get('x-forwarded-proto') !== 'https' &&
+        app.get('env') !== 'development'
+    ) {
         if (config.service === 'shortener') {
             return res.redirect(config.shortener_host + req.url);
         } else {
@@ -41,9 +45,11 @@ morgan.token('remote-addr', function(req) {
 app.use(morgan('combined'));
 
 // Request parsers
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(
+    bodyParser.urlencoded({
+        extended: true
+    })
+);
 app.use(bodyParser.json());
 
 // Server side views (if used)
@@ -71,9 +77,11 @@ var sessionMiddleware = session({
 
 app.use(sessionMiddleware);
 
-io.use(sharedsession(sessionMiddleware, {
-    autoSave: true
-}));
+io.use(
+    sharedsession(sessionMiddleware, {
+        autoSave: true
+    })
+);
 
 // Set an xsrf-token for the session if it's enabled
 app.use(function(req, res, next) {
@@ -110,9 +118,11 @@ if (config.service === 'shortener') {
         app.use(historyApiFallback());
         app.use(webpackMiddlewareInstance);
 
-        app.use(webpackHotMiddleware(webpackCompiler, {
-            log: console.log
-        }));
+        app.use(
+            webpackHotMiddleware(webpackCompiler, {
+                log: console.log
+            })
+        );
     } else {
         // Static files middleware
         app.use(express.static('build'));
