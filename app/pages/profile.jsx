@@ -262,7 +262,7 @@ class Profile extends React.Component {
             files['resume'] = this.state.resume;
         }
         if (this.state.avatar) {
-            files['avatar'] = this.state.avatar
+            files['avatar'] = this.state.avatar;
         }
 
         for (const key of Object.keys(ProfileFields)) {
@@ -291,7 +291,7 @@ class Profile extends React.Component {
     }
 
     render() {
-        console.log(this.state.avatar)
+        console.log(this.state.avatar);
         return (
             <PageContainer>
                 <FormContainer>
@@ -451,7 +451,7 @@ class Profile extends React.Component {
                                       </LabeledInput>
                                       <FileUploadContainer>
                                           <FileUpload
-                                              fileTitle = "Resume"
+                                              fileTitle="Resume"
                                               defaultColor={
                                                   this.props.userState.data.user
                                                       .isResumeUploaded
@@ -477,7 +477,7 @@ class Profile extends React.Component {
                                       </FileUploadContainer>
                                       <FileUploadContainer>
                                           <FileUpload
-                                              fileTitle = "Profile Picture"
+                                              fileTitle="Profile Picture"
                                               defaultColor={
                                                   this.props.theme.primary
                                               }
@@ -490,9 +490,7 @@ class Profile extends React.Component {
                                               onFileSelect={
                                                   this.handlePictureUpload
                                               }
-                                              defaultText={
-                                                 null
-                                              }
+                                              defaultText={null}
                                           />
                                       </FileUploadContainer>
                                       <SubsectionHeader
