@@ -159,7 +159,7 @@ class ReaderPage extends React.Component {
                         accessor: 'github',
                         width: 30,
                         Cell: row => {
-                            return row.value
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>
@@ -171,7 +171,7 @@ class ReaderPage extends React.Component {
                         accessor: 'linkedin',
                         width: 30,
                         Cell: row => {
-                            return row.value
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>
@@ -189,7 +189,7 @@ class ReaderPage extends React.Component {
                         accessor: 'devpost',
                         width: 30,
                         Cell: row => {
-                            return row.value
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>
@@ -201,7 +201,7 @@ class ReaderPage extends React.Component {
                         accessor: 'portfolio',
                         width: 30,
                         Cell: row => {
-                            return row.value
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>

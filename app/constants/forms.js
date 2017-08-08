@@ -94,7 +94,7 @@ export const SponsorPortalFiltersSchema = [
         type: FieldTypes.SELECT,
         label: 'Graduation Year',
         key: 'graduation',
-        options: range(2017, 2026)
+        select: range(2017, 2026)
             .map(year => {
                 return {
                     value: String(year),
@@ -110,7 +110,7 @@ export const SponsorPortalFiltersSchema = [
         type: FieldTypes.SELECT,
         label: 'Job Interest',
         key: 'employment',
-        options: [
+        select: [
             {
                 value: 'internship',
                 label: 'Internship'
@@ -133,8 +133,8 @@ export const SponsorPortalFiltersSchema = [
         type: FieldTypes.MULTI,
         label: 'Skills',
         key: 'skills',
-        options: mapArrayToOptions(Skills)
-    },
+        select: mapArrayToOptions(Skills)
+    }
 ];
 
 export const ApplicationReaderFiltersSchema = [
