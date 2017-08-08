@@ -354,6 +354,7 @@ class Profile extends React.Component {
     }
 
     renderAcceptance() {
+        const user = this.props.userState.data.user;
         return (
             <div>
                 <h3>Application Status: Accepted</h3>
@@ -369,6 +370,9 @@ class Profile extends React.Component {
                     Confirm
                 </StyledNavLink>
                 {this.renderTravelInfo()}
+                {user.needs_reimbursement && user.reimbursement > 0
+                    ? this.renderTravelReimbursement()
+                    : null}
             </div>
         );
     }
