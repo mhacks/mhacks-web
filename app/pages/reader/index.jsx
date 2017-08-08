@@ -285,6 +285,7 @@ class ReaderPage extends React.Component {
         const {
             status,
             reimbursement,
+            experience,
             minor,
             since,
             search
@@ -305,6 +306,10 @@ class ReaderPage extends React.Component {
 
         return searched.filter(application => {
             if (status && application.status !== status) {
+                return false;
+            }
+
+            if (experience && application.experience !== experience) {
                 return false;
             }
 
