@@ -38,7 +38,22 @@ module.exports = function(email, type, application) {
                                 reject(error);
                             })
                             .on('success', function(response) {
-                                resolve([fileName, response]);
+                                User.find()
+                                    .byEmail(email)
+                                    .exec()
+                                    .then(user => {
+                                        var extension = fileName
+                                            .split('.')
+                                            .pop();
+                                        resolve([
+                                            user.full_name + '.' + extension,
+                                            response,
+                                            fileName
+                                        ]);
+                                    })
+                                    .catch(err => {
+                                        reject(err);
+                                    });
                             });
 
                         obj.send();

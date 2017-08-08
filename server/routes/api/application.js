@@ -41,7 +41,7 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
 
                     res.send({
                         status: true,
-                        app: application
+                        application: application
                     });
                 } else {
                     fields.user = user.email;
@@ -52,7 +52,7 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
 
                             res.send({
                                 status: true,
-                                app: application
+                                application: application
                             });
                         })
                         .catch(err => {
@@ -93,7 +93,7 @@ router.get('/', function(req, res) {
 });
 
 // Returns all applications
-router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
+router.get('/all', authMiddleware('reader admin', 'api'), function(req, res) {
     Application.find()
         .select('-_id -__v')
         .then(applications => {
@@ -106,6 +106,7 @@ router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
             })
                 .select('_id full_name email')
                 .then(users => {
+<<<<<<< HEAD
                     Confirmation.find()
                         .select('-_id -__v')
                         .then(confirmations => {
@@ -120,6 +121,15 @@ router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
                                         return application;
                                     }
 
+
+                                    const user_doc = {
+                                        full_name: associated_user.full_name
+                                    };
+
+                                    if (application.resume) {
+                                        user_doc.resume = application.getResume();
+                                    }
+
                                     const associated_confirmation = confirmations.find(
                                         confirmation =>
                                             confirmation.user.equals(
@@ -131,19 +141,14 @@ router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
                                         return Object.assign(
                                             {},
                                             application._doc,
-                                            {
-                                                full_name:
-                                                    associated_user.full_name
-                                            }
+                                            user_doc
                                         );
                                     }
 
                                     return Object.assign(
                                         {},
                                         application._doc,
-                                        {
-                                            full_name: associated_user.full_name
-                                        },
+                                        user_doc,
                                         Object.assign(
                                             {},
                                             associated_confirmation._doc,

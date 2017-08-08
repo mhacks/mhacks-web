@@ -173,6 +173,9 @@ function check_types(prop_val, groups) {
         case 'array':
             val_types.type = config.form_types.ARRAY;
             break;
+        case 'file':
+            val_types.type = config.form_types.FILE;
+            break;
     }
 
     // If there's an enum, it's a select group
