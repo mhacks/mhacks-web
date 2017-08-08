@@ -135,6 +135,7 @@ class Profile extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.handleAttributeChange = this.handleAttributeChange.bind(this);
         this.handleFileUpload = this.handleFileUpload.bind(this);
+        this.handlePictureUpload = this.handlePictureUpload.bind(this);
         this.onClickRequestEmailVerification = this.onClickRequestEmailVerification.bind(
             this
         );
@@ -212,6 +213,12 @@ class Profile extends React.Component {
         });
     }
 
+    handlePictureUpload(file) {
+        this.setState({
+            avatar: file
+        });
+    }
+
     handleSortItems(a, b, value) {
         const aLower = a.toLowerCase();
         const bLower = b.toLowerCase();
@@ -254,6 +261,9 @@ class Profile extends React.Component {
         if (this.state.resume) {
             files['resume'] = this.state.resume;
         }
+        if (this.state.avatar) {
+            files['avatar'] = this.state.avatar
+        }
 
         for (const key of Object.keys(ProfileFields)) {
             if (
@@ -281,6 +291,7 @@ class Profile extends React.Component {
     }
 
     render() {
+        console.log(this.state.avatar)
         return (
             <PageContainer>
                 <FormContainer>
@@ -440,6 +451,7 @@ class Profile extends React.Component {
                                       </LabeledInput>
                                       <FileUploadContainer>
                                           <FileUpload
+                                              fileTitle = "Resume"
                                               defaultColor={
                                                   this.props.userState.data.user
                                                       .isResumeUploaded
@@ -460,6 +472,26 @@ class Profile extends React.Component {
                                                       .isResumeUploaded
                                                       ? 'Resume Uploaded'
                                                       : null
+                                              }
+                                          />
+                                      </FileUploadContainer>
+                                      <FileUploadContainer>
+                                          <FileUpload
+                                              fileTitle = "Profile Picture"
+                                              defaultColor={
+                                                  this.props.theme.primary
+                                              }
+                                              hoverColor={
+                                                  this.props.theme.secondary
+                                              }
+                                              activeColor={
+                                                  this.props.theme.success
+                                              }
+                                              onFileSelect={
+                                                  this.handlePictureUpload
+                                              }
+                                              defaultText={
+                                                 null
                                               }
                                           />
                                       </FileUploadContainer>
