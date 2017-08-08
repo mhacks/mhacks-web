@@ -135,7 +135,6 @@ class Profile extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.handleAttributeChange = this.handleAttributeChange.bind(this);
         this.handleFileUpload = this.handleFileUpload.bind(this);
-        this.handleImageError = this.handleImageError.bind(this);
         this.onClickRequestEmailVerification = this.onClickRequestEmailVerification.bind(
             this
         );
@@ -238,19 +237,6 @@ class Profile extends React.Component {
                 }
             />
         );
-    }
-
-    handleImageError() {
-        console.log('old avatar: ' + this.state.avatars[this.state.counter]);
-        console.log('counter old: ' + this.state.counter);
-        this.setState(prevState => {
-            console.log('counter new: ' + (prevState.counter + 1));
-            return { counter: prevState.counter + 1 };
-        });
-        this.setState(prevState => {
-            console.log('new avatar: ' + prevState.avatars[prevState.counter]);
-            return { profilePicture: prevState.avatars[prevState.counter] };
-        });
     }
 
     onSubmit(e) {
@@ -449,18 +435,6 @@ class Profile extends React.Component {
                                               menuStyle={autocompleteMenuStyle}
                                               wrapperStyle={
                                                   autocompleteWrapperStyle
-                                              }
-                                          />
-                                      </LabeledInput>
-                                      <LabeledInput label="Avatar">
-                                          <input
-                                              id="avatar"
-                                              type="text"
-                                              name="avatar"
-                                              placeholder="image url"
-                                              value={this.state.avatar}
-                                              onChange={
-                                                  this.handleAttributeChange
                                               }
                                           />
                                       </LabeledInput>
