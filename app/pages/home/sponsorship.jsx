@@ -82,16 +82,42 @@ const LogoWrapper = styled.div`
     margin: 25px;
 `;
 
-const LogoImg = styled.img`
-    height: 75px;
+const SmallLogoImg = styled.img`
+    height: 40px;
     width: auto;
     maxWidth: 100%;
 `;
 
-const Logo = props =>
+const MediumLogoImg = styled.img`
+    height: 70px;
+    width: auto;
+    maxWidth: 100%;
+`;
+
+const LargeLogoImg = styled.img`
+    height: 100px;
+    width: auto;
+    maxWidth: 100%;
+`;
+
+const SmallLogo = props =>
     <LogoWrapper>
         <a href={props.href}>
-            <LogoImg src={props.src} />
+            <SmallLogoImg src={props.src} />
+        </a>
+    </LogoWrapper>;
+
+const MediumLogo = props =>
+    <LogoWrapper>
+        <a href={props.href}>
+            <MediumLogoImg src={props.src} />
+        </a>
+    </LogoWrapper>;
+
+const LargeLogo = props =>
+    <LogoWrapper>
+        <a href={props.href}>
+            <LargeLogoImg src={props.src} />
         </a>
     </LogoWrapper>;
 
@@ -138,39 +164,48 @@ class Sponsorship extends React.Component {
                     </FlexBox>
 
                     <SponsorsFlexBox>
-                        <Logo src={BloombergImg} />
-                        <Logo src={DRWImg} href="https://drw.com/evolve" />
-                        <Logo
-                            src={FacebookImg}
-                            href="https://www.facebook.com/careers/"
-                        />
-                        <Logo
-                            src={ICSImg}
-                            href="http://www.controls-ics.com/"
-                        />
-                        <Logo src={LTSImg} href="https://www.ltsnet.net/" />
-                        <Logo src={LyftImg} href="https://www.lyft.com/jobs" />
-                        <Logo
+                        <LargeLogo
                             src={MicrosoftImg}
                             href="https://careers.microsoft.com/"
                         />
-                        <Logo
+                        <MediumLogo
+                            src={DRWImg}
+                            href="https://drw.com/evolve"
+                        />
+                        <MediumLogo
                             src={NSAImg}
                             href="https://www.intelligencecareers.gov/nsa/"
                         />
-                        <Logo
+                        <MediumLogo
+                            src={LTSImg}
+                            href="https://www.ltsnet.net/"
+                        />
+                        <SmallLogo src={TargetImg} />
+                        <SmallLogo src={CloudFlareImg} />
+                        <SmallLogo src={QualtricsImg} />
+                        <SmallLogo src={GoldmanSachsImg} />
+                        <SmallLogo src={DelphiImg} />
+                        <SmallLogo src={WolframImg} />
+                        <SmallLogo src={BloombergImg} />
+                        <SmallLogo
+                            src={FacebookImg}
+                            href="https://www.facebook.com/careers/"
+                        />
+                        <SmallLogo
+                            src={LyftImg}
+                            href="https://www.lyft.com/jobs"
+                        />
+                        <SmallLogo
+                            src={ICSImg}
+                            href="http://www.controls-ics.com/"
+                        />
+                        <SmallLogo src={CapitalOneImg} />
+                        <SmallLogo
                             src={PalantirImg}
                             href="https://www.palantir.com/careers/"
                         />
-                        <Logo src={CapitalOneImg} />
-                        <Logo src={CloudFlareImg} />
-                        <Logo src={DelphiImg} />
-                        <Logo src={GoldmanSachsImg} />
-                        <Logo src={MongoDBImg} />
-                        <Logo src={QualtricsImg} />
-                        <Logo src={SalesforceImg} />
-                        <Logo src={TargetImg} />
-                        <Logo src={WolframImg} />
+                        <SmallLogo src={MongoDBImg} />
+                        <SmallLogo src={SalesforceImg} />
                     </SponsorsFlexBox>
                 </CenteredContainer>
             </Wrapper>
