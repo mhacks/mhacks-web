@@ -37,10 +37,16 @@ function handler(req, res) {
 
                     // Check if the key exists in the parent model, if it does, use the parent models form value
                     if (prop.key in model.schema.obj) {
-                        prop = model.schema.obj[prop.key];
+                        prop = Object.assign(
+                            {},
+                            model.schema.obj[prop.key],
+                            org_prop
+                        );
                     } else {
                         prop.form = JSON.parse(JSON.stringify(prop));
                     }
+
+                    console.log(prop);
 
                     var prop_res = {};
 
