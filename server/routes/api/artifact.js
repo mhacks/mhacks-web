@@ -6,7 +6,7 @@ var router = require('express').Router(),
     mime = require('mime'),
     resumes = require('../../interactors/resumes.js');
 
-router.get('/resume/:email', authMiddleware('admin', 'api'), function(
+router.get('/resume/:email', authMiddleware('reader sponsor admin', 'api'), function(
     req,
     res
 ) {
