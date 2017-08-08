@@ -46,8 +46,6 @@ function handler(req, res) {
                         prop.form = JSON.parse(JSON.stringify(prop));
                     }
 
-                    console.log(prop);
-
                     var prop_res = {};
 
                     if (req.groups) {
