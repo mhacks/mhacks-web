@@ -5,7 +5,7 @@ var router = require('express').Router(),
     authMiddleware = require('../../middleware/auth.js'),
     mime = require('mime');
 
-router.get('/resume/:email', authMiddleware('admin', 'api'), function(
+router.get('/resume/:email', authMiddleware('reader sponsor admin', 'api'), function(
     req,
     res
 ) {
