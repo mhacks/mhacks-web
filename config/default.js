@@ -73,6 +73,7 @@ module.exports = {
         SECTIONHEADER: 7,
         BUFFER: 8,
         ARRAY: 9,
-        SUBMIT: 10
+        SUBMIT: 10,
+        FILE: 11
     }
 };
