@@ -76,6 +76,7 @@ const SponsorsFlexBox = styled.div`
     flexWrap: wrap;
     maxWidth: 850px;
     justifyContent: center;
+    alignItems: center;
 `;
 
 const LogoWrapper = styled.div`
