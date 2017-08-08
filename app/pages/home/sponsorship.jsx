@@ -17,6 +17,15 @@ const LyftImg = require('../../../static/logos/lyft.png');
 const MicrosoftImg = require('../../../static/logos/microsoft.png');
 const NSAImg = require('../../../static/logos/nsa.png');
 const PalantirImg = require('../../../static/logos/palantir.jpg');
+const CapitalOneImg = require('../../../static/logos/capitalone.png');
+const CloudFlareImg = require('../../../static/logos/cloudflare.png');
+const TargetImg = require('../../../static/logos/target.jpg');
+const DelphiImg = require('../../../static/logos/delphi.jpg');
+const GoldmanSachsImg = require('../../../static/logos/goldmansachs.jpg');
+const MongoDBImg = require('../../../static/logos/mongodb.jpg');
+const QualtricsImg = require('../../../static/logos/qualtrics.png');
+const SalesforceImg = require('../../../static/logos/salesforce.png');
+const WolframImg = require('../../../static/logos/wolfram.png');
 
 const Wrapper = styled.div`
     backgroundColor: white;
@@ -153,6 +162,15 @@ class Sponsorship extends React.Component {
                             src={PalantirImg}
                             href="https://www.palantir.com/careers/"
                         />
+                        <Logo src={CapitalOneImg} />
+                        <Logo src={CloudFlareImg} />
+                        <Logo src={DelphiImg} />
+                        <Logo src={GoldmanSachsImg} />
+                        <Logo src={MongoDBImg} />
+                        <Logo src={QualtricsImg} />
+                        <Logo src={SalesforceImg} />
+                        <Logo src={TargetImg} />
+                        <Logo src={WolframImg} />
                     </SponsorsFlexBox>
                 </CenteredContainer>
             </Wrapper>
