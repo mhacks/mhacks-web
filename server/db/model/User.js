@@ -121,14 +121,16 @@ var schema = new mongoose.Schema({
         type: String,
         form: {
             user_editable: true,
-            label: 'Avatar'
+            label: 'Avatar',
+            type_override: 'file'
         }
     },
     resume: {
         type: String,
         form: {
             user_editable: true,
-            label: 'Resume'
+            label: 'Resume',
+            type_override: 'file'
         }
     },
     github: {

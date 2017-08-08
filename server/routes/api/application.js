@@ -41,7 +41,7 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
 
                     res.send({
                         status: true,
-                        app: application
+                        application: application
                     });
                 } else {
                     fields.user = user.email;
@@ -52,7 +52,7 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
 
                             res.send({
                                 status: true,
-                                app: application
+                                application: application
                             });
                         })
                         .catch(err => {
@@ -93,7 +93,7 @@ router.get('/', function(req, res) {
 });
 
 // Returns all applications
-router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
+router.get('/all', authMiddleware('reader admin', 'api'), function(req, res) {
     Application.find()
         .select('-_id -__v')
         .then(applications => {
@@ -115,9 +115,20 @@ router.get('/all', authMiddleware('admin', 'api'), function(req, res) {
                             if (!associated_user) {
                                 return application;
                             }
-                            return Object.assign({}, application._doc, {
+
+                            var user_doc = {
                                 full_name: associated_user.full_name
-                            });
+                            };
+
+                            if (application.resume) {
+                                user_doc.resume = application.getResume();
+                            }
+
+                            return Object.assign(
+                                {},
+                                application._doc,
+                                user_doc
+                            );
                         })
                     });
                 })

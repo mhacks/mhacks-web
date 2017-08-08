@@ -75,7 +75,12 @@ var schema = new mongoose.Schema({
         }
     },
     resume: {
-        type: String
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'Resume',
+            type_override: 'file'
+        }
     },
     created_at: {
         type: Date,
