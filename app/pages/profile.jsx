@@ -291,6 +291,7 @@ class Profile extends React.Component {
     }
 
     render() {
+        // console.log('avatar: ' + this.state.avatar);
         return (
             <PageContainer>
                 <FormContainer>

@@ -20,8 +20,8 @@ export default class ProfileRequests {
         }
 
         if (files['avatar']) {
-            console.log(files['avatar'])
-            formData.append('avatar', files['avatar'])
+            console.log(files['avatar']);
+            formData.append('avatar', files['avatar']);
         }
 
         for (var key in body) {
