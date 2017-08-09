@@ -291,7 +291,6 @@ class Profile extends React.Component {
     }
 
     render() {
-        console.log(this.state.avatar);
         return (
             <PageContainer>
                 <FormContainer>
@@ -479,7 +478,9 @@ class Profile extends React.Component {
                                           <FileUpload
                                               fileTitle="Profile Picture"
                                               defaultColor={
-                                                  this.props.theme.primary
+                                                  this.state.avatars.length > 2
+                                                      ? this.props.theme.success
+                                                      : this.props.theme.primary
                                               }
                                               hoverColor={
                                                   this.props.theme.secondary
@@ -490,7 +491,11 @@ class Profile extends React.Component {
                                               onFileSelect={
                                                   this.handlePictureUpload
                                               }
-                                              defaultText={null}
+                                              defaultText={
+                                                  this.state.avatars.length > 2
+                                                      ? 'Profile Picture Uploaded'
+                                                      : null
+                                              }
                                           />
                                       </FileUploadContainer>
                                       <SubsectionHeader

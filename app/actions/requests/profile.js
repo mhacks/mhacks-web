@@ -19,6 +19,11 @@ export default class ProfileRequests {
             formData.append('resume', files['resume']);
         }
 
+        if (files['avatar']) {
+            console.log(files['avatar'])
+            formData.append('avatar', files['avatar'])
+        }
+
         for (var key in body) {
             if (body.hasOwnProperty(key)) {
                 formData.append(key, body[key]);

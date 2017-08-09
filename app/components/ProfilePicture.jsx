@@ -10,27 +10,27 @@ export default class ProfilePicture extends React.Component {
             profilePicture: this.props.avatars[0] || ''
         };
 
-        this.handleImageError = this.handleImageError.bind(this);
+        // this.handleImageError = this.handleImageError.bind(this);
     }
 
-    handleImageError() {
-        console.log('old avatar: ' + this.props.avatars[this.state.counter]);
-        console.log('counter old: ' + this.state.counter);
-        this.setState(prevState => {
-            console.log('counter new: ' + (prevState.counter + 1));
-            return { counter: prevState.counter + 1 };
-        });
-        this.setState(prevState => {
-            console.log('new avatar: ' + this.props.avatars[prevState.counter]);
-            return { profilePicture: this.props.avatars[prevState.counter] };
-        });
-    }
+    // handleImageError() {
+    //     console.log('old avatar: ' + this.props.avatars[this.state.counter]);
+    //     console.log('counter old: ' + this.state.counter);
+    //     this.setState(prevState => {
+    //         console.log('counter new: ' + (prevState.counter + 1));
+    //         return { counter: prevState.counter + 1 };
+    //     });
+    //     this.setState(prevState => {
+    //         console.log('new avatar: ' + this.props.avatars[prevState.counter]);
+    //         return { profilePicture: this.props.avatars[prevState.counter] };
+    //     });
+    // }
 
     render() {
-        console.log(this.state.profilePicture);
+        console.log('Profile Picture URL: ' + this.state.profilePicture);
         return (
             <img
-                onError={this.handleImageError}
+                // onError={this.handleImageError}
                 src={this.state.profilePicture}
             />
         );
