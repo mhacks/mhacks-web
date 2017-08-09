@@ -198,7 +198,7 @@ class Sponsorship extends React.Component {
                         />
                         <SmallLogo
                             src={ICSImg}
-                            href="http://www.controls-ics.com/"
+                            href="https://www.intrepidcs.com/"
                         />
                         <SmallLogo src={CapitalOneImg} />
                         <SmallLogo
