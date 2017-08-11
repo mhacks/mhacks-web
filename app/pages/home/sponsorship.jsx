@@ -6,26 +6,9 @@ import {
     SectionHeader,
     Brick
 } from './section_components.jsx';
-import theme from '../../styles/theme.js';
 
-const BloombergImg = require('../../../static/logos/bloomberg.png');
-const DRWImg = require('../../../static/logos/drw.png');
-const FacebookImg = require('../../../static/logos/facebook.png');
-const ICSImg = require('../../../static/logos/ics.png');
-const LTSImg = require('../../../static/logos/lts.png');
-const LyftImg = require('../../../static/logos/lyft.png');
-const MicrosoftImg = require('../../../static/logos/microsoft.png');
-const NSAImg = require('../../../static/logos/nsa.png');
-const PalantirImg = require('../../../static/logos/palantir.jpg');
-const CapitalOneImg = require('../../../static/logos/capitalone.png');
-const CloudFlareImg = require('../../../static/logos/cloudflare.png');
-const TargetImg = require('../../../static/logos/target.jpg');
-const DelphiImg = require('../../../static/logos/delphi.jpg');
-const GoldmanSachsImg = require('../../../static/logos/goldmansachs.jpg');
-const MongoDBImg = require('../../../static/logos/mongodb.jpg');
-const QualtricsImg = require('../../../static/logos/qualtrics.png');
-const SalesforceImg = require('../../../static/logos/salesforce.png');
-const WolframImg = require('../../../static/logos/wolfram.png');
+import SponsorLogos from '../../components/SponsorLogos.jsx';
+import theme from '../../styles/theme.js';
 
 const Wrapper = styled.div`
     backgroundColor: white;
@@ -71,57 +54,6 @@ const Link = styled.a`
     color: ${theme.secondary};
 `;
 
-const SponsorsFlexBox = styled.div`
-    display: flex;
-    flexWrap: wrap;
-    maxWidth: 850px;
-    justifyContent: center;
-    alignItems: center;
-`;
-
-const LogoWrapper = styled.div`
-    margin: 25px;
-`;
-
-const SmallLogoImg = styled.img`
-    height: 40px;
-    width: auto;
-    maxWidth: 100%;
-`;
-
-const MediumLogoImg = styled.img`
-    height: 70px;
-    width: auto;
-    maxWidth: 100%;
-`;
-
-const LargeLogoImg = styled.img`
-    height: 100px;
-    width: auto;
-    maxWidth: 100%;
-`;
-
-const SmallLogo = props =>
-    <LogoWrapper>
-        <a href={props.href}>
-            <SmallLogoImg src={props.src} />
-        </a>
-    </LogoWrapper>;
-
-const MediumLogo = props =>
-    <LogoWrapper>
-        <a href={props.href}>
-            <MediumLogoImg src={props.src} />
-        </a>
-    </LogoWrapper>;
-
-const LargeLogo = props =>
-    <LogoWrapper>
-        <a href={props.href}>
-            <LargeLogoImg src={props.src} />
-        </a>
-    </LogoWrapper>;
-
 class Sponsorship extends React.Component {
     render() {
         return (
@@ -164,52 +96,7 @@ class Sponsorship extends React.Component {
                         </QuoteWrapper>
                     </FlexBox>
 
-                    <SponsorsFlexBox>
-                        <LargeLogo
-                            src={MicrosoftImg}
-                            href="https://careers.microsoft.com/"
-                        />
-                        <MediumLogo
-                            src={DRWImg}
-                            href="https://drw.com/evolve"
-                        />
-                        <br />
-                        <MediumLogo
-                            src={NSAImg}
-                            href="https://www.intelligencecareers.gov/nsa/"
-                        />
-                        <MediumLogo
-                            src={LTSImg}
-                            href="https://www.ltsnet.net/"
-                        />
-                        <br />
-                        <SmallLogo src={TargetImg} />
-                        <SmallLogo src={CloudFlareImg} />
-                        <SmallLogo src={QualtricsImg} />
-                        <SmallLogo src={GoldmanSachsImg} />
-                        <SmallLogo src={DelphiImg} />
-                        <SmallLogo src={WolframImg} />
-                        <SmallLogo src={BloombergImg} />
-                        <SmallLogo
-                            src={FacebookImg}
-                            href="https://www.facebook.com/careers/"
-                        />
-                        <SmallLogo
-                            src={LyftImg}
-                            href="https://www.lyft.com/jobs"
-                        />
-                        <SmallLogo
-                            src={ICSImg}
-                            href="https://www.intrepidcs.com/"
-                        />
-                        <SmallLogo src={CapitalOneImg} />
-                        <SmallLogo
-                            src={PalantirImg}
-                            href="https://www.palantir.com/careers/"
-                        />
-                        <SmallLogo src={MongoDBImg} />
-                        <SmallLogo src={SalesforceImg} />
-                    </SponsorsFlexBox>
+                    <SponsorLogos />
                 </CenteredContainer>
             </Wrapper>
         );

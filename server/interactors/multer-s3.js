@@ -7,7 +7,7 @@ var AWS = require('aws-sdk'),
     fs = require('fs'),
     mkdirp = require('mkdirp');
 
-module.exports = function(bucket_name, allowNull) {
+module.exports = function(bucket_name, artifactOverride) {
     var multeropts;
     var directory = '';
 
@@ -58,7 +58,7 @@ module.exports = function(bucket_name, allowNull) {
                             .catch(() => {
                                 return cb(false, '');
                             });
-                    } else if (allowNull) {
+                    } else if (artifactOverride) {
                         if (file.fieldname === 'resume') {
                             directory = 'resumes';
                         }
@@ -71,9 +71,7 @@ module.exports = function(bucket_name, allowNull) {
                             return cb(false, '');
                         }
 
-                        var fileType = file.originalname
-                            .split('.')
-                            .pop();
+                        var fileType = file.originalname.split('.').pop();
                         var fileName =
                             directory +
                             '/' +
@@ -137,7 +135,7 @@ module.exports = function(bucket_name, allowNull) {
                             .catch(() => {
                                 return cb(false, '');
                             });
-                    } else if (allowNull) {
+                    } else if (artifactOverride) {
                         if (file.fieldname === 'resume') {
                             directory = 'resumes';
                         }
@@ -150,9 +148,7 @@ module.exports = function(bucket_name, allowNull) {
                             return cb(false, '');
                         }
 
-                        var fileType = file.originalname
-                            .split('.')
-                            .pop();
+                        var fileType = file.originalname.split('.').pop();
                         var fileName =
                             directory +
                             '/' +

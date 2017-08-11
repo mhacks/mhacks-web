@@ -539,9 +539,7 @@ schema.methods.getGroupsList = function() {
 
 schema.methods.updateFields = function(fields) {
     for (var param in fields) {
-        if (schema.obj[param].user_editable) {
-            this[param] = fields[param];
-        }
+        this[param] = fields[param];
     }
     this.save();
 };

@@ -1,5 +1,9 @@
 var PushNotifications = require('node-pushnotifications'),
     config = require('../../config/default.js'),
+    crypto = require('./crypto.js'),
+    push;
+
+if (config.push_notifications.enabled) {
     push = PushNotifications({
         gcm: {
             id: new Buffer(
@@ -24,6 +28,7 @@ var PushNotifications = require('node-pushnotifications'),
             }
         }
     });
+}
 
 function sendNotification(devices, title, message) {
     if (config.push_notifications.enabled) {
