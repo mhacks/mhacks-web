@@ -176,7 +176,7 @@ if (config.push_notifications.enabled) {
                 if (pushnotifications) {
                     pushnotifications.forEach(function(pushnotification) {
                         var device_ids = [];
-                        if (pushnotification.devices.length < 1) {
+                        if (pushnotification.users.length < 1) {
                             User.find({
                                 push_id: { $exists: true }
                             })

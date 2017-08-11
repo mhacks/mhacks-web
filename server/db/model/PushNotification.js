@@ -2,7 +2,10 @@ var mongoose = require('../index.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema({
-    title: String,
+    title: {
+        type: String,
+        default: ''
+    },
     body: {
         type: String,
         default: ''

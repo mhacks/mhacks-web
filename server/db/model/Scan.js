@@ -1,22 +1,38 @@
-var mongoose = require('../index.js'),
-    PushNotification = require('./PushNotification.js');
+var mongoose = require('../index.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema({
-    user: {
+    type: {
+        type: String,
+        required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    count: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    max_count: {
+        type: Number,
+        required: true,
+        default: 10
+    },
+    creator: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    scanner: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+    notes: {
+        type: String,
         required: true
     },
-    event: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Scan',
-        required: true
+    public: {
+        type: Boolean,
+        required: true,
+        default: false
     },
     created_at: {
         type: Date,
@@ -24,21 +40,12 @@ var schema = new mongoose.Schema({
     }
 });
 
-// Allow us to query by token
-schema.query.byToken = function(findToken) {
-    return mongoose
-        .model('User')
-        .find()
-        .byToken(findToken)
-        .exec()
-        .then(user => {
-            return this.findOne({ user: user }).exec();
-        })
-        .catch(() => {});
-};
-
 schema.query.byUser = function(user) {
     return this.findOne({ user: user });
+};
+
+schema.query.byType = function(type) {
+    return this.findOne({ type: type });
 };
 
 schema.methods.updateFields = function(fields) {
@@ -73,25 +80,7 @@ schema.statics.getUpdateableFields = function(groups) {
     return updateables;
 };
 
-schema.post('save', function(doc) {
-    var body = '';
-
-    if (doc.user.email == doc.scanner.email) {
-        body = 'You scanned: ' + doc.scan.name;
-    } else {
-        body = 'You were scanned in for: ' + doc.scan.name;
-    }
-
-    PushNotification.create({
-        title: 'Scan Event!',
-        body: body,
-        category: 'Logistics',
-        isApproved: true,
-        users: [doc.user.email, doc.scanner.email]
-    });
-});
-
 // Initialize the model with the schema, and export it
-var model = mongoose.model('ScanEvent', schema);
+var model = mongoose.model('Scan', schema);
 
 module.exports = model;

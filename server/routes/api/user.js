@@ -14,7 +14,7 @@ var router = require('express').Router(),
 
 router.post(
     '/profile',
-    authMiddleware('any', 'api', true),
+    authMiddleware('any', 'api'),
     uploadHelper.fields([{ name: 'avatar' }, { name: 'resume' }]),
     function(req, res) {
         if (req.user) {
@@ -107,7 +107,7 @@ router.get('/profile', function(req, res) {
     }
 });
 
-router.get('/ticket', authMiddleware('any', 'api', true), function(req, res) {
+router.get('/ticket', authMiddleware('any', 'api'), function(req, res) {
     if (req.user && req.user.application_submitted) {
         Application.find().byEmail(req.user.email).exec().then(application => {
             if (application) {
@@ -146,7 +146,7 @@ router.get('/ticket', authMiddleware('any', 'api', true), function(req, res) {
     }
 });
 
-router.get('/ticket/verify', authMiddleware('scanner', 'api', true), function(
+router.get('/ticket/verify', authMiddleware('scanner', 'api'), function(
     req,
     res
 ) {
