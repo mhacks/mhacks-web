@@ -4,7 +4,7 @@ var AWS = require('aws-sdk'),
     Responses = require('../responses/api/index.js'),
     Application = require('../db/model/Application.js');
 
-module.exports = function(email, type, application) {
+module.exports = function(email, type, application, allowNull) {
     var s3 = new AWS.S3({
         accessKeyId: config.AWS_ACCESS_KEY_ID,
         secretAccessKey: config.AWS_SECRET_ACCESS_KEY
@@ -12,7 +12,7 @@ module.exports = function(email, type, application) {
 
     return new Promise((resolve, reject) => {
         if (application) {
-            Application.findOne({ user: email })
+            Application.findOne({user: email})
                 .exec()
                 .then(application => {
                     if (type in application) {
@@ -34,10 +34,10 @@ module.exports = function(email, type, application) {
                         var obj = s3.getObject(params);
 
                         obj
-                            .on('error', function(error) {
+                            .on('error', function (error) {
                                 reject(error);
                             })
-                            .on('success', function(response) {
+                            .on('success', function (response) {
                                 User.find()
                                     .byEmail(email)
                                     .exec()
@@ -64,6 +64,31 @@ module.exports = function(email, type, application) {
                 .catch(() => {
                     reject(new Error(Responses.INVALID_TYPE));
                 });
+        } else if (allowNull) {
+            var directory = '';
+
+            if (type === 'resume') {
+                directory = 'resumes';
+            } else {
+                directory = 'avatars';
+            }
+
+            var params = {
+                Bucket: config.AWS_BUCKET_NAME,
+                Key: directory + '/' + email
+            };
+
+            var obj = s3.getObject(params);
+
+            obj
+                .on('error', function(error) {
+                    reject(error);
+                })
+                .on('success', function(response) {
+                    resolve([email, response]);
+                });
+
+            obj.send();
         } else {
             User.find()
                 .byEmail(email)

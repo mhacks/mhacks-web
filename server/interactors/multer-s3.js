@@ -7,8 +7,9 @@ var AWS = require('aws-sdk'),
     fs = require('fs'),
     mkdirp = require('mkdirp');
 
-module.exports = function(bucket_name) {
+module.exports = function(bucket_name, allowNull) {
     var multeropts;
+    var directory = '';
 
     if (config.AWS_ACCESS_KEY_ID && config.AWS_SECRET_ACCESS_KEY) {
         var s3 = new AWS.S3({
@@ -27,8 +28,6 @@ module.exports = function(bucket_name) {
                             .byToken(req.authToken)
                             .exec()
                             .then(user => {
-                                var directory = '';
-
                                 if (file.fieldname === 'resume') {
                                     directory = 'resumes';
                                 }
@@ -59,6 +58,33 @@ module.exports = function(bucket_name) {
                             .catch(() => {
                                 return cb(false, '');
                             });
+                    } else if (allowNull) {
+                        if (file.fieldname === 'resume') {
+                            directory = 'resumes';
+                        }
+
+                        if (file.fieldname === 'avatar') {
+                            directory = 'avatars';
+                        }
+
+                        if (!directory) {
+                            return cb(false, '');
+                        }
+
+                        var fileType = file.originalname
+                            .split('.')
+                            .pop();
+                        var fileName =
+                            directory +
+                            '/' +
+                            crypto
+                                .createHash('sha512')
+                                .update(file.originalname + config.secret)
+                                .digest('hex') +
+                            '.' +
+                            fileType;
+
+                        cb(null, fileName);
                     } else {
                         return cb(false, '');
                     }
@@ -69,8 +95,6 @@ module.exports = function(bucket_name) {
         multeropts = {
             storage: multer.diskStorage({
                 destination: function(req, file, cb) {
-                    var directory = '';
-
                     if (file.fieldname === 'resume') {
                         directory = 'resumes';
                     }
@@ -113,6 +137,33 @@ module.exports = function(bucket_name) {
                             .catch(() => {
                                 return cb(false, '');
                             });
+                    } else if (allowNull) {
+                        if (file.fieldname === 'resume') {
+                            directory = 'resumes';
+                        }
+
+                        if (file.fieldname === 'avatar') {
+                            directory = 'avatars';
+                        }
+
+                        if (!directory) {
+                            return cb(false, '');
+                        }
+
+                        var fileType = file.originalname
+                            .split('.')
+                            .pop();
+                        var fileName =
+                            directory +
+                            '/' +
+                            crypto
+                                .createHash('sha512')
+                                .update(file.originalname + config.secret)
+                                .digest('hex') +
+                            '.' +
+                            fileType;
+
+                        cb(null, fileName);
                     } else {
                         return cb(false, '');
                     }

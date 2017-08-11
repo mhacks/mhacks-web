@@ -173,6 +173,7 @@ class Sponsorship extends React.Component {
                             src={DRWImg}
                             href="https://drw.com/evolve"
                         />
+                        <br />
                         <MediumLogo
                             src={NSAImg}
                             href="https://www.intelligencecareers.gov/nsa/"
@@ -181,6 +182,7 @@ class Sponsorship extends React.Component {
                             src={LTSImg}
                             href="https://www.ltsnet.net/"
                         />
+                        <br />
                         <SmallLogo src={TargetImg} />
                         <SmallLogo src={CloudFlareImg} />
                         <SmallLogo src={QualtricsImg} />
