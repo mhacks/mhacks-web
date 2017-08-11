@@ -77,9 +77,9 @@ schema.post('save', function(doc) {
     var body = '';
 
     if (doc.user.email == doc.scanner.email) {
-        body = 'You scanned: ' + doc.scan.name;
+        body = 'You scanned: ' + doc.event.name;
     } else {
-        body = 'You were scanned in for: ' + doc.scan.name;
+        body = 'You were scanned in for: ' + doc.event.name;
     }
 
     PushNotification.create({

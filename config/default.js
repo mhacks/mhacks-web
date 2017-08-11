@@ -88,5 +88,8 @@ module.exports = {
         gcm: {
             id: process.env.GCM_ID || ''
         }
-    }
+    },
+    admin_name: process.env.ADMIN_NAME || 'Administrator',
+    admin_email: process.env.ADMIN_EMAIL || 'hackathon@umich.edu',
+    admin_password: process.env.ADMIN_PASSWORD || 'hunter2'
 };

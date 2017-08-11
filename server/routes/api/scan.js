@@ -28,7 +28,7 @@ router.post('/', authMiddleware('admin', 'api'), function(req, res) {
         !req.body.id &&
         req.body.type &&
         req.body.notes &&
-        req.body.count &&
+        req.body.max_count &&
         req.body.name &&
         req.body.public
     ) {
@@ -57,7 +57,7 @@ router.post('/', authMiddleware('admin', 'api'), function(req, res) {
         req.body.id &&
         req.body.type &&
         req.body.notes &&
-        req.body.count &&
+        req.body.max_count &&
         req.body.name &&
         req.body.public
     ) {
@@ -118,7 +118,28 @@ router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
         Scan.findOne({ _id: req.params.id })
             .exec()
             .then(scan => {
-                ScanEvent.findOne({ user: req.user, type: scan })
+                var valid_group = false;
+                req.groups.forEach(function(group) {
+                    if (
+                        scan.auth_groups &&
+                        scan.auth_groups.indexOf(group) !== -1
+                    ) {
+                        valid_group = true;
+                    }
+                });
+
+                if (scan.auth_groups.indexOf('any') !== -1) {
+                    valid_group = true;
+                }
+
+                if (!valid_group) {
+                    return res.status(401).send({
+                        status: false,
+                        message: Responses.Auth.UNAUTHORIZED
+                    });
+                }
+
+                ScanEvent.findOne({ user: req.user, event: scan })
                     .exec()
                     .then(scanevent => {
                         if (scanevent) {
@@ -127,7 +148,10 @@ router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
                                 scanevent: scanevent
                             });
                         } else {
-                            if (scan.count < scan.max_count) {
+                            if (
+                                scan.max_count === -1 ||
+                                scan.count < scan.max_count
+                            ) {
                                 ScanEvent.create({
                                     user: req.user,
                                     scanner: req.user,

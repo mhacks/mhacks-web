@@ -12,10 +12,10 @@ var router = require('express').Router(),
 
 function sortSponsors(sponsors) {
     var levels = {
-        'unobtanium': [],
-        'gold': [],
-        'silver': [],
-        'bronze': []
+        unobtanium: [],
+        gold: [],
+        silver: [],
+        bronze: []
     };
 
     sponsors.forEach(function(sponsor) {

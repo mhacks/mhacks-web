@@ -18,7 +18,7 @@ var schema = new mongoose.Schema({
     max_count: {
         type: Number,
         required: true,
-        default: 10
+        default: -1
     },
     creator: {
         type: mongoose.Schema.Types.ObjectId,
@@ -33,6 +33,10 @@ var schema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    auth_groups: {
+        type: [String],
+        default: ['any']
     },
     created_at: {
         type: Date,

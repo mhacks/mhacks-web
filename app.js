@@ -135,5 +135,7 @@ if (config.service === 'shortener') {
 
 var ioHandler = require('./server/socketio/index.js')(io); // eslint-disable-line
 
+require('./server/interactors/setup.js');
+
 // Now we start the server
 server.listen(config.server_port);
