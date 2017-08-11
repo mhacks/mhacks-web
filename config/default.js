@@ -73,7 +73,8 @@ module.exports = {
         SECTIONHEADER: 7,
         BUFFER: 8,
         ARRAY: 9,
-        SUBMIT: 10
+        SUBMIT: 10,
+        FILE: 11
     },
     color_dark: process.env.COLOR_DARK || '#5d3e6e',
     color_light: process.env.COLOR_LIGHT || '',

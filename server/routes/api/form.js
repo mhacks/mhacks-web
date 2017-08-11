@@ -37,7 +37,11 @@ function handler(req, res) {
 
                     // Check if the key exists in the parent model, if it does, use the parent models form value
                     if (prop.key in model.schema.obj) {
-                        prop = model.schema.obj[prop.key];
+                        prop = Object.assign(
+                            {},
+                            model.schema.obj[prop.key],
+                            org_prop
+                        );
                     } else {
                         prop.form = JSON.parse(JSON.stringify(prop));
                     }
@@ -172,6 +176,9 @@ function check_types(prop_val, groups) {
             break;
         case 'array':
             val_types.type = config.form_types.ARRAY;
+            break;
+        case 'file':
+            val_types.type = config.form_types.FILE;
             break;
     }
 

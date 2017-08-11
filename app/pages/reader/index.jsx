@@ -210,15 +210,20 @@ class ReaderPage extends React.Component {
                         Header: <FontAwesome name="paperclip" />,
                         accessor: 'resume',
                         width: 30,
-                        Cell: row =>
-                            <A target="_blank" href={row.value}>{GoodMark}</A>
+                        Cell: row => {
+                            return row.value
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
+                                : BadMark;
+                        }
                     },
                     {
                         Header: <FontAwesome name="github" />,
                         accessor: 'github',
                         width: 30,
                         Cell: row => {
-                            return row.value.length > 0
+                            return row.value
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>
@@ -230,7 +235,7 @@ class ReaderPage extends React.Component {
                         accessor: 'linkedin',
                         width: 30,
                         Cell: row => {
-                            return row.value.length > 0
+                            return row.value
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>
@@ -248,7 +253,7 @@ class ReaderPage extends React.Component {
                         accessor: 'devpost',
                         width: 30,
                         Cell: row => {
-                            return row.value.length > 0
+                            return row.value
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>
@@ -260,7 +265,7 @@ class ReaderPage extends React.Component {
                         accessor: 'portfolio',
                         width: 30,
                         Cell: row => {
-                            return row.value.length > 0
+                            return row.value
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>
@@ -280,6 +285,7 @@ class ReaderPage extends React.Component {
         const {
             status,
             reimbursement,
+            experience,
             minor,
             since,
             search
@@ -300,6 +306,10 @@ class ReaderPage extends React.Component {
 
         return searched.filter(application => {
             if (status && application.status !== status) {
+                return false;
+            }
+
+            if (experience && application.experience !== experience) {
                 return false;
             }
 

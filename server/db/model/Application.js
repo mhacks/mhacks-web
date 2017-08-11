@@ -63,7 +63,7 @@ var schema = new mongoose.Schema({
         enum: ['novice', 'experienced', 'veteran'],
         form: {
             user_editable: true,
-            label: 'T-Shirt',
+            label: 'Experience',
             select: ['Novice', 'Experienced', 'Veteran']
         }
     },
@@ -75,7 +75,12 @@ var schema = new mongoose.Schema({
         }
     },
     resume: {
-        type: String
+        type: String,
+        form: {
+            user_editable: true,
+            label: 'Resume',
+            type_override: 'file'
+        }
     },
     created_at: {
         type: Date,
@@ -262,6 +267,11 @@ var schema = new mongoose.Schema({
             {
                 key: 'needs_reimbursement',
                 label: 'Needs Reimbursement'
+            },
+            {
+                key: 'experience',
+                label: 'Experience',
+                required: false
             },
             {
                 key: 'minor',
