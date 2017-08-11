@@ -14,7 +14,7 @@ var schema = new mongoose.Schema(
         },
         level: {
             type: String,
-            enum: ['bronze', 'silver', 'gold'],
+            enum: ['bronze', 'silver', 'gold', 'unobtanium'],
             required: true
         },
         logo: {

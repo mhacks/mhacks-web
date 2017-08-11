@@ -11,7 +11,12 @@ var router = require('express').Router(),
     mime = require('mime');
 
 function sortSponsors(sponsors) {
-    var levels = {};
+    var levels = {
+        'unobtanium': [],
+        'gold': [],
+        'silver': [],
+        'bronze': []
+    };
 
     sponsors.forEach(function(sponsor) {
         if (sponsor.level in levels) {
