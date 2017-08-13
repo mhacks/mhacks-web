@@ -20,7 +20,13 @@ class ApplicationSection extends React.Component {
             <div>
                 <SectionHeader>Application</SectionHeader>
                 <ApplicationStatusBar userData={this.props.userData} />
-                <SectionBody>We're excited to see you at MHacks X! We've got some greate things in store :) In the meantime, we encourage you to connect with other hackers in the HH MHacks Facebook Grouop. As always, stay tuned to our Facebook, Twitter, and Instagrams for updates on all things MHacks.</SectionBody>
+                <SectionBody>
+                    We're excited to see you at MHacks X! We've got some great
+                    things in store :) In the meantime, we encourage you to
+                    connect with other hackers in the HH MHacks Facebook Grouop.
+                    As always, stay tuned to our Facebook, Twitter, and
+                    Instagram for updates on all things MHacks.
+                </SectionBody>
             </div>
         );
     }

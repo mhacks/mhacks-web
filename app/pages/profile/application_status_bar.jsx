@@ -47,7 +47,11 @@ const FlexBox = styled.div`
 class ApplicationStatusBar extends React.Component {
     render() {
         const userData = this.props.userData;
-        const { isApplicationSubmitted, isApplicationReviewed, isConfirmed } = getUserMetadata( userData );
+        const {
+            isApplicationSubmitted,
+            isApplicationReviewed,
+            isConfirmed
+        } = getUserMetadata(userData);
         //var isConfirmed = true;
         //var isApplicationReviewed = true;
         //var isApplicationSubmitted = true;
@@ -63,7 +67,6 @@ class ApplicationStatusBar extends React.Component {
             percent = '33';
             applicationStatus = 'Submitted';
         }
-
 
         return (
             <div>
