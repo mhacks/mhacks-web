@@ -8,7 +8,7 @@ import { routes } from '../../constants';
 import Autocomplete from 'react-autocomplete';
 import { getUserMetadata } from '../../util/user.js';
 import ProfilePreview from './profile_preview.jsx';
-import ApplicationStatusBar from './application_status_bar.jsx';
+import ApplicationSection from './application_section.jsx';
 const Majors = require('../../../static/misc/majors.json');
 const Universities = require('../../../static/misc/universities.json');
 
@@ -485,7 +485,8 @@ class Profile extends React.Component {
                         Profile
                     </SectionHeader>
                     <ProfilePreview user={this.props.userState.data.user} />
-                    <ApplicationStatusBar userData={this.props.userState.data} />
+
+                    <ApplicationSection userData={this.props.userState.data} />
 
                     {this.renderApplicationReviewSection()}
 
