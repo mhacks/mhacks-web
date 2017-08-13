@@ -22,7 +22,7 @@ Configuration.find({}).exec().then(configurations => {
 });
 
 setTimeout(function() {
-    User.find.byEmail(config.admin_email).exec().then(user => {
+    User.find().byEmail(config.admin_email).exec().then(user => {
         if (!user) {
             User.create({
                 full_name: config.admin_name,

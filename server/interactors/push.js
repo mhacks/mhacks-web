@@ -4,7 +4,7 @@ var PushNotifications = require('node-pushnotifications'),
     push;
 
 if (config.push_notifications.enabled) {
-    push = PushNotifications({
+    push = new PushNotifications({
         gcm: {
             id: new Buffer(
                 crypto.decrypt(config.push_notifications.gcm.id),

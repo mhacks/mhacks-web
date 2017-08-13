@@ -81,7 +81,7 @@ module.exports = {
     push_notifications: {
         enabled: process.env.PUSH_NOTIS_ENABLED || false,
         apns: {
-            token: process.env.APNS_KEY || '',
+            key: process.env.APNS_KEY || '',
             key_id: process.env.APNS_KEY_ID || '',
             team_id: process.env.APNS_TEAM_ID || ''
         },

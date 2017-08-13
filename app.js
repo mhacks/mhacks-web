@@ -55,10 +55,13 @@ app.use(bodyParser.json());
 // Server side views (if used)
 app.set('view engine', 'pug');
 app.set('views', './server/views');
-app.set('view cache', false);
+app.disable('view cache');
 
 // Pretty API Responses
 app.set('json spaces', 4);
+
+// Disable x-powered-by
+app.disable('x-powered-by');
 
 // Initialize session
 var sessionStore = new MongoStore({
@@ -131,11 +134,11 @@ if (config.service === 'shortener') {
             res.sendFile(__dirname + '/build/index.html');
         });
     }
+
+    require('./server/interactors/setup.js');
 }
 
-var ioHandler = require('./server/socketio/index.js')(io); // eslint-disable-line
-
-require('./server/interactors/setup.js');
+require('./server/socketio/index.js')(io);
 
 // Now we start the server
 server.listen(config.server_port);

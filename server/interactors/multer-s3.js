@@ -23,7 +23,7 @@ module.exports = function(bucket_name, artifactOverride) {
                 acl: 'private',
                 bucket: bucket_name,
                 key: function(req, file, cb) {
-                    if (req.authToken) {
+                    if (req.authToken && !artifactOverride) {
                         User.find()
                             .byToken(req.authToken)
                             .exec()
@@ -114,7 +114,7 @@ module.exports = function(bucket_name, artifactOverride) {
                     cb(null, fullDirectory);
                 },
                 filename: function(req, file, cb) {
-                    if (req.authToken) {
+                    if (req.authToken && !artifactOverride) {
                         User.find()
                             .byToken(req.authToken)
                             .exec()
