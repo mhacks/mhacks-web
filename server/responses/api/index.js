@@ -2,7 +2,8 @@ var authResponses = require('./auth.js'),
     emailResponses = require('./email.js'),
     applicationResponse = require('./application.js'),
     deployResponse = require('./deploy.js'),
-    shortenerResponse = require('./shortener.js');
+    shortenerResponse = require('./shortener.js'),
+    scanResponse = require('./scan.js');
 
 var Responses = {
     METHOD_NOT_ALLOWED: 'Method not allowed',
@@ -19,5 +20,6 @@ Responses.Email = emailResponses;
 Responses.Deploy = deployResponse;
 Responses.Application = applicationResponse;
 Responses.Shortener = shortenerResponse;
+Responses.Scan = scanResponse;
 
 module.exports = Responses;

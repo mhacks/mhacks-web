@@ -75,5 +75,21 @@ module.exports = {
         ARRAY: 9,
         SUBMIT: 10,
         FILE: 11
-    }
+    },
+    color_dark: process.env.COLOR_DARK || '#5d3e6e',
+    color_light: process.env.COLOR_LIGHT || '',
+    push_notifications: {
+        enabled: process.env.PUSH_NOTIS_ENABLED || false,
+        apns: {
+            key: process.env.APNS_KEY || '',
+            key_id: process.env.APNS_KEY_ID || '',
+            team_id: process.env.APNS_TEAM_ID || ''
+        },
+        gcm: {
+            id: process.env.GCM_ID || ''
+        }
+    },
+    admin_name: process.env.ADMIN_NAME || 'Administrator',
+    admin_email: process.env.ADMIN_EMAIL || 'hackathon@umich.edu',
+    admin_password: process.env.ADMIN_PASSWORD || 'hunter2'
 };

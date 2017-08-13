@@ -84,6 +84,7 @@ export default class AuthThunks {
             dispatch({ type: actions.LOGOUT_REQUEST });
 
             return AuthRequests.logout().then(response => {
+                localStorage.removeItem('jwt');
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch({
@@ -93,7 +94,6 @@ export default class AuthThunks {
                     });
                 } else {
                     response.json().then(json => {
-                        localStorage.removeItem('jwt');
                         dispatch({
                             type: actions.LOGOUT_ERROR,
                             error: response.status,
