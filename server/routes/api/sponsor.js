@@ -95,23 +95,43 @@ router.post(
 );
 
 router.get('/', function(req, res) {
-    Sponsor.find({}, '-__v -domain -logo')
-        .exec()
-        .then(sponsors => {
-            sponsors = sortSponsors(sponsors);
+    authMiddleware('admin', 'api', true, function() {
+        Sponsor.find({}, '-__v -domain -logo')
+            .exec()
+            .then(sponsors => {
+                sponsors = sortSponsors(sponsors);
 
-            res.send({
-                status: true,
-                sponsors: sponsors
+                res.send({
+                    status: true,
+                    sponsors: sponsors
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                res.send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
             });
-        })
-        .catch(err => {
-            console.error(err);
-            res.send({
-                status: false,
-                message: Responses.UNKNOWN_ERROR
+    })(req, res, function() {
+        Sponsor.find({})
+            .exec()
+            .then(sponsors => {
+                sponsors = sortSponsors(sponsors);
+
+                res.send({
+                    status: true,
+                    sponsors: sponsors
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                res.send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
             });
-        });
+    });
 });
 
 router.get('/logo/:id', function(req, res) {
