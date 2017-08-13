@@ -1,4 +1,3 @@
-/* eslint-disable */
 var mongoose = require('../index.js'),
     end = 2026,
     start = 2017,
@@ -6,7 +5,7 @@ var mongoose = require('../index.js'),
         .fill()
         .map((_, idx) => (start + idx).toString())
         .concat(['later']),
-    skills = require('../../../static/misc/skills.json').map((str, _) => {
+    skills = require('../../../static/misc/skills.json').map(str => {
         return {
             value: str,
             label: str

@@ -2,7 +2,6 @@ var router = require('express').Router(),
     ConfigurationSchema = require('../../db/model/Configuration.js'),
     authMiddleware = require('../../middleware/auth.js'),
     Responses = require('../../responses/api/announcement.js'),
-    config = require('../../../config/default.js'),
     User = require('../../db/model/User.js');
 
 // Handles get requests for /v1/configuration
@@ -44,53 +43,10 @@ router.get('/', authMiddleware('any', 'api', false, undefined, false), function(
                     });
                 }
             } else {
-                ConfigurationSchema.create({
-                    app_name: config.app_name,
-                    start_date: config.start_date,
-                    end_date: config.end_date,
-                    is_live_page_enabled: config.is_live_page_enabled,
-                    is_application_open: config.is_application_open
-                })
-                    .then(configuration => {
-                        configuration = JSON.parse(
-                            JSON.stringify(configuration)
-                        );
-
-                        if (req.authToken) {
-                            User.find()
-                                .byToken(req.authToken)
-                                .then(user => {
-                                    user.getProfile().then(profile => {
-                                        res.send({
-                                            status: true,
-                                            user: profile,
-                                            configuration: configuration
-                                        });
-                                    });
-                                })
-                                .catch(err => {
-                                    console.error(err);
-                                    res.status(500).send({
-                                        status: false,
-                                        message: Responses.UNKNOWN_ERROR
-                                    });
-                                });
-                        } else {
-                            configuration.should_logout = true;
-
-                            res.send({
-                                status: true,
-                                configuration: configuration
-                            });
-                        }
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        res.status(500).send({
-                            status: false,
-                            message: Responses.UNKNOWN_ERROR
-                        });
-                    });
+                res.status(500).send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
             }
         })
         .catch(err => {

@@ -11,7 +11,10 @@ var router = require('express').Router(),
     artifactHandler = require('./api/artifact.js'),
     formHandler = require('./api/form.js'),
     readerHandler = require('./api/reader.js'),
-    adminHandler = require('./api/admin.js');
+    adminHandler = require('./api/admin.js'),
+    pushHandler = require('./api/push.js'),
+    scanHandler = require('./api/scan.js'),
+    sponsorHandler = require('./api/sponsor.js');
 
 router.use('/auth', authHandler);
 router.use('/email', emailHandler);
@@ -25,6 +28,9 @@ router.use('/form', formHandler);
 router.use('/shortener', shortenerHandler);
 router.use('/admin', authMiddleware('admin', 'api'), adminHandler);
 router.use('/reader', authMiddleware('admin reader', 'api'), readerHandler);
+router.use('/push', pushHandler);
+router.use('/scan', scanHandler);
+router.use('/sponsor', sponsorHandler);
 
 router.get('/', function(req, res) {
     res.send('API');

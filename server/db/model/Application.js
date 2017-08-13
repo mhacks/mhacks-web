@@ -340,14 +340,9 @@ schema.query.byToken = function(findToken) {
 
 // Allow us to query by token
 schema.query.byEmail = function(email) {
-    return mongoose
-        .model('User')
-        .find()
-        .byEmail(email)
-        .then(user => {
-            return this.findOne({ user: user.email });
-        })
-        .catch(() => {});
+    return this.findOne({
+        user: new RegExp(email, 'i')
+    });
 };
 
 schema.methods.updateFields = function(fields) {

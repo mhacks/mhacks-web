@@ -8,3 +8,4 @@ export { default as AnnouncementsThunks } from './thunks/announcements.js';
 export { default as ConfigurationThunks } from './thunks/configuration.js';
 export { default as ReaderThunks } from './thunks/reader.js';
 export { default as ConfirmationThunks } from './thunks/confirmation.js';
+export { default as SponsorThunks } from './thunks/sponsor.js';
