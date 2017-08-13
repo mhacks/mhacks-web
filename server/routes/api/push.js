@@ -1,24 +1,27 @@
 var router = require('express').Router(),
-    Announcement = require('../../db/model/Announcement.js'),
+    PushNotification = require('../../db/model/PushNotification'),
     authMiddleware = require('../../middleware/auth.js'),
-    Responses = require('../../responses/api/announcement.js');
+    Responses = require('../../responses/api/announcement.js'),
+    push = require('../../interactors/push.js'),
+    User = require('../../db/model/User.js'),
+    config = require('../../../config/default.js');
 
 function sortByDate(a, b) {
     return new Date(b.broadcastTime) - new Date(a.broadcastTime);
 }
 
-// Handles get requests for /v1/announcements
+// Handles get requests for /v1/push
 router.get('/', function(req, res) {
     authMiddleware('admin', 'api', true, function() {
-        Announcement.find({}, '-_id -__v')
+        PushNotification.find({}, '-_id -__v')
             .byIsPublic()
             .exec()
-            .then(announcements => {
-                announcements.sort(sortByDate);
+            .then(pushnotifications => {
+                pushnotifications.sort(sortByDate);
 
                 res.send({
                     status: true,
-                    announcements: announcements
+                    pushnotifications: pushnotifications
                 });
             })
             .catch(err => {
@@ -29,13 +32,13 @@ router.get('/', function(req, res) {
                 });
             });
     })(req, res, function() {
-        Announcement.find({}, '-_id -__v')
+        PushNotification.find({}, '-_id -__v')
             .exec()
-            .then(announcements => {
-                announcements.sort(sortByDate);
+            .then(pushnotifications => {
+                pushnotifications.sort(sortByDate);
                 res.send({
                     status: true,
-                    announcements: announcements
+                    pushnotifications: pushnotifications
                 });
             })
             .catch(err => {
@@ -51,7 +54,7 @@ router.get('/', function(req, res) {
 router.post('/', authMiddleware('admin', 'api'), function(req, res) {
     if (req.session.loggedIn) {
         if (req.body.title && req.body.body && req.body.category) {
-            Announcement.create({
+            PushNotification.create({
                 title: req.body.title,
                 body: req.body.body,
                 broadcastTime: req.body.broadcastTime,
@@ -59,10 +62,10 @@ router.post('/', authMiddleware('admin', 'api'), function(req, res) {
                 isApproved: req.body.isApproved,
                 isSent: req.body.isSent
             })
-                .then(announcement => {
+                .then(pushnotification => {
                     res.send({
                         status: true,
-                        announcement: announcement
+                        pushnotification: pushnotification
                     });
                 })
                 .catch(err => {
@@ -89,20 +92,23 @@ router.post('/', authMiddleware('admin', 'api'), function(req, res) {
 router.put('/', authMiddleware('admin', 'api'), function(req, res) {
     if (req.session.loggedIn) {
         if (req.body.id) {
-            Announcement.findById(req.body.id)
+            PushNotification.findById(req.body.id)
                 .exec()
-                .then(announcement => {
-                    announcement.title = req.body.title || announcement.title;
-                    announcement.body = req.body.body || announcement.body;
-                    announcement.broadcastTime =
-                        req.body.broadcastTime || announcement.broadcastTime;
-                    announcement.category =
-                        req.body.category || announcement.category;
-                    announcement.isApproved =
-                        req.body.isApproved || announcement.isApproved;
-                    announcement.isSent =
-                        req.body.isSent || announcement.isSent;
-                    announcement.save();
+                .then(pushnotification => {
+                    pushnotification.title =
+                        req.body.title || pushnotification.title;
+                    pushnotification.body =
+                        req.body.body || pushnotification.body;
+                    pushnotification.broadcastTime =
+                        req.body.broadcastTime ||
+                        pushnotification.broadcastTime;
+                    pushnotification.category =
+                        req.body.category || pushnotification.category;
+                    pushnotification.isApproved =
+                        req.body.isApproved || pushnotification.isApproved;
+                    pushnotification.isSent =
+                        req.body.isSent || pushnotification.isSent;
+                    pushnotification.save();
                     res.send({
                         status: true
                     });
@@ -131,7 +137,7 @@ router.put('/', authMiddleware('admin', 'api'), function(req, res) {
 router.patch('/', authMiddleware('admin', 'api'), function(req, res) {
     if (req.session.loggedIn) {
         if (req.body.id) {
-            Announcement.updateOne({ _id: req.body.id }, req.body, {
+            PushNotification.updateOne({ _id: req.body.id }, req.body, {
                 runValidators: true
             })
                 .then(() => {
@@ -159,5 +165,55 @@ router.patch('/', authMiddleware('admin', 'api'), function(req, res) {
         });
     }
 });
+
+// prettier-ignore
+var notificationInterval = setInterval(function() { // eslint-disable-line
+    PushNotification.find()
+        .byIsReadyToSend()
+        .exec()
+        .then(pushnotifications => {
+            if (pushnotifications) {
+                pushnotifications.forEach(function(pushnotification) {
+                    var device_ids = [];
+                    if (pushnotification.users.length < 1) {
+                        User.find({
+                            push_id: { $exists: true }
+                        })
+                            .exec()
+                            .then(users => {
+                                users.forEach(function(user) {
+                                    device_ids.push(user.push_id);
+                                });
+                            });
+                    } else {
+                        User.find({
+                            email: { $in: pushnotification.users },
+                            push_id: { $exists: true }
+                        })
+                            .exec()
+                            .then(users => {
+                                users.forEach(function(user) {
+                                    device_ids.push(user.push_id);
+                                });
+                            });
+                    }
+                    if (config.push_notifications.enabled) {
+                        push.sendNotification(
+                            device_ids,
+                            pushnotification.title,
+                            pushnotification.body
+                        );
+                    } else {
+                        console.log('Push notification no-op:', device_ids, pushnotification.title, pushnotification.body);
+                    }
+                    pushnotification.isSent = true;
+                    pushnotification.save();
+                });
+            }
+        })
+        .catch(err => {
+            console.error(err);
+        });
+}, 1000);
 
 module.exports = router;
