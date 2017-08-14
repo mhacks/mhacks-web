@@ -22,7 +22,8 @@ var schema = new mongoose.Schema({
         required: true,
         form: {
             user_editable: true,
-            label: 'Would you like to give a Tech Talk (give a presentation, possibly followed by a Q&A session) or a Workshop (interactive, more hands-on for the audience)?',
+            label:
+                'Would you like to give a Tech Talk (give a presentation, possibly followed by a Q&A session) or a Workshop (interactive, more hands-on for the audience)?',
             select: ['Tech Talk', 'Workshop']
         }
     },
@@ -32,7 +33,8 @@ var schema = new mongoose.Schema({
         required: true,
         form: {
             user_editable: true,
-            label: 'Would you like to give a Lightning Talk (total time 30 min) or a Regular Talk (total time 1 hr)?',
+            label:
+                'Would you like to give a Lightning Talk (total time 30 min) or a Regular Talk (total time 1 hr)?',
             select: ['Lightning Talk', 'Regular Talk']
         }
     },
@@ -50,7 +52,7 @@ var schema = new mongoose.Schema({
         form: {
             user_editable: true,
             label: 'Abstract/Summary for the talk',
-            type_override: 'essay',
+            type_override: 'essay'
         }
     },
     qualifications: {
@@ -58,8 +60,9 @@ var schema = new mongoose.Schema({
         required: true,
         form: {
             user_editable: true,
-            label: 'List down anything that qualifies you to be a mentor (e.g. projects, classes, work experience, hobbies, past hackathons, etc.)',
-            type_override: 'essay',
+            label:
+                'List down anything that qualifies you to be a mentor (e.g. projects, classes, work experience, hobbies, past hackathons, etc.)',
+            type_override: 'essay'
         }
     },
     links_header: {
@@ -177,6 +180,13 @@ var schema = new mongoose.Schema({
             label: 'Sex'
         }
     },
+    save_button: {
+        type: String,
+        form: {
+            label: 'Save',
+            type_override: 'submit'
+        }
+    },
     created_at: {
         type: Date,
         default: Date.now
@@ -196,6 +206,10 @@ schema.query.byToken = function(findToken) {
         .catch(() => {});
 };
 
+schema.query.byUser = function(user) {
+    return this.findOne({user: user});
+};
+
 schema.methods.updateFields = function(fields) {
     for (var param in fields) {
         this[param] = fields[param];
@@ -205,12 +219,11 @@ schema.methods.updateFields = function(fields) {
 
 schema.methods.getResume = function() {
     return (
-        config.host + '/v1/artifact/resume/' + this.user.email + '?application=true'
+        config.host +
+        '/v1/artifact/resume/' +
+        this.user.email +
+        '?application=true'
     );
-};
-
-schema.methods.getUser = function() {
-    return mongoose.model('User').find().byEmail(this.user.email).exec();
 };
 
 schema.statics.getUpdateableFields = function(groups) {
@@ -244,4 +257,3 @@ schema.plugin(sanitizerPlugin);
 var model = mongoose.model('SpeakerApplication', schema);
 
 module.exports = model;
-

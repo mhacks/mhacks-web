@@ -22,7 +22,8 @@ import {
     ReaderPage,
     Confirm,
     Sponsor,
-    MentorApply
+    MentorApply,
+    SpeakerApply
 } from './pages';
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';
@@ -95,6 +96,17 @@ class AppProvider extends React.Component {
                                 render={() => {
                                     if (this.getMetadata().isLoggedIn) {
                                         return <MentorApply />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.SPEAKER_APPLICATION}
+                                render={() => {
+                                    if (this.getMetadata().isLoggedIn) {
+                                        return <SpeakerApply />;
                                     }
 
                                     return <Redirect to={routes.LOGIN} />;

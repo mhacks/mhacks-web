@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { MentorThunks } from '../../actions';
+import { SpeakerThunks } from '../../actions';
 import { PageContainer, MHForm } from '../../components';
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
@@ -46,8 +46,8 @@ class Apply extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(MentorThunks.loadApplication());
-        this.props.dispatch(MentorThunks.loadForm());
+        this.props.dispatch(SpeakerThunks.loadApplication());
+        this.props.dispatch(SpeakerThunks.loadForm());
     }
 
     componentWillReceiveProps(nextProps) {
@@ -69,7 +69,7 @@ class Apply extends React.Component {
     }
 
     onSubmit(formData) {
-        this.props.dispatch(MentorThunks.uploadApplication(formData));
+        this.props.dispatch(SpeakerThunks.uploadApplication(formData));
 
         this.addNotification('Application Saved!', 'save');
     }
@@ -87,12 +87,12 @@ class Apply extends React.Component {
         return (
             <PageContainer>
                 <FormContainer>
-                    <h2>Mentor Application</h2>
+                    <h2>Speaker Application</h2>
                     <p>
-                        Apply to be a mentor at MHacks X! We're looking for the
-                        brightest students and professionals from around the
-                        world to be a part of our community and help hackers
-                        create their dreams!
+                        Apply to be a speaker at MHacks X! Know something cool
+                        that others might be interested in learning about? Host
+                        a tech talk or workshop and teach your fellow hackers a
+                        thing or two!
                     </p>
                     <MHForm
                         schema={this.state.userState.data.form}
@@ -101,7 +101,7 @@ class Apply extends React.Component {
                         onSubmit={this.onSubmit}
                     />
                     <p>
-                        By applying to be a mentor, you also confirm you have
+                        By applying to be a Speaker, you also confirm you have
                         read
                         and agree to the{' '}
                         <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">

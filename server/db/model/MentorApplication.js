@@ -38,8 +38,9 @@ var schema = new mongoose.Schema({
         required: true,
         form: {
             user_editable: true,
-            label: 'List down anything that qualifies you to be a mentor (e.g. projects, classes, work experience, hobbies, past hackathons, etc.)',
-            type_override: 'essay',
+            label:
+                'List down anything that qualifies you to be a mentor (e.g. projects, classes, work experience, hobbies, past hackathons, etc.)',
+            type_override: 'essay'
         }
     },
     hackathons_been: {
@@ -181,6 +182,13 @@ var schema = new mongoose.Schema({
             label: 'Sex'
         }
     },
+    save_button: {
+        type: String,
+        form: {
+            label: 'Save',
+            type_override: 'submit'
+        }
+    },
     created_at: {
         type: Date,
         default: Date.now
@@ -200,6 +208,10 @@ schema.query.byToken = function(findToken) {
         .catch(() => {});
 };
 
+schema.query.byUser = function(user) {
+    return this.findOne({user: user});
+};
+
 schema.methods.updateFields = function(fields) {
     for (var param in fields) {
         this[param] = fields[param];
@@ -209,7 +221,10 @@ schema.methods.updateFields = function(fields) {
 
 schema.methods.getResume = function() {
     return (
-        config.host + '/v1/artifact/resume/' + this.user.email + '?application=true'
+        config.host +
+        '/v1/artifact/resume/' +
+        this.user.email +
+        '?application=true'
     );
 };
 
@@ -248,4 +263,3 @@ schema.plugin(sanitizerPlugin);
 var model = mongoose.model('MentorApplication', schema);
 
 module.exports = model;
-
