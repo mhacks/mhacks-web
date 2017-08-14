@@ -20,7 +20,8 @@ import {
     Apply,
     BlackoutPage,
     ReaderPage,
-    Confirm
+    Confirm,
+    MentorApply
 } from './pages';
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';
@@ -85,6 +86,17 @@ class AppProvider extends React.Component {
                                 path={routes.LOGOUT}
                                 render={() => {
                                     return <Logout />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.MENTOR_APPLICATION}
+                                render={() => {
+                                    if (this.getMetadata().isLoggedIn) {
+                                        return <MentorApply />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
                                 }}
                             />
                             <Route

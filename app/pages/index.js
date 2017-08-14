@@ -8,6 +8,7 @@ import Apply from './apply.jsx';
 import LivePage from './live';
 import ReaderPage from './reader';
 import Confirm from './confirm';
+import MentorApply from './mentor/apply';
 
 export {
     Navigator,
@@ -19,5 +20,6 @@ export {
     Apply,
     LivePage,
     ReaderPage,
-    Confirm
+    Confirm,
+    MentorApply
 };
