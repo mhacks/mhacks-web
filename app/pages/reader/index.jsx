@@ -284,7 +284,7 @@ class ReaderPage extends React.Component {
 
         const {
             status,
-            reimbursement,
+            needs_reimbursement,
             experience,
             minor,
             since,
@@ -314,8 +314,8 @@ class ReaderPage extends React.Component {
             }
 
             if (
-                (reimbursement === 'yes' && !application.needs_reimbursement) ||
-                (reimbursement === 'no' && application.needs_reimbursement)
+                (needs_reimbursement === 'yes' && !application.needs_reimbursement) ||
+                (needs_reimbursement === 'no' && application.needs_reimbursement)
             ) {
                 return false;
             }
