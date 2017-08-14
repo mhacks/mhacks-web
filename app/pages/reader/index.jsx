@@ -314,8 +314,10 @@ class ReaderPage extends React.Component {
             }
 
             if (
-                (needs_reimbursement === 'yes' && !application.needs_reimbursement) ||
-                (needs_reimbursement === 'no' && application.needs_reimbursement)
+                (needs_reimbursement === 'yes' &&
+                    !application.needs_reimbursement) ||
+                (needs_reimbursement === 'no' &&
+                    application.needs_reimbursement)
             ) {
                 return false;
             }
