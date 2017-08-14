@@ -17,10 +17,10 @@ export default class ProfilePicture extends React.Component {
     }
 
     handleImageError() {
-        var avatars = this.props.avatars
-        var fallback = avatars[avatars.length - 1]
-        this.setState({ 
-            profilePicture: fallback 
+        var avatars = this.props.avatars;
+        var fallback = avatars[avatars.length - 1];
+        this.setState({
+            profilePicture: fallback
         });
     }
 

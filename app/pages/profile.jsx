@@ -300,7 +300,7 @@ class Profile extends React.Component {
                 <FormContainer>
                     <SectionHeader color={this.props.theme.primary}>
                         <AvatarContainer>
-                          <ProfilePicture avatars={this.state.avatars} />
+                            <ProfilePicture avatars={this.state.avatars} />
                         </AvatarContainer>
                         {this.props.userState.data.isEmailVerified
                             ? 'Profile'
