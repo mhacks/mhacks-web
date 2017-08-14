@@ -425,6 +425,8 @@ schema.methods.getAvatars = function() {
     var avatars = [];
 
     if (this.avatar) {
+        /* used this to test on development */
+        // avatars.push('http://localhost:3000/v1/artifact/avatar/' + this.email);
         avatars.push(config.host + '/v1/artifact/avatar/' + this.email);
     }
 

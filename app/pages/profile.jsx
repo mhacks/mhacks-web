@@ -64,6 +64,10 @@ const AlertContainer = styled.div`
     marginTop: 30px;
 `;
 
+const AvatarContainer = styled.div`
+    width: 100px;
+`;
+
 const Subhead = styled.p`
     margin: 20px 0 0 0;
     color: ${props => props.theme.secondary};
@@ -291,12 +295,13 @@ class Profile extends React.Component {
     }
 
     render() {
-        // console.log('avatar: ' + this.state.avatar);
         return (
             <PageContainer>
                 <FormContainer>
                     <SectionHeader color={this.props.theme.primary}>
-                        <ProfilePicture avatars={this.state.avatars} />
+                        <AvatarContainer>
+                          <ProfilePicture avatars={this.state.avatars} />
+                        </AvatarContainer>
                         {this.props.userState.data.isEmailVerified
                             ? 'Profile'
                             : 'Unverified Email'}

@@ -856,6 +856,7 @@ class Apply extends React.Component {
                                     })}
                                     <FileUploadContainer>
                                         <FileUpload
+                                            fileTitle="Resume"
                                             defaultColor={
                                                 app && app.resume
                                                     ? this.props.theme.success
