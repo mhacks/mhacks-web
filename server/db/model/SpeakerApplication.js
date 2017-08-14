@@ -1,12 +1,6 @@
 var mongoose = require('../index.js'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin'),
-    config = require('../../../config/default.js'),
-    skills = require('../../../static/misc/skills.json').map(str => {
-        return {
-            value: str,
-            label: str
-        };
-    });
+    config = require('../../../config/default.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema({
@@ -22,15 +16,41 @@ var schema = new mongoose.Schema({
             type_override: 'sectionheader'
         }
     },
-    skills: {
-        type: [String],
-        default: [],
+    talk_type: {
+        type: String,
+        enum: ['techtalk', 'workshop'],
         required: true,
         form: {
             user_editable: true,
-            label: 'I can mentor in...',
-            array_select: skills,
-            type_override: 'array'
+            label: 'Would you like to give a Tech Talk (give a presentation, possibly followed by a Q&A session) or a Workshop (interactive, more hands-on for the audience)?',
+            select: ['Tech Talk', 'Workshop']
+        }
+    },
+    talk_length: {
+        type: String,
+        enum: ['lightning', 'regular'],
+        required: true,
+        form: {
+            user_editable: true,
+            label: 'Would you like to give a Lightning Talk (total time 30 min) or a Regular Talk (total time 1 hr)?',
+            select: ['Lightning Talk', 'Regular Talk']
+        }
+    },
+    topic: {
+        type: String,
+        required: true,
+        form: {
+            user_editable: true,
+            label: 'Topic/Title for your talk'
+        }
+    },
+    abstract: {
+        type: String,
+        required: true,
+        form: {
+            user_editable: true,
+            label: 'Abstract/Summary for the talk',
+            type_override: 'essay',
         }
     },
     qualifications: {
@@ -40,30 +60,6 @@ var schema = new mongoose.Schema({
             user_editable: true,
             label: 'List down anything that qualifies you to be a mentor (e.g. projects, classes, work experience, hobbies, past hackathons, etc.)',
             type_override: 'essay',
-        }
-    },
-    hackathons_been: {
-        type: Number,
-        required: true,
-        form: {
-            user_editable: true,
-            label: 'How many hackathons have you been to?'
-        }
-    },
-    hackathons_mentored: {
-        type: Number,
-        required: true,
-        form: {
-            user_editable: true,
-            label: 'How many hackathons have you mentored at?'
-        }
-    },
-    availability_during: {
-        type: String,
-        required: true,
-        form: {
-            user_editable: true,
-            label: 'Availability during the event'
         }
     },
     links_header: {
@@ -245,7 +241,7 @@ schema.statics.getUpdateableFields = function(groups) {
 schema.plugin(sanitizerPlugin);
 
 // Initialize the model with the schema, and export it
-var model = mongoose.model('MentorApplication', schema);
+var model = mongoose.model('SpeakerApplication', schema);
 
 module.exports = model;
 

@@ -21,5 +21,6 @@ export {
     LivePage,
     ReaderPage,
     Confirm,
-    Sponsor
+    Sponsor,
+    MentorApply
 };

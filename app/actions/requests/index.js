@@ -7,3 +7,4 @@ export { default as ConfigurationRequests } from './configuration.js';
 export { default as ReaderRequests } from './reader.js';
 export { default as ConfirmationRequests } from './confirmation.js';
 export { default as SponsorRequests } from './sponsor.js';
+export { default as MentorRequests } from './mentor.js';

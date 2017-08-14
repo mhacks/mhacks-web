@@ -12,5 +12,6 @@ export default {
     CONFIRM: '/confirm',
     ADMIN_PORTAL: '/portal/admin',
     READER_PORTAL: '/portal/reader',
-    SPONSOR_PORTAL: '/portal/sponsor'
+    SPONSOR_PORTAL: '/portal/sponsor',
+    MENTOR_APPLICATION: '/mentor/apply'
 };
