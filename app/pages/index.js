@@ -9,6 +9,7 @@ import LivePage from './live';
 import ReaderPage from './reader';
 import Confirm from './confirm';
 import MentorApply from './mentor/apply';
+import SpeakerApply from './speaker/apply';
 
 export {
     Navigator,
@@ -21,5 +22,6 @@ export {
     LivePage,
     ReaderPage,
     Confirm,
-    MentorApply
+    MentorApply,
+    SpeakerApply
 };

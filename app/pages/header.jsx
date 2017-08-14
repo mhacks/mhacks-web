@@ -200,6 +200,22 @@ class HeaderLinks extends React.Component {
                           {isApplicationSubmitted ? 'Application' : 'Apply'}
                       </StyledNavLink>}
                 {isLoggedIn
+                    ? <StyledNavLink
+                          to={routes.MENTOR_APPLICATION}
+                          color={color}
+                      >
+                          Mentor Application
+                      </StyledNavLink>
+                    : null}
+                {isLoggedIn
+                    ? <StyledNavLink
+                          to={routes.SPEAKER_APPLICATION}
+                          color={color}
+                      >
+                          Speaker Application
+                      </StyledNavLink>
+                    : null}
+                {isLoggedIn
                     ? <StyledNavLink to={routes.PROFILE} color={color}>
                           Profile
                       </StyledNavLink>
