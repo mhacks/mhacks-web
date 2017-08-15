@@ -6,7 +6,10 @@ var router = require('express').Router(),
         config.AWS_BUCKET_NAME
     );
 
-router.post('/application', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
+router.post('/application', uploadHelper.fields([{ name: 'resume' }]), function(
+    req,
+    res
+) {
     var updateable_fields = SpeakerApplication.getUpdateableFields(req.groups);
     var fields = {};
 
@@ -28,38 +31,41 @@ router.post('/application', uploadHelper.fields([{ name: 'resume' }]), function(
         }
     }
 
-    SpeakerApplication.find().byUser(req.user).then(application => {
-        if (application) {
-            application.updateFields(fields);
+    SpeakerApplication.find()
+        .byUser(req.user)
+        .then(application => {
+            if (application) {
+                application.updateFields(fields);
 
-            res.send({
-                status: true,
-                speaker_application: application
-            });
-        } else {
-            fields.user = req.user;
-            SpeakerApplication.create(fields)
-                .then(application => {
-                    res.send({
-                        status: true,
-                        speaker_application: application
-                    });
-                })
-                .catch(err => {
-                    console.error(err);
-                    res.status(500).send({
-                        status: false,
-                        message: Responses.UNKNOWN_ERROR
-                    });
+                res.send({
+                    status: true,
+                    speaker_application: application
                 });
-        }
-    }).catch(err => {
-        console.error(err);
-        res.status(500).send({
-            status: false,
-            message: Responses.UNKNOWN_ERROR
+            } else {
+                fields.user = req.user;
+                SpeakerApplication.create(fields)
+                    .then(application => {
+                        res.send({
+                            status: true,
+                            speaker_application: application
+                        });
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        res.status(500).send({
+                            status: false,
+                            message: Responses.UNKNOWN_ERROR
+                        });
+                    });
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({
+                status: false,
+                message: Responses.UNKNOWN_ERROR
+            });
         });
-    });
 });
 
 // Returns speaker application for the current user
