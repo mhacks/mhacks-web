@@ -8,7 +8,8 @@ const StyledSectionBody = styled(SectionBody)`
 `;
 
 const Container = styled.div`
-    background: ${props => props.theme.gradientOverlay}, ${props => props.theme.primary}
+    background: ${props => props.theme.gradientOverlay}, ${props =>
+    props.theme.primary}
     padding: 10px;
 `;
 
@@ -35,7 +36,9 @@ class ProfileSection extends React.Component {
                         <Avatar src={user.avatars[1]} />
                         <div>
                             <StyledSectionBody>{user.name}</StyledSectionBody>
-                            <StyledSectionBody>{user.university}</StyledSectionBody>
+                            <StyledSectionBody>
+                                {user.university}
+                            </StyledSectionBody>
                             <StyledSectionBody>{user.major}</StyledSectionBody>
                         </div>
                     </FlexBox>
