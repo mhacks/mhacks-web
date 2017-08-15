@@ -170,8 +170,7 @@ class HeaderLinks extends React.Component {
             isAdmin,
             isSponsor,
             isReader,
-            isEmailVerified,
-            isApplicationSubmitted
+            isEmailVerified
         } = userMetadata;
 
         // Either render a Menu component for mobile, or NavContainer for desktop as
@@ -197,7 +196,7 @@ class HeaderLinks extends React.Component {
                 {!isLoggedIn || !isEmailVerified
                     ? null
                     : <StyledNavLink to={routes.APPLY} color={color}>
-                          {isApplicationSubmitted ? 'Application' : 'Apply'}
+                          Hacker App
                       </StyledNavLink>}
                 {isLoggedIn
                     ? <StyledNavLink
