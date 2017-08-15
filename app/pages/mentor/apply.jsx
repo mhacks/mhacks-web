@@ -53,12 +53,12 @@ class Apply extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (
             nextProps.userState.data.form &&
-            nextProps.userState.data.confirmation
+            nextProps.userState.data.mentor_application
         ) {
-            for (var i in nextProps.userState.data.confirmation) {
+            for (var i in nextProps.userState.data.mentor_application) {
                 if (i in nextProps.userState.data.form) {
                     nextProps.userState.data.form[i].default =
-                        nextProps.userState.data.confirmation[i];
+                        nextProps.userState.data.mentor_application[i];
                 }
             }
         }
@@ -79,7 +79,7 @@ class Apply extends React.Component {
             !this.state.userState ||
             !this.state.userState.data ||
             (!this.state.userState.data.form &&
-                !this.state.userState.data.confirmation)
+                !this.state.userState.data.mentor_application)
         ) {
             return null;
         }

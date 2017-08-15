@@ -204,7 +204,7 @@ class HeaderLinks extends React.Component {
                           to={routes.MENTOR_APPLICATION}
                           color={color}
                       >
-                          Mentor Application
+                          Mentor App
                       </StyledNavLink>
                     : null}
                 {isLoggedIn
@@ -212,7 +212,7 @@ class HeaderLinks extends React.Component {
                           to={routes.SPEAKER_APPLICATION}
                           color={color}
                       >
-                          Speaker Application
+                          Speaker App
                       </StyledNavLink>
                     : null}
                 {isLoggedIn
