@@ -25,14 +25,22 @@ const Input = styled.input`
     borderRadius: 4px;
 `;
 
+const TextArea = styled.textarea`
+    padding: 10px;
+    borderColor: rgb(215, 215, 215);
+    flexGrow: 1;
+    height: 120px;
+    width: 100%;
+    borderRadius: 5px;
+`;
+
 class MHForm extends React.Component {
     constructor(props) {
         super(props);
 
         const initialState = {
             errorFields: [],
-            formData: {},
-            firstLoad: false
+            formData: {}
         };
 
         this.FieldTypes = props.FieldTypes;
@@ -72,14 +80,10 @@ class MHForm extends React.Component {
     componentWillReceiveProps(nextProps) {
         var formData = {};
 
-        if (!this.state.firstLoad) {
-            for (const field in nextProps.schema) {
-                var defaultValue = this.getFieldDefault(
-                    nextProps.schema[field]
-                );
-                if (defaultValue !== undefined) {
-                    formData[field] = defaultValue;
-                }
+        for (const field in nextProps.schema) {
+            var defaultValue = this.getFieldDefault(nextProps.schema[field]);
+            if (defaultValue !== undefined) {
+                formData[field] = defaultValue;
             }
         }
 
@@ -87,8 +91,7 @@ class MHForm extends React.Component {
             formData: {
                 ...this.state.formData,
                 ...formData
-            },
-            firstLoad: true
+            }
         });
     }
 
@@ -333,6 +336,16 @@ class MHForm extends React.Component {
                                           onChange={this.handleSelectChange(
                                               field.key
                                           )}
+                                      />
+                                  );
+                              case this.FieldTypes.ESSAY:
+                                  return this.renderLabeledInput(
+                                      field,
+                                      <TextArea
+                                          name={field.key}
+                                          value={formData[field.key]}
+                                          placeholder={field.placeholder}
+                                          onChange={this.handleAttributeChange}
                                       />
                                   );
                           }

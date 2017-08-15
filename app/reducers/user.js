@@ -182,7 +182,7 @@ export function userState(state = initialUserState, action) {
                 error: action.error,
                 message: action.message
             };
-        case actions.LOAD_APPLICATIONS_FORM_SUCCESS_FORM_SUCCESS:
+        case actions.LOAD_APPLICATIONS_FORM_SUCCESS:
             return {
                 ...state,
                 fetching: false,
@@ -192,7 +192,7 @@ export function userState(state = initialUserState, action) {
                     ...action.data
                 }
             };
-        case actions.LOAD_APPLICATIONS_FORM_ERROR_FORM_ERROR:
+        case actions.LOAD_APPLICATIONS_FORM_ERROR:
             return {
                 ...state,
                 fetching: false,
@@ -200,7 +200,7 @@ export function userState(state = initialUserState, action) {
                 error: action.error,
                 message: action.message
             };
-        case actions.LOAD_PROFILE_FORM_SUCCESS:
+        case actions.LOAD_MENTOR_APPLICATION_FORM_SUCCESS:
             return {
                 ...state,
                 fetching: false,
@@ -210,13 +210,107 @@ export function userState(state = initialUserState, action) {
                     ...action.data
                 }
             };
-        case actions.LOAD_PROFILE_FORM_ERROR:
+        case actions.LOAD_MENTOR_APPLICATION_FORM_ERROR:
             return {
                 ...state,
                 fetching: false,
                 fetched: false,
                 error: action.error,
                 message: action.message
+            };
+        case actions.LOAD_MENTOR_APPLICATION_FORM_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+                fetched: false,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_MENTOR_APPLICATION_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                fetched: false,
+                error: action.error,
+                message: action.message
+            };
+        case actions.LOAD_MENTOR_APPLICATION_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_MENTOR_APPLICATION_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+                fetched: false,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_SPEAKER_APPLICATION_FORM_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_SPEAKER_APPLICATION_FORM_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                fetched: false,
+                error: action.error,
+                message: action.message
+            };
+        case actions.LOAD_SPEAKER_APPLICATION_FORM_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+                fetched: false,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_SPEAKER_APPLICATION_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                fetched: false,
+                error: action.error,
+                message: action.message
+            };
+        case actions.LOAD_SPEAKER_APPLICATION_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_SPEAKER_APPLICATION_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+                fetched: false,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
             };
         default:
             return state;
