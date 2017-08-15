@@ -3,22 +3,21 @@ import styled from 'styled-components';
 
 import { Theme } from '../../styles';
 import { getUserMetadata } from '../../util/user.js';
-//import { Container } from '../components';
-//import { devices } from '../styles';
 
-const InfoContainer = styled.div`
+const ProgressBar = styled.div`
     height: 15px;
     background: ${Theme.reverseBackgroundGradient};
     borderRadius: 25px;
     display: flex;
     borderStyle: solid;
     borderWidth: 1px;
+    borderColor: white;
     backgroundSize: ${props => props.percent}% 100%;
     backgroundRepeat: no-repeat;
 `;
 
 const VerticalLine = styled.div`
-    background: black;
+    background: white;
     height: 100%;
     width: 1px;
     marginLeft: calc(33% - 1px);
@@ -46,26 +45,29 @@ const FlexBox = styled.div`
 
 class ApplicationStatusBar extends React.Component {
     render() {
+        var applicationStatus, percent;
         const userData = this.props.userData;
         const {
             isApplicationSubmitted,
             isApplicationReviewed,
             isConfirmed
         } = getUserMetadata(userData);
-        //var isConfirmed = true;
-        //var isApplicationReviewed = true;
-        //var isApplicationSubmitted = true;
-        var applicationStatus = 'Pending';
-        var percent = '0';
-        if (isConfirmed) {
-            percent = '100';
-            applicationStatus = 'Confirmed';
-        } else if (isApplicationReviewed) {
-            percent = '66';
-            applicationStatus = 'Reviewed';
-        } else if (isApplicationSubmitted) {
-            percent = '33';
-            applicationStatus = 'Submitted';
+        if (isApplicationSubmitted) {
+            if (isApplicationReviewed) {
+                if (isConfirmed) {
+                    applicationStatus = 'Confirmed';
+                    percent = '100';
+                } else {
+                    applicationStatus = 'Reviewed';
+                    percent = '66';
+                }
+            } else {
+                applicationStatus = 'Submitted';
+                percent = '33';
+            }
+        } else {
+            applicationStatus = 'Pending';
+            percent = '0';
         }
 
         return (
@@ -74,10 +76,10 @@ class ApplicationStatusBar extends React.Component {
                     <Header>Application Status</Header>
                     <StatusText>{applicationStatus}</StatusText>
                 </FlexBox>
-                <InfoContainer percent={percent}>
+                <ProgressBar percent={percent}>
                     <VerticalLine />
                     <VerticalLine />
-                </InfoContainer>
+                </ProgressBar>
             </div>
         );
     }

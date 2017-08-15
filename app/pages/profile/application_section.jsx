@@ -1,18 +1,6 @@
 import React from 'react';
 import ApplicationStatusBar from './application_status_bar.jsx';
-import styled from 'styled-components';
-
-const SectionHeader = styled.h2`
-    fontSize: 25px;
-    color: ${props => props.theme.highlight};
-    textTransform: uppercase;
-`;
-
-const SectionBody = styled.p`
-    color: ${props => props.theme.highlight};
-    fontSize: 16px;
-    max-width: 600px;
-`;
+import { SectionHeader, SectionBody } from './section_components.jsx';
 
 class ApplicationSection extends React.Component {
     render() {

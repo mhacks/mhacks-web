@@ -7,8 +7,8 @@ import { FieldTypes, ProfileFields } from '../../constants/forms';
 import { routes } from '../../constants';
 import Autocomplete from 'react-autocomplete';
 import { getUserMetadata } from '../../util/user.js';
-import ProfilePreview from './profile_preview.jsx';
 import ApplicationSection from './application_section.jsx';
+import ProfileSection from './profile_section.jsx';
 const Majors = require('../../../static/misc/majors.json');
 const Universities = require('../../../static/misc/universities.json');
 
@@ -23,6 +23,11 @@ import {
 
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
+
+const StyledDiv = styled.div`
+    background: ${props => props.theme.secondary};
+    padding: 10px;
+`;
 
 const StyledNavLink = styled(NavLink)`
     fontSize: 16px;
@@ -481,12 +486,10 @@ class Profile extends React.Component {
         return (
             <PageContainer>
                 <FullscreenColumnContainer>
-                    <SectionHeader color={this.props.theme.primary}>
-                        Profile
-                    </SectionHeader>
-                    <ProfilePreview user={this.props.userState.data.user} />
-
-                    <ApplicationSection userData={this.props.userState.data} />
+                    <StyledDiv>
+                        <ProfileSection userData={userData} />
+                        <ApplicationSection userData={userData} />
+                    </StyledDiv>
 
                     {this.renderApplicationReviewSection()}
 
