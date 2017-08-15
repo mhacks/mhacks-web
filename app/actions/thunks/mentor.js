@@ -13,7 +13,9 @@ export default class MentorThunks {
                     response.json().then(json => {
                         dispatch({
                             type: actions.LOAD_MENTOR_APPLICATION_SUCCESS,
-                            data: { application: json.confirmation },
+                            data: {
+                                mentor_application: json.mentor_application
+                            },
                             message: json.message
                         });
                     });

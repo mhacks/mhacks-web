@@ -13,7 +13,9 @@ export default class SpeakerThunks {
                     response.json().then(json => {
                         dispatch({
                             type: actions.LOAD_SPEAKER_APPLICATION_SUCCESS,
-                            data: { application: json.confirmation },
+                            data: {
+                                speaker_application: json.speaker_application
+                            },
                             message: json.message
                         });
                     });

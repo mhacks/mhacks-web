@@ -33,7 +33,7 @@ const ChildContainer = styled.div`
 `;
 
 const LabeledInput = props =>
-    <InputField labelWidth={props.labelWidth || '100px'}>
+    <InputField labelWidth={props.labelWidth || '60%'}>
         <p>{props.label}{props.required ? '*' : ''}</p>
         <ChildContainer>
             {React.Children.toArray(props.children)}

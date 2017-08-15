@@ -25,6 +25,15 @@ const Input = styled.input`
     borderRadius: 4px;
 `;
 
+const TextArea = styled.textarea`
+    padding: 10px;
+    borderColor: rgb(215, 215, 215);
+    flexGrow: 1;
+    height: 120px;
+    width: 100%;
+    borderRadius: 5px;
+`;
+
 class MHForm extends React.Component {
     constructor(props) {
         super(props);
@@ -156,9 +165,10 @@ class MHForm extends React.Component {
                     }
                     break;
                 case this.FieldTypes.ARRAY:
-                    if (formData[field.key].length > 0) {
+                    if (formData[field.key].length < 1) {
                         errors.push(field.key);
                     }
+                    break;
             }
         }
 
@@ -333,6 +343,16 @@ class MHForm extends React.Component {
                                           onChange={this.handleSelectChange(
                                               field.key
                                           )}
+                                      />
+                                  );
+                              case this.FieldTypes.ESSAY:
+                                  return this.renderLabeledInput(
+                                      field,
+                                      <TextArea
+                                          name={field.key}
+                                          value={formData[field.key]}
+                                          placeholder={field.placeholder}
+                                          onChange={this.handleAttributeChange}
                                       />
                                   );
                           }
