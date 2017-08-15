@@ -13,5 +13,7 @@ export default {
     ANNOUNCEMENTS: '/v1/announcements',
     CONFIGURATION: '/v1/configuration',
     FORM: '/v1/form/',
-    SPONSOR: '/v1/sponsor'
+    SPONSOR: '/v1/sponsor',
+    MENTOR_APPLICATION: '/v1/mentor/application',
+    SPEAKER_APPLICATION: '/v1/speaker/application'
 };
