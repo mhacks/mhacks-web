@@ -3,6 +3,7 @@ var authResponses = require('./auth.js'),
     applicationResponse = require('./application.js'),
     deployResponse = require('./deploy.js'),
     shortenerResponse = require('./shortener.js'),
+    locationResponse = require('./location.js'),
     scanResponse = require('./scan.js');
 
 var Responses = {
@@ -21,5 +22,6 @@ Responses.Deploy = deployResponse;
 Responses.Application = applicationResponse;
 Responses.Shortener = shortenerResponse;
 Responses.Scan = scanResponse;
+Responses.Location = locationResponse;
 
 module.exports = Responses;
