@@ -40,8 +40,7 @@ class MHForm extends React.Component {
 
         const initialState = {
             errorFields: [],
-            formData: {},
-            firstLoad: false
+            formData: {}
         };
 
         this.FieldTypes = props.FieldTypes;
@@ -81,14 +80,10 @@ class MHForm extends React.Component {
     componentWillReceiveProps(nextProps) {
         var formData = {};
 
-        if (!this.state.firstLoad) {
-            for (const field in nextProps.schema) {
-                var defaultValue = this.getFieldDefault(
-                    nextProps.schema[field]
-                );
-                if (defaultValue !== undefined) {
-                    formData[field] = defaultValue;
-                }
+        for (const field in nextProps.schema) {
+            var defaultValue = this.getFieldDefault(nextProps.schema[field]);
+            if (defaultValue !== undefined) {
+                formData[field] = defaultValue;
             }
         }
 
@@ -96,8 +91,7 @@ class MHForm extends React.Component {
             formData: {
                 ...this.state.formData,
                 ...formData
-            },
-            firstLoad: true
+            }
         });
     }
 
@@ -165,10 +159,9 @@ class MHForm extends React.Component {
                     }
                     break;
                 case this.FieldTypes.ARRAY:
-                    if (formData[field.key].length < 1) {
+                    if (formData[field.key].length > 0) {
                         errors.push(field.key);
                     }
-                    break;
             }
         }
 
