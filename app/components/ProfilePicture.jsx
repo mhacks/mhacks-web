@@ -10,7 +10,8 @@ export default class ProfilePicture extends React.Component {
         super(props);
 
         this.state = {
-            profilePicture: this.props.avatars[0] || ''
+            profilePicture: this.props.avatars[0] || '',
+            counter: 0
         };
 
         this.handleImageError = this.handleImageError.bind(this);
@@ -18,9 +19,11 @@ export default class ProfilePicture extends React.Component {
 
     handleImageError() {
         var avatars = this.props.avatars;
-        var fallback = avatars[avatars.length - 1];
+        var counter = this.state.counter + 1
+        var next = avatars[counter];
         this.setState({
-            profilePicture: fallback
+            profilePicture: next,
+            counter: counter
         });
     }
 
