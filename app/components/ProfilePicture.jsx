@@ -19,7 +19,7 @@ export default class ProfilePicture extends React.Component {
 
     handleImageError() {
         var avatars = this.props.avatars;
-        var counter = this.state.counter + 1
+        var counter = this.state.counter + 1;
         var next = avatars[counter];
         this.setState({
             profilePicture: next,
