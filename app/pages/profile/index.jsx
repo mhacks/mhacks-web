@@ -490,17 +490,10 @@ class Profile extends React.Component {
         return (
             <PageContainer>
                 <FullscreenColumnContainer>
-<<<<<<< 60f95a24976f69649c11b60f2aa19899e4668e10:app/pages/profile/index.jsx
                     <StyledDiv>
                         <ProfileSection userData={userData} />
                         <ApplicationSection userData={userData} />
                     </StyledDiv>
-=======
-                    <SectionHeader color={this.props.theme.primary}>
-                        Profile
-                    </SectionHeader>
-                    <ProfilePreview user={this.props.userState.data.user} />
->>>>>>> Added basic frame for dashboard:app/pages/profile/index.jsx
 
                     {this.renderApplicationReviewSection()}
 
