@@ -16,13 +16,14 @@ import {
     HomePage,
     Login,
     Logout,
-    Profile,
+    EditProfile,
     Apply,
     BlackoutPage,
     ReaderPage,
     Confirm,
     MentorApply,
-    SpeakerApply
+    SpeakerApply,
+    Dashboard
 } from './pages';
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';
@@ -116,7 +117,18 @@ class AppProvider extends React.Component {
                                 path={routes.PROFILE}
                                 render={() => {
                                     if (this.getMetadata().isLoggedIn) {
-                                        return <Profile />;
+                                        return <EditProfile />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.DASHBOARD}
+                                render={() => {
+                                    if (this.getMetadata().isLoggedIn) {
+                                        return <Dashboard />;
                                     }
 
                                     return <Redirect to={routes.LOGIN} />;

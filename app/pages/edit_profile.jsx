@@ -2,15 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ProfileThunks } from '../../actions';
-import { FieldTypes, ProfileFields } from '../../constants/forms';
-import { routes } from '../../constants';
+import { ProfileThunks } from '../actions';
+import { FieldTypes, ProfileFields } from '../constants/forms';
+import { routes } from '../constants';
 import Autocomplete from 'react-autocomplete';
-import { getUserMetadata } from '../../util/user.js';
-import ApplicationSection from './application_section.jsx';
-import ProfileSection from './profile_section.jsx';
-const Majors = require('../../../static/misc/majors.json');
-const Universities = require('../../../static/misc/universities.json');
+import { getUserMetadata } from '../util/user.js';
+const Majors = require('../../static/misc/majors.json');
+const Universities = require('../../static/misc/universities.json');
 
 import {
     PageContainer,
@@ -19,15 +17,10 @@ import {
     Input,
     LabeledInput,
     RoundedButton
-} from '../../components';
+} from '../components';
 
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
-
-const StyledDiv = styled.div`
-    background: ${props => props.theme.secondary};
-    padding: 10px;
-`;
 
 const StyledNavLink = styled(NavLink)`
     fontSize: 16px;
@@ -135,7 +128,7 @@ const autocompleteWrapperStyle = {
     position: 'relative'
 };
 
-class Profile extends React.Component {
+class EditProfile extends React.Component {
     constructor(props) {
         super(props);
 
@@ -490,11 +483,6 @@ class Profile extends React.Component {
         return (
             <PageContainer>
                 <FullscreenColumnContainer>
-                    <StyledDiv>
-                        <ProfileSection userData={userData} />
-                        <ApplicationSection userData={userData} />
-                    </StyledDiv>
-
                     {this.renderApplicationReviewSection()}
 
                     <SectionHeader color={this.props.theme.primary}>
@@ -819,4 +807,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps)(EditProfile);

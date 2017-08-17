@@ -216,7 +216,12 @@ class HeaderLinks extends React.Component {
                     : null}
                 {isLoggedIn
                     ? <StyledNavLink to={routes.PROFILE} color={color}>
-                          Profile
+                          Edit Profile
+                      </StyledNavLink>
+                    : null}
+                {isLoggedIn
+                    ? <StyledNavLink to={routes.DASHBOARD} color={color}>
+                          Dashboard
                       </StyledNavLink>
                     : null}
                 {isLoggedIn
