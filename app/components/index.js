@@ -12,6 +12,8 @@ import LabeledTextarea from './LabeledTextarea.jsx';
 import PageContainer from './PageContainer.jsx';
 import Countdown from './Countdown.jsx';
 import ProfilePicture from './ProfilePicture.jsx';
+import MHForm from './MHForm.jsx';
+import Input from './Input.jsx';
 
 export {
     TextSubmit,
@@ -27,5 +29,7 @@ export {
     LabeledTextarea,
     PageContainer,
     Countdown,
-    ProfilePicture
+    ProfilePicture,
+    MHForm,
+    Input
 };
