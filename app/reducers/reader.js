@@ -1,4 +1,4 @@
-import { reduxActions } from '../constants';
+import { actions } from '../actions';
 
 const initialState = {
     fetching: false,
@@ -11,7 +11,7 @@ const initialState = {
 
 export function readerState(state = initialState, action) {
     switch (action.type) {
-        case reduxActions.LOAD_APPLICATIONS_REQUEST:
+        case actions.LOAD_APPLICATIONS_REQUEST:
             return {
                 ...state,
                 fetching: true,
@@ -19,7 +19,7 @@ export function readerState(state = initialState, action) {
                 error: null
             };
 
-        case reduxActions.LOAD_APPLICATIONS_ERROR:
+        case actions.LOAD_APPLICATIONS_ERROR:
             return {
                 ...state,
                 fetching: false,
@@ -28,7 +28,7 @@ export function readerState(state = initialState, action) {
                 message: action.message
             };
 
-        case reduxActions.LOAD_APPLICATIONS_SUCCESS:
+        case actions.LOAD_APPLICATIONS_SUCCESS:
             return {
                 ...state,
                 fetching: false,
@@ -36,6 +36,45 @@ export function readerState(state = initialState, action) {
                 data: {
                     ...state.data,
                     applications: action.data
+                },
+                message: action.message
+            };
+
+        case actions.REVIEW_APPLICATIONS_SUCCESS: {
+            const { reimbursement, score, status } = action.data;
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    applications: state.data.applications.map(application => {
+                        if (
+                            action.data.users.indexOf(application.user) === -1
+                        ) {
+                            return application;
+                        }
+                        return {
+                            ...application,
+                            reimbursement,
+                            score,
+                            status
+                        };
+                    })
+                }
+            };
+        }
+
+        case actions.LOAD_READER_FORM_SUCCESS:
+            var form = state.data.form || {};
+            form[action.data.form_name] = action.data.form;
+
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    form,
+                    FieldTypes: action.data.FieldTypes
                 },
                 message: action.message
             };

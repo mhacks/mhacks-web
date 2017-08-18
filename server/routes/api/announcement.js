@@ -59,9 +59,10 @@ router.post('/', authMiddleware('admin', 'api'), function(req, res) {
                 isApproved: req.body.isApproved,
                 isSent: req.body.isSent
             })
-                .then(() => {
+                .then(announcement => {
                     res.send({
-                        status: true
+                        status: true,
+                        announcement: announcement
                     });
                 })
                 .catch(err => {

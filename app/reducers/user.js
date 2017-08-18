@@ -1,14 +1,14 @@
-import { reduxActions } from '../constants';
+import { actions } from '../actions';
 import { initialUserState } from './initial_states.js';
 
 export function userState(state = initialUserState, action) {
     switch (action.type) {
         // Handled separately as we optimistically update
-        case reduxActions.LOGOUT_REQUEST:
+        case actions.LOGOUT_REQUEST:
             return initialUserState;
 
-        case reduxActions.REGISTER_REQUEST:
-        case reduxActions.LOGIN_REQUEST:
+        case actions.REGISTER_REQUEST:
+        case actions.LOGIN_REQUEST:
             return {
                 ...state,
                 fetching: true,
@@ -16,8 +16,8 @@ export function userState(state = initialUserState, action) {
                 error: null
             };
 
-        case reduxActions.REGISTER_ERROR:
-        case reduxActions.LOGIN_ERROR:
+        case actions.REGISTER_ERROR:
+        case actions.LOGIN_ERROR:
             return {
                 ...state,
                 fetching: false,
@@ -26,8 +26,8 @@ export function userState(state = initialUserState, action) {
                 message: action.message
             };
 
-        case reduxActions.REGISTER_SUCCESS:
-        case reduxActions.LOGIN_SUCCESS:
+        case actions.REGISTER_SUCCESS:
+        case actions.LOGIN_SUCCESS:
             return {
                 ...state,
                 fetching: false,
@@ -39,7 +39,7 @@ export function userState(state = initialUserState, action) {
                 message: action.message
             };
 
-        case reduxActions.LOAD_PROFILE_REQUEST:
+        case actions.LOAD_PROFILE_REQUEST:
             return {
                 ...state,
                 fetching: true,
@@ -47,7 +47,7 @@ export function userState(state = initialUserState, action) {
                 error: null
             };
 
-        case reduxActions.LOAD_PROFILE_ERROR:
+        case actions.LOAD_PROFILE_ERROR:
             return {
                 ...state,
                 fetching: false,
@@ -56,7 +56,7 @@ export function userState(state = initialUserState, action) {
                 message: action.message
             };
 
-        case reduxActions.LOAD_PROFILE_SUCCESS:
+        case actions.LOAD_PROFILE_SUCCESS:
             return {
                 ...state,
                 fetching: false,
@@ -68,7 +68,7 @@ export function userState(state = initialUserState, action) {
                 message: action.message
             };
 
-        case reduxActions.UPDATE_PROFILE_REQUEST:
+        case actions.UPDATE_PROFILE_REQUEST:
             return {
                 ...state,
                 fetching: true,
@@ -76,7 +76,7 @@ export function userState(state = initialUserState, action) {
                 error: null
             };
 
-        case reduxActions.UPDATE_PROFILE_ERROR:
+        case actions.UPDATE_PROFILE_ERROR:
             return {
                 ...state,
                 fetching: false,
@@ -85,7 +85,7 @@ export function userState(state = initialUserState, action) {
                 message: action.message
             };
 
-        case reduxActions.UPDATE_PROFILE_SUCCESS:
+        case actions.UPDATE_PROFILE_SUCCESS:
             return {
                 ...state,
                 fetching: false,
@@ -99,7 +99,7 @@ export function userState(state = initialUserState, action) {
                 message: action.message
             };
 
-        case reduxActions.UPLOAD_APPLICATION_SUCCESS:
+        case actions.UPLOAD_APPLICATION_SUCCESS:
             return {
                 ...state,
                 fetching: false,
@@ -112,7 +112,7 @@ export function userState(state = initialUserState, action) {
                 }
             };
 
-        case reduxActions.LOAD_CONFIGURATION_SUCCESS:
+        case actions.LOAD_CONFIGURATION_SUCCESS:
             return {
                 ...state,
                 fetching: false,
@@ -122,6 +122,195 @@ export function userState(state = initialUserState, action) {
                     ...action.data.userData
                 },
                 message: action.message
+            };
+
+        case actions.UPLOAD_CONFIRMATION_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data,
+                    user: {
+                        ...state.data.user,
+                        isConfirmed: true
+                    }
+                }
+            };
+
+        case actions.UPLOAD_CONFIRMATION_FAILED:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data,
+                    user: {
+                        ...state.data.user,
+                        isConfirmed: false
+                    }
+                }
+            };
+
+        case actions.LOAD_CONFIRMATION_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_CONFIRMATION_FORM_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_CONFIRMATION_FORM_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                fetched: false,
+                error: action.error,
+                message: action.message
+            };
+        case actions.LOAD_APPLICATIONS_FORM_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_APPLICATIONS_FORM_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                fetched: false,
+                error: action.error,
+                message: action.message
+            };
+        case actions.LOAD_MENTOR_APPLICATION_FORM_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_MENTOR_APPLICATION_FORM_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                fetched: false,
+                error: action.error,
+                message: action.message
+            };
+        case actions.LOAD_MENTOR_APPLICATION_FORM_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+                fetched: false,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_MENTOR_APPLICATION_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                fetched: false,
+                error: action.error,
+                message: action.message
+            };
+        case actions.LOAD_MENTOR_APPLICATION_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_MENTOR_APPLICATION_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+                fetched: false,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_SPEAKER_APPLICATION_FORM_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_SPEAKER_APPLICATION_FORM_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                fetched: false,
+                error: action.error,
+                message: action.message
+            };
+        case actions.LOAD_SPEAKER_APPLICATION_FORM_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+                fetched: false,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_SPEAKER_APPLICATION_ERROR:
+            return {
+                ...state,
+                fetching: false,
+                fetched: false,
+                error: action.error,
+                message: action.message
+            };
+        case actions.LOAD_SPEAKER_APPLICATION_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
+            };
+        case actions.LOAD_SPEAKER_APPLICATION_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+                fetched: false,
+                data: {
+                    ...state.data,
+                    ...action.data
+                }
             };
         default:
             return state;

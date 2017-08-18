@@ -1,11 +1,11 @@
-import { ConfigurationPureActions } from '../pure';
+import { actions } from '../../actions';
 import { ConfigurationRequests } from '../requests';
 import { ProfileFields } from '../../constants/forms';
 
 export default class ConfigurationThunks {
     static loadConfiguration() {
         return dispatch => {
-            dispatch(ConfigurationPureActions.loadConfigurationRequest());
+            dispatch({ type: actions.LOAD_CONFIGURATION_REQUEST });
 
             const token = localStorage.getItem('jwt');
 
@@ -37,9 +37,10 @@ export default class ConfigurationThunks {
                                         user.groups.indexOf('sponsor') !== -1,
                                 user: {
                                     name: user.full_name,
-                                    groups: user.groups,
                                     avatars: user.avatar,
-                                    isResumeUploaded: user.resume_uploaded
+                                    isResumeUploaded: user.resume_uploaded,
+                                    isConfirmed: user.is_confirmed,
+                                    ...user
                                 }
                             };
 
@@ -50,22 +51,20 @@ export default class ConfigurationThunks {
                             }
                         }
 
-                        dispatch(
-                            ConfigurationPureActions.loadConfigurationSuccess(
-                                state,
-                                json.message
-                            )
-                        );
+                        dispatch({
+                            type: actions.LOAD_CONFIGURATION_SUCCESS,
+                            data: state,
+                            message: json.message
+                        });
                     });
                 } else {
                     response.json().then(json => {
-                        dispatch(
-                            ConfigurationPureActions.loadConfigurationError(
-                                token,
-                                response.status,
-                                json.message
-                            )
-                        );
+                        dispatch({
+                            type: actions.LOAD_CONFIGURATION_ERROR,
+                            data: token,
+                            error: response.status,
+                            message: json.message
+                        });
                     });
                 }
             });

@@ -6,17 +6,17 @@ if (config.newrelic_enabled) {
 }
 
 var http = require('http'),
-    mongoose = require('./server/db/index.js'),
+    mongoose = require('./server/db/index.js'), // eslint-disable-line
     morgan = require('morgan'),
     express = require('express'),
     app = express(),
     server = http.createServer(app),
-    io = require('socket.io')(server, {wsEngine: 'uws'}),
+    io = require('socket.io')(server, { wsEngine: 'uws' }),
     session = require('express-session'),
     bodyParser = require('body-parser'),
     MongoStore = require('connect-mongo')(session),
     csrf = require('csurf'),
-    csrfProtection = csrf(),
+    csrfProtection = csrf(), // eslint-disable-line
     apiRouter = require('./server/routes/api.js'),
     indexRouter = require('./server/routes/index.js'),
     shortenerRouter = require('./server/routes/shortener.js'),
@@ -24,7 +24,11 @@ var http = require('http'),
 
 // Force https
 app.use(function(req, res, next) {
-    if (!req.secure && req.get('x-forwarded-proto') !== 'https' && app.get('env') !== 'development') {
+    if (
+        !req.secure &&
+        req.get('x-forwarded-proto') !== 'https' &&
+        app.get('env') !== 'development'
+    ) {
         if (config.service === 'shortener') {
             return res.redirect(config.shortener_host + req.url);
         } else {
@@ -35,21 +39,29 @@ app.use(function(req, res, next) {
 });
 
 // Logging
-morgan.token('remote-addr', function(req, res) {
+morgan.token('remote-addr', function(req) {
     return req.headers['x-forwarded-for'] || req.ip;
 });
 app.use(morgan('combined'));
 
 // Request parsers
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(
+    bodyParser.urlencoded({
+        extended: true
+    })
+);
 app.use(bodyParser.json());
 
 // Server side views (if used)
 app.set('view engine', 'pug');
 app.set('views', './server/views');
-app.set('view cache', false);
+app.disable('view cache');
+
+// Pretty API Responses
+app.set('json spaces', 4);
+
+// Disable x-powered-by
+app.disable('x-powered-by');
 
 // Initialize session
 var sessionStore = new MongoStore({
@@ -60,14 +72,19 @@ var sessionMiddleware = session({
     secret: config.secret,
     store: sessionStore,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        maxAge: config.token_expiration * 24 * 60 * 60 * 1000
+    }
 });
 
 app.use(sessionMiddleware);
 
-io.use(sharedsession(sessionMiddleware, {
-    autoSave: true
-}));
+io.use(
+    sharedsession(sessionMiddleware, {
+        autoSave: true
+    })
+);
 
 // Set an xsrf-token for the session if it's enabled
 app.use(function(req, res, next) {
@@ -104,20 +121,24 @@ if (config.service === 'shortener') {
         app.use(historyApiFallback());
         app.use(webpackMiddlewareInstance);
 
-        app.use(webpackHotMiddleware(webpackCompiler, {
-            log: console.log
-        }));
+        app.use(
+            webpackHotMiddleware(webpackCompiler, {
+                log: console.log
+            })
+        );
     } else {
         // Static files middleware
         app.use(express.static('build'));
 
-        app.use(function(req, res, next) {
+        app.use(function(req, res) {
             res.sendFile(__dirname + '/build/index.html');
         });
     }
+
+    require('./server/interactors/setup.js');
 }
 
-var ioHandler = require('./server/socketio/index.js')(io);
+require('./server/socketio/index.js')(io);
 
 // Now we start the server
 server.listen(config.server_port);

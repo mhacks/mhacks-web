@@ -1,17 +1,11 @@
-import SubscribeRequests from './subscribe.js';
-import AuthRequests from './auth.js';
-import ProfileRequests from './profile.js';
-import ApplicationRequests from './application.js';
-import AnnouncementsRequests from './announcements.js';
-import ConfigurationRequests from './configuration.js';
-import ReaderRequests from './reader.js';
-
-export {
-    SubscribeRequests,
-    AuthRequests,
-    ProfileRequests,
-    ApplicationRequests,
-    AnnouncementsRequests,
-    ConfigurationRequests,
-    ReaderRequests
-};
+export { default as SubscribeRequests } from './subscribe.js';
+export { default as AuthRequests } from './auth.js';
+export { default as ProfileRequests } from './profile.js';
+export { default as ApplicationRequests } from './application.js';
+export { default as AnnouncementsRequests } from './announcements.js';
+export { default as ConfigurationRequests } from './configuration.js';
+export { default as ReaderRequests } from './reader.js';
+export { default as ConfirmationRequests } from './confirmation.js';
+export { default as SponsorRequests } from './sponsor.js';
+export { default as MentorRequests } from './mentor.js';
+export { default as SpeakerRequests } from './speaker.js';

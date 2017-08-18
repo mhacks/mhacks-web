@@ -1,5 +1,4 @@
 import TextSubmit from './TextSubmit.jsx';
-import InputText from './InputText.jsx';
 import Container from './Container.jsx';
 import VideoPlayer from './VideoPlayer.jsx';
 import ExpandingItem from './ExpandingItem.jsx';
@@ -12,10 +11,11 @@ import LabeledTextarea from './LabeledTextarea.jsx';
 import PageContainer from './PageContainer.jsx';
 import Countdown from './Countdown.jsx';
 import ProfilePicture from './ProfilePicture.jsx';
+import MHForm from './MHForm.jsx';
+import Input from './Input.jsx';
 
 export {
     TextSubmit,
-    InputText,
     Container,
     VideoPlayer,
     ExpandingItem,
@@ -27,5 +27,7 @@ export {
     LabeledTextarea,
     PageContainer,
     Countdown,
-    ProfilePicture
+    ProfilePicture,
+    MHForm,
+    Input
 };

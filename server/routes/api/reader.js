@@ -21,7 +21,7 @@ router.post('/', function(req, res) {
                 }
             ).catch(err => {
                 console.error(err);
-                res.send(500).send({
+                res.status(500).send({
                     status: false,
                     message: Responses.UNKNOWN_ERROR
                 });
@@ -32,7 +32,7 @@ router.post('/', function(req, res) {
             status: true
         });
     } else {
-        res.send(401).send({
+        res.status(401).send({
             status: false,
             message: Responses.MISSING_PARAMETERS
         });

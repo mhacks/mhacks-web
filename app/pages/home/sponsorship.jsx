@@ -6,17 +6,9 @@ import {
     SectionHeader,
     Brick
 } from './section_components.jsx';
-import theme from '../../styles/theme.js';
 
-const BloombergImg = require('../../../static/logos/bloomberg.png');
-const DRWImg = require('../../../static/logos/drw.png');
-const FacebookImg = require('../../../static/logos/facebook.png');
-const ICSImg = require('../../../static/logos/ics.png');
-const LTSImg = require('../../../static/logos/lts.png');
-const LyftImg = require('../../../static/logos/lyft.png');
-const MicrosoftImg = require('../../../static/logos/microsoft.png');
-const NSAImg = require('../../../static/logos/nsa.png');
-const PalantirImg = require('../../../static/logos/palantir.jpg');
+import SponsorLogos from '../../components/SponsorLogos.jsx';
+import theme from '../../styles/theme.js';
 
 const Wrapper = styled.div`
     backgroundColor: white;
@@ -62,30 +54,6 @@ const Link = styled.a`
     color: ${theme.secondary};
 `;
 
-const SponsorsFlexBox = styled.div`
-    display: flex;
-    flexWrap: wrap;
-    maxWidth: 850px;
-    justifyContent: center;
-`;
-
-const LogoWrapper = styled.div`
-    margin: 25px;
-`;
-
-const LogoImg = styled.img`
-    height: 75px;
-    width: auto;
-    maxWidth: 100%;
-`;
-
-const Logo = props =>
-    <LogoWrapper>
-        <a href={props.href}>
-            <LogoImg src={props.src} />
-        </a>
-    </LogoWrapper>;
-
 class Sponsorship extends React.Component {
     render() {
         return (
@@ -128,32 +96,7 @@ class Sponsorship extends React.Component {
                         </QuoteWrapper>
                     </FlexBox>
 
-                    <SponsorsFlexBox>
-                        <Logo src={BloombergImg} />
-                        <Logo src={DRWImg} href="https://drw.com/evolve" />
-                        <Logo
-                            src={FacebookImg}
-                            href="https://www.facebook.com/careers/"
-                        />
-                        <Logo
-                            src={ICSImg}
-                            href="http://www.controls-ics.com/"
-                        />
-                        <Logo src={LTSImg} href="https://www.ltsnet.net/" />
-                        <Logo src={LyftImg} href="https://www.lyft.com/jobs" />
-                        <Logo
-                            src={MicrosoftImg}
-                            href="https://careers.microsoft.com/"
-                        />
-                        <Logo
-                            src={NSAImg}
-                            href="https://www.intelligencecareers.gov/nsa/"
-                        />
-                        <Logo
-                            src={PalantirImg}
-                            href="https://www.palantir.com/careers/"
-                        />
-                    </SponsorsFlexBox>
+                    <SponsorLogos />
                 </CenteredContainer>
             </Wrapper>
         );

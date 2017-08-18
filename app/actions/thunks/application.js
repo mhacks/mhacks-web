@@ -1,38 +1,32 @@
-import { ApplicationPureActions } from '../pure';
+import { actions } from '../../actions';
 import { ApplicationRequests } from '../requests';
 
 export default class ApplicationThunks {
     static loadApplication() {
         return dispatch => {
-            dispatch(ApplicationPureActions.loadApplicationRequest());
-
+            dispatch({ type: actions.LOAD_PROFILE_REQUEST });
             const token = localStorage.getItem('jwt');
 
             return ApplicationRequests.loadApplication(token).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         const { application } = json;
+                        const state = { app: application };
 
-                        const state = {
-                            app: application
-                        };
-
-                        dispatch(
-                            ApplicationPureActions.loadApplicationSuccess(
-                                state,
-                                json.message
-                            )
-                        );
+                        dispatch({
+                            type: actions.LOAD_PROFILE_SUCCESS,
+                            data: state,
+                            message: json.message
+                        });
                     });
                 } else {
                     response.json().then(json => {
-                        dispatch(
-                            ApplicationPureActions.loadApplicationError(
-                                token,
-                                response.status,
-                                json.message
-                            )
-                        );
+                        dispatch({
+                            type: actions.LOAD_PROFILE_ERROR,
+                            data: token,
+                            error: response.status,
+                            message: json.message
+                        });
                     });
                 }
             });
@@ -41,9 +35,10 @@ export default class ApplicationThunks {
 
     static uploadApplication(application, files) {
         return dispatch => {
-            dispatch(
-                ApplicationPureActions.uploadApplicationRequest(application)
-            );
+            dispatch({
+                type: actions.UPLOAD_APPLICATION_REQUEST,
+                data: application
+            });
 
             const token = localStorage.getItem('jwt');
 
@@ -54,24 +49,52 @@ export default class ApplicationThunks {
             ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
-                        dispatch(
-                            ApplicationPureActions.uploadApplicationSuccess(
-                                {
-                                    isApplicationSubmitted: true,
-                                    app: json.app
-                                },
-                                json.message
-                            )
-                        );
+                        dispatch({
+                            type: actions.UPLOAD_APPLICATION_SUCCESS,
+                            data: {
+                                isApplicationSubmitted: true,
+                                app: json.app
+                            },
+                            message: json.message
+                        });
                     });
                 } else {
                     response.json().then(json => {
-                        dispatch(
-                            ApplicationPureActions.uploadApplicationError(
-                                response.status,
-                                json.message
-                            )
-                        );
+                        dispatch({
+                            type: actions.UPLOAD_APPLICATION_ERROR,
+                            error: response.status,
+                            message: json.message
+                        });
+                    });
+                }
+            });
+        };
+    }
+
+    static loadForm() {
+        return dispatch => {
+            dispatch({
+                type: actions.LOAD_APPLICATIONS_FORM_REQUEST
+            });
+
+            const token = localStorage.getItem('jwt');
+
+            return ApplicationRequests.loadForm(token).then(response => {
+                if (response.status == 200) {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.LOAD_APPLICATIONS_FORM_SUCCESS,
+                            data: { form: json.form, FieldTypes: json.types },
+                            message: json.message
+                        });
+                    });
+                } else {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.LOAD_APPLICATIONS_FORM_ERROR,
+                            error: json.status,
+                            message: json.message
+                        });
                     });
                 }
             });

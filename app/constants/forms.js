@@ -6,7 +6,8 @@ export const FieldTypes = {
     INTEGER: 4,
     ESSAY: 5,
     BOOLEAN: 6,
-    SECTIONHEADER: 7
+    SECTIONHEADER: 7,
+    MULTI: 8
 };
 
 export const ProfileFields = {
@@ -23,8 +24,277 @@ export const ProfileFields = {
     birthday: FieldTypes.DATE
 };
 
+const Skills = [
+    '.Net',
+    'Android Development',
+    'Arduino',
+    'ASP',
+    'Bash',
+    'C',
+    'C#',
+    'C++',
+    'CSS',
+    'Data Testing',
+    'Database Experience',
+    'Eclipse',
+    'Hadoop',
+    'Hive',
+    'HTML',
+    'iOS Development',
+    'Java',
+    'JavaScript',
+    'JUnit',
+    'LaTeX',
+    'LINDO',
+    'Linux Development',
+    'Mac OSX Development',
+    'MATLAB',
+    'MySQL',
+    'Node.js',
+    'Objective C',
+    'Oozie',
+    'Perl',
+    'PHP',
+    'Python',
+    'R',
+    'Ruby',
+    'SASS',
+    'SQL',
+    'Sqoop',
+    'Swift',
+    'Visual C++',
+    'Web Development',
+    'Windows Development'
+];
+
+function mapArrayToOptions(array) {
+    return array.map((str, idx) => {
+        return {
+            value: idx,
+            label: str
+        };
+    });
+}
+
 const required = true;
 const optional = false;
+
+export const ApplicationReaderFiltersSchema = [
+    {
+        type: FieldTypes.SELECT,
+        label: 'Status',
+        key: 'status',
+        options: [
+            {
+                value: 'unread',
+                label: 'Unread'
+            },
+            {
+                value: 'waitlisted',
+                label: 'Waitlisted'
+            },
+            {
+                value: 'accepted',
+                label: 'Accepted'
+            }
+        ]
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Reimbursement',
+        key: 'reimbursement',
+        options: [
+            {
+                value: 'yes',
+                label: 'Yes'
+            },
+            {
+                value: 'no',
+                label: 'No'
+            }
+        ]
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Minor',
+        key: 'minor',
+        options: [
+            {
+                value: 'yes',
+                label: 'Yes'
+            },
+            {
+                value: 'no',
+                label: 'No'
+            }
+        ]
+    },
+    {
+        type: FieldTypes.TEXT,
+        label: 'Search',
+        key: 'search',
+        placeholder: 'By name, uni, email'
+    },
+    {
+        type: FieldTypes.DATE,
+        label: 'Since',
+        key: 'since'
+    }
+];
+
+export const ApplicationReaderSchema = [
+    {
+        type: FieldTypes.SECTIONHEADER,
+        title: 'Review'
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Status',
+        key: 'status',
+        default: 'unread',
+        options: [
+            {
+                value: 'unread',
+                label: 'Unread'
+            },
+            {
+                value: 'waitlisted',
+                label: 'Waitlisted'
+            },
+            {
+                value: 'accepted',
+                label: 'Accepted'
+            }
+        ]
+    },
+    {
+        type: FieldTypes.INTEGER,
+        label: 'Score',
+        key: 'score'
+    },
+    {
+        type: FieldTypes.INTEGER,
+        label: 'Reimbursement',
+        key: 'reimbursement'
+    },
+    {
+        type: FieldTypes.SUBMIT,
+        title: 'Save'
+    }
+];
+
+function range(start, end) {
+    return Array(end - start).fill().map((_, idx) => start + idx);
+}
+
+export const ConfirmAttendanceSchema = [
+    {
+        type: FieldTypes.TEXT,
+        label: 'Phone Number',
+        placeholder: '(313)867-5309',
+        key: 'phone',
+        required
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Graduation Year',
+        key: 'graduation',
+        options: range(2017, 2026)
+            .map(year => {
+                return {
+                    value: String(year),
+                    label: String(year)
+                };
+            })
+            .concat({
+                value: 'later',
+                label: '2026 or later'
+            }),
+        required
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Degree Type',
+        key: 'degree',
+        options: [
+            {
+                value: 'highschool',
+                label: 'High School'
+            },
+            {
+                value: 'bachelor',
+                label: 'Bachelors'
+            },
+            {
+                value: 'master',
+                label: 'Masters'
+            },
+            {
+                value: 'doctorate',
+                label: 'Doctorate'
+            }
+        ],
+        required
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Job Interest',
+        key: 'employment',
+        options: [
+            {
+                value: 'internship',
+                label: 'Internship'
+            },
+            {
+                value: 'fulltime',
+                label: 'Full Time'
+            },
+            {
+                value: 'coop',
+                label: 'Co-op'
+            },
+            {
+                value: 'none',
+                label: 'None'
+            }
+        ],
+        required
+    },
+    {
+        type: FieldTypes.MULTI,
+        label: 'Skills',
+        key: 'skills',
+        default: [],
+        options: mapArrayToOptions(Skills)
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Travel',
+        key: 'travel',
+        options: [
+            {
+                value: 'bus',
+                label: 'MHacks Bus'
+            },
+            {
+                value: 'driving',
+                label: 'Driving'
+            },
+            {
+                value: 'fly',
+                label: 'Flying'
+            },
+            {
+                value: 'other',
+                label: 'Other'
+            }
+        ]
+    },
+    {
+        type: FieldTypes.SUBMIT,
+        title: 'Confirm'
+    }
+];
 
 export const HackerApplicationFields = [
     {
