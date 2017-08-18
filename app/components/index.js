@@ -13,6 +13,8 @@ import Countdown from './Countdown.jsx';
 import ProfilePicture from './ProfilePicture.jsx';
 import MHForm from './MHForm.jsx';
 import Input from './Input.jsx';
+import InputText from './InputText';
+import SponsorLogos from './SponsorLogos';
 
 export {
     TextSubmit,
@@ -28,6 +30,8 @@ export {
     PageContainer,
     Countdown,
     ProfilePicture,
+    InputText,
+    SponsorLogos,
     MHForm,
     Input
 };
