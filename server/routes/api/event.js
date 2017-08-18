@@ -1,47 +1,61 @@
 var router = require('express').Router(),
     Responses = require('../../responses/api'),
     authMiddleware = require('../../middleware/auth.js'),
-    Location = require('../../db/model/Location.js');
+    Location = require('../../db/model/Location.js'),
+    Event = require('../../db/model/Event.js');
 
 router.post('/', authMiddleware('admin', 'api', true), function(req, res) {
-    if (!req.body.name || !req.body.longitude || !req.body.latitude) {
+    if (
+        !req.body.name ||
+        !req.body.desc ||
+        !req.body.location ||
+        !req.body.startDate
+    ) {
         res.send({
             status: false,
             message: Responses.MISSING_PARAMETERS
         });
         return;
     }
-    Location.find()
+    Event.find()
         .byName(req.body.name)
         .exec()
-        .then(location => {
-            if (location) {
-                return location
-                    .updateFields({
-                        longitude: req.body.longitude,
-                        latitude: req.body.latitude
+        .then(event => {
+            if (event) {
+                return Location.find()
+                    .byName(req.body.location)
+                    .exec()
+                    .then(location => {
+                        req.body.location = location._id;
+                        return event.updateFields(req.body);
                     })
                     .then(saved => {
                         res.status(200).send({
                             status: true,
                             message: Responses.UPDATED,
-                            location: saved
+                            event: saved
                         });
                     });
             } else {
-                return Location.create({
-                    name: req.body.name,
-                    longitude: req.body.longitude,
-                    latitude: req.body.latitude
-                })
-                    .then(loc => {
-                        return loc.save();
+                return Location.find()
+                    .byName(req.body.location)
+                    .exec()
+                    .then(location => {
+                        req.body.location = location._id;
+                        return Event.create({
+                            name: req.body.name,
+                            longitude: req.body.longitude,
+                            latitude: req.body.latitude
+                        });
+                    })
+                    .then(event => {
+                        return event.save();
                     })
                     .then(saved => {
                         res.status(200).send({
                             status: true,
                             message: Responses.CREATED,
-                            location: saved
+                            event: saved
                         });
                     });
             }
@@ -55,16 +69,16 @@ router.post('/', authMiddleware('admin', 'api', true), function(req, res) {
         });
 });
 
-// Handles /v1/location/<location_name>
+// Handles /v1/event/<event_name>
 router.get('/:name', function(req, res) {
-    Location.find()
+    Event.find()
         .byName(req.params.name)
         .exec()
-        .then(location => {
-            if (location) {
+        .then(event => {
+            if (event) {
                 res.send({
                     status: true,
-                    location: location
+                    event: event
                 });
             } else {
                 res.status(401).send({
@@ -82,16 +96,16 @@ router.get('/:name', function(req, res) {
         });
 });
 
-// Handles /v1/location/
+// Handles /v1/event/
 router.get('/', function(req, res) {
     console.log(req.params);
-    Location.find({})
+    Event.find({})
         .exec()
-        .then(locations => {
-            if (locations) {
+        .then(events => {
+            if (events) {
                 res.send({
                     status: true,
-                    locations: locations
+                    events: events
                 });
             } else {
                 res.status(401).send({

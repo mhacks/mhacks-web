@@ -14,17 +14,17 @@ schema.query.byName = function(name) {
     });
 };
 
-schema.method.getCoordinates = function() {
+schema.methods.getCoordinates = function() {
     return {
         latitude: this.latitude,
         longitude: this.longitude
     };
 };
 
-schema.method.updateLocation = function(lat, lng) {
-    this.latitude = lat;
-    this.longitude = lng;
-
+schema.methods.updateFields = function(fields) {
+    for (var param in fields) {
+        this[param] = fields[param];
+    }
     return this.save();
 };
 
