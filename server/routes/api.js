@@ -35,7 +35,7 @@ router.use('/reader', authMiddleware('admin reader', 'api'), readerHandler);
 router.use('/push', pushHandler);
 router.use('/scan', scanHandler);
 router.use('/sponsor', sponsorHandler);
-router.use('/mentor', mentorHandler);
+router.use('/mentor', authMiddleware('any', 'api'), mentorHandler);
 router.use('/speaker', authMiddleware('any', 'api'), speakerHandler);
 router.use('/location', locationHandler), router.use('/event', eventHandler);
 
