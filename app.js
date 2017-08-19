@@ -141,4 +141,14 @@ if (config.service === 'shortener') {
 require('./server/socketio/index.js')(io);
 
 // Now we start the server
-server.listen(config.server_port);
+if (config.start_server) {
+    server.listen(config.server_port);
+}
+
+module.exports = {
+    mongoose,
+    express,
+    app,
+    server,
+    io
+};

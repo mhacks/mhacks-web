@@ -163,6 +163,7 @@ function check_types(prop_val, groups) {
             val_types.type = config.form_types.BUFFER;
             break;
         case Array:
+        case 'array':
             val_types.type = config.form_types.ARRAY;
             break;
         case 'essay':
@@ -173,9 +174,6 @@ function check_types(prop_val, groups) {
             break;
         case 'submit':
             val_types.type = config.form_types.SUBMIT;
-            break;
-        case 'array':
-            val_types.type = config.form_types.ARRAY;
             break;
         case 'file':
             val_types.type = config.form_types.FILE;
