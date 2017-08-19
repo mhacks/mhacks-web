@@ -39,13 +39,14 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 const StyledSelect = styled.select`
-        background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+) no-repeat 95% 50%;
-        paddingLeft: 10px;
-        appearance: none;
-        borderColor: rgb(215, 215, 215);
-        flexGrow: 1;
-        height: 36px;
-        width: 100%;
+    background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+)
+        no-repeat 95% 50%;
+    paddingLeft: 10px;
+    appearance: none;
+    borderColor: rgb(215, 215, 215);
+    flexGrow: 1;
+    height: 36px;
+    width: 100%;
 `;
 
 const FullscreenColumnContainer = styled.div`
@@ -60,9 +61,7 @@ const Flexer = styled.div`
     flexDirection: column;
 `;
 
-const InputContainer = styled.div`
-    marginBottom: 30px;
-`;
+const InputContainer = styled.div`marginBottom: 30px;`;
 
 const ButtonGroup = styled.div`
     display: flex;
@@ -85,13 +84,9 @@ const SubsectionHeader = styled.h3`
     margin: 26px 0 0 0;
 `;
 
-const FileUploadContainer = styled.div`
-    marginTop: 10px;
-`;
+const FileUploadContainer = styled.div`marginTop: 10px;`;
 
-const AlertContainer = styled.div`
-    marginTop: 30px;
-`;
+const AlertContainer = styled.div`marginTop: 30px;`;
 
 const Subhead = styled.p`
     margin: 20px 0 0 0;
@@ -116,7 +111,7 @@ const autocompleteMenuStyle = {
             window.innerHeight || 0
         ) /
             2 +
-            'px',
+        'px',
     left: '20px',
     top: '45px',
     overflow: 'auto',
@@ -321,15 +316,14 @@ class Profile extends React.Component {
                     </SectionHeader>
                     <p>
                         You should have received a verification email at{' ' + userData.email}.
-                        If not, you can
-                        request another one by clicking{' '}
+                        If not, you can request another one by clicking{' '}
                         <Link
                             onClick={this.onClickRequestEmailVerification}
                             color={this.props.theme.highlight}
                         >
                             here
-                        </Link>. After you verify your email you can
-                        continue setting up your profile!
+                        </Link>. After you verify your email you can continue
+                        setting up your profile!
                     </p>
                 </FullscreenColumnContainer>
             </PageContainer>
@@ -406,9 +400,7 @@ class Profile extends React.Component {
                 Please plan to arrive in Ann Arbor before 6pm on Friday,
                 September 22nd. Registration will begin at 4pm and end at 6pm.
                 Late registration will be available at the Help Desk. Closing
-                Ceremonies will last until about 5pm on Sunday, September 24th.{
-                    ' '
-                }
+                Ceremonies will last until about 5pm on Sunday, September 24th.{' '}
                 <br /> <br />
                 <strong>MHacks Buses</strong>: We will be sending buses to
                 several campuses across the nation, stay tuned for more details
@@ -435,9 +427,7 @@ class Profile extends React.Component {
                 <p>
                     To remain eligible for your reimbursement, you must email
                     flymhacks@umich.edu with any relevant receipts, ticket
-                    confirmations, etc. within 5 days of application acceptance.{
-                        ' '
-                    }
+                    confirmations, etc. within 5 days of application acceptance.{' '}
                     <br /> <br />If you are driving, please indicate as such on
                     the confirmation form - you will have until September 30th
                     to send a single email to flymhacks@umich.edu with all costs
@@ -511,10 +501,9 @@ class Profile extends React.Component {
                               </AlertContainer>
                             : null}
                         <Subhead>
-                            Update your profile with some info about
-                            yourself. This will be automatically
-                            populated into your application and persist
-                            through hackathons!
+                            Update your profile with some info about yourself.
+                            This will be automatically populated into your
+                            application and persist through hackathons!
                         </Subhead>
                         <Flexer>
                             <InputContainer>
@@ -739,8 +728,7 @@ class Profile extends React.Component {
                                         <option value="white">White</option>
                                         <option value="black">Black</option>
                                         <option value="am-indian-alaskan">
-                                            American Indian or Alaskan
-                                            Native
+                                            American Indian or Alaskan Native
                                         </option>
                                         <option value="asian">
                                             Asian or Pacific Islander
@@ -764,9 +752,7 @@ class Profile extends React.Component {
                                             Select
                                         </option>
                                         <option value="male">Male</option>
-                                        <option value="female">
-                                            Female
-                                        </option>
+                                        <option value="female">Female</option>
                                         <option value="non-binary">
                                             Other
                                         </option>

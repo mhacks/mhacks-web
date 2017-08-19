@@ -441,8 +441,8 @@ schema.methods.sendVerificationEmail = function() {
             {
                 confirmation_url:
                     config.host +
-                        '/v1/auth/verify/' +
-                        this.generateEmailVerificationToken(),
+                    '/v1/auth/verify/' +
+                    this.generateEmailVerificationToken(),
                 FIRST_NAME: this.full_name
                     ? this.full_name.split(' ')[0]
                     : 'Hacker'
@@ -472,8 +472,8 @@ schema.methods.sendPasswordResetEmail = function() {
             {
                 update_password_url:
                     config.host +
-                        '/auth/passwordreset/' +
-                        this.generatePasswordResetToken()
+                    '/auth/passwordreset/' +
+                    this.generatePasswordResetToken()
             },
             config.password_reset_email_subject,
             this.email,

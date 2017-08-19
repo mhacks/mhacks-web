@@ -7,9 +7,7 @@ import { routes } from '../constants';
 import { TabGroup, RoundedButton, Alert } from '../components';
 
 /* Containers */
-const Page = styled.div`
-    margin: 80px auto 0 auto;
-`;
+const Page = styled.div`margin: 80px auto 0 auto;`;
 
 const FormContainer = styled.div`
     width: 500px;
@@ -40,9 +38,7 @@ const ButtonGroup = styled.div`
     justifyContent: space-between;
 `;
 
-const AlertContainer = styled.div`
-    marginTop: 30px;
-`;
+const AlertContainer = styled.div`marginTop: 30px;`;
 
 const LegalText = styled.p`
     fontSize: 15px;

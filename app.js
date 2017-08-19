@@ -20,7 +20,9 @@ var http = require('http'),
     apiRouter = require('./server/routes/api.js'),
     indexRouter = require('./server/routes/index.js'),
     shortenerRouter = require('./server/routes/shortener.js'),
-    sharedsession = require('express-socket.io-session');
+    sharedsession = require('express-socket.io-session'),
+    swaggerUI = require('swagger-ui-express'),
+    swaggerDoc = require('./static/docs/openapi.json');
 
 // Force https
 app.use(function(req, res, next) {
@@ -94,6 +96,8 @@ app.use(function(req, res, next) {
 
     return next();
 });
+
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
 // Other route middleware (modules in `routes/`)
 if (config.service === 'shortener') {

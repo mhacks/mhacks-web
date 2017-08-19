@@ -102,8 +102,7 @@ class Apply extends React.Component {
                     />
                     <p>
                         By applying to be a mentor, you also confirm you have
-                        read
-                        and agree to the{' '}
+                        read and agree to the{' '}
                         <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
                             MLH Code of Conduct
                         </a>, the{' '}

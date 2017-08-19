@@ -11,15 +11,15 @@ const Wrapper = styled.div`
     }
 
     input:-moz-placeholder {
-        color: ${props => props.placeholderColor} !important;  
+        color: ${props => props.placeholderColor} !important;
     }
-     
-    input::-moz-placeholder { 
-        color: ${props => props.placeholderColor} !important;  
+
+    input::-moz-placeholder {
+        color: ${props => props.placeholderColor} !important;
     }
-     
-    input:-ms-input-placeholder {  
-        color: ${props => props.placeholderColor} !important;  
+
+    input:-ms-input-placeholder {
+        color: ${props => props.placeholderColor} !important;
     }
 `;
 

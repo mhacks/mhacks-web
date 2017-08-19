@@ -13,7 +13,8 @@
         "build": "webpack --progress --colors",
         "test": "yarn run lint && yarn run prettier && yarn run build",
         "lint": "eslint server/ app/ config/ *.js",
-        "prettier": "ci/prettier.sh"
+        "prettier": "ci/prettier.sh",
+        "gendocs": "cd static/docs && node ../../scripts/unchained-generate-docs.js > openapi.json"
     },
     "dependencies": {
         "@newrelic/native-metrics": "^2.1.1",
@@ -95,6 +96,7 @@
         "socket.io-client": "^2.0.3",
         "style-loader": "^0.16.0",
         "styled-components": "^1.4.4",
+        "swagger-ui-express": "^2.0.6",
         "url-loader": "^0.5.8",
         "validator": "^7.0.0",
         "webpack": "^2.3.2",
