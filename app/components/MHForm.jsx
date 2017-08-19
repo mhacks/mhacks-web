@@ -159,7 +159,7 @@ class MHForm extends React.Component {
                     }
                     break;
                 case this.FieldTypes.ARRAY:
-                    if (formData[field.key].length > 0) {
+                    if (formData[field.key].length < 1) {
                         errors.push(field.key);
                     }
             }
