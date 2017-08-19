@@ -3,7 +3,8 @@ var router = require('express').Router(),
     artifact = require('../../interactors/artifact.js'),
     Responses = require('../../responses/api/index.js'),
     authMiddleware = require('../../middleware/auth.js'),
-    mime = require('mime');
+    mime = require('mime'),
+    resumes = require('../../interactors/resumes.js');
 
 router.get('/resume/:email', authMiddleware('admin', 'api'), function(
     req,
@@ -48,6 +49,24 @@ router.get('/avatar/:email', function(req, res) {
             message: Responses.NOT_FOUND
         });
     }
+});
+
+router.get('/resumes', authMiddleware('sponsor admin', 'api'), function(
+    req,
+    res
+) {
+    resumes
+        .downloadZip(req.query.application)
+        .then(zip => {
+            res.attachment('resumes.zip');
+            zip.pipe(res);
+        })
+        .catch(err => {
+            res.status(500).send({
+                status: false,
+                message: err
+            });
+        });
 });
 
 module.exports = router;
