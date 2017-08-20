@@ -82,7 +82,7 @@ class MHForm extends React.Component {
 
         for (const field in nextProps.schema) {
             var defaultValue = this.getFieldDefault(nextProps.schema[field]);
-            if (defaultValue !== undefined) {
+            if (defaultValue !== undefined && !(field in this.state.formData)) {
                 formData[field] = defaultValue;
             }
         }
@@ -159,7 +159,7 @@ class MHForm extends React.Component {
                     }
                     break;
                 case this.FieldTypes.ARRAY:
-                    if (formData[field.key].length > 0) {
+                    if (formData[field.key].length < 1) {
                         errors.push(field.key);
                     }
             }

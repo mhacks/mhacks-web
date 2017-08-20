@@ -1,3 +1,19 @@
+process.on('unhandledRejection', error => {
+    console.log('unhandledRejection', error);
+});
+
+process.on('warning', warning => {
+    console.log('warning', warning);
+});
+
+process.on('uncaughtException', exception => {
+    console.log('uncaughtException', exception);
+});
+
+process.on('rejectionHandled', rejection => {
+    console.log('rejectionHandled', rejection);
+});
+
 var config = require('./config/default.js');
 
 if (config.newrelic_enabled) {
