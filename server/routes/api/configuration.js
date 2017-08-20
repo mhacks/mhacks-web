@@ -35,8 +35,6 @@ router.get('/', authMiddleware('any', 'api', false, undefined, false), function(
                             });
                         });
                 } else {
-                    configuration.should_logout = true;
-
                     res.send({
                         status: true,
                         configuration: configuration

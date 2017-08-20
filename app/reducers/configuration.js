@@ -6,7 +6,8 @@ const initialState = {
     error: null,
     message: null,
     is_livepage_enabled: false,
-    is_applications_open: false
+    is_applications_open: false,
+    should_logout: false
 };
 
 export function configurationState(state = initialState, action) {
@@ -25,7 +26,8 @@ export function configurationState(state = initialState, action) {
                 fetching: false,
                 fetched: false,
                 error: action.error,
-                message: action.message
+                message: action.message,
+                should_logout: true
             };
 
         case actions.LOAD_CONFIGURATION_SUCCESS:
