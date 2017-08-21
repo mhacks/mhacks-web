@@ -63,10 +63,15 @@ app.use(morgan('combined'));
 // Request parsers
 app.use(
     bodyParser.urlencoded({
-        extended: true
+        extended: true,
+        limit: '50mb'
     })
 );
-app.use(bodyParser.json());
+app.use(
+    bodyParser.json({
+        limit: '50mb'
+    })
+);
 
 // Server side views (if used)
 app.set('view engine', 'pug');
