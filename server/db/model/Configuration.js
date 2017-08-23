@@ -1,4 +1,5 @@
-var mongoose = require('../index.js');
+var mongoose = require('../index.js'),
+    escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
 var schema = new mongoose.Schema({
@@ -17,8 +18,9 @@ var schema = new mongoose.Schema({
 
 // Allow us to query by app_name
 schema.query.byAppName = function(app_name) {
+    var escapedName = escapeStringRegex(app_name);
     return this.findOne({
-        app_name: new RegExp(app_name, 'i')
+        app_name: new RegExp(escapedName, 'i')
     });
 };
 
