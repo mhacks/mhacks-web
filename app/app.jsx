@@ -57,6 +57,14 @@ class AppProvider extends React.Component {
     }
 
     render() {
+        if (
+            this.props.configurationState.should_logout &&
+            localStorage.getItem('jwt')
+        ) {
+            localStorage.removeItem('jwt');
+            location.reload();
+        }
+
         if (!this.props.configurationState.fetched) {
             return <div />;
         }
