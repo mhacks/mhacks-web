@@ -2,14 +2,27 @@ import fetch from 'isomorphic-fetch';
 import { endpoints } from '../../constants';
 
 export default class SpeakerRequests {
-    static uploadApplication(token, body) {
+    static uploadApplication(token, body, files) {
+        const formData = new FormData();
+
+        for (var file in files) {
+            if (files.hasOwnProperty(file)) {
+                formData.append(file, files[file]);
+            }
+        }
+
+        for (var key in body) {
+            if (body.hasOwnProperty(key)) {
+                formData.append(key, body[key]);
+            }
+        }
+
         return fetch(endpoints.SPEAKER_APPLICATION, {
             method: 'post',
             headers: new Headers({
-                'Content-Type': 'application/json',
                 Authorization: 'Bearer ' + token
             }),
-            body: JSON.stringify(body)
+            body: formData
         });
     }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import LabeledInput from './LabeledInput.jsx';
 import RoundedButton from './RoundedButton.jsx';
+import FileUpload from './FileUpload';
 import Alert from './Alert.jsx';
 import Select from 'react-select';
 import 'react-select/dist/react-select.min.css';
@@ -40,7 +41,8 @@ class MHForm extends React.Component {
 
         const initialState = {
             errorFields: [],
-            formData: {}
+            formData: {},
+            files: {}
         };
 
         this.FieldTypes = props.FieldTypes;
@@ -48,12 +50,17 @@ class MHForm extends React.Component {
         for (const field in props.schema) {
             const defaultValue = this.getFieldDefault(props.schema[field]);
             if (defaultValue !== undefined) {
-                initialState.formData[field] = defaultValue;
+                if (props.schema[field].type === props.FieldTypes.FILE) {
+                    initialState.files[field] = defaultValue;
+                } else {
+                    initialState.formData[field] = defaultValue;
+                }
             }
         }
 
         this.state = initialState;
         this.handleAttributeChange = this.handleAttributeChange.bind(this);
+        this.handleFileUploadForKey = this.handleFileUploadForKey.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.changeCompletion = this.changeCompletion.bind(this);
@@ -64,6 +71,7 @@ class MHForm extends React.Component {
             case this.FieldTypes.TEXT:
             case this.FieldTypes.ESSAY:
             case this.FieldTypes.SELECT:
+            case this.FieldTypes.FILE:
             case this.FieldTypes.LINK:
                 return field.default || '';
             case this.FieldTypes.DATE:
@@ -97,7 +105,7 @@ class MHForm extends React.Component {
 
     changeCompletion() {
         if (this.props.onChange) {
-            this.props.onChange(this.formatFormData());
+            this.props.onChange(this.formatFormData(), this.formatFiles());
         }
     }
 
@@ -113,6 +121,20 @@ class MHForm extends React.Component {
             },
             this.changeCompletion
         );
+    }
+
+    handleFileUploadForKey(key) {
+        return (file) => {
+            this.setState(
+                {
+                    files: {
+                        ...this.state.files,
+                        [key]: file
+                    }
+                },
+                this.changeCompletion
+            );
+        };
     }
 
     handleSelectChange(name) {
@@ -137,7 +159,7 @@ class MHForm extends React.Component {
 
     validateFields() {
         const errors = [];
-        const formData = this.state.formData;
+        const {formData, files} = this.state;
         for (const key in this.props.schema) {
             var field = this.props.schema[key];
             if (!field.required) {
@@ -160,6 +182,11 @@ class MHForm extends React.Component {
                     break;
                 case this.FieldTypes.ARRAY:
                     if (formData[field.key].length < 1) {
+                        errors.push(field.key);
+                    }
+                    break;
+                case this.FieldTypes.FILE:
+                    if (files[field.key] === '') {
                         errors.push(field.key);
                     }
             }
@@ -185,7 +212,7 @@ class MHForm extends React.Component {
         const errorFields = this.validateFields();
 
         if (errorFields.length === 0) {
-            this.props.onSubmit(this.formatFormData());
+            this.props.onSubmit(this.formatFormData(), this.formatFiles());
         } else {
             this.setState({
                 errorFields
@@ -208,13 +235,28 @@ class MHForm extends React.Component {
                     formatted[key] = formData[key];
                     break;
                 case this.FieldTypes.DATE:
-                    formatted[key] = new Date(formData[key]);
+                    formatted[key] = new Date(formData[key]).toISOString().split('T')[0].getTime();
                     break;
                 case this.FieldTypes.SELECT:
                     formatted[key] = formData[key];
                     break;
                 case this.FieldTypes.ARRAY:
                     formatted[key] = formData[key].map(obj => obj.label);
+            }
+        }
+
+        return formatted;
+    }
+
+    formatFiles() {
+        const formatted = {};
+        const files = this.state.files;
+        for (const key in this.props.schema) {
+            var field = this.props.schema[key];
+
+            switch (field.type) {
+                case this.FieldTypes.FILE:
+                    formatted[key] = files[key];
             }
         }
 
@@ -307,6 +349,16 @@ class MHForm extends React.Component {
                                           {field.label}
                                       </SectionHeader>
                                   );
+                              case this.FieldTypes.FILE:
+                                  return (
+                                      <FileUpload
+                                          key={field.label}
+                                          defaultColor={this.props.theme.primary}
+                                          hoverColor={this.props.theme.secondary}
+                                          activeColor={this.props.theme.success}
+                                          onFileSelect={this.handleFileUploadForKey(field.key)}
+                                      />
+                                  );
                               case this.FieldTypes.SUBMIT:
                                   return (
                                       <RoundedButton
@@ -367,7 +419,8 @@ MHForm.defaultProps = {
         SECTIONHEADER: 7,
         BUFFER: 8,
         ARRAY: 9,
-        SUBMIT: 10
+        SUBMIT: 10,
+        FILE: 11,
     }
 };
 
