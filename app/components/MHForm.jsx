@@ -49,6 +49,7 @@ class MHForm extends React.Component {
 
         for (const field in props.schema) {
             const defaultValue = this.getFieldDefault(props.schema[field]);
+            console.log('heybb', defaultValue);
             if (defaultValue !== undefined) {
                 if (props.schema[field].type === props.FieldTypes.FILE) {
                     initialState.files[field] = defaultValue;
@@ -67,12 +68,14 @@ class MHForm extends React.Component {
     }
 
     getFieldDefault(field) {
+        console.log('taco', field, field.default);
         switch (field.type) {
             case this.FieldTypes.TEXT:
             case this.FieldTypes.ESSAY:
             case this.FieldTypes.SELECT:
             case this.FieldTypes.FILE:
             case this.FieldTypes.LINK:
+                console.log('def', field.default, field.default || '');
                 return field.default || '';
             case this.FieldTypes.DATE:
                 return field.default || 'yyyy-MM-dd';
@@ -90,6 +93,7 @@ class MHForm extends React.Component {
 
         for (const field in nextProps.schema) {
             var defaultValue = this.getFieldDefault(nextProps.schema[field]);
+            console.log('FISHHHHHH', defaultValue);
             if (defaultValue !== undefined && !(field in this.state.formData)) {
                 formData[field] = defaultValue;
             }
@@ -235,10 +239,15 @@ class MHForm extends React.Component {
                     formatted[key] = formData[key];
                     break;
                 case this.FieldTypes.DATE:
-                    formatted[key] = new Date(formData[key]).toISOString().split('T')[0].getTime();
+                    formatted[key] = new Date(new Date(formData[key]).toISOString().split('T')[0]).getTime();
                     break;
                 case this.FieldTypes.SELECT:
-                    formatted[key] = formData[key];
+                    if (!field.required && formData[key] === '' && field.select.length > 0) {
+                        // Assume default value (which should be unselected) if unselected.
+                        formatted[key] = field.select[0].value;
+                    } else {
+                        formatted[key] = formData[key];
+                    }
                     break;
                 case this.FieldTypes.ARRAY:
                     formatted[key] = formData[key].map(obj => obj.label);
@@ -254,9 +263,8 @@ class MHForm extends React.Component {
         for (const key in this.props.schema) {
             var field = this.props.schema[key];
 
-            switch (field.type) {
-                case this.FieldTypes.FILE:
-                    formatted[key] = files[key];
+            if (field.type === this.FieldTypes.FILE && files[key]) {
+                formatted[key] = files[key];
             }
         }
 
