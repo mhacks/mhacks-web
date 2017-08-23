@@ -1,3 +1,19 @@
+process.on('unhandledRejection', error => {
+    console.log('unhandledRejection', error);
+});
+
+process.on('warning', warning => {
+    console.log('warning', warning);
+});
+
+process.on('uncaughtException', exception => {
+    console.log('uncaughtException', exception);
+});
+
+process.on('rejectionHandled', rejection => {
+    console.log('rejectionHandled', rejection);
+});
+
 var config = require('./config/default.js');
 
 if (config.newrelic_enabled) {
@@ -47,10 +63,15 @@ app.use(morgan('combined'));
 // Request parsers
 app.use(
     bodyParser.urlencoded({
-        extended: true
+        extended: true,
+        limit: '50mb'
     })
 );
-app.use(bodyParser.json());
+app.use(
+    bodyParser.json({
+        limit: '50mb'
+    })
+);
 
 // Server side views (if used)
 app.set('view engine', 'pug');
