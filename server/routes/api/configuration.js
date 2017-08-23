@@ -5,17 +5,21 @@ var router = require('express').Router(),
     User = require('../../db/model/User.js');
 
 // Handles get requests for /v1/configuration
-router.get('/', authMiddleware('any', 'api', false, undefined, false), function(
-    req,
-    res
-) {
+router.get('/', function(req, res) {
     ConfigurationSchema.findOne({}, '-_id -__v')
         .exec()
         .then(configuration => {
             if (configuration) {
                 configuration = JSON.parse(JSON.stringify(configuration));
 
-                if (req.authToken) {
+                authMiddleware('any', 'api', false, function() {
+                    configuration.should_logout = true;
+
+                    res.send({
+                        status: true,
+                        configuration: configuration
+                    });
+                })(req, res, function() {
                     User.find()
                         .byToken(req.authToken)
                         .then(user => {
@@ -34,12 +38,7 @@ router.get('/', authMiddleware('any', 'api', false, undefined, false), function(
                                 message: Responses.UNKNOWN_ERROR
                             });
                         });
-                } else {
-                    res.send({
-                        status: true,
-                        configuration: configuration
-                    });
-                }
+                });
             } else {
                 res.status(500).send({
                     status: false,
