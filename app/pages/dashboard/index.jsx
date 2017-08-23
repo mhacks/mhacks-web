@@ -7,9 +7,7 @@ import ApplicationSection from './application_section.jsx';
 import ProfileSection from './profile_section.jsx';
 import ExpandingItem from './ExpandingItem';
 
-import {
-    PageContainer,
-} from '../../components';
+import { PageContainer } from '../../components';
 
 import { OrderedSet } from 'immutable';
 
@@ -19,7 +17,7 @@ const FaqItem = props =>
         expandColor
         colorOn={props => props.theme.highlightSecondary}
         colorOff={props => props.theme.highlight}
-    />
+    />;
 
 const StyledPageContainer = styled(PageContainer)`
     background: ${props => props.theme.secondary};
@@ -164,16 +162,14 @@ class Dashboard extends React.Component {
 
     render() {
         const userData = this.props.userState.data;
-        const {
-            isEmailVerified
-        } = getUserMetadata(userData);
+        const { isEmailVerified } = getUserMetadata(userData);
 
         if (!isEmailVerified) {
             return this.renderEmailVerificationPage();
         }
 
         return (
-            <StyledPageContainer backgroundColor='red'>
+            <StyledPageContainer backgroundColor="red">
                 <FullscreenColumnContainer>
                     <StyledDiv>
                         <ProfileSection userData={userData} />
