@@ -273,11 +273,11 @@ class EditProfile extends React.Component {
         var profile = {};
         var files = {};
 
-        const inputBirthday = new Date(this.state.birthday).getTime();
+        //const inputBirthday = new Date(this.state.birthday).getTime();
 
-        profile.birthday = inputBirthday;
-        profile.major = this.state.major;
-        profile.university = this.state.university;
+        //profile.birthday = inputBirthday;
+        //profile.major = this.state.major;
+        //profile.university = this.state.university;
 
         if (this.state.resume) {
             files['resume'] = this.state.resume;
