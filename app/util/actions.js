@@ -4,8 +4,10 @@ export function postFormData(route, token, body, files) {
     const formData = new FormData();
 
     for (var fileKey in files) {
-        if (files.hasOwnProperty(fileKey) &&
-            typeof files[fileKey] === 'object') {
+        if (
+            files.hasOwnProperty(fileKey) &&
+            typeof files[fileKey] === 'object'
+        ) {
             formData.append(fileKey, files[fileKey]);
         }
     }
@@ -25,7 +27,7 @@ export function postFormData(route, token, body, files) {
     });
 }
 
-export function getResponseFromRoute(route, token='') {
+export function getResponseFromRoute(route, token = '') {
     const headers = {
         'Content-Type': 'application/json'
     };

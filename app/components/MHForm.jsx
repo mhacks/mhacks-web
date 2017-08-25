@@ -26,13 +26,13 @@ const Input = styled.input`
     height: 36px;
     width: 100%;
     paddingLeft: 10px;
-    border: 1px solid ${props => props.hasError ? 'red' : '#ccc'};
+    border: 1px solid ${props => (props.hasError ? 'red' : '#ccc')};
     borderRadius: 4px;
 `;
 
 const TextArea = styled.textarea`
     padding: 10px;
-    borderColor: ${props => props.hasError ? 'red' : 'rgb(215, 215, 215)'};
+    borderColor: ${props => (props.hasError ? 'red' : 'rgb(215, 215, 215)')};
     flexGrow: 1;
     height: 120px;
     width: 100%;
@@ -91,7 +91,11 @@ class MHForm extends React.Component {
             case this.FieldTypes.SUBMIT:
                 return undefined;
             default:
-                console.error('Field Type ' + type + ' not defined, behavior is undefined!');
+                console.error(
+                    'Field Type ' +
+                        type +
+                        ' not defined, behavior is undefined!'
+                );
         }
     }
 
@@ -135,15 +139,22 @@ class MHForm extends React.Component {
         for (const field in nextProps.schema) {
             const defaultValue = this.getFieldDefault(nextProps.schema[field]);
 
-            if (nextProps.schema[field].type === this.FieldTypes.FILE && defaultValue !== undefined &&
+            if (
+                nextProps.schema[field].type === this.FieldTypes.FILE &&
+                defaultValue !== undefined &&
                 (!this.state.files.hasOwnProperty(field) ||
-                this.state.files[field] === undefined ||
-                this.state.files[field] === this.defaultForType(nextProps.schema[field].type))) {
+                    this.state.files[field] === undefined ||
+                    this.state.files[field] ===
+                        this.defaultForType(nextProps.schema[field].type))
+            ) {
                 files[field] = defaultValue;
-            } else if (defaultValue !== undefined &&
+            } else if (
+                defaultValue !== undefined &&
                 (!this.state.formData.hasOwnProperty(field) ||
-                this.state.formData[field] === undefined ||
-                this.state.formData[field] === this.defaultForType(nextProps.schema[field].type))) {
+                    this.state.formData[field] === undefined ||
+                    this.state.formData[field] ===
+                        this.defaultForType(nextProps.schema[field].type))
+            ) {
                 formData[field] = defaultValue;
             }
         }
@@ -181,7 +192,7 @@ class MHForm extends React.Component {
     }
 
     handleFileUploadForKey(key) {
-        return (file) => {
+        return file => {
             this.setState(
                 {
                     files: {
@@ -216,7 +227,7 @@ class MHForm extends React.Component {
 
     validateFields() {
         const errors = [];
-        const {formData, files} = this.state;
+        const { formData, files } = this.state;
         for (const key in this.props.schema) {
             var field = this.props.schema[key];
             if (!field.required) {
@@ -252,7 +263,7 @@ class MHForm extends React.Component {
         return errors;
     }
 
-    renderLabeledInput(field, contents, hasError=false) {
+    renderLabeledInput(field, contents, hasError = false) {
         return (
             <LabeledInput
                 label={field.label}
@@ -293,10 +304,16 @@ class MHForm extends React.Component {
                     formatted[key] = formData[key];
                     break;
                 case this.FieldTypes.DATE:
-                    formatted[key] = new Date(new Date(formData[key]).toISOString().split('T')[0]).getTime();
+                    formatted[key] = new Date(
+                        new Date(formData[key]).toISOString().split('T')[0]
+                    ).getTime();
                     break;
                 case this.FieldTypes.SELECT:
-                    if (!field.required && formData[key] === '' && field.select.length > 0) {
+                    if (
+                        !field.required &&
+                        formData[key] === '' &&
+                        field.select.length > 0
+                    ) {
                         // Assume default value (which should be unselected) if unselected.
                         formatted[key] = field.select[0].value;
                     } else {
@@ -317,7 +334,11 @@ class MHForm extends React.Component {
         for (const key in this.props.schema) {
             var field = this.props.schema[key];
 
-            if (field.type === this.FieldTypes.FILE && files[key] && typeof files[key] === 'object') {
+            if (
+                field.type === this.FieldTypes.FILE &&
+                files[key] &&
+                typeof files[key] === 'object'
+            ) {
                 formatted[key] = files[key];
             }
         }
@@ -340,7 +361,9 @@ class MHForm extends React.Component {
                           return !this.props.hidden[field.key];
                       })
                       .map(fieldKey => {
-                          const hasError = this.state.errorFields.includes(fieldKey);
+                          const hasError = this.state.errorFields.includes(
+                              fieldKey
+                          );
                           const field = this.props.schema[fieldKey];
                           field.key = fieldKey;
                           switch (field.type) {
@@ -417,16 +440,24 @@ class MHForm extends React.Component {
                                       </SectionHeader>
                                   );
                               case this.FieldTypes.FILE: {
-                                  const uploadBackground = hasError ? 'red' : (this.state.files[field.key] ? this.props.theme.success : this.props.theme.primary);
+                                  const uploadBackground = hasError
+                                      ? 'red'
+                                      : this.state.files[field.key]
+                                        ? this.props.theme.success
+                                        : this.props.theme.primary;
                                   return (
-                                      <FileUploadContainer
-                                          key={field.label}
-                                      >
+                                      <FileUploadContainer key={field.label}>
                                           <FileUpload
                                               defaultColor={uploadBackground}
-                                              hoverColor={this.props.theme.secondary}
-                                              activeColor={this.props.theme.success}
-                                              onFileSelect={this.handleFileUploadForKey(field.key)}
+                                              hoverColor={
+                                                  this.props.theme.secondary
+                                              }
+                                              activeColor={
+                                                  this.props.theme.success
+                                              }
+                                              onFileSelect={this.handleFileUploadForKey(
+                                                  field.key
+                                              )}
                                           />
                                       </FileUploadContainer>
                                   );
@@ -494,7 +525,7 @@ MHForm.defaultProps = {
         BUFFER: 8,
         ARRAY: 9,
         SUBMIT: 10,
-        FILE: 11,
+        FILE: 11
     }
 };
 
