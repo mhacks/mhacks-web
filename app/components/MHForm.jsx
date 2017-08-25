@@ -49,7 +49,6 @@ class MHForm extends React.Component {
 
         for (const field in props.schema) {
             const defaultValue = this.getFieldDefault(props.schema[field]);
-            console.log('heybb', defaultValue);
             if (defaultValue !== undefined) {
                 if (props.schema[field].type === props.FieldTypes.FILE) {
                     initialState.files[field] = defaultValue;
@@ -67,34 +66,80 @@ class MHForm extends React.Component {
         this.changeCompletion = this.changeCompletion.bind(this);
     }
 
+    defaultForType(type) {
+        switch (type) {
+            case this.FieldTypes.TEXT:
+            case this.FieldTypes.ESSAY:
+            case this.FieldTypes.SELECT:
+            case this.FieldTypes.FILE:
+            case this.FieldTypes.LINK:
+                return '';
+            case this.FieldTypes.DATE: {
+                return 'yyyy-MM-dd';
+            }
+            case this.FieldTypes.NUMBER:
+                return 0;
+            case this.FieldTypes.BOOLEAN:
+                return false;
+            case this.FieldTypes.ARRAY:
+                return [];
+            case this.FieldTypes.SECTIONHEADER:
+            case this.FieldTypes.SUBMIT:
+                return undefined;
+            default:
+                console.error('Field Type ' + type + ' not defined, behavior is undefined!');
+        }
+    }
+
     getFieldDefault(field) {
-        console.log('taco', field, field.default);
+        const defaultValue = this.defaultForType(field.type);
+
         switch (field.type) {
             case this.FieldTypes.TEXT:
             case this.FieldTypes.ESSAY:
             case this.FieldTypes.SELECT:
             case this.FieldTypes.FILE:
             case this.FieldTypes.LINK:
-                console.log('def', field.default, field.default || '');
-                return field.default || '';
-            case this.FieldTypes.DATE:
-                return field.default || 'yyyy-MM-dd';
+                return field.default || defaultValue;
+            case this.FieldTypes.DATE: {
+                const date = new Date(field.default);
+                if (isNaN(date.getTime())) {
+                    return defaultValue;
+                }
+
+                return date.toISOString().split('T')[0];
+            }
             case this.FieldTypes.NUMBER:
-                return field.default || 0;
+                return field.default || defaultValue;
             case this.FieldTypes.BOOLEAN:
-                return field.default || false;
+                return field.default || defaultValue;
             case this.FieldTypes.ARRAY:
-                return field.default || [];
+                return field.default || defaultValue;
+            case this.FieldTypes.SECTIONHEADER:
+            case this.FieldTypes.SUBMIT:
+                return defaultValue;
+            default:
+                console.error('Field Type not defined, behavior is undefined!');
+                return defaultValue;
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        var formData = {};
+        const formData = {};
+        const files = {};
 
         for (const field in nextProps.schema) {
-            var defaultValue = this.getFieldDefault(nextProps.schema[field]);
-            console.log('FISHHHHHH', defaultValue);
-            if (defaultValue !== undefined && !(field in this.state.formData)) {
+            const defaultValue = this.getFieldDefault(nextProps.schema[field]);
+
+            if (nextProps.schema[field].type === this.FieldTypes.FILE && defaultValue !== undefined &&
+                (!this.state.files.hasOwnProperty(field) ||
+                this.state.files[field] === undefined ||
+                this.state.files[field] === this.defaultForType(nextProps.schema[field].type))) {
+                files[field] = defaultValue;
+            } else if (defaultValue !== undefined &&
+                (!this.state.formData.hasOwnProperty(field) ||
+                this.state.formData[field] === undefined ||
+                this.state.formData[field] === this.defaultForType(nextProps.schema[field].type))) {
                 formData[field] = defaultValue;
             }
         }
@@ -103,6 +148,10 @@ class MHForm extends React.Component {
             formData: {
                 ...this.state.formData,
                 ...formData
+            },
+            files: {
+                ...this.state.files,
+                ...files
             }
         });
     }
@@ -263,7 +312,7 @@ class MHForm extends React.Component {
         for (const key in this.props.schema) {
             var field = this.props.schema[key];
 
-            if (field.type === this.FieldTypes.FILE && files[key]) {
+            if (field.type === this.FieldTypes.FILE && files[key] && typeof files[key] === 'object') {
                 formatted[key] = files[key];
             }
         }
@@ -361,7 +410,8 @@ class MHForm extends React.Component {
                                   return (
                                       <FileUpload
                                           key={field.label}
-                                          defaultColor={this.props.theme.primary}
+                                          defaultColor={this.state.files[field.key] ?
+                                                  this.props.theme.success : this.props.theme.primary}
                                           hoverColor={this.props.theme.secondary}
                                           activeColor={this.props.theme.success}
                                           onFileSelect={this.handleFileUploadForKey(field.key)}
