@@ -7,6 +7,10 @@ import Alert from './Alert.jsx';
 import Select from 'react-select';
 import 'react-select/dist/react-select.min.css';
 
+const FileUploadContainer = styled.div`
+    margin: 10px 0;
+`;
+
 const AlertContainer = styled.div`
     marginTop: 30px;
 `;
@@ -22,13 +26,13 @@ const Input = styled.input`
     height: 36px;
     width: 100%;
     paddingLeft: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid ${props => props.hasError ? 'red' : '#ccc'};
     borderRadius: 4px;
 `;
 
 const TextArea = styled.textarea`
     padding: 10px;
-    borderColor: rgb(215, 215, 215);
+    borderColor: ${props => props.hasError ? 'red' : 'rgb(215, 215, 215)'};
     flexGrow: 1;
     height: 120px;
     width: 100%;
@@ -248,12 +252,13 @@ class MHForm extends React.Component {
         return errors;
     }
 
-    renderLabeledInput(field, contents) {
+    renderLabeledInput(field, contents, hasError=false) {
         return (
             <LabeledInput
                 label={field.label}
                 required={field.required || false}
                 key={field.key}
+                hasError={hasError}
             >
                 {contents}
             </LabeledInput>
@@ -266,11 +271,11 @@ class MHForm extends React.Component {
 
         if (errorFields.length === 0) {
             this.props.onSubmit(this.formatFormData(), this.formatFiles());
-        } else {
-            this.setState({
-                errorFields
-            });
         }
+
+        this.setState({
+            errorFields
+        });
     }
 
     formatFormData() {
@@ -334,9 +339,9 @@ class MHForm extends React.Component {
                       .filter(field => {
                           return !this.props.hidden[field.key];
                       })
-                      .map(field => {
-                          var fieldKey = field;
-                          field = this.props.schema[field];
+                      .map(fieldKey => {
+                          const hasError = this.state.errorFields.includes(fieldKey);
+                          const field = this.props.schema[fieldKey];
                           field.key = fieldKey;
                           switch (field.type) {
                               case this.FieldTypes.SELECT:
@@ -349,7 +354,8 @@ class MHForm extends React.Component {
                                           onChange={this.handleSelectChange(
                                               field.key
                                           )}
-                                      />
+                                      />,
+                                      hasError
                                   );
                               case this.FieldTypes.ARRAY:
                                   return this.renderLabeledInput(
@@ -362,7 +368,8 @@ class MHForm extends React.Component {
                                           onChange={this.handleSelectChange(
                                               field.key
                                           )}
-                                      />
+                                      />,
+                                      hasError
                                   );
                               case this.FieldTypes.LINK:
                               case this.FieldTypes.TEXT:
@@ -374,6 +381,7 @@ class MHForm extends React.Component {
                                           placeholder={field.placeholder}
                                           value={formData[field.key]}
                                           onChange={this.handleAttributeChange}
+                                          hasError={hasError}
                                       />
                                   );
                               case this.FieldTypes.NUMBER:
@@ -384,6 +392,7 @@ class MHForm extends React.Component {
                                           type="number"
                                           value={formData[field.key]}
                                           onChange={this.handleAttributeChange}
+                                          hasError={hasError}
                                       />
                                   );
                               case this.FieldTypes.DATE:
@@ -395,6 +404,7 @@ class MHForm extends React.Component {
                                           placeholder="yyyy-mm-dd"
                                           value={formData[field.key]}
                                           onChange={this.handleAttributeChange}
+                                          hasError={hasError}
                                       />
                                   );
                               case this.FieldTypes.SECTIONHEADER:
@@ -406,17 +416,21 @@ class MHForm extends React.Component {
                                           {field.label}
                                       </SectionHeader>
                                   );
-                              case this.FieldTypes.FILE:
+                              case this.FieldTypes.FILE: {
+                                  const uploadBackground = hasError ? 'red' : (this.state.files[field.key] ? this.props.theme.success : this.props.theme.primary);
                                   return (
-                                      <FileUpload
+                                      <FileUploadContainer
                                           key={field.label}
-                                          defaultColor={this.state.files[field.key] ?
-                                                  this.props.theme.success : this.props.theme.primary}
-                                          hoverColor={this.props.theme.secondary}
-                                          activeColor={this.props.theme.success}
-                                          onFileSelect={this.handleFileUploadForKey(field.key)}
-                                      />
+                                      >
+                                          <FileUpload
+                                              defaultColor={uploadBackground}
+                                              hoverColor={this.props.theme.secondary}
+                                              activeColor={this.props.theme.success}
+                                              onFileSelect={this.handleFileUploadForKey(field.key)}
+                                          />
+                                      </FileUploadContainer>
                                   );
+                              }
                               case this.FieldTypes.SUBMIT:
                                   return (
                                       <RoundedButton
@@ -446,7 +460,8 @@ class MHForm extends React.Component {
                                           onChange={this.handleSelectChange(
                                               field.key
                                           )}
-                                      />
+                                      />,
+                                      hasError
                                   );
                               case this.FieldTypes.ESSAY:
                                   return this.renderLabeledInput(
@@ -456,6 +471,7 @@ class MHForm extends React.Component {
                                           value={formData[field.key]}
                                           placeholder={field.placeholder}
                                           onChange={this.handleAttributeChange}
+                                          hasError={hasError}
                                       />
                                   );
                           }
