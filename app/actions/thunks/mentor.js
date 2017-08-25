@@ -33,7 +33,7 @@ export default class MentorThunks {
         };
     }
 
-    static uploadApplication(formData) {
+    static uploadApplication(formData, files) {
         return dispatch => {
             dispatch({
                 type: actions.UPLOAD_MENTOR_APPLICATION_REQUEST,
@@ -44,7 +44,8 @@ export default class MentorThunks {
 
             return MentorRequests.uploadApplication(
                 token,
-                formData
+                formData,
+                files
             ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
