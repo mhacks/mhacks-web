@@ -6,7 +6,7 @@ import Logout from './logout.jsx';
 import Profile from './profile.jsx';
 import Apply from './apply.jsx';
 import LivePage from './live';
-import ReaderPage from './reader';
+import Reader from './reader';
 import Confirm from './confirm';
 import MentorApply from './mentor/apply';
 import SpeakerApply from './speaker/apply';
@@ -20,7 +20,7 @@ export {
     Profile,
     Apply,
     LivePage,
-    ReaderPage,
+    Reader,
     Confirm,
     MentorApply,
     SpeakerApply
