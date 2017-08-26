@@ -117,10 +117,11 @@ router.get('/ticket', authMiddleware('any', 'api'), function(req, res) {
                         .exec()
                         .then(confirmation => {
                             if (confirmation) {
-                                qrcode.generateQRCode(req.user.email, function(err, url) {
-                                    res.send(
-                                        url
-                                    )
+                                qrcode.generateQRCode(req.user.email, function(
+                                    err,
+                                    url
+                                ) {
+                                    res.send(url);
                                 });
                             } else {
                                 res.status(400).send({

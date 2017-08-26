@@ -90,7 +90,7 @@ class Dashboard extends React.Component {
     }
 
     renderTicketInfo() {
-        const url = this.props.ticketState.data
+        const url = this.props.ticketState.data;
         return (
             <div>
                 <p>Check your email for this qr code</p>
