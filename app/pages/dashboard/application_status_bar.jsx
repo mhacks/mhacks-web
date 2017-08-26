@@ -66,7 +66,7 @@ class ApplicationStatusBar extends React.Component {
                 percent = '33';
             }
         } else {
-            applicationStatus = 'Pending';
+            applicationStatus = 'Not Submitted';
             percent = '0';
         }
 
