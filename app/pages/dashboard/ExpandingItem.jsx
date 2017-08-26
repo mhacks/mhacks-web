@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components';
 
 const Wrapper = styled.div`
     display: inline-block;
+    width: 100%;
 `;
 
 const Header = styled.h3`
@@ -15,7 +16,7 @@ const Header = styled.h3`
     fontSize: 25px;
 `;
 
-const Body = styled.p`
+const Body = styled.span`
     paddingLeft: 25px;
     paddingTop: 10px;
     paddingBottom: 10px;

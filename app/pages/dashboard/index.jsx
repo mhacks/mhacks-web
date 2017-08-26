@@ -6,6 +6,7 @@ import { getUserMetadata } from '../../util/user.js';
 import ApplicationSection from './application_section.jsx';
 import ProfileSection from './profile_section.jsx';
 import ExpandingItem from './ExpandingItem';
+import { TicketThunks } from '../../actions';
 
 import { PageContainer } from '../../components';
 
@@ -76,12 +77,26 @@ class Dashboard extends React.Component {
         );
     }
 
+    componentDidMount() {
+        this.props.dispatch(TicketThunks.loadTicket());
+    }
+
     onClickRequestEmailVerification(e) {
         e.preventDefault();
 
         var email = this.props.userState.data.user.email;
 
         this.props.dispatch(ProfileThunks.sendVerificationEmail(email));
+    }
+
+    renderTicketInfo() {
+        const url = this.props.ticketState.data
+        return (
+            <div>
+                <p>Check your email for this qr code</p>
+                <img src={url} />
+            </div>
+        );
     }
 
     renderTravelInfo() {
@@ -179,19 +194,7 @@ class Dashboard extends React.Component {
                             header="Ticket"
                             body={
                                 <span>
-                                    Participants
-                                    (&#8220;hackers&#8221;) spend 36
-                                    hours working in teams of 1 - 4
-                                    people to build or code or
-                                    design projects
-                                    (&#8220;hacks&#8221;) that
-                                    they&#8217;re excited about.
-                                    There are workshops, mentors,
-                                    food, swag, and buckets of
-                                    coffee to guide you along the
-                                    way. You bring your ideas, and
-                                    we give you everything you need
-                                    to make them come to life.
+                                    {this.renderTicketInfo()}
                                 </span>
                             }
                         />
@@ -224,7 +227,8 @@ class Dashboard extends React.Component {
 function mapStateToProps(state) {
     return {
         userState: state.userState,
-        theme: state.theme.data
+        theme: state.theme.data,
+        ticketState: state.ticketState
     };
 }
 

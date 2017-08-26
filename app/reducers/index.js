@@ -5,6 +5,7 @@ import { theme } from './theme.js';
 import { subscribeState } from './subscribe.js';
 import { userState } from './user.js';
 import { announcementsState } from './announcements.js';
+import { ticketState } from './ticket.js';
 import { configurationState } from './configuration.js';
 import { readerState } from './reader.js';
 import { sponsorState } from './sponsor.js';
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     subscribeState,
     userState,
     announcementsState,
+    ticketState,
     configurationState,
     readerState,
     sponsorState

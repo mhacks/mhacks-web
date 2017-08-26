@@ -11,3 +11,4 @@ export { default as ConfirmationThunks } from './thunks/confirmation.js';
 export { default as SponsorThunks } from './thunks/sponsor.js';
 export { default as MentorThunks } from './thunks/mentor.js';
 export { default as SpeakerThunks } from './thunks/speaker.js';
+export { default as TicketThunks } from './thunks/ticket.js';

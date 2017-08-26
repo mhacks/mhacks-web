@@ -117,8 +117,11 @@ router.get('/ticket', authMiddleware('any', 'api'), function(req, res) {
                         .exec()
                         .then(confirmation => {
                             if (confirmation) {
-                                res.set('Content-Type', 'image/png');
-                                qrcode.writeQRCodeToStream(req.user.email, res);
+                                qrcode.generateQRCode(req.user.email, function(err, url) {
+                                    res.send(
+                                        url
+                                    )
+                                });
                             } else {
                                 res.status(400).send({
                                     status: false,

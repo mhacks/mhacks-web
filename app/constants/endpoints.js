@@ -6,6 +6,7 @@ export default {
     LOGIN: '/v1/auth/login',
     LOGOUT: '/v1/auth/logout',
     PROFILE: '/v1/user/profile',
+    TICKET: '/v1/user/ticket',
     APPLICATION: '/v1/application',
     CONFIRMATION: '/v1/application/confirm',
     ALL_APPLICATIONS: '/v1/application/all',
