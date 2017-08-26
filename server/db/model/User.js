@@ -6,6 +6,7 @@ var bcrypt = require('bcrypt'),
     emailResponses = require('../../responses/api/email.js'),
     crypto = require('crypto'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin'),
+    escapeStringRegex = require('escape-string-regexp'),
     secret = config.secret;
 
 // Define the document Schema
@@ -221,15 +222,17 @@ var schema = new mongoose.Schema({
 
 // Allow us to query by name
 schema.query.byName = function(name) {
+    var escapedName = escapeStringRegex(name);
     return this.findOne({
-        full_name: new RegExp(name, 'i')
+        full_name: new RegExp(escapedName, 'i')
     });
 };
 
 // Allow us to query by email
 schema.query.byEmail = function(email) {
+    var escapedEmail = escapeStringRegex(email);
     return this.findOne({
-        email: new RegExp(email, 'i')
+        email: new RegExp(escapedEmail, 'i')
     });
 };
 
