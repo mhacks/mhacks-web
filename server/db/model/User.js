@@ -168,10 +168,10 @@ var schema = new mongoose.Schema({
     },
     tshirt: {
         type: String,
-        enum: ['xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
+        enum: ['unselected', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
         form: {
             user_editable: true,
-            select: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
+            select: ['', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
             label: 'T-Shirt'
         }
     },
