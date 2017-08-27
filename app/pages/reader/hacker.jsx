@@ -1,86 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-import { devices } from '../../styles';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import { MHForm, PageContainer } from '../../components';
 import { ReaderThunks } from '../../actions';
 import { FormattedRelative } from 'react-intl';
+import { isMinor } from '../../util/user.js';
 import Fuse from 'fuse.js';
 import FontAwesome from 'react-fontawesome';
-
-const HeaderSection = styled.div`
-    display: flex;
-    flexDirection: column;
-    justifyContent: space-between;
-    padding: 10px 20px;
-
-    ${devices.tablet`
-        flexDirection: row;
-
-        form {
-            flex: 1;
-
-            &:first-child {
-                marginRight: 40px;
-            }
-        }
-    `}
-`;
-
-const SubsectionContainer = styled.div`
-    display: flex;
-    flexDirection: row;
-    padding: 0 20px;
-`;
+import { HeaderSection, SubsectionContainer, UtilityBar } from './components';
+import { generateCSV } from './util.js';
 
 const A = styled.a`
     text-align: center;
 `;
 
-const UtilityContainer = styled.div`
-    padding: 0 20px;
-    display: flex;
-    flexWrap: wrap;
-`;
-
-const UtilityButton = styled.button`
-    borderRadius: 20px;
-    backgroundColor: transparent;
-    color: ${props => props.color};
-    fontWeight: 500;
-    fontSize: 16px;
-    padding: 8px 20px;
-    border: 3px solid ${props => props.color};
-    margin: 20px 20px 20px 0;
-
-    &:hover {
-        backgroundColor: ${props => props.color};
-        color: white;
-    }
-
-    &:last-child {
-        marginRight: 0;
-    }
-`;
-
 const BadMark = <FontAwesome name="times" style={{ color: '#FF4136' }} />;
 const GoodMark = <FontAwesome name="check" style={{ color: '#2ECC40' }} />;
-
-function isMinor(birthdate) {
-    const now = new Date();
-    const birth = new Date(birthdate);
-
-    var age = now.getFullYear() - birth.getFullYear();
-    const ageMonth = now.getMonth() - birth.getMonth();
-    const ageDay = now.getDate() - birth.getDate();
-
-    if (ageMonth < 0 || (ageMonth === 0 && ageDay < 0)) {
-        age = parseInt(age) - 1;
-    }
-
-    return age < 18;
-}
 
 /* Page Component */
 class ReaderPage extends React.Component {
@@ -404,26 +340,23 @@ class ReaderPage extends React.Component {
                         onSubmit={this.onSubmit}
                     />
                 </HeaderSection>
-                <UtilityContainer>
-                    <UtilityButton
-                        color={this.props.theme.primary}
-                        onClick={this.selectAll}
-                    >
-                        Select All
-                    </UtilityButton>
-                    <UtilityButton
-                        color={this.props.theme.primary}
-                        onClick={this.deselectAll}
-                    >
-                        Deselect All ({this.state.selected.length})
-                    </UtilityButton>
-                    <UtilityButton
-                        color={this.props.theme.primary}
-                        onClick={this.generateCSV}
-                    >
-                        CSV
-                    </UtilityButton>
-                </UtilityContainer>
+                <UtilityBar
+                    theme={this.props.theme}
+                    utilities={[
+                        {
+                            onClick: this.selectAll,
+                            title: 'Select All'
+                        },
+                        {
+                            onClick: this.deselectAll,
+                            title: 'Deselect All (' + this.state.selected.length + ')'
+                        },
+                        {
+                            onClick: () => {generateCSV(this.props.readerState.data.applications)},
+                            title: 'CSV'
+                        }
+                    ]}
+                />
                 <ReactTable
                     data={this.filterApplications(
                         this.props.readerState.data.applications

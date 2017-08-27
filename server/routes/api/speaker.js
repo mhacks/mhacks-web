@@ -2,11 +2,12 @@ var router = require('express').Router(),
     Responses = require('../../responses/api'),
     SpeakerApplication = require('../../db/model/SpeakerApplication.js'),
     config = require('../../../config/default.js'),
+    authMiddleware = require('../../middleware/auth.js'),
     uploadHelper = require('../../interactors/multer-s3.js')(
         config.AWS_BUCKET_NAME
     );
 
-router.post('/application', uploadHelper.fields([{ name: 'resume' }]), function(
+router.post('/application', authMiddleware('any', 'api'), uploadHelper.fields([{ name: 'resume' }]), function(
     req,
     res
 ) {
@@ -69,7 +70,7 @@ router.post('/application', uploadHelper.fields([{ name: 'resume' }]), function(
 });
 
 // Returns speaker application for the current user
-router.get('/application', function(req, res) {
+router.get('/application', authMiddleware('any', 'api'), function(req, res) {
     SpeakerApplication.find({}, '-_id -__v')
         .byUser(req.user)
         .then(application => {
@@ -80,6 +81,32 @@ router.get('/application', function(req, res) {
         })
         .catch(() => {
             res.send({
+                status: false,
+                message: Responses.UNKNOWN_ERROR
+            });
+        });
+});
+
+// Returns all speaker applications
+router.get('/all', authMiddleware('reader admin', 'api'), function(req, res) {
+    SpeakerApplication.find()
+        .select('-_id -__v')
+        .then(applications => {
+            res.send({
+                status: true,
+                applications: applications.map(application => {
+                    return Object.assign({}, application._doc, {
+                        email: application.user.email,
+                        name: application.user.full_name,
+                        university: application.user.university,
+                        user: undefined
+                    });
+                })
+            });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({
                 status: false,
                 message: Responses.UNKNOWN_ERROR
             });

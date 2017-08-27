@@ -2,13 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
-import { MHForm, PageContainer } from '../../components';
+import { PageContainer } from '../../components';
 import { ReaderThunks } from '../../actions';
-import { FormattedRelative } from 'react-intl';
-import Fuse from 'fuse.js';
 import FontAwesome from 'react-fontawesome';
 import { isMinor } from '../../util/user.js';
-import { HeaderSection, SubsectionContainer, UtilityBar } from './components';
+import { SubsectionContainer, UtilityBar } from './components';
 import { generateCSV } from './util.js';
 
 const A = styled.a`
@@ -19,97 +17,28 @@ const BadMark = <FontAwesome name="times" style={{ color: '#FF4136' }} />;
 const GoodMark = <FontAwesome name="check" style={{ color: '#2ECC40' }} />;
 
 /* Page Component */
-class ReaderPage extends React.Component {
+class MentorReader extends React.Component {
     constructor() {
         super();
 
-        this.state = {
-            selected: []
-        };
-
-        this.onSubmit = this.onSubmit.bind(this);
         this.generateColumns = this.generateColumns.bind(this);
-        this.filterApplications = this.filterApplications.bind(this);
-        this.selectAll = this.selectAll.bind(this);
-        this.deselectAll = this.deselectAll.bind(this);
     }
 
     componentDidMount() {
-        this.props.dispatch(ReaderThunks.loadApplications());
-        this.props.dispatch(ReaderThunks.loadForm('reader_filter'));
-        this.props.dispatch(ReaderThunks.loadForm('reader_schema'));
+        this.props.dispatch(ReaderThunks.loadMentorApplications());
     }
 
-    didSelect(user) {
-        return () => {
-            if (this.state.selected.includes(user)) {
-                this.setState({
-                    selected: this.state.selected.filter(ele => ele !== user)
-                });
-            } else {
-                this.setState({
-                    selected: this.state.selected.concat(user)
-                });
-            }
-        };
-    }
-
-    onSubmit(formData) {
-        this.props.dispatch(
-            ReaderThunks.reviewApplications(this.state.selected, formData)
-        );
-    }
-
-    generateColumns(selected) {
+    generateColumns() {
         return [
             {
                 Header: '',
                 columns: [
                     {
-                        Header: '',
-                        width: 30,
-                        Cell: row => {
-                            const isSelected = selected.includes(
-                                row.original.user
-                            );
-                            return (
-                                <input
-                                    type="checkbox"
-                                    checked={isSelected}
-                                    onChange={this.didSelect(row.original.user)}
-                                />
-                            );
-                        }
-                    },
-                    {
                         expander: true
                     },
                     {
                         Header: 'Name',
-                        accessor: 'full_name'
-                    }
-                ]
-            },
-            {
-                Header: 'Review',
-                columns: [
-                    {
-                        Header: 'Submitted',
-                        accessor: 'created_at',
-                        Cell: row => <FormattedRelative value={row.value} />
-                    },
-                    {
-                        Header: 'Status',
-                        accessor: 'status'
-                    },
-                    {
-                        Header: 'Score',
-                        accessor: 'score',
-                        width: 60
-                    },
-                    {
-                        Header: 'Reimbursement',
-                        accessor: 'reimbursement'
+                        accessor: 'name'
                     }
                 ]
             },
@@ -118,15 +47,11 @@ class ReaderPage extends React.Component {
                 columns: [
                     {
                         Header: 'Email',
-                        accessor: 'user'
+                        accessor: 'email'
                     },
                     {
                         Header: 'University',
                         accessor: 'university'
-                    },
-                    {
-                        Header: 'Experience',
-                        accessor: 'experience'
                     },
                     {
                         Header: 'Adult',
@@ -135,6 +60,35 @@ class ReaderPage extends React.Component {
                         Cell: row => {
                             return isMinor(row.value) ? BadMark : GoodMark;
                         }
+                    },
+                    {
+                        Header: 'Shirt',
+                        accessor: 'tshirt'
+                    },
+                    {
+                        Header: 'Race',
+                        accessor: 'race'
+                    },
+                    {
+                        Header: 'Sex',
+                        accessor: 'sex'
+                    }
+                ]
+            },
+            {
+                Header: 'Application',
+                columns: [
+                    {
+                        Header: 'Hackathon Count',
+                        accessor: 'hackathons_been'
+                    },
+                    {
+                        Header: 'Mentored Count',
+                        accessor: 'hackathons_mentored'
+                    },
+                    {
+                        Header: 'Availability',
+                        accessor: 'availability_during',
                     }
                 ]
             },
@@ -212,166 +166,30 @@ class ReaderPage extends React.Component {
         ];
     }
 
-    filterApplications(applications) {
-        if (!this.state.filterData) {
-            return applications;
-        }
-
-        const {
-            status,
-            needs_reimbursement,
-            experience,
-            minor,
-            since,
-            search
-        } = this.state.filterData;
-
-        const fuse = new Fuse(applications, {
-            shouldSort: true,
-            findAllMatches: true,
-            threshold: 0.3,
-            location: 0,
-            distance: 100,
-            maxPatternLength: 32,
-            minMatchCharLength: 1,
-            keys: ['university', 'user']
-        });
-
-        const searched = search.length > 0 ? fuse.search(search) : applications;
-
-        return searched.filter(application => {
-            if (status && application.status !== status) {
-                return false;
-            }
-
-            if (experience && application.experience !== experience) {
-                return false;
-            }
-
-            if (
-                (needs_reimbursement === 'yes' &&
-                    !application.needs_reimbursement) ||
-                (needs_reimbursement === 'no' &&
-                    application.needs_reimbursement)
-            ) {
-                return false;
-            }
-
-            if (
-                (minor === 'yes' && !isMinor(application.birthday)) ||
-                (minor === 'no' && isMinor(application.birthday))
-            ) {
-                return false;
-            }
-
-            const submitted_since = Date.parse(since);
-            if (
-                !isNaN(submitted_since) &&
-                new Date(submitted_since) > new Date(application.created_at)
-            ) {
-                return false;
-            }
-
-            return true;
-        });
-    }
-
-    deselectAll() {
-        this.setState({
-            selected: []
-        });
-    }
-
-    selectAll() {
-        const filtered = this.filterApplications(
-            this.props.readerState.data.applications
-        );
-
-        this.setState({
-            selected: filtered.map(application => application.user)
-        });
-    }
-
     render() {
-        if (
-            !this.props.readerState.data.form &&
-            !(
-                this.props.readerState.data.form &&
-                !(Object.values(this.props.readerState.data.form).length > 1)
-            )
-        ) {
-            return null;
-        }
-
         return (
             <PageContainer ref="pagecontainer">
-                <HeaderSection>
-                    <MHForm
-                        schema={this.props.readerState.data.form.reader_filter}
-                        FieldTypes={this.props.readerState.data.FieldTypes}
-                        theme={this.props.theme}
-                        onChange={formState => {
-                            this.setState({
-                                filterData: formState
-                            });
-                        }}
-                    />
-                    <MHForm
-                        schema={this.props.readerState.data.form.reader_schema}
-                        FieldTypes={this.props.readerState.data.FieldTypes}
-                        theme={this.props.theme}
-                        onSubmit={this.onSubmit}
-                    />
-                </HeaderSection>
                 <UtilityBar
                     theme={this.props.theme}
                     utilities={[
                         {
-                            onClick: this.selectAll,
-                            title: 'Select All'
-                        },
-                        {
-                            onClick: this.deselectAll,
-                            title: 'Deselect All (' + this.state.selected.length + ')'
-                        },
-                        {
-                            onClick: () => {generateCSV(this.props.readerState.data.applications)},
+                            onClick: () => {generateCSV(this.props.readerState.data.mentorApplications)},
                             title: 'CSV'
                         }
                     ]}
                 />
                 <ReactTable
-                    data={this.filterApplications(
-                        this.props.readerState.data.applications
-                    )}
-                    columns={this.generateColumns(this.state.selected)}
+                    data={this.props.readerState.data.mentorApplications}
+                    columns={this.generateColumns()}
                     SubComponent={row => {
                         const data = row.original;
                         return (
                             <SubsectionContainer>
                                 <div>
-                                    <h4>Why MHacks?</h4>
-                                    <p>{data.why_mhacks}</p>
-                                    <h4>Favorite Memory?</h4>
-                                    <p>{data.favorite_memory}</p>
-                                    <h4>Anything Else?</h4>
-                                    <p>{data.anything_else}</p>
-                                    <h4>Departing From</h4>
-                                    <p>{data.departing_from}</p>
-                                    <h4>Needs Reimbursement</h4>
-                                    <p>
-                                        {data.needs_reimbursement
-                                            ? 'true'
-                                            : 'false'}
-                                    </p>
-                                    <h4>Requested Reimbursement</h4>
-                                    <p>{data.requested_reimbursement}</p>
-                                    <h4>race</h4>
-                                    <p>{data.race}</p>
-                                    <h4>sex</h4>
-                                    <p>{data.sex}</p>
-                                    <h4>tshirt</h4>
-                                    <p>{data.tshirt}</p>
+                                    <h4>Skills</h4>
+                                    <p>{data.skills.join(', ')}</p>
+                                    <h4>Qualifications</h4>
+                                    <p>{data.qualifications}</p>
                                 </div>
                             </SubsectionContainer>
                         );
@@ -389,4 +207,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(ReaderPage);
+export default connect(mapStateToProps)(MentorReader);
