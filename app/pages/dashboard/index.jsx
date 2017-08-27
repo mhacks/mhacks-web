@@ -177,7 +177,7 @@ class Dashboard extends React.Component {
 
     render() {
         const userData = this.props.userState.data;
-        const { isEmailVerified } = getUserMetadata(userData);
+        const { isEmailVerified, isAccepted } = getUserMetadata(userData);
 
         if (!isEmailVerified) {
             return this.renderEmailVerificationPage();
@@ -189,15 +189,19 @@ class Dashboard extends React.Component {
                     <StyledDiv>
                         <ProfileSection userData={userData} />
                         <ApplicationSection userData={userData} />
-                        <Seperator />
-                        <FaqItem
-                            header="Ticket"
-                            body={
-                                <span>
-                                    {this.renderTicketInfo()}
-                                </span>
-                            }
-                        />
+                        {isAccepted
+                            ? <div>
+                                  <Seperator />
+                                  <FaqItem
+                                      header="Ticket"
+                                      body={
+                                          <span>
+                                              {this.renderTicketInfo()}
+                                          </span>
+                                      }
+                                  />
+                              </div>
+                            : null}
                         <Seperator />
                         <FaqItem
                             header="Travel Information"
