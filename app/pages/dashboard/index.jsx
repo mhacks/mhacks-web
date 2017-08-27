@@ -212,15 +212,20 @@ class Dashboard extends React.Component {
                             }
                         />
                         <Seperator />
-                        <FaqItem
-                            header="Travel Reimbursement"
-                            body={
-                                <span>
-                                    {this.renderTravelReimbursement()}
-                                </span>
-                            }
-                        />
-                        <Seperator />
+                        {userData.user.needs_reimbursement &&
+                            userData.user.reimbursement > 0
+                            ? <div>
+                                  <FaqItem
+                                      header="Travel Reimbursement"
+                                      body={
+                                          <span>
+                                              {this.renderTravelReimbursement()}
+                                          </span>
+                                      }
+                                  />
+                                  <Seperator />
+                              </div>
+                            : null}
                     </StyledDiv>
                 </FullscreenColumnContainer>
             </StyledPageContainer>
