@@ -33,7 +33,7 @@ class ProfileSection extends React.Component {
                 <SectionHeader>Profile</SectionHeader>
                 <Container>
                     <FlexBox>
-                        <Avatar src={user.avatars[1]} />
+                        <Avatar src="http://via.placeholder.com/100x100" />
                         <div>
                             <StyledSectionBody>{user.name}</StyledSectionBody>
                             <StyledSectionBody>
