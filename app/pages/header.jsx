@@ -189,7 +189,7 @@ class HeaderLinks extends React.Component {
                       </StyledALink>
                     : null}
                 {isLoggedIn && (isReader || isAdmin)
-                    ? <StyledALink href={routes.READER} color={color}>
+                    ? <StyledALink href={routes.HACKER_READER} color={color}>
                           Reader
                       </StyledALink>
                     : null}

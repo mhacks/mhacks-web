@@ -33,8 +33,8 @@ router.use('/reader', authMiddleware('admin reader', 'api'), readerHandler);
 router.use('/push', pushHandler);
 router.use('/scan', scanHandler);
 router.use('/sponsor', sponsorHandler);
-router.use('/mentor', authMiddleware('any', 'api'), mentorHandler);
-router.use('/speaker', authMiddleware('any', 'api'), speakerHandler);
+router.use('/mentor', mentorHandler);
+router.use('/speaker', speakerHandler);
 
 router.get('/', function(req, res) {
     res.send('API');
