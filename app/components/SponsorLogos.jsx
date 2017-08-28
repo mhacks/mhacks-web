@@ -12,9 +12,7 @@ const SponsorsFlexBox = styled.div`
     alignItems: center;
 `;
 
-const LogoWrapper = styled.div`
-    margin: 25px;
-`;
+const LogoWrapper = styled.div`margin: 25px;`;
 
 const SmallLogoImg = styled.img`
     height: 40px;

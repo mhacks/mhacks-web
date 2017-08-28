@@ -25,7 +25,7 @@ const HeaderSection = styled.div`
                 marginRight: 40px;
             }
         }
-    `}
+    `};
 `;
 
 const SubsectionContainer = styled.div`
@@ -34,9 +34,7 @@ const SubsectionContainer = styled.div`
     padding: 0 20px;
 `;
 
-const A = styled.a`
-    text-align: center;
-`;
+const A = styled.a`text-align: center;`;
 
 const UtilityContainer = styled.div`
     padding: 0 20px;
@@ -435,13 +433,21 @@ class ReaderPage extends React.Component {
                             <SubsectionContainer>
                                 <div>
                                     <h4>Why MHacks?</h4>
-                                    <p>{data.why_mhacks}</p>
+                                    <p>
+                                        {data.why_mhacks}
+                                    </p>
                                     <h4>Favorite Memory?</h4>
-                                    <p>{data.favorite_memory}</p>
+                                    <p>
+                                        {data.favorite_memory}
+                                    </p>
                                     <h4>Anything Else?</h4>
-                                    <p>{data.anything_else}</p>
+                                    <p>
+                                        {data.anything_else}
+                                    </p>
                                     <h4>Departing From</h4>
-                                    <p>{data.departing_from}</p>
+                                    <p>
+                                        {data.departing_from}
+                                    </p>
                                     <h4>Needs Reimbursement</h4>
                                     <p>
                                         {data.needs_reimbursement
@@ -449,13 +455,21 @@ class ReaderPage extends React.Component {
                                             : 'false'}
                                     </p>
                                     <h4>Requested Reimbursement</h4>
-                                    <p>{data.requested_reimbursement}</p>
+                                    <p>
+                                        {data.requested_reimbursement}
+                                    </p>
                                     <h4>race</h4>
-                                    <p>{data.race}</p>
+                                    <p>
+                                        {data.race}
+                                    </p>
                                     <h4>sex</h4>
-                                    <p>{data.sex}</p>
+                                    <p>
+                                        {data.sex}
+                                    </p>
                                     <h4>tshirt</h4>
-                                    <p>{data.tshirt}</p>
+                                    <p>
+                                        {data.tshirt}
+                                    </p>
                                 </div>
                             </SubsectionContainer>
                         );

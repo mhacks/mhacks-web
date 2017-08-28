@@ -10,9 +10,8 @@ module.exports = function(
 ) {
     groupName = groupName || 'any';
     verifiedEmail = typeof verifiedEmail === 'boolean' ? verifiedEmail : true;
-    requireAuthToken = typeof requireAuthToken === 'boolean'
-        ? requireAuthToken
-        : true;
+    requireAuthToken =
+        typeof requireAuthToken === 'boolean' ? requireAuthToken : true;
     return function(req, res, next) {
         if (req.get('Authorization')) {
             var authorization = req.get('Authorization');
