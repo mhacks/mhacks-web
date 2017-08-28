@@ -15,5 +15,7 @@ export default {
     FORM: '/v1/form/',
     SPONSOR: '/v1/sponsor',
     MENTOR_APPLICATION: '/v1/mentor/application',
-    SPEAKER_APPLICATION: '/v1/speaker/application'
+    MENTOR_APPLICATION_FORM: '/v1/form/MentorApplication',
+    SPEAKER_APPLICATION: '/v1/speaker/application',
+    SPEAKER_APPLICATION_FORM: '/v1/form/SpeakerApplication'
 };
