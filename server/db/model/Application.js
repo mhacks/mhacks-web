@@ -1,6 +1,7 @@
 var mongoose = require('../index.js'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin'),
-    config = require('../../../config/default.js');
+    config = require('../../../config/default.js'),
+    escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
 var schema = new mongoose.Schema({
@@ -50,11 +51,11 @@ var schema = new mongoose.Schema({
     tshirt: {
         type: String,
         required: true,
-        enum: ['xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
+        enum: ['unselected', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
         form: {
             user_editable: true,
             label: 'T-Shirt',
-            select: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL']
+            select: ['', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL']
         }
     },
     experience: {
@@ -340,8 +341,9 @@ schema.query.byToken = function(findToken) {
 
 // Allow us to query by token
 schema.query.byEmail = function(email) {
+    var escapedEmail = escapeStringRegex(email);
     return this.findOne({
-        user: new RegExp(email, 'i')
+        user: new RegExp(escapedEmail, 'i')
     });
 };
 

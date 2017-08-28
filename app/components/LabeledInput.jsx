@@ -13,9 +13,7 @@ const InputField = styled.div`
     ${devices.small`
         flexDirection: row;
         alignItems: center;
-    `}
-
-    p {
+    `} p {
         width: ${props => props.labelWidth};
         marginRight: 30px;
         marginBottom: 4px;
@@ -23,7 +21,7 @@ const InputField = styled.div`
 
         ${devices.small`
             marginBottom: 1em;
-        `}
+        `};
     }
 
     .Select-control {
@@ -37,11 +35,11 @@ const ChildContainer = styled.div`
 `;
 
 const LabeledInput = props =>
-    <InputField
-        labelWidth={props.labelWidth || '60%'}
-        hasError={props.hasError || false}
-    >
-        <p>{props.label}{props.required ? '*' : ''}</p>
+    <InputField labelWidth={props.labelWidth || '60%'}>
+        <p>
+            {props.label}
+            {props.required ? '*' : ''}
+        </p>
         <ChildContainer>
             {React.Children.toArray(props.children)}
         </ChildContainer>

@@ -27,15 +27,11 @@ const Container = styled.div`
 
     ${devices.tablet`
         width: calc(100% - 100px);
-    `}
-
-    ${devices.desktop`
+    `} ${devices.desktop`
         width: calc(100% - 140px);
-    `}
-
-    ${devices.giant`
+    `} ${devices.giant`
         width: calc(100% - 160px);
-    `}
+    `};
 `;
 
 const SectionHeader = styled.h2`
@@ -49,7 +45,7 @@ const SectionHeader = styled.h2`
     ${devices.tablet`
         marginLeft: 60px;
         min-width: calc(66.666% - 80px);
-    `}
+    `};
 `;
 
 const Flexbox = styled.div`
@@ -69,7 +65,7 @@ const Flex1 = styled.div`
 
     ${devices.tablet`
         width: calc(33.333% - 40px); 
-    `}
+    `};
 `;
 
 const Img100 = styled.img`
@@ -91,7 +87,9 @@ class HackingCategories extends React.Component {
             <Wrapper>
                 <Container>
                     <Flexbox>
-                        <SectionHeader>Hacking <br />Cortices</SectionHeader>
+                        <SectionHeader>
+                            Hacking <br />Cortices
+                        </SectionHeader>
                         {Object.keys(Images).map(function(name, index) {
                             return (
                                 <Flex1 key={index}>
