@@ -36,11 +36,9 @@ const ExpandingItemWrapper = styled.div`
 
     ${devices.tablet`
         width: 50%;
-    `}
-
-    ${devices.giant`
+    `} ${devices.giant`
         width: 33%;
-    `}
+    `};
 `;
 
 const Link = styled.a`
@@ -74,15 +72,13 @@ class BlackoutFaq extends React.Component {
                             body={
                                 <span>
                                     Participants (“hackers”) spend 36 hours
-                                    working in teams of
-                                    1 - 4 people to build or code projects
-                                    (“hacks”) they’re
-                                    excited about. There are workshops, mentors,
-                                    food, swag, and
-                                    buckets of coffee to guide you along the
-                                    way. You bring your ideas,
-                                    and we give you everything you need to make
-                                    them come to life. &nbsp;
+                                    working in teams of 1 - 4 people to build or
+                                    code projects (“hacks”) they’re excited
+                                    about. There are workshops, mentors, food,
+                                    swag, and buckets of coffee to guide you
+                                    along the way. You bring your ideas, and we
+                                    give you everything you need to make them
+                                    come to life. &nbsp;
                                     <Link
                                         href="https://drive.google.com/file/d/0B4fSxuPetYFGWjNLSng1QVdVdm8/view"
                                         target="_blank"
@@ -97,9 +93,8 @@ class BlackoutFaq extends React.Component {
                             body={
                                 <span>
                                     Common areas of focus include iOS or Android
-                                    apps, web apps,
-                                    and hardware hacks. Check out the hacks from
-                                    MHacks 9 on &nbsp;
+                                    apps, web apps, and hardware hacks. Check
+                                    out the hacks from MHacks 9 on &nbsp;
                                     <Link
                                         href="https://mhacks9.devpost.com/submissions"
                                         target="_blank"

@@ -20,7 +20,7 @@ const HeroContainer = styled.div`
         padding: 75px 0;
         flexDirection: row;
         alignItems: center;
-    `}
+    `};
 `;
 
 const LeftSideContainer = styled.div`
@@ -28,7 +28,7 @@ const LeftSideContainer = styled.div`
     ${devices.desktop`
         width: calc(40% - 20px);
         float: left;
-    `}
+    `};
 `;
 
 const TextSubmitPositioner = styled.div`
@@ -38,7 +38,7 @@ const TextSubmitPositioner = styled.div`
         position: absolute;
         margin: 0;
         width: 425px;
-    `}
+    `};
 `;
 
 const Text = styled.h2`
@@ -49,7 +49,7 @@ const Text = styled.h2`
         fontSize: 28px;
         margin: -50px 15px 25px 0;
         textAlign: left;
-    `}
+    `};
 `;
 
 const VideoPlayerContainer = styled.div`
@@ -57,7 +57,7 @@ const VideoPlayerContainer = styled.div`
     ${devices.desktop`
         width: 60%;
         float: right;
-    `}
+    `};
 `;
 
 const Orb = styled.div`
@@ -70,7 +70,7 @@ const Orb = styled.div`
 
     ${devices.desktop`
         display: block;
-    `}
+    `};
 `;
 
 const PinkOrb = styled(Orb)`
