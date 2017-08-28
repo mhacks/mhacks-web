@@ -68,8 +68,8 @@ class Apply extends React.Component {
         });
     }
 
-    onSubmit(formData) {
-        this.props.dispatch(SpeakerThunks.uploadApplication(formData));
+    onSubmit(formData, files) {
+        this.props.dispatch(SpeakerThunks.uploadApplication(formData, files));
 
         this.addNotification('Application Saved!', 'save');
     }

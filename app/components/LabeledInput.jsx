@@ -23,6 +23,10 @@ const InputField = styled.div`
             marginBottom: 1em;
         `};
     }
+
+    .Select-control {
+        border: 1px solid ${props => (props.hasError ? 'red' : '#ccc')};
+    }
 `;
 
 const ChildContainer = styled.div`
