@@ -60,6 +60,35 @@ export default class ReaderThunks {
         };
     }
 
+    static loadSpeakerApplications() {
+        return dispatch => {
+            dispatch({ type: actions.LOAD_SPEAKER_APPLICATIONS_REQUEST });
+
+            const token = localStorage.getItem('jwt');
+
+            return ReaderRequests.loadSpeakerApplications(token).then(response => {
+                if (response.status == 200) {
+                    response.json().then(json => {
+                        const { applications } = json;
+                        dispatch({
+                            type: actions.LOAD_SPEAKER_APPLICATIONS_SUCCESS,
+                            data: applications,
+                            message: json.message
+                        });
+                    });
+                } else {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.LOAD_SPEAKER_APPLICATIONS_ERROR,
+                            error: response.status,
+                            message: json.message
+                        });
+                    });
+                }
+            });
+        };
+    }
+
     static reviewApplications(users, formData) {
         return dispatch => {
             const review = {

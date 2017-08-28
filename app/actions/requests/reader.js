@@ -11,6 +11,10 @@ export default class ReaderRequests {
         return getResponseFromRoute(endpoints.ALL_MENTOR_APPLICATIONS, token);
     }
 
+    static loadSpeakerApplications(token) {
+        return getResponseFromRoute(endpoints.ALL_SPEAKER_APPLICATIONS, token);
+    }
+
     static reviewApplications(token, body) {
         return fetch(endpoints.READER, {
             method: 'post',

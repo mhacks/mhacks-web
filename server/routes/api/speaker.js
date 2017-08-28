@@ -91,6 +91,7 @@ router.get('/application', authMiddleware('any', 'api'), function(req, res) {
 router.get('/all', authMiddleware('reader admin', 'api'), function(req, res) {
     SpeakerApplication.find()
         .select('-_id -__v')
+        .populate('user')
         .then(applications => {
             res.send({
                 status: true,

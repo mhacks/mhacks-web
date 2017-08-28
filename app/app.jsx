@@ -183,6 +183,22 @@ class AppProvider extends React.Component {
                             />
                             <Route
                                 exact
+                                path={routes.SPEAKER_READER}
+                                render={() => {
+                                    const {
+                                        isLoggedIn,
+                                        isReader,
+                                        isAdmin
+                                    } = this.getMetadata();
+                                    if (isLoggedIn && (isReader || isAdmin)) {
+                                        return <Reader.Speaker />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                exact
                                 path={routes.CONFIRM}
                                 render={() => {
                                     const {

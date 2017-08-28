@@ -13,6 +13,7 @@ export function readerState(state = initialState, action) {
     switch (action.type) {
         case actions.LOAD_APPLICATIONS_REQUEST:
         case actions.LOAD_MENTOR_APPLICATIONS_REQUEST:
+        case actions.LOAD_SPEAKER_APPLICATIONS_REQUEST:
             return {
                 ...state,
                 fetching: true,
@@ -22,6 +23,7 @@ export function readerState(state = initialState, action) {
 
         case actions.LOAD_APPLICATIONS_ERROR:
         case actions.LOAD_MENTOR_APPLICATIONS_ERROR:
+        case actions.LOAD_SPEAKER_APPLICATIONS_ERROR:
             return {
                 ...state,
                 fetching: false,
@@ -50,6 +52,18 @@ export function readerState(state = initialState, action) {
                 data: {
                     ...state.data,
                     mentorApplications: action.data
+                },
+                message: action.message
+            };
+
+        case actions.LOAD_SPEAKER_APPLICATIONS_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    speakerApplications: action.data
                 },
                 message: action.message
             };
