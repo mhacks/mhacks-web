@@ -28,13 +28,13 @@ export default class ConfigurationThunks {
                                 isLoggedIn: true,
                                 isAdmin:
                                     user.groups &&
-                                        user.groups.indexOf('admin') !== -1,
+                                    user.groups.indexOf('admin') !== -1,
                                 isReader:
                                     user.groups &&
-                                        user.groups.indexOf('reader') !== -1,
+                                    user.groups.indexOf('reader') !== -1,
                                 isSponsor:
                                     user.groups &&
-                                        user.groups.indexOf('sponsor') !== -1,
+                                    user.groups.indexOf('sponsor') !== -1,
                                 user: {
                                     name: user.full_name,
                                     avatars: user.avatar,

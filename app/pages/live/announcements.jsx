@@ -4,9 +4,7 @@ import { FormattedRelative } from 'react-intl';
 import { AnnouncementsThunks } from '../../actions';
 import { connect } from 'react-redux';
 
-const Wrapper = styled.div`
-    height: 100%;
-`;
+const Wrapper = styled.div`height: 100%;`;
 
 const List = styled.div`
     display: flex;
@@ -21,8 +19,7 @@ const ListHeader = styled.h3`
     margin: 0 0 20px 0;
 `;
 
-const ListItem = styled.div`
-`;
+const ListItem = styled.div``;
 
 const ListItemHeader = styled.h2`
     color: darkorange;
@@ -35,9 +32,7 @@ const ListItemTimestamp = styled.p`
     color: gray;
 `;
 
-const ListItemDescription = styled.p`
-    color: gray;
-`;
+const ListItemDescription = styled.p`color: gray;`;
 
 class Announcements extends React.Component {
     componentDidMount() {

@@ -17,7 +17,7 @@ const Page = styled.div`
     backgroundColor: black;
     width: 100%;
     height: 100%;
-    color: #F1F7FF;
+    color: #f1f7ff;
     overflowX: hidden;
 `;
 

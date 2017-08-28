@@ -20,7 +20,9 @@ class Welcome extends React.Component {
             <Wrapper>
                 <CenteredContainer>
                     <Brick />
-                    <SectionHeader>Welcome <br />to MHacks X</SectionHeader>
+                    <SectionHeader>
+                        Welcome <br />to MHacks X
+                    </SectionHeader>
                     <SectionBody>
                         During MHacks X, we're taking a look back at where
                         MHacks began and how it's evolved. MHacks was founded in

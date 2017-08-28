@@ -29,7 +29,7 @@ const FlexBox = styled.div`
 
     ${devices.tablet`
         flexWrap: nowrap;
-    `}
+    `};
 `;
 
 const QuoteWrapper = styled.div`
@@ -50,9 +50,7 @@ const CompanyName = styled.div`
     textAlign: right;
 `;
 
-const Link = styled.a`
-    color: ${theme.secondary};
-`;
+const Link = styled.a`color: ${theme.secondary};`;
 
 class Sponsorship extends React.Component {
     render() {
@@ -88,9 +86,7 @@ class Sponsorship extends React.Component {
                         <QuoteWrapper>
                             <QuoteText>
                                 {' '}“The caliber and number of students that
-                                MHacks attracts is like no other hacking event.”{
-                                    ' '
-                                }
+                                MHacks attracts is like no other hacking event.”{' '}
                             </QuoteText>
                             <CompanyName> - Walmart </CompanyName>
                         </QuoteWrapper>

@@ -6,6 +6,7 @@ var bcrypt = require('bcrypt'),
     emailResponses = require('../../responses/api/email.js'),
     crypto = require('crypto'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin'),
+    escapeStringRegex = require('escape-string-regexp'),
     secret = config.secret;
 
 // Define the document Schema
@@ -167,10 +168,10 @@ var schema = new mongoose.Schema({
     },
     tshirt: {
         type: String,
-        enum: ['xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
+        enum: ['unselected', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
         form: {
             user_editable: true,
-            select: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
+            select: ['', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
             label: 'T-Shirt'
         }
     },
@@ -221,15 +222,17 @@ var schema = new mongoose.Schema({
 
 // Allow us to query by name
 schema.query.byName = function(name) {
+    var escapedName = escapeStringRegex(name);
     return this.findOne({
-        full_name: new RegExp(name, 'i')
+        full_name: new RegExp(escapedName, 'i')
     });
 };
 
 // Allow us to query by email
 schema.query.byEmail = function(email) {
+    var escapedEmail = escapeStringRegex(email);
     return this.findOne({
-        email: new RegExp(email, 'i')
+        email: new RegExp(escapedEmail, 'i')
     });
 };
 
@@ -441,8 +444,8 @@ schema.methods.sendVerificationEmail = function() {
             {
                 confirmation_url:
                     config.host +
-                        '/v1/auth/verify/' +
-                        this.generateEmailVerificationToken(),
+                    '/v1/auth/verify/' +
+                    this.generateEmailVerificationToken(),
                 FIRST_NAME: this.full_name
                     ? this.full_name.split(' ')[0]
                     : 'Hacker'
@@ -472,8 +475,8 @@ schema.methods.sendPasswordResetEmail = function() {
             {
                 update_password_url:
                     config.host +
-                        '/auth/passwordreset/' +
-                        this.generatePasswordResetToken()
+                    '/auth/passwordreset/' +
+                    this.generatePasswordResetToken()
             },
             config.password_reset_email_subject,
             this.email,

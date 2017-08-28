@@ -1,4 +1,5 @@
-var mongoose = require('../index.js');
+var mongoose = require('../index.js'),
+    escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
 var schema = new mongoose.Schema({
@@ -35,8 +36,9 @@ var schema = new mongoose.Schema({
 
 // Allow us to query by title
 schema.query.byTitle = function(title) {
+    var escapedTitle = escapeStringRegex(title);
     return this.findOne({
-        title: new RegExp(title, 'i')
+        title: new RegExp(escapedTitle, 'i')
     });
 };
 

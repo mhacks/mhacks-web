@@ -19,11 +19,9 @@ const Container = styled.div`
 
     ${devices.small`
         width: calc(100% - 60px);
-    `}
-
-    ${devices.tablet`
+    `} ${devices.tablet`
         margin: ${verticalMargin}px auto;
-    `}
+    `};
 `;
 
 const Content = styled.div`
