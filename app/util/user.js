@@ -36,4 +36,3 @@ export function isMinor(birthdate) {
 
     return age < 18;
 }
-

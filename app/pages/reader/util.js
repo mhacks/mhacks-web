@@ -12,4 +12,3 @@ export function generateCSV(arr) {
         .join('\n');
     window.open(encodeURI(meta + keyList + data));
 }
-

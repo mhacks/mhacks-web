@@ -8,7 +8,9 @@ export default class ReaderThunks {
 
             const token = localStorage.getItem('jwt');
 
-            return ReaderRequests.loadHackerApplications(token).then(response => {
+            return ReaderRequests.loadHackerApplications(
+                token
+            ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         const { applications } = json;
@@ -37,7 +39,9 @@ export default class ReaderThunks {
 
             const token = localStorage.getItem('jwt');
 
-            return ReaderRequests.loadMentorApplications(token).then(response => {
+            return ReaderRequests.loadMentorApplications(
+                token
+            ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         const { applications } = json;
@@ -66,7 +70,9 @@ export default class ReaderThunks {
 
             const token = localStorage.getItem('jwt');
 
-            return ReaderRequests.loadSpeakerApplications(token).then(response => {
+            return ReaderRequests.loadSpeakerApplications(
+                token
+            ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         const { applications } = json;

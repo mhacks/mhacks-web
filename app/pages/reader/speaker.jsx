@@ -88,7 +88,7 @@ class SpeakerReader extends React.Component {
                     },
                     {
                         Header: 'Talk Topic',
-                        accessor: 'topic',
+                        accessor: 'topic'
                     }
                 ]
             },
@@ -173,7 +173,12 @@ class SpeakerReader extends React.Component {
                     theme={this.props.theme}
                     utilities={[
                         {
-                            onClick: () => {generateCSV(this.props.readerState.data.speakerApplications)},
+                            onClick: () => {
+                                generateCSV(
+                                    this.props.readerState.data
+                                        .speakerApplications
+                                );
+                            },
                             title: 'CSV'
                         }
                     ]}

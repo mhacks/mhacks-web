@@ -61,9 +61,7 @@ class ReaderPage extends React.Component {
         );
     }
 
-    navigateToMentorReader() {
-
-    }
+    navigateToMentorReader() {}
 
     generateColumns(selected) {
         return [
@@ -337,21 +335,32 @@ class ReaderPage extends React.Component {
                         },
                         {
                             onClick: this.deselectAll,
-                            title: 'Deselect All (' + this.state.selected.length + ')'
+                            title:
+                                'Deselect All (' +
+                                    this.state.selected.length +
+                                    ')'
                         },
                         {
-                            onClick: () => {generateCSV(this.props.readerState.data.applications)},
+                            onClick: () => {
+                                generateCSV(
+                                    this.props.readerState.data.applications
+                                );
+                            },
                             title: 'CSV'
                         },
                         {
                             onClick: () => {
-                                this.context.router.history.push(routes.MENTOR_READER);
+                                this.context.router.history.push(
+                                    routes.MENTOR_READER
+                                );
                             },
                             title: 'Mentor'
                         },
                         {
                             onClick: () => {
-                                this.context.router.history.push(routes.SPEAKER_READER);
+                                this.context.router.history.push(
+                                    routes.SPEAKER_READER
+                                );
                             },
                             title: 'Speaker'
                         }
@@ -400,9 +409,9 @@ class ReaderPage extends React.Component {
 }
 
 ReaderPage.contextTypes = {
-  router: React.PropTypes.shape({
-    history: React.PropTypes.object.isRequired
-  })
+    router: React.PropTypes.shape({
+        history: React.PropTypes.object.isRequired
+    })
 };
 
 function mapStateToProps(state) {

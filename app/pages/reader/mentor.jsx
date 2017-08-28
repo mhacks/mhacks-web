@@ -88,7 +88,7 @@ class MentorReader extends React.Component {
                     },
                     {
                         Header: 'Availability',
-                        accessor: 'availability_during',
+                        accessor: 'availability_during'
                     }
                 ]
             },
@@ -173,7 +173,12 @@ class MentorReader extends React.Component {
                     theme={this.props.theme}
                     utilities={[
                         {
-                            onClick: () => {generateCSV(this.props.readerState.data.mentorApplications)},
+                            onClick: () => {
+                                generateCSV(
+                                    this.props.readerState.data
+                                        .mentorApplications
+                                );
+                            },
                             title: 'CSV'
                         }
                     ]}
