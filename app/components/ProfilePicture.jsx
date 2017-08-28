@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Avatar = styled.img`
-    width: inherit;    
+    width: inherit; 
+    minWidth: 100px;   
+    maxWidth: 200px;
 `;
 
 export default class ProfilePicture extends React.Component {

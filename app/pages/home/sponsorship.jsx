@@ -7,7 +7,7 @@ import {
     Brick
 } from './section_components.jsx';
 
-import SponsorLogos from '../../components';
+import { SponsorLogos } from '../../components';
 import theme from '../../styles/theme.js';
 
 const Wrapper = styled.div`
