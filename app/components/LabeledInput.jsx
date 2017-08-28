@@ -35,7 +35,10 @@ const ChildContainer = styled.div`
 `;
 
 const LabeledInput = props =>
-    <InputField labelWidth={props.labelWidth || '60%'}>
+    <InputField
+        labelWidth={props.labelWidth || '60%'}
+        hasError={props.hasError}
+    >
         <p>
             {props.label}
             {props.required ? '*' : ''}
