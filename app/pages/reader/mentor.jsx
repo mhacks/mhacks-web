@@ -9,9 +9,7 @@ import { isMinor } from '../../util/user.js';
 import { SubsectionContainer, UtilityBar } from './components';
 import { generateCSV } from './util.js';
 
-const A = styled.a`
-    text-align: center;
-`;
+const A = styled.a`text-align: center;`;
 
 const BadMark = <FontAwesome name="times" style={{ color: '#FF4136' }} />;
 const GoodMark = <FontAwesome name="check" style={{ color: '#2ECC40' }} />;
@@ -192,9 +190,13 @@ class MentorReader extends React.Component {
                             <SubsectionContainer>
                                 <div>
                                     <h4>Skills</h4>
-                                    <p>{data.skills.join(', ')}</p>
+                                    <p>
+                                        {data.skills.join(', ')}
+                                    </p>
                                     <h4>Qualifications</h4>
-                                    <p>{data.qualifications}</p>
+                                    <p>
+                                        {data.qualifications}
+                                    </p>
                                 </div>
                             </SubsectionContainer>
                         );

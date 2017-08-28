@@ -18,7 +18,7 @@ export const HeaderSection = styled.div`
                 marginRight: 40px;
             }
         }
-    `}
+    `};
 `;
 
 export const SubsectionContainer = styled.div`

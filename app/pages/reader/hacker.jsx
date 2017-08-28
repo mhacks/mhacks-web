@@ -335,8 +335,8 @@ class ReaderPage extends React.Component {
                             onClick: this.deselectAll,
                             title:
                                 'Deselect All (' +
-                                    this.state.selected.length +
-                                    ')'
+                                this.state.selected.length +
+                                ')'
                         },
                         {
                             onClick: () => {
