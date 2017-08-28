@@ -6,7 +6,7 @@ export default {
     LOGIN: '/v1/auth/login',
     LOGOUT: '/v1/auth/logout',
     PROFILE: '/v1/user/profile',
-    ALL_APPLICATIONS: '/v1/application/all',
+    ALL_HACKER_APPLICATIONS: '/v1/application/all',
     APPLICATION: '/v1/application',
     CONFIRMATION: '/v1/application/confirm',
     READER: '/v1/reader',

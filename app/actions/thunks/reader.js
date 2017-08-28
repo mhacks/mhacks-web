@@ -2,18 +2,18 @@ import { actions } from '../../actions';
 import { ReaderRequests } from '../requests';
 
 export default class ReaderThunks {
-    static loadApplications() {
+    static loadHackerApplications() {
         return dispatch => {
-            dispatch({ type: actions.LOAD_APPLICATIONS_REQUEST });
+            dispatch({ type: actions.LOAD_HACKER_APPLICATIONS_REQUEST });
 
             const token = localStorage.getItem('jwt');
 
-            return ReaderRequests.loadApplications(token).then(response => {
+            return ReaderRequests.loadHackerApplications(token).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         const { applications } = json;
                         dispatch({
-                            type: actions.LOAD_APPLICATIONS_SUCCESS,
+                            type: actions.LOAD_HACKER_APPLICATIONS_SUCCESS,
                             data: applications,
                             message: json.message
                         });
@@ -21,7 +21,7 @@ export default class ReaderThunks {
                 } else {
                     response.json().then(json => {
                         dispatch({
-                            type: actions.LOAD_APPLICATIONS_ERROR,
+                            type: actions.LOAD_HACKER_APPLICATIONS_ERROR,
                             error: response.status,
                             message: json.message
                         });

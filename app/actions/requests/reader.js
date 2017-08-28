@@ -3,8 +3,8 @@ import { endpoints } from '../../constants';
 import { getResponseFromRoute } from '../../util/actions.js';
 
 export default class ReaderRequests {
-    static loadApplications(token) {
-        return getResponseFromRoute(endpoints.ALL_APPLICATIONS, token);
+    static loadHackerApplications(token) {
+        return getResponseFromRoute(endpoints.ALL_HACKER_APPLICATIONS, token);
     }
 
     static loadMentorApplications(token) {

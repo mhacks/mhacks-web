@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import { MHForm, PageContainer } from '../../components';
 import { ReaderThunks } from '../../actions';
+import { routes } from '../../constants';
 import { FormattedRelative } from 'react-intl';
 import { isMinor } from '../../util/user.js';
 import Fuse from 'fuse.js';
@@ -30,13 +31,12 @@ class ReaderPage extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.generateColumns = this.generateColumns.bind(this);
         this.filterApplications = this.filterApplications.bind(this);
-        this.generateCSV = this.generateCSV.bind(this);
         this.selectAll = this.selectAll.bind(this);
         this.deselectAll = this.deselectAll.bind(this);
     }
 
     componentDidMount() {
-        this.props.dispatch(ReaderThunks.loadApplications());
+        this.props.dispatch(ReaderThunks.loadHackerApplications());
         this.props.dispatch(ReaderThunks.loadForm('reader_filter'));
         this.props.dispatch(ReaderThunks.loadForm('reader_schema'));
     }
@@ -59,6 +59,10 @@ class ReaderPage extends React.Component {
         this.props.dispatch(
             ReaderThunks.reviewApplications(this.state.selected, formData)
         );
+    }
+
+    navigateToMentorReader() {
+
     }
 
     generateColumns(selected) {
@@ -277,22 +281,6 @@ class ReaderPage extends React.Component {
         });
     }
 
-    generateCSV() {
-        const { applications } = this.props.readerState.data;
-        if (applications.length === 0) {
-            return;
-        }
-        const keys = Object.keys(applications[0]);
-        const meta = 'data:text/csv;charset=utf-8,';
-        const keyList = keys.join(',') + '\n';
-        const data = applications
-            .map(app => {
-                return keys.map(key => app[key]).join(',');
-            })
-            .join('\n');
-        window.open(encodeURI(meta + keyList + data));
-    }
-
     deselectAll() {
         this.setState({
             selected: []
@@ -354,6 +342,18 @@ class ReaderPage extends React.Component {
                         {
                             onClick: () => {generateCSV(this.props.readerState.data.applications)},
                             title: 'CSV'
+                        },
+                        {
+                            onClick: () => {
+                                this.context.router.history.push(routes.MENTOR_READER);
+                            },
+                            title: 'Mentor'
+                        },
+                        {
+                            onClick: () => {
+                                this.context.router.history.push(routes.SPEAKER_READER);
+                            },
+                            title: 'Speaker'
                         }
                     ]}
                 />
@@ -398,6 +398,12 @@ class ReaderPage extends React.Component {
         );
     }
 }
+
+ReaderPage.contextTypes = {
+  router: React.PropTypes.shape({
+    history: React.PropTypes.object.isRequired
+  })
+};
 
 function mapStateToProps(state) {
     return {
