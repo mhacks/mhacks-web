@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "@newrelic/native-metrics": "^2.1.1",
+        "archiver": "^2.0.0",
         "autoprefixer": "^6.7.7",
         "aws-sdk": "^2.67.0",
         "babel-core": "^6.24.0",
