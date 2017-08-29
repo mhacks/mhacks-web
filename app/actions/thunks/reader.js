@@ -135,11 +135,7 @@ export default class ReaderThunks {
         };
     }
 
-<<<<<<< HEAD
     static loadForm(base, subform) {
-=======
-    static loadForm(subform) {
->>>>>>> master
         return dispatch => {
             dispatch({
                 type: actions.LOAD_READER_FORM_REQUEST
@@ -147,11 +143,7 @@ export default class ReaderThunks {
 
             const token = localStorage.getItem('jwt');
 
-<<<<<<< HEAD
             return loadFormRequest(token, base + subform).then(response => {
-=======
-            return ReaderRequests.loadForm(token, subform).then(response => {
->>>>>>> master
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch({
