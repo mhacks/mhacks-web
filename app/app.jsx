@@ -207,7 +207,10 @@ class AppProvider extends React.Component {
                                         isSponsor,
                                         isAdmin
                                     } = this.getMetadata();
-                                    if (isLoggedIn && (isReader || isSponsor || isAdmin)) {
+                                    if (
+                                        isLoggedIn &&
+                                        (isReader || isSponsor || isAdmin)
+                                    ) {
                                         return <Reader.Sponsor />;
                                     }
 

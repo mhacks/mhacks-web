@@ -9,9 +9,7 @@ import Fuse from 'fuse.js';
 import { HeaderSection, SubsectionContainer, UtilityBar } from './components';
 import { generateCSV } from './util.js';
 
-const A = styled.a`
-    text-align: center;
-`;
+const A = styled.a`text-align: center;`;
 
 const BadMark = <FontAwesome name="times" style={{ color: '#FF4136' }} />;
 const GoodMark = <FontAwesome name="check" style={{ color: '#2ECC40' }} />;
@@ -29,7 +27,9 @@ class SponsorReader extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(ReaderThunks.loadHackerApplications());
-        this.props.dispatch(ReaderThunks.loadForm('confirmation/', 'sponsor_filter'));
+        this.props.dispatch(
+            ReaderThunks.loadForm('confirmation/', 'sponsor_filter')
+        );
     }
 
     generateColumns() {
@@ -84,7 +84,9 @@ class SponsorReader extends React.Component {
                         accessor: 'resume',
                         width: 30,
                         Cell: row =>
-                            <A target="_blank" href={row.value}>{GoodMark}</A>
+                            <A target="_blank" href={row.value}>
+                                {GoodMark}
+                            </A>
                     },
                     {
                         Header: <FontAwesome name="github" />,
@@ -168,7 +170,8 @@ class SponsorReader extends React.Component {
             keys: ['university', 'user', 'full_name']
         });
 
-        const searched = (search && search.length) > 0 ? fuse.search(search) : applications;
+        const searched =
+            (search && search.length) > 0 ? fuse.search(search) : applications;
 
         return searched.filter(application => {
             if (employment && application.employment !== employment) {
@@ -196,15 +199,17 @@ class SponsorReader extends React.Component {
 
     render() {
         if (
-            !(this.props.readerState.data.form &&
-              Object.values(this.props.readerState.data.form).length > 0)
-            ) {
+            !(
+                this.props.readerState.data.form &&
+                Object.values(this.props.readerState.data.form).length > 0
+            )
+        ) {
             return null;
         }
 
         return (
             <PageContainer ref="pagecontainer">
-                <HeaderSection>     
+                <HeaderSection>
                     <MHForm
                         schema={this.props.readerState.data.form.sponsor_filter}
                         FieldTypes={this.props.readerState.data.FieldTypes}
@@ -239,7 +244,12 @@ class SponsorReader extends React.Component {
                         const data = row.original;
                         return (
                             <SubsectionContainer>
-                                <p>Skills: {data.skills ? data.skills.join(', ') : 'undefined as user has not confirmed attendance yet.'}</p>
+                                <p>
+                                    Skills:{' '}
+                                    {data.skills
+                                        ? data.skills.join(', ')
+                                        : 'undefined as user has not confirmed attendance yet.'}
+                                </p>
                             </SubsectionContainer>
                         );
                     }}

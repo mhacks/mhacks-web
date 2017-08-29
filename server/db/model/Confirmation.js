@@ -10,7 +10,26 @@ var mongoose = require('../index.js'),
             value: str,
             label: str
         };
-    });
+    }),
+    degrees = {
+        highschool: 'High School',
+        bachelor: 'Bachelors',
+        master: 'Masters',
+        doctorate: 'Doctorate'
+    },
+    employements = {
+        internship: 'Internship',
+        fulltime: 'Full Time',
+        coop: 'Co-op',
+        none: 'None'
+    },
+    transportations = {
+        bus: 'MHacks Bus',
+        driving: 'Driving',
+        fly: 'Flying',
+        walking: 'Walking',
+        other: 'Other'
+    };
 
 // Define the document Schema
 var schema = new mongoose.Schema({
@@ -40,31 +59,31 @@ var schema = new mongoose.Schema({
     },
     degree: {
         type: String,
-        enum: ['highschool', 'bachelor', 'master', 'doctorate'],
+        enum: Object.keys(degrees),
         required: true,
         form: {
             user_editable: true,
             label: 'Degree Type',
-            select: ['High School', 'Bachelors', 'Masters', 'Doctorate']
+            select: Object.values(degrees)
         }
     },
     employment: {
         type: String,
-        enum: ['internship', 'fulltime', 'coop', 'none'],
+        enum: Object.keys(employements),
         required: true,
         form: {
             user_editable: true,
             label: 'Job Interest',
-            select: ['Internship', 'Full Time', 'Co-op', 'None']
+            select: Object.values(employements)
         }
     },
     travel: {
         type: String,
-        enum: ['bus', 'driving', 'fly', 'walking', 'other'],
+        enum: Object.keys(transportations),
         form: {
             user_editable: true,
             label: 'Travel',
-            select: ['MHacks Bus', 'Driving', 'Flying', 'Walking', 'Other']
+            select: Object.values(transportations)
         },
         required: true
     },
@@ -90,27 +109,60 @@ var schema = new mongoose.Schema({
         form: [
             {
                 key: 'graduation',
-                label: 'Grad year',
-                required: false,
-                type: Array
+                enum: false,
+                form: {
+                    label: 'Grad year',
+                    auth_groups: ['admin', 'sponsor'],
+                    type_override: 'array',
+                    array_select: years
+                        .slice(0, -1)
+                        .concat([end + ' or later'])
+                        .map(function(a) {
+                            return {
+                                value: a,
+                                label: a
+                            };
+                        })
+                },
+                required: false
             },
             {
                 key: 'skills',
                 label: 'Skills',
-                required: false
+                auth_groups: ['admin', 'sponsor']
             },
             {
                 key: 'degree',
-                label: 'Degree',
-                required: false
+                enum: false,
+                form: {
+                    label: 'Degree',
+                    auth_groups: ['admin', 'sponsor'],
+                    type_override: 'array',
+                    array_select: Object.keys(degrees).map(function(a) {
+                        return {
+                            value: a,
+                            label: degrees[a]
+                        };
+                    })
+                }
             },
             {
                 key: 'employment',
-                label: 'Employment',
-                required: false
+                enum: false,
+                form: {
+                    label: 'Employment',
+                    auth_groups: ['admin', 'sponsor'],
+                    type_override: 'array',
+                    array_select: Object.keys(employements).map(function(a) {
+                        return {
+                            value: a,
+                            label: employements[a]
+                        };
+                    })
+                }
             }
         ]
-    },
+    }
 });
 
 // Allow us to query by token

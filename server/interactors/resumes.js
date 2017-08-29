@@ -33,8 +33,8 @@ function downloadApplicationsZip(resolve, reject) {
                         applications.forEach(function(application) {
                             if (user.email === application.user) {
                                 var fileName = application.resume
-                                    .split('/')
-                                    .pop(),
+                                        .split('/')
+                                        .pop(),
                                     fileEnding = fileName.split('.').pop();
 
                                 if (
@@ -51,9 +51,9 @@ function downloadApplicationsZip(resolve, reject) {
                                         {
                                             name:
                                                 'MHacks Resumes/' +
-                                                    user.full_name +
-                                                    '.' +
-                                                    fileEnding
+                                                user.full_name +
+                                                '.' +
+                                                fileEnding
                                         }
                                     );
                                 } else {
@@ -104,9 +104,9 @@ function downloadUsersZip(resolve, reject) {
                         {
                             name:
                                 'MHacks Resumes/' +
-                                    user.full_name +
-                                    '.' +
-                                    fileEnding
+                                user.full_name +
+                                '.' +
+                                fileEnding
                         }
                     );
                 } else {
@@ -144,8 +144,8 @@ function downloadS3ApplicationsZip(resolve, reject) {
                         applications.forEach(function(application) {
                             if (user.email === application.user) {
                                 var fileName = application.resume
-                                    .split('/')
-                                    .pop(),
+                                        .split('/')
+                                        .pop(),
                                     fileEnding = fileName.split('.').pop();
 
                                 var params = {
@@ -163,9 +163,9 @@ function downloadS3ApplicationsZip(resolve, reject) {
                                         archive.append(response.data.Body, {
                                             name:
                                                 'MHacks Resumes/' +
-                                                    user.full_name +
-                                                    '.' +
-                                                    fileEnding
+                                                user.full_name +
+                                                '.' +
+                                                fileEnding
                                         });
 
                                         if (elem + 1 === users.length) {
@@ -219,9 +219,9 @@ function downloadS3UsersZip(resolve, reject) {
                         archive.append(response.data.Body, {
                             name:
                                 'MHacks Resumes/' +
-                                    user.full_name +
-                                    '.' +
-                                    fileEnding
+                                user.full_name +
+                                '.' +
+                                fileEnding
                         });
 
                         if (elem + 1 === users.length) {

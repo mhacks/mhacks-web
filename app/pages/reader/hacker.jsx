@@ -35,8 +35,12 @@ class ReaderPage extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(ReaderThunks.loadHackerApplications());
-        this.props.dispatch(ReaderThunks.loadForm('application/', 'reader_filter'));
-        this.props.dispatch(ReaderThunks.loadForm('application/', 'reader_schema'));
+        this.props.dispatch(
+            ReaderThunks.loadForm('application/', 'reader_filter')
+        );
+        this.props.dispatch(
+            ReaderThunks.loadForm('application/', 'reader_schema')
+        );
     }
 
     didSelect(user) {

@@ -181,7 +181,7 @@ function check_types(prop_val, groups) {
     }
 
     // If there's an enum, it's a select group
-    if ('enum' in prop_val) {
+    if ('enum' in prop_val && prop_val.enum) {
         var select = [];
         prop_val.enum.forEach(function(data, elem) {
             select.push({ label: prop_val.form.select[elem], value: data });
