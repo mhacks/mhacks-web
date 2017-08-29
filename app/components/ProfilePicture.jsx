@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Avatar = styled.img`
-    width: inherit; 
-    minWidth: 100px;   
+    width: inherit;
+    minWidth: 100px;
     maxWidth: 200px;
 `;
 
