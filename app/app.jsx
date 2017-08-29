@@ -19,7 +19,7 @@ import {
     Profile,
     Apply,
     BlackoutPage,
-    ReaderPage,
+    Reader,
     Confirm,
     MentorApply,
     SpeakerApply
@@ -151,7 +151,7 @@ class AppProvider extends React.Component {
                             />
                             <Route
                                 exact
-                                path={routes.READER}
+                                path={routes.HACKER_READER}
                                 render={() => {
                                     const {
                                         isLoggedIn,
@@ -159,7 +159,59 @@ class AppProvider extends React.Component {
                                         isAdmin
                                     } = this.getMetadata();
                                     if (isLoggedIn && (isReader || isAdmin)) {
-                                        return <ReaderPage />;
+                                        return <Reader.Hacker />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.MENTOR_READER}
+                                render={() => {
+                                    const {
+                                        isLoggedIn,
+                                        isReader,
+                                        isAdmin
+                                    } = this.getMetadata();
+                                    if (isLoggedIn && (isReader || isAdmin)) {
+                                        return <Reader.Mentor />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.SPEAKER_READER}
+                                render={() => {
+                                    const {
+                                        isLoggedIn,
+                                        isReader,
+                                        isAdmin
+                                    } = this.getMetadata();
+                                    if (isLoggedIn && (isReader || isAdmin)) {
+                                        return <Reader.Speaker />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.SPONSOR_READER}
+                                render={() => {
+                                    const {
+                                        isLoggedIn,
+                                        isReader,
+                                        isSponsor,
+                                        isAdmin
+                                    } = this.getMetadata();
+                                    if (
+                                        isLoggedIn &&
+                                        (isReader || isSponsor || isAdmin)
+                                    ) {
+                                        return <Reader.Sponsor />;
                                     }
 
                                     return <Redirect to={routes.LOGIN} />;

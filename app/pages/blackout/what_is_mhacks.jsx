@@ -15,7 +15,7 @@ const OrbImage1 = styled.img`
         height: 500px;
         position: relative;
         left: -20%;
-    `}
+    `};
 `;
 
 const FlexBox = styled.div`
@@ -25,7 +25,7 @@ const FlexBox = styled.div`
 
     ${devices.tablet`
         flexWrap: nowrap;
-    `}
+    `};
 `;
 
 const Header = styled(SectionHeader)`
@@ -62,22 +62,18 @@ class BlackoutWhatIsMHacks extends React.Component {
                     <div>
                         <Body>
                             MHacks is a 36-hour hackathon run by University of
-                            Michigan students.
-                            At MHacks, we want to help you turn your ideas into
-                            reality.
-                            You're welcome to come with or without a team.
-                            We'll provide you with all the resources and mentors
-                            you need to help
-                            you work on something cool or learn new skills.
-                            You'll have the freedom
-                            to create a product, learn new techniques for your
-                            future work,
-                            or just have fun working on a project with friends.
-                            Moreover, we will offer you a chance to network with
-                            other
-                            creators and professionals. For newcomers and
-                            veterans alike, MHacks is a
-                            weekend experience you won’t want to miss.
+                            Michigan students. At MHacks, we want to help you
+                            turn your ideas into reality. You're welcome to come
+                            with or without a team. We'll provide you with all
+                            the resources and mentors you need to help you work
+                            on something cool or learn new skills. You'll have
+                            the freedom to create a product, learn new
+                            techniques for your future work, or just have fun
+                            working on a project with friends. Moreover, we will
+                            offer you a chance to network with other creators
+                            and professionals. For newcomers and veterans alike,
+                            MHacks is a weekend experience you won’t want to
+                            miss.
                         </Body>
                     </div>
                 </FlexBox>

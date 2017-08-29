@@ -33,7 +33,7 @@ export default class SpeakerThunks {
         };
     }
 
-    static uploadApplication(formData) {
+    static uploadApplication(formData, files) {
         return dispatch => {
             dispatch({
                 type: actions.UPLOAD_SPEAKER_APPLICATION_REQUEST,
@@ -44,7 +44,8 @@ export default class SpeakerThunks {
 
             return SpeakerRequests.uploadApplication(
                 token,
-                formData
+                formData,
+                files
             ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {

@@ -1,86 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import { devices } from '../../styles';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import { MHForm, PageContainer } from '../../components';
 import { ReaderThunks } from '../../actions';
+import { routes } from '../../constants';
 import { FormattedRelative } from 'react-intl';
+import { isMinor } from '../../util/user.js';
 import Fuse from 'fuse.js';
 import FontAwesome from 'react-fontawesome';
+import { HeaderSection, SubsectionContainer, UtilityBar } from './components';
+import { generateCSV } from './util.js';
 
-const HeaderSection = styled.div`
-    display: flex;
-    flexDirection: column;
-    justifyContent: space-between;
-    padding: 10px 20px;
-
-    ${devices.tablet`
-        flexDirection: row;
-
-        form {
-            flex: 1;
-
-            &:first-child {
-                marginRight: 40px;
-            }
-        }
-    `}
-`;
-
-const SubsectionContainer = styled.div`
-    display: flex;
-    flexDirection: row;
-    padding: 0 20px;
-`;
-
-const A = styled.a`
-    text-align: center;
-`;
-
-const UtilityContainer = styled.div`
-    padding: 0 20px;
-    display: flex;
-    flexWrap: wrap;
-`;
-
-const UtilityButton = styled.button`
-    borderRadius: 20px;
-    backgroundColor: transparent;
-    color: ${props => props.color};
-    fontWeight: 500;
-    fontSize: 16px;
-    padding: 8px 20px;
-    border: 3px solid ${props => props.color};
-    margin: 20px 20px 20px 0;
-
-    &:hover {
-        backgroundColor: ${props => props.color};
-        color: white;
-    }
-
-    &:last-child {
-        marginRight: 0;
-    }
-`;
+const A = styled.a`text-align: center;`;
 
 const BadMark = <FontAwesome name="times" style={{ color: '#FF4136' }} />;
 const GoodMark = <FontAwesome name="check" style={{ color: '#2ECC40' }} />;
-
-function isMinor(birthdate) {
-    const now = new Date();
-    const birth = new Date(birthdate);
-
-    var age = now.getFullYear() - birth.getFullYear();
-    const ageMonth = now.getMonth() - birth.getMonth();
-    const ageDay = now.getDate() - birth.getDate();
-
-    if (ageMonth < 0 || (ageMonth === 0 && ageDay < 0)) {
-        age = parseInt(age) - 1;
-    }
-
-    return age < 18;
-}
 
 /* Page Component */
 class ReaderPage extends React.Component {
@@ -94,15 +29,18 @@ class ReaderPage extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.generateColumns = this.generateColumns.bind(this);
         this.filterApplications = this.filterApplications.bind(this);
-        this.generateCSV = this.generateCSV.bind(this);
         this.selectAll = this.selectAll.bind(this);
         this.deselectAll = this.deselectAll.bind(this);
     }
 
     componentDidMount() {
-        this.props.dispatch(ReaderThunks.loadApplications());
-        this.props.dispatch(ReaderThunks.loadForm('reader_filter'));
-        this.props.dispatch(ReaderThunks.loadForm('reader_schema'));
+        this.props.dispatch(ReaderThunks.loadHackerApplications());
+        this.props.dispatch(
+            ReaderThunks.loadForm('application/', 'reader_filter')
+        );
+        this.props.dispatch(
+            ReaderThunks.loadForm('application/', 'reader_schema')
+        );
     }
 
     didSelect(user) {
@@ -124,6 +62,8 @@ class ReaderPage extends React.Component {
             ReaderThunks.reviewApplications(this.state.selected, formData)
         );
     }
+
+    navigateToMentorReader() {}
 
     generateColumns(selected) {
         return [
@@ -223,7 +163,7 @@ class ReaderPage extends React.Component {
                         accessor: 'github',
                         width: 30,
                         Cell: row => {
-                            return row.value
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>
@@ -235,7 +175,7 @@ class ReaderPage extends React.Component {
                         accessor: 'linkedin',
                         width: 30,
                         Cell: row => {
-                            return row.value
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>
@@ -253,7 +193,7 @@ class ReaderPage extends React.Component {
                         accessor: 'devpost',
                         width: 30,
                         Cell: row => {
-                            return row.value
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>
@@ -265,7 +205,7 @@ class ReaderPage extends React.Component {
                         accessor: 'portfolio',
                         width: 30,
                         Cell: row => {
-                            return row.value
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>
@@ -341,22 +281,6 @@ class ReaderPage extends React.Component {
         });
     }
 
-    generateCSV() {
-        const { applications } = this.props.readerState.data;
-        if (applications.length === 0) {
-            return;
-        }
-        const keys = Object.keys(applications[0]);
-        const meta = 'data:text/csv;charset=utf-8,';
-        const keyList = keys.join(',') + '\n';
-        const data = applications
-            .map(app => {
-                return keys.map(key => app[key]).join(',');
-            })
-            .join('\n');
-        window.open(encodeURI(meta + keyList + data));
-    }
-
     deselectAll() {
         this.setState({
             selected: []
@@ -404,26 +328,46 @@ class ReaderPage extends React.Component {
                         onSubmit={this.onSubmit}
                     />
                 </HeaderSection>
-                <UtilityContainer>
-                    <UtilityButton
-                        color={this.props.theme.primary}
-                        onClick={this.selectAll}
-                    >
-                        Select All
-                    </UtilityButton>
-                    <UtilityButton
-                        color={this.props.theme.primary}
-                        onClick={this.deselectAll}
-                    >
-                        Deselect All ({this.state.selected.length})
-                    </UtilityButton>
-                    <UtilityButton
-                        color={this.props.theme.primary}
-                        onClick={this.generateCSV}
-                    >
-                        CSV
-                    </UtilityButton>
-                </UtilityContainer>
+                <UtilityBar
+                    theme={this.props.theme}
+                    utilities={[
+                        {
+                            onClick: this.selectAll,
+                            title: 'Select All'
+                        },
+                        {
+                            onClick: this.deselectAll,
+                            title:
+                                'Deselect All (' +
+                                this.state.selected.length +
+                                ')'
+                        },
+                        {
+                            onClick: () => {
+                                generateCSV(
+                                    this.props.readerState.data.applications
+                                );
+                            },
+                            title: 'CSV'
+                        },
+                        {
+                            onClick: () => {
+                                this.context.router.history.push(
+                                    routes.MENTOR_READER
+                                );
+                            },
+                            title: 'Mentor'
+                        },
+                        {
+                            onClick: () => {
+                                this.context.router.history.push(
+                                    routes.SPEAKER_READER
+                                );
+                            },
+                            title: 'Speaker'
+                        }
+                    ]}
+                />
                 <ReactTable
                     data={this.filterApplications(
                         this.props.readerState.data.applications
@@ -435,13 +379,21 @@ class ReaderPage extends React.Component {
                             <SubsectionContainer>
                                 <div>
                                     <h4>Why MHacks?</h4>
-                                    <p>{data.why_mhacks}</p>
+                                    <p>
+                                        {data.why_mhacks}
+                                    </p>
                                     <h4>Favorite Memory?</h4>
-                                    <p>{data.favorite_memory}</p>
+                                    <p>
+                                        {data.favorite_memory}
+                                    </p>
                                     <h4>Anything Else?</h4>
-                                    <p>{data.anything_else}</p>
+                                    <p>
+                                        {data.anything_else}
+                                    </p>
                                     <h4>Departing From</h4>
-                                    <p>{data.departing_from}</p>
+                                    <p>
+                                        {data.departing_from}
+                                    </p>
                                     <h4>Needs Reimbursement</h4>
                                     <p>
                                         {data.needs_reimbursement
@@ -449,13 +401,21 @@ class ReaderPage extends React.Component {
                                             : 'false'}
                                     </p>
                                     <h4>Requested Reimbursement</h4>
-                                    <p>{data.requested_reimbursement}</p>
+                                    <p>
+                                        {data.requested_reimbursement}
+                                    </p>
                                     <h4>race</h4>
-                                    <p>{data.race}</p>
+                                    <p>
+                                        {data.race}
+                                    </p>
                                     <h4>sex</h4>
-                                    <p>{data.sex}</p>
+                                    <p>
+                                        {data.sex}
+                                    </p>
                                     <h4>tshirt</h4>
-                                    <p>{data.tshirt}</p>
+                                    <p>
+                                        {data.tshirt}
+                                    </p>
                                 </div>
                             </SubsectionContainer>
                         );
@@ -465,6 +425,12 @@ class ReaderPage extends React.Component {
         );
     }
 }
+
+ReaderPage.contextTypes = {
+    router: React.PropTypes.shape({
+        history: React.PropTypes.object.isRequired
+    })
+};
 
 function mapStateToProps(state) {
     return {

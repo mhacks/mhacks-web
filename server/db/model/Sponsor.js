@@ -1,5 +1,6 @@
 var mongoose = require('../index.js'),
-    config = require('../../../config/default.js');
+    config = require('../../../config/default.js'),
+    escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
@@ -42,15 +43,17 @@ var schema = new mongoose.Schema(
 
 // Allow us to query by name
 schema.query.byName = function(name) {
+    var escapedName = escapeStringRegex(name);
     return this.findOne({
-        name: new RegExp(name, 'i')
+        name: new RegExp(escapedName, 'i')
     });
 };
 
 // Allow us to query by email
 schema.query.byLevel = function(level) {
+    var escapedLevel = escapeStringRegex(level);
     return this.findOne({
-        level: new RegExp(level, 'i')
+        level: new RegExp(escapedLevel, 'i')
     });
 };
 

@@ -163,6 +163,7 @@ function check_types(prop_val, groups) {
             val_types.type = config.form_types.BUFFER;
             break;
         case Array:
+        case 'array':
             val_types.type = config.form_types.ARRAY;
             break;
         case 'essay':
@@ -174,16 +175,13 @@ function check_types(prop_val, groups) {
         case 'submit':
             val_types.type = config.form_types.SUBMIT;
             break;
-        case 'array':
-            val_types.type = config.form_types.ARRAY;
-            break;
         case 'file':
             val_types.type = config.form_types.FILE;
             break;
     }
 
     // If there's an enum, it's a select group
-    if ('enum' in prop_val) {
+    if ('enum' in prop_val && prop_val.enum) {
         var select = [];
         prop_val.enum.forEach(function(data, elem) {
             select.push({ label: prop_val.form.select[elem], value: data });
