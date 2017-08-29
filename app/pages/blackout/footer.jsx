@@ -31,7 +31,7 @@ const Text = styled.h2`
         textAlign: left;
         minWidth: 0;
         order: 0;
-    `}
+    `};
 `;
 
 const HeaderLogo = styled.img`
@@ -50,7 +50,7 @@ const Flexer = styled.div`
         textAlign: left;
         minWidth: 0;
         ${props => (props.right ? 'justifyContent: flex-end;' : '')}
-    `}
+    `};
 `;
 
 const Img100 = styled.img`

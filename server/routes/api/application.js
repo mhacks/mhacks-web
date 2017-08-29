@@ -93,7 +93,10 @@ router.get('/', function(req, res) {
 });
 
 // Returns all applications
-router.get('/all', authMiddleware('reader admin', 'api'), function(req, res) {
+router.get('/all', authMiddleware('sponsor reader admin', 'api'), function(
+    req,
+    res
+) {
     Application.find()
         .select('-_id -__v')
         .then(applications => {
@@ -104,33 +107,65 @@ router.get('/all', authMiddleware('reader admin', 'api'), function(req, res) {
                         .map(application => application.user)
                 }
             })
-                .select('full_name email')
+                .select('_id full_name email')
                 .then(users => {
-                    res.send({
-                        status: true,
-                        applications: applications.map(application => {
-                            const associated_user = users.find(
-                                user => user.email === application.user
-                            );
-                            if (!associated_user) {
-                                return application;
-                            }
+                    Confirmation.find()
+                        .select('-_id -__v')
+                        .then(confirmations => {
+                            res.send({
+                                status: true,
+                                applications: applications.map(application => {
+                                    const associated_user = users.find(
+                                        user => user.email === application.user
+                                    );
 
-                            var user_doc = {
-                                full_name: associated_user.full_name
-                            };
+                                    if (!associated_user) {
+                                        return application;
+                                    }
 
-                            if (application.resume) {
-                                user_doc.resume = application.getResume();
-                            }
+                                    const user_doc = {
+                                        full_name: associated_user.full_name
+                                    };
 
-                            return Object.assign(
-                                {},
-                                application._doc,
-                                user_doc
-                            );
+                                    if (application.resume) {
+                                        user_doc.resume = application.getResume();
+                                    }
+
+                                    const associated_confirmation = confirmations.find(
+                                        confirmation =>
+                                            confirmation.user.equals(
+                                                associated_user._id
+                                            )
+                                    );
+
+                                    if (!associated_confirmation) {
+                                        return Object.assign(
+                                            {},
+                                            application._doc,
+                                            user_doc
+                                        );
+                                    }
+
+                                    return Object.assign(
+                                        {},
+                                        application._doc,
+                                        user_doc,
+                                        Object.assign(
+                                            {},
+                                            associated_confirmation._doc,
+                                            { user: undefined }
+                                        )
+                                    );
+                                })
+                            });
                         })
-                    });
+                        .catch(err => {
+                            console.error(err);
+                            res.status(500).send({
+                                status: false,
+                                message: Responses.UNKNOWN_ERROR
+                            });
+                        });
                 })
                 .catch(err => {
                     console.error(err);

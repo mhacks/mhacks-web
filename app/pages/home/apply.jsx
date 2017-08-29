@@ -39,7 +39,7 @@ const StyledNavLinkWrapper = styled.div`
 
     ${devices.tablet`
         textAlign: left;
-    `}
+    `};
 `;
 
 class Apply extends React.Component {

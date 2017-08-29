@@ -7,12 +7,10 @@ import Favicon from '../../../../static/nano/favicon.png';
 
 import InputBar from './InputBar.jsx';
 
-const Wrapper = styled.div`
-    height: 100%;
-`;
+const Wrapper = styled.div`height: 100%;`;
 
 const Header = styled.div`
-    backgroundColor: #E6E6E6;
+    backgroundColor: #e6e6e6;
     borderRadius: 8px 8px 0 0;
     padding: 10px;
     border: 1px solid gray;
@@ -31,7 +29,7 @@ const List = styled.div`
 `;
 
 const ListItem = styled.div`
-    backgroundColor: #EFEFEF;
+    backgroundColor: #efefef;
     borderBottom: 0.5px solid black;
     padding: 10px;
 `;
@@ -232,7 +230,9 @@ class Chat extends React.Component {
                               </HeaderText>
                             : <HeaderText>
                                   Chat with{' '}
-                                  {users.length > 0 ? users.length - 1 : '0'}{' '}
+                                  {users.length > 0
+                                      ? users.length - 1
+                                      : '0'}{' '}
                                   other{' '}
                                   {users.length - 1 === 1 ? 'user' : 'users'}
                               </HeaderText>}
@@ -240,16 +240,18 @@ class Chat extends React.Component {
                     <List>
                         {this.state.messages.map(
                             function(message, i) {
-                                var propId = i ===
-                                    this.state.messages.length - 1
-                                    ? 'lastItem'
-                                    : '';
+                                var propId =
+                                    i === this.state.messages.length - 1
+                                        ? 'lastItem'
+                                        : '';
                                 return (
                                     <ListItem key={i} id={propId}>
                                         <ListItemHeader>
                                             {message.user.name}
                                             <ListItemTimestamp>
-                                                <FormattedRelative value={message.time} />
+                                                <FormattedRelative
+                                                    value={message.time}
+                                                />
                                             </ListItemTimestamp>
                                         </ListItemHeader>
                                         <ListItemDescription>

@@ -51,11 +51,11 @@ var schema = new mongoose.Schema({
     tshirt: {
         type: String,
         required: true,
-        enum: ['xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
+        enum: ['unselected', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
         form: {
             user_editable: true,
             label: 'T-Shirt',
-            select: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL']
+            select: ['', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL']
         }
     },
     experience: {
@@ -263,29 +263,32 @@ var schema = new mongoose.Schema({
         form: [
             {
                 key: 'status',
-                label: 'Status'
+                label: 'Status',
+                auth_groups: ['admin', 'reader']
             },
             {
                 key: 'needs_reimbursement',
-                label: 'Needs Reimbursement'
+                label: 'Needs Reimbursement',
+                auth_groups: ['admin', 'reader']
             },
             {
                 key: 'experience',
                 label: 'Experience',
-                required: false
+                required: false,
+                auth_groups: ['admin', 'reader', 'sponsor']
             },
             {
                 key: 'minor',
                 label: 'Minor',
                 type: Boolean,
-                auth_groups: ['admin', 'reader']
+                auth_groups: ['admin', 'reader', 'sponsor']
             },
             {
                 key: 'search',
                 label: 'Search',
                 type: String,
                 placeholder: 'By name, uni, email',
-                auth_groups: ['admin', 'reader']
+                auth_groups: ['admin', 'reader', 'sponsor']
             },
             {
                 key: 'since',

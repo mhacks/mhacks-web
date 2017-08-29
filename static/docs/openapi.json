@@ -1,0 +1,2152 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "The Unchained MHacks API",
+        "version": "0.0.1",
+        "title": "MHacks",
+        "termsOfService": "https://mhacks.org",
+        "contact": {
+            "email": "me@antoniomika.me"
+        },
+        "license": {
+            "name": "GNU General Public License v3.0",
+            "url": "https://github.com/mhacks/mhacks-web/blob/master/LICENSE"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://mhacks.org/v1",
+            "description": "Production"
+        },
+        {
+            "url": "https://staging.mhacks.org/v1",
+            "description": "Staging"
+        },
+        {
+            "url": "http://localhost:3000/v1",
+            "description": "Development"
+        }
+    ],
+    "tags": [],
+    "paths": {
+        "/v1/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postAuthLogin",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Auth"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postAuthRegister",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Auth"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/auth/verify": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postAuthVerify",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Auth"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/auth/verify/:token": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getAuthVerify:token",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/auth/password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postAuthPassword",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Auth"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/auth/password/:token": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postAuthPassword:token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Auth"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postAuthLogout",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Auth"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/email/subscribe": {
+            "post": {
+                "tags": [
+                    "Email"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postEmailSubscribe",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Email"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/announcements": {
+            "patch": {
+                "tags": [
+                    "Announcements"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "patchAnnouncements",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Announcement"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Announcements"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "putAnnouncements",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Announcement"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Announcements"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postAnnouncements",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Announcement"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "Announcements"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getAnnouncements",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/user/profile": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getUserProfile",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postUserProfile",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/User"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/user/ticket": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getUserTicket",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/user/ticket/verify": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getUserTicketVerify",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/application": {
+            "get": {
+                "tags": [
+                    "Application"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getApplication",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Application"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postApplication",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Application"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/application/all": {
+            "get": {
+                "tags": [
+                    "Application"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getApplicationAll",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/application/confirm": {
+            "get": {
+                "tags": [
+                    "Application"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getApplicationConfirm",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Application"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postApplicationConfirm",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Application"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/deploy/webhook/github": {
+            "post": {
+                "tags": [
+                    "Deploy"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postDeployWebhookGithub",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Deploy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/deploy/webhook/slack": {
+            "post": {
+                "tags": [
+                    "Deploy"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postDeployWebhookSlack",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Deploy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/artifact/resume/:email": {
+            "get": {
+                "tags": [
+                    "Artifact"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getArtifactResume:email",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/artifact/avatar/:email": {
+            "get": {
+                "tags": [
+                    "Artifact"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getArtifactAvatar:email",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/configuration": {
+            "get": {
+                "tags": [
+                    "Configuration"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getConfiguration",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/configuration/control": {
+            "post": {
+                "tags": [
+                    "Configuration"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postConfigurationControl",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Configuration"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/form/:model": {
+            "get": {
+                "tags": [
+                    "Form"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getForm:model",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/form/:model/:submodel": {
+            "get": {
+                "tags": [
+                    "Form"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getForm:model:submodel",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/shortener": {
+            "post": {
+                "tags": [
+                    "Shortener"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postShortener",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Shortener"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "Shortener"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getShortener",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/shortener/:id": {
+            "get": {
+                "tags": [
+                    "Shortener"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getShortener:id",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/admin/user/groups": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postAdminUserGroups",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Admin"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/reader": {
+            "post": {
+                "tags": [
+                    "Reader"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postReader",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Reader"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/push": {
+            "patch": {
+                "tags": [
+                    "Push"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "patchPush",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Push"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Push"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "putPush",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Push"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Push"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postPush",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Push"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "Push"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getPush",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/scan": {
+            "post": {
+                "tags": [
+                    "Scan"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postScan",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Scan"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "Scan"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getScan",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/scan/image/:id": {
+            "get": {
+                "tags": [
+                    "Scan"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getScanImage:id",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/scan/:id": {
+            "post": {
+                "tags": [
+                    "Scan"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postScan:id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Scan"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "Scan"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getScan:id",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/sponsor": {
+            "get": {
+                "tags": [
+                    "Sponsor"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getSponsor",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Sponsor"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postSponsor",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/Sponsor"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/sponsor/logo/:id": {
+            "get": {
+                "tags": [
+                    "Sponsor"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getSponsorLogo:id",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/mentor/application": {
+            "get": {
+                "tags": [
+                    "Mentor"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getMentorApplication",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Mentor"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postMentorApplication",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/MentorApplication"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/speaker/application": {
+            "get": {
+                "tags": [
+                    "Speaker"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getSpeakerApplication",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Speaker"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postSpeakerApplication",
+                "parameters": [
+                    {
+                        "$ref": "#/components/schemas/SpeakerApplication"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Okay"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ],
+    "components": {
+        "schemas": {
+            "Auth": {
+                "type": "object",
+                "properties": {
+                    "full_name": {
+                        "type": "string",
+                        "description": "Full Name"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "Email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password",
+                        "description": "Password"
+                    }
+                }
+            },
+            "Email": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "Email"
+                    }
+                }
+            },
+            "Deploy": {
+                "type": "object",
+                "properties": {}
+            },
+            "Admin": {
+                "type": "object",
+                "properties": {}
+            },
+            "Reader": {
+                "type": "object",
+                "properties": {}
+            },
+            "Push": {
+                "type": "object",
+                "properties": {}
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "full_name": {
+                        "type": "string",
+                        "description": "Full Name"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Password"
+                    },
+                    "birthday": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date of Birth"
+                    },
+                    "major": {
+                        "type": "string",
+                        "description": "Major"
+                    },
+                    "university": {
+                        "type": "string",
+                        "description": "University"
+                    },
+                    "avatar": {
+                        "type": "string",
+                        "format": "binary",
+                        "description": "Avatar"
+                    },
+                    "resume": {
+                        "type": "string",
+                        "format": "binary",
+                        "description": "Resume"
+                    },
+                    "github": {
+                        "type": "string",
+                        "description": "GitHub"
+                    },
+                    "linkedin": {
+                        "type": "string",
+                        "description": "LinkedIn"
+                    },
+                    "devpost": {
+                        "type": "string",
+                        "description": "DevPost"
+                    },
+                    "portfolio": {
+                        "type": "string",
+                        "description": "Portfolio"
+                    },
+                    "tshirt": {
+                        "type": "string",
+                        "description": "T-Shirt",
+                        "enum": [
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl",
+                            "2xl",
+                            "3xl"
+                        ]
+                    },
+                    "race": {
+                        "type": "string",
+                        "description": "Race",
+                        "enum": [
+                            "unselected",
+                            "white",
+                            "black",
+                            "am-indian-alaskan",
+                            "asian",
+                            "hispanic",
+                            "other",
+                            "prefer-not"
+                        ]
+                    },
+                    "sex": {
+                        "type": "string",
+                        "description": "Sex",
+                        "enum": [
+                            "unselected",
+                            "male",
+                            "female",
+                            "non-binary",
+                            "prefer-not"
+                        ]
+                    }
+                }
+            },
+            "Application": {
+                "type": "object",
+                "properties": {
+                    "birthday": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date of Birth"
+                    },
+                    "university": {
+                        "type": "string",
+                        "description": "University"
+                    },
+                    "major": {
+                        "type": "string",
+                        "description": "Major"
+                    },
+                    "tshirt": {
+                        "type": "string",
+                        "description": "T-Shirt",
+                        "enum": [
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl",
+                            "2xl",
+                            "3xl"
+                        ]
+                    },
+                    "experience": {
+                        "type": "string",
+                        "description": "Experience",
+                        "enum": [
+                            "novice",
+                            "experienced",
+                            "veteran"
+                        ]
+                    },
+                    "resume": {
+                        "type": "string",
+                        "format": "binary",
+                        "description": "Resume"
+                    },
+                    "github": {
+                        "type": "string",
+                        "description": "GitHub"
+                    },
+                    "linkedin": {
+                        "type": "string",
+                        "description": "LinkedIn"
+                    },
+                    "devpost": {
+                        "type": "string",
+                        "description": "DevPost"
+                    },
+                    "portfolio": {
+                        "type": "string",
+                        "description": "Portfolio"
+                    },
+                    "race": {
+                        "type": "string",
+                        "description": "Race",
+                        "enum": [
+                            "unselected",
+                            "white",
+                            "black",
+                            "am-indian-alaskan",
+                            "asian",
+                            "hispanic",
+                            "other",
+                            "prefer-not"
+                        ]
+                    },
+                    "sex": {
+                        "type": "string",
+                        "description": "Sex",
+                        "enum": [
+                            "unselected",
+                            "male",
+                            "female",
+                            "non-binary",
+                            "prefer-not"
+                        ]
+                    },
+                    "why_mhacks": {
+                        "type": "string",
+                        "description": "Why do you want to come to MHacks?"
+                    },
+                    "favorite_memory": {
+                        "type": "string",
+                        "description": "What is your favorite memory from  MHacks (if applicable)?"
+                    },
+                    "anything_else": {
+                        "type": "string",
+                        "description": "Anything else you would like to tell us?"
+                    },
+                    "needs_reimbursement": {
+                        "type": "boolean",
+                        "description": "Do you need travel reimbursement?"
+                    },
+                    "departing_from": {
+                        "type": "string",
+                        "description": "Departing From"
+                    },
+                    "requested_reimbursement": {
+                        "type": "number",
+                        "description": "How much reimbursement do you expect to need?"
+                    }
+                }
+            },
+            "Confirmation": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string",
+                        "description": "Phone Number"
+                    },
+                    "graduation": {
+                        "type": "string",
+                        "description": "Graduation Year",
+                        "enum": [
+                            "2017",
+                            "2018",
+                            "2019",
+                            "2020",
+                            "2021",
+                            "2022",
+                            "2023",
+                            "2024",
+                            "2025",
+                            "later"
+                        ]
+                    },
+                    "degree": {
+                        "type": "string",
+                        "description": "Degree Type",
+                        "enum": [
+                            "highschool",
+                            "bachelor",
+                            "master",
+                            "doctorate"
+                        ]
+                    },
+                    "employment": {
+                        "type": "string",
+                        "description": "Job Interest",
+                        "enum": [
+                            "internship",
+                            "fulltime",
+                            "coop",
+                            "none"
+                        ]
+                    },
+                    "travel": {
+                        "type": "string",
+                        "description": "Travel",
+                        "enum": [
+                            "bus",
+                            "driving",
+                            "fly",
+                            "walking",
+                            "other"
+                        ]
+                    },
+                    "skills": {
+                        "type": "array",
+                        "description": "Skills",
+                        "default": []
+                    }
+                }
+            },
+            "PushNotification": {
+                "type": "object",
+                "properties": {}
+            },
+            "ScanEvent": {
+                "type": "object",
+                "properties": {}
+            },
+            "Scan": {
+                "type": "object",
+                "properties": {}
+            },
+            "Announcement": {
+                "type": "object",
+                "properties": {}
+            },
+            "Configuration": {
+                "type": "object",
+                "properties": {}
+            },
+            "Shortener": {
+                "type": "object",
+                "properties": {}
+            },
+            "Sponsor": {
+                "type": "object",
+                "properties": {}
+            },
+            "MentorApplication": {
+                "type": "object",
+                "properties": {
+                    "skills": {
+                        "type": "array",
+                        "description": "I can mentor in...",
+                        "default": []
+                    },
+                    "qualifications": {
+                        "type": "string",
+                        "description": "List down anything that qualifies you to be a mentor (e.g. projects, classes, work experience, hobbies, past hackathons, etc.)"
+                    },
+                    "hackathons_been": {
+                        "type": "number",
+                        "description": "How many hackathons have you been to?"
+                    },
+                    "hackathons_mentored": {
+                        "type": "number",
+                        "description": "How many hackathons have you mentored at?"
+                    },
+                    "availability_during": {
+                        "type": "string",
+                        "description": "Availability during the event"
+                    },
+                    "resume": {
+                        "type": "string",
+                        "format": "binary",
+                        "description": "Resume"
+                    },
+                    "github": {
+                        "type": "string",
+                        "description": "GitHub"
+                    },
+                    "linkedin": {
+                        "type": "string",
+                        "description": "LinkedIn"
+                    },
+                    "devpost": {
+                        "type": "string",
+                        "description": "DevPost"
+                    },
+                    "portfolio": {
+                        "type": "string",
+                        "description": "Portfolio"
+                    },
+                    "birthday": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date of Birth"
+                    },
+                    "tshirt": {
+                        "type": "string",
+                        "description": "T-Shirt",
+                        "enum": [
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl",
+                            "2xl",
+                            "3xl"
+                        ]
+                    },
+                    "race": {
+                        "type": "string",
+                        "description": "Race",
+                        "enum": [
+                            "unselected",
+                            "white",
+                            "black",
+                            "am-indian-alaskan",
+                            "asian",
+                            "hispanic",
+                            "other",
+                            "prefer-not"
+                        ]
+                    },
+                    "sex": {
+                        "type": "string",
+                        "description": "Sex",
+                        "enum": [
+                            "unselected",
+                            "male",
+                            "female",
+                            "non-binary",
+                            "prefer-not"
+                        ]
+                    }
+                }
+            },
+            "SpeakerApplication": {
+                "type": "object",
+                "properties": {
+                    "talk_type": {
+                        "type": "string",
+                        "description": "Would you like to give a Tech Talk (give a presentation, possibly followed by a Q&A session) or a Workshop (interactive, more hands-on for the audience)?",
+                        "enum": [
+                            "techtalk",
+                            "workshop"
+                        ]
+                    },
+                    "talk_length": {
+                        "type": "string",
+                        "description": "Would you like to give a Lightning Talk (total time 30 min) or a Regular Talk (total time 1 hr)?",
+                        "enum": [
+                            "lightning",
+                            "regular"
+                        ]
+                    },
+                    "topic": {
+                        "type": "string",
+                        "description": "Topic/Title for your talk"
+                    },
+                    "abstract": {
+                        "type": "string",
+                        "description": "Abstract/Summary for the talk"
+                    },
+                    "qualifications": {
+                        "type": "string",
+                        "description": "List down anything that qualifies you to be a mentor (e.g. projects, classes, work experience, hobbies, past hackathons, etc.)"
+                    },
+                    "resume": {
+                        "type": "string",
+                        "format": "binary",
+                        "description": "Resume"
+                    },
+                    "github": {
+                        "type": "string",
+                        "description": "GitHub"
+                    },
+                    "linkedin": {
+                        "type": "string",
+                        "description": "LinkedIn"
+                    },
+                    "devpost": {
+                        "type": "string",
+                        "description": "DevPost"
+                    },
+                    "portfolio": {
+                        "type": "string",
+                        "description": "Portfolio"
+                    },
+                    "birthday": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date of Birth"
+                    },
+                    "tshirt": {
+                        "type": "string",
+                        "description": "T-Shirt",
+                        "enum": [
+                            "xs",
+                            "s",
+                            "m",
+                            "l",
+                            "xl",
+                            "2xl",
+                            "3xl"
+                        ]
+                    },
+                    "race": {
+                        "type": "string",
+                        "description": "Race",
+                        "enum": [
+                            "unselected",
+                            "white",
+                            "black",
+                            "am-indian-alaskan",
+                            "asian",
+                            "hispanic",
+                            "other",
+                            "prefer-not"
+                        ]
+                    },
+                    "sex": {
+                        "type": "string",
+                        "description": "Sex",
+                        "enum": [
+                            "unselected",
+                            "male",
+                            "female",
+                            "non-binary",
+                            "prefer-not"
+                        ]
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
