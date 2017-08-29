@@ -25,4 +25,17 @@ export default class ReaderRequests {
             body: JSON.stringify(body)
         });
     }
+
+    static loadForm(token, subform) {
+        return fetch(
+            endpoints.FORM + 'application' + (subform ? '/' + subform : ''),
+            {
+                method: 'get',
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token
+                })
+            }
+        );
+    }
 }

@@ -63,6 +63,8 @@ class ReaderPage extends React.Component {
         );
     }
 
+    navigateToMentorReader() {}
+
     generateColumns(selected) {
         return [
             {
