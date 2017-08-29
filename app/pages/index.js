@@ -8,10 +8,8 @@ import Apply from './apply.jsx';
 import LivePage from './live';
 import Reader from './reader';
 import Confirm from './confirm';
-import Sponsor from './sponsor';
 import MentorApply from './mentor/apply';
 import SpeakerApply from './speaker/apply';
-import Sponsor from './sponsor';
 
 export {
     Navigator,
@@ -24,8 +22,6 @@ export {
     LivePage,
     Reader,
     Confirm,
-    Sponsor,
     MentorApply,
-    SpeakerApply,
-    Sponsor
+    SpeakerApply
 };

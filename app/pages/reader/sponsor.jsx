@@ -1,76 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
-import { devices } from '../../styles';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
-import { MHForm, PageContainer } from '../../components';
+import { PageContainer, MHForm } from '../../components';
 import { ReaderThunks } from '../../actions';
 import FontAwesome from 'react-fontawesome';
 import Fuse from 'fuse.js';
-import {
-    SponsorPortalFiltersSchema
-} from '../../constants/forms';
-
-const HeaderSection = styled.div`
-    display: flex;
-    flexDirection: column;
-    justifyContent: space-between;
-    padding: 10px 20px;
-
-    ${devices.tablet`
-        flexDirection: row;
-
-        form {
-            flex: 1;
-
-            &:first-child {
-                marginRight: 40px;
-            }
-        }
-    `}
-`;
-
-const SubsectionContainer = styled.div`
-    display: flex;
-    flexDirection: row;
-    padding: 0 20px;
-`;
+import { HeaderSection, SubsectionContainer, UtilityBar } from './components';
+import { generateCSV } from './util.js';
 
 const A = styled.a`
     text-align: center;
-`;
-
-const UtilityContainer = styled.div`
-    padding: 0 20px;
-    display: flex;
-    flexWrap: wrap;
-`;
-
-const UtilityButton = styled.button`
-    borderRadius: 20px;
-    backgroundColor: transparent;
-    color: ${props => props.color};
-    fontWeight: 500;
-    fontSize: 16px;
-    padding: 8px 20px;
-    border: 3px solid ${props => props.color};
-    margin: 20px 20px 20px 0;
-
-    &:hover {
-        backgroundColor: ${props => props.color};
-        color: white;
-    }
-
-    &:last-child {
-        marginRight: 0;
-    }
 `;
 
 const BadMark = <FontAwesome name="times" style={{ color: '#FF4136' }} />;
 const GoodMark = <FontAwesome name="check" style={{ color: '#2ECC40' }} />;
 
 /* Page Component */
-class ReaderPage extends React.Component {
+class SponsorReader extends React.Component {
     constructor() {
         super();
 
@@ -78,11 +25,11 @@ class ReaderPage extends React.Component {
 
         this.generateColumns = this.generateColumns.bind(this);
         this.filterApplications = this.filterApplications.bind(this);
-        this.generateCSV = this.generateCSV.bind(this);
     }
 
     componentDidMount() {
-        this.props.dispatch(ReaderThunks.loadApplications());
+        this.props.dispatch(ReaderThunks.loadHackerApplications());
+        this.props.dispatch(ReaderThunks.loadForm('confirmation/', 'sponsor_filter'));
     }
 
     generateColumns() {
@@ -247,28 +194,20 @@ class ReaderPage extends React.Component {
         });
     }
 
-    generateCSV() {
-        const { applications } = this.props.readerState.data;
-        if (applications.length === 0) {
-            return;
-        }
-        const keys = Object.keys(applications[0]);
-        const meta = 'data:text/csv;charset=utf-8,';
-        const keyList = keys.join(',') + '\n';
-        const data = applications
-            .map(app => {
-                return keys.map(key => app[key]).join(',');
-            })
-            .join('\n');
-        window.open(encodeURI(meta + keyList + data));
-    }
-
     render() {
+        if (
+            !(this.props.readerState.data.form &&
+              Object.values(this.props.readerState.data.form).length > 0)
+            ) {
+            return null;
+        }
+
         return (
             <PageContainer ref="pagecontainer">
-                <HeaderSection>
+                <HeaderSection>     
                     <MHForm
-                        schema={SponsorPortalFiltersSchema}
+                        schema={this.props.readerState.data.form.sponsor_filter}
+                        FieldTypes={this.props.readerState.data.FieldTypes}
                         theme={this.props.theme}
                         onChange={formState => {
                             this.setState({
@@ -277,14 +216,20 @@ class ReaderPage extends React.Component {
                         }}
                     />
                 </HeaderSection>
-                <UtilityContainer>
-                    <UtilityButton
-                        color={this.props.theme.primary}
-                        onClick={this.generateCSV}
-                    >
-                        CSV
-                    </UtilityButton>
-                </UtilityContainer>
+                <UtilityBar
+                    theme={this.props.theme}
+                    utilities={[
+                        {
+                            onClick: () => {
+                                generateCSV(
+                                    this.props.readerState.data
+                                        .mentorApplications
+                                );
+                            },
+                            title: 'CSV'
+                        }
+                    ]}
+                />
                 <ReactTable
                     data={this.filterApplications(
                         this.props.readerState.data.applications
@@ -311,4 +256,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(ReaderPage);
+export default connect(mapStateToProps)(SponsorReader);

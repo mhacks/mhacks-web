@@ -184,7 +184,7 @@ class HeaderLinks extends React.Component {
                       </StyledALink>
                     : null}
                 {isLoggedIn && (isSponsor || isAdmin)
-                    ? <StyledALink href={routes.SPONSOR} color={color}>
+                    ? <StyledALink href={routes.SPONSOR_READER} color={color}>
                           Sponsor
                       </StyledALink>
                     : null}

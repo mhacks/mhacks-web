@@ -21,10 +21,8 @@ import {
     BlackoutPage,
     Reader,
     Confirm,
-    Sponsor,
     MentorApply,
-    SpeakerApply,
-    Sponsor
+    SpeakerApply
 } from './pages';
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';
@@ -201,15 +199,16 @@ class AppProvider extends React.Component {
                             />
                             <Route
                                 exact
-                                path={routes.SPONSOR}
+                                path={routes.SPONSOR_READER}
                                 render={() => {
                                     const {
                                         isLoggedIn,
+                                        isReader,
                                         isSponsor,
                                         isAdmin
                                     } = this.getMetadata();
-                                    if (isLoggedIn && (isSponsor || isAdmin)) {
-                                        return <Sponsor />;
+                                    if (isLoggedIn && (isReader || isSponsor || isAdmin)) {
+                                        return <Reader.Sponsor />;
                                     }
 
                                     return <Redirect to={routes.LOGIN} />;

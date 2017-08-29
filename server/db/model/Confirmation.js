@@ -84,7 +84,33 @@ var schema = new mongoose.Schema({
             label: 'Confirm',
             type_override: 'submit'
         }
-    }
+    },
+    sponsor_filter: {
+        type: Object,
+        form: [
+            {
+                key: 'graduation',
+                label: 'Grad year',
+                required: false,
+                type: Array
+            },
+            {
+                key: 'skills',
+                label: 'Skills',
+                required: false
+            },
+            {
+                key: 'degree',
+                label: 'Degree',
+                required: false
+            },
+            {
+                key: 'employment',
+                label: 'Employment',
+                required: false
+            }
+        ]
+    },
 });
 
 // Allow us to query by token

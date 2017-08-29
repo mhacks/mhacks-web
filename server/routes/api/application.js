@@ -93,7 +93,7 @@ router.get('/', function(req, res) {
 });
 
 // Returns all applications
-router.get('/all', authMiddleware('reader admin', 'api'), function(req, res) {
+router.get('/all', authMiddleware('sponsor reader admin', 'api'), function(req, res) {
     Application.find()
         .select('-_id -__v')
         .then(applications => {
