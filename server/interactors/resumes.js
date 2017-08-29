@@ -140,42 +140,64 @@ function downloadS3ApplicationsZip(resolve, reject) {
                         archive.finalize();
                     }
 
-                    users.forEach(function(user, elem) {
+                    var count = 0;
+                    users.forEach(function(user) {
                         applications.forEach(function(application) {
-                            if (user.email === application.user) {
-                                var fileName = application.resume
-                                        .split('/')
-                                        .pop(),
-                                    fileEnding = fileName.split('.').pop();
-
-                                var params = {
-                                    Bucket: config.AWS_BUCKET_NAME,
-                                    Key: 'resumes/' + fileName
-                                };
-
-                                var obj = s3.getObject(params);
-
-                                obj
-                                    .on('error', function(error) {
-                                        console.log(error);
-                                        //reject(error);
-                                    })
-                                    .on('success', function(response) {
-                                        archive.append(response.data.Body, {
-                                            name:
-                                                'MHacks Resumes/' +
-                                                user.full_name +
-                                                '.' +
-                                                fileEnding
-                                        });
-
-                                        if (elem + 1 === users.length) {
-                                            archive.finalize();
-                                        }
-                                    });
-                                obj.send();
+                            if (
+                                user.email !== application.user ||
+                                !application.resume
+                            ) {
+                                return;
                             }
+
+                            count++;
+                            var fileName = application.resume.split('/').pop(),
+                                fileEnding = fileName.split('.').pop();
+
+                            var matches = application.resume.match(
+                                    /https:\/\/(.*)\.s3\.amazonaws\.com\/(.*)\/(.*)/
+                                ),
+                                key = 'resumes/' + fileName,
+                                bucket = config.AWS_BUCKET_NAME;
+
+                            if (matches && matches.length === 4) {
+                                key = matches.slice(2, 4).join('/');
+                                bucket = matches[1];
+                            }
+
+                            var params = {
+                                Bucket: bucket,
+                                Key: key
+                            };
+
+                            var obj = s3.getObject(params);
+
+                            obj
+                                .on('error', function(error) {
+                                    console.error(error);
+                                    count--;
+                                })
+                                .on('success', function(response) {
+                                    archive.append(response.data.Body, {
+                                        name:
+                                            'MHacks Resumes/' +
+                                            user.full_name +
+                                            '.' +
+                                            fileEnding
+                                    });
+                                });
+                            obj.send();
                         });
+                    });
+
+                    archive.on('progress', function(data) {
+                        if (
+                            data.entries.total === count &&
+                            data.entries.total === data.entries.processed
+                        ) {
+                            archive.finalize();
+                            console.log('Finalized');
+                        }
                     });
 
                     resolve(archive);
@@ -201,21 +223,38 @@ function downloadS3UsersZip(resolve, reject) {
                 archive.finalize();
             }
 
-            users.forEach(function(user, elem) {
+            var count = 0;
+            users.forEach(function(user) {
+                if (!user.resume) {
+                    return;
+                }
+
+                count++;
                 var fileName = user.resume.split('/').pop(),
                     fileEnding = fileName.split('.').pop();
 
+                var matches = user.resume.match(
+                        /https:\/\/(.*)\.s3\.amazonaws\.com\/(.*)\/(.*)/
+                    ),
+                    key = 'resumes/' + fileName,
+                    bucket = config.AWS_BUCKET_NAME;
+
+                if (matches && matches.length === 4) {
+                    key = matches.slice(2, 4).join('/');
+                    bucket = matches[1];
+                }
+
                 var params = {
-                    Bucket: config.AWS_BUCKET_NAME,
-                    Key: 'resumes/' + fileName
+                    Bucket: bucket,
+                    Key: key
                 };
 
                 var obj = s3.getObject(params);
 
                 obj
                     .on('error', function(error) {
-                        console.log(error);
-                        //reject(error);
+                        console.error(error);
+                        count--;
                     })
                     .on('success', function(response) {
                         archive.append(response.data.Body, {
@@ -225,12 +264,18 @@ function downloadS3UsersZip(resolve, reject) {
                                 '.' +
                                 fileEnding
                         });
-
-                        if (elem + 1 === users.length) {
-                            archive.finalize();
-                        }
                     });
                 obj.send();
+            });
+
+            archive.on('progress', function(data) {
+                if (
+                    data.entries.total === count &&
+                    data.entries.total === data.entries.processed
+                ) {
+                    archive.finalize();
+                    console.log('Finalized');
+                }
             });
 
             resolve(archive);
