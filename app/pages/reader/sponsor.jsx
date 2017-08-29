@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import { PageContainer, MHForm } from '../../components';
 import { ReaderThunks } from '../../actions';
+import { endpoints } from '../../constants';
 import FontAwesome from 'react-fontawesome';
 import Fuse from 'fuse.js';
 import { HeaderSection, SubsectionContainer, UtilityBar } from './components';
@@ -155,6 +156,7 @@ class SponsorReader extends React.Component {
         const {
             graduation,
             employment,
+            degree,
             skills,
             search
         } = this.state.filterData;
@@ -175,6 +177,10 @@ class SponsorReader extends React.Component {
 
         return searched.filter(application => {
             if (employment && application.employment !== employment) {
+                return false;
+            }
+
+            if (degree && application.degree !== degree) {
                 return false;
             }
 
@@ -232,6 +238,12 @@ class SponsorReader extends React.Component {
                                 );
                             },
                             title: 'CSV'
+                        },
+                        {
+                            title: 'Download All Resumes',
+                            onClick: () => {
+                                window.open(endpoints.ALL_APPLICATION_RESUMES);
+                            }
                         }
                     ]}
                 />

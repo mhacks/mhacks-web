@@ -128,7 +128,6 @@ var schema = new mongoose.Schema({
             },
             {
                 key: 'skills',
-                label: 'Skills',
                 auth_groups: ['admin', 'sponsor']
             },
             {
@@ -160,6 +159,13 @@ var schema = new mongoose.Schema({
                         };
                     })
                 }
+            },
+            {
+                key: 'search',
+                label: 'Search',
+                type: String,
+                placeholder: 'By name, uni, email',
+                auth_groups: ['admin', 'reader', 'sponsor']
             }
         ]
     }
