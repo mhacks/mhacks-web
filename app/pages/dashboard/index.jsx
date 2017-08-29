@@ -105,9 +105,7 @@ class Dashboard extends React.Component {
                 Please plan to arrive in Ann Arbor before 6pm on Friday,
                 September 22nd. Registration will begin at 4pm and end at 6pm.
                 Late registration will be available at the Help Desk. Closing
-                Ceremonies will last until about 5pm on Sunday, September 24th.{
-                    ' '
-                }
+                Ceremonies will last until about 5pm on Sunday, September 24th.{' '}
                 <br /> <br />
                 <strong>MHacks Buses</strong>: We will be sending buses to
                 several campuses across the nation, stay tuned for more details
@@ -134,9 +132,7 @@ class Dashboard extends React.Component {
                 <p>
                     To remain eligible for your reimbursement, you must email
                     flymhacks@umich.edu with any relevant receipts, ticket
-                    confirmations, etc. within 5 days of application acceptance.{
-                        ' '
-                    }
+                    confirmations, etc. within 5 days of application acceptance.{' '}
                     <br /> <br />If you are driving, please indicate as such on
                     the confirmation form - you will have until September 30th
                     to send a single email to flymhacks@umich.edu with all costs
@@ -160,15 +156,14 @@ class Dashboard extends React.Component {
                     </SectionHeader>
                     <p>
                         You should have received a verification email at{' ' + userData.email}.
-                        If not, you can
-                        request another one by clicking{' '}
+                        If not, you can request another one by clicking{' '}
                         <Link
                             onClick={this.onClickRequestEmailVerification}
                             color={this.props.theme.highlight}
                         >
                             here
-                        </Link>. After you verify your email you can
-                        continue setting up your profile!
+                        </Link>. After you verify your email you can continue
+                        setting up your profile!
                     </p>
                 </FullscreenColumnContainer>
             </PageContainer>
@@ -213,7 +208,7 @@ class Dashboard extends React.Component {
                         />
                         <Seperator />
                         {userData.user.needs_reimbursement &&
-                            userData.user.reimbursement > 0
+                        userData.user.reimbursement > 0
                             ? <div>
                                   <FaqItem
                                       header="Travel Reimbursement"

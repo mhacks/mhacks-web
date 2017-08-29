@@ -55,7 +55,7 @@ const Close = keyframes`
 const Slider = styled.div`
     overflow: hidden;
     transformOrigin: top center;
-    
+
     ${props =>
         props.open
             ? ` 
@@ -66,7 +66,7 @@ const Slider = styled.div`
         height: max-content;
         animation: ${Close} 0.3s ease-in-out;
         animationFillMode: forwards;
-    `}
+    `};
 `;
 
 const PlusWrapper = styled.div`
@@ -96,7 +96,7 @@ const PlusLine = styled.div`
     `
             : `
         transform: rotate(0deg);
-    `}
+    `};
 `;
 
 const Plus = props => {
@@ -164,7 +164,9 @@ export default class ExpandingItem extends React.Component {
                     />
                 </Flexbox>
                 <Slider open={this.state.expanded}>
-                    <Body color={this.handleBodyColor}>{this.props.body}</Body>
+                    <Body color={this.handleBodyColor}>
+                        {this.props.body}
+                    </Body>
                 </Slider>
             </Wrapper>
         );
