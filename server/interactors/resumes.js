@@ -157,7 +157,8 @@ function downloadS3ApplicationsZip(resolve, reject) {
 
                                 obj
                                     .on('error', function(error) {
-                                        reject(error);
+                                        console.log(error);
+                                        //reject(error);
                                     })
                                     .on('success', function(response) {
                                         archive.append(response.data.Body, {
@@ -213,7 +214,8 @@ function downloadS3UsersZip(resolve, reject) {
 
                 obj
                     .on('error', function(error) {
-                        reject(error);
+                        console.log(error);
+                        //reject(error);
                     })
                     .on('success', function(response) {
                         archive.append(response.data.Body, {
