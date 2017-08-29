@@ -176,30 +176,33 @@ class SponsorReader extends React.Component {
             (search && search.length) > 0 ? fuse.search(search) : applications;
 
         return searched.filter(application => {
-            if (employment && application.employment !== employment) {
+            if (employment && employment.length > 0 &&
+                !employment.includes(application.employment)) {
                 return false;
             }
 
-            if (degree && application.degree !== degree) {
+            if (degree && degree.length > 0 &&
+                !degree.includes(application.degree)) {
                 return false;
             }
 
-            if (graduation && application.graduation !== graduation) {
+            if (graduation && graduation.length > 0 &&
+                !graduation.includes(application.graduation)) {
                 return false;
             }
 
-            var missingSkills = false;
+            var hasSkill = false;
             if (skills && skills.length > 0 && application.skills) {
-                skills.forEach(skill => {
-                    if (application.skills.indexOf(skill) === -1) {
-                        missingSkills = true;
+                application.skills.forEach(skill => {
+                    if (skills.includes(skill)) {
+                        hasSkill = true;
                     }
                 });
-            } else if (skills && skills.length > 0) {
-                return false;
+            } else {
+                return true;
             }
 
-            return !missingSkills;
+            return hasSkill;
         });
     }
 
