@@ -3,7 +3,7 @@ var mongoose = require('../index.js'),
 
 // Define the document Schema
 var schema = new mongoose.Schema({
-    title: String,
+    name: String,
     desc: String,
     startDate: {
         type: Date,
@@ -32,7 +32,7 @@ schema.query.byName = function(name) {
     });
 };
 
-schema.query.byLocation = function(name) {
+schema.query.byLocationName = function(name) {
     return mongoose
         .model('Location')
         .find()
@@ -48,17 +48,17 @@ schema.query.byLocation = function(name) {
         });
 };
 
-schema.method.getCoordinates = function() {
+schema.methods.getCoordinates = function() {
     return {
         latitude: this.latitude,
         longitude: this.longitude
     };
 };
 
-schema.method.updateLocation = function(lat, lng) {
-    this.latitude = lat;
-    this.longitude = lng;
-
+schema.methods.updateFields = function(fields) {
+    for (var param in fields) {
+        this[param] = fields[param];
+    }
     return this.save();
 };
 
