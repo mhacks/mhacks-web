@@ -97,7 +97,7 @@ class Faq extends React.Component {
                                                 Web Development, Android, iOS,
                                                 AI/ML, AR/VR, Game Development,
                                                 and Hardware. Check out the
-                                                hacks from MHacks 9 on
+                                                hacks from MHacks 9 on{' '}
                                                 <Link
                                                     href="https://mhacks9.devpost.com/submissions"
                                                     target="_blank"
@@ -203,7 +203,7 @@ class Faq extends React.Component {
                                                     target="_blank"
                                                 >
                                                     this website
-                                                </Link>
+                                                </Link>{' '}
                                                 to make sure you meet the
                                                 requirements and get started on
                                                 the process if you haven’t
@@ -246,7 +246,7 @@ class Faq extends React.Component {
                                             <span>
                                                 If you’re contemplating judging,
                                                 volunteering, or mentoring,
-                                                shoot us an email at
+                                                shoot us an email at{' '}
                                                 <Link href="mailto:hackathon@umich.edu">
                                                     hackathon@umich.edu
                                                 </Link>. If your company is
@@ -261,7 +261,7 @@ class Faq extends React.Component {
                                         body={
                                             <span>
                                                 If you’ve got something else on
-                                                your mind, fire it off to
+                                                your mind, fire it off to{' '}
                                                 <Link href="mailto:hackathon@umich.edu">
                                                     hackathon@umich.edu
                                                 </Link>!
