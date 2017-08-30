@@ -37,7 +37,8 @@ router.use('/scan', scanHandler);
 router.use('/sponsor', sponsorHandler);
 router.use('/mentor', authMiddleware('any', 'api'), mentorHandler);
 router.use('/speaker', authMiddleware('any', 'api'), speakerHandler);
-router.use('/location', locationHandler), router.use('/event', eventHandler);
+router.use('/location', locationHandler);
+router.use('/event', eventHandler);
 
 router.get('/', function(req, res) {
     res.send('API');

@@ -98,7 +98,6 @@ router.get('/:name', function(req, res) {
 
 // Handles /v1/event/
 router.get('/', function(req, res) {
-    console.log(req.params);
     Event.find({})
         .exec()
         .then(events => {
