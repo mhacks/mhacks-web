@@ -70,11 +70,7 @@ class TabGroup extends React.Component {
             );
         });
 
-        return (
-            <Group>
-                {tabs}
-            </Group>
-        );
+        return <Group>{tabs}</Group>;
     }
 }
 

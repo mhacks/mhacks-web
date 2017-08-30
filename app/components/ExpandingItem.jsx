@@ -160,9 +160,7 @@ export default class ExpandingItem extends React.Component {
                     </Header>
                 </Flexbox>
                 <Slider open={this.state.expanded}>
-                    <Body color={this.handleBodyColor}>
-                        {this.props.body}
-                    </Body>
+                    <Body color={this.handleBodyColor}>{this.props.body}</Body>
                 </Slider>
             </Wrapper>
         );

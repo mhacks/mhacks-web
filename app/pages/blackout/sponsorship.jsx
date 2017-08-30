@@ -36,7 +36,7 @@ const Header = styled(SectionHeader)`
 
     ${devices.tablet`
         textAlign: left;
-    `}
+    `};
 `;
 
 const Body = styled(SectionBody)`
@@ -45,22 +45,20 @@ const Body = styled(SectionBody)`
     ${devices.tablet`
         left: 15%;
         width: 105%;
-    `}
+    `};
 `;
 
-const EmailBody = styled(Body)`
-    fontWeight: 500;
-`;
+const EmailBody = styled(Body)`fontWeight: 500;`;
 
 const Link = styled.a`color: white;`;
 
 const StyledContainer = styled(Container)`
     ${devices.tablet`
         marginBottom: -150px;
-    `}
+    `};
 `;
 
-export default () =>
+export default () => (
     <StyledContainer>
         <Header>Sponsorship</Header>
         <FlexBox>
@@ -80,4 +78,5 @@ export default () =>
             </div>
             <Orb src={OrbImage} />
         </FlexBox>
-    </StyledContainer>;
+    </StyledContainer>
+);

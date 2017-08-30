@@ -10,9 +10,7 @@ const Wrapper = styled.div`
     position: relative;
 `;
 
-const Header = styled(SectionHeader)`
-    textAlign: center;
-`;
+const Header = styled(SectionHeader)`textAlign: center;`;
 
 const FaqSectionHeader = styled.h2`
     fontSize: 18px;
@@ -48,7 +46,7 @@ const Link = styled.a`
 
 const FaqItem = connect(state => {
     return { theme: state.theme.data };
-})(props =>
+})(props => (
     <ExpandingItemWrapper>
         <ExpandingItem
             {...props}
@@ -57,7 +55,7 @@ const FaqItem = connect(state => {
             bodyColor={props.theme.pink}
         />
     </ExpandingItemWrapper>
-);
+));
 
 class BlackoutFaq extends React.Component {
     render() {

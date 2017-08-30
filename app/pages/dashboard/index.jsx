@@ -6,20 +6,20 @@ import { getUserMetadata } from '../../util/user.js';
 import ApplicationSection from './application_section.jsx';
 import ProfileSection from './profile_section.jsx';
 import ExpandingItem from './ExpandingItem';
-import { TicketThunks } from '../../actions';
 import { endpoints } from '../../constants';
 
 import { PageContainer } from '../../components';
 
 import { OrderedSet } from 'immutable';
 
-const FaqItem = props =>
+const FaqItem = props => (
     <ExpandingItem
         {...props}
         expandColor
         colorOn={props => props.theme.highlightSecondary}
         colorOff={props => props.theme.highlight}
-    />;
+    />
+);
 
 const StyledPageContainer = styled(PageContainer)`
     background: ${props => props.theme.secondary};
@@ -76,10 +76,6 @@ class Dashboard extends React.Component {
         this.onClickRequestEmailVerification = this.onClickRequestEmailVerification.bind(
             this
         );
-    }
-
-    componentDidMount() {
-        this.props.dispatch(TicketThunks.loadTicket());
     }
 
     onClickRequestEmailVerification(e) {
@@ -172,7 +168,9 @@ class Dashboard extends React.Component {
 
     render() {
         const userData = this.props.userState.data;
-        const { isEmailVerified, isAccepted, isConfirmed } = getUserMetadata(userData);
+        const { isEmailVerified, isAccepted, isConfirmed } = getUserMetadata(
+            userData
+        );
 
         if (!isEmailVerified) {
             return this.renderEmailVerificationPage();
@@ -184,43 +182,37 @@ class Dashboard extends React.Component {
                     <StyledDiv>
                         <ProfileSection userData={userData} />
                         <ApplicationSection userData={userData} />
-                        {isAccepted && isConfirmed
-                            ? <div>
-                                  <Seperator />
-                                  <FaqItem
-                                      header="Ticket"
-                                      body={
-                                          <span>
-                                              {this.renderTicketInfo()}
-                                          </span>
-                                      }
-                                  />
-                              </div>
-                            : null}
+                        {isAccepted && isConfirmed ? (
+                            <div>
+                                <Seperator />
+                                <FaqItem
+                                    header="Ticket"
+                                    body={
+                                        <span>{this.renderTicketInfo()}</span>
+                                    }
+                                />
+                            </div>
+                        ) : null}
                         <Seperator />
                         <FaqItem
                             header="Travel Information"
-                            body={
-                                <span>
-                                    {this.renderTravelInfo()}
-                                </span>
-                            }
+                            body={<span>{this.renderTravelInfo()}</span>}
                         />
                         <Seperator />
                         {userData.user.needs_reimbursement &&
-                        userData.user.reimbursement > 0
-                            ? <div>
-                                  <FaqItem
-                                      header="Travel Reimbursement"
-                                      body={
-                                          <span>
-                                              {this.renderTravelReimbursement()}
-                                          </span>
-                                      }
-                                  />
-                                  <Seperator />
-                              </div>
-                            : null}
+                        userData.user.reimbursement > 0 ? (
+                            <div>
+                                <FaqItem
+                                    header="Travel Reimbursement"
+                                    body={
+                                        <span>
+                                            {this.renderTravelReimbursement()}
+                                        </span>
+                                    }
+                                />
+                                <Seperator />
+                            </div>
+                        ) : null}
                     </StyledDiv>
                 </FullscreenColumnContainer>
             </StyledPageContainer>

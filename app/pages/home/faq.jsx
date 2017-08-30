@@ -47,7 +47,7 @@ const FaqBody = styled.div`
     margin: 30px auto 0;
 `;
 
-const FaqItem = props =>
+const FaqItem = props => (
     <ExpandingItemWrapper>
         <ExpandingItem
             {...props}
@@ -55,7 +55,8 @@ const FaqItem = props =>
             colorOn={props => props.theme.highlightSecondary}
             colorOff={props => props.theme.highlight}
         />
-    </ExpandingItemWrapper>;
+    </ExpandingItemWrapper>
+);
 
 class Faq extends React.Component {
     render() {

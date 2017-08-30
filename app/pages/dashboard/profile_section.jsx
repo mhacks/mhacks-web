@@ -35,15 +35,11 @@ class ProfileSection extends React.Component {
                     <FlexBox>
                         <Avatar src="http://via.placeholder.com/100x100" />
                         <div>
-                            <StyledSectionBody>
-                                {user.name}
-                            </StyledSectionBody>
+                            <StyledSectionBody>{user.name}</StyledSectionBody>
                             <StyledSectionBody>
                                 {user.university}
                             </StyledSectionBody>
-                            <StyledSectionBody>
-                                {user.major}
-                            </StyledSectionBody>
+                            <StyledSectionBody>{user.major}</StyledSectionBody>
                         </div>
                     </FlexBox>
                 </Container>

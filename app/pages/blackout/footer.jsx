@@ -66,12 +66,13 @@ const ImgButtonWrapper = styled.div`
     display: block;
 `;
 
-const ImgButton = props =>
+const ImgButton = props => (
     <ImgButtonWrapper>
         <a href={props.href}>
             <Img100 {...props} />
         </a>
-    </ImgButtonWrapper>;
+    </ImgButtonWrapper>
+);
 
 class BlackoutFooter extends React.Component {
     render() {

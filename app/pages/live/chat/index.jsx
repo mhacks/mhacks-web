@@ -224,18 +224,16 @@ class Chat extends React.Component {
             return (
                 <Wrapper>
                     <Header>
-                        {this.state.isDisconnected
-                            ? <HeaderText>
-                                  You have been disconnected.
-                              </HeaderText>
-                            : <HeaderText>
-                                  Chat with{' '}
-                                  {users.length > 0
-                                      ? users.length - 1
-                                      : '0'}{' '}
-                                  other{' '}
-                                  {users.length - 1 === 1 ? 'user' : 'users'}
-                              </HeaderText>}
+                        {this.state.isDisconnected ? (
+                            <HeaderText>You have been disconnected.</HeaderText>
+                        ) : (
+                            <HeaderText>
+                                Chat with{' '}
+                                {users.length > 0 ? users.length - 1 : '0'}{' '}
+                                other{' '}
+                                {users.length - 1 === 1 ? 'user' : 'users'}
+                            </HeaderText>
+                        )}
                     </Header>
                     <List>
                         {this.state.messages.map(
