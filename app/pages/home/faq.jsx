@@ -203,8 +203,8 @@ class Faq extends React.Component {
                                                     target="_blank"
                                                 >
                                                     this website
-                                                </Link>
-                                                {' '}to make sure you meet the
+                                                </Link>{' '}
+                                                to make sure you meet the
                                                 requirements and get started on
                                                 the process if you haven’t
                                                 already. If you need anything
