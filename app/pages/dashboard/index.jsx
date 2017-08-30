@@ -7,6 +7,7 @@ import ApplicationSection from './application_section.jsx';
 import ProfileSection from './profile_section.jsx';
 import ExpandingItem from './ExpandingItem';
 import { TicketThunks } from '../../actions';
+import { endpoints } from '../../constants';
 
 import { PageContainer } from '../../components';
 
@@ -90,11 +91,10 @@ class Dashboard extends React.Component {
     }
 
     renderTicketInfo() {
-        const url = this.props.ticketState.data;
         return (
             <div>
                 <p>Check your email for this qr code</p>
-                <img src={url} />
+                <img src={endpoints.TICKET} width="100%" />
             </div>
         );
     }
@@ -172,7 +172,7 @@ class Dashboard extends React.Component {
 
     render() {
         const userData = this.props.userState.data;
-        const { isEmailVerified, isAccepted } = getUserMetadata(userData);
+        const { isEmailVerified, isAccepted, isConfirmed } = getUserMetadata(userData);
 
         if (!isEmailVerified) {
             return this.renderEmailVerificationPage();
@@ -184,7 +184,7 @@ class Dashboard extends React.Component {
                     <StyledDiv>
                         <ProfileSection userData={userData} />
                         <ApplicationSection userData={userData} />
-                        {isAccepted
+                        {isAccepted && isConfirmed
                             ? <div>
                                   <Seperator />
                                   <FaqItem

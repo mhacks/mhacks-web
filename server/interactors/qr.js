@@ -1,7 +1,7 @@
 var qrcode = require('qrcode'),
     config = require('../../config/default.js'),
     options = {
-        scale: 10,
+        scale: 20,
         color: {
             dark: config.color_dark,
             light: config.color_light
