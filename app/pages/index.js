@@ -3,7 +3,8 @@ import BlackoutPage from './blackout';
 import HomePage from './home';
 import Login from './login.jsx';
 import Logout from './logout.jsx';
-import Profile from './profile.jsx';
+import EditProfile from './edit_profile.jsx';
+import Dashboard from './dashboard';
 import Apply from './apply.jsx';
 import LivePage from './live';
 import Reader from './reader';
@@ -17,7 +18,8 @@ export {
     BlackoutPage,
     Login,
     Logout,
-    Profile,
+    EditProfile,
+    Dashboard,
     Apply,
     LivePage,
     Reader,

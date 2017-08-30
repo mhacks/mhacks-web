@@ -128,26 +128,28 @@ class Login extends React.Component {
                         ]}
                         primaryColor={this.props.theme.primary}
                     />
-                    {this.props.userState.error
-                        ? <AlertContainer>
-                              <Alert message={this.props.userState.message} />
-                          </AlertContainer>
-                        : null}
+                    {this.props.userState.error ? (
+                        <AlertContainer>
+                            <Alert message={this.props.userState.message} />
+                        </AlertContainer>
+                    ) : null}
                     <form onSubmit={this.onSubmit.bind(this)}>
                         <Flexer>
                             <InputContainer>
-                                {this.state.isRegistering
-                                    ? <input
-                                          id="name"
-                                          type="text"
-                                          name="name"
-                                          placeholder="Name (e.g. Hacker McHackerface)"
-                                          value={this.state.name}
-                                          onChange={this.handleAttributeChange.bind(
-                                              this
-                                          )}
-                                      />
-                                    : undefined}
+                                {this.state.isRegistering ? (
+                                    <input
+                                        id="name"
+                                        type="text"
+                                        name="name"
+                                        placeholder="Name (e.g. Hacker McHackerface)"
+                                        value={this.state.name}
+                                        onChange={this.handleAttributeChange.bind(
+                                            this
+                                        )}
+                                    />
+                                ) : (
+                                    undefined
+                                )}
                                 <input
                                     id="email"
                                     type="email"
@@ -177,19 +179,21 @@ class Login extends React.Component {
                                     Confirm
                                 </RoundedButton>
                             </ButtonGroup>
-                            {this.state.isRegistering
-                                ? <LegalText>
-                                      By signing up for an MHacks account, you
-                                      agree to the MHacks{' '}
-                                      <LegalLink href="https://docs.google.com/document/d/11a34FHFftUKiN7DF3Fi_nTKCbiOXBbKTFwJfeqqZZmA/pub">
-                                          Privacy Policy
-                                      </LegalLink>{' '}
-                                      and{' '}
-                                      <LegalLink href="https://docs.google.com/document/d/1b-NwrHVRvct-1Fqx7QdjMWgERC1Isy8dHtE0q3v5tZA/pub">
-                                          Terms of Service
-                                      </LegalLink>.
-                                  </LegalText>
-                                : undefined}
+                            {this.state.isRegistering ? (
+                                <LegalText>
+                                    By signing up for an MHacks account, you
+                                    agree to the MHacks{' '}
+                                    <LegalLink href="https://docs.google.com/document/d/11a34FHFftUKiN7DF3Fi_nTKCbiOXBbKTFwJfeqqZZmA/pub">
+                                        Privacy Policy
+                                    </LegalLink>{' '}
+                                    and{' '}
+                                    <LegalLink href="https://docs.google.com/document/d/1b-NwrHVRvct-1Fqx7QdjMWgERC1Isy8dHtE0q3v5tZA/pub">
+                                        Terms of Service
+                                    </LegalLink>.
+                                </LegalText>
+                            ) : (
+                                undefined
+                            )}
                         </Flexer>
                     </form>
                 </FormContainer>

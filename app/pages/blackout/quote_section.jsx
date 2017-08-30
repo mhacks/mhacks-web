@@ -27,7 +27,7 @@ const Quote = styled.div`
     float: ${props => (props.position === 'left' ? 'left' : 'right')};
     zIndex: 10;
     letter-spacing: 3px;
-    fontSize: 2.0em;
+    fontSize: 2em;
     textAlign: left;
 
     ${devices.tablet`
@@ -81,7 +81,7 @@ const CompanyName = styled.div`
     color: #a3a3a3;
     fontStyle: italic;
     clear: both;
-    fontSize: 2.0em;
+    fontSize: 2em;
     zIndex: 9999;
     paddingBottom: 50px;
     textAlign: left;
@@ -96,7 +96,7 @@ const CompanyName = styled.div`
     `};
 `;
 
-export default () =>
+export default () => (
     <Wrapper>
         <QuoteSection>
             <StartWrapper src={StartIcon} />
@@ -111,7 +111,9 @@ export default () =>
                 no other hacking event.
             </Quote>
             <CompanyName position="right" dark>
-                {' '}Walmart{' '}
+                {' '}
+                Walmart{' '}
             </CompanyName>
         </QuoteSection>
-    </Wrapper>;
+    </Wrapper>
+);

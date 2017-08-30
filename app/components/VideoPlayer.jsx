@@ -114,15 +114,17 @@ class VideoPlayer extends React.Component {
     render() {
         return (
             <div>
-                {this.state.playing
-                    ? this.generateAspectRatioMaintainer.bind(this)()
-                    : <PlaceholderContainer onClick={this.playVideo.bind(this)}>
-                          <VideoPlaceholder
-                              src={this.props.placeholderImage}
-                              onLoad={this.getImageDimensions.bind(this)}
-                          />
-                          <PlayButton src={PlayButtonImage} className="play" />
-                      </PlaceholderContainer>}
+                {this.state.playing ? (
+                    this.generateAspectRatioMaintainer.bind(this)()
+                ) : (
+                    <PlaceholderContainer onClick={this.playVideo.bind(this)}>
+                        <VideoPlaceholder
+                            src={this.props.placeholderImage}
+                            onLoad={this.getImageDimensions.bind(this)}
+                        />
+                        <PlayButton src={PlayButtonImage} className="play" />
+                    </PlaceholderContainer>
+                )}
             </div>
         );
     }

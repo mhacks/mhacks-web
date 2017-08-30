@@ -1,7 +1,10 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-const Wrapper = styled.div`display: inline-block;`;
+const Wrapper = styled.div`
+    display: inline-block;
+    width: 100%;
+`;
 
 const Header = styled.h3`
     display: inline-block;
@@ -10,10 +13,10 @@ const Header = styled.h3`
     marginTop: 0;
     marginBottom: 0;
     color: ${props => props.color};
-    fontSize: 18px;
+    fontSize: 25px;
 `;
 
-const Body = styled.p`
+const Body = styled.span`
     paddingLeft: 25px;
     paddingTop: 10px;
     paddingBottom: 10px;
@@ -27,6 +30,7 @@ const Body = styled.p`
 const Flexbox = styled.div`
     display: flex;
     cursor: pointer;
+    justifyContent: space-between;
 `;
 
 const Open = keyframes`
@@ -80,9 +84,9 @@ const PlusLine = styled.div`
     position: absolute;
     zIndex: -1;
     backgroundColor: ${props => props.color};
-    height: 10px;
+    height: 15px;
     width: 2px;
-    top: 4px;
+    top: 10px;
     transitionDuration: 0.3s;
 
     ${props =>
@@ -151,13 +155,13 @@ export default class ExpandingItem extends React.Component {
         return (
             <Wrapper>
                 <Flexbox onClick={this.handleClick}>
+                    <Header color={this.handleHeaderColor}>
+                        {this.props.header}
+                    </Header>
                     <Plus
                         color={this.handlePlusColor}
                         open={this.state.expanded}
                     />
-                    <Header color={this.handleHeaderColor}>
-                        {this.props.header}
-                    </Header>
                 </Flexbox>
                 <Slider open={this.state.expanded}>
                     <Body color={this.handleBodyColor}>{this.props.body}</Body>

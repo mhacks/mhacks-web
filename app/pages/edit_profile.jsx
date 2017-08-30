@@ -70,11 +70,10 @@ const ButtonGroup = styled.div`
 `;
 
 const SectionHeader = styled.h2`
-    fontSize: 40px;
+    textTransform: uppercase;
+    fontSize: 24px;
     color: ${props => props.color};
-    fontWeight: 500;
     margin: 0;
-    padding: 20px 0;
 `;
 
 const SubsectionHeader = styled.h3`
@@ -124,7 +123,7 @@ const autocompleteWrapperStyle = {
     position: 'relative'
 };
 
-class Profile extends React.Component {
+class EditProfile extends React.Component {
     constructor(props) {
         super(props);
 
@@ -269,11 +268,11 @@ class Profile extends React.Component {
         var profile = {};
         var files = {};
 
-        const inputBirthday = new Date(this.state.birthday).getTime();
+        //const inputBirthday = new Date(this.state.birthday).getTime();
 
-        profile.birthday = inputBirthday;
-        profile.major = this.state.major;
-        profile.university = this.state.university;
+        //profile.birthday = inputBirthday;
+        //profile.major = this.state.major;
+        //profile.university = this.state.university;
 
         if (this.state.resume) {
             files['resume'] = this.state.resume;
@@ -364,9 +363,9 @@ class Profile extends React.Component {
                     Confirm
                 </StyledNavLink>
                 {this.renderTravelInfo()}
-                {user.needs_reimbursement && user.reimbursement > 0
-                    ? this.renderTravelReimbursement()
-                    : null}
+                {user.needs_reimbursement && user.reimbursement > 0 ? (
+                    this.renderTravelReimbursement()
+                ) : null}
             </div>
         );
     }
@@ -387,9 +386,9 @@ class Profile extends React.Component {
                     updates on all things MHacks.
                 </p>
                 {this.renderTravelInfo()}
-                {user.needs_reimbursement && user.reimbursement > 0
-                    ? this.renderTravelReimbursement()
-                    : null}
+                {user.needs_reimbursement && user.reimbursement > 0 ? (
+                    this.renderTravelReimbursement()
+                ) : null}
             </div>
         );
     }
@@ -477,29 +476,27 @@ class Profile extends React.Component {
                     {this.renderApplicationReviewSection()}
 
                     <SectionHeader color={this.props.theme.primary}>
-                        Profile
+                        Edit Profile
                     </SectionHeader>
                     <form onSubmit={this.onSubmit}>
-                        {this.props.userState.error
-                            ? <AlertContainer>
-                                  <Alert
-                                      message={this.props.userState.message}
-                                  />
-                              </AlertContainer>
-                            : null}
-                        {isApplicationSubmitted && !isApplicationReviewed
-                            ? <AlertContainer>
-                                  <Alert
-                                      message={
-                                          'Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to MHacks X'
-                                      }
-                                      style={{
-                                          backgroundColor: '#01FF70',
-                                          color: '#3D9970'
-                                      }}
-                                  />
-                              </AlertContainer>
-                            : null}
+                        {this.props.userState.error ? (
+                            <AlertContainer>
+                                <Alert message={this.props.userState.message} />
+                            </AlertContainer>
+                        ) : null}
+                        {isApplicationSubmitted && !isApplicationReviewed ? (
+                            <AlertContainer>
+                                <Alert
+                                    message={
+                                        'Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to MHacks X'
+                                    }
+                                    style={{
+                                        backgroundColor: '#01FF70',
+                                        color: '#3D9970'
+                                    }}
+                                />
+                            </AlertContainer>
+                        ) : null}
                         <Subhead>
                             Update your profile with some info about yourself.
                             This will be automatically populated into your
@@ -529,7 +526,7 @@ class Profile extends React.Component {
                                         shouldItemRender={
                                             this.handleItemShouldRender
                                         }
-                                        renderItem={(item, isHighlighted) =>
+                                        renderItem={(item, isHighlighted) => (
                                             <div
                                                 style={{
                                                     background: isHighlighted
@@ -538,7 +535,8 @@ class Profile extends React.Component {
                                                 }}
                                             >
                                                 {item}
-                                            </div>}
+                                            </div>
+                                        )}
                                         inputProps={{
                                             placeholder:
                                                 'e.g. University of Michigan',
@@ -579,7 +577,7 @@ class Profile extends React.Component {
                                         shouldItemRender={
                                             this.handleItemShouldRender
                                         }
-                                        renderItem={(item, isHighlighted) =>
+                                        renderItem={(item, isHighlighted) => (
                                             <div
                                                 style={{
                                                     background: isHighlighted
@@ -588,7 +586,8 @@ class Profile extends React.Component {
                                                 }}
                                             >
                                                 {item}
-                                            </div>}
+                                            </div>
+                                        )}
                                         inputProps={{
                                             placeholder:
                                                 'e.g. Underwater Basket Weaving',
@@ -624,17 +623,19 @@ class Profile extends React.Component {
                                 <FileUploadContainer>
                                     <FileUpload
                                         defaultColor={
-                                            userData.user.isResumeUploaded
-                                                ? this.props.theme.success
-                                                : this.props.theme.primary
+                                            userData.user.isResumeUploaded ? (
+                                                this.props.theme.success
+                                            ) : (
+                                                this.props.theme.primary
+                                            )
                                         }
                                         hoverColor={this.props.theme.secondary}
                                         activeColor={this.props.theme.success}
                                         onFileSelect={this.handleFileUpload}
                                         defaultText={
-                                            userData.user.isResumeUploaded
-                                                ? 'Resume Uploaded'
-                                                : null
+                                            userData.user.isResumeUploaded ? (
+                                                'Resume Uploaded'
+                                            ) : null
                                         }
                                     />
                                 </FileUploadContainer>
@@ -794,4 +795,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps)(EditProfile);

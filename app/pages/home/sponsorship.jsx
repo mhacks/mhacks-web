@@ -60,15 +60,17 @@ class Sponsorship extends React.Component {
                     <Brick />
                     <SectionHeader>Sponsorship</SectionHeader>
                     <SectionBody>
-                        {' '}MHacks is the gateway between you and the top tech
+                        {' '}
+                        MHacks is the gateway between you and the top tech
                         talent in the world. Whether you come to network,
                         promote brand awareness, or get feedback on a product or
                         API, we’ll provide the tools you need to make the most
                         out of your experience.{' '}
                     </SectionBody>
                     <SectionBody>
-                        {' '}Interested in sponsoring? Want more information?
-                        Shoot us an email at{' '}
+                        {' '}
+                        Interested in sponsoring? Want more information? Shoot
+                        us an email at{' '}
                         <Link href="mailto:kevin@mhacks.org">
                             kevin@mhacks.org
                         </Link>{' '}
@@ -77,7 +79,8 @@ class Sponsorship extends React.Component {
                     <FlexBox>
                         <QuoteWrapper>
                             <QuoteText>
-                                {' '}“This was one of the most well organized
+                                {' '}
+                                “This was one of the most well organized
                                 student-run hackathons that we’ve ever
                                 sponsored.”{' '}
                             </QuoteText>
@@ -85,8 +88,9 @@ class Sponsorship extends React.Component {
                         </QuoteWrapper>
                         <QuoteWrapper>
                             <QuoteText>
-                                {' '}“The caliber and number of students that
-                                MHacks attracts is like no other hacking event.”{' '}
+                                {' '}
+                                “The caliber and number of students that MHacks
+                                attracts is like no other hacking event.”{' '}
                             </QuoteText>
                             <CompanyName> - Walmart </CompanyName>
                         </QuoteWrapper>

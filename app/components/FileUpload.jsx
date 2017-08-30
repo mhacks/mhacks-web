@@ -18,12 +18,12 @@ const SelectionContainer = styled.div`
 
     &:hover {
         border: 3px solid ${props => props.hoverColor};
-        transition: all .2s ease-in-out;
+        transition: all 0.2s ease-in-out;
 
         .upload-button {
             backgroundColor: ${props => props.hoverColor};
             color: white;
-            transition: all .2s ease-in-out;
+            transition: all 0.2s ease-in-out;
         }
     }
 `;
@@ -101,9 +101,11 @@ class FileUpload extends React.Component {
                         Upload Resume
                     </Button>
                     <FileName>
-                        {this.state.fileSelected
-                            ? this.state.fileName
-                            : this.props.defaultText || 'No file chosen...'}
+                        {this.state.fileSelected ? (
+                            this.state.fileName
+                        ) : (
+                            this.props.defaultText || 'No file chosen...'
+                        )}
                     </FileName>
                     <Input
                         type="file"

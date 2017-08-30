@@ -95,54 +95,55 @@ const LegalLink = styled.a`
     textDecoration: none;
 `;
 
-const ImgButton = props =>
+const ImgButton = props => (
     <ImgButtonWrapper>
         <a href={props.href}>
             <Img100 {...props} />
         </a>
-    </ImgButtonWrapper>;
+    </ImgButtonWrapper>
+);
 
 class Footer extends React.Component {
     render() {
         return (
             <div>
-                {window.location.pathname == routes.SUBSCRIBE
-                    ? null
-                    : <FooterWrapper id="asdfFooter">
-                          <Container>
-                              <HomeFooter>
-                                  <Text>© MHacks 2017</Text>
-                                  <Flexer>
-                                      <ImgButton
-                                          src={FacebookImg}
-                                          alt="Facebook"
-                                          align="middle"
-                                          href="https://www.facebook.com/MHacksHackathon"
-                                      />
-                                      <ImgButton
-                                          src={InstagramImg}
-                                          alt="Instagram"
-                                          align="middle"
-                                          href="https://www.instagram.com/mhacks_"
-                                      />
-                                      <ImgButton
-                                          src={TwitterImg}
-                                          alt="Twitter"
-                                          align="middle"
-                                          href="https://twitter.com/mhacks"
-                                      />
-                                  </Flexer>
-                                  <LegalLinks>
-                                      <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
-                                          MHacks CoC
-                                      </LegalLink>
-                                      <LegalLink href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
-                                          MLH CoC
-                                      </LegalLink>
-                                  </LegalLinks>
-                              </HomeFooter>
-                          </Container>
-                      </FooterWrapper>}
+                {window.location.pathname == routes.SUBSCRIBE ? null : (
+                    <FooterWrapper id="asdfFooter">
+                        <Container>
+                            <HomeFooter>
+                                <Text>© MHacks 2017</Text>
+                                <Flexer>
+                                    <ImgButton
+                                        src={FacebookImg}
+                                        alt="Facebook"
+                                        align="middle"
+                                        href="https://www.facebook.com/MHacksHackathon"
+                                    />
+                                    <ImgButton
+                                        src={InstagramImg}
+                                        alt="Instagram"
+                                        align="middle"
+                                        href="https://www.instagram.com/mhacks_"
+                                    />
+                                    <ImgButton
+                                        src={TwitterImg}
+                                        alt="Twitter"
+                                        align="middle"
+                                        href="https://twitter.com/mhacks"
+                                    />
+                                </Flexer>
+                                <LegalLinks>
+                                    <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
+                                        MHacks CoC
+                                    </LegalLink>
+                                    <LegalLink href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
+                                        MLH CoC
+                                    </LegalLink>
+                                </LegalLinks>
+                            </HomeFooter>
+                        </Container>
+                    </FooterWrapper>
+                )}
             </div>
         );
     }
