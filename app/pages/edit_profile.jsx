@@ -39,13 +39,14 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 const StyledSelect = styled.select`
-        background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+) no-repeat 95% 50%;
-        paddingLeft: 10px;
-        appearance: none;
-        borderColor: rgb(215, 215, 215);
-        flexGrow: 1;
-        height: 36px;
-        width: 100%;
+    background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+)
+        no-repeat 95% 50%;
+    paddingLeft: 10px;
+    appearance: none;
+    borderColor: rgb(215, 215, 215);
+    flexGrow: 1;
+    height: 36px;
+    width: 100%;
 `;
 
 const FullscreenColumnContainer = styled.div`
@@ -60,9 +61,7 @@ const Flexer = styled.div`
     flexDirection: column;
 `;
 
-const InputContainer = styled.div`
-    marginBottom: 30px;
-`;
+const InputContainer = styled.div`marginBottom: 30px;`;
 
 const ButtonGroup = styled.div`
     display: flex;
@@ -71,11 +70,10 @@ const ButtonGroup = styled.div`
 `;
 
 const SectionHeader = styled.h2`
-    fontSize: 40px;
+    textTransform: uppercase;
+    fontSize: 24px;
     color: ${props => props.color};
-    fontWeight: 500;
     margin: 0;
-    padding: 20px 0;
 `;
 
 const SubsectionHeader = styled.h3`
@@ -85,13 +83,9 @@ const SubsectionHeader = styled.h3`
     margin: 26px 0 0 0;
 `;
 
-const FileUploadContainer = styled.div`
-    marginTop: 10px;
-`;
+const FileUploadContainer = styled.div`marginTop: 10px;`;
 
-const AlertContainer = styled.div`
-    marginTop: 30px;
-`;
+const AlertContainer = styled.div`marginTop: 30px;`;
 
 const Subhead = styled.p`
     margin: 20px 0 0 0;
@@ -116,7 +110,7 @@ const autocompleteMenuStyle = {
             window.innerHeight || 0
         ) /
             2 +
-            'px',
+        'px',
     left: '20px',
     top: '45px',
     overflow: 'auto',
@@ -129,7 +123,7 @@ const autocompleteWrapperStyle = {
     position: 'relative'
 };
 
-class Profile extends React.Component {
+class EditProfile extends React.Component {
     constructor(props) {
         super(props);
 
@@ -274,11 +268,11 @@ class Profile extends React.Component {
         var profile = {};
         var files = {};
 
-        const inputBirthday = new Date(this.state.birthday).getTime();
+        //const inputBirthday = new Date(this.state.birthday).getTime();
 
-        profile.birthday = inputBirthday;
-        profile.major = this.state.major;
-        profile.university = this.state.university;
+        //profile.birthday = inputBirthday;
+        //profile.major = this.state.major;
+        //profile.university = this.state.university;
 
         if (this.state.resume) {
             files['resume'] = this.state.resume;
@@ -321,15 +315,14 @@ class Profile extends React.Component {
                     </SectionHeader>
                     <p>
                         You should have received a verification email at{' ' + userData.email}.
-                        If not, you can
-                        request another one by clicking{' '}
+                        If not, you can request another one by clicking{' '}
                         <Link
                             onClick={this.onClickRequestEmailVerification}
                             color={this.props.theme.highlight}
                         >
                             here
-                        </Link>. After you verify your email you can
-                        continue setting up your profile!
+                        </Link>. After you verify your email you can continue
+                        setting up your profile!
                     </p>
                 </FullscreenColumnContainer>
             </PageContainer>
@@ -370,9 +363,9 @@ class Profile extends React.Component {
                     Confirm
                 </StyledNavLink>
                 {this.renderTravelInfo()}
-                {user.needs_reimbursement && user.reimbursement > 0
-                    ? this.renderTravelReimbursement()
-                    : null}
+                {user.needs_reimbursement && user.reimbursement > 0 ? (
+                    this.renderTravelReimbursement()
+                ) : null}
             </div>
         );
     }
@@ -393,9 +386,9 @@ class Profile extends React.Component {
                     updates on all things MHacks.
                 </p>
                 {this.renderTravelInfo()}
-                {user.needs_reimbursement && user.reimbursement > 0
-                    ? this.renderTravelReimbursement()
-                    : null}
+                {user.needs_reimbursement && user.reimbursement > 0 ? (
+                    this.renderTravelReimbursement()
+                ) : null}
             </div>
         );
     }
@@ -406,9 +399,7 @@ class Profile extends React.Component {
                 Please plan to arrive in Ann Arbor before 6pm on Friday,
                 September 22nd. Registration will begin at 4pm and end at 6pm.
                 Late registration will be available at the Help Desk. Closing
-                Ceremonies will last until about 5pm on Sunday, September 24th.{
-                    ' '
-                }
+                Ceremonies will last until about 5pm on Sunday, September 24th.{' '}
                 <br /> <br />
                 <strong>MHacks Buses</strong>: We will be sending buses to
                 several campuses across the nation, stay tuned for more details
@@ -435,9 +426,7 @@ class Profile extends React.Component {
                 <p>
                     To remain eligible for your reimbursement, you must email
                     flymhacks@umich.edu with any relevant receipts, ticket
-                    confirmations, etc. within 5 days of application acceptance.{
-                        ' '
-                    }
+                    confirmations, etc. within 5 days of application acceptance.{' '}
                     <br /> <br />If you are driving, please indicate as such on
                     the confirmation form - you will have until September 30th
                     to send a single email to flymhacks@umich.edu with all costs
@@ -487,34 +476,31 @@ class Profile extends React.Component {
                     {this.renderApplicationReviewSection()}
 
                     <SectionHeader color={this.props.theme.primary}>
-                        Profile
+                        Edit Profile
                     </SectionHeader>
                     <form onSubmit={this.onSubmit}>
-                        {this.props.userState.error
-                            ? <AlertContainer>
-                                  <Alert
-                                      message={this.props.userState.message}
-                                  />
-                              </AlertContainer>
-                            : null}
-                        {isApplicationSubmitted && !isApplicationReviewed
-                            ? <AlertContainer>
-                                  <Alert
-                                      message={
-                                          'Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to MHacks X'
-                                      }
-                                      style={{
-                                          backgroundColor: '#01FF70',
-                                          color: '#3D9970'
-                                      }}
-                                  />
-                              </AlertContainer>
-                            : null}
+                        {this.props.userState.error ? (
+                            <AlertContainer>
+                                <Alert message={this.props.userState.message} />
+                            </AlertContainer>
+                        ) : null}
+                        {isApplicationSubmitted && !isApplicationReviewed ? (
+                            <AlertContainer>
+                                <Alert
+                                    message={
+                                        'Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to MHacks X'
+                                    }
+                                    style={{
+                                        backgroundColor: '#01FF70',
+                                        color: '#3D9970'
+                                    }}
+                                />
+                            </AlertContainer>
+                        ) : null}
                         <Subhead>
-                            Update your profile with some info about
-                            yourself. This will be automatically
-                            populated into your application and persist
-                            through hackathons!
+                            Update your profile with some info about yourself.
+                            This will be automatically populated into your
+                            application and persist through hackathons!
                         </Subhead>
                         <Flexer>
                             <InputContainer>
@@ -540,7 +526,7 @@ class Profile extends React.Component {
                                         shouldItemRender={
                                             this.handleItemShouldRender
                                         }
-                                        renderItem={(item, isHighlighted) =>
+                                        renderItem={(item, isHighlighted) => (
                                             <div
                                                 style={{
                                                     background: isHighlighted
@@ -549,7 +535,8 @@ class Profile extends React.Component {
                                                 }}
                                             >
                                                 {item}
-                                            </div>}
+                                            </div>
+                                        )}
                                         inputProps={{
                                             placeholder:
                                                 'e.g. University of Michigan',
@@ -590,7 +577,7 @@ class Profile extends React.Component {
                                         shouldItemRender={
                                             this.handleItemShouldRender
                                         }
-                                        renderItem={(item, isHighlighted) =>
+                                        renderItem={(item, isHighlighted) => (
                                             <div
                                                 style={{
                                                     background: isHighlighted
@@ -599,7 +586,8 @@ class Profile extends React.Component {
                                                 }}
                                             >
                                                 {item}
-                                            </div>}
+                                            </div>
+                                        )}
                                         inputProps={{
                                             placeholder:
                                                 'e.g. Underwater Basket Weaving',
@@ -635,17 +623,19 @@ class Profile extends React.Component {
                                 <FileUploadContainer>
                                     <FileUpload
                                         defaultColor={
-                                            userData.user.isResumeUploaded
-                                                ? this.props.theme.success
-                                                : this.props.theme.primary
+                                            userData.user.isResumeUploaded ? (
+                                                this.props.theme.success
+                                            ) : (
+                                                this.props.theme.primary
+                                            )
                                         }
                                         hoverColor={this.props.theme.secondary}
                                         activeColor={this.props.theme.success}
                                         onFileSelect={this.handleFileUpload}
                                         defaultText={
-                                            userData.user.isResumeUploaded
-                                                ? 'Resume Uploaded'
-                                                : null
+                                            userData.user.isResumeUploaded ? (
+                                                'Resume Uploaded'
+                                            ) : null
                                         }
                                     />
                                 </FileUploadContainer>
@@ -739,8 +729,7 @@ class Profile extends React.Component {
                                         <option value="white">White</option>
                                         <option value="black">Black</option>
                                         <option value="am-indian-alaskan">
-                                            American Indian or Alaskan
-                                            Native
+                                            American Indian or Alaskan Native
                                         </option>
                                         <option value="asian">
                                             Asian or Pacific Islander
@@ -764,9 +753,7 @@ class Profile extends React.Component {
                                             Select
                                         </option>
                                         <option value="male">Male</option>
-                                        <option value="female">
-                                            Female
-                                        </option>
+                                        <option value="female">Female</option>
                                         <option value="non-binary">
                                             Other
                                         </option>
@@ -808,4 +795,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps)(EditProfile);

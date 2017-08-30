@@ -47,7 +47,7 @@ const FaqBody = styled.div`
     margin: 30px auto 0;
 `;
 
-const FaqItem = props =>
+const FaqItem = props => (
     <ExpandingItemWrapper>
         <ExpandingItem
             {...props}
@@ -55,7 +55,8 @@ const FaqItem = props =>
             colorOn={props => props.theme.highlightSecondary}
             colorOff={props => props.theme.highlight}
         />
-    </ExpandingItemWrapper>;
+    </ExpandingItemWrapper>
+);
 
 class Faq extends React.Component {
     render() {
@@ -97,7 +98,7 @@ class Faq extends React.Component {
                                                 Web Development, Android, iOS,
                                                 AI/ML, AR/VR, Game Development,
                                                 and Hardware. Check out the
-                                                hacks from MHacks 9 on
+                                                hacks from MHacks 9 on{' '}
                                                 <Link
                                                     href="https://mhacks9.devpost.com/submissions"
                                                     target="_blank"
@@ -197,15 +198,13 @@ class Faq extends React.Component {
                                                 you are traveling from another
                                                 country, the first step is to
                                                 make sure you have a valid
-                                                travel visa. Please refer to{
-                                                    ' '
-                                                }
+                                                travel visa. Please refer to{' '}
                                                 <Link
                                                     href="https://www.visahq.com"
                                                     target="_blank"
                                                 >
                                                     this website
-                                                </Link>
+                                                </Link>{' '}
                                                 to make sure you meet the
                                                 requirements and get started on
                                                 the process if you haven’t
@@ -248,7 +247,7 @@ class Faq extends React.Component {
                                             <span>
                                                 If you’re contemplating judging,
                                                 volunteering, or mentoring,
-                                                shoot us an email at
+                                                shoot us an email at{' '}
                                                 <Link href="mailto:hackathon@umich.edu">
                                                     hackathon@umich.edu
                                                 </Link>. If your company is
@@ -263,7 +262,7 @@ class Faq extends React.Component {
                                         body={
                                             <span>
                                                 If you’ve got something else on
-                                                your mind, fire it off to
+                                                your mind, fire it off to{' '}
                                                 <Link href="mailto:hackathon@umich.edu">
                                                     hackathon@umich.edu
                                                 </Link>!

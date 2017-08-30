@@ -17,14 +17,12 @@ const Page = styled.div`
     backgroundColor: black;
     width: 100%;
     height: 100%;
-    color: #F1F7FF;
+    color: #f1f7ff;
     overflowX: hidden;
 `;
 
 /* Styled elements */
-const StyledHero = styled(Hero)`
-    margin: 35px 0;
-`;
+const StyledHero = styled(Hero)`margin: 35px 0;`;
 
 /* Page Component */
 class BlackoutPage extends React.Component {

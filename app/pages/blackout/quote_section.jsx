@@ -6,9 +6,7 @@ import devices from '../../styles/devices';
 import StartIcon from '../../../static/icons/quote_start.png';
 import EndIcon from '../../../static/icons/quote_end.png';
 
-const Wrapper = styled.section`
-    padding: 70px 0;
-`;
+const Wrapper = styled.section`padding: 70px 0;`;
 
 const QuoteSection = styled.div`
     position: relative;
@@ -29,7 +27,7 @@ const Quote = styled.div`
     float: ${props => (props.position === 'left' ? 'left' : 'right')};
     zIndex: 10;
     letter-spacing: 3px;
-    fontSize: 2.0em;
+    fontSize: 2em;
     textAlign: left;
 
     ${devices.tablet`
@@ -38,7 +36,7 @@ const Quote = styled.div`
         width: 100%;
         fontSize: 2.5em;
         paddingBottom: 10px;
-    `}
+    `};
 `;
 
 const StartWrapper = styled.img`
@@ -53,11 +51,9 @@ const StartWrapper = styled.img`
     ${devices.tablet`
         height: 20%;
         visibility: visible;
-    `}
-
-    ${devices.giant`
+    `} ${devices.giant`
         height: 25%;
-    `}
+    `};
 `;
 
 const EndWrapper = styled.img`
@@ -73,15 +69,11 @@ const EndWrapper = styled.img`
         visibility: visible;
         right: 3%;
         bottom: 10%;
-    `}
-
-    ${devices.desktop`
+    `} ${devices.desktop`
         bottom: 12%;
-    `}
-
-    ${devices.giant`
+    `} ${devices.giant`
         height: 25%;
-    `}
+    `};
 `;
 
 const CompanyName = styled.div`
@@ -89,26 +81,22 @@ const CompanyName = styled.div`
     color: #a3a3a3;
     fontStyle: italic;
     clear: both;
-    fontSize: 2.0em;
+    fontSize: 2em;
     zIndex: 9999;
     paddingBottom: 50px;
     textAlign: left;
 
     ${devices.tablet`
       textAlign: ${props => (props.position === 'right' ? 'right' : 'left')};
-    `}
-
-    ${devices.desktop`
+    `} ${devices.desktop`
       fontSize: 2.5em;
       paddingBottom: 30px;
-    `}
-
-    ${devices.giant`
+    `} ${devices.giant`
       paddingBottom: 20px;
-    `}
+    `};
 `;
 
-export default () =>
+export default () => (
     <Wrapper>
         <QuoteSection>
             <StartWrapper src={StartIcon} />
@@ -122,6 +110,10 @@ export default () =>
                 The caliber and number of students that MHacks attracts is like
                 no other hacking event.
             </Quote>
-            <CompanyName position="right" dark> Walmart </CompanyName>
+            <CompanyName position="right" dark>
+                {' '}
+                Walmart{' '}
+            </CompanyName>
         </QuoteSection>
-    </Wrapper>;
+    </Wrapper>
+);

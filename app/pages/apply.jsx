@@ -22,13 +22,14 @@ import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
 
 const StyledSelect = styled.select`
-        background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+) no-repeat 95% 50%;
-        paddingLeft: 10px;
-        appearance: none;
-        borderColor: rgb(215, 215, 215);
-        flexGrow: 1;
-        height: 36px;
-        width: 100%;
+    background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+)
+        no-repeat 95% 50%;
+    paddingLeft: 10px;
+    appearance: none;
+    borderColor: rgb(215, 215, 215);
+    flexGrow: 1;
+    height: 36px;
+    width: 100%;
 `;
 
 const FormContainer = styled.div`
@@ -43,9 +44,7 @@ const Flexer = styled.div`
     flexDirection: column;
 `;
 
-const InputContainer = styled.div`
-    margin: 20px 0 30px 0;
-`;
+const InputContainer = styled.div`margin: 20px 0 30px 0;`;
 
 const ButtonGroup = styled.div`
     display: flex;
@@ -60,9 +59,7 @@ const SectionHeader = styled.h2`
     margin: 0;
 `;
 
-const FileUploadContainer = styled.div`
-    marginTop: 30px;
-`;
+const FileUploadContainer = styled.div`marginTop: 30px;`;
 
 const SubsectionHeader = styled.h3`
     fontSize: 22px;
@@ -71,9 +68,7 @@ const SubsectionHeader = styled.h3`
     margin: 26px 0 0 0;
 `;
 
-const AlertContainer = styled.div`
-    marginTop: 30px;
-`;
+const AlertContainer = styled.div`marginTop: 30px;`;
 
 const LegalText = styled.p`
     fontSize: 15px;
@@ -103,7 +98,7 @@ const autocompleteMenuStyle = {
             window.innerHeight || 0
         ) /
             2 +
-            'px',
+        'px',
     left: '20px',
     top: '45px',
     overflow: 'auto',
@@ -356,23 +351,21 @@ class Apply extends React.Component {
                         Application
                     </SectionHeader>
                     <form onSubmit={this.onSubmit}>
-                        {this.props.userState.error
-                            ? <AlertContainer>
-                                  <Alert
-                                      message={this.props.userState.message}
-                                  />
-                              </AlertContainer>
-                            : null}
-                        {this.props.userState.data.isApplicationSubmitted
-                            ? <AlertContainer>
-                                  <Alert
-                                      message={
-                                          'Your application is submitted but you can make changes on this page and update your application! Thanks for applying to MHacks X.'
-                                      }
-                                      positive={true}
-                                  />
-                              </AlertContainer>
-                            : null}
+                        {this.props.userState.error ? (
+                            <AlertContainer>
+                                <Alert message={this.props.userState.message} />
+                            </AlertContainer>
+                        ) : null}
+                        {this.props.userState.data.isApplicationSubmitted ? (
+                            <AlertContainer>
+                                <Alert
+                                    message={
+                                        'Your application is submitted but you can make changes on this page and update your application! Thanks for applying to MHacks X.'
+                                    }
+                                    positive={true}
+                                />
+                            </AlertContainer>
+                        ) : null}
                         <Subhead>
                             Apply for MHacks X! MHacks X will be held on the
                             University of Michigan's North Campus in Ann Arbor
@@ -407,184 +400,201 @@ class Apply extends React.Component {
                                                                     : '')
                                                             }
                                                             labelWidth={
-                                                                field.wideLabel
-                                                                    ? '150px'
-                                                                    : '100px'
+                                                                field.wideLabel ? (
+                                                                    '150px'
+                                                                ) : (
+                                                                    '100px'
+                                                                )
                                                             }
                                                             key={field.key}
                                                         >
-                                                            {field.autocomplete
-                                                                ? <Autocomplete
-                                                                      getItemValue={item =>
-                                                                          item}
-                                                                      items={
-                                                                          field.autocomplete
-                                                                      }
-                                                                      shouldItemRender={
-                                                                          this
-                                                                              .handleItemShouldRender
-                                                                      }
-                                                                      renderItem={(
-                                                                          item,
-                                                                          isHighlighted
-                                                                      ) =>
-                                                                          <div
-                                                                              style={{
-                                                                                  background: isHighlighted
-                                                                                      ? 'lightgray'
-                                                                                      : 'white'
-                                                                              }}
-                                                                          >
-                                                                              {item}
-                                                                          </div>}
-                                                                      inputProps={{
-                                                                          placeholder:
-                                                                              field.placeholder,
-                                                                          name:
-                                                                              field.key,
-                                                                          id:
-                                                                              field.key,
-                                                                          style: {
-                                                                              height:
-                                                                                  '36px',
-                                                                              width:
-                                                                                  '100%',
-                                                                              paddingLeft:
-                                                                                  '10px',
-                                                                              border:
-                                                                                  '1px solid #ccc',
-                                                                              borderRadius:
-                                                                                  '4px'
-                                                                          }
-                                                                      }}
-                                                                      sortItems={
-                                                                          this
-                                                                              .handleSortItems
-                                                                      }
-                                                                      value={
-                                                                          this
-                                                                              .state[
-                                                                              field
-                                                                                  .key
-                                                                          ]
-                                                                      }
-                                                                      onChange={e => {
-                                                                          if (
-                                                                              !e
-                                                                                  .target
-                                                                                  .value &&
-                                                                              field.required
-                                                                          ) {
-                                                                              this.addError(
-                                                                                  field.key
-                                                                              );
-                                                                          } else {
-                                                                              this.removeError(
-                                                                                  field.key
-                                                                              );
-                                                                          }
+                                                            {field.autocomplete ? (
+                                                                <Autocomplete
+                                                                    getItemValue={item =>
+                                                                        item}
+                                                                    items={
+                                                                        field.autocomplete
+                                                                    }
+                                                                    shouldItemRender={
+                                                                        this
+                                                                            .handleItemShouldRender
+                                                                    }
+                                                                    renderItem={(
+                                                                        item,
+                                                                        isHighlighted
+                                                                    ) => (
+                                                                        <div
+                                                                            style={{
+                                                                                background: isHighlighted
+                                                                                    ? 'lightgray'
+                                                                                    : 'white'
+                                                                            }}
+                                                                        >
+                                                                            {
+                                                                                item
+                                                                            }
+                                                                        </div>
+                                                                    )}
+                                                                    inputProps={{
+                                                                        placeholder:
+                                                                            field.placeholder,
+                                                                        name:
+                                                                            field.key,
+                                                                        id:
+                                                                            field.key,
+                                                                        style: {
+                                                                            height:
+                                                                                '36px',
+                                                                            width:
+                                                                                '100%',
+                                                                            paddingLeft:
+                                                                                '10px',
+                                                                            border:
+                                                                                '1px solid #ccc',
+                                                                            borderRadius:
+                                                                                '4px'
+                                                                        }
+                                                                    }}
+                                                                    sortItems={
+                                                                        this
+                                                                            .handleSortItems
+                                                                    }
+                                                                    value={
+                                                                        this
+                                                                            .state[
+                                                                            field
+                                                                                .key
+                                                                        ]
+                                                                    }
+                                                                    onChange={e => {
+                                                                        if (
+                                                                            !e
+                                                                                .target
+                                                                                .value &&
+                                                                            field.required
+                                                                        ) {
+                                                                            this.addError(
+                                                                                field.key
+                                                                            );
+                                                                        } else {
+                                                                            this.removeError(
+                                                                                field.key
+                                                                            );
+                                                                        }
 
-                                                                          this.handleAttributeChange(
-                                                                              e
-                                                                          );
-                                                                      }}
-                                                                      onSelect={e => {
-                                                                          var fakeEvent = {
-                                                                              target: {
-                                                                                  name:
-                                                                                      field.key,
-                                                                                  value: e
-                                                                              }
-                                                                          };
+                                                                        this.handleAttributeChange(
+                                                                            e
+                                                                        );
+                                                                    }}
+                                                                    onSelect={e => {
+                                                                        var fakeEvent = {
+                                                                            target: {
+                                                                                name:
+                                                                                    field.key,
+                                                                                value: e
+                                                                            }
+                                                                        };
 
-                                                                          if (
-                                                                              !fakeEvent
-                                                                                  .target
-                                                                                  .value &&
-                                                                              field.required
-                                                                          ) {
-                                                                              this.addError(
-                                                                                  field.key
-                                                                              );
-                                                                          } else {
-                                                                              this.removeError(
-                                                                                  field.key
-                                                                              );
-                                                                          }
+                                                                        if (
+                                                                            !fakeEvent
+                                                                                .target
+                                                                                .value &&
+                                                                            field.required
+                                                                        ) {
+                                                                            this.addError(
+                                                                                field.key
+                                                                            );
+                                                                        } else {
+                                                                            this.removeError(
+                                                                                field.key
+                                                                            );
+                                                                        }
 
-                                                                          this.handleAttributeChange(
-                                                                              fakeEvent
-                                                                          );
-                                                                      }}
-                                                                      menuStyle={
-                                                                          autocompleteMenuStyle
-                                                                      }
-                                                                      wrapperStyle={
-                                                                          autocompleteWrapperStyle
-                                                                      }
-                                                                      renderMenu={
-                                                                          field.key ===
-                                                                              'university'
-                                                                              ? this
-                                                                                    .handleRenderMenu
-                                                                              : this
-                                                                                    .defaultHandleRenderMenu
-                                                                      }
-                                                                  />
-                                                                : <Input
-                                                                      id={
-                                                                          field.key
-                                                                      }
-                                                                      type="text"
-                                                                      name={
-                                                                          field.key
-                                                                      }
-                                                                      placeholder={
-                                                                          field.placeholder
-                                                                      }
-                                                                      value={
-                                                                          this
-                                                                              .state[
-                                                                              field
-                                                                                  .key
-                                                                          ]
-                                                                      }
-                                                                      onChange={e => {
-                                                                          if (
-                                                                              !e
-                                                                                  .target
-                                                                                  .value &&
-                                                                              field.required
-                                                                          ) {
-                                                                              this.addError(
-                                                                                  field.key
-                                                                              );
-                                                                          } else {
-                                                                              this.removeError(
-                                                                                  field.key
-                                                                              );
-                                                                          }
+                                                                        this.handleAttributeChange(
+                                                                            fakeEvent
+                                                                        );
+                                                                    }}
+                                                                    menuStyle={
+                                                                        autocompleteMenuStyle
+                                                                    }
+                                                                    wrapperStyle={
+                                                                        autocompleteWrapperStyle
+                                                                    }
+                                                                    renderMenu={
+                                                                        field.key ===
+                                                                        'university' ? (
+                                                                            this
+                                                                                .handleRenderMenu
+                                                                        ) : (
+                                                                            this
+                                                                                .defaultHandleRenderMenu
+                                                                        )
+                                                                    }
+                                                                />
+                                                            ) : (
+                                                                <Input
+                                                                    id={
+                                                                        field.key
+                                                                    }
+                                                                    type="text"
+                                                                    name={
+                                                                        field.key
+                                                                    }
+                                                                    placeholder={
+                                                                        field.placeholder
+                                                                    }
+                                                                    value={
+                                                                        this
+                                                                            .state[
+                                                                            field
+                                                                                .key
+                                                                        ]
+                                                                    }
+                                                                    onChange={e => {
+                                                                        if (
+                                                                            !e
+                                                                                .target
+                                                                                .value &&
+                                                                            field.required
+                                                                        ) {
+                                                                            this.addError(
+                                                                                field.key
+                                                                            );
+                                                                        } else {
+                                                                            this.removeError(
+                                                                                field.key
+                                                                            );
+                                                                        }
 
-                                                                          this.handleAttributeChange(
-                                                                              e
-                                                                          );
-                                                                      }}
-                                                                  />}
+                                                                        this.handleAttributeChange(
+                                                                            e
+                                                                        );
+                                                                    }}
+                                                                />
+                                                            )}
                                                         </LabeledInput>
                                                         {(!this.state[
                                                             field.key
                                                         ] &&
                                                             field.required) ||
-                                                            this.checkError(
+                                                        this.checkError(
+                                                            field.key
+                                                        ) ? (
+                                                            <AlertContainer>
+                                                                {this.addError(
+                                                                    field.key
+                                                                )}
+                                                                <Alert
+                                                                    message={
+                                                                        'The field above is required'
+                                                                    }
+                                                                />
+                                                            </AlertContainer>
+                                                        ) : (
+                                                            this.removeError(
                                                                 field.key
                                                             )
-                                                            ? <AlertContainer>
-                                                                  {this.addError(field.key)}
-                                                                  <Alert message={'The field above is required'} />
-                                                              </AlertContainer>
-                                                            : this.removeError(
-                                                                  field.key
-                                                              )}
+                                                        )}
                                                     </div>
                                                 );
                                             case FieldTypes.ESSAY:
@@ -633,16 +643,24 @@ class Apply extends React.Component {
                                                             field.key
                                                         ] &&
                                                             field.required) ||
-                                                            this.checkError(
+                                                        this.checkError(
+                                                            field.key
+                                                        ) ? (
+                                                            <AlertContainer>
+                                                                {this.addError(
+                                                                    field.key
+                                                                )}
+                                                                <Alert
+                                                                    message={
+                                                                        'The field above is required'
+                                                                    }
+                                                                />
+                                                            </AlertContainer>
+                                                        ) : (
+                                                            this.removeError(
                                                                 field.key
                                                             )
-                                                            ? <AlertContainer>
-                                                                  {this.addError(field.key)}
-                                                                  <Alert message={'The field above is required'} />
-                                                              </AlertContainer>
-                                                            : this.removeError(
-                                                                  field.key
-                                                              )}
+                                                        )}
                                                     </LabeledTextarea>
                                                 );
                                             case FieldTypes.DATE:
@@ -656,9 +674,11 @@ class Apply extends React.Component {
                                                                     : '')
                                                             }
                                                             labelWidth={
-                                                                field.wideLabel
-                                                                    ? '150px'
-                                                                    : '100px'
+                                                                field.wideLabel ? (
+                                                                    '150px'
+                                                                ) : (
+                                                                    '100px'
+                                                                )
                                                             }
                                                             key={field.key}
                                                         >
@@ -699,14 +719,22 @@ class Apply extends React.Component {
                                                         </LabeledInput>
                                                         {!this.state[
                                                             field.key
-                                                        ] && field.required
-                                                            ? <AlertContainer>
-                                                                  {this.addError(field.key)}
-                                                                  <Alert message={'The field above is required'} />
-                                                              </AlertContainer>
-                                                            : this.removeError(
-                                                                  field.key
-                                                              )}
+                                                        ] && field.required ? (
+                                                            <AlertContainer>
+                                                                {this.addError(
+                                                                    field.key
+                                                                )}
+                                                                <Alert
+                                                                    message={
+                                                                        'The field above is required'
+                                                                    }
+                                                                />
+                                                            </AlertContainer>
+                                                        ) : (
+                                                            this.removeError(
+                                                                field.key
+                                                            )
+                                                        )}
                                                     </div>
                                                 );
                                             case FieldTypes.INTEGER:
@@ -720,9 +748,11 @@ class Apply extends React.Component {
                                                                     : '')
                                                             }
                                                             labelWidth={
-                                                                field.wideLabel
-                                                                    ? '150px'
-                                                                    : '100px'
+                                                                field.wideLabel ? (
+                                                                    '150px'
+                                                                ) : (
+                                                                    '100px'
+                                                                )
                                                             }
                                                             key={field.key}
                                                         >
@@ -762,16 +792,24 @@ class Apply extends React.Component {
                                                             field.key
                                                         ] &&
                                                             field.required) ||
-                                                            this.checkError(
+                                                        this.checkError(
+                                                            field.key
+                                                        ) ? (
+                                                            <AlertContainer>
+                                                                {this.addError(
+                                                                    field.key
+                                                                )}
+                                                                <Alert
+                                                                    message={
+                                                                        'The field above is required'
+                                                                    }
+                                                                />
+                                                            </AlertContainer>
+                                                        ) : (
+                                                            this.removeError(
                                                                 field.key
                                                             )
-                                                            ? <AlertContainer>
-                                                                  {this.addError(field.key)}
-                                                                  <Alert message={'The field above is required'} />
-                                                              </AlertContainer>
-                                                            : this.removeError(
-                                                                  field.key
-                                                              )}
+                                                        )}
                                                     </div>
                                                 );
                                             case FieldTypes.SELECT:
@@ -785,9 +823,11 @@ class Apply extends React.Component {
                                                                     : '')
                                                             }
                                                             labelWidth={
-                                                                field.wideLabel
-                                                                    ? '150px'
-                                                                    : '100px'
+                                                                field.wideLabel ? (
+                                                                    '150px'
+                                                                ) : (
+                                                                    '100px'
+                                                                )
                                                             }
                                                             key={field.key}
                                                         >
@@ -831,7 +871,9 @@ class Apply extends React.Component {
                                                                                     tuple.key
                                                                                 }
                                                                             >
-                                                                                {tuple.value}
+                                                                                {
+                                                                                    tuple.value
+                                                                                }
                                                                             </option>
                                                                         );
                                                                     }
@@ -842,21 +884,28 @@ class Apply extends React.Component {
                                                             field.key
                                                         ] &&
                                                             field.required) ||
-                                                            (this.state[
-                                                                field.key
-                                                            ] ===
-                                                                'unselected' &&
-                                                                field.required) ||
-                                                            this.checkError(
+                                                        (this.state[
+                                                            field.key
+                                                        ] === 'unselected' &&
+                                                            field.required) ||
+                                                        this.checkError(
+                                                            field.key
+                                                        ) ? (
+                                                            <AlertContainer>
+                                                                {this.addError(
+                                                                    field.key
+                                                                )}
+                                                                <Alert
+                                                                    message={
+                                                                        'The field above is required'
+                                                                    }
+                                                                />
+                                                            </AlertContainer>
+                                                        ) : (
+                                                            this.removeError(
                                                                 field.key
                                                             )
-                                                            ? <AlertContainer>
-                                                                  {this.addError(field.key)}
-                                                                  <Alert message={'The field above is required'} />
-                                                              </AlertContainer>
-                                                            : this.removeError(
-                                                                  field.key
-                                                              )}
+                                                        )}
                                                     </div>
                                                 );
                                             case FieldTypes.SECTIONHEADER:
@@ -876,9 +925,11 @@ class Apply extends React.Component {
                                     <FileUploadContainer>
                                         <FileUpload
                                             defaultColor={
-                                                app && app.resume
-                                                    ? this.props.theme.success
-                                                    : this.props.theme.primary
+                                                app && app.resume ? (
+                                                    this.props.theme.success
+                                                ) : (
+                                                    this.props.theme.primary
+                                                )
                                             }
                                             hoverColor={
                                                 this.props.theme.secondary
@@ -898,29 +949,33 @@ class Apply extends React.Component {
                                                 this.handleFileUpload(e);
                                             }}
                                             defaultText={
-                                                app && app.resume
-                                                    ? 'Resume Uploaded'
-                                                    : null
+                                                app && app.resume ? (
+                                                    'Resume Uploaded'
+                                                ) : null
                                             }
                                         />
 
                                         {(app && app.resume) ||
-                                            this.state.resume
-                                            ? this.removeError('choosefile')
-                                            : this.addError('choosefile')}
+                                        this.state.resume ? (
+                                            this.removeError('choosefile')
+                                        ) : (
+                                            this.addError('choosefile')
+                                        )}
 
                                         {(!(app && app.resume) &&
                                             !this.state.resume) ||
-                                            this.checkError('choosefile')
-                                            ? <AlertContainer>
-                                                  {this.addError('choosefile')}
-                                                  <Alert
-                                                      message={
-                                                          'The field above is required'
-                                                      }
-                                                  />
-                                              </AlertContainer>
-                                            : this.removeError('choosefile')}
+                                        this.checkError('choosefile') ? (
+                                            <AlertContainer>
+                                                {this.addError('choosefile')}
+                                                <Alert
+                                                    message={
+                                                        'The field above is required'
+                                                    }
+                                                />
+                                            </AlertContainer>
+                                        ) : (
+                                            this.removeError('choosefile')
+                                        )}
                                     </FileUploadContainer>
                                 </InputContainer>
                                 <ButtonGroup>
@@ -931,29 +986,34 @@ class Apply extends React.Component {
                                             this.validationErrors.length > 0
                                         }
                                         style={
-                                            this.validationErrors.length > 0
-                                                ? {
-                                                      backgroundColor: this
-                                                          .props.theme.secondary
-                                                  }
-                                                : {}
+                                            this.validationErrors.length > 0 ? (
+                                                {
+                                                    backgroundColor: this.props
+                                                        .theme.secondary
+                                                }
+                                            ) : (
+                                                {}
+                                            )
                                         }
                                         hover={
-                                            this.validationErrors.length > 0
-                                                ? 'color: ' +
-                                                      this.props.theme.primary
-                                                : ''
+                                            this.validationErrors.length > 0 ? (
+                                                'color: ' +
+                                                this.props.theme.primary
+                                            ) : (
+                                                ''
+                                            )
                                         }
                                     >
-                                        {this.validationErrors.length > 0
-                                            ? `${this.validationErrors
-                                                  .length} Error(s)`
-                                            : 'Save'}
+                                        {this.validationErrors.length > 0 ? (
+                                            `${this.validationErrors
+                                                .length} Error(s)`
+                                        ) : (
+                                            'Save'
+                                        )}
                                     </RoundedButton>
                                 </ButtonGroup>
                                 <LegalText>
-                                    By applying to MHacks X, you agree
-                                    to the
+                                    By applying to MHacks X, you agree to the
                                     MHacks{' '}
                                     <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
                                         Code of Conduct

@@ -11,15 +11,15 @@ const Wrapper = styled.div`
     }
 
     input:-moz-placeholder {
-        color: ${props => props.placeholderColor} !important;  
+        color: ${props => props.placeholderColor} !important;
     }
-     
-    input::-moz-placeholder { 
-        color: ${props => props.placeholderColor} !important;  
+
+    input::-moz-placeholder {
+        color: ${props => props.placeholderColor} !important;
     }
-     
-    input:-ms-input-placeholder {  
-        color: ${props => props.placeholderColor} !important;  
+
+    input:-ms-input-placeholder {
+        color: ${props => props.placeholderColor} !important;
     }
 `;
 
@@ -56,11 +56,13 @@ export default class InputText extends React.Component {
     render() {
         return (
             <Wrapper placeholderColor={this.props.placeholderColor}>
-                {this.props.feedback
-                    ? <Feedback color={this.props.feedbackColor}>
-                          {this.props.feedback}
-                      </Feedback>
-                    : <br />}
+                {this.props.feedback ? (
+                    <Feedback color={this.props.feedbackColor}>
+                        {this.props.feedback}
+                    </Feedback>
+                ) : (
+                    <br />
+                )}
                 <Input
                     type="text"
                     ref="textField"

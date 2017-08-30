@@ -31,7 +31,7 @@ const Text = styled.h2`
         textAlign: left;
         minWidth: 0;
         order: 0;
-    `}
+    `};
 `;
 
 const HeaderLogo = styled.img`
@@ -50,7 +50,7 @@ const Flexer = styled.div`
         textAlign: left;
         minWidth: 0;
         ${props => (props.right ? 'justifyContent: flex-end;' : '')}
-    `}
+    `};
 `;
 
 const Img100 = styled.img`
@@ -66,12 +66,13 @@ const ImgButtonWrapper = styled.div`
     display: block;
 `;
 
-const ImgButton = props =>
+const ImgButton = props => (
     <ImgButtonWrapper>
         <a href={props.href}>
             <Img100 {...props} />
         </a>
-    </ImgButtonWrapper>;
+    </ImgButtonWrapper>
+);
 
 class BlackoutFooter extends React.Component {
     render() {

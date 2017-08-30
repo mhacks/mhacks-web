@@ -10,8 +10,8 @@ const Wrapper = styled.div`
     height: ${props => props.height}px;
     width: 100%;
     overflow-x: hidden;
-	overflow-y: hidden;
-    background: rgba(0,0,0,0);
+    overflow-y: hidden;
+    background: rgba(0, 0, 0, 0);
     zIndex: 5;
     pointer-events: none;
 `;
@@ -20,10 +20,10 @@ const Square = styled.svg`
     position: absolute;
     top: ${props => props.top}px;
     left: ${props => props.left}px;
-    fill: rgba(0,0,0,0);
+    fill: rgba(0, 0, 0, 0);
     stroke: ${theme.highlight};
-    stroke-width:8;
-    fill-opacity:0;
+    stroke-width: 8;
+    fill-opacity: 0;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-opacity: ${props => props.sOpacity};
@@ -68,9 +68,11 @@ class Animations extends React.Component {
                     top={topPos}
                     left={Math.floor(Math.random() * this.state.pageWidth)}
                     sOpacity={
-                        topPos - 300 < 0
-                            ? 0.28
-                            : (height - topPos) / (height - 300) * 0.23 + 0.05
+                        topPos - 300 < 0 ? (
+                            0.28
+                        ) : (
+                            (height - topPos) / (height - 300) * 0.23 + 0.05
+                        )
                     }
                     key={i}
                 >

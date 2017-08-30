@@ -190,8 +190,8 @@ append pageContent
                                 td=val.major ? val.major.substr(0, 30) + (val.major.substr(0, 30).length < val.major.length ? '...' : '') : ''
                                 td=val.university ? val.university.substr(0, 30) + (val.university.substr(0, 30).length < val.university.length ? '...' : '') : ''
                                 td
-                                    each url in val.getAvatars()
-                                        img(src=url, onerror='$(this).hide()', height='50px', width='50px')
+                                    //each url in val.getAvatars()
+                                    //    img(src=url, onerror='$(this).hide()', height='50px', width='50px')
                                 if val.resume
                                     td
                                         - var resume = val.getResume()

@@ -1,3 +1,19 @@
+process.on('unhandledRejection', error => {
+    console.log('unhandledRejection', error);
+});
+
+process.on('warning', warning => {
+    console.log('warning', warning);
+});
+
+process.on('uncaughtException', exception => {
+    console.log('uncaughtException', exception);
+});
+
+process.on('rejectionHandled', rejection => {
+    console.log('rejectionHandled', rejection);
+});
+
 var config = require('./config/default.js');
 
 if (config.newrelic_enabled) {
@@ -20,7 +36,9 @@ var http = require('http'),
     apiRouter = require('./server/routes/api.js'),
     indexRouter = require('./server/routes/index.js'),
     shortenerRouter = require('./server/routes/shortener.js'),
-    sharedsession = require('express-socket.io-session');
+    sharedsession = require('express-socket.io-session'),
+    swaggerUI = require('swagger-ui-express'),
+    swaggerDoc = require('./static/docs/openapi.json');
 
 // Force https
 app.use(function(req, res, next) {
@@ -47,10 +65,15 @@ app.use(morgan('combined'));
 // Request parsers
 app.use(
     bodyParser.urlencoded({
-        extended: true
+        extended: true,
+        limit: '50mb'
     })
 );
-app.use(bodyParser.json());
+app.use(
+    bodyParser.json({
+        limit: '50mb'
+    })
+);
 
 // Server side views (if used)
 app.set('view engine', 'pug');
@@ -94,6 +117,8 @@ app.use(function(req, res, next) {
 
     return next();
 });
+
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
 // Other route middleware (modules in `routes/`)
 if (config.service === 'shortener') {
@@ -141,4 +166,14 @@ if (config.service === 'shortener') {
 require('./server/socketio/index.js')(io);
 
 // Now we start the server
-server.listen(config.server_port);
+if (config.start_server) {
+    server.listen(config.server_port);
+}
+
+module.exports = {
+    mongoose,
+    express,
+    app,
+    server,
+    io
+};

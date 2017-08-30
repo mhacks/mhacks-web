@@ -11,7 +11,9 @@ const initialState = {
 
 export function readerState(state = initialState, action) {
     switch (action.type) {
-        case actions.LOAD_APPLICATIONS_REQUEST:
+        case actions.LOAD_HACKER_APPLICATIONS_REQUEST:
+        case actions.LOAD_MENTOR_APPLICATIONS_REQUEST:
+        case actions.LOAD_SPEAKER_APPLICATIONS_REQUEST:
             return {
                 ...state,
                 fetching: true,
@@ -19,7 +21,9 @@ export function readerState(state = initialState, action) {
                 error: null
             };
 
-        case actions.LOAD_APPLICATIONS_ERROR:
+        case actions.LOAD_HACKER_APPLICATIONS_ERROR:
+        case actions.LOAD_MENTOR_APPLICATIONS_ERROR:
+        case actions.LOAD_SPEAKER_APPLICATIONS_ERROR:
             return {
                 ...state,
                 fetching: false,
@@ -28,7 +32,7 @@ export function readerState(state = initialState, action) {
                 message: action.message
             };
 
-        case actions.LOAD_APPLICATIONS_SUCCESS:
+        case actions.LOAD_HACKER_APPLICATIONS_SUCCESS:
             return {
                 ...state,
                 fetching: false,
@@ -36,6 +40,30 @@ export function readerState(state = initialState, action) {
                 data: {
                     ...state.data,
                     applications: action.data
+                },
+                message: action.message
+            };
+
+        case actions.LOAD_MENTOR_APPLICATIONS_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    mentorApplications: action.data
+                },
+                message: action.message
+            };
+
+        case actions.LOAD_SPEAKER_APPLICATIONS_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    speakerApplications: action.data
                 },
                 message: action.message
             };

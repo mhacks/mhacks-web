@@ -12,9 +12,7 @@ const SponsorsFlexBox = styled.div`
     alignItems: center;
 `;
 
-const LogoWrapper = styled.div`
-    margin: 25px;
-`;
+const LogoWrapper = styled.div`margin: 25px;`;
 
 const SmallLogoImg = styled.img`
     height: 40px;
@@ -34,26 +32,29 @@ const LargeLogoImg = styled.img`
     maxWidth: 100%;
 `;
 
-const SmallLogo = props =>
+const SmallLogo = props => (
     <LogoWrapper>
         <a href={props.href}>
             <SmallLogoImg src={props.src} />
         </a>
-    </LogoWrapper>;
+    </LogoWrapper>
+);
 
-const MediumLogo = props =>
+const MediumLogo = props => (
     <LogoWrapper>
         <a href={props.href}>
             <MediumLogoImg src={props.src} />
         </a>
-    </LogoWrapper>;
+    </LogoWrapper>
+);
 
-const LargeLogo = props =>
+const LargeLogo = props => (
     <LogoWrapper>
         <a href={props.href}>
             <LargeLogoImg src={props.src} />
         </a>
-    </LogoWrapper>;
+    </LogoWrapper>
+);
 
 class SponsorLogos extends React.Component {
     constructor() {

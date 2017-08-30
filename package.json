@@ -13,10 +13,12 @@
         "build": "webpack --progress --colors",
         "test": "yarn run lint && yarn run prettier && yarn run build",
         "lint": "eslint server/ app/ config/ *.js",
-        "prettier": "ci/prettier.sh"
+        "prettier": "ci/prettier.sh",
+        "gendocs": "cd static/docs && node ../../scripts/unchained-generate-docs.js > openapi.json"
     },
     "dependencies": {
         "@newrelic/native-metrics": "^2.1.1",
+        "archiver": "^2.0.0",
         "autoprefixer": "^6.7.7",
         "aws-sdk": "^2.67.0",
         "babel-core": "^6.24.0",
@@ -34,6 +36,7 @@
         "css-loader": "^0.27.3",
         "csurf": "^1.9.0",
         "es6-promise": "^4.1.0",
+        "escape-string-regexp": "^1.0.5",
         "eslint": "^3.18.0",
         "eslint-loader": "^1.7.0",
         "eslint-plugin-react": "^6.10.3",
@@ -50,6 +53,7 @@
         "immutable": "^3.8.1",
         "isomorphic-fetch": "^2.2.1",
         "jsonwebtoken": "^7.3.0",
+        "lodash": "^4.17.4",
         "mailchimp-api-v3": "^1.7.0",
         "mandrill-api": "^1.0.45",
         "mime": "^1.3.6",
@@ -94,6 +98,7 @@
         "socket.io-client": "^2.0.3",
         "style-loader": "^0.16.0",
         "styled-components": "^1.4.4",
+        "swagger-ui-express": "^2.0.6",
         "url-loader": "^0.5.8",
         "validator": "^7.0.0",
         "webpack": "^2.3.2",

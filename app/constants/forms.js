@@ -1,3 +1,9 @@
+function range(start, end) {
+    return Array(end - start)
+        .fill()
+        .map((_, idx) => start + idx);
+}
+
 export const FieldTypes = {
     TEXT: 0,
     LINK: 1,
@@ -78,6 +84,60 @@ function mapArrayToOptions(array) {
 
 const required = true;
 const optional = false;
+
+export const SponsorPortalFiltersSchema = [
+    {
+        type: FieldTypes.TEXT,
+        label: 'Search',
+        key: 'search',
+        placeholder: 'By name, email, or school'
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Graduation Year',
+        key: 'graduation',
+        select: range(2017, 2026)
+            .map(year => {
+                return {
+                    value: String(year),
+                    label: String(year)
+                };
+            })
+            .concat({
+                value: 'later',
+                label: '2026 or later'
+            })
+    },
+    {
+        type: FieldTypes.SELECT,
+        label: 'Job Interest',
+        key: 'employment',
+        select: [
+            {
+                value: 'internship',
+                label: 'Internship'
+            },
+            {
+                value: 'fulltime',
+                label: 'Full Time'
+            },
+            {
+                value: 'coop',
+                label: 'Co-op'
+            },
+            {
+                value: 'none',
+                label: 'None'
+            }
+        ]
+    },
+    {
+        type: FieldTypes.MULTI,
+        label: 'Skills',
+        key: 'skills',
+        select: mapArrayToOptions(Skills)
+    }
+];
 
 export const ApplicationReaderFiltersSchema = [
     {
@@ -182,10 +242,6 @@ export const ApplicationReaderSchema = [
         title: 'Save'
     }
 ];
-
-function range(start, end) {
-    return Array(end - start).fill().map((_, idx) => start + idx);
-}
 
 export const ConfirmAttendanceSchema = [
     {

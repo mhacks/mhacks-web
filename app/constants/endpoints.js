@@ -6,14 +6,20 @@ export default {
     LOGIN: '/v1/auth/login',
     LOGOUT: '/v1/auth/logout',
     PROFILE: '/v1/user/profile',
+    TICKET: '/v1/user/ticket',
+    ALL_HACKER_APPLICATIONS: '/v1/application/all',
     APPLICATION: '/v1/application',
     CONFIRMATION: '/v1/application/confirm',
-    ALL_APPLICATIONS: '/v1/application/all',
     READER: '/v1/reader',
     ANNOUNCEMENTS: '/v1/announcements',
     CONFIGURATION: '/v1/configuration',
     FORM: '/v1/form/',
     SPONSOR: '/v1/sponsor',
+    ALL_MENTOR_APPLICATIONS: '/v1/mentor/all',
     MENTOR_APPLICATION: '/v1/mentor/application',
-    SPEAKER_APPLICATION: '/v1/speaker/application'
+    MENTOR_APPLICATION_FORM: '/v1/form/MentorApplication',
+    ALL_SPEAKER_APPLICATIONS: '/v1/speaker/all',
+    SPEAKER_APPLICATION: '/v1/speaker/application',
+    SPEAKER_APPLICATION_FORM: '/v1/form/SpeakerApplication',
+    ALL_APPLICATION_RESUMES: '/v1/artifact/resumes?application=true'
 };

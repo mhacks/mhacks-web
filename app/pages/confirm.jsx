@@ -90,9 +90,9 @@ class Confirm extends React.Component {
         return (
             <PageContainer>
                 <FormContainer>
-                    {isConfirmed
-                        ? <Alert message="You are confirmed!" positive={true} />
-                        : null}
+                    {isConfirmed ? (
+                        <Alert message="You are confirmed!" positive={true} />
+                    ) : null}
                     <h2>Confirm Attendance at MHacks X!</h2>
                     <MHForm
                         schema={this.state.userState.data.form}
@@ -101,8 +101,7 @@ class Confirm extends React.Component {
                         onSubmit={this.onSubmit}
                     />
                     <p>
-                        By confirming attendance, you also confirm you have
-                        read
+                        By confirming attendance, you also confirm you have read
                         and agree to the{' '}
                         <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
                             MLH Code of Conduct
