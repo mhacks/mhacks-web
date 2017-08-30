@@ -1,5 +1,6 @@
 import { actions } from '../../actions';
 import { ReaderRequests } from '../requests';
+import { loadFormRequest } from '../../util/actions';
 
 export default class ReaderThunks {
     static loadHackerApplications() {
@@ -134,7 +135,7 @@ export default class ReaderThunks {
         };
     }
 
-    static loadForm(subform) {
+    static loadForm(base, subform) {
         return dispatch => {
             dispatch({
                 type: actions.LOAD_READER_FORM_REQUEST
@@ -142,7 +143,7 @@ export default class ReaderThunks {
 
             const token = localStorage.getItem('jwt');
 
-            return ReaderRequests.loadForm(token, subform).then(response => {
+            return loadFormRequest(token, base + subform).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch({

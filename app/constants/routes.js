@@ -10,6 +10,7 @@ export default {
     HACKER_READER: '/reader/hacker',
     MENTOR_READER: '/reader/mentor',
     SPEAKER_READER: '/reader/speaker',
+    SPONSOR_READER: '/reader/sponsor',
     CONFIRM: '/confirm',
     ADMIN_PORTAL: '/portal/admin',
     READER_PORTAL: '/portal/reader',

@@ -317,7 +317,7 @@ class MHForm extends React.Component {
                     }
                     break;
                 case this.FieldTypes.ARRAY:
-                    formatted[key] = formData[key].map(obj => obj.label);
+                    formatted[key] = formData[key].map(obj => obj.value);
             }
         }
 

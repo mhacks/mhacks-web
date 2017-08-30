@@ -19,5 +19,6 @@ export default {
     MENTOR_APPLICATION_FORM: '/v1/form/MentorApplication',
     ALL_SPEAKER_APPLICATIONS: '/v1/speaker/all',
     SPEAKER_APPLICATION: '/v1/speaker/application',
-    SPEAKER_APPLICATION_FORM: '/v1/form/SpeakerApplication'
+    SPEAKER_APPLICATION_FORM: '/v1/form/SpeakerApplication',
+    ALL_APPLICATION_RESUMES: '/v1/artifact/resumes?application=true'
 };

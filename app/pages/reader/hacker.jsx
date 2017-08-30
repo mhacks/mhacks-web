@@ -35,8 +35,12 @@ class ReaderPage extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(ReaderThunks.loadHackerApplications());
-        this.props.dispatch(ReaderThunks.loadForm('reader_filter'));
-        this.props.dispatch(ReaderThunks.loadForm('reader_schema'));
+        this.props.dispatch(
+            ReaderThunks.loadForm('application/', 'reader_filter')
+        );
+        this.props.dispatch(
+            ReaderThunks.loadForm('application/', 'reader_schema')
+        );
     }
 
     didSelect(user) {
@@ -159,7 +163,7 @@ class ReaderPage extends React.Component {
                         accessor: 'github',
                         width: 30,
                         Cell: row => {
-                            return row.value
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>
@@ -171,7 +175,7 @@ class ReaderPage extends React.Component {
                         accessor: 'linkedin',
                         width: 30,
                         Cell: row => {
-                            return row.value
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>
@@ -189,7 +193,7 @@ class ReaderPage extends React.Component {
                         accessor: 'devpost',
                         width: 30,
                         Cell: row => {
-                            return row.value
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>
@@ -201,7 +205,7 @@ class ReaderPage extends React.Component {
                         accessor: 'portfolio',
                         width: 30,
                         Cell: row => {
-                            return row.value
+                            return row.value && row.value.length > 0
                                 ? <A target="_blank" href={row.value}>
                                       {GoodMark}
                                   </A>

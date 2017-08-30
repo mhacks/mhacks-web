@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import { endpoints } from '../constants';
 
 export function postFormData(route, token, body, files) {
     const formData = new FormData();
@@ -40,4 +41,8 @@ export function getResponseFromRoute(route, token = '') {
         method: 'get',
         headers: new Headers(headers)
     });
+}
+
+export function loadFormRequest(token, formRoute) {
+    return getResponseFromRoute(endpoints.FORM + formRoute, token);
 }

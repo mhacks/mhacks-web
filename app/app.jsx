@@ -199,6 +199,26 @@ class AppProvider extends React.Component {
                             />
                             <Route
                                 exact
+                                path={routes.SPONSOR_READER}
+                                render={() => {
+                                    const {
+                                        isLoggedIn,
+                                        isReader,
+                                        isSponsor,
+                                        isAdmin
+                                    } = this.getMetadata();
+                                    if (
+                                        isLoggedIn &&
+                                        (isReader || isSponsor || isAdmin)
+                                    ) {
+                                        return <Reader.Sponsor />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                exact
                                 path={routes.CONFIRM}
                                 render={() => {
                                     const {
