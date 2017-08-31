@@ -69,7 +69,6 @@ class Dashboard extends React.Component {
         this.props.dispatch(ProfileThunks.sendVerificationEmail(email));
     }
 
-
     renderEmailVerificationPage() {
         const userData = this.props.userState.data;
         return (
@@ -96,9 +95,7 @@ class Dashboard extends React.Component {
 
     render() {
         const userData = this.props.userState.data;
-        const { isEmailVerified } = getUserMetadata(
-            userData
-        );
+        const { isEmailVerified } = getUserMetadata(userData);
 
         if (!isEmailVerified) {
             return this.renderEmailVerificationPage();

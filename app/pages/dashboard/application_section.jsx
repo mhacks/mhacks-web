@@ -31,9 +31,12 @@ const Link = styled.a`
 class ApplicationSection extends React.Component {
     renderApplicationReviewSection() {
         const userData = this.props.userState.data;
-        const { isAccepted, isConfirmed, isWaitlisted } = getUserMetadata(
-            userData
-        );
+        const {
+            isApplicationSubmitted,
+            isWaitlisted,
+            isAccepted,
+            isConfirmed
+        } = getUserMetadata(userData);
 
         if (isConfirmed) {
             return this.renderConfirmed();
@@ -41,6 +44,8 @@ class ApplicationSection extends React.Component {
             return this.renderAcceptance();
         } else if (isWaitlisted) {
             return this.renderWaitlisted();
+        } else if (isApplicationSubmitted) {
+            return this.renderSubmitted();
         } else {
             return this.renderNotSubmitted();
         }
@@ -54,9 +59,7 @@ class ApplicationSection extends React.Component {
                     together. Head over to the confirmation form to secure your
                     spot at MHacks X!
                 </SectionBody>
-                <StyledNavLink to={routes.CONFIRM}>
-                    Confirm
-                </StyledNavLink>
+                <StyledNavLink to={routes.CONFIRM}>Confirm</StyledNavLink>
             </div>
         );
     }
@@ -65,13 +68,16 @@ class ApplicationSection extends React.Component {
         return (
             <SectionBody>
                 We’re excited to see you at MHacks X! We’ve got some great
-                things in store :) In the meantime, we encourage you to
-                connect with other hackers in the HH MHacks Facebook Group.
-                As always, stay tuned to our{' '}
-                <Link href="http://facebook.com/MHacksHackathon">Facebook</Link>,{' '}
-                <Link href="http://twitter.com/mhacks">Twitter</Link>, and{' '}
-                <Link href="http://instagram.com/mhacks_">Instagram</Link> for
-                updates on all things MHacks.
+                things in store :) In the meantime, we encourage you to connect
+                with other hackers in the HH MHacks Facebook Group. As always,
+                stay tuned to our{' '}
+                <Link href="http://facebook.com/MHacksHackathon">
+                    Facebook
+                </Link>, <Link href="http://twitter.com/mhacks">Twitter</Link>,
+                and <Link href="http://instagram.com/mhacks_">
+                    Instagram
+                </Link>{' '}
+                for updates on all things MHacks.
             </SectionBody>
         );
     }
@@ -79,14 +85,24 @@ class ApplicationSection extends React.Component {
     renderWaitlisted() {
         return (
             <SectionBody>
-                Unfortunately, we are unable to extend an invitation for
-                MHacks X to you at this time. We hope you will still be a
-                part of our community via{' '}
-                <Link href="http://facebook.com/MHacksHackathon">Facebook</Link>,{' '}
-                <Link href="http://twitter.com/mhacks">Twitter</Link>,{' '}
+                Unfortunately, we are unable to extend an invitation for MHacks
+                X to you at this time. We hope you will still be a part of our
+                community via{' '}
+                <Link href="http://facebook.com/MHacksHackathon">
+                    Facebook
+                </Link>, <Link href="http://twitter.com/mhacks">Twitter</Link>,{' '}
                 <Link href="http://instagram.com/mhacks_">Instagram</Link>, and
                 and encourage you to apply for the next MHacks event in the
                 winter.
+            </SectionBody>
+        );
+    }
+
+    renderSubmitted() {
+        return (
+            <SectionBody>
+                Your application is submitted but you can make changes on the
+                hacker application page! Thanks for applying to MHacks X.
             </SectionBody>
         );
     }
@@ -95,11 +111,9 @@ class ApplicationSection extends React.Component {
         return (
             <div>
                 <SectionBody>
-                  Head on over to the application section to apply!
+                    Head on over to the application section to apply!
                 </SectionBody>
-                <StyledNavLink to={routes.APPLY}>
-                    Apply
-                </StyledNavLink>
+                <StyledNavLink to={routes.APPLY}>Apply</StyledNavLink>
             </div>
         );
     }

@@ -5,7 +5,6 @@ import { getUserMetadata } from '../../util/user.js';
 import ExpandingItem from './ExpandingItem';
 import { endpoints } from '../../constants';
 
-
 const FaqItem = props => (
     <ExpandingItem
         {...props}
@@ -82,50 +81,54 @@ class TravelTicketSection extends React.Component {
     renderDeclinedTravelReimbursement() {
         return (
             <p>
-                Unfortunately we are unable to offer you a travel reimbursement to MHacks X. We hope you can still make it!
+                Unfortunately we are unable to offer you a travel reimbursement
+                to MHacks X. We hope you can still make it!
             </p>
         );
     }
 
     render() {
         const userData = this.props.userState.data;
-        const { isAccepted, isConfirmed } = getUserMetadata(
-            userData
-        );
+        const { isAccepted, isConfirmed } = getUserMetadata(userData);
 
         return (
             <div>
                 {isAccepted ? (
                     <div>
-                    {isConfirmed ? (
-                        <div>
-                            <Seperator />
-                            <FaqItem
-                                header="Ticket"
-                                body={
-                                    <span>{this.renderTicketInfo()}</span>
-                                }
-                            />
-                        </div>
-                    ) : null}
-                    <Seperator />
-                    <FaqItem
-                        header="Travel Information"
-                        body={<span>{this.renderTravelInfo()}</span>}
-                    />
-                    <Seperator />
-                    <FaqItem
-                        header="Travel Reimbursement"
-                        body=
-                            {userData.user.reimbursement > 0 ? (
-                                    <span>{this.renderAcceptedTravelReimbursement()}</span>
+                        {isConfirmed ? (
+                            <div>
+                                <Seperator />
+                                <FaqItem
+                                    header="Ticket"
+                                    body={
+                                        <span>{this.renderTicketInfo()}</span>
+                                    }
+                                />
+                            </div>
+                        ) : null}
+                        <Seperator />
+                        <FaqItem
+                            header="Travel Information"
+                            body={<span>{this.renderTravelInfo()}</span>}
+                        />
+                        <Seperator />
+                        <FaqItem
+                            header="Travel Reimbursement"
+                            body={
+                                userData.user.reimbursement > 0 ? (
+                                    <span>
+                                        {this.renderAcceptedTravelReimbursement()}
+                                    </span>
                                 ) : (
-                                    <span>{this.renderDeclinedTravelReimbursement()}</span>
-                                )}
-                    />
-                    <Seperator />
+                                    <span>
+                                        {this.renderDeclinedTravelReimbursement()}
+                                    </span>
+                                )
+                            }
+                        />
+                        <Seperator />
                     </div>
-              ) : null}
+                ) : null}
             </div>
         );
     }
