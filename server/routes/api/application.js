@@ -126,7 +126,8 @@ router.get('/all', authMiddleware('sponsor reader admin', 'api'), function(
                                     }
 
                                     const user_doc = {
-                                        full_name: associated_user.full_name
+                                        full_name: associated_user.full_name,
+                                        email: associated_user.email
                                     };
 
                                     if (application.resume) {

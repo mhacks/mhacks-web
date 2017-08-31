@@ -49,7 +49,7 @@ class SponsorReader extends React.Component {
                 columns: [
                     {
                         Header: 'Email',
-                        accessor: 'user'
+                        accessor: 'email'
                     },
                     {
                         Header: 'University',
