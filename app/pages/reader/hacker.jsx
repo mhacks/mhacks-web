@@ -382,6 +382,7 @@ class ReaderPage extends React.Component {
                     data={this.filterApplications(
                         this.props.readerState.data.applications
                     )}
+                    loading={this.props.readerState.fetching}
                     columns={this.generateColumns(this.state.selected)}
                     SubComponent={row => {
                         const data = row.original;
