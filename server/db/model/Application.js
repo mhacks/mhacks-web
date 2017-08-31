@@ -309,15 +309,21 @@ var schema = new mongoose.Schema({
             },
             {
                 key: 'status',
-                label: 'Status'
+                label: 'Status',
+                required: true
             },
             {
                 key: 'score',
-                label: 'Score'
+                label: 'Score',
+                placeholder: '0 - 10',
+                required: true
             },
             {
                 key: 'reimbursement',
-                label: 'Reimbursement'
+                label: 'Reimbursement',
+                placeholder: 'One dollar, Bob.',
+                default: 0,
+                required: true
             },
             {
                 key: 'save_button',
