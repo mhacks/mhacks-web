@@ -90,6 +90,7 @@ class TravelTicketSection extends React.Component {
     render() {
         const userData = this.props.userState.data;
         const { isAccepted, isConfirmed } = getUserMetadata(userData);
+        const { reimbursement, needs_reimbursement } = userData.user;
 
         return (
             <div>
@@ -112,21 +113,26 @@ class TravelTicketSection extends React.Component {
                             body={<span>{this.renderTravelInfo()}</span>}
                         />
                         <Seperator />
-                        <FaqItem
-                            header="Travel Reimbursement"
-                            body={
-                                userData.user.reimbursement > 0 ? (
-                                    <span>
-                                        {this.renderAcceptedTravelReimbursement()}
-                                    </span>
-                                ) : (
-                                    <span>
-                                        {this.renderDeclinedTravelReimbursement()}
-                                    </span>
-                                )
-                            }
-                        />
-                        <Seperator />
+                        {reimbursement || needs_reimbursement ? (
+                            <div>
+                                <FaqItem
+                                    header="Travel Reimbursement"
+                                    body={
+                                        reimbursement > 0 ? (
+                                            <span>
+                                                {this.renderAcceptedTravelReimbursement()}
+                                            </span>
+                                        ) : needs_reimbursement ? (
+                                            <span>
+                                                {this.renderDeclinedTravelReimbursement()}
+                                            </span>
+                                        ) : null
+                                    }
+                                />
+                                <Seperator />
+                            </div>
+                            ) : null
+                        }
                     </div>
                 ) : null}
             </div>

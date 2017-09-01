@@ -256,6 +256,7 @@ class EditProfile extends React.Component {
 
         for (const key of Object.keys(ProfileFields)) {
             if (key === 'name') {
+                profile[key] = this.state[key];
                 profile['full_name'] = this.state[key];
             } else if (
                 ProfileFields[key] === FieldTypes.TEXT ||
