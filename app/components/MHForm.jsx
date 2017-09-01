@@ -252,7 +252,9 @@ class MHForm extends React.Component {
                     }
                     break;
                 default:
-                    console.error('Field Type not defined, behavior is undefined!');
+                    console.error(
+                        'Field Type not defined, behavior is undefined!'
+                    );
             }
         }
 
@@ -300,13 +302,13 @@ class MHForm extends React.Component {
                     formatted[key] = formData[key];
                     break;
                 case this.FieldTypes.DATE: {
-                  const formDate = new Date(formData[key]);
-                  if (!isNaN(formDate.getTime())) {
-                    formatted[key] = new Date(
-                        formDate.toISOString().split('T')[0]
-                    ).getTime();
-                  }
-                  break;
+                    const formDate = new Date(formData[key]);
+                    if (!isNaN(formDate.getTime())) {
+                        formatted[key] = new Date(
+                            formDate.toISOString().split('T')[0]
+                        ).getTime();
+                    }
+                    break;
                 }
                 case this.FieldTypes.SELECT:
                     if (

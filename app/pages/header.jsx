@@ -55,7 +55,7 @@ const NavContainer = styled.div`
     alignItems: center;
     justifyContent: flex-end;
     ${devices.tablet`
-        display: flex;
+        ${props => (props.disableCompact ? 'display: flex' : '')};
     `};
 `;
 
@@ -121,6 +121,8 @@ const Burger = styled.div`
 
     .bm-burger-bars {
         background: ${props => props.primaryColor};
+        height: 15% !important;
+        borderRadius: 10px;
     }
 
     .bm-cross-button {
@@ -158,7 +160,7 @@ const Burger = styled.div`
     }
 
     ${devices.tablet`
-        display: none;
+        ${props => (props.disableCompact ? 'display: none' : '')};
     `};
 `;
 
@@ -177,7 +179,11 @@ class HeaderLinks extends React.Component {
         // the parent component for the navigation links.
         const WrappingComponent = isCompact ? Menu : NavContainer;
         return (
-            <WrappingComponent right>
+            <WrappingComponent
+                right
+                disableCompact={!userMetadata.isLoggedIn}
+                isOpen={false}
+            >
                 {isLoggedIn && isAdmin ? (
                     <StyledALink href={routes.ADMIN_PORTAL} color={color}>
                         Admin
@@ -267,6 +273,9 @@ class Header extends React.Component {
                                     <Burger
                                         primaryColor={
                                             this.props.theme.highlight
+                                        }
+                                        disableCompact={
+                                            !userMetadata.isLoggedIn
                                         }
                                     >
                                         <HeaderLinks
