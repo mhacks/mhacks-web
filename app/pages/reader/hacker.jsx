@@ -279,10 +279,10 @@ class ReaderPage extends React.Component {
                 return false;
             }
 
-            const submitted_since = (new Date(since)).getTime();
+            const submitted_since = new Date(since).getTime();
             if (
                 !isNaN(submitted_since) &&
-                submitted_since > (new Date(application.created_at)).getTime()
+                submitted_since > new Date(application.created_at).getTime()
             ) {
                 return false;
             }
