@@ -55,7 +55,7 @@ const NavContainer = styled.div`
     alignItems: center;
     justifyContent: flex-end;
     ${devices.tablet`
-        display: flex;
+        ${props => (props.disableCompact ? 'display: flex' : '')};
     `};
 `;
 
@@ -121,6 +121,8 @@ const Burger = styled.div`
 
     .bm-burger-bars {
         background: ${props => props.primaryColor};
+        height: 15% !important;
+        borderRadius: 10px;
     }
 
     .bm-cross-button {
@@ -158,7 +160,7 @@ const Burger = styled.div`
     }
 
     ${devices.tablet`
-        display: none;
+        ${props => (props.disableCompact ? 'display: none' : '')};
     `};
 `;
 
@@ -177,59 +179,64 @@ class HeaderLinks extends React.Component {
         // the parent component for the navigation links.
         const WrappingComponent = isCompact ? Menu : NavContainer;
         return (
-            <WrappingComponent right>
-                {isLoggedIn && isAdmin ? (
-                    <StyledALink href={routes.ADMIN_PORTAL} color={color}>
-                        Admin
-                    </StyledALink>
-                ) : null}
-                {isLoggedIn && (isSponsor || isAdmin) ? (
-                    <StyledALink href={routes.SPONSOR_READER} color={color}>
-                        Sponsor
-                    </StyledALink>
-                ) : null}
-                {isLoggedIn && (isReader || isAdmin) ? (
-                    <StyledALink href={routes.HACKER_READER} color={color}>
-                        Reader
-                    </StyledALink>
-                ) : null}
-                {!isLoggedIn || !isEmailVerified ? null : (
-                    <StyledNavLink to={routes.APPLY} color={color}>
-                        Hacker App
-                    </StyledNavLink>
-                )}
-                {isLoggedIn ? (
-                    <StyledNavLink to={routes.MENTOR_APPLICATION} color={color}>
-                        Mentor App
-                    </StyledNavLink>
-                ) : null}
-                {isLoggedIn ? (
-                    <StyledNavLink
-                        to={routes.SPEAKER_APPLICATION}
-                        color={color}
-                    >
-                        Speaker App
-                    </StyledNavLink>
-                ) : null}
-                {isLoggedIn ? (
-                    <StyledNavLink to={routes.PROFILE} color={color}>
-                        Edit Profile
-                    </StyledNavLink>
-                ) : null}
-                {isLoggedIn ? (
-                    <StyledNavLink to={routes.DASHBOARD} color={color}>
-                        Dashboard
-                    </StyledNavLink>
-                ) : null}
-                {isLoggedIn ? (
-                    <StyledNavLink to={routes.LOGOUT} color={color}>
-                        Log Out
-                    </StyledNavLink>
-                ) : (
-                    <StyledNavLink to={routes.LOGIN} color={color}>
-                        Log In
-                    </StyledNavLink>
-                )}
+            <WrappingComponent
+                right
+                disableCompact={!userMetadata.isLoggedIn}
+                isOpen={false}
+            >
+                {isLoggedIn && isAdmin
+                    ? <StyledALink href={routes.ADMIN_PORTAL} color={color}>
+                          Admin
+                      </StyledALink>
+                    : null}
+                {isLoggedIn && (isSponsor || isAdmin)
+                    ? <StyledALink href={routes.SPONSOR_READER} color={color}>
+                          Sponsor
+                      </StyledALink>
+                    : null}
+                {isLoggedIn && (isReader || isAdmin)
+                    ? <StyledALink href={routes.HACKER_READER} color={color}>
+                          Reader
+                      </StyledALink>
+                    : null}
+                {!isLoggedIn || !isEmailVerified
+                    ? null
+                    : <StyledNavLink to={routes.APPLY} color={color}>
+                          Hacker App
+                      </StyledNavLink>}
+                {isLoggedIn
+                    ? <StyledNavLink
+                          to={routes.MENTOR_APPLICATION}
+                          color={color}
+                      >
+                          Mentor App
+                      </StyledNavLink>
+                    : null}
+                {isLoggedIn
+                    ? <StyledNavLink
+                          to={routes.SPEAKER_APPLICATION}
+                          color={color}
+                      >
+                          Speaker App
+                      </StyledNavLink>
+                    : null}
+                {isLoggedIn
+                    ? <StyledNavLink to={routes.PROFILE} color={color}>
+                          Edit Profile
+                      </StyledNavLink>
+                    : null}
+                {isLoggedIn
+                    ? <StyledNavLink to={routes.DASHBOARD} color={color}>
+                          Dashboard
+                      </StyledNavLink>
+                    : null}
+                {isLoggedIn
+                    ? <StyledNavLink to={routes.LOGOUT} color={color}>
+                          Log Out
+                      </StyledNavLink>
+                    : <StyledNavLink to={routes.LOGIN} color={color}>
+                          Log In
+                      </StyledNavLink>}
             </WrappingComponent>
         );
     }
@@ -242,44 +249,47 @@ class Header extends React.Component {
 
         return (
             <div>
-                {window.location.pathname == routes.SUBSCRIBE ? null : (
-                    <div>
-                        <Helmet>
-                            <title>MHacks X</title>
+                {window.location.pathname == routes.SUBSCRIBE
+                    ? null
+                    : <div>
+                          <Helmet>
+                              <title>MHacks X</title>
 
-                            <link
-                                rel="icon"
-                                type="image/x-icon"
-                                href={Favicon}
-                            />
-                        </Helmet>
-                        <Wrapper>
-                            <Container>
-                                <FlexWrapper>
-                                    <HeaderNavLink to={routes.HOME}>
-                                        <Logo src={HeaderLogoImage} />
-                                    </HeaderNavLink>
-                                    <HeaderLinks
-                                        userMetadata={userMetadata}
-                                        color={this.props.theme.highlight}
-                                        isCompact={false}
-                                    />
-                                    <Burger
-                                        primaryColor={
-                                            this.props.theme.highlight
-                                        }
-                                    >
-                                        <HeaderLinks
-                                            userMetadata={userMetadata}
-                                            color={this.props.theme.highlight}
-                                            isCompact={true}
-                                        />
-                                    </Burger>
-                                </FlexWrapper>
-                            </Container>
-                        </Wrapper>
-                    </div>
-                )}
+                              <link
+                                  rel="icon"
+                                  type="image/x-icon"
+                                  href={Favicon}
+                              />
+                          </Helmet>
+                          <Wrapper>
+                              <Container>
+                                  <FlexWrapper>
+                                      <HeaderNavLink to={routes.HOME}>
+                                          <Logo src={HeaderLogoImage} />
+                                      </HeaderNavLink>
+                                      <HeaderLinks
+                                          userMetadata={userMetadata}
+                                          color={this.props.theme.highlight}
+                                          isCompact={false}
+                                      />
+                                      <Burger
+                                          primaryColor={
+                                              this.props.theme.highlight
+                                          }
+                                          disableCompact={
+                                              !userMetadata.isLoggedIn
+                                          }
+                                      >
+                                          <HeaderLinks
+                                              userMetadata={userMetadata}
+                                              color={this.props.theme.highlight}
+                                              isCompact={true}
+                                          />
+                                      </Burger>
+                                  </FlexWrapper>
+                              </Container>
+                          </Wrapper>
+                      </div>}
             </div>
         );
     }

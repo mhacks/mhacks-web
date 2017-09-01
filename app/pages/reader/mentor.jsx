@@ -98,13 +98,11 @@ class MentorReader extends React.Component {
                         accessor: 'resume',
                         width: 30,
                         Cell: row => {
-                            return row.value ? (
-                                <A target="_blank" href={row.value}>
-                                    {GoodMark}
-                                </A>
-                            ) : (
-                                BadMark
-                            );
+                            return row.value
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
+                                : BadMark;
                         }
                     },
                     {
@@ -112,13 +110,11 @@ class MentorReader extends React.Component {
                         accessor: 'github',
                         width: 30,
                         Cell: row => {
-                            return row.value ? (
-                                <A target="_blank" href={row.value}>
-                                    {GoodMark}
-                                </A>
-                            ) : (
-                                BadMark
-                            );
+                            return row.value
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
+                                : BadMark;
                         }
                     },
                     {
@@ -126,13 +122,11 @@ class MentorReader extends React.Component {
                         accessor: 'linkedin',
                         width: 30,
                         Cell: row => {
-                            return row.value ? (
-                                <A target="_blank" href={row.value}>
-                                    {GoodMark}
-                                </A>
-                            ) : (
-                                BadMark
-                            );
+                            return row.value
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
+                                : BadMark;
                         }
                     },
                     {
@@ -146,13 +140,11 @@ class MentorReader extends React.Component {
                         accessor: 'devpost',
                         width: 30,
                         Cell: row => {
-                            return row.value ? (
-                                <A target="_blank" href={row.value}>
-                                    {GoodMark}
-                                </A>
-                            ) : (
-                                BadMark
-                            );
+                            return row.value
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
+                                : BadMark;
                         }
                     },
                     {
@@ -160,13 +152,11 @@ class MentorReader extends React.Component {
                         accessor: 'portfolio',
                         width: 30,
                         Cell: row => {
-                            return row.value ? (
-                                <A target="_blank" href={row.value}>
-                                    {GoodMark}
-                                </A>
-                            ) : (
-                                BadMark
-                            );
+                            return row.value
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
+                                : BadMark;
                         }
                     }
                 ]
@@ -200,9 +190,13 @@ class MentorReader extends React.Component {
                             <SubsectionContainer>
                                 <div>
                                     <h4>Skills</h4>
-                                    <p>{data.skills.join(', ')}</p>
+                                    <p>
+                                        {data.skills.join(', ')}
+                                    </p>
                                     <h4>Qualifications</h4>
-                                    <p>{data.qualifications}</p>
+                                    <p>
+                                        {data.qualifications}
+                                    </p>
                                 </div>
                             </SubsectionContainer>
                         );

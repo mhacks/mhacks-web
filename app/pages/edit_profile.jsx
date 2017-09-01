@@ -324,24 +324,26 @@ class EditProfile extends React.Component {
                         Edit Profile
                     </SectionHeader>
                     <form onSubmit={this.onSubmit}>
-                        {this.props.userState.error ? (
-                            <AlertContainer>
-                                <Alert message={this.props.userState.message} />
-                            </AlertContainer>
-                        ) : null}
-                        {isApplicationSubmitted && !isApplicationReviewed ? (
-                            <AlertContainer>
-                                <Alert
-                                    message={
-                                        'Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to MHacks X'
-                                    }
-                                    style={{
-                                        backgroundColor: '#01FF70',
-                                        color: '#3D9970'
-                                    }}
-                                />
-                            </AlertContainer>
-                        ) : null}
+                        {this.props.userState.error
+                            ? <AlertContainer>
+                                  <Alert
+                                      message={this.props.userState.message}
+                                  />
+                              </AlertContainer>
+                            : null}
+                        {isApplicationSubmitted && !isApplicationReviewed
+                            ? <AlertContainer>
+                                  <Alert
+                                      message={
+                                          'Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to MHacks X'
+                                      }
+                                      style={{
+                                          backgroundColor: '#01FF70',
+                                          color: '#3D9970'
+                                      }}
+                                  />
+                              </AlertContainer>
+                            : null}
                         <Subhead>
                             Update your profile with some info about yourself.
                             This will be automatically populated into your
@@ -371,7 +373,7 @@ class EditProfile extends React.Component {
                                         shouldItemRender={
                                             this.handleItemShouldRender
                                         }
-                                        renderItem={(item, isHighlighted) => (
+                                        renderItem={(item, isHighlighted) =>
                                             <div
                                                 style={{
                                                     background: isHighlighted
@@ -380,8 +382,7 @@ class EditProfile extends React.Component {
                                                 }}
                                             >
                                                 {item}
-                                            </div>
-                                        )}
+                                            </div>}
                                         inputProps={{
                                             placeholder:
                                                 'e.g. University of Michigan',
@@ -422,7 +423,7 @@ class EditProfile extends React.Component {
                                         shouldItemRender={
                                             this.handleItemShouldRender
                                         }
-                                        renderItem={(item, isHighlighted) => (
+                                        renderItem={(item, isHighlighted) =>
                                             <div
                                                 style={{
                                                     background: isHighlighted
@@ -431,8 +432,7 @@ class EditProfile extends React.Component {
                                                 }}
                                             >
                                                 {item}
-                                            </div>
-                                        )}
+                                            </div>}
                                         inputProps={{
                                             placeholder:
                                                 'e.g. Underwater Basket Weaving',
@@ -468,19 +468,17 @@ class EditProfile extends React.Component {
                                 <FileUploadContainer>
                                     <FileUpload
                                         defaultColor={
-                                            userData.user.isResumeUploaded ? (
-                                                this.props.theme.success
-                                            ) : (
-                                                this.props.theme.primary
-                                            )
+                                            userData.user.isResumeUploaded
+                                                ? this.props.theme.success
+                                                : this.props.theme.primary
                                         }
                                         hoverColor={this.props.theme.secondary}
                                         activeColor={this.props.theme.success}
                                         onFileSelect={this.handleFileUpload}
                                         defaultText={
-                                            userData.user.isResumeUploaded ? (
-                                                'Resume Uploaded'
-                                            ) : null
+                                            userData.user.isResumeUploaded
+                                                ? 'Resume Uploaded'
+                                                : null
                                         }
                                     />
                                 </FileUploadContainer>

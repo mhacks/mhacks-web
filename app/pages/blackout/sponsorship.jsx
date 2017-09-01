@@ -58,7 +58,7 @@ const StyledContainer = styled(Container)`
     `};
 `;
 
-export default () => (
+export default () =>
     <StyledContainer>
         <Header>Sponsorship</Header>
         <FlexBox>
@@ -78,5 +78,4 @@ export default () => (
             </div>
             <Orb src={OrbImage} />
         </FlexBox>
-    </StyledContainer>
-);
+    </StyledContainer>;

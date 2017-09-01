@@ -151,13 +151,11 @@ class ReaderPage extends React.Component {
                         accessor: 'resume',
                         width: 30,
                         Cell: row => {
-                            return row.value ? (
-                                <A target="_blank" href={row.value}>
-                                    {GoodMark}
-                                </A>
-                            ) : (
-                                BadMark
-                            );
+                            return row.value
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
+                                : BadMark;
                         }
                     },
                     {
@@ -165,13 +163,11 @@ class ReaderPage extends React.Component {
                         accessor: 'github',
                         width: 30,
                         Cell: row => {
-                            return row.value && row.value.length > 0 ? (
-                                <A target="_blank" href={row.value}>
-                                    {GoodMark}
-                                </A>
-                            ) : (
-                                BadMark
-                            );
+                            return row.value && row.value.length > 0
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
+                                : BadMark;
                         }
                     },
                     {
@@ -179,13 +175,11 @@ class ReaderPage extends React.Component {
                         accessor: 'linkedin',
                         width: 30,
                         Cell: row => {
-                            return row.value && row.value.length > 0 ? (
-                                <A target="_blank" href={row.value}>
-                                    {GoodMark}
-                                </A>
-                            ) : (
-                                BadMark
-                            );
+                            return row.value && row.value.length > 0
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
+                                : BadMark;
                         }
                     },
                     {
@@ -199,13 +193,11 @@ class ReaderPage extends React.Component {
                         accessor: 'devpost',
                         width: 30,
                         Cell: row => {
-                            return row.value && row.value.length > 0 ? (
-                                <A target="_blank" href={row.value}>
-                                    {GoodMark}
-                                </A>
-                            ) : (
-                                BadMark
-                            );
+                            return row.value && row.value.length > 0
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
+                                : BadMark;
                         }
                     },
                     {
@@ -213,13 +205,11 @@ class ReaderPage extends React.Component {
                         accessor: 'portfolio',
                         width: 30,
                         Cell: row => {
-                            return row.value && row.value.length > 0 ? (
-                                <A target="_blank" href={row.value}>
-                                    {GoodMark}
-                                </A>
-                            ) : (
-                                BadMark
-                            );
+                            return row.value && row.value.length > 0
+                                ? <A target="_blank" href={row.value}>
+                                      {GoodMark}
+                                  </A>
+                                : BadMark;
                         }
                     }
                 ]
@@ -279,10 +269,10 @@ class ReaderPage extends React.Component {
                 return false;
             }
 
-            const submitted_since = (new Date(since)).getTime();
+            const submitted_since = new Date(since).getTime();
             if (
                 !isNaN(submitted_since) &&
-                submitted_since > (new Date(application.created_at)).getTime()
+                submitted_since > new Date(application.created_at).getTime()
             ) {
                 return false;
             }
@@ -390,29 +380,43 @@ class ReaderPage extends React.Component {
                             <SubsectionContainer>
                                 <div>
                                     <h4>Why MHacks?</h4>
-                                    <p>{data.why_mhacks}</p>
+                                    <p>
+                                        {data.why_mhacks}
+                                    </p>
                                     <h4>Favorite Memory?</h4>
-                                    <p>{data.favorite_memory}</p>
+                                    <p>
+                                        {data.favorite_memory}
+                                    </p>
                                     <h4>Anything Else?</h4>
-                                    <p>{data.anything_else}</p>
+                                    <p>
+                                        {data.anything_else}
+                                    </p>
                                     <h4>Departing From</h4>
-                                    <p>{data.departing_from}</p>
+                                    <p>
+                                        {data.departing_from}
+                                    </p>
                                     <h4>Needs Reimbursement</h4>
                                     <p>
-                                        {data.needs_reimbursement ? (
-                                            'true'
-                                        ) : (
-                                            'false'
-                                        )}
+                                        {data.needs_reimbursement
+                                            ? 'true'
+                                            : 'false'}
                                     </p>
                                     <h4>Requested Reimbursement</h4>
-                                    <p>{data.requested_reimbursement}</p>
+                                    <p>
+                                        {data.requested_reimbursement}
+                                    </p>
                                     <h4>race</h4>
-                                    <p>{data.race}</p>
+                                    <p>
+                                        {data.race}
+                                    </p>
                                     <h4>sex</h4>
-                                    <p>{data.sex}</p>
+                                    <p>
+                                        {data.sex}
+                                    </p>
                                     <h4>tshirt</h4>
-                                    <p>{data.tshirt}</p>
+                                    <p>
+                                        {data.tshirt}
+                                    </p>
                                 </div>
                             </SubsectionContainer>
                         );

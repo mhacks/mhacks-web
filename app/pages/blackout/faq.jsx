@@ -46,7 +46,7 @@ const Link = styled.a`
 
 const FaqItem = connect(state => {
     return { theme: state.theme.data };
-})(props => (
+})(props =>
     <ExpandingItemWrapper>
         <ExpandingItem
             {...props}
@@ -55,7 +55,7 @@ const FaqItem = connect(state => {
             bodyColor={props.theme.pink}
         />
     </ExpandingItemWrapper>
-));
+);
 
 class BlackoutFaq extends React.Component {
     render() {

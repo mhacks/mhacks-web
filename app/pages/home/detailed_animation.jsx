@@ -68,11 +68,9 @@ class Animations extends React.Component {
                     top={topPos}
                     left={Math.floor(Math.random() * this.state.pageWidth)}
                     sOpacity={
-                        topPos - 300 < 0 ? (
-                            0.28
-                        ) : (
-                            (height - topPos) / (height - 300) * 0.23 + 0.05
-                        )
+                        topPos - 300 < 0
+                            ? 0.28
+                            : (height - topPos) / (height - 300) * 0.23 + 0.05
                     }
                     key={i}
                 >

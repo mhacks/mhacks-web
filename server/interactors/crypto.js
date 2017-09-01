@@ -18,10 +18,7 @@ function decrypt(text) {
 }
 
 function createHmac(secret, body) {
-    return crypto
-        .createHmac('sha1', secret)
-        .update(body)
-        .digest('hex');
+    return crypto.createHmac('sha1', secret).update(body).digest('hex');
 }
 
 module.exports = {

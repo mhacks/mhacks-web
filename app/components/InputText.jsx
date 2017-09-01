@@ -56,13 +56,11 @@ export default class InputText extends React.Component {
     render() {
         return (
             <Wrapper placeholderColor={this.props.placeholderColor}>
-                {this.props.feedback ? (
-                    <Feedback color={this.props.feedbackColor}>
-                        {this.props.feedback}
-                    </Feedback>
-                ) : (
-                    <br />
-                )}
+                {this.props.feedback
+                    ? <Feedback color={this.props.feedbackColor}>
+                          {this.props.feedback}
+                      </Feedback>
+                    : <br />}
                 <Input
                     type="text"
                     ref="textField"

@@ -1,7 +1,5 @@
 function range(start, end) {
-    return Array(end - start)
-        .fill()
-        .map((_, idx) => start + idx);
+    return Array(end - start).fill().map((_, idx) => start + idx);
 }
 
 export const FieldTypes = {

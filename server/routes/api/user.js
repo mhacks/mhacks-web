@@ -110,42 +110,35 @@ router.get('/profile', function(req, res) {
 
 router.get('/ticket', authMiddleware('any', 'api'), function(req, res) {
     if (req.user && req.user.application_submitted) {
-        Application.find()
-            .byEmail(req.user.email)
-            .exec()
-            .then(application => {
-                if (application) {
-                    if (application.status === 'accepted') {
-                        Confirmation.findOne({ user: req.user })
-                            .exec()
-                            .then(confirmation => {
-                                if (confirmation) {
-                                    res.set('Content-Type', 'image/png');
-                                    qrcode.writeQRCodeToStream(
-                                        req.user.email,
-                                        res
-                                    );
-                                } else {
-                                    res.status(400).send({
-                                        status: false,
-                                        message:
-                                            Responses.Application.NOT_CONFIRMED
-                                    });
-                                }
-                            });
-                    } else {
-                        res.status(400).send({
-                            status: false,
-                            message: Responses.Application.NOT_ACCEPTED
+        Application.find().byEmail(req.user.email).exec().then(application => {
+            if (application) {
+                if (application.status === 'accepted') {
+                    Confirmation.findOne({ user: req.user })
+                        .exec()
+                        .then(confirmation => {
+                            if (confirmation) {
+                                res.set('Content-Type', 'image/png');
+                                qrcode.writeQRCodeToStream(req.user.email, res);
+                            } else {
+                                res.status(400).send({
+                                    status: false,
+                                    message: Responses.Application.NOT_CONFIRMED
+                                });
+                            }
                         });
-                    }
                 } else {
                     res.status(400).send({
                         status: false,
-                        message: Responses.Application.NOT_SUBMITTED
+                        message: Responses.Application.NOT_ACCEPTED
                     });
                 }
-            });
+            } else {
+                res.status(400).send({
+                    status: false,
+                    message: Responses.Application.NOT_SUBMITTED
+                });
+            }
+        });
     } else {
         res.status(401).send({
             status: false,
@@ -164,111 +157,102 @@ router.get('/ticket/verify', authMiddleware('scanner', 'api'), function(
         .then(scan => {
             if (scan) {
                 if (req.body.email) {
-                    User.find()
-                        .byEmail(req.body.email)
-                        .exec()
-                        .then(user => {
-                            if (user) {
-                                ScanEvent.findOne({
-                                    user: user,
-                                    event: scan
-                                })
-                                    .exec()
-                                    .then(event => {
-                                        if (event) {
-                                            res.status(400).send({
-                                                status: false,
-                                                message:
-                                                    Responses.Application
-                                                        .ALREADY_REGISTERED
-                                            });
-                                        } else {
-                                            Application.find()
-                                                .byEmail(req.body.email)
-                                                .exec()
-                                                .then(application => {
-                                                    if (application) {
-                                                        if (
-                                                            application.status ===
-                                                            'accepted'
-                                                        ) {
-                                                            Confirmation.findOne(
-                                                                {
-                                                                    user:
-                                                                        req.body
-                                                                            .email
-                                                                }
-                                                            )
-                                                                .exec()
-                                                                .then(
-                                                                    confirmation => {
-                                                                        if (
-                                                                            confirmation
-                                                                        ) {
-                                                                            ScanEvent.create(
-                                                                                {
-                                                                                    user,
-                                                                                    scanner:
-                                                                                        req.user,
-                                                                                    event: scan
-                                                                                }
-                                                                            ).then(
-                                                                                scanevent => {
-                                                                                    res.send(
-                                                                                        {
-                                                                                            status: true,
-                                                                                            scanevent: scanevent
-                                                                                        }
-                                                                                    );
-                                                                                }
-                                                                            );
-                                                                        } else {
-                                                                            res
-                                                                                .status(
-                                                                                    400
-                                                                                )
-                                                                                .send(
+                    User.find().byEmail(req.body.email).exec().then(user => {
+                        if (user) {
+                            ScanEvent.findOne({
+                                user: user,
+                                event: scan
+                            })
+                                .exec()
+                                .then(event => {
+                                    if (event) {
+                                        res.status(400).send({
+                                            status: false,
+                                            message:
+                                                Responses.Application
+                                                    .ALREADY_REGISTERED
+                                        });
+                                    } else {
+                                        Application.find()
+                                            .byEmail(req.body.email)
+                                            .exec()
+                                            .then(application => {
+                                                if (application) {
+                                                    if (
+                                                        application.status ===
+                                                        'accepted'
+                                                    ) {
+                                                        Confirmation.findOne({
+                                                            user: req.body.email
+                                                        })
+                                                            .exec()
+                                                            .then(
+                                                                confirmation => {
+                                                                    if (
+                                                                        confirmation
+                                                                    ) {
+                                                                        ScanEvent.create(
+                                                                            {
+                                                                                user,
+                                                                                scanner:
+                                                                                    req.user,
+                                                                                event: scan
+                                                                            }
+                                                                        ).then(
+                                                                            scanevent => {
+                                                                                res.send(
                                                                                     {
-                                                                                        status: false,
-                                                                                        message:
-                                                                                            Responses
-                                                                                                .Application
-                                                                                                .NOT_CONFIRMED
+                                                                                        status: true,
+                                                                                        scanevent: scanevent
                                                                                     }
                                                                                 );
-                                                                        }
+                                                                            }
+                                                                        );
+                                                                    } else {
+                                                                        res
+                                                                            .status(
+                                                                                400
+                                                                            )
+                                                                            .send(
+                                                                                {
+                                                                                    status: false,
+                                                                                    message:
+                                                                                        Responses
+                                                                                            .Application
+                                                                                            .NOT_CONFIRMED
+                                                                                }
+                                                                            );
                                                                     }
-                                                                );
-                                                        } else {
-                                                            res
-                                                                .status(400)
-                                                                .send({
-                                                                    status: false,
-                                                                    message:
-                                                                        Responses
-                                                                            .Application
-                                                                            .NOT_ACCEPTED
-                                                                });
-                                                        }
+                                                                }
+                                                            );
                                                     } else {
                                                         res.status(400).send({
                                                             status: false,
                                                             message:
                                                                 Responses
                                                                     .Application
-                                                                    .NOT_SUBMITTED
+                                                                    .NOT_ACCEPTED
                                                         });
                                                     }
-                                                });
-                                        }
-                                    });
-                            } else {
-                                res.status(400).send({
-                                    status: false,
-                                    message: Responses.Auth.USER_NOT_FOUND
+                                                } else {
+                                                    res.status(400).send({
+                                                        status: false,
+                                                        message:
+                                                            Responses
+                                                                .Application
+                                                                .NOT_SUBMITTED
+                                                    });
+                                                }
+                                            });
+                                    }
                                 });
-                            }
-                        });
+                        } else {
+                            res.status(400).send({
+                                status: false,
+                                message: Responses.Auth.USER_NOT_FOUND
+                            });
+                        }
+                    });
                 } else {
                     res.status(400).send({
                         status: false,

@@ -35,37 +35,35 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
                 }
             }
 
-            Application.find()
-                .byToken(req.authToken)
-                .then(application => {
-                    if (application) {
-                        application.updateFields(fields);
+            Application.find().byToken(req.authToken).then(application => {
+                if (application) {
+                    application.updateFields(fields);
 
-                        res.send({
-                            status: true,
-                            application: application
-                        });
-                    } else {
-                        fields.user = user.email;
-                        Application.create(fields)
-                            .then(application => {
-                                user.application_submitted = true;
-                                user.save();
+                    res.send({
+                        status: true,
+                        application: application
+                    });
+                } else {
+                    fields.user = user.email;
+                    Application.create(fields)
+                        .then(application => {
+                            user.application_submitted = true;
+                            user.save();
 
-                                res.send({
-                                    status: true,
-                                    application: application
-                                });
-                            })
-                            .catch(err => {
-                                console.error(err);
-                                res.status(500).send({
-                                    status: false,
-                                    message: Responses.UNKNOWN_ERROR
-                                });
+                            res.send({
+                                status: true,
+                                application: application
                             });
-                    }
-                });
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            res.status(500).send({
+                                status: false,
+                                message: Responses.UNKNOWN_ERROR
+                            });
+                        });
+                }
+            });
         })
         .catch(err => {
             console.error(err);

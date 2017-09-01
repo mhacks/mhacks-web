@@ -90,9 +90,9 @@ class Confirm extends React.Component {
         return (
             <PageContainer>
                 <FormContainer>
-                    {isConfirmed ? (
-                        <Alert message="You are confirmed!" positive={true} />
-                    ) : null}
+                    {isConfirmed
+                        ? <Alert message="You are confirmed!" positive={true} />
+                        : null}
                     <h2>Confirm Attendance at MHacks X!</h2>
                     <MHForm
                         schema={this.state.userState.data.form}

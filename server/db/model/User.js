@@ -556,10 +556,7 @@ schema.methods.getAvatars = function() {
 
     avatars = avatars.concat([
         'https://www.gravatar.com/avatar/' +
-            crypto
-                .createHash('md5')
-                .update(this.email)
-                .digest('hex') +
+            crypto.createHash('md5').update(this.email).digest('hex') +
             '?d=404',
         'https://api-avatar.trove.com/v1/avatar/' +
             this.email +

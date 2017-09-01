@@ -84,13 +84,11 @@ export default class TextSubmit extends React.Component {
     render() {
         return (
             <Wrapper primaryColor={this.props.primaryColor}>
-                {this.props.feedback ? (
-                    <Feedback color={this.props.feedbackColor}>
-                        {this.props.feedback}
-                    </Feedback>
-                ) : (
-                    <br />
-                )}
+                {this.props.feedback
+                    ? <Feedback color={this.props.feedbackColor}>
+                          {this.props.feedback}
+                      </Feedback>
+                    : <br />}
                 <Container>
                     <Input
                         type="text"
