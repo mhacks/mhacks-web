@@ -26,9 +26,7 @@ class Alert extends React.Component {
 
         return (
             <Wrapper backgroundColor={backgroundColor} color={color}>
-                <Message>
-                    {this.props.message}
-                </Message>
+                <Message>{this.props.message}</Message>
             </Wrapper>
         );
     }

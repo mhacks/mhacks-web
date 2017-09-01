@@ -96,7 +96,7 @@ const CompanyName = styled.div`
     `};
 `;
 
-export default () =>
+export default () => (
     <Wrapper>
         <QuoteSection>
             <StartWrapper src={StartIcon} />
@@ -111,7 +111,9 @@ export default () =>
                 no other hacking event.
             </Quote>
             <CompanyName position="right" dark>
-                {' '}Walmart{' '}
+                {' '}
+                Walmart{' '}
             </CompanyName>
         </QuoteSection>
-    </Wrapper>;
+    </Wrapper>
+);

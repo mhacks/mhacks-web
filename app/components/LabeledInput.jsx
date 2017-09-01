@@ -34,7 +34,7 @@ const ChildContainer = styled.div`
     width: 100%;
 `;
 
-const LabeledInput = props =>
+const LabeledInput = props => (
     <InputField
         labelWidth={props.labelWidth || '60%'}
         hasError={props.hasError}
@@ -46,6 +46,7 @@ const LabeledInput = props =>
         <ChildContainer>
             {React.Children.toArray(props.children)}
         </ChildContainer>
-    </InputField>;
+    </InputField>
+);
 
 export default LabeledInput;

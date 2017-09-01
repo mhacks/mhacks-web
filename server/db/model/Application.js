@@ -370,7 +370,11 @@ schema.methods.getResume = function() {
 };
 
 schema.methods.getUser = function() {
-    return mongoose.model('User').find().byEmail(this.user).exec();
+    return mongoose
+        .model('User')
+        .find()
+        .byEmail(this.user)
+        .exec();
 };
 
 schema.statics.getUpdateableFields = function(groups) {

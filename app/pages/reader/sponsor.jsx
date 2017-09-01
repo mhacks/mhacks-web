@@ -84,21 +84,24 @@ class SponsorReader extends React.Component {
                         Header: <FontAwesome name="paperclip" />,
                         accessor: 'resume',
                         width: 30,
-                        Cell: row =>
+                        Cell: row => (
                             <A target="_blank" href={row.value}>
                                 {GoodMark}
                             </A>
+                        )
                     },
                     {
                         Header: <FontAwesome name="github" />,
                         accessor: 'github',
                         width: 30,
                         Cell: row => {
-                            return row.value && row.value.length > 0
-                                ? <A target="_blank" href={row.value}>
-                                      {GoodMark}
-                                  </A>
-                                : BadMark;
+                            return row.value && row.value.length > 0 ? (
+                                <A target="_blank" href={row.value}>
+                                    {GoodMark}
+                                </A>
+                            ) : (
+                                BadMark
+                            );
                         }
                     },
                     {
@@ -106,11 +109,13 @@ class SponsorReader extends React.Component {
                         accessor: 'linkedin',
                         width: 30,
                         Cell: row => {
-                            return row.value && row.value.length > 0
-                                ? <A target="_blank" href={row.value}>
-                                      {GoodMark}
-                                  </A>
-                                : BadMark;
+                            return row.value && row.value.length > 0 ? (
+                                <A target="_blank" href={row.value}>
+                                    {GoodMark}
+                                </A>
+                            ) : (
+                                BadMark
+                            );
                         }
                     },
                     {
@@ -124,11 +129,13 @@ class SponsorReader extends React.Component {
                         accessor: 'devpost',
                         width: 30,
                         Cell: row => {
-                            return row.value && row.value.length > 0
-                                ? <A target="_blank" href={row.value}>
-                                      {GoodMark}
-                                  </A>
-                                : BadMark;
+                            return row.value && row.value.length > 0 ? (
+                                <A target="_blank" href={row.value}>
+                                    {GoodMark}
+                                </A>
+                            ) : (
+                                BadMark
+                            );
                         }
                     },
                     {
@@ -136,11 +143,13 @@ class SponsorReader extends React.Component {
                         accessor: 'portfolio',
                         width: 30,
                         Cell: row => {
-                            return row.value && row.value.length > 0
-                                ? <A target="_blank" href={row.value}>
-                                      {GoodMark}
-                                  </A>
-                                : BadMark;
+                            return row.value && row.value.length > 0 ? (
+                                <A target="_blank" href={row.value}>
+                                    {GoodMark}
+                                </A>
+                            ) : (
+                                BadMark
+                            );
                         }
                     }
                 ]
@@ -271,9 +280,11 @@ class SponsorReader extends React.Component {
                             <SubsectionContainer>
                                 <p>
                                     Skills:{' '}
-                                    {data.skills
-                                        ? data.skills.join(', ')
-                                        : 'undefined as user has not confirmed attendance yet.'}
+                                    {data.skills ? (
+                                        data.skills.join(', ')
+                                    ) : (
+                                        'undefined as user has not confirmed attendance yet.'
+                                    )}
                                 </p>
                             </SubsectionContainer>
                         );
