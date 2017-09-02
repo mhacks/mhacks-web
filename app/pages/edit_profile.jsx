@@ -110,7 +110,6 @@ class EditProfile extends React.Component {
         super(props);
 
         const userData = this.props.userState.data.user;
-
         this.state = {
             birthday: userData.birthday
                 ? new Date(userData.birthday).toISOString().split('T')[0]
@@ -140,6 +139,7 @@ class EditProfile extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.handleAttributeChange = this.handleAttributeChange.bind(this);
         this.handleFileUpload = this.handleFileUpload.bind(this);
+        this.handlePictureUpload = this.handlePictureUpload.bind(this);
         this.onClickRequestEmailVerification = this.onClickRequestEmailVerification.bind(
             this
         );
@@ -217,6 +217,12 @@ class EditProfile extends React.Component {
         });
     }
 
+    handlePictureUpload(file) {
+        this.setState({
+            avatar: file
+        });
+    }
+
     handleSortItems(a, b, value) {
         const aLower = a.toLowerCase();
         const bLower = b.toLowerCase();
@@ -252,6 +258,9 @@ class EditProfile extends React.Component {
 
         if (this.state.resume) {
             files['resume'] = this.state.resume;
+        }
+        if (this.state.avatar) {
+            files['avatar'] = this.state.avatar;
         }
 
         for (const key of Object.keys(ProfileFields)) {
@@ -480,6 +489,26 @@ class EditProfile extends React.Component {
                                         defaultText={
                                             userData.user.isResumeUploaded ? (
                                                 'Resume Uploaded'
+                                            ) : null
+                                        }
+                                    />
+                                </FileUploadContainer>
+                                <FileUploadContainer>
+                                    <FileUpload
+                                        fileTitle="Profile Picture"
+                                        defaultColor={
+                                            this.state.avatars.length > 2 ? (
+                                                this.props.theme.success
+                                            ) : (
+                                                this.props.theme.primary
+                                            )
+                                        }
+                                        hoverColor={this.props.theme.secondary}
+                                        activeColor={this.props.theme.success}
+                                        onFileSelect={this.handlePictureUpload}
+                                        defaultText={
+                                            this.state.avatars.length > 2 ? (
+                                                'Profile Picture Uploaded'
                                             ) : null
                                         }
                                     />
