@@ -22,9 +22,7 @@ const Page = styled.div`
 `;
 
 /* Styled elements */
-const StyledHero = styled(Hero)`
-    margin: 35px 0;
-`;
+const StyledHero = styled(Hero)`margin: 35px 0;`;
 
 /* Page Component */
 class BlackoutPage extends React.Component {

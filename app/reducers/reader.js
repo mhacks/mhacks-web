@@ -97,8 +97,6 @@ export function readerState(state = initialState, action) {
 
             return {
                 ...state,
-                fetching: false,
-                fetched: true,
                 data: {
                     ...state.data,
                     form,

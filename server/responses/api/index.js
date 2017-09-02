@@ -12,7 +12,9 @@ var Responses = {
     MISSING_CONFIG: 'The configuration is missing necessary values',
     NOT_FOUND: 'Not found',
     INVALID_TYPE: 'Invalid type.',
-    MISSING_PARAMETERS: 'Missing some required fields'
+    MISSING_PARAMETERS: 'Missing some required fields',
+    CREATED: 'Created successfully',
+    UPDATED: 'Updated successfully'
 };
 
 Responses.Auth = authResponses;

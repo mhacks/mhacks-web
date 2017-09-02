@@ -6,6 +6,7 @@ export default {
     LOGOUT: '/logout',
     APPLY: '/apply',
     PROFILE: '/profile',
+    DASHBOARD: '/dashboard',
     LIVE: '/live',
     HACKER_READER: '/reader/hacker',
     MENTOR_READER: '/reader/mentor',
