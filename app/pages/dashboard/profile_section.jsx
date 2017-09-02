@@ -24,9 +24,7 @@ const ProfileContainer = styled.div`
     height: auto;
 `;
 
-const ContentContainer = styled.div`
-    marginLeft: 10px;
-`;
+const ContentContainer = styled.div`marginLeft: 10px;`;
 
 class ProfileSection extends React.Component {
     render() {

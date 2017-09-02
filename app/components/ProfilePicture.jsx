@@ -46,9 +46,7 @@ export default class ProfilePicture extends React.Component {
 
     render() {
         if (!this.state.isValidPicture) {
-            return (
-                <BackupPicture />
-            );
+            return <BackupPicture />;
         }
 
         return (
