@@ -497,17 +497,19 @@ class EditProfile extends React.Component {
                                     <FileUpload
                                         fileTitle="Profile Picture"
                                         defaultColor={
-                                            this.state.avatars.length > 2
-                                                ? this.props.theme.success
-                                                : this.props.theme.primary
+                                            this.state.avatars.length > 2 ? (
+                                                this.props.theme.success
+                                            ) : (
+                                                this.props.theme.primary
+                                            )
                                         }
                                         hoverColor={this.props.theme.secondary}
                                         activeColor={this.props.theme.success}
                                         onFileSelect={this.handlePictureUpload}
                                         defaultText={
-                                            this.state.avatars.length > 2
-                                                ? 'Profile Picture Uploaded'
-                                                : null
+                                            this.state.avatars.length > 2 ? (
+                                                'Profile Picture Uploaded'
+                                            ) : null
                                         }
                                     />
                                 </FileUploadContainer>
