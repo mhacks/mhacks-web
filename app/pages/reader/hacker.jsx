@@ -75,13 +75,15 @@ class ReaderPage extends React.Component {
                         width: 30,
                         Cell: row => {
                             const isSelected = selected.includes(
-                                row.original.user
+                                row.original.email
                             );
                             return (
                                 <input
                                     type="checkbox"
                                     checked={isSelected}
-                                    onChange={this.didSelect(row.original.user)}
+                                    onChange={this.didSelect(
+                                        row.original.email
+                                    )}
                                 />
                             );
                         }
@@ -303,7 +305,7 @@ class ReaderPage extends React.Component {
         );
 
         this.setState({
-            selected: filtered.map(application => application.user)
+            selected: filtered.map(application => application.email)
         });
     }
 
