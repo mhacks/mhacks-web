@@ -81,7 +81,9 @@ class ReaderPage extends React.Component {
                                 <input
                                     type="checkbox"
                                     checked={isSelected}
-                                    onChange={this.didSelect(row.original.email)}
+                                    onChange={this.didSelect(
+                                        row.original.email
+                                    )}
                                 />
                             );
                         }

@@ -131,8 +131,7 @@ class TravelTicketSection extends React.Component {
                                 />
                                 <Seperator />
                             </div>
-                            ) : null
-                        }
+                        ) : null}
                     </div>
                 ) : null}
             </div>
