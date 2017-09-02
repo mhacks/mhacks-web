@@ -7,29 +7,50 @@ const Avatar = styled.img`
     maxWidth: 200px;
 `;
 
+const BackupPicture = styled.div`
+    backgroundColor: gray;
+    width: 100px;
+    height: 100px;
+`;
+
 export default class ProfilePicture extends React.Component {
     constructor(props) {
         super(props);
 
+        const avatars = this.props.avatars;
+
         this.state = {
-            profilePicture: this.props.avatars[0] || '',
-            counter: 0
+            profilePicture: avatars && avatars.length > 0 ? avatars[0] : '',
+            counter: 0,
+            isValidPicture: true
         };
 
         this.handleImageError = this.handleImageError.bind(this);
     }
 
     handleImageError() {
-        var avatars = this.props.avatars;
-        var counter = this.state.counter + 1;
-        var next = avatars[counter];
-        this.setState({
-            profilePicture: next,
-            counter: counter
-        });
+        const avatars = this.props.avatars;
+        const counter = this.state.counter + 1;
+
+        if (!avatars || counter > avatars.length) {
+            this.setState({
+                isValidPicture: false
+            });
+        } else {
+            this.setState({
+                profilePicture: avatars[counter],
+                counter: counter
+            });
+        }
     }
 
     render() {
+        if (!this.state.isValidPicture) {
+            return (
+                <BackupPicture />
+            );
+        }
+
         return (
             <Avatar
                 onError={this.handleImageError}
