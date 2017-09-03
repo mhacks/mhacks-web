@@ -72,15 +72,13 @@ class MHForm extends React.Component {
             case this.FieldTypes.ESSAY:
             case this.FieldTypes.SELECT:
             case this.FieldTypes.FILE:
+            case this.FieldTypes.BOOLEAN:
             case this.FieldTypes.LINK:
+            case this.FieldTypes.NUMBER:
                 return '';
             case this.FieldTypes.DATE: {
                 return 'yyyy-MM-dd';
             }
-            case this.FieldTypes.NUMBER:
-                return 0;
-            case this.FieldTypes.BOOLEAN:
-                return false;
             case this.FieldTypes.ARRAY:
                 return [];
             case this.FieldTypes.SECTIONHEADER:
@@ -104,6 +102,9 @@ class MHForm extends React.Component {
             case this.FieldTypes.SELECT:
             case this.FieldTypes.FILE:
             case this.FieldTypes.LINK:
+            case this.FieldTypes.NUMBER:
+            case this.FieldTypes.BOOLEAN:
+            case this.FieldTypes.ARRAY:
                 return field.default || defaultValue;
             case this.FieldTypes.DATE: {
                 const date = new Date(field.default);
@@ -113,12 +114,6 @@ class MHForm extends React.Component {
 
                 return date.toISOString().split('T')[0];
             }
-            case this.FieldTypes.NUMBER:
-                return field.default || defaultValue;
-            case this.FieldTypes.BOOLEAN:
-                return field.default || defaultValue;
-            case this.FieldTypes.ARRAY:
-                return field.default || defaultValue;
             case this.FieldTypes.SECTIONHEADER:
             case this.FieldTypes.SUBMIT:
                 return defaultValue;
@@ -234,7 +229,9 @@ class MHForm extends React.Component {
                 case this.FieldTypes.TEXT:
                 case this.FieldTypes.ESSAY:
                 case this.FieldTypes.SELECT:
+                case this.FieldTypes.BOOLEAN:
                 case this.FieldTypes.LINK:
+                case this.FieldTypes.NUMBER:
                     if (formData[field.key] === '') {
                         errors.push(field.key);
                     }
@@ -253,6 +250,11 @@ class MHForm extends React.Component {
                     if (files[field.key] === '') {
                         errors.push(field.key);
                     }
+                    break;
+                default:
+                    console.error(
+                        'Field Type not defined, behavior is undefined!'
+                    );
             }
         }
 
@@ -299,11 +301,15 @@ class MHForm extends React.Component {
                 case this.FieldTypes.BOOLEAN:
                     formatted[key] = formData[key];
                     break;
-                case this.FieldTypes.DATE:
-                    formatted[key] = new Date(
-                        new Date(formData[key]).toISOString().split('T')[0]
-                    ).getTime();
+                case this.FieldTypes.DATE: {
+                    const formDate = new Date(formData[key]);
+                    if (!isNaN(formDate.getTime())) {
+                        formatted[key] = new Date(
+                            formDate.toISOString().split('T')[0]
+                        ).getTime();
+                    }
                     break;
+                }
                 case this.FieldTypes.SELECT:
                     if (
                         !field.required &&
@@ -344,166 +350,166 @@ class MHForm extends React.Component {
 
     render() {
         const formData = this.state.formData;
-        return !this.props.schema
-            ? null
-            : <form onSubmit={this.onSubmit}>
-                  {this.state.errorFields.length > 0
-                      ? <AlertContainer>
-                            <Alert message="Missing some required fields!" />
-                        </AlertContainer>
-                      : null}
-                  {Object.keys(this.props.schema)
-                      .filter(field => {
-                          return !this.props.hidden[field.key];
-                      })
-                      .map(fieldKey => {
-                          const hasError = this.state.errorFields.includes(
-                              fieldKey
-                          );
-                          const field = this.props.schema[fieldKey];
-                          field.key = fieldKey;
-                          switch (field.type) {
-                              case this.FieldTypes.SELECT:
-                                  return this.renderLabeledInput(
-                                      field,
-                                      <Select
-                                          name={field.key}
-                                          value={formData[field.key]}
-                                          options={field.select}
-                                          onChange={this.handleSelectChange(
-                                              field.key
-                                          )}
-                                      />,
-                                      hasError
-                                  );
-                              case this.FieldTypes.ARRAY:
-                                  return this.renderLabeledInput(
-                                      field,
-                                      <Select
-                                          name={field.key}
-                                          value={formData[field.key]}
-                                          options={field.array_select}
-                                          multi={true}
-                                          onChange={this.handleSelectChange(
-                                              field.key
-                                          )}
-                                      />,
-                                      hasError
-                                  );
-                              case this.FieldTypes.LINK:
-                              case this.FieldTypes.TEXT:
-                                  return this.renderLabeledInput(
-                                      field,
-                                      <Input
-                                          name={field.key}
-                                          type="text"
-                                          placeholder={field.placeholder}
-                                          value={formData[field.key]}
-                                          onChange={this.handleAttributeChange}
-                                          hasError={hasError}
-                                      />
-                                  );
-                              case this.FieldTypes.NUMBER:
-                                  return this.renderLabeledInput(
-                                      field,
-                                      <Input
-                                          name={field.key}
-                                          type="number"
-                                          value={formData[field.key]}
-                                          onChange={this.handleAttributeChange}
-                                          hasError={hasError}
-                                      />
-                                  );
-                              case this.FieldTypes.DATE:
-                                  return this.renderLabeledInput(
-                                      field,
-                                      <Input
-                                          name={field.key}
-                                          type="date"
-                                          placeholder="yyyy-mm-dd"
-                                          value={formData[field.key]}
-                                          onChange={this.handleAttributeChange}
-                                          hasError={hasError}
-                                      />
-                                  );
-                              case this.FieldTypes.SECTIONHEADER:
-                                  return (
-                                      <SectionHeader
-                                          color={this.props.theme.primary}
-                                          key={field.label}
-                                      >
-                                          {field.label}
-                                      </SectionHeader>
-                                  );
-                              case this.FieldTypes.FILE: {
-                                  const uploadBackground = hasError
-                                      ? 'red'
-                                      : this.state.files[field.key]
-                                        ? this.props.theme.success
-                                        : this.props.theme.primary;
-                                  return (
-                                      <FileUploadContainer key={field.label}>
-                                          <FileUpload
-                                              defaultColor={uploadBackground}
-                                              hoverColor={
-                                                  this.props.theme.secondary
-                                              }
-                                              activeColor={
-                                                  this.props.theme.success
-                                              }
-                                              onFileSelect={this.handleFileUploadForKey(
-                                                  field.key
-                                              )}
-                                          />
-                                      </FileUploadContainer>
-                                  );
-                              }
-                              case this.FieldTypes.SUBMIT:
-                                  return (
-                                      <RoundedButton
-                                          type="submit"
-                                          color={this.props.theme.primary}
-                                          key={field.label}
-                                      >
-                                          {field.label}
-                                      </RoundedButton>
-                                  );
-                              case this.FieldTypes.BOOLEAN:
-                                  return this.renderLabeledInput(
-                                      field,
-                                      <Select
-                                          name={field.key}
-                                          value={formData[field.key]}
-                                          options={[
-                                              {
-                                                  value: 'yes',
-                                                  label: 'Yes'
-                                              },
-                                              {
-                                                  value: 'no',
-                                                  label: 'No'
-                                              }
-                                          ]}
-                                          onChange={this.handleSelectChange(
-                                              field.key
-                                          )}
-                                      />,
-                                      hasError
-                                  );
-                              case this.FieldTypes.ESSAY:
-                                  return this.renderLabeledInput(
-                                      field,
-                                      <TextArea
-                                          name={field.key}
-                                          value={formData[field.key]}
-                                          placeholder={field.placeholder}
-                                          onChange={this.handleAttributeChange}
-                                          hasError={hasError}
-                                      />
-                                  );
-                          }
-                      })}
-              </form>;
+        return !this.props.schema ? null : (
+            <form onSubmit={this.onSubmit}>
+                {this.state.errorFields.length > 0 ? (
+                    <AlertContainer>
+                        <Alert message="Missing some required fields!" />
+                    </AlertContainer>
+                ) : null}
+                {Object.keys(this.props.schema)
+                    .filter(field => {
+                        return !this.props.hidden[field.key];
+                    })
+                    .map(fieldKey => {
+                        const hasError = this.state.errorFields.includes(
+                            fieldKey
+                        );
+                        const field = this.props.schema[fieldKey];
+                        field.key = fieldKey;
+                        switch (field.type) {
+                            case this.FieldTypes.SELECT:
+                                return this.renderLabeledInput(
+                                    field,
+                                    <Select
+                                        name={field.key}
+                                        value={formData[field.key]}
+                                        options={field.select}
+                                        onChange={this.handleSelectChange(
+                                            field.key
+                                        )}
+                                    />,
+                                    hasError
+                                );
+                            case this.FieldTypes.ARRAY:
+                                return this.renderLabeledInput(
+                                    field,
+                                    <Select
+                                        name={field.key}
+                                        value={formData[field.key]}
+                                        options={field.array_select}
+                                        multi={true}
+                                        onChange={this.handleSelectChange(
+                                            field.key
+                                        )}
+                                    />,
+                                    hasError
+                                );
+                            case this.FieldTypes.LINK:
+                            case this.FieldTypes.TEXT:
+                                return this.renderLabeledInput(
+                                    field,
+                                    <Input
+                                        name={field.key}
+                                        type="text"
+                                        placeholder={field.placeholder}
+                                        value={formData[field.key]}
+                                        onChange={this.handleAttributeChange}
+                                        hasError={hasError}
+                                    />
+                                );
+                            case this.FieldTypes.NUMBER:
+                                return this.renderLabeledInput(
+                                    field,
+                                    <Input
+                                        name={field.key}
+                                        type="number"
+                                        value={formData[field.key]}
+                                        onChange={this.handleAttributeChange}
+                                        hasError={hasError}
+                                    />
+                                );
+                            case this.FieldTypes.DATE:
+                                return this.renderLabeledInput(
+                                    field,
+                                    <Input
+                                        name={field.key}
+                                        type="date"
+                                        placeholder="yyyy-mm-dd"
+                                        value={formData[field.key]}
+                                        onChange={this.handleAttributeChange}
+                                        hasError={hasError}
+                                    />
+                                );
+                            case this.FieldTypes.SECTIONHEADER:
+                                return (
+                                    <SectionHeader
+                                        color={this.props.theme.primary}
+                                        key={field.label}
+                                    >
+                                        {field.label}
+                                    </SectionHeader>
+                                );
+                            case this.FieldTypes.FILE: {
+                                const uploadBackground = hasError
+                                    ? 'red'
+                                    : this.state.files[field.key]
+                                      ? this.props.theme.success
+                                      : this.props.theme.primary;
+                                return (
+                                    <FileUploadContainer key={field.label}>
+                                        <FileUpload
+                                            defaultColor={uploadBackground}
+                                            hoverColor={
+                                                this.props.theme.secondary
+                                            }
+                                            activeColor={
+                                                this.props.theme.success
+                                            }
+                                            onFileSelect={this.handleFileUploadForKey(
+                                                field.key
+                                            )}
+                                        />
+                                    </FileUploadContainer>
+                                );
+                            }
+                            case this.FieldTypes.SUBMIT:
+                                return (
+                                    <RoundedButton
+                                        type="submit"
+                                        color={this.props.theme.primary}
+                                        key={field.label}
+                                    >
+                                        {field.label}
+                                    </RoundedButton>
+                                );
+                            case this.FieldTypes.BOOLEAN:
+                                return this.renderLabeledInput(
+                                    field,
+                                    <Select
+                                        name={field.key}
+                                        value={formData[field.key]}
+                                        options={[
+                                            {
+                                                value: 'yes',
+                                                label: 'Yes'
+                                            },
+                                            {
+                                                value: 'no',
+                                                label: 'No'
+                                            }
+                                        ]}
+                                        onChange={this.handleSelectChange(
+                                            field.key
+                                        )}
+                                    />,
+                                    hasError
+                                );
+                            case this.FieldTypes.ESSAY:
+                                return this.renderLabeledInput(
+                                    field,
+                                    <TextArea
+                                        name={field.key}
+                                        value={formData[field.key]}
+                                        placeholder={field.placeholder}
+                                        onChange={this.handleAttributeChange}
+                                        hasError={hasError}
+                                    />
+                                );
+                        }
+                    })}
+            </form>
+        );
     }
 }
 

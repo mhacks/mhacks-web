@@ -35,35 +35,37 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
                 }
             }
 
-            Application.find().byToken(req.authToken).then(application => {
-                if (application) {
-                    application.updateFields(fields);
+            Application.find()
+                .byToken(req.authToken)
+                .then(application => {
+                    if (application) {
+                        application.updateFields(fields);
 
-                    res.send({
-                        status: true,
-                        application: application
-                    });
-                } else {
-                    fields.user = user.email;
-                    Application.create(fields)
-                        .then(application => {
-                            user.application_submitted = true;
-                            user.save();
-
-                            res.send({
-                                status: true,
-                                application: application
-                            });
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            res.status(500).send({
-                                status: false,
-                                message: Responses.UNKNOWN_ERROR
-                            });
+                        res.send({
+                            status: true,
+                            application: application
                         });
-                }
-            });
+                    } else {
+                        fields.user = user.email;
+                        Application.create(fields)
+                            .then(application => {
+                                user.application_submitted = true;
+                                user.save();
+
+                                res.send({
+                                    status: true,
+                                    application: application
+                                });
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                res.status(500).send({
+                                    status: false,
+                                    message: Responses.UNKNOWN_ERROR
+                                });
+                            });
+                    }
+                });
         })
         .catch(err => {
             console.error(err);
@@ -124,7 +126,8 @@ router.get('/all', authMiddleware('sponsor reader admin', 'api'), function(
                                     }
 
                                     const user_doc = {
-                                        full_name: associated_user.full_name
+                                        full_name: associated_user.full_name,
+                                        email: associated_user.email
                                     };
 
                                     if (application.resume) {

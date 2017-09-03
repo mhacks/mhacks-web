@@ -14,6 +14,8 @@ var router = require('express').Router(),
     adminHandler = require('./api/admin.js'),
     pushHandler = require('./api/push.js'),
     scanHandler = require('./api/scan.js'),
+    locationHandler = require('./api/location.js'),
+    eventHandler = require('./api/event.js'),
     sponsorHandler = require('./api/sponsor.js'),
     mentorHandler = require('./api/mentor.js'),
     speakerHandler = require('./api/speaker.js');
@@ -33,6 +35,8 @@ router.use('/reader', authMiddleware('admin reader', 'api'), readerHandler);
 router.use('/push', pushHandler);
 router.use('/scan', scanHandler);
 router.use('/sponsor', sponsorHandler);
+router.use('/location', locationHandler);
+router.use('/event', eventHandler);
 router.use('/mentor', mentorHandler);
 router.use('/speaker', speakerHandler);
 
