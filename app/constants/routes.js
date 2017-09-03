@@ -13,6 +13,7 @@ export default {
     SPEAKER_READER: '/reader/speaker',
     SPONSOR_READER: '/reader/sponsor',
     CONFIRM: '/confirm',
+    ADMIN: '/admin',
     ADMIN_PORTAL: '/portal/admin',
     READER_PORTAL: '/portal/reader',
     SPONSOR_PORTAL: '/portal/sponsor',

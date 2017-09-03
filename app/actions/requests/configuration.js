@@ -22,4 +22,14 @@ export default class ConfigurationRequests {
             body: JSON.stringify(body)
         });
     }
+
+    static loadForm(token) {
+        return fetch(endpoints.FORM + 'configuration', {
+            method: 'get',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token
+            })
+        });
+    }
 }

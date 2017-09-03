@@ -70,4 +70,34 @@ export default class ConfigurationThunks {
             });
         };
     }
+
+    static loadForm() {
+        return dispatch => {
+            dispatch({
+                type: actions.LOAD_CONFIGURATION_FORM_REQUEST
+            });
+
+            const token = localStorage.getItem('jwt');
+
+            return ConfigurationRequests.loadForm(token).then(response => {
+                if (response.status == 200) {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.LOAD_CONFIGURATION_FORM_SUCCESS,
+                            data: { form: json.form, FieldTypes: json.types },
+                            message: json.message
+                        });
+                    });
+                } else {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.LOAD_CONFIGURATION_FORM_ERROR,
+                            error: json.status,
+                            message: json.message
+                        });
+                    });
+                }
+            });
+        };
+    }
 }

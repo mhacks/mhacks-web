@@ -23,7 +23,8 @@ import {
     Confirm,
     MentorApply,
     SpeakerApply,
-    Dashboard
+    Dashboard,
+    AdminPage
 } from './pages';
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';
@@ -156,6 +157,21 @@ class AppProvider extends React.Component {
 
                                     if (isLoggedIn && !isEmailVerified) {
                                         return <Redirect to={routes.PROFILE} />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.ADMIN}
+                                render={() => {
+                                    const {
+                                        isLoggedIn,
+                                        isAdmin
+                                    } = this.getMetadata();
+                                    if (isLoggedIn && isAdmin) {
+                                        return <AdminPage />;
                                     }
 
                                     return <Redirect to={routes.LOGIN} />;

@@ -185,7 +185,7 @@ class HeaderLinks extends React.Component {
                 isOpen={false}
             >
                 {isLoggedIn && isAdmin ? (
-                    <StyledALink href={routes.ADMIN_PORTAL} color={color}>
+                    <StyledALink href={routes.ADMIN} color={color}>
                         Admin
                     </StyledALink>
                 ) : null}
