@@ -8,11 +8,19 @@ var schema = new mongoose.Schema({
     end_date: Date,
     is_live_page_enabled: {
         type: Boolean,
-        default: false
+        default: false,
+        form: {
+            user_editable: true,
+            label: 'Live Page Enabled'
+        }
     },
     is_application_open: {
         type: Boolean,
-        default: false
+        default: false,
+        form: {
+            user_editable: true,
+            label: 'Application Open'
+        }
     }
 });
 
