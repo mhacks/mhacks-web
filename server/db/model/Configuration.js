@@ -9,6 +9,7 @@ var schema = new mongoose.Schema({
     is_live_page_enabled: {
         type: Boolean,
         default: false,
+        required: true,
         form: {
             user_editable: true,
             label: 'Live Page Enabled'
@@ -17,9 +18,18 @@ var schema = new mongoose.Schema({
     is_application_open: {
         type: Boolean,
         default: false,
+        required: true,
         form: {
             user_editable: true,
             label: 'Application Open'
+        }
+    },
+    save_button: {
+        type: String,
+        form: {
+            type_override: 'submit',
+            label: 'Save',
+            user_editable: true
         }
     }
 });

@@ -1,45 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { MHForm, PageContainer } from '../../components';
-import { ConfigurationThunks } from '../../actions';
+import styled from 'styled-components';
+import { PageContainer } from '../../components';
+import ConfigurationSection from './configuration';
+
+const PagePulled = styled(PageContainer)`min-height: calc(100vh - 146px);`
 
 /* Page Component */
 class AdminPage extends React.Component {
-    componentDidMount() {
-        this.props.dispatch(ConfigurationThunks.loadForm());
-    }
 
     render() {
-        if (
-            !this.props.configurationState.data.form &&
-            !(
-                this.props.configurationState.data.form &&
-                !(Object.values(this.props.configurationState.data.form).length > 1)
-            )
-        ) {
-            return null;
-        }
-
         return (
-            <PageContainer ref="pagecontainer">
-                <MHForm
-                    schema={this.props.configurationState.data.form}
-                    FieldTypes={this.props.configurationState.data.FieldTypes}
-                    theme={this.props.theme}
-                    onChange={formState => {
-                        this.setState({
-                            configuration: formState
-                        });
-                    }}
-                />
-            </PageContainer>
+            <PagePulled ref="pagecontainer">
+                <ConfigurationSection />
+            </PagePulled>
         );
     }
 }
 
 function mapStateToProps(state) {
     return {
-        configurationState: state.configurationState,
         theme: state.theme.data
     };
 }
