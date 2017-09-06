@@ -4,8 +4,8 @@ var mongoose = require('../index.js'),
 // Define the document Schema
 var schema = new mongoose.Schema({
     name: String,
-    latitude: mongoose.Schema.Types.Decimal128,
-    longitude: mongoose.Schema.Types.Decimal128
+    latitude: String,
+    longitude: String
 });
 
 // Allow us to query by name

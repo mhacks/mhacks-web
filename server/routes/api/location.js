@@ -91,7 +91,14 @@ router.get('/', function(req, res) {
             if (locations) {
                 res.send({
                     status: true,
-                    locations: locations
+                    locations: locations.map(location => {
+                        return Object.assign({}, location._doc, {
+                            id: location._id,
+                            _id: undefined,
+                            __v: undefined,
+                            lat: location.latitude['$numberDecimal']
+                        });
+                    })
                 });
             } else {
                 res.status(401).send({

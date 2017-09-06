@@ -11,6 +11,8 @@ router.get('/', function(req, res) {
         .then(configuration => {
             if (configuration) {
                 configuration = JSON.parse(JSON.stringify(configuration));
+                configuration.start_date = (new Date(configuration.start_date)).getTime();
+                configuration.end_date = (new Date(configuration.end_date)).getTime();
 
                 authMiddleware('any', 'api', false, function() {
                     configuration.should_logout = true;
