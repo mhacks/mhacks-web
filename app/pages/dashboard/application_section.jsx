@@ -69,8 +69,11 @@ class ApplicationSection extends React.Component {
             <SectionBody>
                 We’re excited to see you at MHacks X! We’ve got some great
                 things in store :) In the meantime, we encourage you to connect
-                with other hackers in the HH MHacks Facebook Group. As always,
-                stay tuned to our{' '}
+                with other hackers in the HH MHacks Facebook Group or{' '}
+                <Link href="https://www.facebook.com/events/363750477376350/">
+                    MHacks X Facebook Event
+                </Link>
+                . As always,stay tuned to our{' '}
                 <Link href="http://facebook.com/MHacksHackathon">
                     Facebook
                 </Link>, <Link href="http://twitter.com/mhacks">Twitter</Link>,
