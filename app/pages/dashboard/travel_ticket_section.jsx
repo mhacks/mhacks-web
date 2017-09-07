@@ -5,6 +5,8 @@ import { getUserMetadata } from '../../util/user.js';
 import ExpandingItem from './ExpandingItem';
 import { endpoints } from '../../constants';
 
+const AddToAppleWallet = require('../../../static/icons/add_to_apple_wallet.svg');
+
 const FaqItem = props => (
     <ExpandingItem
         {...props}
@@ -27,6 +29,9 @@ class TravelTicketSection extends React.Component {
             <div>
                 <p>Check your email for this qr code</p>
                 <img src={endpoints.TICKET} width="100%" />
+                <a href={endpoints.TICKET_PASSBOOK}>
+                    <img src={AddToAppleWallet} width="100%" />
+                </a>
             </div>
         );
     }

@@ -17,6 +17,7 @@
         "gendocs": "cd static/docs && node ../../scripts/unchained-generate-docs.js > openapi.json"
     },
     "dependencies": {
+        "@destinationstransfers/passkit": "mhacks/passkit",
         "@newrelic/native-metrics": "^2.1.1",
         "archiver": "^2.0.0",
         "autoprefixer": "^6.7.7",

@@ -44,3 +44,6 @@ build/*
 *.env
 
 .vscode/
+
+keys/*
+!keys/.gitkeep

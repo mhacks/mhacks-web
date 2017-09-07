@@ -121,7 +121,7 @@ let buildConfig = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"production"'
         }),
-        new CleanWebpackPlugin(['build/logo.png', 'build/fonts', 'build/js', 'build/styles', 'build/index.html']),
+        new CleanWebpackPlugin(['build/logo-title.png', 'build/logo.png', 'build/fonts', 'build/js', 'build/styles', 'build/index.html']),
         cssExtractor,
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true,
@@ -129,6 +129,7 @@ let buildConfig = {
         }),
         new CopyWebpackPlugin([
             { from: './static/icons/x-logo.png', to: './logo.png' },
+            { from: './static/icons/x-logo-title.png', to: './logo-title.png' },
             {context: './app/favicon/', from: '**/*', to: './favicon/'},
             {context: './app/fonts/', from: '**/*', to: './fonts/'}
         ]),
