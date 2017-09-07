@@ -59,7 +59,7 @@ const MLHBanner = styled.a`
     display: block;
     width: 60px;
     position: absolute;
-    left: 10px;
+    left: 31px;
     top: 80px;
     z-index: 99;
 `;
