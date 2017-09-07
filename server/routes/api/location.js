@@ -93,8 +93,6 @@ router.get('/', function(req, res) {
                     status: true,
                     locations: locations.map(location => {
                         return Object.assign({}, location._doc, {
-                            id: location._id,
-                            _id: undefined,
                             __v: undefined,
                             lat: location.latitude['$numberDecimal']
                         });

@@ -107,7 +107,12 @@ router.get('/', function(req, res) {
             if (events) {
                 res.send({
                     status: true,
-                    events: events
+                    events: events.map(event => {
+                        return Object.assign({}, event._doc, {
+                            startDate: (new Date(event.startDate)).getTime(),
+                            endDate: (new Date(event.endDate)).getTime()
+                        });
+                    })
                 });
             } else {
                 res.status(401).send({
