@@ -25,16 +25,14 @@ const VerticalLine = styled.div`
 
 const Header = styled.h2`
     fontSize: 20px;
-    color: ${props => props.theme.highlight};
+    color: ${props => props.theme.highlightSecondary};
     fontWeight: thin;
 `;
 
 const StatusText = styled.h2`
     fontSize: 20px;
     textTransform: uppercase;
-    fontWeight: 500;
-    color: ${props => props.theme.highlight};
-    //fontWeight: thin;
+    color: ${props => props.theme.highlightSecondary};
 `;
 
 const FlexBox = styled.div`
@@ -49,22 +47,23 @@ class ApplicationStatusBar extends React.Component {
         const userData = this.props.userData;
         const {
             isApplicationSubmitted,
-            isApplicationReviewed,
+            isAccepted,
+            isWaitlisted,
             isConfirmed
         } = getUserMetadata(userData);
-        if (isApplicationSubmitted) {
-            if (isApplicationReviewed) {
-                if (isConfirmed) {
-                    applicationStatus = 'Confirmed';
-                    percent = '100';
-                } else {
-                    applicationStatus = 'Reviewed';
-                    percent = '66';
-                }
-            } else {
-                applicationStatus = 'Submitted';
-                percent = '33';
-            }
+
+        if (isConfirmed) {
+            applicationStatus = 'Confirmed';
+            percent = '100';
+        } else if (isWaitlisted) {
+            applicationStatus = 'Waitlisted';
+            percent = '66';
+        } else if (isAccepted) {
+            applicationStatus = 'Accepted';
+            percent = '66';
+        } else if (isApplicationSubmitted) {
+            applicationStatus = 'Submitted';
+            percent = '33';
         } else {
             applicationStatus = 'Not Submitted';
             percent = '0';

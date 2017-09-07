@@ -76,7 +76,7 @@ export function readerState(state = initialState, action) {
                     ...state.data,
                     applications: state.data.applications.map(application => {
                         if (
-                            action.data.users.indexOf(application.user) === -1
+                            action.data.users.indexOf(application.email) === -1
                         ) {
                             return application;
                         }
@@ -97,8 +97,6 @@ export function readerState(state = initialState, action) {
 
             return {
                 ...state,
-                fetching: false,
-                fetched: true,
                 data: {
                     ...state.data,
                     form,

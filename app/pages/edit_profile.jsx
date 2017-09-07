@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ProfileThunks } from '../actions';
 import { FieldTypes, ProfileFields } from '../constants/forms';
-import { routes } from '../constants';
 import Autocomplete from 'react-autocomplete';
 import { getUserMetadata } from '../util/user.js';
 const Majors = require('../../static/misc/majors.json');
@@ -21,22 +19,6 @@ import {
 
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
-
-const StyledNavLink = styled(NavLink)`
-    fontSize: 16px;
-    padding: 2px 20px;
-    border: 2px solid ${props => props.theme.primary};
-    color: ${props => props.theme.primary};
-    borderRadius: 25px;
-    textDecoration: none;
-    transition: all 0.3s;
-    text-transform: uppercase;
-
-    &:hover {
-        backgroundColor: ${props => props.theme.primary};
-        color: white;
-    }
-`;
 
 const StyledSelect = styled.select`
     background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+)
@@ -128,7 +110,6 @@ class EditProfile extends React.Component {
         super(props);
 
         const userData = this.props.userState.data.user;
-
         this.state = {
             birthday: userData.birthday
                 ? new Date(userData.birthday).toISOString().split('T')[0]
@@ -158,6 +139,7 @@ class EditProfile extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.handleAttributeChange = this.handleAttributeChange.bind(this);
         this.handleFileUpload = this.handleFileUpload.bind(this);
+        this.handlePictureUpload = this.handlePictureUpload.bind(this);
         this.onClickRequestEmailVerification = this.onClickRequestEmailVerification.bind(
             this
         );
@@ -235,6 +217,12 @@ class EditProfile extends React.Component {
         });
     }
 
+    handlePictureUpload(file) {
+        this.setState({
+            avatar: file
+        });
+    }
+
     handleSortItems(a, b, value) {
         const aLower = a.toLowerCase();
         const bLower = b.toLowerCase();
@@ -268,18 +256,16 @@ class EditProfile extends React.Component {
         var profile = {};
         var files = {};
 
-        //const inputBirthday = new Date(this.state.birthday).getTime();
-
-        //profile.birthday = inputBirthday;
-        //profile.major = this.state.major;
-        //profile.university = this.state.university;
-
         if (this.state.resume) {
             files['resume'] = this.state.resume;
+        }
+        if (this.state.avatar) {
+            files['avatar'] = this.state.avatar;
         }
 
         for (const key of Object.keys(ProfileFields)) {
             if (key === 'name') {
+                profile[key] = this.state[key];
                 profile['full_name'] = this.state[key];
             } else if (
                 ProfileFields[key] === FieldTypes.TEXT ||
@@ -329,135 +315,6 @@ class EditProfile extends React.Component {
         );
     }
 
-    renderApplicationReviewSection() {
-        const userData = this.props.userState.data;
-        const { isAccepted, isConfirmed, isWaitlisted } = getUserMetadata(
-            userData
-        );
-
-        if (isConfirmed) {
-            return this.renderConfirmed();
-        } else if (isAccepted) {
-            return this.renderAcceptance();
-        } else if (isWaitlisted) {
-            return this.renderWaitlisted();
-        } else {
-            return null;
-        }
-    }
-
-    renderAcceptance() {
-        const user = this.props.userState.data.user;
-        return (
-            <div>
-                <h3>Application Status: Accepted</h3>
-                <p>
-                    You’re awesome. We’re awesome. Let’s make some great things
-                    together. Head over to the confirmation form to secure your
-                    spot at MHacks X!
-                </p>
-                <StyledNavLink
-                    color={this.props.theme.primary}
-                    to={routes.CONFIRM}
-                >
-                    Confirm
-                </StyledNavLink>
-                {this.renderTravelInfo()}
-                {user.needs_reimbursement && user.reimbursement > 0 ? (
-                    this.renderTravelReimbursement()
-                ) : null}
-            </div>
-        );
-    }
-
-    renderConfirmed() {
-        const user = this.props.userState.data.user;
-        return (
-            <div>
-                <h4>Application Status: Accepted and Confirmed</h4>
-                <p>
-                    We’re excited to see you at MHacks X! We’ve got some great
-                    things in store :) In the meantime, we encourage you to
-                    connect with other hackers in the HH MHacks Facebook Group.
-                    As always, stay tuned to our{' '}
-                    <a href="http://facebook.com/MHacksHackathon">Facebook</a>,{' '}
-                    <a href="http://twitter.com/mhacks">Twitter</a>, and{' '}
-                    <a href="http://instagram.com/mhacks_">Instagram</a> for
-                    updates on all things MHacks.
-                </p>
-                {this.renderTravelInfo()}
-                {user.needs_reimbursement && user.reimbursement > 0 ? (
-                    this.renderTravelReimbursement()
-                ) : null}
-            </div>
-        );
-    }
-
-    renderTravelInfo() {
-        return (
-            <p>
-                Please plan to arrive in Ann Arbor before 6pm on Friday,
-                September 22nd. Registration will begin at 4pm and end at 6pm.
-                Late registration will be available at the Help Desk. Closing
-                Ceremonies will last until about 5pm on Sunday, September 24th.{' '}
-                <br /> <br />
-                <strong>MHacks Buses</strong>: We will be sending buses to
-                several campuses across the nation, stay tuned for more details
-                in the coming weeks. <br /> <br />
-                <strong>Flying</strong>: MHacks airport shuttles will pickup
-                from DTW at 2:30pm and 4pm on Friday, September 22nd. Airport
-                shuttles will leave from Ann Arbor at 6pm on Sunday, September
-                24th. Please book flights accordingly so that you can ride one
-                of the shuttles - travel between the airport and Ann Arbor will
-                not be reimbursed. <br /> <br />
-                <strong>Driving</strong>: Free parking will be available after
-                4pm on Friday, September 22nd first-come first-serve at parking
-                lots on campus.
-            </p>
-        );
-    }
-
-    renderTravelReimbursement() {
-        return (
-            <div>
-                <h4>
-                    Travel Reimbursement Offered: Up to ${this.props.userState.data.user.reimbursement}
-                </h4>
-                <p>
-                    To remain eligible for your reimbursement, you must email
-                    flymhacks@umich.edu with any relevant receipts, ticket
-                    confirmations, etc. within 5 days of application acceptance.{' '}
-                    <br /> <br />If you are driving, please indicate as such on
-                    the confirmation form - you will have until September 30th
-                    to send a single email to flymhacks@umich.edu with all costs
-                    you would like to be reimbursed for. <br /> <br />
-                    If you need a time extension on the deadline, please email
-                    us at flymhacks@umich.edu. We have many other hackers on our
-                    waitlist who would also need a travel reimbursement to
-                    attend.
-                </p>
-            </div>
-        );
-    }
-
-    renderWaitlisted() {
-        return (
-            <div>
-                <h4>Application Status: Waitlisted</h4>
-                <p>
-                    Unfortunately, we are unable to extend an invitation for
-                    MHacks X to you at this time. We hope you will still be a
-                    part of our community via{' '}
-                    <a href="http://facebook.com/MHacksHackathon">Facebook</a>,{' '}
-                    <a href="http://twitter.com/mhacks">Twitter</a>,{' '}
-                    <a href="http://instagram.com/mhacks_">Instagram</a>, and
-                    and encourage you to apply for the next MHacks event in the
-                    winter.
-                </p>
-            </div>
-        );
-    }
-
     render() {
         const userData = this.props.userState.data;
         const {
@@ -473,8 +330,6 @@ class EditProfile extends React.Component {
         return (
             <PageContainer>
                 <FullscreenColumnContainer>
-                    {this.renderApplicationReviewSection()}
-
                     <SectionHeader color={this.props.theme.primary}>
                         Edit Profile
                     </SectionHeader>
@@ -635,6 +490,26 @@ class EditProfile extends React.Component {
                                         defaultText={
                                             userData.user.isResumeUploaded ? (
                                                 'Resume Uploaded'
+                                            ) : null
+                                        }
+                                    />
+                                </FileUploadContainer>
+                                <FileUploadContainer>
+                                    <FileUpload
+                                        fileTitle="Profile Picture"
+                                        defaultColor={
+                                            this.state.avatars.length > 2 ? (
+                                                this.props.theme.success
+                                            ) : (
+                                                this.props.theme.primary
+                                            )
+                                        }
+                                        hoverColor={this.props.theme.secondary}
+                                        activeColor={this.props.theme.success}
+                                        onFileSelect={this.handlePictureUpload}
+                                        defaultText={
+                                            this.state.avatars.length > 2 ? (
+                                                'Profile Picture Uploaded'
                                             ) : null
                                         }
                                     />

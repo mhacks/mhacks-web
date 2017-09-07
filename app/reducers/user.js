@@ -93,6 +93,7 @@ export function userState(state = initialUserState, action) {
                 data: {
                     ...state.data,
                     user: {
+                        ...state.data.user,
                         ...action.data.user
                     }
                 },

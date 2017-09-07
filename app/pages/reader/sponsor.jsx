@@ -49,7 +49,7 @@ class SponsorReader extends React.Component {
                 columns: [
                     {
                         Header: 'Email',
-                        accessor: 'user'
+                        accessor: 'email'
                     },
                     {
                         Header: 'University',
@@ -273,6 +273,7 @@ class SponsorReader extends React.Component {
                         this.props.readerState.data.applications
                     )}
                     columns={this.generateColumns()}
+                    loading={this.props.readerState.fetching}
                     SubComponent={row => {
                         const data = row.original;
                         return (

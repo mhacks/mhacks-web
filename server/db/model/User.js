@@ -609,9 +609,7 @@ schema.methods.getProfile = function() {
                 profile.application_submitted = true;
                 profile.status = status;
                 profile.needs_reimbursement = needs_reimbursement;
-                profile.reimbursement = needs_reimbursement
-                    ? reimbursement
-                    : undefined;
+                profile.reimbursement = reimbursement;
 
                 if (status === 'accepted') {
                     mongoose

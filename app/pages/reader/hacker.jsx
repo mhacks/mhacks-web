@@ -75,13 +75,15 @@ class ReaderPage extends React.Component {
                         width: 30,
                         Cell: row => {
                             const isSelected = selected.includes(
-                                row.original.user
+                                row.original.email
                             );
                             return (
                                 <input
                                     type="checkbox"
                                     checked={isSelected}
-                                    onChange={this.didSelect(row.original.user)}
+                                    onChange={this.didSelect(
+                                        row.original.email
+                                    )}
                                 />
                             );
                         }
@@ -123,7 +125,7 @@ class ReaderPage extends React.Component {
                 columns: [
                     {
                         Header: 'Email',
-                        accessor: 'user'
+                        accessor: 'email'
                     },
                     {
                         Header: 'University',
@@ -279,10 +281,10 @@ class ReaderPage extends React.Component {
                 return false;
             }
 
-            const submitted_since = Date.parse(since);
+            const submitted_since = new Date(since).getTime();
             if (
                 !isNaN(submitted_since) &&
-                new Date(submitted_since) > new Date(application.created_at)
+                submitted_since > new Date(application.created_at).getTime()
             ) {
                 return false;
             }
@@ -303,7 +305,7 @@ class ReaderPage extends React.Component {
         );
 
         this.setState({
-            selected: filtered.map(application => application.user)
+            selected: filtered.map(application => application.email)
         });
     }
 
@@ -382,6 +384,7 @@ class ReaderPage extends React.Component {
                     data={this.filterApplications(
                         this.props.readerState.data.applications
                     )}
+                    loading={this.props.readerState.fetching}
                     columns={this.generateColumns(this.state.selected)}
                     SubComponent={row => {
                         const data = row.original;

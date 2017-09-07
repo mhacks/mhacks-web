@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { SectionHeader, SectionBody } from './section_components.jsx';
+import { ProfilePicture } from '../../components';
 
 const StyledSectionBody = styled(SectionBody)`
     color: white;
@@ -18,11 +19,12 @@ const FlexBox = styled.div`
     alignItems: center;
 `;
 
-const Avatar = styled.img`
-    margin: 20px;
+const ProfileContainer = styled.div`
     width: 100px;
-    height: 100px;
+    height: auto;
 `;
+
+const ContentContainer = styled.div`marginLeft: 10px;`;
 
 class ProfileSection extends React.Component {
     render() {
@@ -33,14 +35,16 @@ class ProfileSection extends React.Component {
                 <SectionHeader>Profile</SectionHeader>
                 <Container>
                     <FlexBox>
-                        <Avatar src="http://via.placeholder.com/100x100" />
-                        <div>
+                        <ProfileContainer>
+                            <ProfilePicture avatars={user.avatars} />
+                        </ProfileContainer>
+                        <ContentContainer>
                             <StyledSectionBody>{user.name}</StyledSectionBody>
                             <StyledSectionBody>
                                 {user.university}
                             </StyledSectionBody>
                             <StyledSectionBody>{user.major}</StyledSectionBody>
-                        </div>
+                        </ContentContainer>
                     </FlexBox>
                 </Container>
             </div>

@@ -98,7 +98,7 @@ class FileUpload extends React.Component {
                             this.state.fileSelected ? activeColor : defaultColor
                         }
                     >
-                        Upload Resume
+                        Upload {this.props.fileTitle}
                     </Button>
                     <FileName>
                         {this.state.fileSelected ? (

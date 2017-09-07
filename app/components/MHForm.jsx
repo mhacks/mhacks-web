@@ -72,15 +72,13 @@ class MHForm extends React.Component {
             case this.FieldTypes.ESSAY:
             case this.FieldTypes.SELECT:
             case this.FieldTypes.FILE:
+            case this.FieldTypes.BOOLEAN:
             case this.FieldTypes.LINK:
+            case this.FieldTypes.NUMBER:
                 return '';
             case this.FieldTypes.DATE: {
                 return 'yyyy-MM-dd';
             }
-            case this.FieldTypes.NUMBER:
-                return 0;
-            case this.FieldTypes.BOOLEAN:
-                return false;
             case this.FieldTypes.ARRAY:
                 return [];
             case this.FieldTypes.SECTIONHEADER:
@@ -104,6 +102,9 @@ class MHForm extends React.Component {
             case this.FieldTypes.SELECT:
             case this.FieldTypes.FILE:
             case this.FieldTypes.LINK:
+            case this.FieldTypes.NUMBER:
+            case this.FieldTypes.BOOLEAN:
+            case this.FieldTypes.ARRAY:
                 return field.default || defaultValue;
             case this.FieldTypes.DATE: {
                 const date = new Date(field.default);
@@ -113,12 +114,6 @@ class MHForm extends React.Component {
 
                 return date.toISOString().split('T')[0];
             }
-            case this.FieldTypes.NUMBER:
-                return field.default || defaultValue;
-            case this.FieldTypes.BOOLEAN:
-                return field.default || defaultValue;
-            case this.FieldTypes.ARRAY:
-                return field.default || defaultValue;
             case this.FieldTypes.SECTIONHEADER:
             case this.FieldTypes.SUBMIT:
                 return defaultValue;
@@ -234,7 +229,9 @@ class MHForm extends React.Component {
                 case this.FieldTypes.TEXT:
                 case this.FieldTypes.ESSAY:
                 case this.FieldTypes.SELECT:
+                case this.FieldTypes.BOOLEAN:
                 case this.FieldTypes.LINK:
+                case this.FieldTypes.NUMBER:
                     if (formData[field.key] === '') {
                         errors.push(field.key);
                     }
@@ -253,6 +250,11 @@ class MHForm extends React.Component {
                     if (files[field.key] === '') {
                         errors.push(field.key);
                     }
+                    break;
+                default:
+                    console.error(
+                        'Field Type not defined, behavior is undefined!'
+                    );
             }
         }
 
@@ -299,11 +301,15 @@ class MHForm extends React.Component {
                 case this.FieldTypes.BOOLEAN:
                     formatted[key] = formData[key];
                     break;
-                case this.FieldTypes.DATE:
-                    formatted[key] = new Date(
-                        new Date(formData[key]).toISOString().split('T')[0]
-                    ).getTime();
+                case this.FieldTypes.DATE: {
+                    const formDate = new Date(formData[key]);
+                    if (!isNaN(formDate.getTime())) {
+                        formatted[key] = new Date(
+                            formDate.toISOString().split('T')[0]
+                        ).getTime();
+                    }
                     break;
+                }
                 case this.FieldTypes.SELECT:
                     if (
                         !field.required &&
