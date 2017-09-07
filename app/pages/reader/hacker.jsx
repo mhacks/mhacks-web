@@ -251,17 +251,25 @@ class ReaderPage extends React.Component {
             distance: 100,
             maxPatternLength: 32,
             minMatchCharLength: 1,
-            keys: ['university', 'user']
+            keys: ['full_name', 'university', 'email']
         });
 
         const searched = search.length > 0 ? fuse.search(search) : applications;
 
         return searched.filter(application => {
-            if (status && application.status !== status) {
+            if (
+                status &&
+                status.length > 0 &&
+                !status.includes(application.status)
+            ) {
                 return false;
             }
 
-            if (experience && application.experience !== experience) {
+            if (
+                experience &&
+                experience.length > 0 &&
+                !experience.includes(application.experience)
+            ) {
                 return false;
             }
 
