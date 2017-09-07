@@ -18,9 +18,21 @@ const FaqItem = props => (
 
 const Seperator = styled.div`
     background: ${props => props.theme.highlight};
-    width: 100
+    width: 100;
     height: 2px;
     margin: 15px auto;
+`;
+
+const ImageWrapper = styled.div`textAlign: center;`;
+
+const QRImage = styled.img`
+    width: 80%;
+    marginTop: 25px;
+`;
+
+const PassbookImage = styled.img`
+    width: 40%;
+    marginTop: 25px;
 `;
 
 class TravelTicketSection extends React.Component {
@@ -28,10 +40,12 @@ class TravelTicketSection extends React.Component {
         return (
             <div>
                 <p>Check your email for this qr code</p>
-                <img src={endpoints.TICKET} width="100%" />
-                <a href={endpoints.TICKET_PASSBOOK}>
-                    <img src={AddToAppleWallet} width="100%" />
-                </a>
+                <ImageWrapper>
+                    <QRImage src={endpoints.TICKET} width="100%" />
+                    <a href={endpoints.TICKET_PASSBOOK}>
+                        <PassbookImage src={AddToAppleWallet} />
+                    </a>
+                </ImageWrapper>
             </div>
         );
     }
