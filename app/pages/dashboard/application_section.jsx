@@ -75,14 +75,25 @@ class ApplicationSection extends React.Component {
                     href="https://www.facebook.com/groups/1506039289667163/"
                 >
                     HH MHacks Facebook Group
-                </Link>. As always, stay tuned to our{' '}
-                <Link href="http://facebook.com/MHacksHackathon">
+                </Link>, and the{' '}
+                <Link
+                    target="_blank"
+                    href="https://www.facebook.com/events/363750477376350/"
+                >
+                    MHacks X Facebook Event
+                </Link>
+                . As always,stay tuned to our{' '}
+                <Link
+                    target="_blank"
+                    href="http://facebook.com/MHacksHackathon"
+                >
                     Facebook
-                </Link>, <Link href="http://twitter.com/mhacks">Twitter</Link>,
-                and <Link href="http://instagram.com/mhacks_">
-                    Instagram
-                </Link>{' '}
-                for updates on all things MHacks.
+                </Link>,{' '}
+                <Link target="_blank" href="http://twitter.com/mhacks">
+                    Twitter
+                </Link>, and{' '}
+                <Link href="http://instagram.com/mhacks_">Instagram</Link> for
+                updates on all things MHacks.
             </SectionBody>
         );
     }
@@ -93,12 +104,19 @@ class ApplicationSection extends React.Component {
                 Unfortunately, we are unable to extend an invitation for MHacks
                 X to you at this time. We hope you will still be a part of our
                 community via{' '}
-                <Link href="http://facebook.com/MHacksHackathon">
+                <Link
+                    target="_blank"
+                    href="http://facebook.com/MHacksHackathon"
+                >
                     Facebook
-                </Link>, <Link href="http://twitter.com/mhacks">Twitter</Link>,{' '}
-                <Link href="http://instagram.com/mhacks_">Instagram</Link>, and
-                and encourage you to apply for the next MHacks event in the
-                winter.
+                </Link>,{' '}
+                <Link target="_blank" href="http://twitter.com/mhacks">
+                    Twitter
+                </Link>,{' '}
+                <Link target="_blank" href="http://instagram.com/mhacks_">
+                    Instagram
+                </Link>, and and encourage you to apply for the next MHacks
+                event in the winter.
             </SectionBody>
         );
     }
