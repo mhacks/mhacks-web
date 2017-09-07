@@ -271,12 +271,8 @@ class Header extends React.Component {
                                     isCompact={false}
                                 />
                                 <Burger
-                                    primaryColor={
-                                        this.props.theme.highlight
-                                    }
-                                    disableCompact={
-                                        !userMetadata.isLoggedIn
-                                    }
+                                    primaryColor={this.props.theme.highlight}
+                                    disableCompact={!userMetadata.isLoggedIn}
                                 >
                                     <HeaderLinks
                                         userMetadata={userMetadata}
