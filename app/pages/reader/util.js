@@ -1,14 +1,8 @@
-export function generateCSV(arr) {
-    if (arr.length === 0) {
-        return;
-    }
-    const keys = Object.keys(arr[0]);
-    const meta = 'data:text/csv;charset=utf-8,';
-    const keyList = keys.join(',') + '\n';
-    const data = arr
-        .map(obj => {
-            return keys.map(key => obj[key]).join(',');
-        })
-        .join('\n');
-    window.open(encodeURI(meta + keyList + data));
+import csv from 'json2csv';
+import fileDownload from 'react-file-download';
+
+export function generateCSV(arr, fileName) {
+    csv({data: arr}, function(err, csvString){
+        fileDownload(csvString, fileName);
+    });
 }

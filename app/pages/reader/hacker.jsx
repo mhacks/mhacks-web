@@ -357,7 +357,7 @@ class ReaderPage extends React.Component {
                         {
                             onClick: () => {
                                 generateCSV(
-                                    this.props.readerState.data.applications
+                                    this.props.readerState.data.applications, 'hacker_applications.csv'
                                 );
                             },
                             title: 'CSV'

@@ -184,7 +184,7 @@ class SpeakerReader extends React.Component {
                             onClick: () => {
                                 generateCSV(
                                     this.props.readerState.data
-                                        .speakerApplications
+                                        .speakerApplications, 'speaker_applications.csv'
                                 );
                             },
                             title: 'CSV'
