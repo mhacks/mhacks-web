@@ -61,7 +61,6 @@ const NavContainer = styled.div`
 
 const HeaderNavLink = styled(NavLink)`
     margin: auto;
-    marginLeft: 0;
 `;
 
 const StyledNavLink = styled(NavLink)`
