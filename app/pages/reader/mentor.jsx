@@ -184,7 +184,8 @@ class MentorReader extends React.Component {
                             onClick: () => {
                                 generateCSV(
                                     this.props.readerState.data
-                                        .mentorApplications, 'mentor_applications.csv'
+                                        .mentorApplications,
+                                    'mentor_applications.csv'
                                 );
                             },
                             title: 'CSV'
