@@ -44,7 +44,7 @@ var schema = new mongoose.Schema({
         form: {
             user_editable: true,
             label: 'Phone Number',
-            placeholder: '(313) 867-5509'
+            placeholder: '(734) 867-5309'
         }
     },
     graduation: {
