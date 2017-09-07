@@ -449,6 +449,7 @@ class MHForm extends React.Component {
                                 return (
                                     <FileUploadContainer key={field.label}>
                                         <FileUpload
+                                            fileTitle={field.label}
                                             defaultColor={uploadBackground}
                                             hoverColor={
                                                 this.props.theme.secondary
