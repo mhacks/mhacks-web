@@ -61,9 +61,9 @@ class ReaderPage extends React.Component {
         this.props.dispatch(
             ReaderThunks.reviewApplications(this.state.selected, formData)
         );
-    }
 
-    navigateToMentorReader() {}
+        this.deselectAll();
+    }
 
     generateColumns(selected) {
         return [
