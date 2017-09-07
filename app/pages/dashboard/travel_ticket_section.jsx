@@ -18,7 +18,7 @@ const FaqItem = props => (
 
 const Seperator = styled.div`
     background: ${props => props.theme.highlight};
-    width: 100;
+    width: 100%;
     height: 2px;
     margin: 15px auto;
 `;
