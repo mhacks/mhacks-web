@@ -10,7 +10,7 @@ var devConfig = {
         'webpack-hot-middleware/client'
     ],
     output: {
-        publicPath: 'http://localhost:3000/',
+        publicPath: (process.env.HOST || 'http://localhost:3000') + '/',
         path: '/',
         filename: 'js/app.js'
     },

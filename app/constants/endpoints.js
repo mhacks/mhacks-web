@@ -7,6 +7,7 @@ export default {
     LOGOUT: '/v1/auth/logout',
     PROFILE: '/v1/user/profile',
     TICKET: '/v1/user/ticket',
+    TICKET_PASSBOOK: '/v1/user/ticket/passbook',
     ALL_HACKER_APPLICATIONS: '/v1/application/all',
     APPLICATION: '/v1/application',
     CONFIRMATION: '/v1/application/confirm',

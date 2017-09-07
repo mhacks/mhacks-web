@@ -78,7 +78,7 @@ module.exports = {
         FILE: 11
     },
     color_dark: process.env.COLOR_DARK || '#5d3e6e',
-    color_light: process.env.COLOR_LIGHT || '',
+    color_light: process.env.COLOR_LIGHT || '#fafafa',
     push_notifications: {
         enabled: parseBool(process.env.PUSH_NOTIS_ENABLED, false),
         apns: {
@@ -89,6 +89,33 @@ module.exports = {
         gcm: {
             id: process.env.GCM_ID || ''
         }
+    },
+    passbook: {
+        enabled: parseBool(process.env.PASSBOOK_ENABLED, false),
+        secret: process.env.PASSBOOK_SECRET || '',
+        directory: process.env.PASSBOOK_DIRECTORY || '/usr/src/app/keys',
+        description: process.env.PASSBOOK_DESCRIPTION || 'MHacks Ticket',
+        logo_url:
+            process.env.PASSBOOK_LOGO_URL ||
+            '/usr/src/app/static/icons/x-logo.png',
+        logo_title_url:
+            process.env.PASSBOOK_LOGO_TITLE_URL ||
+            '/usr/src/app/static/icons/x-logo-title.png',
+        team_id: process.env.PASSBOOK_TEAM_ID || '478C74MJ7T',
+        organization_name: process.env.PASSBOOK_ORGANIZATION_NAME || 'MHacks',
+        label_color: process.env.PASSBOOK_LABEL_TEXT || 'rgba(0, 0, 0, 0.6)',
+        store_identifier: process.env.PASSBOOK_STORE_ID || 955659359,
+        beacon:
+            process.env.PASSBOOK_BEACON ||
+            '5759985C-B037-43B4-939D-D6286CE9C941',
+        beacon_text:
+            process.env.PASSBOOK_BEACON_DESCRIPTION || 'You are near a scanner',
+        locations: JSON.parse(
+            process.env.PASSBOOK_LOCATION ||
+                '[{"lat":42.291033,"lng":-83.718001,"text":"MHacks X"},{"lat":42.291234,"lng":-83.716693,"text":"MHacks X"},{"lat":42.291841,"lng":-83.714762,"text":"MHacks X"}]'
+        ),
+        date: process.env.PASSBOOK_DATE || 'September 22-24',
+        pass_type: process.env.PASSBOOK_PASS_TYPE || 'pass.com.MHacks.UserPass'
     },
     admin_name: process.env.ADMIN_NAME || 'Administrator',
     admin_email: process.env.ADMIN_EMAIL || 'hackathon@umich.edu',
