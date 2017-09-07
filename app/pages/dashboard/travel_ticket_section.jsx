@@ -39,17 +39,17 @@ class TravelTicketSection extends React.Component {
     renderTicketInfo() {
         return (
             <div>
-               <p>
+                <p>
                     We will use this QR code during MHacks to register your
                     attendance, so be sure to save it or return to this page
                     during MHacks!
-               </p>
-               <ImageWrapper>
+                </p>
+                <ImageWrapper>
                     <QRImage src={endpoints.TICKET} width="100%" />
                     <a href={endpoints.TICKET_PASSBOOK}>
                         <PassbookImage src={AddToAppleWallet} />
                     </a>
-                </ImageWrapper>                
+                </ImageWrapper>
             </div>
         );
     }
