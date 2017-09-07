@@ -26,7 +26,7 @@ var schema = new mongoose.Schema({
                     'Sound Design',
                     'Hardware',
                     'Research',
-                    'Other (explained in project desctiption)'
+                    'Other (explained in project description)'
                 ]
             },
             isLeader: {
