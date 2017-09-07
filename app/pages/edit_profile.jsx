@@ -477,6 +477,7 @@ class EditProfile extends React.Component {
                                 </LabeledInput>
                                 <FileUploadContainer>
                                     <FileUpload
+                                        fileTitle="Resume"
                                         defaultColor={
                                             userData.user.isResumeUploaded ? (
                                                 this.props.theme.success
