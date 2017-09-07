@@ -9,6 +9,7 @@ const InputField = styled.div`
     flexDirection: column;
     justifyContent: space-between;
     alignItems: flex-start;
+    fontSize: 1em;
 
     ${devices.small`
         flexDirection: row;

@@ -24,6 +24,7 @@ const Input = styled.input`
     paddingLeft: 10px;
     border: 1px solid ${props => (props.hasError ? 'red' : '#ccc')};
     borderRadius: 4px;
+    fontSize: 1em;
 `;
 
 const TextArea = styled.textarea`
@@ -33,6 +34,7 @@ const TextArea = styled.textarea`
     height: 120px;
     width: 100%;
     borderRadius: 5px;
+    fontSize: 1em;
 `;
 
 class MHForm extends React.Component {
@@ -449,6 +451,7 @@ class MHForm extends React.Component {
                                 return (
                                     <FileUploadContainer key={field.label}>
                                         <FileUpload
+                                            fileTitle={field.label}
                                             defaultColor={uploadBackground}
                                             hoverColor={
                                                 this.props.theme.secondary
