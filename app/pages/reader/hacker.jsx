@@ -61,9 +61,9 @@ class ReaderPage extends React.Component {
         this.props.dispatch(
             ReaderThunks.reviewApplications(this.state.selected, formData)
         );
-    }
 
-    navigateToMentorReader() {}
+        this.deselectAll();
+    }
 
     generateColumns(selected) {
         return [
@@ -251,17 +251,25 @@ class ReaderPage extends React.Component {
             distance: 100,
             maxPatternLength: 32,
             minMatchCharLength: 1,
-            keys: ['university', 'user']
+            keys: ['full_name', 'university', 'email']
         });
 
         const searched = search.length > 0 ? fuse.search(search) : applications;
 
         return searched.filter(application => {
-            if (status && application.status !== status) {
+            if (
+                status &&
+                status.length > 0 &&
+                !status.includes(application.status)
+            ) {
                 return false;
             }
 
-            if (experience && application.experience !== experience) {
+            if (
+                experience &&
+                experience.length > 0 &&
+                !experience.includes(application.experience)
+            ) {
                 return false;
             }
 
@@ -357,7 +365,8 @@ class ReaderPage extends React.Component {
                         {
                             onClick: () => {
                                 generateCSV(
-                                    this.props.readerState.data.applications
+                                    this.props.readerState.data.applications,
+                                    'hacker_applications.csv'
                                 );
                             },
                             title: 'CSV'

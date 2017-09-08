@@ -29,6 +29,7 @@ const InputContainer = styled.div`
         width: 100%;
         margin: 10px 0;
         padding: 8px;
+        fontSize: 1em;
     }
 `;
 

@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { slide as Menu } from 'react-burger-menu';
 import { routes } from '../constants';
-import { Container } from '../components';
 import { devices } from '../styles';
 import theme from '../styles/theme.js';
 import { getUserMetadata } from '../util/user.js';
@@ -35,6 +34,8 @@ const FlexWrapper = styled.div`
     alignItems: center;
     justifyContent: center;
     height: 90%;
+    width: calc(100% - 72px);
+    margin: 0 auto;
 
     ${devices.tablet`
         justifyContent: space-between;
@@ -260,32 +261,26 @@ class Header extends React.Component {
                             />
                         </Helmet>
                         <Wrapper>
-                            <Container>
-                                <FlexWrapper>
-                                    <HeaderNavLink to={routes.HOME}>
-                                        <Logo src={HeaderLogoImage} />
-                                    </HeaderNavLink>
+                            <FlexWrapper>
+                                <HeaderNavLink to={routes.HOME}>
+                                    <Logo src={HeaderLogoImage} />
+                                </HeaderNavLink>
+                                <HeaderLinks
+                                    userMetadata={userMetadata}
+                                    color={this.props.theme.highlight}
+                                    isCompact={false}
+                                />
+                                <Burger
+                                    primaryColor={this.props.theme.highlight}
+                                    disableCompact={!userMetadata.isLoggedIn}
+                                >
                                     <HeaderLinks
                                         userMetadata={userMetadata}
                                         color={this.props.theme.highlight}
-                                        isCompact={false}
+                                        isCompact={true}
                                     />
-                                    <Burger
-                                        primaryColor={
-                                            this.props.theme.highlight
-                                        }
-                                        disableCompact={
-                                            !userMetadata.isLoggedIn
-                                        }
-                                    >
-                                        <HeaderLinks
-                                            userMetadata={userMetadata}
-                                            color={this.props.theme.highlight}
-                                            isCompact={true}
-                                        />
-                                    </Burger>
-                                </FlexWrapper>
-                            </Container>
+                                </Burger>
+                            </FlexWrapper>
                         </Wrapper>
                     </div>
                 )}

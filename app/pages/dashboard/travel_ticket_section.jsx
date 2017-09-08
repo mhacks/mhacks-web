@@ -5,6 +5,8 @@ import { getUserMetadata } from '../../util/user.js';
 import ExpandingItem from './ExpandingItem';
 import { endpoints } from '../../constants';
 
+const AddToAppleWallet = require('../../../static/icons/add_to_apple_wallet.svg');
+
 const FaqItem = props => (
     <ExpandingItem
         {...props}
@@ -16,17 +18,38 @@ const FaqItem = props => (
 
 const Seperator = styled.div`
     background: ${props => props.theme.highlight};
-    width: 100
+    width: 100%;
     height: 2px;
     margin: 15px auto;
+`;
+
+const ImageWrapper = styled.div`textAlign: center;`;
+
+const QRImage = styled.img`
+    width: 80%;
+    marginTop: 25px;
+`;
+
+const PassbookImage = styled.img`
+    width: 40%;
+    marginTop: 25px;
 `;
 
 class TravelTicketSection extends React.Component {
     renderTicketInfo() {
         return (
             <div>
-                <p>Check your email for this qr code</p>
-                <img src={endpoints.TICKET} width="100%" />
+                <p>
+                    We will use this QR code during MHacks to register your
+                    attendance, so be sure to save it or return to this page
+                    during MHacks!
+                </p>
+                <ImageWrapper>
+                    <QRImage src={endpoints.TICKET} width="100%" />
+                    <a href={endpoints.TICKET_PASSBOOK}>
+                        <PassbookImage src={AddToAppleWallet} />
+                    </a>
+                </ImageWrapper>
             </div>
         );
     }

@@ -29,6 +29,7 @@ const StyledSelect = styled.select`
     flexGrow: 1;
     height: 36px;
     width: 100%;
+    fontSize: 16px;
 `;
 
 const FullscreenColumnContainer = styled.div`
@@ -402,7 +403,8 @@ class EditProfile extends React.Component {
                                                 width: '100%',
                                                 paddingLeft: '10px',
                                                 border: '1px solid #ccc',
-                                                borderRadius: '4px'
+                                                borderRadius: '4px',
+                                                fontSize: '1em'
                                             }
                                         }}
                                         sortItems={this.handleSortItems}
@@ -453,7 +455,8 @@ class EditProfile extends React.Component {
                                                 width: '100%',
                                                 paddingLeft: '10px',
                                                 border: '1px solid #ccc',
-                                                borderRadius: '4px'
+                                                borderRadius: '4px',
+                                                fontSize: '1em'
                                             }
                                         }}
                                         sortItems={this.handleSortItems}
@@ -477,6 +480,7 @@ class EditProfile extends React.Component {
                                 </LabeledInput>
                                 <FileUploadContainer>
                                     <FileUpload
+                                        fileTitle="Resume"
                                         defaultColor={
                                             userData.user.isResumeUploaded ? (
                                                 this.props.theme.success

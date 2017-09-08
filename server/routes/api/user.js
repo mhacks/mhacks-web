@@ -11,7 +11,8 @@ var router = require('express').Router(),
     Application = require('../../db/model/Application.js'),
     Confirmation = require('../../db/model/Confirmation.js'),
     ScanEvent = require('../../db/model/ScanEvent.js'),
-    Scan = require('../../db/model/Scan.js');
+    Scan = require('../../db/model/Scan.js'),
+    passbook = require('../../interactors/passbook.js');
 
 router.post(
     '/profile',
@@ -125,6 +126,76 @@ router.get('/ticket', authMiddleware('any', 'api'), function(req, res) {
                                         req.user.email,
                                         res
                                     );
+                                } else {
+                                    res.status(400).send({
+                                        status: false,
+                                        message:
+                                            Responses.Application.NOT_CONFIRMED
+                                    });
+                                }
+                            });
+                    } else {
+                        res.status(400).send({
+                            status: false,
+                            message: Responses.Application.NOT_ACCEPTED
+                        });
+                    }
+                } else {
+                    res.status(400).send({
+                        status: false,
+                        message: Responses.Application.NOT_SUBMITTED
+                    });
+                }
+            });
+    } else {
+        res.status(401).send({
+            status: false,
+            message: Responses.Auth.UNAUTHORIZED
+        });
+    }
+});
+
+router.get('/ticket/passbook', authMiddleware('any', 'api'), function(
+    req,
+    res
+) {
+    if (req.user && req.user.application_submitted) {
+        Application.find()
+            .byEmail(req.user.email)
+            .exec()
+            .then(application => {
+                if (application) {
+                    if (application.status === 'accepted') {
+                        Confirmation.findOne({ user: req.user })
+                            .exec()
+                            .then(confirmation => {
+                                if (confirmation) {
+                                    passbook
+                                        .createPass(req.user.email)
+                                        .then(pass => {
+                                            if (pass) {
+                                                res.attachment('MHacks.pkpass');
+                                                pass.render(res).catch(err => {
+                                                    console.error(err);
+
+                                                    res.status(500).send({
+                                                        status: false,
+                                                        message: err
+                                                    });
+                                                });
+                                            } else {
+                                                res.status(404).send({
+                                                    status: false,
+                                                    message: Responses.NOT_FOUND
+                                                });
+                                            }
+                                        })
+                                        .catch(err => {
+                                            res.status(500).send({
+                                                status: false,
+                                                message: err
+                                            });
+                                        });
                                 } else {
                                     res.status(400).send({
                                         status: false,

@@ -3,6 +3,18 @@ var mongoose = require('../index.js'),
     config = require('../../../config/default.js'),
     escapeStringRegex = require('escape-string-regexp');
 
+const experienceOptions = {
+    novice: 'Novice',
+    experienced: 'Experienced',
+    veteran: 'Veteran'
+};
+
+const statusOptions = {
+    unread: 'Unread',
+    waitlisted: 'Waitlisted',
+    accepted: 'Accepted'
+};
+
 // Define the document Schema
 var schema = new mongoose.Schema({
     general_header: {
@@ -61,11 +73,11 @@ var schema = new mongoose.Schema({
     experience: {
         type: String,
         required: true,
-        enum: ['novice', 'experienced', 'veteran'],
+        enum: Object.keys(experienceOptions),
         form: {
             user_editable: true,
             label: 'Experience',
-            select: ['Novice', 'Experienced', 'Veteran']
+            select: Object.values(experienceOptions)
         }
     },
     links_header: {
@@ -229,11 +241,11 @@ var schema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['unread', 'waitlisted', 'accepted'],
+        enum: Object.keys(statusOptions),
         default: 'unread',
         form: {
             label: 'Status',
-            select: ['Unread', 'Waitlisted', 'Accepted'],
+            select: Object.values(statusOptions),
             auth_groups: ['admin', 'reader']
         }
     },
@@ -263,8 +275,18 @@ var schema = new mongoose.Schema({
         form: [
             {
                 key: 'status',
-                label: 'Status',
-                auth_groups: ['admin', 'reader']
+                enum: false,
+                form: {
+                    label: 'Status',
+                    auth_groups: ['admin', 'reader'],
+                    type_override: 'array',
+                    array_select: Object.keys(statusOptions).map(key => {
+                        return {
+                            value: key,
+                            label: statusOptions[key]
+                        };
+                    })
+                }
             },
             {
                 key: 'needs_reimbursement',
@@ -273,9 +295,19 @@ var schema = new mongoose.Schema({
             },
             {
                 key: 'experience',
-                label: 'Experience',
+                enum: false,
                 required: false,
-                auth_groups: ['admin', 'reader', 'sponsor']
+                form: {
+                    label: 'Experience',
+                    auth_groups: ['admin', 'reader', 'sponsor'],
+                    type_override: 'array',
+                    array_select: Object.keys(experienceOptions).map(key => {
+                        return {
+                            value: key,
+                            label: experienceOptions[key]
+                        };
+                    })
+                }
             },
             {
                 key: 'minor',
