@@ -105,7 +105,7 @@ class MHForm extends React.Component {
             case this.FieldTypes.NUMBER:
             case this.FieldTypes.BOOLEAN:
             case this.FieldTypes.ARRAY:
-                return field.default || defaultValue;
+                return (field.default !== undefined) ? field.default : defaultValue;
             case this.FieldTypes.DATE: {
                 const date = new Date(field.default);
                 if (isNaN(date.getTime())) {
@@ -481,11 +481,11 @@ class MHForm extends React.Component {
                                         value={formData[field.key]}
                                         options={[
                                             {
-                                                value: 'yes',
+                                                value: true,
                                                 label: 'Yes'
                                             },
                                             {
-                                                value: 'no',
+                                                value: false,
                                                 label: 'No'
                                             }
                                         ]}
