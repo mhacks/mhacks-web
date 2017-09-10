@@ -4,11 +4,10 @@ import styled from 'styled-components';
 import { ConfigurationThunks } from '../../actions';
 import { MHForm, Container } from '../../components';
 
-const SlimContainer = styled(Container)`max-width: 500px;`
-const H1 = styled.h1`padding: 20px 0;`
+const SlimContainer = styled(Container)`max-width: 500px;`;
+const H1 = styled.h1`padding: 20px 0;`;
 
 class ConfigurationSection extends Component {
-
     constructor(props) {
         super(props);
         this.onSubmit = this.onSubmit.bind(this);
@@ -38,7 +37,7 @@ class ConfigurationSection extends Component {
     }
 
     onSubmit(formData) {
-        this.props.dispatch(ConfigurationThunks.updateConfig(formData))
+        this.props.dispatch(ConfigurationThunks.updateConfig(formData));
     }
 
     render() {

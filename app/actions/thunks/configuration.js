@@ -109,7 +109,10 @@ export default class ConfigurationThunks {
 
             const token = localStorage.getItem('jwt');
 
-            return ConfigurationRequests.updateConfiguration(token, formData).then(response => {
+            return ConfigurationRequests.updateConfiguration(
+                token,
+                formData
+            ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch({

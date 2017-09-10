@@ -38,27 +38,25 @@ export function configurationState(state = initialState, action) {
                 ...action.data.configuration
             };
 
-            case actions.LOAD_CONFIGURATION_FORM_SUCCESS:
+        case actions.LOAD_CONFIGURATION_FORM_SUCCESS:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    form: action.data.form,
+                    FieldTypes: action.data.FieldTypes
+                },
+                message: action.message
+            };
 
-                return {
-                    ...state,
-                    data: {
-                        ...state.data,
-                        form: action.data.form,
-                        FieldTypes: action.data.FieldTypes
-                    },
-                    message: action.message
-                };
-
-            case actions.UPDATE_CONFIGURATION_SUCCESS:
-
-                return {
-                    ...state,
-                    fetching: false,
-                    fetched: true,
-                    message: action.message,
-                    ...action.data
-                };
+        case actions.UPDATE_CONFIGURATION_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                message: action.message,
+                ...action.data
+            };
 
         default:
             return state;
