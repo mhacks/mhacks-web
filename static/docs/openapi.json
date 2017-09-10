@@ -37,14 +37,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postAuthLogin",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Auth"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Auth"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "auth": {
+                                            "$ref": "#/components/schemas/Auth"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -71,14 +91,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postAuthRegister",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Auth"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Auth"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "auth": {
+                                            "$ref": "#/components/schemas/Auth"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -105,14 +145,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postAuthVerify",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Auth"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Auth"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "auth": {
+                                            "$ref": "#/components/schemas/Auth"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -139,10 +199,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getAuthVerify:token",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "auth": {
+                                            "$ref": "#/components/schemas/Auth"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -169,14 +244,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postAuthPassword",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Auth"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Auth"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "auth": {
+                                            "$ref": "#/components/schemas/Auth"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -203,14 +298,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postAuthPassword:token",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Auth"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Auth"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "auth": {
+                                            "$ref": "#/components/schemas/Auth"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -237,14 +352,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postAuthLogout",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Auth"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Auth"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "auth": {
+                                            "$ref": "#/components/schemas/Auth"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -271,14 +406,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postEmailSubscribe",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Email"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Email"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "email": {
+                                            "$ref": "#/components/schemas/Email"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -305,14 +460,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "patchAnnouncements",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Announcement"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Announcement"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "announcements": {
+                                            "$ref": "#/components/schemas/Announcement"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -337,14 +512,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "putAnnouncements",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Announcement"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Announcement"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "announcements": {
+                                            "$ref": "#/components/schemas/Announcement"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -369,14 +564,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postAnnouncements",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Announcement"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Announcement"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "announcements": {
+                                            "$ref": "#/components/schemas/Announcement"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -401,10 +616,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getAnnouncements",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "announcements": {
+                                            "$ref": "#/components/schemas/Announcement"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -431,10 +661,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getUserProfile",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -459,14 +704,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postUserProfile",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/User"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -493,10 +758,70 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getUserTicket",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/user/ticket/passbook": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getUserTicketPassbook",
+                "responses": {
+                    "200": {
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -523,10 +848,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getUserTicketVerify",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -553,10 +893,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getApplication",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "application": {
+                                            "$ref": "#/components/schemas/Application"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -581,14 +936,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postApplication",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Application"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Application"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "application": {
+                                            "$ref": "#/components/schemas/Application"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -615,10 +990,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getApplicationAll",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "application": {
+                                            "$ref": "#/components/schemas/Application"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -645,10 +1035,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getApplicationConfirm",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "application": {
+                                            "$ref": "#/components/schemas/Application"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -673,14 +1078,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postApplicationConfirm",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Application"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Application"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "application": {
+                                            "$ref": "#/components/schemas/Application"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -707,14 +1132,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postDeployWebhookGithub",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Deploy"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Deploy"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "deploy": {
+                                            "$ref": "#/components/schemas/Deploy"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -741,14 +1186,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postDeployWebhookSlack",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Deploy"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Deploy"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "deploy": {
+                                            "$ref": "#/components/schemas/Deploy"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -775,10 +1240,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getArtifactResume:email",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "artifact": {
+                                            "$ref": "#/components/schemas/Artifact"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -805,10 +1285,70 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getArtifactAvatar:email",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "artifact": {
+                                            "$ref": "#/components/schemas/Artifact"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/artifact/resumes": {
+            "get": {
+                "tags": [
+                    "Artifact"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getArtifactResumes",
+                "responses": {
+                    "200": {
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "artifact": {
+                                            "$ref": "#/components/schemas/Artifact"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -835,10 +1375,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getConfiguration",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "configuration": {
+                                            "$ref": "#/components/schemas/Configuration"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -865,14 +1420,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postConfigurationControl",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Configuration"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Configuration"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "configuration": {
+                                            "$ref": "#/components/schemas/Configuration"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -899,10 +1474,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getForm:model",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "form": {
+                                            "$ref": "#/components/schemas/Form"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -929,10 +1519,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getForm:model:submodel",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "form": {
+                                            "$ref": "#/components/schemas/Form"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -959,14 +1564,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postShortener",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Shortener"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Shortener"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "shortener": {
+                                            "$ref": "#/components/schemas/Shortener"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -991,10 +1616,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getShortener",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "shortener": {
+                                            "$ref": "#/components/schemas/Shortener"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1021,10 +1661,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getShortener:id",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "shortener": {
+                                            "$ref": "#/components/schemas/Shortener"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1051,14 +1706,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postAdminUserGroups",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Admin"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Admin"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "admin": {
+                                            "$ref": "#/components/schemas/Admin"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1085,14 +1760,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postReader",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Reader"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Reader"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "reader": {
+                                            "$ref": "#/components/schemas/Reader"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1119,14 +1814,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "patchPush",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Push"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Push"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "push": {
+                                            "$ref": "#/components/schemas/Push"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1151,14 +1866,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "putPush",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Push"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Push"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "push": {
+                                            "$ref": "#/components/schemas/Push"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1183,14 +1918,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postPush",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Push"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Push"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "push": {
+                                            "$ref": "#/components/schemas/Push"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1215,10 +1970,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getPush",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "push": {
+                                            "$ref": "#/components/schemas/Push"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1245,14 +2015,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postScan",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Scan"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Scan"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "scan": {
+                                            "$ref": "#/components/schemas/Scan"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1277,10 +2067,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getScan",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "scan": {
+                                            "$ref": "#/components/schemas/Scan"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1307,10 +2112,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getScanImage:id",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "scan": {
+                                            "$ref": "#/components/schemas/Scan"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1337,14 +2157,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postScan:id",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Scan"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Scan"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "scan": {
+                                            "$ref": "#/components/schemas/Scan"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1369,10 +2209,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getScan:id",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "scan": {
+                                            "$ref": "#/components/schemas/Scan"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1399,10 +2254,25 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getSponsor",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "sponsor": {
+                                            "$ref": "#/components/schemas/Sponsor"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1427,14 +2297,34 @@
                 "summary": "",
                 "description": "",
                 "operationId": "postSponsor",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/Sponsor"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Sponsor"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "sponsor": {
+                                            "$ref": "#/components/schemas/Sponsor"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1461,10 +2351,309 @@
                 "summary": "",
                 "description": "",
                 "operationId": "getSponsorLogo:id",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "sponsor": {
+                                            "$ref": "#/components/schemas/Sponsor"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/location": {
+            "get": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getLocation",
+                "responses": {
+                    "200": {
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "location": {
+                                            "$ref": "#/components/schemas/Location"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postLocation",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Location"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "location": {
+                                            "$ref": "#/components/schemas/Location"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/location/:name": {
+            "get": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getLocation:name",
+                "responses": {
+                    "200": {
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "location": {
+                                            "$ref": "#/components/schemas/Location"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/event": {
+            "get": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getEvent",
+                "responses": {
+                    "200": {
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "event": {
+                                            "$ref": "#/components/schemas/Event"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "postEvent",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Event"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "event": {
+                                            "$ref": "#/components/schemas/Event"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/event/:name": {
+            "get": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getEvent:name",
+                "responses": {
+                    "200": {
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "event": {
+                                            "$ref": "#/components/schemas/Event"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1486,15 +2675,30 @@
         "/v1/mentor/application": {
             "get": {
                 "tags": [
-                    "Mentor"
+                    "MentorApplication"
                 ],
                 "summary": "",
                 "description": "",
                 "operationId": "getMentorApplication",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "application": {
+                                            "$ref": "#/components/schemas/MentorApplication"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1514,19 +2718,84 @@
             },
             "post": {
                 "tags": [
-                    "Mentor"
+                    "MentorApplication"
                 ],
                 "summary": "",
                 "description": "",
                 "operationId": "postMentorApplication",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/MentorApplication"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MentorApplication"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "application": {
+                                            "$ref": "#/components/schemas/MentorApplication"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/mentor/all": {
+            "get": {
+                "tags": [
+                    "MentorApplication"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getMentorAll",
+                "responses": {
+                    "200": {
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "application": {
+                                            "$ref": "#/components/schemas/MentorApplication"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1548,15 +2817,30 @@
         "/v1/speaker/application": {
             "get": {
                 "tags": [
-                    "Speaker"
+                    "SpeakerApplication"
                 ],
                 "summary": "",
                 "description": "",
                 "operationId": "getSpeakerApplication",
-                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "application": {
+                                            "$ref": "#/components/schemas/SpeakerApplication"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1576,19 +2860,84 @@
             },
             "post": {
                 "tags": [
-                    "Speaker"
+                    "SpeakerApplication"
                 ],
                 "summary": "",
                 "description": "",
                 "operationId": "postSpeakerApplication",
-                "parameters": [
-                    {
-                        "$ref": "#/components/schemas/SpeakerApplication"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SpeakerApplication"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Okay"
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "application": {
+                                            "$ref": "#/components/schemas/SpeakerApplication"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/speaker/all": {
+            "get": {
+                "tags": [
+                    "SpeakerApplication"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getSpeakerAll",
+                "responses": {
+                    "200": {
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "application": {
+                                            "$ref": "#/components/schemas/SpeakerApplication"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request"
@@ -1660,9 +3009,29 @@
                 "type": "object",
                 "properties": {}
             },
+            "Artifact": {
+                "type": "object",
+                "properties": {}
+            },
+            "Form": {
+                "type": "object",
+                "properties": {}
+            },
             "User": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The id of the document"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
                     "full_name": {
                         "type": "string",
                         "description": "Full Name"
@@ -1671,9 +3040,22 @@
                         "type": "string",
                         "description": "Email"
                     },
+                    "email_verified": {
+                        "type": "boolean",
+                        "description": "Email Verified"
+                    },
+                    "application_submitted": {
+                        "type": "boolean",
+                        "description": "Application Submitted"
+                    },
                     "password": {
                         "type": "string",
                         "description": "Password"
+                    },
+                    "birthday_ts": {
+                        "type": "number",
+                        "format": "integer",
+                        "description": "Date of Birth"
                     },
                     "birthday": {
                         "type": "string",
@@ -1718,6 +3100,7 @@
                         "type": "string",
                         "description": "T-Shirt",
                         "enum": [
+                            "unselected",
                             "xs",
                             "s",
                             "m",
@@ -1757,6 +3140,28 @@
             "Application": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The id of the document"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "general_header": {},
+                    "user": {
+                        "type": "string",
+                        "description": "Email"
+                    },
+                    "birthday_ts": {
+                        "type": "number",
+                        "format": "integer",
+                        "description": "Date of Birth"
+                    },
                     "birthday": {
                         "type": "string",
                         "format": "date-time",
@@ -1774,6 +3179,7 @@
                         "type": "string",
                         "description": "T-Shirt",
                         "enum": [
+                            "unselected",
                             "xs",
                             "s",
                             "m",
@@ -1792,6 +3198,7 @@
                             "veteran"
                         ]
                     },
+                    "links_header": {},
                     "resume": {
                         "type": "string",
                         "format": "binary",
@@ -1813,6 +3220,7 @@
                         "type": "string",
                         "description": "Portfolio"
                     },
+                    "demographics_header": {},
                     "race": {
                         "type": "string",
                         "description": "Race",
@@ -1838,6 +3246,7 @@
                             "prefer-not"
                         ]
                     },
+                    "short_answer_headers": {},
                     "why_mhacks": {
                         "type": "string",
                         "description": "Why do you want to come to MHacks?"
@@ -1861,12 +3270,48 @@
                     "requested_reimbursement": {
                         "type": "number",
                         "description": "How much reimbursement do you expect to need?"
-                    }
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Status",
+                        "default": "unread",
+                        "enum": [
+                            "unread",
+                            "waitlisted",
+                            "accepted"
+                        ]
+                    },
+                    "score": {
+                        "type": "number",
+                        "description": "Score"
+                    },
+                    "reader": {
+                        "type": "string",
+                        "description": "Reader"
+                    },
+                    "reimbursement": {
+                        "type": "number",
+                        "description": "Reimbursement"
+                    },
+                    "reader_filter": {},
+                    "reader_schema": {}
                 }
             },
             "Confirmation": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The id of the document"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
                     "phone": {
                         "type": "string",
                         "description": "Phone Number"
@@ -1922,40 +3367,180 @@
                         "type": "array",
                         "description": "Skills",
                         "default": []
-                    }
+                    },
+                    "confirm_button": {},
+                    "sponsor_filter": {}
                 }
             },
             "PushNotification": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The id of the document"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
             },
             "ScanEvent": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The id of the document"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
             },
             "Scan": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The id of the document"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
             },
             "Announcement": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The id of the document"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
             },
             "Configuration": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The id of the document"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
             },
             "Shortener": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The id of the document"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "Location": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The id of the document"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "Event": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The id of the document"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
             },
             "Sponsor": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The id of the document"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
             },
             "MentorApplication": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The id of the document"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "general_header": {},
                     "skills": {
                         "type": "array",
                         "description": "I can mentor in...",
@@ -1977,6 +3562,7 @@
                         "type": "string",
                         "description": "Availability during the event"
                     },
+                    "links_header": {},
                     "resume": {
                         "type": "string",
                         "format": "binary",
@@ -1997,6 +3583,12 @@
                     "portfolio": {
                         "type": "string",
                         "description": "Portfolio"
+                    },
+                    "demographics_header": {},
+                    "birthday_ts": {
+                        "type": "number",
+                        "format": "integer",
+                        "description": "Date of Birth"
                     },
                     "birthday": {
                         "type": "string",
@@ -2040,12 +3632,26 @@
                             "non-binary",
                             "prefer-not"
                         ]
-                    }
+                    },
+                    "save_button": {}
                 }
             },
             "SpeakerApplication": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The id of the document"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "general_header": {},
                     "talk_type": {
                         "type": "string",
                         "description": "Would you like to give a Tech Talk (give a presentation, possibly followed by a Q&A session) or a Workshop (interactive, more hands-on for the audience)?",
@@ -2074,6 +3680,7 @@
                         "type": "string",
                         "description": "List down anything that qualifies you to be a mentor (e.g. projects, classes, work experience, hobbies, past hackathons, etc.)"
                     },
+                    "links_header": {},
                     "resume": {
                         "type": "string",
                         "format": "binary",
@@ -2094,6 +3701,12 @@
                     "portfolio": {
                         "type": "string",
                         "description": "Portfolio"
+                    },
+                    "demographics_header": {},
+                    "birthday_ts": {
+                        "type": "number",
+                        "format": "integer",
+                        "description": "Date of Birth"
                     },
                     "birthday": {
                         "type": "string",
@@ -2137,7 +3750,8 @@
                             "non-binary",
                             "prefer-not"
                         ]
-                    }
+                    },
+                    "save_button": {}
                 }
             }
         },

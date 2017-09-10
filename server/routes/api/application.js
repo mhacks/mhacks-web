@@ -78,7 +78,7 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
 
 // Returns application for the current user
 router.get('/', function(req, res) {
-    Application.find({}, '-_id -__v -score -reader -review_notes')
+    Application.find({}, '-score -reader -review_notes')
         .byToken(req.authToken)
         .then(application => {
             res.send({
@@ -100,7 +100,6 @@ router.get('/all', authMiddleware('sponsor reader admin', 'api'), function(
     res
 ) {
     Application.find()
-        .select('-_id -__v')
         .then(applications => {
             User.find({
                 email: {
@@ -109,10 +108,8 @@ router.get('/all', authMiddleware('sponsor reader admin', 'api'), function(
                         .map(application => application.user)
                 }
             })
-                .select('_id full_name email')
                 .then(users => {
                     Confirmation.find()
-                        .select('-_id -__v')
                         .then(confirmations => {
                             res.send({
                                 status: true,

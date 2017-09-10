@@ -1,4 +1,4 @@
-var mongoose = require('../index.js'),
+var { mongoose, defaultOptions, modifySchema } = require('../index.js'),
     config = require('../../../config/default.js'),
     escapeStringRegex = require('escape-string-regexp');
 
@@ -31,14 +31,7 @@ var schema = new mongoose.Schema(
             type: String
         }
     },
-    {
-        toObject: {
-            virtuals: true
-        },
-        toJSON: {
-            virtuals: true
-        }
-    }
+    defaultOptions
 );
 
 // Allow us to query by name
@@ -60,6 +53,8 @@ schema.query.byLevel = function(level) {
 schema.virtual('logo_url').get(function() {
     return config.host + '/v1/sponsor/logo/' + this.id;
 });
+
+modifySchema(schema);
 
 // Initialize the model with the schema, and export it
 var model = mongoose.model('Sponsor', schema);

@@ -188,7 +188,19 @@ doc.components.schemas = {
         properties: {
 
         }
-    }
+    },
+    Artifact: {
+        type: 'object',
+        properties: {
+
+        }
+    },
+    Form: {
+        type: 'object',
+        properties: {
+
+        }
+    },
 };
 
 const routes = {};
@@ -220,7 +232,20 @@ for (const modelName in mongoose.modelSchemas) {
         const model = mongoose.modelSchemas[modelName],
             definition = {
                 type: 'object',
-                properties: {}
+                properties: {
+                    id: {
+                        type: 'string',
+                        description: 'The id of the document'
+                    },
+                    createdAt: {
+                        type: 'string',
+                        format: 'date-time',
+                    },
+                    updatedAt: {
+                        type: 'string',
+                        format: 'date-time',
+                    }
+                }
             };
 
         for (const prop in model.obj) {
@@ -228,7 +253,7 @@ for (const modelName in mongoose.modelSchemas) {
                 const prop_val = model.obj[prop];
                 let type = prop_val.type;
 
-                if (prop_val.form && prop_val.form.user_editable) {
+                if (prop_val.form) {
                     if (prop_val.form.type_override) {
                         type = prop_val.form.type_override;
                     }
@@ -251,6 +276,12 @@ for (const modelName in mongoose.modelSchemas) {
                             };
                             break;
                         case Date:
+                            definition.properties[prop + '_ts'] = {
+                                type: 'number',
+                                format: 'integer',
+                                description: prop_val.form.label,
+                                default: prop_val.default
+                            };
                             prop_def_obj = {
                                 type: 'string',
                                 format: 'date-time',
@@ -321,8 +352,14 @@ for (const route in cleanRoutes) {
         const routeParts = route.split('/');
         doc.paths[route] = {};
 
-        let specialTag = false;
-        const tag = routeParts[2].charAt(0).toUpperCase() + routeParts[2].slice(1);
+        let specialTag = false,
+            tag = routeParts[2].charAt(0).toUpperCase() + routeParts[2].slice(1),
+            responseProp = tag;
+
+        if (tag === 'Mentor' || tag === 'Speaker') {
+            tag += 'Application';
+            responseProp = 'application';
+        }
 
         if (routeParts[3]) {
             const testSpecialTag = tag + routeParts[3].charAt(0).toUpperCase() + routeParts[3].slice(1);
@@ -340,14 +377,31 @@ for (const route in cleanRoutes) {
                 summary: '',
                 description: '',
                 operationId: method + routeParts.slice(2).map(function(elem) { return elem.charAt(0).toUpperCase() + elem.slice(1) }).join(''),
-                parameters: [
-                    {
-                        $ref: '#/components/schemas/' + (specialTag || (tag.substr(-1) === 's' ? tag.substr(0, tag.length - 1) : tag))
+                requestBody: {
+                    content: {
+                        'application/json': {
+                            schema: {
+                                $ref: '#/components/schemas/' + (specialTag || (tag.substr(-1) === 's' ? tag.substr(0, tag.length - 1) : tag))
+                            },
+                        }
                     }
-                ],
+                },
                 responses: {
                     '200': {
-                        description: 'Okay'
+                        description: 'Okay',
+                        content: {
+                            'application/json': {
+                                schema: {
+                                    type: 'object',
+                                    properties: {
+                                        status: {
+                                            type: 'boolean',
+                                            description: 'Whether or not the request was successful'
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     '401': {
                         description: 'Unauthorized'
@@ -366,10 +420,14 @@ for (const route in cleanRoutes) {
                 ]
             };
 
+            doc.paths[route][method].responses['200'].content['application/json'].schema.properties[responseProp.toLowerCase()] = {
+                $ref: '#/components/schemas/' + (specialTag || (tag.substr(-1) === 's' ? tag.substr(0, tag.length - 1) : tag))
+            };
+
             if (['get'].indexOf(method) !== -1) {
-                doc.paths[route][method].parameters = [];
+                delete doc.paths[route][method].requestBody;
             }
-        });
+        });3
     }
 }
 

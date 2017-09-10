@@ -1,28 +1,31 @@
-var mongoose = require('../index.js'),
+var { mongoose, defaultOptions, modifySchema } = require('../index.js'),
     PushNotification = require('./PushNotification.js');
 
 // Define the document Schema
-var schema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+var schema = new mongoose.Schema(
+    {
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
+        scanner: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
+        event: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Scan',
+            required: true
+        },
+        created_at: {
+            type: Date,
+            default: Date.now
+        }
     },
-    scanner: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    event: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Scan',
-        required: true
-    },
-    created_at: {
-        type: Date,
-        default: Date.now
-    }
-});
+    defaultOptions
+);
 
 // Allow us to query by token
 schema.query.byToken = function(findToken) {
@@ -90,6 +93,8 @@ schema.post('save', function(doc) {
         users: [doc.user.email, doc.scanner.email]
     });
 });
+
+modifySchema(schema);
 
 // Initialize the model with the schema, and export it
 var model = mongoose.model('ScanEvent', schema);

@@ -75,7 +75,7 @@ router.post(
 
 // Returns mentor application for the current user
 router.get('/application', authMiddleware('any', 'api'), function(req, res) {
-    MentorApplication.find({}, '-_id -__v')
+    MentorApplication.find({})
         .byUser(req.user)
         .then(application => {
             res.send({
@@ -94,7 +94,6 @@ router.get('/application', authMiddleware('any', 'api'), function(req, res) {
 // Returns all mentor applications
 router.get('/all', authMiddleware('reader admin', 'api'), function(req, res) {
     MentorApplication.find()
-        .select('-_id -__v')
         .populate('user')
         .then(applications => {
             res.send({

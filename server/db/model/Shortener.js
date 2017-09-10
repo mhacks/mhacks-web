@@ -1,4 +1,4 @@
-var mongoose = require('../index.js'),
+var { mongoose, defaultOptions, modifySchema } = require('../index.js'),
     config = require('../../../config/default.js'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin');
 
@@ -39,10 +39,7 @@ var schema = new mongoose.Schema(
             }
         ]
     },
-    {
-        toObject: { virtuals: true },
-        toJSON: { virtuals: true }
-    }
+    defaultOptions
 );
 
 schema.query.byShortCode = function(short_code) {
@@ -65,6 +62,8 @@ schema.virtual('short_url').get(function() {
 });
 
 schema.plugin(sanitizerPlugin);
+
+modifySchema(schema);
 
 // Initialize the model with the schema, and export it
 var model = mongoose.model('Shortener', schema);

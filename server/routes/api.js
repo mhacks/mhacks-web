@@ -19,8 +19,11 @@ var router = require('express').Router(),
     sponsorHandler = require('./api/sponsor.js'),
     mentorHandler = require('./api/mentor.js'),
     floorHandler = require('./api/floor.js'),
-    speakerHandler = require('./api/speaker.js');
+    speakerHandler = require('./api/speaker.js'),
+    swaggerUI = require('swagger-ui-express'),
+    swaggerDoc = require('../../static/docs/openapi.json');
 
+router.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 router.use('/auth', authHandler);
 router.use('/email', emailHandler);
 router.use('/announcements', announcementHandler);
@@ -43,7 +46,7 @@ router.use('/floor', floorHandler);
 router.use('/speaker', speakerHandler);
 
 router.get('/', function(req, res) {
-    res.send('API');
+    res.redirect('/v1/docs');
 });
 
 module.exports = router;

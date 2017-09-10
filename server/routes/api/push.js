@@ -13,8 +13,8 @@ function sortByDate(a, b) {
 // Handles get requests for /v1/push
 router.get('/', function(req, res) {
     authMiddleware('admin', 'api', true, function() {
-        PushNotification.find({}, '-_id -__v')
-            .byIsPublic()
+        PushNotification.find()
+            .byIsPublic(req.query.since)
             .exec()
             .then(pushnotifications => {
                 pushnotifications.sort(sortByDate);
@@ -32,7 +32,8 @@ router.get('/', function(req, res) {
                 });
             });
     })(req, res, function() {
-        PushNotification.find({}, '-_id -__v')
+        PushNotification.find()
+            .since(req.query.since)
             .exec()
             .then(pushnotifications => {
                 pushnotifications.sort(sortByDate);

@@ -1,28 +1,31 @@
-var mongoose = require('../index.js'),
+var { mongoose, defaultOptions, modifySchema } = require('../index.js'),
     escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
-var schema = new mongoose.Schema({
-    name: String,
-    desc: String,
-    startDate: {
-        type: Date,
-        default: Date.now()
+var schema = new mongoose.Schema(
+    {
+        name: String,
+        desc: String,
+        startDate: {
+            type: Date,
+            default: Date.now()
+        },
+        endDate: {
+            type: Date,
+            default: Date.now()
+        },
+        category: {
+            type: String,
+            enum: ['General', 'Food', 'Tech Talk', 'Sponsor Event', 'Other'],
+            default: 'General'
+        },
+        location: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Location'
+        }
     },
-    endDate: {
-        type: Date,
-        default: Date.now()
-    },
-    category: {
-        type: String,
-        enum: ['General', 'Food', 'Tech Talk', 'Sponsor Event', 'Other'],
-        default: 'General'
-    },
-    location: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Location'
-    }
-});
+    defaultOptions
+);
 
 // Allow us to query by name
 schema.query.byName = function(name) {
@@ -61,6 +64,8 @@ schema.methods.updateFields = function(fields) {
     }
     return this.save();
 };
+
+modifySchema(schema);
 
 // Initialize the model with the schema, and export it
 var model = mongoose.model('Event', schema);
