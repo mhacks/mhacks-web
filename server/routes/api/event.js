@@ -44,8 +44,11 @@ router.post('/', authMiddleware('admin', 'api', true), function(req, res) {
                         req.body.location = location._id;
                         return Event.create({
                             name: req.body.name,
-                            longitude: req.body.longitude,
-                            latitude: req.body.latitude
+                            desc: req.body.desc,
+                            startDate: req.body.startDate,
+                            endDate: req.body.endDate,
+                            category: req.body.category,
+                            location: req.body.location
                         });
                     })
                     .then(event => {

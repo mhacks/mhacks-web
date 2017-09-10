@@ -18,6 +18,7 @@ var router = require('express').Router(),
     eventHandler = require('./api/event.js'),
     sponsorHandler = require('./api/sponsor.js'),
     mentorHandler = require('./api/mentor.js'),
+    floorHandler = require('./api/floor.js'),
     speakerHandler = require('./api/speaker.js');
 
 router.use('/auth', authHandler);
@@ -38,6 +39,7 @@ router.use('/sponsor', sponsorHandler);
 router.use('/location', locationHandler);
 router.use('/event', eventHandler);
 router.use('/mentor', mentorHandler);
+router.use('/floor', floorHandler);
 router.use('/speaker', speakerHandler);
 
 router.get('/', function(req, res) {
