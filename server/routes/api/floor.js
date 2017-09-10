@@ -4,7 +4,7 @@ var router = require('express').Router(),
 
 // Handles get requests for /v1/floor
 router.get('/', function(req, res) {
-    Floor.find({}, '-__v')
+    Floor.find()
         .exec()
         .then(floors => {
             res.send({
