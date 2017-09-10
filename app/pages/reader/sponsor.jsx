@@ -254,8 +254,7 @@ class SponsorReader extends React.Component {
                         {
                             onClick: () => {
                                 generateCSV(
-                                    this.props.readerState.data
-                                        .hackerApplications,
+                                    this.props.readerState.data.applications,
                                     'hacker_applications.csv'
                                 );
                             },
