@@ -13,7 +13,7 @@ const util = require('util'),
             title: 'MHacks',
             termsOfService: 'https://mhacks.org',
             contact: {
-                email: 'me@antoniomika.me'
+                email: 'hackathon-tech@umich.edu'
             },
             license: {
                 name: 'GNU General Public License v3.0',
@@ -251,93 +251,88 @@ for (const modelName in mongoose.modelSchemas) {
         for (const prop in model.obj) {
             if (model.obj.hasOwnProperty(prop)) {
                 const prop_val = model.obj[prop];
-                let type = prop_val.type;
+                let type = prop_val.type,
+                    label = prop_val.label || '',
+                    defaultValue = (prop_val.default !== undefined ? prop_val.default : '');
 
                 if (prop_val.form) {
                     if (prop_val.form.type_override) {
                         type = prop_val.form.type_override;
                     }
 
-                    let prop_def_obj = {};
-
-                    switch (type) {
-                        case String:
-                            prop_def_obj = {
-                                type: 'string',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
-                        case Boolean:
-                            prop_def_obj = {
-                                type: 'boolean',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
-                        case Date:
-                            definition.properties[prop + '_ts'] = {
-                                type: 'number',
-                                format: 'integer',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            prop_def_obj = {
-                                type: 'string',
-                                format: 'date-time',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
-                        case Number:
-                            prop_def_obj = {
-                                type: 'number',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
-                        case Buffer:
-                            prop_def_obj = {
-                                type: 'buffer',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
-                        case Array:
-                        case 'array':
-                            prop_def_obj = {
-                                type: 'array',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
-                        case 'essay':
-                            prop_def_obj = {
-                                type: 'string',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
-                        case 'sectionheader':
-                            break;
-                        case 'submit':
-                            break;
-                        case 'file':
-                            prop_def_obj = {
-                                type: 'string',
-                                format: 'binary',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
+                    if (prop_val.form.label) {
+                        label = prop_val.label;
                     }
 
-                    if ('enum' in prop_val) {
-                        prop_def_obj.enum = prop_val.enum;
+                    if (prop_val.form.default) {
+                        defaultValue = prop_val.form.default;
                     }
-
-                    definition.properties[prop] = prop_def_obj;
                 }
+
+                let prop_def_obj = {
+                    description: label,
+                    default: defaultValue
+                };
+
+                switch (type) {
+                    case String:
+                        prop_def_obj = {
+                            type: 'string'
+                        };
+                        break;
+                    case Boolean:
+                        prop_def_obj = {
+                            type: 'boolean'
+                        };
+                        break;
+                    case Date:
+                        definition.properties[prop + '_ts'] = {
+                            type: 'number',
+                            format: 'integer'
+                        };
+                        prop_def_obj = {
+                            type: 'string',
+                            format: 'date-time'
+                        };
+                        break;
+                    case Number:
+                        prop_def_obj = {
+                            type: 'number'
+                        };
+                        break;
+                    case Buffer:
+                        prop_def_obj = {
+                            type: 'buffer'
+                        };
+                        break;
+                    case Array:
+                    case 'array':
+                        prop_def_obj = {
+                            type: 'array'
+                        };
+                        break;
+                    case 'essay':
+                        prop_def_obj = {
+                            type: 'string'
+                        };
+                        break;
+                    case 'sectionheader':
+                        break;
+                    case 'submit':
+                        break;
+                    case 'file':
+                        prop_def_obj = {
+                            type: 'string',
+                            format: 'binary'
+                        };
+                        break;
+                }
+
+                if ('enum' in prop_val) {
+                    prop_def_obj.enum = prop_val.enum;
+                }
+
+                definition.properties[prop] = prop_def_obj;
             }
         }
 

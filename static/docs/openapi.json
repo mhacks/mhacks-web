@@ -6,7 +6,7 @@
         "title": "MHacks",
         "termsOfService": "https://mhacks.org",
         "contact": {
-            "email": "me@antoniomika.me"
+            "email": "hackathon-tech@umich.edu"
         },
         "license": {
             "name": "GNU General Public License v3.0",
@@ -3077,73 +3077,88 @@
                         "type": "string",
                         "format": "date-time"
                     },
+                    "deleted": {
+                        "type": "boolean"
+                    },
                     "full_name": {
-                        "type": "string",
-                        "description": "Full Name"
+                        "type": "string"
                     },
                     "email": {
-                        "type": "string",
-                        "description": "Email"
+                        "type": "string"
                     },
                     "email_verified": {
-                        "type": "boolean",
-                        "description": "Email Verified"
+                        "type": "boolean"
                     },
                     "application_submitted": {
-                        "type": "boolean",
-                        "description": "Application Submitted"
+                        "type": "boolean"
+                    },
+                    "verification_tokens": {
+                        "description": "",
+                        "default": ""
                     },
                     "password": {
+                        "type": "string"
+                    },
+                    "tokens": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "old_tokens": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "created_at_ts": {
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    "created_at": {
                         "type": "string",
-                        "description": "Password"
+                        "format": "date-time"
                     },
                     "birthday_ts": {
                         "type": "number",
-                        "format": "integer",
-                        "description": "Date of Birth"
+                        "format": "integer"
                     },
                     "birthday": {
                         "type": "string",
-                        "format": "date-time",
-                        "description": "Date of Birth"
+                        "format": "date-time"
                     },
                     "major": {
-                        "type": "string",
-                        "description": "Major"
+                        "type": "string"
                     },
                     "university": {
-                        "type": "string",
-                        "description": "University"
+                        "type": "string"
+                    },
+                    "groups": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "meta": {
+                        "description": "",
+                        "default": ""
                     },
                     "avatar": {
                         "type": "string",
-                        "format": "binary",
-                        "description": "Avatar"
+                        "format": "binary"
                     },
                     "resume": {
                         "type": "string",
-                        "format": "binary",
-                        "description": "Resume"
+                        "format": "binary"
                     },
                     "github": {
-                        "type": "string",
-                        "description": "GitHub"
+                        "type": "string"
                     },
                     "linkedin": {
-                        "type": "string",
-                        "description": "LinkedIn"
+                        "type": "string"
                     },
                     "devpost": {
-                        "type": "string",
-                        "description": "DevPost"
+                        "type": "string"
                     },
                     "portfolio": {
-                        "type": "string",
-                        "description": "Portfolio"
+                        "type": "string"
                     },
                     "tshirt": {
                         "type": "string",
-                        "description": "T-Shirt",
                         "enum": [
                             "unselected",
                             "xs",
@@ -3157,7 +3172,6 @@
                     },
                     "race": {
                         "type": "string",
-                        "description": "Race",
                         "enum": [
                             "unselected",
                             "white",
@@ -3171,7 +3185,6 @@
                     },
                     "sex": {
                         "type": "string",
-                        "description": "Sex",
                         "enum": [
                             "unselected",
                             "male",
@@ -3179,6 +3192,10 @@
                             "non-binary",
                             "prefer-not"
                         ]
+                    },
+                    "push_id": {
+                        "description": "",
+                        "default": ""
                     }
                 }
             },
@@ -3197,32 +3214,31 @@
                         "type": "string",
                         "format": "date-time"
                     },
-                    "general_header": {},
+                    "deleted": {
+                        "type": "boolean"
+                    },
+                    "general_header": {
+                        "default": ""
+                    },
                     "user": {
-                        "type": "string",
-                        "description": "Email"
+                        "type": "string"
                     },
                     "birthday_ts": {
                         "type": "number",
-                        "format": "integer",
-                        "description": "Date of Birth"
+                        "format": "integer"
                     },
                     "birthday": {
                         "type": "string",
-                        "format": "date-time",
-                        "description": "Date of Birth"
+                        "format": "date-time"
                     },
                     "university": {
-                        "type": "string",
-                        "description": "University"
+                        "type": "string"
                     },
                     "major": {
-                        "type": "string",
-                        "description": "Major"
+                        "type": "string"
                     },
                     "tshirt": {
                         "type": "string",
-                        "description": "T-Shirt",
                         "enum": [
                             "unselected",
                             "xs",
@@ -3236,39 +3252,44 @@
                     },
                     "experience": {
                         "type": "string",
-                        "description": "Experience",
                         "enum": [
                             "novice",
                             "experienced",
                             "veteran"
                         ]
                     },
-                    "links_header": {},
+                    "links_header": {
+                        "default": ""
+                    },
                     "resume": {
                         "type": "string",
-                        "format": "binary",
-                        "description": "Resume"
+                        "format": "binary"
+                    },
+                    "created_at_ts": {
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "github": {
-                        "type": "string",
-                        "description": "GitHub"
+                        "type": "string"
                     },
                     "linkedin": {
-                        "type": "string",
-                        "description": "LinkedIn"
+                        "type": "string"
                     },
                     "devpost": {
-                        "type": "string",
-                        "description": "DevPost"
+                        "type": "string"
                     },
                     "portfolio": {
-                        "type": "string",
-                        "description": "Portfolio"
+                        "type": "string"
                     },
-                    "demographics_header": {},
+                    "demographics_header": {
+                        "default": ""
+                    },
                     "race": {
                         "type": "string",
-                        "description": "Race",
                         "enum": [
                             "unselected",
                             "white",
@@ -3282,7 +3303,6 @@
                     },
                     "sex": {
                         "type": "string",
-                        "description": "Sex",
                         "enum": [
                             "unselected",
                             "male",
@@ -3291,35 +3311,29 @@
                             "prefer-not"
                         ]
                     },
-                    "short_answer_headers": {},
+                    "short_answer_headers": {
+                        "default": ""
+                    },
                     "why_mhacks": {
-                        "type": "string",
-                        "description": "Why do you want to come to MHacks?"
+                        "type": "string"
                     },
                     "favorite_memory": {
-                        "type": "string",
-                        "description": "What is your favorite memory from  MHacks (if applicable)?"
+                        "type": "string"
                     },
                     "anything_else": {
-                        "type": "string",
-                        "description": "Anything else you would like to tell us?"
+                        "type": "string"
                     },
                     "needs_reimbursement": {
-                        "type": "boolean",
-                        "description": "Do you need travel reimbursement?"
+                        "type": "boolean"
                     },
                     "departing_from": {
-                        "type": "string",
-                        "description": "Departing From"
+                        "type": "string"
                     },
                     "requested_reimbursement": {
-                        "type": "number",
-                        "description": "How much reimbursement do you expect to need?"
+                        "type": "number"
                     },
                     "status": {
                         "type": "string",
-                        "description": "Status",
-                        "default": "unread",
                         "enum": [
                             "unread",
                             "waitlisted",
@@ -3327,19 +3341,22 @@
                         ]
                     },
                     "score": {
-                        "type": "number",
-                        "description": "Score"
+                        "type": "number"
                     },
                     "reader": {
-                        "type": "string",
-                        "description": "Reader"
+                        "type": "string"
                     },
                     "reimbursement": {
-                        "type": "number",
-                        "description": "Reimbursement"
+                        "type": "number"
                     },
-                    "reader_filter": {},
-                    "reader_schema": {}
+                    "reader_filter": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "reader_schema": {
+                        "description": "",
+                        "default": ""
+                    }
                 }
             },
             "Confirmation": {
@@ -3357,13 +3374,18 @@
                         "type": "string",
                         "format": "date-time"
                     },
+                    "deleted": {
+                        "type": "boolean"
+                    },
+                    "user": {
+                        "description": "",
+                        "default": ""
+                    },
                     "phone": {
-                        "type": "string",
-                        "description": "Phone Number"
+                        "type": "string"
                     },
                     "graduation": {
                         "type": "string",
-                        "description": "Graduation Year",
                         "enum": [
                             "2017",
                             "2018",
@@ -3379,7 +3401,6 @@
                     },
                     "degree": {
                         "type": "string",
-                        "description": "Degree Type",
                         "enum": [
                             "highschool",
                             "bachelor",
@@ -3389,7 +3410,6 @@
                     },
                     "employment": {
                         "type": "string",
-                        "description": "Job Interest",
                         "enum": [
                             "internship",
                             "fulltime",
@@ -3399,7 +3419,6 @@
                     },
                     "travel": {
                         "type": "string",
-                        "description": "Travel",
                         "enum": [
                             "bus",
                             "driving",
@@ -3409,12 +3428,15 @@
                         ]
                     },
                     "skills": {
-                        "type": "array",
-                        "description": "Skills",
-                        "default": []
+                        "type": "array"
                     },
-                    "confirm_button": {},
-                    "sponsor_filter": {}
+                    "confirm_button": {
+                        "default": ""
+                    },
+                    "sponsor_filter": {
+                        "description": "",
+                        "default": ""
+                    }
                 }
             },
             "PushNotification": {
@@ -3431,6 +3453,43 @@
                     "updatedAt": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "deleted": {
+                        "type": "boolean"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "body": {
+                        "type": "string"
+                    },
+                    "broadcastTime_ts": {
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    "broadcastTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "category": {
+                        "type": "string",
+                        "enum": [
+                            "Emergency",
+                            "Logistics",
+                            "Food",
+                            "Event",
+                            "Sponsored"
+                        ]
+                    },
+                    "isApproved": {
+                        "type": "boolean"
+                    },
+                    "isSent": {
+                        "type": "boolean"
+                    },
+                    "users": {
+                        "description": "",
+                        "default": []
                     }
                 }
             },
@@ -3446,6 +3505,29 @@
                         "format": "date-time"
                     },
                     "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted": {
+                        "type": "boolean"
+                    },
+                    "user": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "scanner": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "event": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "created_at_ts": {
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    "created_at": {
                         "type": "string",
                         "format": "date-time"
                     }
@@ -3465,6 +3547,45 @@
                     "updatedAt": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "deleted": {
+                        "type": "boolean"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "count": {
+                        "type": "number"
+                    },
+                    "max_count": {
+                        "type": "number"
+                    },
+                    "creator": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "notes": {
+                        "type": "string"
+                    },
+                    "public": {
+                        "type": "boolean"
+                    },
+                    "auth_groups": {
+                        "description": "",
+                        "default": [
+                            "any"
+                        ]
+                    },
+                    "created_at_ts": {
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
@@ -3482,6 +3603,40 @@
                     "updatedAt": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "deleted": {
+                        "type": "boolean"
+                    },
+                    "title": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "body": {
+                        "type": "string"
+                    },
+                    "broadcastTime_ts": {
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    "broadcastTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "category": {
+                        "type": "string",
+                        "enum": [
+                            "Emergency",
+                            "Logistics",
+                            "Food",
+                            "Event",
+                            "Sponsored"
+                        ]
+                    },
+                    "isApproved": {
+                        "type": "boolean"
+                    },
+                    "isSent": {
+                        "type": "boolean"
                     }
                 }
             },
@@ -3499,6 +3654,27 @@
                     "updatedAt": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "deleted": {
+                        "type": "boolean"
+                    },
+                    "app_name": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "start_date": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "end_date": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "is_live_page_enabled": {
+                        "type": "boolean"
+                    },
+                    "is_application_open": {
+                        "type": "boolean"
                     }
                 }
             },
@@ -3516,6 +3692,27 @@
                     "updatedAt": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "deleted": {
+                        "type": "boolean"
+                    },
+                    "long_url": {
+                        "type": "string"
+                    },
+                    "short_code": {
+                        "type": "string"
+                    },
+                    "created_at_ts": {
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "clicks": {
+                        "description": "",
+                        "default": ""
                     }
                 }
             },
@@ -3533,6 +3730,18 @@
                     "updatedAt": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "deleted": {
+                        "type": "boolean"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "latitude": {
+                        "type": "string"
+                    },
+                    "longitude": {
+                        "type": "string"
                     }
                 }
             },
@@ -3550,6 +3759,47 @@
                     "updatedAt": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "deleted": {
+                        "type": "boolean"
+                    },
+                    "name": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "desc": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "startDate_ts": {
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    "startDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "endDate_ts": {
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    "endDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "category": {
+                        "type": "string",
+                        "enum": [
+                            "General",
+                            "Food",
+                            "Tech Talk",
+                            "Sponsor Event",
+                            "Other"
+                        ]
+                    },
+                    "location": {
+                        "description": "",
+                        "default": ""
                     }
                 }
             },
@@ -3567,6 +3817,38 @@
                     "updatedAt": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "deleted": {
+                        "type": "boolean"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "domain": {
+                        "type": "string"
+                    },
+                    "level": {
+                        "type": "string",
+                        "enum": [
+                            "bronze",
+                            "silver",
+                            "gold",
+                            "unobtanium"
+                        ]
+                    },
+                    "logo": {
+                        "type": "string"
+                    },
+                    "logo_size": {
+                        "type": "string",
+                        "enum": [
+                            "small",
+                            "medium",
+                            "large"
+                        ]
+                    },
+                    "url": {
+                        "type": "string"
                     }
                 }
             },
@@ -3585,64 +3867,63 @@
                         "type": "string",
                         "format": "date-time"
                     },
-                    "general_header": {},
+                    "deleted": {
+                        "type": "boolean"
+                    },
+                    "user": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "general_header": {
+                        "default": ""
+                    },
                     "skills": {
-                        "type": "array",
-                        "description": "I can mentor in...",
-                        "default": []
+                        "type": "array"
                     },
                     "qualifications": {
-                        "type": "string",
-                        "description": "List down anything that qualifies you to be a mentor (e.g. projects, classes, work experience, hobbies, past hackathons, etc.)"
+                        "type": "string"
                     },
                     "hackathons_been": {
-                        "type": "number",
-                        "description": "How many hackathons have you been to?"
+                        "type": "number"
                     },
                     "hackathons_mentored": {
-                        "type": "number",
-                        "description": "How many hackathons have you mentored at?"
+                        "type": "number"
                     },
                     "availability_during": {
-                        "type": "string",
-                        "description": "Availability during the event"
+                        "type": "string"
                     },
-                    "links_header": {},
+                    "links_header": {
+                        "default": ""
+                    },
                     "resume": {
                         "type": "string",
-                        "format": "binary",
-                        "description": "Resume"
+                        "format": "binary"
                     },
                     "github": {
-                        "type": "string",
-                        "description": "GitHub"
+                        "type": "string"
                     },
                     "linkedin": {
-                        "type": "string",
-                        "description": "LinkedIn"
+                        "type": "string"
                     },
                     "devpost": {
-                        "type": "string",
-                        "description": "DevPost"
+                        "type": "string"
                     },
                     "portfolio": {
-                        "type": "string",
-                        "description": "Portfolio"
+                        "type": "string"
                     },
-                    "demographics_header": {},
+                    "demographics_header": {
+                        "default": ""
+                    },
                     "birthday_ts": {
                         "type": "number",
-                        "format": "integer",
-                        "description": "Date of Birth"
+                        "format": "integer"
                     },
                     "birthday": {
                         "type": "string",
-                        "format": "date-time",
-                        "description": "Date of Birth"
+                        "format": "date-time"
                     },
                     "tshirt": {
                         "type": "string",
-                        "description": "T-Shirt",
                         "enum": [
                             "xs",
                             "s",
@@ -3655,7 +3936,6 @@
                     },
                     "race": {
                         "type": "string",
-                        "description": "Race",
                         "enum": [
                             "unselected",
                             "white",
@@ -3669,7 +3949,6 @@
                     },
                     "sex": {
                         "type": "string",
-                        "description": "Sex",
                         "enum": [
                             "unselected",
                             "male",
@@ -3678,7 +3957,17 @@
                             "prefer-not"
                         ]
                     },
-                    "save_button": {}
+                    "save_button": {
+                        "default": ""
+                    },
+                    "created_at_ts": {
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
                 }
             },
             "Floor": {
@@ -3695,6 +3984,41 @@
                     "updatedAt": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "deleted": {
+                        "type": "boolean"
+                    },
+                    "name": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "desc": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "level": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "image": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "nw_latitude": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "nw_longitude": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "se_latitude": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "se_longitude": {
+                        "description": "",
+                        "default": ""
                     }
                 }
             },
@@ -3713,10 +4037,18 @@
                         "type": "string",
                         "format": "date-time"
                     },
-                    "general_header": {},
+                    "deleted": {
+                        "type": "boolean"
+                    },
+                    "user": {
+                        "description": "",
+                        "default": ""
+                    },
+                    "general_header": {
+                        "default": ""
+                    },
                     "talk_type": {
                         "type": "string",
-                        "description": "Would you like to give a Tech Talk (give a presentation, possibly followed by a Q&A session) or a Workshop (interactive, more hands-on for the audience)?",
                         "enum": [
                             "techtalk",
                             "workshop"
@@ -3724,60 +4056,52 @@
                     },
                     "talk_length": {
                         "type": "string",
-                        "description": "Would you like to give a Lightning Talk (total time 30 min) or a Regular Talk (total time 1 hr)?",
                         "enum": [
                             "lightning",
                             "regular"
                         ]
                     },
                     "topic": {
-                        "type": "string",
-                        "description": "Topic/Title for your talk"
+                        "type": "string"
                     },
                     "abstract": {
-                        "type": "string",
-                        "description": "Abstract/Summary for the talk"
+                        "type": "string"
                     },
                     "qualifications": {
-                        "type": "string",
-                        "description": "List down anything that qualifies you to be a mentor (e.g. projects, classes, work experience, hobbies, past hackathons, etc.)"
+                        "type": "string"
                     },
-                    "links_header": {},
+                    "links_header": {
+                        "default": ""
+                    },
                     "resume": {
                         "type": "string",
-                        "format": "binary",
-                        "description": "Resume"
+                        "format": "binary"
                     },
                     "github": {
-                        "type": "string",
-                        "description": "GitHub"
+                        "type": "string"
                     },
                     "linkedin": {
-                        "type": "string",
-                        "description": "LinkedIn"
+                        "type": "string"
                     },
                     "devpost": {
-                        "type": "string",
-                        "description": "DevPost"
+                        "type": "string"
                     },
                     "portfolio": {
-                        "type": "string",
-                        "description": "Portfolio"
+                        "type": "string"
                     },
-                    "demographics_header": {},
+                    "demographics_header": {
+                        "default": ""
+                    },
                     "birthday_ts": {
                         "type": "number",
-                        "format": "integer",
-                        "description": "Date of Birth"
+                        "format": "integer"
                     },
                     "birthday": {
                         "type": "string",
-                        "format": "date-time",
-                        "description": "Date of Birth"
+                        "format": "date-time"
                     },
                     "tshirt": {
                         "type": "string",
-                        "description": "T-Shirt",
                         "enum": [
                             "xs",
                             "s",
@@ -3790,7 +4114,6 @@
                     },
                     "race": {
                         "type": "string",
-                        "description": "Race",
                         "enum": [
                             "unselected",
                             "white",
@@ -3804,7 +4127,6 @@
                     },
                     "sex": {
                         "type": "string",
-                        "description": "Sex",
                         "enum": [
                             "unselected",
                             "male",
@@ -3813,7 +4135,17 @@
                             "prefer-not"
                         ]
                     },
-                    "save_button": {}
+                    "save_button": {
+                        "default": ""
+                    },
+                    "created_at_ts": {
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
                 }
             }
         },
