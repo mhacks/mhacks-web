@@ -22,7 +22,7 @@ var schema = new mongoose.Schema({
                 type: String,
                 enum: [
                     'Coding',
-                    'Visual Desing',
+                    'Visual Design',
                     'Sound Design',
                     'Hardware',
                     'Research',

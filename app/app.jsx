@@ -23,7 +23,8 @@ import {
     Confirm,
     MentorApply,
     SpeakerApply,
-    Dashboard
+    Dashboard,
+    TeamBuilding
 } from './pages';
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';
@@ -140,6 +141,13 @@ class AppProvider extends React.Component {
                                     }
 
                                     return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.TEAM_BUILDING}
+                                render={() => {
+                                    return <TeamBuilding />;
                                 }}
                             />
                             <Route
