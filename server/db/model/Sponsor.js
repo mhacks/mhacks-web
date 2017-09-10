@@ -1,10 +1,15 @@
-var { mongoose, defaultOptions, modifySchema } = require('../index.js'),
+var {
+        mongoose,
+        defaultOptions,
+        modifySchema,
+        defaultSchema
+    } = require('../index.js'),
     config = require('../../../config/default.js'),
     escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    {
+    Object.assign({}, defaultSchema, {
         name: {
             type: String,
             required: true
@@ -30,7 +35,7 @@ var schema = new mongoose.Schema(
         url: {
             type: String
         }
-    },
+    }),
     defaultOptions
 );
 

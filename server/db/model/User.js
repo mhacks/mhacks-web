@@ -1,6 +1,11 @@
 var bcrypt = require('bcrypt'),
     jwt = require('jsonwebtoken'),
-    { mongoose, defaultOptions, modifySchema } = require('../index.js'),
+    {
+        mongoose,
+        defaultOptions,
+        modifySchema,
+        defaultSchema
+    } = require('../index.js'),
     config = require('../../../config/default.js'),
     Email = require('../../interactors/email.js'),
     emailResponses = require('../../responses/api/email.js'),
@@ -11,7 +16,7 @@ var bcrypt = require('bcrypt'),
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    {
+    Object.assign({}, defaultSchema, {
         full_name: {
             type: String,
             form: {
@@ -219,7 +224,7 @@ var schema = new mongoose.Schema(
             }
         },
         push_id: String
-    },
+    }),
     defaultOptions
 );
 

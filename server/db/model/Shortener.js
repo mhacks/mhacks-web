@@ -1,10 +1,15 @@
-var { mongoose, defaultOptions, modifySchema } = require('../index.js'),
+var {
+        mongoose,
+        defaultOptions,
+        modifySchema,
+        defaultSchema
+    } = require('../index.js'),
     config = require('../../../config/default.js'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    {
+    Object.assign({}, defaultSchema, {
         long_url: {
             type: String,
             required: true
@@ -38,7 +43,7 @@ var schema = new mongoose.Schema(
                 }
             }
         ]
-    },
+    }),
     defaultOptions
 );
 

@@ -1,10 +1,15 @@
-var { mongoose, defaultOptions, modifySchema } = require('../index.js'),
+var {
+        mongoose,
+        defaultOptions,
+        modifySchema,
+        defaultSchema
+    } = require('../index.js'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin'),
     config = require('../../../config/default.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    {
+    Object.assign({}, defaultSchema, {
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
@@ -192,7 +197,7 @@ var schema = new mongoose.Schema(
             type: Date,
             default: Date.now
         }
-    },
+    }),
     defaultOptions
 );
 

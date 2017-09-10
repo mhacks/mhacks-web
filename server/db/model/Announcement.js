@@ -1,9 +1,14 @@
-var { mongoose, defaultOptions, modifySchema } = require('../index.js'),
+var {
+        mongoose,
+        defaultOptions,
+        modifySchema,
+        defaultSchema
+    } = require('../index.js'),
     escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    {
+    Object.assign({}, defaultSchema, {
         title: String,
         body: {
             type: String,
@@ -26,7 +31,7 @@ var schema = new mongoose.Schema(
             type: Boolean,
             default: false
         }
-    },
+    }),
     defaultOptions
 );
 

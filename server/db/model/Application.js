@@ -1,4 +1,9 @@
-var { mongoose, defaultOptions, modifySchema } = require('../index.js'),
+var {
+        mongoose,
+        defaultOptions,
+        modifySchema,
+        defaultSchema
+    } = require('../index.js'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin'),
     config = require('../../../config/default.js'),
     escapeStringRegex = require('escape-string-regexp');
@@ -17,7 +22,7 @@ const statusOptions = {
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    {
+    Object.assign({}, defaultSchema, {
         general_header: {
             type: String,
             form: {
@@ -369,7 +374,7 @@ var schema = new mongoose.Schema(
                 }
             ]
         }
-    },
+    }),
     defaultOptions
 );
 

@@ -1,9 +1,14 @@
-var { mongoose, defaultOptions, modifySchema } = require('../index.js'),
+var {
+        mongoose,
+        defaultOptions,
+        modifySchema,
+        defaultSchema
+    } = require('../index.js'),
     escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    {
+    Object.assign({}, defaultSchema, {
         name: String,
         desc: String,
         startDate: {
@@ -23,7 +28,7 @@ var schema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Location'
         }
-    },
+    }),
     defaultOptions
 );
 

@@ -1,8 +1,13 @@
-var { mongoose, defaultOptions, modifySchema } = require('../index.js');
+var {
+    mongoose,
+    defaultOptions,
+    modifySchema,
+    defaultSchema
+} = require('../index.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    {
+    Object.assign({}, defaultSchema, {
         type: {
             type: String,
             required: true
@@ -43,7 +48,7 @@ var schema = new mongoose.Schema(
             type: Date,
             default: Date.now
         }
-    },
+    }),
     defaultOptions
 );
 

@@ -12,6 +12,12 @@ var mongoose = require('mongoose'),
                 delete ret.__v;
             }
         }
+    },
+    defaultSchema = {
+        deleted: {
+            type: Boolean,
+            default: false
+        }
     };
 
 // Initialize a promise handler (even though we don't currently use them)
@@ -53,5 +59,6 @@ function modifySchema(schema) {
 module.exports = {
     mongoose,
     defaultOptions,
-    modifySchema
+    modifySchema,
+    defaultSchema
 };
