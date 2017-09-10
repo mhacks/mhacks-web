@@ -37,6 +37,12 @@ router.post('/login', function(req, res) {
                                 req.session.email = user.email;
                                 res.send({
                                     status: true,
+                                    user: {
+                                        full_name: user.full_name,
+                                        email: user.email,
+                                        school: user.school,
+                                        groups: user.groups
+                                    },
                                     message: Responses.SUCCESSFUL_AUTH,
                                     token: user.generateNewToken()
                                 });
