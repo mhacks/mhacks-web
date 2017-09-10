@@ -2814,6 +2814,51 @@
                 ]
             }
         },
+        "/v1/floor": {
+            "get": {
+                "tags": [
+                    "Floor"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "getFloor",
+                "responses": {
+                    "200": {
+                        "description": "Okay",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Whether or not the request was successful"
+                                        },
+                                        "floor": {
+                                            "$ref": "#/components/schemas/Floor"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error (Unknown Error)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/v1/speaker/application": {
             "get": {
                 "tags": [
@@ -3634,6 +3679,23 @@
                         ]
                     },
                     "save_button": {}
+                }
+            },
+            "Floor": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The id of the document"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
                 }
             },
             "SpeakerApplication": {
