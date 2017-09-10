@@ -50,6 +50,16 @@ export function configurationState(state = initialState, action) {
                     message: action.message
                 };
 
+            case actions.UPDATE_CONFIGURATION_SUCCESS:
+
+                return {
+                    ...state,
+                    fetching: false,
+                    fetched: true,
+                    message: action.message,
+                    ...action.data
+                };
+
         default:
             return state;
     }

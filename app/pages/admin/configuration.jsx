@@ -38,7 +38,6 @@ class ConfigurationSection extends Component {
     }
 
     onSubmit(formData) {
-        // TODO: create update config
         this.props.dispatch(ConfigurationThunks.updateConfig(formData))
     }
 
