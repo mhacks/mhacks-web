@@ -3474,11 +3474,11 @@
                     "category": {
                         "type": "string",
                         "enum": [
-                            "Emergency",
-                            "Logistics",
-                            "Food",
-                            "Event",
-                            "Sponsored"
+                            "emergency",
+                            "logistics",
+                            "food",
+                            "event",
+                            "sponsored"
                         ]
                     },
                     "isApproved": {
@@ -3625,11 +3625,11 @@
                     "category": {
                         "type": "string",
                         "enum": [
-                            "Emergency",
-                            "Logistics",
-                            "Food",
-                            "Event",
-                            "Sponsored"
+                            "emergency",
+                            "logistics",
+                            "food",
+                            "event",
+                            "sponsored"
                         ]
                     },
                     "isApproved": {
@@ -3675,6 +3675,9 @@
                     },
                     "is_application_open": {
                         "type": "boolean"
+                    },
+                    "save_button": {
+                        "default": ""
                     }
                 }
             },

@@ -53,6 +53,14 @@ function modifySchema(schema) {
                 });
             }
         }
+
+        schema.query.since = function(since) {
+            return this.find({
+                updatedAt: {
+                    $gte: new Date(parseInt(since || 0))
+                }
+            });
+        };
     }
 }
 

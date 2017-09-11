@@ -84,8 +84,8 @@ router.get('/:name', function(req, res) {
 
 // Handles /v1/location/
 router.get('/', function(req, res) {
-    console.log(req.params);
-    Location.find({})
+    Location.find()
+        .since(req.query.since)
         .exec()
         .then(locations => {
             if (locations) {

@@ -5,6 +5,7 @@ var router = require('express').Router(),
 // Handles get requests for /v1/floor
 router.get('/', function(req, res) {
     Floor.find()
+        .since(req.query.since)
         .exec()
         .then(floors => {
             res.send({

@@ -24,7 +24,7 @@ var schema = new mongoose.Schema(
         },
         category: {
             type: String,
-            enum: ['Emergency', 'Logistics', 'Food', 'Event', 'Sponsored']
+            enum: ['emergency', 'logistics', 'food', 'event', 'sponsored']
         },
         isApproved: {
             type: Boolean,
@@ -96,15 +96,9 @@ schema.query.byIsPublic = function(since) {
         isApproved: true,
         isSent: true,
         broadcastTime: {
-            $gte: new Date(parseInt(since || 0))
-        }
-    });
-};
-
-// Allow us to query after a date
-schema.query.since = function(since) {
-    return this.find({
-        broadcastTime: {
+            $lte: new Date()
+        },
+        updatedAt: {
             $gte: new Date(parseInt(since || 0))
         }
     });
