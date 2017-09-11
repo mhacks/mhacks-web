@@ -33,12 +33,15 @@ router.post('/login', function(req, res) {
                         .checkPassword(req.body.password)
                         .then(checkRes => {
                             if (checkRes) {
-                                req.session.loggedIn = true;
-                                req.session.email = user.email;
-                                res.send({
-                                    status: true,
-                                    message: Responses.SUCCESSFUL_AUTH,
-                                    token: user.generateNewToken()
+                                user.getProfile().then(profile => {
+                                    req.session.loggedIn = true;
+                                    req.session.email = user.email;
+                                    res.send({
+                                        status: true,
+                                        message: Responses.SUCCESSFUL_AUTH,
+                                        token: user.generateNewToken(),
+                                        user: profile
+                                    });
                                 });
                             } else {
                                 res.status(401).send({
