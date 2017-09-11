@@ -16,6 +16,7 @@ export default {
     CONFIGURATION: '/v1/configuration',
     FORM: '/v1/form/',
     SPONSOR: '/v1/sponsor',
+    ALL_SPONSOR_PORTAL_APPLICATIONS: '/v1/application/all/sponsor',
     ALL_MENTOR_APPLICATIONS: '/v1/mentor/all',
     MENTOR_APPLICATION: '/v1/mentor/application',
     MENTOR_APPLICATION_FORM: '/v1/form/MentorApplication',
