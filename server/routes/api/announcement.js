@@ -10,8 +10,8 @@ function sortByDate(a, b) {
 // Handles get requests for /v1/announcements
 router.get('/', function(req, res) {
     authMiddleware('admin', 'api', true, function() {
-        Announcement.find({}, '-_id -__v')
-            .byIsPublic()
+        Announcement.find()
+            .byIsPublic(req.query.since)
             .exec()
             .then(announcements => {
                 announcements.sort(sortByDate);
@@ -29,7 +29,8 @@ router.get('/', function(req, res) {
                 });
             });
     })(req, res, function() {
-        Announcement.find({}, '-_id -__v')
+        Announcement.find()
+            .since(req.query.since)
             .exec()
             .then(announcements => {
                 announcements.sort(sortByDate);

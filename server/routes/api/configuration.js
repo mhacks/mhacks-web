@@ -6,7 +6,7 @@ var router = require('express').Router(),
 
 // Handles get requests for /v1/configuration
 router.get('/', function(req, res) {
-    ConfigurationSchema.findOne({}, '-_id -__v')
+    ConfigurationSchema.findOne({})
         .exec()
         .then(configuration => {
             if (configuration) {

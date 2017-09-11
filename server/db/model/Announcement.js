@@ -1,31 +1,39 @@
-var mongoose = require('../index.js'),
+var {
+        mongoose,
+        defaultOptions,
+        modifySchema,
+        defaultSchema
+    } = require('../index.js'),
     escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
-var schema = new mongoose.Schema({
-    title: String,
-    body: {
-        type: String,
-        default: ''
-    },
-    broadcastTime: {
-        type: Date,
-        default: Date.now,
-        index: true
-    },
-    category: {
-        type: String,
-        enum: ['Emergency', 'Logistics', 'Food', 'Event', 'Sponsored']
-    },
-    isApproved: {
-        type: Boolean,
-        default: false
-    },
-    isSent: {
-        type: Boolean,
-        default: false
-    }
-});
+var schema = new mongoose.Schema(
+    Object.assign({}, defaultSchema, {
+        title: String,
+        body: {
+            type: String,
+            default: ''
+        },
+        broadcastTime: {
+            type: Date,
+            default: Date.now,
+            index: true
+        },
+        category: {
+            type: String,
+            enum: ['emergency', 'logistics', 'food', 'event', 'sponsored']
+        },
+        isApproved: {
+            type: Boolean,
+            default: false
+        },
+        isSent: {
+            type: Boolean,
+            default: false
+        }
+    }),
+    defaultOptions
+);
 
 // Allow us to query by title
 schema.query.byTitle = function(title) {
@@ -76,15 +84,20 @@ schema.query.byIsSent = function() {
 };
 
 // Allow us to query for isApproved and isSent
-schema.query.byIsPublic = function() {
+schema.query.byIsPublic = function(since) {
     return this.find({
         isApproved: true,
         isSent: true,
         broadcastTime: {
-            $lte: Date.now()
+            $lte: new Date()
+        },
+        updatedAt: {
+            $gte: new Date(parseInt(since || 0))
         }
     });
 };
+
+modifySchema(schema);
 
 // Initialize the model with the schema, and export it
 var model = mongoose.model('Announcement', schema);
