@@ -11,6 +11,7 @@ import Reader from './reader';
 import Confirm from './confirm';
 import MentorApply from './mentor/apply';
 import SpeakerApply from './speaker/apply';
+import AdminPage from './admin';
 
 export {
     Navigator,
@@ -25,5 +26,6 @@ export {
     Reader,
     Confirm,
     MentorApply,
-    SpeakerApply
+    SpeakerApply,
+    AdminPage
 };

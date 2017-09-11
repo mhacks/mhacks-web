@@ -11,4 +11,25 @@ export default class ConfigurationRequests {
             })
         });
     }
+
+    static updateConfiguration(token, body) {
+        return fetch(endpoints.CONFIGURATION + '/control', {
+            method: 'post',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token
+            }),
+            body: JSON.stringify(body)
+        });
+    }
+
+    static loadForm(token) {
+        return fetch(endpoints.FORM + 'configuration', {
+            method: 'get',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token
+            })
+        });
+    }
 }
