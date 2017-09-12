@@ -18,7 +18,8 @@ var router = require('express').Router(),
     eventHandler = require('./api/event.js'),
     sponsorHandler = require('./api/sponsor.js'),
     mentorHandler = require('./api/mentor.js'),
-    speakerHandler = require('./api/speaker.js');
+    speakerHandler = require('./api/speaker.js'),
+    teamHandler = require('./api/team.js');
 
 router.use('/auth', authHandler);
 router.use('/email', emailHandler);
@@ -39,6 +40,7 @@ router.use('/location', locationHandler);
 router.use('/event', eventHandler);
 router.use('/mentor', mentorHandler);
 router.use('/speaker', speakerHandler);
+router.use('/teams', authMiddleware('any', 'api', false), teamHandler);
 
 router.get('/', function(req, res) {
     res.send('API');
