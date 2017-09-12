@@ -10,8 +10,6 @@ router.get('/', function(req, res) {
         .exec()
         .then(configuration => {
             if (configuration) {
-                configuration = JSON.parse(JSON.stringify(configuration));
-
                 authMiddleware('any', 'api', false, function() {
                     configuration.should_logout = true;
 

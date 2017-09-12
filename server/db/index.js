@@ -11,7 +11,8 @@ var mongoose = require('mongoose'),
                 delete ret._id;
                 delete ret.__v;
             }
-        }
+        },
+        timestamps: true
     },
     defaultSchema = {
         deleted: {
@@ -39,11 +40,15 @@ mongoose
 
 function modifySchema(schema) {
     if (schema.obj) {
-        for (var propertyName in schema.obj) {
+        var obj = Object.assign(
+            { createdAt: Date, updatedAt: Date },
+            schema.obj
+        );
+        for (var propertyName in obj) {
             if (
-                schema.obj.hasOwnProperty(propertyName) &&
-                schema.obj[propertyName].type &&
-                schema.obj[propertyName].type === Date
+                (obj.hasOwnProperty(propertyName) &&
+                    obj[propertyName] === Date) ||
+                (obj[propertyName].type && obj[propertyName].type === Date)
             ) {
                 var dateName = propertyName;
                 schema.virtual(dateName + '_ts').get(function() {
