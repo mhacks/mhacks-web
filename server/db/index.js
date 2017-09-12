@@ -1,4 +1,4 @@
-var mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
     config = require('../../config/default.js'),
     defaultOptions = {
         toObject: {
@@ -40,23 +40,26 @@ mongoose
 
 function modifySchema(schema) {
     if (schema.obj) {
-        var obj = Object.assign(
+        const obj = Object.assign(
             { createdAt: Date, updatedAt: Date },
             schema.obj
         );
-        for (var propertyName in obj) {
-            if (
-                (obj.hasOwnProperty(propertyName) &&
-                    obj[propertyName] === Date) ||
-                (obj[propertyName].type && obj[propertyName].type === Date)
-            ) {
-                var dateName = propertyName;
-                schema.virtual(dateName + '_ts').get(function() {
-                    if (dateName in this) {
-                        return new Date(this[dateName]).getTime();
-                    }
-                });
-            }
+        for (const propertyName in obj) {
+            (function() {
+                if (
+                    obj.hasOwnProperty(propertyName) &&
+                    (obj[propertyName] === Date ||
+                        (obj[propertyName].type &&
+                            obj[propertyName].type === Date))
+                ) {
+                    const dateName = propertyName;
+                    schema.virtual(dateName + '_ts').get(function() {
+                        if (dateName in this) {
+                            return new Date(this[dateName]).getTime();
+                        }
+                    });
+                }
+            })();
         }
 
         schema.query.since = function(since) {
