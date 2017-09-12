@@ -49,13 +49,22 @@ class MHForm extends React.Component {
 
         this.FieldTypes = props.FieldTypes;
 
-        for (const field in props.schema) {
-            const defaultValue = this.getFieldDefault(props.schema[field]);
+        // This will only execute if the schema is hardcoded into frontend. In the typical case, this will not run because the schema is returned by backend.
+        for (const key in props.schema) {
+            const defaultValue =
+                props.initialData[key] !== undefined
+                    ? props.initialData[key]
+                    : this.getFieldDefault(
+                          key,
+                          props.schema,
+                          props.initialData
+                      );
+
             if (defaultValue !== undefined) {
-                if (props.schema[field].type === props.FieldTypes.FILE) {
-                    initialState.files[field] = defaultValue;
+                if (props.schema[key].type === props.FieldTypes.FILE) {
+                    initialState.files[key] = defaultValue;
                 } else {
-                    initialState.formData[field] = defaultValue;
+                    initialState.formData[key] = defaultValue;
                 }
             }
         }
@@ -66,6 +75,48 @@ class MHForm extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.changeCompletion = this.changeCompletion.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const formData = {};
+        const files = {};
+
+        for (const key in nextProps.schema) {
+            const fieldType = nextProps.schema[key].type;
+            const defaultValue = this.getFieldDefault(
+                key,
+                nextProps.schema,
+                nextProps.initialData
+            );
+
+            // Either modifies the files object (in the case of a file), or the formData object otherwise
+            const existingObject =
+                fieldType === this.FieldTypes.FILE
+                    ? this.state.files
+                    : this.state.formData;
+            const editedObject =
+                fieldType === this.FieldTypes.FILE ? files : formData;
+
+            if (
+                defaultValue !== undefined &&
+                (!existingObject.hasOwnProperty(key) ||
+                    existingObject[key] === undefined ||
+                    existingObject[key] === this.defaultForType(fieldType))
+            ) {
+                editedObject[key] = defaultValue;
+            }
+        }
+
+        this.setState({
+            formData: {
+                ...this.state.formData,
+                ...formData
+            },
+            files: {
+                ...this.state.files,
+                ...files
+            }
+        });
     }
 
     defaultForType(type) {
@@ -95,8 +146,16 @@ class MHForm extends React.Component {
         }
     }
 
-    getFieldDefault(field) {
-        const defaultValue = this.defaultForType(field.type);
+    // Given a key for a field, the schema, and optionally initialData, returns the value to populate
+    // into the field by default, before user interaction.
+    getFieldDefault(key, schema, initialData = {}) {
+        // If real valid data is already available, use it.
+        if (initialData[key] !== undefined) {
+            return initialData[key];
+        }
+
+        const field = schema[key];
+        const defaultForType = this.defaultForType(schema[key].type);
 
         switch (field.type) {
             case this.FieldTypes.TEXT:
@@ -109,61 +168,22 @@ class MHForm extends React.Component {
             case this.FieldTypes.ARRAY:
                 return field.default !== undefined
                     ? field.default
-                    : defaultValue;
+                    : defaultForType;
             case this.FieldTypes.DATE: {
                 const date = new Date(field.default);
                 if (isNaN(date.getTime())) {
-                    return defaultValue;
+                    return defaultForType;
                 }
 
                 return date.toISOString().split('T')[0];
             }
             case this.FieldTypes.SECTIONHEADER:
             case this.FieldTypes.SUBMIT:
-                return defaultValue;
+                return defaultForType;
             default:
                 console.error('Field Type not defined, behavior is undefined!');
-                return defaultValue;
+                return defaultForType;
         }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const formData = {};
-        const files = {};
-
-        for (const field in nextProps.schema) {
-            const defaultValue = this.getFieldDefault(nextProps.schema[field]);
-
-            if (
-                nextProps.schema[field].type === this.FieldTypes.FILE &&
-                defaultValue !== undefined &&
-                (!this.state.files.hasOwnProperty(field) ||
-                    this.state.files[field] === undefined ||
-                    this.state.files[field] ===
-                        this.defaultForType(nextProps.schema[field].type))
-            ) {
-                files[field] = defaultValue;
-            } else if (
-                defaultValue !== undefined &&
-                (!this.state.formData.hasOwnProperty(field) ||
-                    this.state.formData[field] === undefined ||
-                    this.state.formData[field] ===
-                        this.defaultForType(nextProps.schema[field].type))
-            ) {
-                formData[field] = defaultValue;
-            }
-        }
-
-        this.setState({
-            formData: {
-                ...this.state.formData,
-                ...formData
-            },
-            files: {
-                ...this.state.files,
-                ...files
-            }
-        });
     }
 
     changeCompletion() {
@@ -212,7 +232,11 @@ class MHForm extends React.Component {
                             ? field.type === this.FieldTypes.ARRAY
                               ? selection
                               : selection.value
-                            : this.getFieldDefault(field)
+                            : this.getFieldDefault(
+                                  name,
+                                  this.props.schema,
+                                  this.props.initialData
+                              )
                     }
                 },
                 this.changeCompletion
@@ -533,7 +557,8 @@ MHForm.defaultProps = {
         ARRAY: 9,
         SUBMIT: 10,
         FILE: 11
-    }
+    },
+    initialData: {}
 };
 
 export default MHForm;
