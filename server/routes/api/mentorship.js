@@ -4,8 +4,8 @@ var router = require('express').Router(),
     authMiddleware = require('../../middleware/auth.js'),
     Responses = require('../../responses/api/announcement.js');
 
-// Handles get requests for /v1/mentorship/tickets
-router.get('/', function(req, res) {
+// Handles get requests for /v1/mentorship/
+router.get('/', authMiddleware('mentor admin', 'api'), function(req, res) {
     MentorshipTicket.find()
         .then(tickets => {
             res.send({
@@ -22,6 +22,7 @@ router.get('/', function(req, res) {
         });
 });
 
+// Handles post requests for /v1/mentorship/
 router.post('/', authMiddleware('any', 'api'), function(req, res) {
     const { skills, title, body, location_description } = req.body;
 
