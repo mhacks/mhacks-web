@@ -44,8 +44,11 @@ router.post('/', authMiddleware('admin', 'api', true), function(req, res) {
                         req.body.location = location._id;
                         return Event.create({
                             name: req.body.name,
-                            longitude: req.body.longitude,
-                            latitude: req.body.latitude
+                            desc: req.body.desc,
+                            startDate: req.body.startDate,
+                            endDate: req.body.endDate,
+                            category: req.body.category,
+                            location: req.body.location
                         });
                     })
                     .then(event => {
@@ -98,7 +101,8 @@ router.get('/:name', function(req, res) {
 
 // Handles /v1/event/
 router.get('/', function(req, res) {
-    Event.find({})
+    Event.find()
+        .since(req.query.since)
         .exec()
         .then(events => {
             if (events) {

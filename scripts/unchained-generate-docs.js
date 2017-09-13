@@ -13,7 +13,7 @@ const util = require('util'),
             title: 'MHacks',
             termsOfService: 'https://mhacks.org',
             contact: {
-                email: 'me@antoniomika.me'
+                email: 'hackathon-tech@umich.edu'
             },
             license: {
                 name: 'GNU General Public License v3.0',
@@ -188,7 +188,19 @@ doc.components.schemas = {
         properties: {
 
         }
-    }
+    },
+    Artifact: {
+        type: 'object',
+        properties: {
+
+        }
+    },
+    Form: {
+        type: 'object',
+        properties: {
+
+        }
+    },
 };
 
 const routes = {};
@@ -220,93 +232,107 @@ for (const modelName in mongoose.modelSchemas) {
         const model = mongoose.modelSchemas[modelName],
             definition = {
                 type: 'object',
-                properties: {}
+                properties: {
+                    id: {
+                        type: 'string',
+                        description: 'The id of the document'
+                    },
+                    createdAt: {
+                        type: 'string',
+                        format: 'date-time',
+                    },
+                    updatedAt: {
+                        type: 'string',
+                        format: 'date-time',
+                    }
+                }
             };
 
         for (const prop in model.obj) {
             if (model.obj.hasOwnProperty(prop)) {
                 const prop_val = model.obj[prop];
-                let type = prop_val.type;
+                let type = prop_val.type,
+                    label = prop_val.label || '',
+                    defaultValue = (prop_val.default !== undefined ? prop_val.default : '');
 
-                if (prop_val.form && prop_val.form.user_editable) {
+                if (prop_val.form) {
                     if (prop_val.form.type_override) {
                         type = prop_val.form.type_override;
                     }
 
-                    let prop_def_obj = {};
-
-                    switch (type) {
-                        case String:
-                            prop_def_obj = {
-                                type: 'string',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
-                        case Boolean:
-                            prop_def_obj = {
-                                type: 'boolean',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
-                        case Date:
-                            prop_def_obj = {
-                                type: 'string',
-                                format: 'date-time',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
-                        case Number:
-                            prop_def_obj = {
-                                type: 'number',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
-                        case Buffer:
-                            prop_def_obj = {
-                                type: 'buffer',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
-                        case Array:
-                        case 'array':
-                            prop_def_obj = {
-                                type: 'array',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
-                        case 'essay':
-                            prop_def_obj = {
-                                type: 'string',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
-                        case 'sectionheader':
-                            break;
-                        case 'submit':
-                            break;
-                        case 'file':
-                            prop_def_obj = {
-                                type: 'string',
-                                format: 'binary',
-                                description: prop_val.form.label,
-                                default: prop_val.default
-                            };
-                            break;
+                    if (prop_val.form.label) {
+                        label = prop_val.label;
                     }
 
-                    if ('enum' in prop_val) {
-                        prop_def_obj.enum = prop_val.enum;
+                    if (prop_val.form.default) {
+                        defaultValue = prop_val.form.default;
                     }
-
-                    definition.properties[prop] = prop_def_obj;
                 }
+
+                let prop_def_obj = {
+                    description: label,
+                    default: defaultValue
+                };
+
+                switch (type) {
+                    case String:
+                        prop_def_obj = {
+                            type: 'string'
+                        };
+                        break;
+                    case Boolean:
+                        prop_def_obj = {
+                            type: 'boolean'
+                        };
+                        break;
+                    case Date:
+                        definition.properties[prop + '_ts'] = {
+                            type: 'number',
+                            format: 'integer'
+                        };
+                        prop_def_obj = {
+                            type: 'string',
+                            format: 'date-time'
+                        };
+                        break;
+                    case Number:
+                        prop_def_obj = {
+                            type: 'number'
+                        };
+                        break;
+                    case Buffer:
+                        prop_def_obj = {
+                            type: 'buffer'
+                        };
+                        break;
+                    case Array:
+                    case 'array':
+                        prop_def_obj = {
+                            type: 'array'
+                        };
+                        break;
+                    case 'essay':
+                        prop_def_obj = {
+                            type: 'string'
+                        };
+                        break;
+                    case 'sectionheader':
+                        break;
+                    case 'submit':
+                        break;
+                    case 'file':
+                        prop_def_obj = {
+                            type: 'string',
+                            format: 'binary'
+                        };
+                        break;
+                }
+
+                if ('enum' in prop_val) {
+                    prop_def_obj.enum = prop_val.enum;
+                }
+
+                definition.properties[prop] = prop_def_obj;
             }
         }
 
@@ -321,8 +347,14 @@ for (const route in cleanRoutes) {
         const routeParts = route.split('/');
         doc.paths[route] = {};
 
-        let specialTag = false;
-        const tag = routeParts[2].charAt(0).toUpperCase() + routeParts[2].slice(1);
+        let specialTag = false,
+            tag = routeParts[2].charAt(0).toUpperCase() + routeParts[2].slice(1),
+            responseProp = tag;
+
+        if (tag === 'Mentor' || tag === 'Speaker') {
+            tag += 'Application';
+            responseProp = 'application';
+        }
 
         if (routeParts[3]) {
             const testSpecialTag = tag + routeParts[3].charAt(0).toUpperCase() + routeParts[3].slice(1);
@@ -340,14 +372,31 @@ for (const route in cleanRoutes) {
                 summary: '',
                 description: '',
                 operationId: method + routeParts.slice(2).map(function(elem) { return elem.charAt(0).toUpperCase() + elem.slice(1) }).join(''),
-                parameters: [
-                    {
-                        $ref: '#/components/schemas/' + (specialTag || (tag.substr(-1) === 's' ? tag.substr(0, tag.length - 1) : tag))
+                requestBody: {
+                    content: {
+                        'application/json': {
+                            schema: {
+                                $ref: '#/components/schemas/' + (specialTag || (tag.substr(-1) === 's' ? tag.substr(0, tag.length - 1) : tag))
+                            },
+                        }
                     }
-                ],
+                },
                 responses: {
                     '200': {
-                        description: 'Okay'
+                        description: 'Okay',
+                        content: {
+                            'application/json': {
+                                schema: {
+                                    type: 'object',
+                                    properties: {
+                                        status: {
+                                            type: 'boolean',
+                                            description: 'Whether or not the request was successful'
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     '401': {
                         description: 'Unauthorized'
@@ -366,10 +415,14 @@ for (const route in cleanRoutes) {
                 ]
             };
 
+            doc.paths[route][method].responses['200'].content['application/json'].schema.properties[responseProp.toLowerCase()] = {
+                $ref: '#/components/schemas/' + (specialTag || (tag.substr(-1) === 's' ? tag.substr(0, tag.length - 1) : tag))
+            };
+
             if (['get'].indexOf(method) !== -1) {
-                doc.paths[route][method].parameters = [];
+                delete doc.paths[route][method].requestBody;
             }
-        });
+        });3
     }
 }
 

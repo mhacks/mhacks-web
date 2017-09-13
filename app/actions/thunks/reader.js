@@ -34,6 +34,41 @@ export default class ReaderThunks {
         };
     }
 
+    static loadSponsorPortalApplications() {
+        return dispatch => {
+            dispatch({
+                type: actions.LOAD_SPONSOR_PORTAL_APPLICATIONS_REQUEST
+            });
+
+            const token = localStorage.getItem('jwt');
+
+            return ReaderRequests.loadSponsorPortalApplications(
+                token
+            ).then(response => {
+                if (response.status == 200) {
+                    response.json().then(json => {
+                        const { applications } = json;
+                        dispatch({
+                            type:
+                                actions.LOAD_SPONSOR_PORTAL_APPLICATIONS_SUCCESS,
+                            data: applications,
+                            message: json.message
+                        });
+                    });
+                } else {
+                    response.json().then(json => {
+                        dispatch({
+                            type:
+                                actions.LOAD_SPONSOR_PORTAL_APPLICATIONS_ERROR,
+                            error: response.status,
+                            message: json.message
+                        });
+                    });
+                }
+            });
+        };
+    }
+
     static loadMentorApplications() {
         return dispatch => {
             dispatch({ type: actions.LOAD_MENTOR_APPLICATIONS_REQUEST });

@@ -1,12 +1,29 @@
-var mongoose = require('../index.js'),
+var {
+        mongoose,
+        defaultOptions,
+        modifySchema,
+        defaultSchema
+    } = require('../index.js'),
     escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
-var schema = new mongoose.Schema({
-    name: String,
-    latitude: mongoose.Schema.Types.Decimal128,
-    longitude: mongoose.Schema.Types.Decimal128
-});
+var schema = new mongoose.Schema(
+    Object.assign({}, defaultSchema, {
+        name: {
+            type: String,
+            required: true
+        },
+        latitude: {
+            type: String,
+            required: true
+        },
+        longitude: {
+            type: String,
+            required: true
+        }
+    }),
+    defaultOptions
+);
 
 // Allow us to query by name
 schema.query.byName = function(name) {
@@ -29,6 +46,8 @@ schema.methods.updateFields = function(fields) {
     }
     return this.save();
 };
+
+modifySchema(schema);
 
 // Initialize the model with the schema, and export it
 var model = mongoose.model('Location', schema);

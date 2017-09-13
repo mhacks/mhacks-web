@@ -27,7 +27,7 @@ class SponsorReader extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(ReaderThunks.loadHackerApplications());
+        this.props.dispatch(ReaderThunks.loadSponsorPortalApplications());
         this.props.dispatch(
             ReaderThunks.loadForm('confirmation/', 'sponsor_filter')
         );
@@ -254,7 +254,8 @@ class SponsorReader extends React.Component {
                         {
                             onClick: () => {
                                 generateCSV(
-                                    this.props.readerState.data.applications,
+                                    this.props.readerState.data
+                                        .sponsorPortalApplications,
                                     'hacker_applications.csv'
                                 );
                             },
@@ -270,7 +271,7 @@ class SponsorReader extends React.Component {
                 />
                 <ReactTable
                     data={this.filterApplications(
-                        this.props.readerState.data.applications
+                        this.props.readerState.data.sponsorPortalApplications
                     )}
                     columns={this.generateColumns()}
                     loading={this.props.readerState.fetching}

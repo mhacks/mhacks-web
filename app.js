@@ -22,7 +22,7 @@ if (config.newrelic_enabled) {
 }
 
 var http = require('http'),
-    mongoose = require('./server/db/index.js'), // eslint-disable-line
+    mongoose = require('./server/db/index.js').mongoose,
     morgan = require('morgan'),
     express = require('express'),
     app = express(),
@@ -36,9 +36,7 @@ var http = require('http'),
     apiRouter = require('./server/routes/api.js'),
     indexRouter = require('./server/routes/index.js'),
     shortenerRouter = require('./server/routes/shortener.js'),
-    sharedsession = require('express-socket.io-session'),
-    swaggerUI = require('swagger-ui-express'),
-    swaggerDoc = require('./static/docs/openapi.json');
+    sharedsession = require('express-socket.io-session');
 
 // Force https
 app.use(function(req, res, next) {
@@ -117,8 +115,6 @@ app.use(function(req, res, next) {
 
     return next();
 });
-
-app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
 // Other route middleware (modules in `routes/`)
 if (config.service === 'shortener') {

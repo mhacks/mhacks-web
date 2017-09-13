@@ -84,14 +84,19 @@ router.get('/:name', function(req, res) {
 
 // Handles /v1/location/
 router.get('/', function(req, res) {
-    console.log(req.params);
-    Location.find({})
+    Location.find()
+        .since(req.query.since)
         .exec()
         .then(locations => {
             if (locations) {
                 res.send({
                     status: true,
-                    locations: locations
+                    locations: locations.map(location => {
+                        return Object.assign({}, location._doc, {
+                            __v: undefined,
+                            lat: location.latitude['$numberDecimal']
+                        });
+                    })
                 });
             } else {
                 res.status(401).send({

@@ -1,20 +1,46 @@
-var mongoose = require('../index.js'),
+var {
+        mongoose,
+        defaultOptions,
+        modifySchema,
+        defaultSchema
+    } = require('../index.js'),
     escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
-var schema = new mongoose.Schema({
-    app_name: String,
-    start_date: Date,
-    end_date: Date,
-    is_live_page_enabled: {
-        type: Boolean,
-        default: false
-    },
-    is_application_open: {
-        type: Boolean,
-        default: false
-    }
-});
+var schema = new mongoose.Schema(
+    Object.assign({}, defaultSchema, {
+        app_name: String,
+        start_date: Date,
+        end_date: Date,
+        is_live_page_enabled: {
+            type: Boolean,
+            default: false,
+            required: true,
+            form: {
+                user_editable: true,
+                label: 'Live Page Enabled'
+            }
+        },
+        is_application_open: {
+            type: Boolean,
+            default: false,
+            required: true,
+            form: {
+                user_editable: true,
+                label: 'Application Open'
+            }
+        },
+        save_button: {
+            type: String,
+            form: {
+                type_override: 'submit',
+                label: 'Save',
+                user_editable: true
+            }
+        }
+    }),
+    defaultOptions
+);
 
 // Allow us to query by app_name
 schema.query.byAppName = function(app_name) {
@@ -43,6 +69,8 @@ schema.query.byEndDate = function(since, until) {
         }
     });
 };
+
+modifySchema(schema);
 
 // Initialize the model with the schema, and export it
 var model = mongoose.model('Configuration', schema);

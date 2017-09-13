@@ -7,6 +7,13 @@ export default class ReaderRequests {
         return getResponseFromRoute(endpoints.ALL_HACKER_APPLICATIONS, token);
     }
 
+    static loadSponsorPortalApplications(token) {
+        return getResponseFromRoute(
+            endpoints.ALL_SPONSOR_PORTAL_APPLICATIONS,
+            token
+        );
+    }
+
     static loadMentorApplications(token) {
         return getResponseFromRoute(endpoints.ALL_MENTOR_APPLICATIONS, token);
     }

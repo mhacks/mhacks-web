@@ -8,7 +8,7 @@ var router = require('express').Router(),
     interval = undefined;
 
 router.get('/', authMiddleware('admin', 'api'), function(req, res) {
-    Shortener.find({}, '-__v')
+    Shortener.find({})
         .exec()
         .then(short_urls => {
             res.send({

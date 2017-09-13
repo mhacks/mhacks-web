@@ -301,7 +301,7 @@ class EditProfile extends React.Component {
                         Unverified Email
                     </SectionHeader>
                     <p>
-                        You should have received a verification email at{' ' + userData.email}.
+                        You should have received a verification email at{' ' + userData.user.email}.
                         If not, you can request another one by clicking{' '}
                         <Link
                             onClick={this.onClickRequestEmailVerification}

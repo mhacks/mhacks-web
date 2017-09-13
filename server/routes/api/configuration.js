@@ -6,12 +6,10 @@ var router = require('express').Router(),
 
 // Handles get requests for /v1/configuration
 router.get('/', function(req, res) {
-    ConfigurationSchema.findOne({}, '-_id -__v')
+    ConfigurationSchema.findOne({})
         .exec()
         .then(configuration => {
             if (configuration) {
-                configuration = JSON.parse(JSON.stringify(configuration));
-
                 authMiddleware('any', 'api', false, function() {
                     configuration.should_logout = true;
 
@@ -69,11 +67,13 @@ router.post('/control', authMiddleware('admin', 'api'), function(req, res) {
                 configuration.end_date =
                     req.body.end_date || configuration.end_date;
                 configuration.is_live_page_enabled =
-                    req.body.is_live_page_enabled ||
-                    configuration.is_live_page_enabled;
+                    req.body.is_live_page_enabled !== undefined
+                        ? req.body.is_live_page_enabled
+                        : configuration.is_live_page_enabled;
                 configuration.is_application_open =
-                    req.body.is_application_open ||
-                    configuration.is_application_open;
+                    req.body.is_application_open !== undefined
+                        ? req.body.is_application_open
+                        : configuration.is_application_open;
 
                 configuration.save();
                 res.send({
