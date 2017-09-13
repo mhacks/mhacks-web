@@ -1,6 +1,7 @@
 var Responses = {
     RATE_LIMIT: 'Exceeded ratelimit.',
-    INVALID_MESSAGE: 'Invalid message.'
+    INVALID_MESSAGE: 'Invalid message.',
+    MEMBERS_NOT_FOUND: 'Members not found.'
 };
 
 module.exports = Responses;

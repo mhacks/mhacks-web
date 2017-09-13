@@ -4,6 +4,10 @@ services:
     extends:
       file: docker-compose.yml
       service: mhacks_db
+#  mhacks_es:
+#    extends:
+#      file: docker-compose.yml
+#      service: mhacks_es
   mhacks_website:
     extends:
       file: docker-compose.yml
@@ -27,3 +31,4 @@ services:
       - NEWRELIC_LICENSE_KEY
     links:
       - mhacks_db
+#      - mhacks_es

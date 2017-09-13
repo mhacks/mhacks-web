@@ -223,7 +223,11 @@ var schema = new mongoose.Schema(
                 label: 'Sex'
             }
         },
-        push_id: String
+        push_id: String,
+        online: {
+            type: Boolean,
+            default: false
+        }
     }),
     defaultOptions
 );
@@ -638,6 +642,10 @@ schema.methods.getProfile = function() {
             });
     });
 };
+
+schema.virtual('avatars').get(function() {
+    return this.getAvatars();
+});
 
 schema.statics.getUpdateableFields = function(groups) {
     var updateables = [];
