@@ -2,6 +2,7 @@ var router = require('express').Router(),
     Responses = require('../../responses/api'),
     authMiddleware = require('../../middleware/auth.js'),
     qrcode = require('../../interactors/qr.js'),
+    User = require('../../db/model/User.js'),
     ScanEvent = require('../../db/model/ScanEvent.js'),
     Scan = require('../../db/model/Scan.js');
 
@@ -113,6 +114,21 @@ router.get('/:id', authMiddleware('any', 'api'), function(req, res) {
     }
 });
 
+function isMinor(birthdate) {
+    const now = new Date();
+    const birth = new Date(birthdate);
+
+    var age = now.getFullYear() - birth.getFullYear();
+    const ageMonth = now.getMonth() - birth.getMonth();
+    const ageDay = now.getDate() - birth.getDate();
+
+    if (ageMonth < 0 || (ageMonth === 0 && ageDay < 0)) {
+        age = parseInt(age) - 1;
+    }
+
+    return age < 18;
+}
+
 router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
     if (req.params.id) {
         Scan.findOne({ _id: req.params.id })
@@ -139,55 +155,131 @@ router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
                     });
                 }
 
-                ScanEvent.findOne({ user: req.user, event: scan })
-                    .exec()
-                    .then(scanevent => {
-                        if (scanevent) {
-                            res.send({
-                                status: true,
-                                scanevent: scanevent
-                            });
-                        } else {
-                            if (
-                                scan.max_count === -1 ||
-                                scan.count < scan.max_count
-                            ) {
-                                ScanEvent.create({
-                                    user: req.user,
-                                    scanner: req.user,
-                                    event: scan
-                                })
-                                    .then(scanevent => {
+                function findAndCreateScan(user) {
+                    ScanEvent.findOne({ user, event: scan })
+                        .then(scanevent => {
+                            if (scanevent) {
+                                if (scan.type === 'registration') {
+                                    user.getProfile().then(profile => {
+                                        console.log(profile);
                                         res.send({
                                             status: true,
-                                            scanevent: scanevent
-                                        });
-                                    })
-                                    .catch(err => {
-                                        console.error(err);
-                                        res.status(500).send({
-                                            status: false,
-                                            message: Responses.UNKNOWN_ERROR
+                                            feedback: [
+                                                {
+                                                    label: 'Name',
+                                                    value: profile.full_name,
+                                                },
+                                                {
+                                                    label: 'Minor',
+                                                    value: isMinor(profile.birthday) ? 'Yes' : 'No'
+                                                },
+                                                {
+                                                    label: 'Already Scanned',
+                                                    value: 'Yes'
+                                                }
+                                            ]
                                         });
                                     });
-
-                                scan.count++;
-                                scan.save();
+                                } else {
+                                    res.send({
+                                        status: true,
+                                        feedback: [
+                                            {
+                                                label: 'Notes',
+                                                value: scan.notes
+                                            },
+                                            {
+                                                label: 'Already Scanned',
+                                                value: 'Yes'
+                                            }
+                                        ]
+                                    });
+                                }
                             } else {
-                                res.status(400).send({
-                                    status: false,
-                                    message: Responses.Scan.TOO_MANY_VALIDATIONS
-                                });
+                                if (
+                                    scan.max_count === -1 ||
+                                    scan.count < scan.max_count
+                                ) {
+                                    ScanEvent.create({
+                                        user: user,
+                                        scanner: req.user,
+                                        event: scan
+                                    })
+                                        .then(() => {
+                                            if (scan.type === 'registration') {
+                                                user
+                                                    .getProfile()
+                                                    .then(profile => {
+                                                        res.send({
+                                                            status: true,
+                                                            feedback: [
+                                                                {
+                                                                    label: 'Name',
+                                                                    value: profile.full_name,
+                                                                },
+                                                                {
+                                                                    label: 'Minor',
+                                                                    value: isMinor(profile.birthday) ? 'Yes' : 'No'
+                                                                }
+                                                            ]
+                                                        });
+                                                    });
+                                            } else {
+                                                res.send({
+                                                    status: true,
+                                                    feedback: [
+                                                        {
+                                                            label: 'Notes',
+                                                            value: scan.notes
+                                                        }
+                                                    ]
+                                                });
+                                            }
+                                        })
+                                        .catch(err => {
+                                            console.error(err);
+                                            res.status(500).send({
+                                                status: false,
+                                                message: Responses.UNKNOWN_ERROR
+                                            });
+                                        });
+
+                                    scan.count++;
+                                    scan.save();
+                                } else {
+                                    res.status(400).send({
+                                        status: false,
+                                        message:
+                                            Responses.Scan.TOO_MANY_VALIDATIONS
+                                    });
+                                }
                             }
-                        }
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        res.status(500).send({
-                            status: false,
-                            message: Responses.UNKNOWN_ERROR
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            res.status(500).send({
+                                status: false,
+                                message: Responses.UNKNOWN_ERROR
+                            });
                         });
-                    });
+                }
+
+                if (scan.type === 'registration') {
+                    User.find()
+                        .byEmail(req.body.scanned_user)
+                        .then(scannedUser => {
+                            findAndCreateScan(scannedUser);
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            res.status(500).send({
+                                status: false,
+                                message: Responses.UNKNOWN_ERROR
+                            });
+                        });
+                } else {
+                    findAndCreateScan(req.user);
+                }
             })
             .catch(err => {
                 console.error(err);
