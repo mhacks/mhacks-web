@@ -34,12 +34,12 @@ var schema = new mongoose.Schema(
     defaultOptions
 );
 
-schema.query.byMember = function (user) {
-    return this.find({'members.user': user});
+schema.query.byMember = function(user) {
+    return this.find({ 'members.user': user });
 };
 
-schema.query.byCreator = function (user) {
-    return this.find({'creator': user});
+schema.query.byCreator = function(user) {
+    return this.find({ creator: user });
 };
 
 modifySchema(schema);

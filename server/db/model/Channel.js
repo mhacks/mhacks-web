@@ -1,9 +1,9 @@
 var {
-        mongoose,
-        defaultOptions,
-        modifySchema,
-        defaultSchema
-    } = require('../index.js');
+    mongoose,
+    defaultOptions,
+    modifySchema,
+    defaultSchema
+} = require('../index.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
@@ -47,21 +47,21 @@ var schema = new mongoose.Schema(
 );
 
 schema.query.byMember = function(user) {
-    return this.find({'members.user': user});
+    return this.find({ 'members.user': user });
 };
 
-schema.query.byCreator = function (user) {
-    return this.find({'creator': user});
+schema.query.byCreator = function(user) {
+    return this.find({ creator: user });
 };
 
-schema.query.byUserJoinable = function (joinable) {
-    joinable = (typeof joinable === 'undefined') ? true : joinable;
+schema.query.byUserJoinable = function(joinable) {
+    joinable = typeof joinable === 'undefined' ? true : joinable;
 
-    return this.find({user_joinable: joinable});
+    return this.find({ user_joinable: joinable });
 };
 
 schema.query.byMemberOrJoinable = function(user, joinable) {
-    joinable = (typeof joinable === 'undefined') ? true : joinable;
+    joinable = typeof joinable === 'undefined' ? true : joinable;
 
     return this.find({
         $or: [

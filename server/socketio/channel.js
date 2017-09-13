@@ -8,7 +8,7 @@ module.exports = function(io) {
         channelHandler(io, socket);
     });
 
-    setInterval(function () {
+    setInterval(function() {
         interval(io);
     }, 250);
 };
@@ -43,57 +43,75 @@ function channelHandler(io, socket) {
 }
 
 function joinChannels(io, socket) {
-    Channel.find().byMember(socket.handshake.user).exec().then(channels => {
-        channels.forEach(function(channel) {
-            socket.join(channel._id);
+    Channel.find()
+        .byMember(socket.handshake.user)
+        .exec()
+        .then(channels => {
+            channels.forEach(function(channel) {
+                socket.join(channel._id);
+            });
+        })
+        .catch(err => {
+            socket.emit('status', {
+                status: false,
+                message: err
+            });
         });
-    }).catch(err => {
-        socket.emit('status', {
-            status: false,
-            message: err
-        });
-    });
 }
 
 function joinPrivateMessages(io, socket) {
-    PrivateMessage.find().byMember(socket.handshake.user).exec().then(privatemessages => {
-        privatemessages.forEach(function(privatemessage) {
-            socket.join(privatemessage._id);
+    PrivateMessage.find()
+        .byMember(socket.handshake.user)
+        .exec()
+        .then(privatemessages => {
+            privatemessages.forEach(function(privatemessage) {
+                socket.join(privatemessage._id);
+            });
+        })
+        .catch(err => {
+            socket.emit('status', {
+                status: false,
+                message: err
+            });
         });
-    }).catch(err => {
-        socket.emit('status', {
-            status: false,
-            message: err
-        });
-    });
 }
 
 function sendChannels(io, socket) {
-    Channel.find().byMemberOrJoinable(socket.handshake.user, true).populate('members.user', 'full_name _id avatars online').exec().then(channels => {
-        socket.emit('channels', {
-            status: true,
-            channels: channels
+    Channel.find()
+        .byMemberOrJoinable(socket.handshake.user, true)
+        .populate('members.user', 'full_name _id avatars online')
+        .exec()
+        .then(channels => {
+            socket.emit('channels', {
+                status: true,
+                channels: channels
+            });
+        })
+        .catch(err => {
+            socket.emit('status', {
+                status: false,
+                message: err
+            });
         });
-    }).catch(err => {
-        socket.emit('status', {
-            status: false,
-            message: err
-        });
-    });
 }
 
 function sendPrivateMessages(io, socket) {
-    PrivateMessage.find().byMember(socket.handshake.user).populate('members.user', 'full_name _id avatars online').exec().then(privatemessages => {
-        socket.emit('privatemessages', {
-            status: true,
-            channels: privatemessages
+    PrivateMessage.find()
+        .byMember(socket.handshake.user)
+        .populate('members.user', 'full_name _id avatars online')
+        .exec()
+        .then(privatemessages => {
+            socket.emit('privatemessages', {
+                status: true,
+                channels: privatemessages
+            });
+        })
+        .catch(err => {
+            socket.emit('status', {
+                status: false,
+                message: err
+            });
         });
-    }).catch(err => {
-        socket.emit('status', {
-            status: false,
-            message: err
-        });
-    });
 }
 
 function createPrivateMessage(io, socket, data) {
@@ -106,36 +124,38 @@ function createPrivateMessage(io, socket, data) {
                 user_is_member = true;
             }
 
-            query.push({_id: member._id});
+            query.push({ _id: member._id });
         });
 
         if (!user_is_member) {
-            query.push({_id: socket.handshake.user._id});
+            query.push({ _id: socket.handshake.user._id });
         }
 
         User.find({
             $or: query
-        }).exec().then(users => {
-            if (users.length === data.members.length) {
-                const members = [];
+        })
+            .exec()
+            .then(users => {
+                if (users.length === data.members.length) {
+                    const members = [];
 
-                users.forEach(function(user) {
-                    members.push({
-                        user: user
+                    users.forEach(function(user) {
+                        members.push({
+                            user: user
+                        });
                     });
-                });
 
-                PrivateMessage.create({
-                    creator: socket.handshake.user,
-                    members: members
-                });
-            } else {
-                socket.emit('status', {
-                    status: false,
-                    message: Responses.MEMBERS_NOT_FOUND
-                });
-            }
-        });
+                    PrivateMessage.create({
+                        creator: socket.handshake.user,
+                        members: members
+                    });
+                } else {
+                    socket.emit('status', {
+                        status: false,
+                        message: Responses.MEMBERS_NOT_FOUND
+                    });
+                }
+            });
     }
 }
 
