@@ -167,11 +167,15 @@ router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
                                             feedback: [
                                                 {
                                                     label: 'Name',
-                                                    value: profile.full_name,
+                                                    value: profile.full_name
                                                 },
                                                 {
                                                     label: 'Minor',
-                                                    value: isMinor(profile.birthday) ? 'Yes' : 'No'
+                                                    value: isMinor(
+                                                        profile.birthday
+                                                    )
+                                                        ? 'Yes'
+                                                        : 'No'
                                                 },
                                                 {
                                                     label: 'Already Scanned',
@@ -214,12 +218,19 @@ router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
                                                             status: true,
                                                             feedback: [
                                                                 {
-                                                                    label: 'Name',
-                                                                    value: profile.full_name,
+                                                                    label:
+                                                                        'Name',
+                                                                    value:
+                                                                        profile.full_name
                                                                 },
                                                                 {
-                                                                    label: 'Minor',
-                                                                    value: isMinor(profile.birthday) ? 'Yes' : 'No'
+                                                                    label:
+                                                                        'Minor',
+                                                                    value: isMinor(
+                                                                        profile.birthday
+                                                                    )
+                                                                        ? 'Yes'
+                                                                        : 'No'
                                                                 }
                                                             ]
                                                         });
