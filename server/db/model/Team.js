@@ -21,20 +21,17 @@ var schema = new mongoose.Schema({
         }
     },
     //First user in the array will be the 'leader'
-    members: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }]
+    members: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
 });
-
-//Checks the amount of members on a team
-schema.path('members').validate(function(val) {
-  return val.length <= 4;
-}, 'Teams may only consist of 4 members.');
 
 //Checks the length of the description
 schema.path('description').validate(function(val) {
-  return val.length >= 100;
+    return val.length >= 100;
 }, 'A descrpition must be at least 100 characters.');
 
 // Allow us to query by name
@@ -46,8 +43,8 @@ schema.query.byTeamName = function(name) {
 };
 
 schema.query.allMembers = function(teamId) {
-    this.findById(teamId, function(team){
-        return {members: team.members}
+    this.findById(teamId, function(team) {
+        return { members: team.members };
     });
 };
 
