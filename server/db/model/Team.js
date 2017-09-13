@@ -42,12 +42,6 @@ schema.query.byTeamName = function(name) {
     });
 };
 
-schema.query.allMembers = function(teamId) {
-    this.findById(teamId, function(team) {
-        return { members: team.members };
-    });
-};
-
 schema.methods.updateFields = function(fields) {
     for (var param in fields) {
         this[param] = fields[param];

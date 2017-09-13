@@ -5,9 +5,8 @@ var router = require('express').Router(),
 
 // Handles get requests for /v1/teams
 router.get('/', function(req, res) {
-    Team.find({}, '-_id -__v')
+    Team.find()
         .populate('members', 'full_name email avatar')
-        //.select('members.full_name')
         .exec()
         .then(teams => {
             res.send({
@@ -25,152 +24,22 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-    if (req.session.loggedIn) {
-        if (req.body.name && req.body.description && req.user) {
-            Application.find()
-                .byEmail(req.user.email)
-                .then(application => {
-                    if (application && application.status === 'accepted') {
-                        if (req.body.description.length >= 100) {
-                            Team.create({
-                                name: req.body.name,
-                                description: req.body.description,
-                                members: [req.user._id]
-                            })
-                                .then(team => {
-                                    res.send({
-                                        status: true,
-                                        team: team
-                                    });
-                                })
-                                .catch(err => {
-                                    console.error(err);
-                                    res.status(500).send({
-                                        status: false,
-                                        message: Responses.UNKNOWN_ERROR
-                                    });
-                                });
-                        } else {
-                            res.status(401).send({
-                                status: false,
-                                message: Responses.DESCRIPTION_SHORT
-                            });
-                        }
-                    } else {
-                        res.status(401).send({
-                            status: false,
-                            message: Responses.NOT_ACCEPTED
-                        });
-                    }
-                });
-        } else {
-            res.status(401).send({
-                status: false,
-                message: Responses.PARAMS_NOT_FOUND
-            });
-        }
-    } else {
-        res.status(401).send({
-            status: false,
-            message: Responses.PERMISSIONS_REQUIRED
-        });
-    }
-});
-
-router.delete('/', function(req, res) {
-    if (req.session.loggedIn) {
-        if (req.user && req.body.team) {
-            Team.findById(req.body.team)
-                .then(team => {
-                    //Check if person removing team is leader (first in array)
-                    if (team && team.members.indexOf(req.user._id) === 0) {
-                        team.remove();
-                        res.send({
-                            status: true
-                        });
-                    } else {
-                        res.status(403).send({
-                            status: false,
-                            message: Responses.NOT_LEADER
-                        });
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    res.status(500).send({
-                        status: false,
-                        message: Responses.UNKNOWN_ERROR
-                    });
-                });
-        } else {
-            res.status(401).send({
-                status: false,
-                message: Responses.PARAMS_NOT_FOUND
-            });
-        }
-    } else {
-        res.status(401).send({
-            status: false,
-            message: Responses.PERMISSIONS_REQUIRED
-        });
-    }
-});
-
-router.post('/member', function(req, res) {
-    if (req.session.loggedIn) {
-        if (req.user && req.body.team) {
-            Application.find()
-                .byEmail(req.user.email)
-                .then(application => {
-                    if (application && application.status === 'accepted') {
-                        Team.findById(req.body.team)
-                            .populate('members', 'email -_id')
+    if (req.body.name && req.body.description && req.user) {
+        Application.find()
+            .byEmail(req.user.email)
+            .then(application => {
+                if (application && application.status === 'accepted') {
+                    if (req.body.description.length >= 100) {
+                        Team.create({
+                            name: req.body.name,
+                            description: req.body.description,
+                            members: [req.user._id]
+                        })
                             .then(team => {
-                                if (team && team.members.length < 4) {
-                                    team.members.addToSet(req.user._id);
-                                    team.save();
-                                    res.send({
-                                        status: true,
-                                        team: team
-                                    });
-                                    //Check for adopt a noob
-                                } else if (team && team.members.length < 5) {
-                                    Application.find({
-                                        user: {
-                                            $in: team.members.map(
-                                                member => member.email
-                                            )
-                                        }
-                                    })
-                                        .select('experience -_id')
-                                        .then(applications => {
-                                            var apps = applications.map(
-                                                item => item['experience']
-                                            );
-                                            apps.push(application.experience);
-                                            if (checkGoodTeam(apps)) {
-                                                team.members.addToSet(
-                                                    req.user._id
-                                                );
-                                                team.save();
-                                                res.send({
-                                                    status: true,
-                                                    team: team
-                                                });
-                                            } else {
-                                                res.status(403).send({
-                                                    status: false,
-                                                    message:
-                                                        Responses.NOT_QUALIFIED_NOOB
-                                                });
-                                            }
-                                        });
-                                } else {
-                                    res.status(403).send({
-                                        status: false,
-                                        message: Responses.TEAM_FULL
-                                    });
-                                }
+                                res.send({
+                                    status: true,
+                                    team: team
+                                });
                             })
                             .catch(err => {
                                 console.error(err);
@@ -182,60 +51,160 @@ router.post('/member', function(req, res) {
                     } else {
                         res.status(401).send({
                             status: false,
-                            message: Responses.NOT_ACCEPTED
+                            message: Responses.DESCRIPTION_SHORT
                         });
                     }
-                });
-        } else {
-            res.status(401).send({
-                status: false,
-                message: Responses.PARAMS_NOT_FOUND
+                } else {
+                    res.status(401).send({
+                        status: false,
+                        message: Responses.NOT_ACCEPTED
+                    });
+                }
             });
-        }
     } else {
         res.status(401).send({
             status: false,
-            message: Responses.PERMISSIONS_REQUIRED
+            message: Responses.PARAMS_NOT_FOUND
+        });
+    }
+});
+
+router.delete('/', function(req, res) {
+    if (req.user && req.body.team) {
+        Team.findById(req.body.team)
+            .then(team => {
+                //Check if person removing team is leader (first in array)
+                if (team && team.members.indexOf(req.user._id) === 0) {
+                    team.remove();
+                    res.send({
+                        status: true
+                    });
+                } else {
+                    res.status(403).send({
+                        status: false,
+                        message: Responses.NOT_LEADER
+                    });
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
+            });
+    } else {
+        res.status(401).send({
+            status: false,
+            message: Responses.PARAMS_NOT_FOUND
+        });
+    }
+});
+
+router.post('/member', function(req, res) {
+    if (req.user && req.body.team) {
+        Application.find()
+            .byEmail(req.user.email)
+            .then(application => {
+                if (application && application.status === 'accepted') {
+                    Team.findById(req.body.team)
+                        .populate('members', 'email -_id')
+                        .then(team => {
+                            if (team && team.members.length < 4) {
+                                team.members.addToSet(req.user._id);
+                                team.save();
+                                res.send({
+                                    status: true,
+                                    team: team
+                                });
+                                //Check for adopt a noob
+                            } else if (team && team.members.length < 5) {
+                                Application.find({
+                                    user: {
+                                        $in: team.members.map(
+                                            member => member.email
+                                        )
+                                    }
+                                })
+                                    .select('experience -_id')
+                                    .then(applications => {
+                                        var apps = applications.map(
+                                            item => item['experience']
+                                        );
+                                        apps.push(application.experience);
+                                        if (checkGoodTeam(apps)) {
+                                            team.members.addToSet(req.user._id);
+                                            team.save();
+                                            res.send({
+                                                status: true,
+                                                team: team
+                                            });
+                                        } else {
+                                            res.status(403).send({
+                                                status: false,
+                                                message:
+                                                    Responses.NOT_QUALIFIED_NOOB
+                                            });
+                                        }
+                                    });
+                            } else {
+                                res.status(403).send({
+                                    status: false,
+                                    message: Responses.TEAM_FULL
+                                });
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            res.status(500).send({
+                                status: false,
+                                message: Responses.UNKNOWN_ERROR
+                            });
+                        });
+                } else {
+                    res.status(401).send({
+                        status: false,
+                        message: Responses.NOT_ACCEPTED
+                    });
+                }
+            });
+    } else {
+        res.status(401).send({
+            status: false,
+            message: Responses.PARAMS_NOT_FOUND
         });
     }
 });
 
 router.delete('/member', function(req, res) {
-    if (req.session.loggedIn) {
-        if (req.user && req.body.team) {
-            Team.findById(req.body.team)
-                .then(team => {
-                    if (team.members.length > 1) {
-                        team.members.pull(req.user._id);
-                        team.save();
-                        res.send({
-                            status: true,
-                            team: team
-                        });
-                    } else {
-                        res.status(403).send({
-                            status: false,
-                            message: Responses.TEAM_EMPTY
-                        });
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    res.status(500).send({
-                        status: false,
-                        message: Responses.UNKNOWN_ERROR
+    if (req.user && req.body.team) {
+        Team.findById(req.body.team)
+            .then(team => {
+                if (team.members.length > 1) {
+                    team.members.pull(req.user._id);
+                    team.save();
+                    res.send({
+                        status: true,
+                        team: team
                     });
+                } else {
+                    res.status(403).send({
+                        status: false,
+                        message: Responses.TEAM_EMPTY
+                    });
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
                 });
-        } else {
-            res.status(401).send({
-                status: false,
-                message: Responses.PARAMS_NOT_FOUND
             });
-        }
     } else {
         res.status(401).send({
             status: false,
-            message: Responses.PERMISSIONS_REQUIRED
+            message: Responses.PARAMS_NOT_FOUND
         });
     }
 });
