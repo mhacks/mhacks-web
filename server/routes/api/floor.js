@@ -15,7 +15,12 @@ router.get('/', function(req, res) {
         .then(floors => {
             res.send({
                 status: true,
-                floors: floors
+                floors: floors.map(function(floor) {
+                    var obj = floor.toObject();
+                    return Object.assign({}, obj, {
+                        floor_image: floor.getFloorImage()
+                    });
+                })
             });
         })
         .catch(err => {
