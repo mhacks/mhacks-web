@@ -223,7 +223,10 @@ var schema = new mongoose.Schema(
                 label: 'Sex'
             }
         },
-        push_id: String
+        push_id: {
+            type: String,
+            user_editable: true
+        }
     }),
     defaultOptions
 );
