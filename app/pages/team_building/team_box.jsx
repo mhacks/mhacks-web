@@ -17,7 +17,7 @@ const Description = styled.h2`
 const Box = styled.div`
     borderRadius: 25px;
     border: 2px solid ${props => props.theme.secondary};
-    padding: 20px; 
+    padding: 20px;
     width: 250px;
     textAlign: center;
 `;
@@ -40,7 +40,7 @@ const StyledNavLink = styled(NavLink)`
 const UserBox = styled.div`
     borderRadius: 25px;
     border: 2px solid ${props => props.theme.secondary};
-    padding: 20px; 
+    padding: 20px;
     width: 20px;
     textAlign: center;
 `;
@@ -49,12 +49,13 @@ const Row = styled.div`
     display: flex;
     margin: 10px;
     justifyContent: space-evenly;
-`
+`;
 
 class TeamBox extends React.Component {
     render() {
         var teamName = 'Team Name';
-        var description = 'Test description goes here lorem ipsum can have a pipsum';
+        var description =
+            'Test description goes here lorem ipsum can have a pipsum';
 
         return (
             <Box>
