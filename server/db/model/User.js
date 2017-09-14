@@ -225,7 +225,9 @@ var schema = new mongoose.Schema(
         },
         push_id: {
             type: String,
-            user_editable: true
+            form: {
+                user_editable: true
+            }
         }
     }),
     defaultOptions
