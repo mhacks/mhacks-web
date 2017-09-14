@@ -16,7 +16,7 @@ router.get('/', function(req, res) {
             res.send({
                 status: true,
                 floors: floors.map(function(floor) {
-                    var obj = floor.toObject();
+                    var obj = floor.toJSON();
                     return Object.assign({}, obj, {
                         floor_image: floor.getFloorImage()
                     });
