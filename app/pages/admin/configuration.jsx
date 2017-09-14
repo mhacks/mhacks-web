@@ -17,25 +17,6 @@ class ConfigurationSection extends Component {
         this.props.dispatch(ConfigurationThunks.loadForm());
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (
-            nextProps.configurationState &&
-            nextProps.configurationState.data &&
-            nextProps.configurationState.data.form
-        ) {
-            for (var i in nextProps.configurationState) {
-                if (i in nextProps.configurationState.data.form) {
-                    nextProps.configurationState.data.form[i].default =
-                        nextProps.configurationState[i];
-                }
-            }
-        }
-
-        this.setState({
-            configurationState: nextProps.configurationState
-        });
-    }
-
     onSubmit(formData) {
         this.props.dispatch(ConfigurationThunks.updateConfig(formData));
     }
@@ -45,6 +26,7 @@ class ConfigurationSection extends Component {
             <SlimContainer>
                 <H1>Configuration</H1>
                 <MHForm
+                    initialData={this.props.configurationState.data}
                     schema={this.props.configurationState.data.form}
                     FieldTypes={this.props.configurationState.data.FieldTypes}
                     theme={this.props.theme}
