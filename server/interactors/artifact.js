@@ -219,7 +219,9 @@ module.exports = function(email, type, application, artifactOverride, url) {
                     Key: directory + '/' + artifactOverride
                 };
 
-                var matches = url.match(/https:\/\/(.*)\.s3\.amazonaws\.com\/(.*)\/(.*)/);
+                var matches = url.match(
+                    /https:\/\/(.*)\.s3\.amazonaws\.com\/(.*)\/(.*)/
+                );
 
                 if (matches && matches.length === 4) {
                     params.Key = matches.slice(2, 4).join('/');
@@ -241,9 +243,7 @@ module.exports = function(email, type, application, artifactOverride, url) {
                     fileName = splitUrl.pop();
                 directory = splitUrl.pop();
                 if (
-                    fs.existsSync(
-                        'build/uploads/' + directory + '/' + fileName
-                    )
+                    fs.existsSync('build/uploads/' + directory + '/' + fileName)
                 ) {
                     resolve([
                         fileName,
@@ -251,9 +251,9 @@ module.exports = function(email, type, application, artifactOverride, url) {
                             data: {
                                 Body: fs.readFileSync(
                                     'build/uploads/' +
-                                    directory +
-                                    '/' +
-                                    fileName
+                                        directory +
+                                        '/' +
+                                        fileName
                                 )
                             }
                         },

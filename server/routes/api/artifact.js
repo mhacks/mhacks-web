@@ -55,24 +55,33 @@ router.get('/avatar/:email', function(req, res) {
 
 router.get('/floor/:id', function(req, res) {
     if (req.params.id) {
-        Floor.findOne({ _id: req.params.id}).exec().then(floor => {
-            artifact(floor._id, 'floor_image', false, false, floor.floor_image)
-                .then(stream => {
-                    res.setHeader('Content-Type', mime.lookup(stream[0]));
-                    res.send(stream[1].data.Body);
-                })
-                .catch(err => {
-                    res.status(500).send({
-                        status: false,
-                        message: err.message
+        Floor.findOne({ _id: req.params.id })
+            .exec()
+            .then(floor => {
+                artifact(
+                    floor._id,
+                    'floor_image',
+                    false,
+                    false,
+                    floor.floor_image
+                )
+                    .then(stream => {
+                        res.setHeader('Content-Type', mime.lookup(stream[0]));
+                        res.send(stream[1].data.Body);
+                    })
+                    .catch(err => {
+                        res.status(500).send({
+                            status: false,
+                            message: err.message
+                        });
                     });
+            })
+            .catch(err => {
+                res.status(500).send({
+                    status: false,
+                    message: err
                 });
-        }).catch(err => {
-            res.status(500).send({
-                status: false,
-                message: err
             });
-        });
     } else {
         res.status(404).send({
             status: false,
