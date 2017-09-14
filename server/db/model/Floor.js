@@ -45,8 +45,6 @@ var schema = new mongoose.Schema(
     defaultOptions
 );
 
-modifySchema(schema);
-
 schema.methods.updateFields = function(fields) {
     for (var param in fields) {
         this[param] = fields[param];
@@ -62,6 +60,8 @@ schema.methods.getFloorImage = function() {
 schema.statics.getUpdateableFields = function() {
     return Object.keys(schema.obj);
 };
+
+modifySchema(schema);
 
 // Initialize the model with the schema, and export it
 var model = mongoose.model('Floor', schema);
