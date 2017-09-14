@@ -55,33 +55,6 @@ router.post('/', authMiddleware('admin', 'api', true), function(req, res) {
     }
 });
 
-// Handles /v1/location/<location_name>
-router.get('/:name', function(req, res) {
-    Location.find()
-        .byName(req.params.name)
-        .exec()
-        .then(location => {
-            if (location) {
-                res.send({
-                    status: true,
-                    location: location
-                });
-            } else {
-                res.status(401).send({
-                    status: false,
-                    message: Responses.NOT_FOUND
-                });
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(500).send({
-                status: false,
-                message: Responses.UNKNOWN_ERROR
-            });
-        });
-});
-
 // Handles /v1/location/
 router.get('/', function(req, res) {
     Location.find()
@@ -91,12 +64,7 @@ router.get('/', function(req, res) {
             if (locations) {
                 res.send({
                     status: true,
-                    locations: locations.map(location => {
-                        return Object.assign({}, location._doc, {
-                            __v: undefined,
-                            lat: location.latitude['$numberDecimal']
-                        });
-                    })
+                    locations
                 });
             } else {
                 res.status(401).send({
