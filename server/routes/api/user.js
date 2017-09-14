@@ -225,7 +225,22 @@ router.get('/ticket/passbook', authMiddleware('any', 'api'), function(
     }
 });
 
-router.get('/ticket/verify', authMiddleware('scanner', 'api'), function(
+function isMinor(birthdate) {
+    const now = new Date();
+    const birth = new Date(birthdate);
+
+    var age = now.getFullYear() - birth.getFullYear();
+    const ageMonth = now.getMonth() - birth.getMonth();
+    const ageDay = now.getDate() - birth.getDate();
+
+    if (ageMonth < 0 || (ageMonth === 0 && ageDay < 0)) {
+        age = parseInt(age) - 1;
+    }
+
+    return age < 18;
+}
+
+router.post('/ticket/verify', authMiddleware('scanner admin', 'api'), function(
     req,
     res
 ) {
@@ -247,11 +262,27 @@ router.get('/ticket/verify', authMiddleware('scanner', 'api'), function(
                                     .exec()
                                     .then(event => {
                                         if (event) {
-                                            res.status(400).send({
-                                                status: false,
-                                                message:
-                                                    Responses.Application
-                                                        .ALREADY_REGISTERED
+                                            res.send({
+                                                status: true,
+                                                feedback: [
+                                                    {
+                                                        label: 'Name',
+                                                        value: user.full_name
+                                                    },
+                                                    {
+                                                        label: 'Minor',
+                                                        value: isMinor(
+                                                            user.birthday
+                                                        )
+                                                            ? 'Yes'
+                                                            : 'No'
+                                                    },
+                                                    {
+                                                        label:
+                                                            'Already Scanned',
+                                                        value: 'Yes'
+                                                    }
+                                                ]
                                             });
                                         } else {
                                             Application.find()
@@ -265,9 +296,7 @@ router.get('/ticket/verify', authMiddleware('scanner', 'api'), function(
                                                         ) {
                                                             Confirmation.findOne(
                                                                 {
-                                                                    user:
-                                                                        req.body
-                                                                            .email
+                                                                    user
                                                                 }
                                                             )
                                                                 .exec()
@@ -284,11 +313,27 @@ router.get('/ticket/verify', authMiddleware('scanner', 'api'), function(
                                                                                     event: scan
                                                                                 }
                                                                             ).then(
-                                                                                scanevent => {
+                                                                                () => {
                                                                                     res.send(
                                                                                         {
                                                                                             status: true,
-                                                                                            scanevent: scanevent
+                                                                                            feedback: [
+                                                                                                {
+                                                                                                    label:
+                                                                                                        'Name',
+                                                                                                    value:
+                                                                                                        user.full_name
+                                                                                                },
+                                                                                                {
+                                                                                                    label:
+                                                                                                        'Minor',
+                                                                                                    value: isMinor(
+                                                                                                        user.birthday
+                                                                                                    )
+                                                                                                        ? 'Yes'
+                                                                                                        : 'No'
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     );
                                                                                 }
