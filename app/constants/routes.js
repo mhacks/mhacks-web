@@ -18,5 +18,6 @@ export default {
     READER_PORTAL: '/portal/reader',
     SPONSOR_PORTAL: '/portal/sponsor',
     MENTOR_APPLICATION: '/mentor/apply',
-    SPEAKER_APPLICATION: '/speaker/apply'
+    SPEAKER_APPLICATION: '/speaker/apply',
+    TEAM_BUILDING: '/team_building'
 };
