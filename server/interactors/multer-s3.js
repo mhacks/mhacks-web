@@ -36,6 +36,10 @@ module.exports = function(bucket_name, artifactOverride) {
                                     directory = 'avatars';
                                 }
 
+                                if (file.fieldname === 'floor_image') {
+                                    directory = 'floor_images';
+                                }
+
                                 if (!directory) {
                                     return cb(false, '');
                                 }
@@ -65,6 +69,10 @@ module.exports = function(bucket_name, artifactOverride) {
 
                         if (file.fieldname === 'avatar') {
                             directory = 'avatars';
+                        }
+
+                        if (file.fieldname === 'floor_image') {
+                            directory = 'floor_images';
                         }
 
                         if (!directory) {
@@ -99,6 +107,10 @@ module.exports = function(bucket_name, artifactOverride) {
 
                     if (file.fieldname === 'avatar') {
                         directory = 'avatars';
+                    }
+
+                    if (file.fieldname === 'floor_image') {
+                        directory = 'floor_images';
                     }
 
                     if (!directory) {
@@ -142,6 +154,10 @@ module.exports = function(bucket_name, artifactOverride) {
 
                         if (file.fieldname === 'avatar') {
                             directory = 'avatars';
+                        }
+
+                        if (file.fieldname === 'floor_image') {
+                            directory = 'floor_images';
                         }
 
                         if (!directory) {

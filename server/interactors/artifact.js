@@ -12,6 +12,8 @@ module.exports = function(email, type, application, artifactOverride) {
 
         if (type === 'resume') {
             directory = 'resumes';
+        } else if (type === 'floor_image') {
+            directory = 'floor_images';
         } else {
             directory = 'avatars';
         }

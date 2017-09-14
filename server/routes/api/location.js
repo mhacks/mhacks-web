@@ -4,55 +4,55 @@ var router = require('express').Router(),
     Location = require('../../db/model/Location.js');
 
 router.post('/', authMiddleware('admin', 'api', true), function(req, res) {
-    if (!req.body.name || !req.body.longitude || !req.body.latitude) {
-        res.send({
-            status: false,
-            message: Responses.MISSING_PARAMETERS
-        });
-        return;
+    var updateable_fields = Location.getUpdateableFields();
+    var fields = {};
+
+    for (var i in req.body) {
+        if (updateable_fields.indexOf(i) !== -1) {
+            fields[i] = req.body[i];
+        }
     }
-    Location.find()
-        .byName(req.body.name)
-        .exec()
-        .then(location => {
-            if (location) {
-                return location
-                    .updateFields({
-                        longitude: req.body.longitude,
-                        latitude: req.body.latitude
-                    })
-                    .then(saved => {
-                        res.status(200).send({
+
+    if (req.body.id) {
+        Location.findById(req.body.id)
+            .then(location => {
+                if (location) {
+                    location.updateFields(fields).then(location => {
+                        res.send({
                             status: true,
-                            message: Responses.UPDATED,
-                            location: saved
+                            location
                         });
                     });
-            } else {
-                return Location.create({
-                    name: req.body.name,
-                    longitude: req.body.longitude,
-                    latitude: req.body.latitude
-                })
-                    .then(loc => {
-                        return loc.save();
-                    })
-                    .then(saved => {
-                        res.status(200).send({
-                            status: true,
-                            message: Responses.CREATED,
-                            location: saved
-                        });
+                } else {
+                    res.status(404).send({
+                        status: false,
+                        message: Responses.NOT_FOUND
                     });
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(500).send({
-                status: false,
-                message: Responses.UNKNOWN_ERROR
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
             });
-        });
+    } else {
+        Location.create(fields)
+            .then(location => {
+                res.send({
+                    status: true,
+                    location
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
+            });
+    }
 });
 
 // Handles /v1/location/<location_name>
