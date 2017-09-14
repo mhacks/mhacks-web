@@ -1,33 +1,41 @@
-var mongoose = require('../index.js'),
+var {
+        mongoose,
+        defaultOptions,
+        modifySchema,
+        defaultSchema
+    } = require('../index.js'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin'),
     escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
-var schema = new mongoose.Schema({
-    name: {
-        type: String,
-        form: {
-            user_editable: true,
-            label: 'Team Name',
-            placeholder: 'Hacker McHackerTeam'
-        }
-    },
-    description: {
-        type: String,
-        form: {
-            user_editable: true,
-            label: 'Description',
-            placeholder: 'Your description goes here'
-        }
-    },
-    //First user in the array will be the 'leader'
-    members: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        }
-    ]
-});
+var schema = new mongoose.Schema(
+    Object.assign({}, defaultSchema, {
+        name: {
+            type: String,
+            form: {
+                user_editable: true,
+                label: 'Team Name',
+                placeholder: 'Hacker McHackerTeam'
+            }
+        },
+        description: {
+            type: String,
+            form: {
+                user_editable: true,
+                label: 'Description',
+                placeholder: 'Your description goes here'
+            }
+        },
+        //First user in the array will be the 'leader'
+        members: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            }
+        ]
+    }),
+    defaultOptions
+);
 
 //Checks the length of the description
 schema.path('description').validate(function(val) {
@@ -75,6 +83,8 @@ schema.statics.getUpdateableFields = function(groups) {
 };
 
 schema.plugin(sanitizerPlugin);
+
+modifySchema(schema);
 
 // Initialize the model with the schema, and export it
 var model = mongoose.model('Team', schema);

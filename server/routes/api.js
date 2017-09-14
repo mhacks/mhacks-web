@@ -47,7 +47,7 @@ router.use('/mentor', mentorHandler);
 router.use('/floor', floorHandler);
 router.use('/speaker', speakerHandler);
 router.use('/teams', authMiddleware('any', 'api', false), teamHandler),
-router.use('/mentorship', mentorshipHandler);
+    router.use('/mentorship', mentorshipHandler);
 
 router.get('/', function(req, res) {
     res.redirect('/v1/docs');
