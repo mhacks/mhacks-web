@@ -1,8 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { PageContainer } from '../../components';
 import TeamBox from './team_box.jsx';
 import { TeamsThunks } from '../../actions';
+
+const FlexBox = styled.div`
+    display: flex;
+    flexWrap: wrap;
+`;
+
 
 class TeamBuilding extends React.Component {
     componentDidMount() {
@@ -24,9 +31,13 @@ class TeamBuilding extends React.Component {
 
         return (
             <PageContainer>
-                <div>
-                    <TeamBox />
-                </div>
+                <FlexBox>
+                    {teams.map(function(team, i) {
+                        return (
+                            <TeamBox key={i} team={team}/>
+                        );
+                    })}
+                </FlexBox>
             </PageContainer>
         );
     }

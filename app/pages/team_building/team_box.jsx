@@ -18,6 +18,7 @@ const Box = styled.div`
     borderRadius: 25px;
     border: 2px solid ${props => props.theme.secondary};
     padding: 20px;
+    margin: 20px;
     width: 250px;
     textAlign: center;
 `;
@@ -53,34 +54,24 @@ const Row = styled.div`
 
 class TeamBox extends React.Component {
     render() {
-        var teamName = 'Team Name';
-        var description =
-            'Test description goes here lorem ipsum can have a pipsum';
+        var team = this.props.team
+        var teamName = team.name;
+        var description = team.description;
+        var members = team.members;
 
         return (
             <Box>
                 <Header>{teamName}</Header>
                 <Description>{description}</Description>
-                <Row>
-                    <UserBox />
-                    <p>Member 1</p>
-                </Row>
-                <Row>
-                    <UserBox />
-                    <p>Member 2</p>
-                </Row>
-                <Row>
-                    <UserBox />
-                    <p>Member 3</p>
-                </Row>
-                <Row>
-                    <UserBox />
-                    <p>Member 4</p>
-                </Row>
-                <Row>
-                    <UserBox />
-                    <p>Member 5</p>
-                </Row>
+
+                {members.map(function(member, i) {
+                    return (
+                        <Row key={i}>
+                            <UserBox />
+                            <p>{member.full_name}</p>
+                        </Row>
+                    );
+                })}
                 <StyledNavLink to={routes.CONFIRM}>Join Team</StyledNavLink>
             </Box>
         );
