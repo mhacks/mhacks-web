@@ -602,7 +602,8 @@ schema.methods.getProfile = function() {
         portfolio: this.portfolio,
         tshirt: this.tshirt,
         race: this.race,
-        sex: this.sex
+        sex: this.sex,
+        online: this.online
     };
 
     return new Promise(resolve => {

@@ -1,7 +1,8 @@
 const Responses = require('../responses/socketio/index.js'),
     Channel = require('../db/model/Channel.js'),
     PrivateMessage = require('../db/model/PrivateMessage.js'),
-    User = require('../db/model/User.js');
+    User = require('../db/model/User.js'),
+    Chat = require('../db/elasticsearch/chat.js');
 
 module.exports = function(io) {
     io.on('connection', function(socket) {
@@ -48,7 +49,26 @@ function joinChannels(io, socket) {
         .exec()
         .then(channels => {
             channels.forEach(function(channel) {
-                socket.join(channel._id);
+                if (Object.keys(socket.rooms).indexOf(channel._id) === -1) {
+                    socket.join(channel._id);
+
+                    Chat.getEntries(channel._id).then((response) => {
+                        console.log(response);
+                        response.hits.hits.forEach(function (hit) {
+                            var data = hit._source;
+
+                            socket.emit('chat', {
+                                status: true,
+                                message: data.message,
+                                channel: data.channel,
+                                time: data.time,
+                                user: {
+                                    name: data.user.name
+                                }
+                            });
+                        });
+                    }).catch(console.error);
+                }
             });
         })
         .catch(err => {
@@ -65,8 +85,64 @@ function joinPrivateMessages(io, socket) {
         .exec()
         .then(privatemessages => {
             privatemessages.forEach(function(privatemessage) {
-                socket.join(privatemessage._id);
+                if (Object.keys(socket.rooms).indexOf(privatemessage._id) === -1) {
+                    socket.join(privatemessage._id);
+
+                    Chat.getEntries(privatemessage._id).then((response) => {
+                        console.log(response);
+                        response.hits.hits.forEach(function (hit) {
+                            var data = hit._source;
+
+                            socket.emit('chat', {
+                                status: true,
+                                message: data.message,
+                                channel: data.channel,
+                                time: data.time,
+                                user: {
+                                    name: data.user.name
+                                }
+                            });
+                        });
+                    }).catch(console.error);
+                }
             });
+        })
+        .catch(err => {
+            socket.emit('status', {
+                status: false,
+                message: err
+            });
+        });
+}
+
+function leaveRooms(io, socket) {
+    Channel.find()
+        .byMember(socket.handshake.user)
+        .exec()
+        .then(channels => {
+            PrivateMessage.find()
+                .byMember(socket.handshake.user)
+                .exec()
+                .then(privatemessages => {
+                    var all = privatemessages.concat(channels),
+                        ids = [];
+
+                    all.forEach(function(channel) {
+                        ids.push(channel._id);
+                    });
+
+                    Object.keys(socket.rooms).forEach(function(room) {
+                        if (ids.indexOf(room) === -1 && room !== socket.id) {
+                            socket.leave(room);
+                        }
+                    });
+                })
+                .catch(err => {
+                    socket.emit('status', {
+                        status: false,
+                        message: err
+                    });
+                });
         })
         .catch(err => {
             socket.emit('status', {
@@ -164,6 +240,7 @@ function interval(io) {
         if (io.sockets.sockets.hasOwnProperty(socketName)) {
             joinChannels(io, io.sockets.sockets[socketName]);
             joinPrivateMessages(io, io.sockets.sockets[socketName]);
+            leaveRooms(io, io.sockets.sockets[socketName]);
         }
     }
 }

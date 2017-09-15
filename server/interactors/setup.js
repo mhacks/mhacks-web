@@ -1,6 +1,7 @@
 var config = require('../../config/default.js'),
     User = require('../db/model/User.js'),
     Scan = require('../db/model/Scan.js'),
+    Channel = require('../db/model/Channel.js'),
     Configuration = require('../db/model/Configuration.js');
 
 Configuration.find({})
@@ -69,6 +70,28 @@ setTimeout(function() {
                                         });
                                 }
                             });
+
+                        Channel.findOne({name: '#general'}).exec().then(channel => {
+                            if (!channel) {
+                                Channel.create({
+                                    creator: user,
+                                    name: '#general',
+                                    members: [{
+                                        user: user
+                                    }]
+                                }).then(channel => {
+                                    console.log(
+                                        'Created initial channel name "#general":',
+                                        channel
+                                    );
+                                }).catch(err => {
+                                    console.error(
+                                        'Error creating channel name "#general":',
+                                        err
+                                    );
+                                });
+                            }
+                        })
                     })
                     .catch(err => {
                         console.error('Error creating initial user', err);
