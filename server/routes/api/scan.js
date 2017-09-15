@@ -140,7 +140,7 @@ router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
                 }
 
                 ScanEvent.findOne({ user: req.user, event: scan })
-                    .populate('event')
+                    .populate('event', 'name')
                     .exec()
                     .then(scanevent => {
                         if (scanevent) {
@@ -184,7 +184,10 @@ router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
                                                     {},
                                                     scanevent.toJSON(),
                                                     {
-                                                        user: profile
+                                                        user: profile,
+                                                        event: {
+                                                            name: scan.name
+                                                        }
                                                     }
                                                 ),
                                                 feedback: [
