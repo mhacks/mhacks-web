@@ -48,7 +48,7 @@ router.post(
                         } else {
                             Device.create({
                                 push_id: req.body.push_id,
-                                push_categories: req.body.push_categories
+                                push_categories: req.body.push_categories || []
                             })
                                 .then(device => {
                                     res.send({
@@ -121,7 +121,7 @@ router.post(
                         Device.create({
                             user: req.user,
                             push_id: req.body.push_id,
-                            push_categories: req.body.push_categories
+                            push_categories: req.body.push_categories || []
                         })
                             .then(device => {
                                 res.send({
