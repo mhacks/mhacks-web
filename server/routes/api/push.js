@@ -177,11 +177,14 @@ var notificationInterval = setInterval(function() { // eslint-disable-line
                 pushnotifications.forEach(function(pushnotification) {
                     getDevicesForPush(pushnotification).then(device_ids => {
                         if (config.push_notifications.enabled) {
-                            console.log('Sending push notifications:', push.sendNotification(
+                            var res = push.sendNotification(
                                 device_ids,
                                 pushnotification.title,
                                 pushnotification.body
-                            ));
+                            );
+
+                            res.then(console.log).catch(console.log);
+                            console.log('Sending push notifications:', device_ids, res);
                         } else {
                             console.log('Push notification no-op:', device_ids, pushnotification.title, pushnotification.body);
                         }
