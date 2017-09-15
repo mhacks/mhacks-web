@@ -41,7 +41,7 @@ router.post(
 
                             res.send({
                                 status: true,
-                                device: Object.assign({}, device, {
+                                device: Object.assign({}, device.toJSON(), {
                                     user: undefined
                                 })
                             });
@@ -53,7 +53,7 @@ router.post(
                                 .then(device => {
                                     res.send({
                                         status: true,
-                                        device: Object.assign({}, device, {
+                                        device: Object.assign({}, device.toJSON(), {
                                             user: undefined
                                         })
                                     });
@@ -113,7 +113,7 @@ router.post(
 
                         res.send({
                             status: true,
-                            device: Object.assign({}, device, {
+                            device: Object.assign({}, device.toJSON(), {
                                 user: device.user.getProfile()
                             })
                         });
@@ -126,7 +126,7 @@ router.post(
                             .then(device => {
                                 res.send({
                                     status: true,
-                                    device: Object.assign({}, device, {
+                                    device: Object.assign({}, device.toJSON(), {
                                         user: device.user.getProfile()
                                     })
                                 });
