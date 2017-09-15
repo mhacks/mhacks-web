@@ -4,7 +4,8 @@ var router = require('express').Router(),
     Responses = require('../../responses/api/announcement.js'),
     push = require('../../interactors/push.js'),
     User = require('../../db/model/User.js'),
-    config = require('../../../config/default.js');
+    config = require('../../../config/default.js'),
+    util = require('util');
 
 function sortByDate(a, b) {
     return new Date(b.broadcastTime) - new Date(a.broadcastTime);
@@ -183,7 +184,16 @@ var notificationInterval = setInterval(function() { // eslint-disable-line
                                 pushnotification.body
                             );
 
-                            res.then(console.log).catch(console.log);
+                            res.then(function() {
+                                Array.prototype.slice.call(arguments).forEach((data) => {
+                                    console.log(util.inspect(data, false, null));
+                                });
+                            }).catch(function() {
+                                Array.prototype.slice.call(arguments).forEach((data) => {
+                                    console.log(util.inspect(data, false, null));
+                                });
+                            });
+
                             console.log('Sending push notifications:', device_ids, res);
                         } else {
                             console.log('Push notification no-op:', device_ids, pushnotification.title, pushnotification.body);

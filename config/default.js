@@ -84,7 +84,10 @@ module.exports = {
         apns: {
             key: process.env.APNS_KEY || '',
             key_id: process.env.APNS_KEY_ID || '',
-            team_id: process.env.APNS_TEAM_ID || ''
+            team_id: process.env.APNS_TEAM_ID || '',
+            topic: process.env.APNS_TOPIC || 'com.MPowered.MHacks',
+            production:
+                process.APNS_PRODUCTION || process.env.NODE_ENV === 'production'
         },
         gcm: {
             id: process.env.GCM_ID || ''
