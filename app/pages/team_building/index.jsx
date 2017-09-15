@@ -27,7 +27,6 @@ class TeamBuilding extends React.Component {
 
     render() {
         const teams = this.props.teamsState.data;
-        console.log(teams);
 
         return (
             <PageContainer>

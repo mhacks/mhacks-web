@@ -29,6 +29,15 @@ export function teamsState(state = arrayState, action) {
                 message: action.message
             };
 
+        case actions.JOIN_TEAM_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: action.data,
+                message: action.message
+            };
+
         default:
             return state;
     }

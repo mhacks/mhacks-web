@@ -97,11 +97,16 @@ export default class TeamsThunks {
             return TeamsRequests.joinTeam(token, body).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
-                        const { team } = json;
-                        dispatch({
-                            type: actions.JOIN_TEAM_SUCCESS,
-                            data: team,
-                            message: json.message
+                        //const { team } = json;
+                        TeamsRequests.loadTeams(token).then(teamsResponse => {
+                            teamsResponse.json().then(teamsJson => {
+                                const { teams } = teamsJson;
+                                dispatch({
+                                    type: actions.JOIN_TEAM_SUCCESS,
+                                    data: teams,
+                                    message: json.message
+                                });
+                            })
                         });
                     });
                 } else {

@@ -1,8 +1,6 @@
 import React from 'react';
 import { TeamsThunks } from '../../actions';
 import styled from 'styled-components';
-import { routes } from '../../constants';
-import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { RoundedButton } from '../../components';
 
@@ -26,21 +24,6 @@ const Box = styled.div`
     textAlign: center;
 `;
 
-const StyledNavLink = styled(NavLink)`
-    fontSize: 16px;
-    padding: 2px 20px;
-    border: 2px solid ${props => props.theme.highlight};
-    color: ${props => props.theme.highlight};
-    borderRadius: 25px;
-    textDecoration: none;
-    transition: all 0.3s;
-    text-transform: uppercase;
-    &:hover {
-        backgroundColor: ${props => props.theme.highlight};
-        color: white;
-    }
-`;
-
 const UserBox = styled.div`
     borderRadius: 25px;
     border: 2px solid ${props => props.theme.secondary};
@@ -55,12 +38,6 @@ const Row = styled.div`
     justifyContent: space-evenly;
 `;
 
-const ButtonGroup = styled.div`
-    display: flex;
-    flexDirection: row;
-    justifyContent: space-between;
-`;
-
 class TeamBox extends React.Component {
     constructor(props) {
         super(props);
@@ -71,12 +48,12 @@ class TeamBox extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
-        var teamId = '59bac3f28f7a6f002b4f0a86';
+        var teamId = this.props.team.id;
         this.props.dispatch(TeamsThunks.joinTeam(teamId));
     }
 
     render() {
-        var team = this.props.team
+        var team = this.props.team;
         var teamName = team.name;
         var description = team.description;
         var members = team.members;
@@ -94,17 +71,14 @@ class TeamBox extends React.Component {
                         </Row>
                     );
                 })}
-                <StyledNavLink to={routes.CONFIRM}>Join Team</StyledNavLink>
 
                 <form onSubmit={this.onSubmit}>
-                    <ButtonGroup>
-                        <RoundedButton
-                            type="submit"
-                            color={props => props.theme.highlight}
-                        >
-                            Save
-                        </RoundedButton>
-                    </ButtonGroup>
+                    <RoundedButton
+                        type="submit"
+                        color={props => props.theme.highlight}
+                    >
+                        Join Team
+                    </RoundedButton>
                 </form>
             </Box>
         );
