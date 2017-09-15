@@ -3,7 +3,7 @@ var router = require('express').Router(),
     authMiddleware = require('../../middleware/auth.js'),
     Responses = require('../../responses/api/announcement.js'),
     push = require('../../interactors/push.js'),
-    User = require('../../db/model/User.js'),
+    Device = require('../../db/model/Device.js'),
     config = require('../../../config/default.js'),
     util = require('util');
 
@@ -215,14 +215,14 @@ var notificationInterval = setInterval(function() { // eslint-disable-line
 function getDevicesForPush(pushnotification) {
     return new Promise((resolve, reject) => {
         var device_ids = [];
-        if (pushnotification.users.length < 1) {
-            User.find({
+        if (pushnotification.devices.length < 1) {
+            Device.find({
                 push_id: { $exists: true }
             })
                 .exec()
-                .then(users => {
-                    users.forEach(function(user) {
-                        device_ids.push(user.push_id);
+                .then(devices => {
+                    devices.forEach(function(device) {
+                        device_ids.push(device.push_id);
                     });
                     resolve(device_ids);
                 })
@@ -230,14 +230,14 @@ function getDevicesForPush(pushnotification) {
                     reject(err);
                 });
         } else {
-            User.find({
-                email: { $in: pushnotification.users },
+            Device.find({
+                _id: { $in: pushnotification.devices },
                 push_id: { $exists: true }
             })
                 .exec()
-                .then(users => {
-                    users.forEach(function(user) {
-                        device_ids.push(user.push_id);
+                .then(devices => {
+                    devices.forEach(function(device) {
+                        device_ids.push(device.push_id);
                         resolve(device_ids);
                     });
                 })
