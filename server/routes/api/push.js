@@ -175,40 +175,22 @@ var notificationInterval = setInterval(function() { // eslint-disable-line
         .then(pushnotifications => {
             if (pushnotifications) {
                 pushnotifications.forEach(function(pushnotification) {
-                    var device_ids = [];
-                    if (pushnotification.users.length < 1) {
-                        User.find({
-                            push_id: { $exists: true }
-                        })
-                            .exec()
-                            .then(users => {
-                                users.forEach(function(user) {
-                                    device_ids.push(user.push_id);
-                                });
-                            });
-                    } else {
-                        User.find({
-                            email: { $in: pushnotification.users },
-                            push_id: { $exists: true }
-                        })
-                            .exec()
-                            .then(users => {
-                                users.forEach(function(user) {
-                                    device_ids.push(user.push_id);
-                                });
-                            });
-                    }
-                    if (config.push_notifications.enabled) {
-                        push.sendNotification(
-                            device_ids,
-                            pushnotification.title,
-                            pushnotification.body
-                        );
-                    } else {
-                        console.log('Push notification no-op:', device_ids, pushnotification.title, pushnotification.body);
-                    }
-                    pushnotification.isSent = true;
-                    pushnotification.save();
+                    getDevicesForPush(pushnotification).then(device_ids => {
+                        if (config.push_notifications.enabled) {
+                            console.log('Sending push notifications:', push.sendNotification(
+                                device_ids,
+                                pushnotification.title,
+                                pushnotification.body
+                            ));
+                        } else {
+                            console.log('Push notification no-op:', device_ids, pushnotification.title, pushnotification.body);
+                        }
+
+                        pushnotification.isSent = true;
+                        pushnotification.save();
+                    }).catch(err => {
+                        console.error('Caught error when sending push notifications:', err);
+                    });
                 });
             }
         })
@@ -216,5 +198,41 @@ var notificationInterval = setInterval(function() { // eslint-disable-line
             console.error(err);
         });
 }, 1000);
+
+function getDevicesForPush(pushnotification) {
+    return new Promise((resolve, reject) => {
+        var device_ids = [];
+        if (pushnotification.users.length < 1) {
+            User.find({
+                push_id: { $exists: true }
+            })
+                .exec()
+                .then(users => {
+                    users.forEach(function(user) {
+                        device_ids.push(user.push_id);
+                    });
+                    resolve(device_ids);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        } else {
+            User.find({
+                email: { $in: pushnotification.users },
+                push_id: { $exists: true }
+            })
+                .exec()
+                .then(users => {
+                    users.forEach(function(user) {
+                        device_ids.push(user.push_id);
+                        resolve(device_ids);
+                    });
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        }
+    });
+}
 
 module.exports = router;

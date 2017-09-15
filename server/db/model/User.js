@@ -228,6 +228,13 @@ var schema = new mongoose.Schema(
             form: {
                 user_editable: true
             }
+        },
+        push_categories: {
+            type: [String],
+            default: ['emergency', 'logistics', 'food', 'event', 'sponsored'],
+            form: {
+                user_editable: true
+            }
         }
     }),
     defaultOptions
