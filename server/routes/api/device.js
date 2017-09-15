@@ -113,6 +113,7 @@ router.post(
                             }
                         }
 
+                        device.user = req.user;
                         device.updateFields(fields);
 
                         res.send({
