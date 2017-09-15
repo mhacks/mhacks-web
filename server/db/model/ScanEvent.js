@@ -92,20 +92,22 @@ schema.post('save', function(doc) {
     }
 
     Device.find({
-        user: { $in: [[doc.user, doc.scanner]]}
-    }).exec().then(devices => {
-        var device_ids = devices.map(function(device) {
-            return device._id;
-        });
+        user: { $in: [[doc.user, doc.scanner]] }
+    })
+        .exec()
+        .then(devices => {
+            var device_ids = devices.map(function(device) {
+                return device._id;
+            });
 
-        PushNotification.create({
-            title: 'Scan Event!',
-            body: body,
-            category: 'logistics',
-            isApproved: true,
-            devices: device_ids
+            PushNotification.create({
+                title: 'Scan Event!',
+                body: body,
+                category: 'logistics',
+                isApproved: true,
+                devices: device_ids
+            });
         });
-    });
 });
 
 modifySchema(schema);

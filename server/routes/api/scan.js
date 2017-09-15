@@ -147,9 +147,13 @@ router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
                             req.user.getProfile().then(profile => {
                                 res.send({
                                     status: true,
-                                    scanevent: Object.assign({}, scanevent.toJSON(), {
-                                        user: profile
-                                    }),
+                                    scanevent: Object.assign(
+                                        {},
+                                        scanevent.toJSON(),
+                                        {
+                                            user: profile
+                                        }
+                                    ),
                                     feedback: [
                                         {
                                             label: 'Scanned',
@@ -176,16 +180,22 @@ router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
                                         req.user.getProfile().then(profile => {
                                             res.send({
                                                 status: true,
-                                                scanevent: Object.assign({}, scanevent.toJSON(), {
-                                                    user: profile
-                                                }),
+                                                scanevent: Object.assign(
+                                                    {},
+                                                    scanevent.toJSON(),
+                                                    {
+                                                        user: profile
+                                                    }
+                                                ),
                                                 feedback: [
                                                     {
                                                         label: 'Scanned',
-                                                        value: scanevent.event.name
+                                                        value:
+                                                            scanevent.event.name
                                                     },
                                                     {
-                                                        label: 'Already Scanned',
+                                                        label:
+                                                            'Already Scanned',
                                                         value: 'No'
                                                     }
                                                 ]
