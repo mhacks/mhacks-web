@@ -8,11 +8,11 @@ function createEntry(user, data) {
             user: {
                 id: user._id,
                 email: user.email,
-                name: user.name
+                name: user.full_name
             },
             message: data.message,
             channel: data.channel,
-            time: new Date()
+            time: new Date().getTime()
         }
     });
 }
@@ -27,7 +27,7 @@ function getEntries(channel, from, size) {
                 }
             }
         },
-        sort: 'time:dsc',
+        sort: 'time:desc',
         size: size || 50,
         from: from || 0
     });

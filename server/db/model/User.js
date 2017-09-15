@@ -569,7 +569,7 @@ schema.methods.getAvatars = function() {
         'https://www.gravatar.com/avatar/' +
             crypto
                 .createHash('md5')
-                .update(this.email)
+                .update(this.email || '')
                 .digest('hex') +
             '?d=404',
         'https://api-avatar.trove.com/v1/avatar/' +

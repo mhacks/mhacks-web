@@ -24,7 +24,8 @@ function chatHandler(io, socket) {
 
                             channel.members.forEach(function(user_info) {
                                 if (
-                                    user_info.user === socket.handshake.user._id
+                                    user_info.user.toString() ===
+                                    socket.handshake.user._id.toString()
                                 ) {
                                     if (!user_info.muted) {
                                         messageSent = true;

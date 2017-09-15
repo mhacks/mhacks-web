@@ -85,6 +85,26 @@ class Chat extends React.Component {
                 component.authenticate(component.props.token);
             } else {
                 component.retrieveProfile();
+
+                component.socket.on('channels', function(data) {
+                    console.log('Channels', data);
+                    data.channels.forEach(function(channel) {
+                        var users = [];
+                        for (var i in channel.members) {
+                            users.push(channel.members[i]);
+                        }
+
+                        component.setState(state => ({
+                            users: users,
+                            channel: channel,
+                            messages: state.messages
+                        }));
+                    });
+                });
+
+                setTimeout(function() {
+                    component.socket.emit('channels');
+                }, 1000);
             }
         });
 
@@ -101,38 +121,20 @@ class Chat extends React.Component {
         });
 
         this.socket.on('chat', function(data) {
-            if (data.channel === '#general') {
-                if (!document.hasFocus() && 'Notification' in window) {
-                    if (Notification.permission === 'granted') {
+            if (!document.hasFocus() && 'Notification' in window) {
+                if (Notification.permission === 'granted') {
+                    component.createNotification(data);
+                } else if (Notification.permission !== 'denied') {
+                    component.requestPermissions(function() {
                         component.createNotification(data);
-                    } else if (Notification.permission !== 'denied') {
-                        component.requestPermissions(function() {
-                            component.createNotification(data);
-                        });
-                    }
+                    });
                 }
-
-                component.setState(state => ({
-                    messages: [...state.messages, data],
-                    users: state.users
-                }));
             }
-        });
 
-        this.socket.on('channels', function(data) {
-            data.channels.forEach(function(channel) {
-                if (channel.name === '#general') {
-                    var users = [];
-                    for (var i in channel.members) {
-                        users.push(channel.members[i]);
-                    }
-
-                    component.setState(state => ({
-                        users: users,
-                        messages: state.messages
-                    }));
-                }
-            });
+            component.setState(state => ({
+                messages: [...state.messages, data],
+                users: state.users
+            }));
         });
     }
 
@@ -187,7 +189,9 @@ class Chat extends React.Component {
     }
 
     componentWillUnmount() {
-        this.socket.disconnect();
+        if (this.socket) {
+            this.socket.disconnect();
+        }
     }
 
     inputSubmit(message) {
@@ -196,7 +200,10 @@ class Chat extends React.Component {
             messages: state.messages,
             topPadding: '23px'
         }));
-        this.sendMessage(message, '#general');
+
+        if (this.state.channel) {
+            this.sendMessage(message, this.state.channel.id);
+        }
     }
 
     componentDidUpdate() {
@@ -269,9 +276,9 @@ class Chat extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        token: state.userState.data.token,
+        token: localStorage.getItem('jwt'),
         theme: state.theme.data,
-        shouldRender: !!state.userState.data.token
+        shouldRender: !!localStorage.getItem('jwt')
     };
 }
 

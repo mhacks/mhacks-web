@@ -43,75 +43,51 @@ function channelHandler(io, socket) {
     }
 }
 
-function joinChannels(io, socket) {
+function joinRooms(io, socket) {
     Channel.find()
         .byMember(socket.handshake.user)
         .exec()
         .then(channels => {
-            channels.forEach(function(channel) {
-                if (Object.keys(socket.rooms).indexOf(channel._id) === -1) {
-                    socket.join(channel._id);
+            PrivateMessage.find()
+                .byMember(socket.handshake.user)
+                .exec()
+                .then(privatemessages => {
+                    var all = privatemessages.concat(channels);
 
-                    Chat.getEntries(channel._id)
-                        .then(response => {
-                            console.log(response);
-                            response.hits.hits.forEach(function(hit) {
-                                var data = hit._source;
+                    all.forEach(function(channel) {
+                        if (
+                            Object.keys(socket.rooms).indexOf(channel.id) === -1
+                        ) {
+                            socket.join(channel.id);
 
-                                socket.emit('chat', {
-                                    status: true,
-                                    message: data.message,
-                                    channel: data.channel,
-                                    time: data.time,
-                                    user: {
-                                        name: data.user.name
-                                    }
-                                });
-                            });
-                        })
-                        .catch(console.error);
-                }
-            });
-        })
-        .catch(err => {
-            socket.emit('status', {
-                status: false,
-                message: err
-            });
-        });
-}
+                            Chat.getEntries(channel.id)
+                                .then(response => {
+                                    response.hits.hits
+                                        .reverse()
+                                        .forEach(function(hit) {
+                                            var data = hit._source;
 
-function joinPrivateMessages(io, socket) {
-    PrivateMessage.find()
-        .byMember(socket.handshake.user)
-        .exec()
-        .then(privatemessages => {
-            privatemessages.forEach(function(privatemessage) {
-                if (
-                    Object.keys(socket.rooms).indexOf(privatemessage._id) === -1
-                ) {
-                    socket.join(privatemessage._id);
-
-                    Chat.getEntries(privatemessage._id)
-                        .then(response => {
-                            console.log(response);
-                            response.hits.hits.forEach(function(hit) {
-                                var data = hit._source;
-
-                                socket.emit('chat', {
-                                    status: true,
-                                    message: data.message,
-                                    channel: data.channel,
-                                    time: data.time,
-                                    user: {
-                                        name: data.user.name
-                                    }
-                                });
-                            });
-                        })
-                        .catch(console.error);
-                }
-            });
+                                            socket.emit('chat', {
+                                                status: true,
+                                                message: data.message,
+                                                channel: data.channel,
+                                                time: data.time,
+                                                user: {
+                                                    name: data.user.name
+                                                }
+                                            });
+                                        });
+                                })
+                                .catch(console.error);
+                        }
+                    });
+                })
+                .catch(err => {
+                    socket.emit('status', {
+                        status: false,
+                        message: err
+                    });
+                });
         })
         .catch(err => {
             socket.emit('status', {
@@ -131,11 +107,9 @@ function leaveRooms(io, socket) {
                 .exec()
                 .then(privatemessages => {
                     var all = privatemessages.concat(channels),
-                        ids = [];
-
-                    all.forEach(function(channel) {
-                        ids.push(channel._id);
-                    });
+                        ids = all.map(function(channel) {
+                            return channel.id;
+                        });
 
                     Object.keys(socket.rooms).forEach(function(room) {
                         if (ids.indexOf(room) === -1 && room !== socket.id) {
@@ -167,12 +141,6 @@ function sendChannels(io, socket) {
             socket.emit('channels', {
                 status: true,
                 channels: channels
-            });
-        })
-        .catch(err => {
-            socket.emit('status', {
-                status: false,
-                message: err
             });
         });
 }
@@ -244,8 +212,7 @@ function createPrivateMessage(io, socket, data) {
 function interval(io) {
     for (const socketName in io.sockets.sockets) {
         if (io.sockets.sockets.hasOwnProperty(socketName)) {
-            joinChannels(io, io.sockets.sockets[socketName]);
-            joinPrivateMessages(io, io.sockets.sockets[socketName]);
+            joinRooms(io, io.sockets.sockets[socketName]);
             leaveRooms(io, io.sockets.sockets[socketName]);
         }
     }
