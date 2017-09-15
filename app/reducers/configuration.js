@@ -5,9 +5,10 @@ const initialState = {
     fetched: false,
     error: null,
     message: null,
-    is_livepage_enabled: false,
-    is_applications_open: false,
-    data: {}
+    data: {
+        is_live_page_enabled: false,
+        is_application_open: false
+    }
 };
 
 export function configurationState(state = initialState, action) {
@@ -35,7 +36,10 @@ export function configurationState(state = initialState, action) {
                 fetching: false,
                 fetched: true,
                 message: action.message,
-                ...action.data.configuration
+                data: {
+                    ...state.data,
+                    ...action.data.configuration
+                }
             };
 
         case actions.LOAD_CONFIGURATION_FORM_SUCCESS:

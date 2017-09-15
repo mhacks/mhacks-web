@@ -9,10 +9,13 @@ var {
 // Define the document Schema
 var schema = new mongoose.Schema(
     Object.assign({}, defaultSchema, {
-        title: String,
+        title: {
+            type: String,
+            required: true
+        },
         body: {
             type: String,
-            default: ''
+            required: true
         },
         broadcastTime: {
             type: Date,
@@ -21,7 +24,8 @@ var schema = new mongoose.Schema(
         },
         category: {
             type: String,
-            enum: ['emergency', 'logistics', 'food', 'event', 'sponsored']
+            enum: ['emergency', 'logistics', 'food', 'event', 'sponsored'],
+            default: 'logistics'
         },
         isApproved: {
             type: Boolean,

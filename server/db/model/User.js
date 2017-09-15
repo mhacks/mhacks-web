@@ -223,7 +223,6 @@ var schema = new mongoose.Schema(
                 label: 'Sex'
             }
         },
-        push_id: String,
         online: {
             type: Boolean,
             default: false
@@ -615,13 +614,17 @@ schema.methods.getProfile = function() {
                 const {
                     status,
                     needs_reimbursement,
-                    reimbursement
+                    reimbursement,
+                    university,
+                    major
                 } = application;
 
                 profile.application_submitted = true;
                 profile.status = status;
                 profile.needs_reimbursement = needs_reimbursement;
                 profile.reimbursement = reimbursement;
+                profile.university = university;
+                profile.major = major;
 
                 if (status === 'accepted') {
                     mongoose

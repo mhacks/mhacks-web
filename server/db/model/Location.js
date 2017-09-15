@@ -20,6 +20,11 @@ var schema = new mongoose.Schema(
         longitude: {
             type: String,
             required: true
+        },
+        floor: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Floor',
+            required: true
         }
     }),
     defaultOptions
@@ -45,6 +50,10 @@ schema.methods.updateFields = function(fields) {
         this[param] = fields[param];
     }
     return this.save();
+};
+
+schema.statics.getUpdateableFields = function() {
+    return Object.keys(schema.obj);
 };
 
 modifySchema(schema);

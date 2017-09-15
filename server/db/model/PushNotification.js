@@ -34,7 +34,7 @@ var schema = new mongoose.Schema(
             type: Boolean,
             default: false
         },
-        users: {
+        devices: {
             type: [String],
             default: []
         }
