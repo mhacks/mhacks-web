@@ -9,15 +9,21 @@ var {
 // Define the document Schema
 var schema = new mongoose.Schema(
     Object.assign({}, defaultSchema, {
-        name: String,
-        desc: String,
+        name: {
+            type: String,
+            required: true
+        },
+        desc: {
+            type: String,
+            required: true
+        },
         startDate: {
             type: Date,
-            default: Date.now()
+            required: true
         },
         endDate: {
             type: Date,
-            default: Date.now()
+            required: true
         },
         category: {
             type: String,
@@ -26,7 +32,8 @@ var schema = new mongoose.Schema(
         },
         location: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Location'
+            ref: 'Location',
+            required: true
         }
     }),
     defaultOptions
@@ -68,6 +75,11 @@ schema.methods.updateFields = function(fields) {
         this[param] = fields[param];
     }
     return this.save();
+};
+
+// All fields are updateable as only admins have power to create and update.
+schema.statics.getUpdateableFields = function() {
+    return Object.keys(schema.obj);
 };
 
 modifySchema(schema);

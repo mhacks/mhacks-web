@@ -87,6 +87,32 @@ router.post('/', authMiddleware('admin', 'api'), function(req, res) {
     }
 });
 
+router.delete('/:id', authMiddleware('admin', 'api'), function(req, res) {
+    if (req.params.id) {
+        Announcement.findById(req.params.id)
+            .then(announcement => {
+                announcement.deleted = true;
+                announcement.save();
+
+                res.send({
+                    status: true,
+                    announcement: announcement
+                });
+            })
+            .catch(err => {
+                res.status(500).send({
+                    status: false,
+                    message: err
+                });
+            });
+    } else {
+        res.status(401).send({
+            status: false,
+            message: Responses.PARAMS_NOT_FOUND
+        });
+    }
+});
+
 router.put('/', authMiddleware('admin', 'api'), function(req, res) {
     if (req.session.loggedIn) {
         if (req.body.id) {

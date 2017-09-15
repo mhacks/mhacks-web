@@ -5,13 +5,17 @@ var AWS = require('aws-sdk'),
     Application = require('../db/model/Application.js'),
     fs = require('fs');
 
-module.exports = function(email, type, application, artifactOverride) {
+module.exports = function(email, type, application, artifactOverride, url) {
     return new Promise((resolve, reject) => {
-        var s3 = false;
-        var directory = '';
+        var s3 = false,
+            directory = '',
+            params,
+            obj;
 
         if (type === 'resume') {
             directory = 'resumes';
+        } else if (type === 'floor_image') {
+            directory = 'floor_images';
         } else {
             directory = 'avatars';
         }
@@ -23,7 +27,7 @@ module.exports = function(email, type, application, artifactOverride) {
             });
         }
 
-        if (!artifactOverride) {
+        if (!artifactOverride && !url) {
             User.find()
                 .byEmail(email)
                 .exec()
@@ -112,13 +116,13 @@ module.exports = function(email, type, application, artifactOverride) {
                                 var fileName = url.split('/').pop();
                                 var extension = fileName.split('.').pop();
 
-                                var params = {
+                                params = {
                                     Bucket: config.AWS_BUCKET_NAME,
                                     Key: directory + '/' + fileName
                                 };
 
                                 if (s3) {
-                                    var obj = s3.getObject(params);
+                                    obj = s3.getObject(params);
 
                                     obj
                                         .on('error', function(error) {
@@ -167,14 +171,14 @@ module.exports = function(email, type, application, artifactOverride) {
                 .catch(err => {
                     reject(err);
                 });
-        } else {
+        } else if (artifactOverride) {
             if (s3) {
-                var params = {
+                params = {
                     Bucket: config.AWS_BUCKET_NAME,
                     Key: directory + '/' + artifactOverride
                 };
 
-                var obj = s3.getObject(params);
+                obj = s3.getObject(params);
 
                 obj
                     .on('error', function(error) {
@@ -199,6 +203,57 @@ module.exports = function(email, type, application, artifactOverride) {
                                         directory +
                                         '/' +
                                         artifactOverride
+                                )
+                            }
+                        },
+                        email
+                    ]);
+                } else {
+                    reject(new Error(Responses.NOT_FOUND));
+                }
+            }
+        } else if (url) {
+            if (s3) {
+                params = {
+                    Bucket: config.AWS_BUCKET_NAME,
+                    Key: directory + '/' + artifactOverride
+                };
+
+                var matches = url.match(
+                    /https:\/\/(.*)\.s3\.amazonaws\.com\/(.*)\/(.*)/
+                );
+
+                if (matches && matches.length === 4) {
+                    params.Key = matches.slice(2, 4).join('/');
+                    params.Bucket = matches[1];
+                }
+
+                obj = s3.getObject(params);
+
+                obj
+                    .on('error', function(error) {
+                        reject(error);
+                    })
+                    .on('success', function(response) {
+                        resolve([matches[matches.length - 1], response, email]);
+                    });
+                obj.send();
+            } else {
+                var splitUrl = url.split('/'),
+                    fileName = splitUrl.pop();
+                directory = splitUrl.pop();
+                if (
+                    fs.existsSync('build/uploads/' + directory + '/' + fileName)
+                ) {
+                    resolve([
+                        fileName,
+                        {
+                            data: {
+                                Body: fs.readFileSync(
+                                    'build/uploads/' +
+                                        directory +
+                                        '/' +
+                                        fileName
                                 )
                             }
                         },

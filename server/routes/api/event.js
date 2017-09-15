@@ -1,75 +1,58 @@
 var router = require('express').Router(),
     Responses = require('../../responses/api'),
     authMiddleware = require('../../middleware/auth.js'),
-    Location = require('../../db/model/Location.js'),
     Event = require('../../db/model/Event.js');
 
 router.post('/', authMiddleware('admin', 'api', true), function(req, res) {
-    if (
-        !req.body.name ||
-        !req.body.desc ||
-        !req.body.location ||
-        !req.body.startDate
-    ) {
-        res.send({
-            status: false,
-            message: Responses.MISSING_PARAMETERS
-        });
-        return;
+    var updateable_fields = Event.getUpdateableFields();
+    var fields = {};
+
+    for (var i in req.body) {
+        if (updateable_fields.indexOf(i) !== -1) {
+            fields[i] = req.body[i];
+        }
     }
-    Event.find()
-        .byName(req.body.name)
-        .exec()
-        .then(event => {
-            if (event) {
-                return Location.find()
-                    .byName(req.body.location)
-                    .exec()
-                    .then(location => {
-                        req.body.location = location._id;
-                        return event.updateFields(req.body);
-                    })
-                    .then(saved => {
-                        res.status(200).send({
+
+    if (req.body.id) {
+        Event.findById(req.body.id)
+            .then(event => {
+                if (event) {
+                    event.updateFields(fields).then(event => {
+                        res.send({
                             status: true,
-                            message: Responses.UPDATED,
-                            event: saved
+                            event
                         });
                     });
-            } else {
-                return Location.find()
-                    .byName(req.body.location)
-                    .exec()
-                    .then(location => {
-                        req.body.location = location._id;
-                        return Event.create({
-                            name: req.body.name,
-                            desc: req.body.desc,
-                            startDate: req.body.startDate,
-                            endDate: req.body.endDate,
-                            category: req.body.category,
-                            location: req.body.location
-                        });
-                    })
-                    .then(event => {
-                        return event.save();
-                    })
-                    .then(saved => {
-                        res.status(200).send({
-                            status: true,
-                            message: Responses.CREATED,
-                            event: saved
-                        });
+                } else {
+                    res.status(404).send({
+                        status: false,
+                        message: Responses.NOT_FOUND
                     });
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(500).send({
-                status: false,
-                message: Responses.UNKNOWN_ERROR
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
             });
-        });
+    } else {
+        Event.create(fields)
+            .then(event => {
+                res.send({
+                    status: true,
+                    event
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
+            });
+    }
 });
 
 // Handles /v1/event/<event_name>
