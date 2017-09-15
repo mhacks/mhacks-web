@@ -11,6 +11,17 @@ router.post(
         false,
         function(req, res) {
             if (req.body.push_id) {
+                if (
+                    req.body.push_categories &&
+                    !Array.isArray(req.body.push_categories)
+                ) {
+                    req.body.push_categories = req.body.push_categories
+                        .split(',')
+                        .map(data => {
+                            return data.replace(/\s+/g, '');
+                        });
+                }
+
                 Device.findOne({
                     push_id: req.body.push_id
                 })
@@ -72,6 +83,17 @@ router.post(
     ),
     function(req, res) {
         if (req.body.push_id) {
+            if (
+                req.body.push_categories &&
+                !Array.isArray(req.body.push_categories)
+            ) {
+                req.body.push_categories = req.body.push_categories
+                    .split(',')
+                    .map(data => {
+                        return data.replace(/\s+/g, '');
+                    });
+            }
+
             Device.findOne({
                 push_id: req.body.push_id
             })
