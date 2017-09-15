@@ -106,7 +106,7 @@ export default class TeamsThunks {
                                     data: teams,
                                     message: json.message
                                 });
-                            })
+                            });
                         });
                     });
                 } else {

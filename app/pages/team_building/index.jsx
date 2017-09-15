@@ -10,7 +10,6 @@ const FlexBox = styled.div`
     flexWrap: wrap;
 `;
 
-
 class TeamBuilding extends React.Component {
     componentDidMount() {
         this.props.dispatch(TeamsThunks.loadTeams());
@@ -32,9 +31,7 @@ class TeamBuilding extends React.Component {
             <PageContainer>
                 <FlexBox>
                     {teams.map(function(team, i) {
-                        return (
-                            <TeamBox key={i} team={team}/>
-                        );
+                        return <TeamBox key={i} team={team} />;
                     })}
                 </FlexBox>
             </PageContainer>

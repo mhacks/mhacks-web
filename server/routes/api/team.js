@@ -111,13 +111,20 @@ router.post('/member', function(req, res) {
                         .then(team => {
                             if (team && team.members.length < 4) {
                                 team.members.addToSet(req.user._id);
-                                team.save(function(){
-                                    Team.populate(team, {path:'members', select:'email full_name'}, function(){
-                                        res.send({
-                                            status: true,
-                                            team: team
-                                        });
-                                    });
+                                team.save(function() {
+                                    Team.populate(
+                                        team,
+                                        {
+                                            path: 'members',
+                                            select: 'email full_name'
+                                        },
+                                        function() {
+                                            res.send({
+                                                status: true,
+                                                team: team
+                                            });
+                                        }
+                                    );
                                 });
                                 //Check for adopt a noob
                             } else if (team && team.members.length < 5) {
