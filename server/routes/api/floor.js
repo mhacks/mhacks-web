@@ -59,7 +59,7 @@ router.post(
                         floor.updateFields(fields).then(floor => {
                             res.send({
                                 status: true,
-                                floor: Object.assign({}, floor._doc, {
+                                floor: Object.assign({}, floor.toJSON(), {
                                     floor_image: floor.getFloorImage()
                                 })
                             });
@@ -83,7 +83,7 @@ router.post(
                 .then(floor => {
                     res.send({
                         status: true,
-                        floor: Object.assign({}, floor._doc, {
+                        floor: Object.assign({}, floor.toJSON(), {
                             floor_image: floor.getFloorImage()
                         })
                     });

@@ -138,18 +138,18 @@ router.get('/all', authMiddleware('reader admin', 'api'), function(req, res) {
                                     if (!associated_confirmation) {
                                         return Object.assign(
                                             {},
-                                            application._doc,
+                                            application.toJSON(),
                                             user_doc
                                         );
                                     }
 
                                     return Object.assign(
                                         {},
-                                        application._doc,
+                                        application.toJSON(),
                                         user_doc,
                                         Object.assign(
                                             {},
-                                            associated_confirmation._doc,
+                                            associated_confirmation.toJSON(),
                                             { user: undefined }
                                         )
                                     );
@@ -190,7 +190,7 @@ router.get(
             status: 'accepted'
         })
             .select(
-                '-_id -__v -needs_reimbursement -requested_reimbursement -status -score -reader -reimbursement'
+                '-needs_reimbursement -requested_reimbursement -status -score -reader -reimbursement'
             )
             .then(applications => {
                 User.find({
@@ -203,7 +203,6 @@ router.get(
                     .select('_id full_name email')
                     .then(users => {
                         Confirmation.find()
-                            .select('-_id -__v')
                             .then(confirmations => {
                                 res.send({
                                     status: true,
@@ -239,18 +238,18 @@ router.get(
                                             if (!associated_confirmation) {
                                                 return Object.assign(
                                                     {},
-                                                    application._doc,
+                                                    application.toJSON(),
                                                     user_doc
                                                 );
                                             }
 
                                             return Object.assign(
                                                 {},
-                                                application._doc,
+                                                application.toJSON(),
                                                 user_doc,
                                                 Object.assign(
                                                     {},
-                                                    associated_confirmation._doc,
+                                                    associated_confirmation.toJSON(),
                                                     { user: undefined }
                                                 )
                                             );
@@ -317,11 +316,9 @@ router.post('/confirm', function(req, res) {
                                     status: true,
                                     confirmation: Object.assign(
                                         {},
-                                        confirmation._doc,
+                                        confirmation.toJSON(),
                                         {
-                                            user: undefined,
-                                            __v: undefined,
-                                            _id: undefined
+                                            user: undefined
                                         }
                                     )
                                 });

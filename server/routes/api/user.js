@@ -313,29 +313,42 @@ router.post('/ticket/verify', authMiddleware('scanner admin', 'api'), function(
                                                                                     event: scan
                                                                                 }
                                                                             ).then(
-                                                                                () => {
-                                                                                    res.send(
-                                                                                        {
-                                                                                            status: true,
-                                                                                            feedback: [
-                                                                                                {
-                                                                                                    label:
-                                                                                                        'Name',
-                                                                                                    value:
-                                                                                                        user.full_name
-                                                                                                },
-                                                                                                {
-                                                                                                    label:
-                                                                                                        'Minor',
-                                                                                                    value: isMinor(
-                                                                                                        user.birthday
-                                                                                                    )
-                                                                                                        ? 'Yes'
-                                                                                                        : 'No'
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    );
+                                                                                scanevent => {
+                                                                                    user
+                                                                                        .getProfile()
+                                                                                        .then(
+                                                                                            profile => {
+                                                                                                res.send(
+                                                                                                    {
+                                                                                                        status: true,
+                                                                                                        scanevent: Object.assign(
+                                                                                                            {},
+                                                                                                            scanevent,
+                                                                                                            {
+                                                                                                                user: profile
+                                                                                                            }
+                                                                                                        ),
+                                                                                                        feedback: [
+                                                                                                            {
+                                                                                                                label:
+                                                                                                                    'Name',
+                                                                                                                value:
+                                                                                                                    user.full_name
+                                                                                                            },
+                                                                                                            {
+                                                                                                                label:
+                                                                                                                    'Minor',
+                                                                                                                value: isMinor(
+                                                                                                                    user.birthday
+                                                                                                                )
+                                                                                                                    ? 'Yes'
+                                                                                                                    : 'No'
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                );
+                                                                                            }
+                                                                                        );
                                                                                 }
                                                                             );
                                                                         } else {
