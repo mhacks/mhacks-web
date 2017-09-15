@@ -53,9 +53,13 @@ router.post(
                                 .then(device => {
                                     res.send({
                                         status: true,
-                                        device: Object.assign({}, device.toJSON(), {
-                                            user: undefined
-                                        })
+                                        device: Object.assign(
+                                            {},
+                                            device.toJSON(),
+                                            {
+                                                user: undefined
+                                            }
+                                        )
                                     });
                                 })
                                 .catch(err => {
