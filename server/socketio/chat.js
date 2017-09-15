@@ -16,55 +16,70 @@ function chatHandler(io, socket) {
         socket.on('chat', function(data) {
             if ('message' in data && 'channel' in data) {
                 if (Object.keys(socket.rooms).indexOf(data.channel) !== -1) {
-                    Channel.findById(data.channel).exec().then(channel => {
-                        var users = [],
-                            messageSent = false;
+                    Channel.findById(data.channel)
+                        .exec()
+                        .then(channel => {
+                            var users = [],
+                                messageSent = false;
 
-                        channel.members.forEach(function(user_info) {
-                            if (user_info.user === socket.handshake.user._id) {
-                                if (!user_info.muted) {
-                                    messageSent = true;
+                            channel.members.forEach(function(user_info) {
+                                if (
+                                    user_info.user === socket.handshake.user._id
+                                ) {
+                                    if (!user_info.muted) {
+                                        messageSent = true;
 
-                                    io.sockets.in(data.channel).emit('chat', {
-                                        status: true,
-                                        message: data.message,
-                                        channel: data.channel,
-                                        time: new Date().getTime(),
-                                        user: {
-                                            name: socket.handshake.name
+                                        io.sockets
+                                            .in(data.channel)
+                                            .emit('chat', {
+                                                status: true,
+                                                message: data.message,
+                                                channel: data.channel,
+                                                time: new Date().getTime(),
+                                                user: {
+                                                    name: socket.handshake.name
+                                                }
+                                            });
+
+                                        if (config.store_chat_messages) {
+                                            Chat.createEntry(
+                                                socket.handshake.user,
+                                                data
+                                            );
                                         }
-                                    });
-
-                                    if (config.store_chat_messages) {
-                                        Chat.createEntry(socket.handshake.user, data);
+                                    } else {
+                                        socket.emit('status', {
+                                            status: false,
+                                            message: Responses.MUTED
+                                        });
                                     }
                                 } else {
-                                    socket.emit('status', {
-                                        status: false,
-                                        message: Responses.MUTED
-                                    });
+                                    users.push(user_info.user);
                                 }
-                            } else {
-                                users.push(user_info.user);
+                            });
+
+                            if (messageSent) {
+                                Device.find({ user: { $in: users } })
+                                    .exec()
+                                    .then(devices => {
+                                        var device_ids = devices.map(function(
+                                            device
+                                        ) {
+                                            return device._id;
+                                        });
+
+                                        PushNotification.create({
+                                            title:
+                                                'MHacks Chat: ' +
+                                                socket.handshake.name,
+                                            body: data.message,
+                                            category: 'chat',
+                                            isApproved: true,
+                                            devices: device_ids
+                                        });
+                                    });
                             }
                         });
-
-                        if (messageSent) {
-                            Device.find({user: {$in: users}}).exec().then(devices => {
-                                var device_ids = devices.map(function(device) {
-                                    return device._id;
-                                });
-
-                                PushNotification.create({
-                                    title: 'MHacks Chat: ' + socket.handshake.name,
-                                    body: data.message,
-                                    category: 'chat',
-                                    isApproved: true,
-                                    devices: device_ids
-                                });
-                            });
-                        }
-                    });
                 } else {
                     socket.emit('status', {
                         status: false,

@@ -52,22 +52,24 @@ function joinChannels(io, socket) {
                 if (Object.keys(socket.rooms).indexOf(channel._id) === -1) {
                     socket.join(channel._id);
 
-                    Chat.getEntries(channel._id).then((response) => {
-                        console.log(response);
-                        response.hits.hits.forEach(function (hit) {
-                            var data = hit._source;
+                    Chat.getEntries(channel._id)
+                        .then(response => {
+                            console.log(response);
+                            response.hits.hits.forEach(function(hit) {
+                                var data = hit._source;
 
-                            socket.emit('chat', {
-                                status: true,
-                                message: data.message,
-                                channel: data.channel,
-                                time: data.time,
-                                user: {
-                                    name: data.user.name
-                                }
+                                socket.emit('chat', {
+                                    status: true,
+                                    message: data.message,
+                                    channel: data.channel,
+                                    time: data.time,
+                                    user: {
+                                        name: data.user.name
+                                    }
+                                });
                             });
-                        });
-                    }).catch(console.error);
+                        })
+                        .catch(console.error);
                 }
             });
         })
@@ -85,25 +87,29 @@ function joinPrivateMessages(io, socket) {
         .exec()
         .then(privatemessages => {
             privatemessages.forEach(function(privatemessage) {
-                if (Object.keys(socket.rooms).indexOf(privatemessage._id) === -1) {
+                if (
+                    Object.keys(socket.rooms).indexOf(privatemessage._id) === -1
+                ) {
                     socket.join(privatemessage._id);
 
-                    Chat.getEntries(privatemessage._id).then((response) => {
-                        console.log(response);
-                        response.hits.hits.forEach(function (hit) {
-                            var data = hit._source;
+                    Chat.getEntries(privatemessage._id)
+                        .then(response => {
+                            console.log(response);
+                            response.hits.hits.forEach(function(hit) {
+                                var data = hit._source;
 
-                            socket.emit('chat', {
-                                status: true,
-                                message: data.message,
-                                channel: data.channel,
-                                time: data.time,
-                                user: {
-                                    name: data.user.name
-                                }
+                                socket.emit('chat', {
+                                    status: true,
+                                    message: data.message,
+                                    channel: data.channel,
+                                    time: data.time,
+                                    user: {
+                                        name: data.user.name
+                                    }
+                                });
                             });
-                        });
-                    }).catch(console.error);
+                        })
+                        .catch(console.error);
                 }
             });
         })
