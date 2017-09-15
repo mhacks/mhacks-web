@@ -214,11 +214,19 @@ var notificationInterval = setInterval(function() { // eslint-disable-line
 
 function getDevicesForPush(pushnotification) {
     return new Promise((resolve, reject) => {
-        var device_ids = [];
+        var device_ids = [],
+            query = {};
         if (pushnotification.devices.length < 1) {
-            Device.find({
-                push_id: { $exists: true }
-            })
+            query = {
+                push_id: { $exists: true },
+                push_categories: pushnotification.category
+            };
+
+            if (pushnotification.category === 'emergency') {
+                delete query.push_categories;
+            }
+
+            Device.find(query)
                 .exec()
                 .then(devices => {
                     devices.forEach(function(device) {
@@ -230,10 +238,17 @@ function getDevicesForPush(pushnotification) {
                     reject(err);
                 });
         } else {
-            Device.find({
+            query = {
                 _id: { $in: pushnotification.devices },
-                push_id: { $exists: true }
-            })
+                push_id: { $exists: true },
+                push_categories: pushnotification.category
+            };
+
+            if (pushnotification.category === 'emergency') {
+                delete query.push_categories;
+            }
+
+            Device.find(query)
                 .exec()
                 .then(devices => {
                     devices.forEach(function(device) {
