@@ -11,15 +11,49 @@ router.post(
         false,
         function(req, res) {
             if (req.body.push_id) {
-                Device.create({
-                    push_id: req.body.push_id,
-                    push_categories: req.body.push_categories
+                Device.findOne({
+                    push_id: req.body.push_id
                 })
+                    .exec()
                     .then(device => {
-                        res.send({
-                            status: true,
-                            device: device
-                        });
+                        if (device) {
+                            var updateable_fields = Device.getUpdateableFields();
+                            var fields = {};
+
+                            for (var i in req.body) {
+                                if (updateable_fields.indexOf(i) !== -1) {
+                                    fields[i] = req.body[i];
+                                }
+                            }
+
+                            device.updateFields(fields);
+
+                            res.send({
+                                status: true,
+                                device: Object.assign({}, device, {
+                                    user: undefined
+                                })
+                            });
+                        } else {
+                            Device.create({
+                                push_id: req.body.push_id,
+                                push_categories: req.body.push_categories
+                            })
+                                .then(device => {
+                                    res.send({
+                                        status: true,
+                                        device: Object.assign({}, device, {
+                                            user: undefined
+                                        })
+                                    });
+                                })
+                                .catch(err => {
+                                    res.send({
+                                        status: false,
+                                        message: err
+                                    });
+                                });
+                        }
                     })
                     .catch(err => {
                         res.send({
@@ -38,16 +72,50 @@ router.post(
     ),
     function(req, res) {
         if (req.body.push_id) {
-            Device.create({
-                user: req.user,
-                push_id: req.body.push_id,
-                push_categories: req.body.push_categories
+            Device.findOne({
+                push_id: req.body.push_id
             })
+                .exec()
                 .then(device => {
-                    res.send({
-                        status: true,
-                        device: device
-                    });
+                    if (device) {
+                        var updateable_fields = Device.getUpdateableFields();
+                        var fields = {};
+
+                        for (var i in req.body) {
+                            if (updateable_fields.indexOf(i) !== -1) {
+                                fields[i] = req.body[i];
+                            }
+                        }
+
+                        device.updateFields(fields);
+
+                        res.send({
+                            status: true,
+                            device: Object.assign({}, device, {
+                                user: device.user.getProfile()
+                            })
+                        });
+                    } else {
+                        Device.create({
+                            user: req.user,
+                            push_id: req.body.push_id,
+                            push_categories: req.body.push_categories
+                        })
+                            .then(device => {
+                                res.send({
+                                    status: true,
+                                    device: Object.assign({}, device, {
+                                        user: device.user.getProfile()
+                                    })
+                                });
+                            })
+                            .catch(err => {
+                                res.send({
+                                    status: false,
+                                    message: err
+                                });
+                            });
+                    }
                 })
                 .catch(err => {
                     res.send({
