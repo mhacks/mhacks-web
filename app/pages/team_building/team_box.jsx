@@ -1,7 +1,10 @@
 import React from 'react';
+import { TeamsThunks } from '../../actions';
 import styled from 'styled-components';
 import { routes } from '../../constants';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { RoundedButton } from '../../components';
 
 const Header = styled.h2`
     fontSize: 20px;
@@ -51,7 +54,26 @@ const Row = styled.div`
     justifyContent: space-evenly;
 `;
 
+const ButtonGroup = styled.div`
+    display: flex;
+    flexDirection: row;
+    justifyContent: space-between;
+`;
+
 class TeamBox extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+
+        var teamId = '59bac3f28f7a6f002b4f0a86';
+        this.props.dispatch(TeamsThunks.joinTeam(teamId));
+    }
+
     render() {
         var teamName = 'Team Name';
         var description =
@@ -82,9 +104,26 @@ class TeamBox extends React.Component {
                     <p>Member 5</p>
                 </Row>
                 <StyledNavLink to={routes.CONFIRM}>Join Team</StyledNavLink>
+
+                <form onSubmit={this.onSubmit}>
+                    <ButtonGroup>
+                        <RoundedButton
+                            type="submit"
+                            color={props => props.theme.highlight}
+                        >
+                            Save
+                        </RoundedButton>
+                    </ButtonGroup>
+                </form>
             </Box>
         );
     }
 }
 
-export default TeamBox;
+function mapStateToProps(state) {
+    return {
+        theme: state.theme.data
+    };
+}
+
+export default connect(mapStateToProps)(TeamBox);
