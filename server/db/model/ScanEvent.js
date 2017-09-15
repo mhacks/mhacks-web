@@ -4,7 +4,8 @@ var {
         modifySchema,
         defaultSchema
     } = require('../index.js'),
-    PushNotification = require('./PushNotification.js');
+    PushNotification = require('./PushNotification.js'),
+    Device = require('./Device.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
@@ -84,18 +85,26 @@ schema.statics.getUpdateableFields = function(groups) {
 schema.post('save', function(doc) {
     var body = '';
 
-    if (doc.user.email == doc.scanner.email) {
+    if (doc.user.email === doc.scanner.email) {
         body = 'You scanned: ' + doc.event.name;
     } else {
         body = 'You were scanned in for: ' + doc.event.name;
     }
 
-    PushNotification.create({
-        title: 'Scan Event!',
-        body: body,
-        category: 'Logistics',
-        isApproved: true,
-        users: [doc.user.email, doc.scanner.email]
+    Device.find({
+        user: { $in: [[doc.user, doc.scanner]]}
+    }).exec().then(devices => {
+        var device_ids = devices.map(function(device) {
+            return device._id;
+        });
+
+        PushNotification.create({
+            title: 'Scan Event!',
+            body: body,
+            category: 'logistics',
+            isApproved: true,
+            devices: device_ids
+        });
     });
 });
 

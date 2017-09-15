@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
                 authMiddleware('any', 'api', false, function() {
                     res.send({
                         status: true,
-                        configuration: Object.assign({}, configuration._doc, {
+                        configuration: Object.assign({}, configuration.toJSON(), {
                             should_logout: true
                         })
                     });
