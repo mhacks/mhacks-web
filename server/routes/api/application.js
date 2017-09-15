@@ -190,7 +190,7 @@ router.get(
             status: 'accepted'
         })
             .select(
-                '-_id -__v -needs_reimbursement -requested_reimbursement -status -score -reader -reimbursement'
+                '-needs_reimbursement -requested_reimbursement -status -score -reader -reimbursement'
             )
             .then(applications => {
                 User.find({
@@ -203,7 +203,6 @@ router.get(
                     .select('_id full_name email')
                     .then(users => {
                         Confirmation.find()
-                            .select('-_id -__v')
                             .then(confirmations => {
                                 res.send({
                                     status: true,
@@ -319,9 +318,7 @@ router.post('/confirm', function(req, res) {
                                         {},
                                         confirmation.toJSON(),
                                         {
-                                            user: undefined,
-                                            __v: undefined,
-                                            _id: undefined
+                                            user: undefined
                                         }
                                     )
                                 });
