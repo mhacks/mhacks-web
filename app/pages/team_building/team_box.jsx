@@ -31,8 +31,7 @@ const Row = styled.div`
     justifyContent: space-evenly;
 `;
 
-const ProfileContainer = styled.div`
-`;
+const ProfileContainer = styled.div``;
 
 class TeamBox extends React.Component {
     constructor(props) {

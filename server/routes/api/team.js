@@ -131,7 +131,9 @@ router.post('/member', function(req, res) {
                             } else if (team && team.members.length < 5) {
                                 Application.find({
                                     user: {
-                                        $in: team.members.map( member => member.email )
+                                        $in: team.members.map(
+                                            member => member.email
+                                        )
                                     }
                                 })
                                     .select('experience -_id')

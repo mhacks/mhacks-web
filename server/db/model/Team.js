@@ -39,7 +39,7 @@ var schema = new mongoose.Schema(
                 label: 'Create Team',
                 type_override: 'submit'
             }
-        },
+        }
     }),
     defaultOptions
 );

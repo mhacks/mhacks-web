@@ -5,7 +5,7 @@ const initialState = {
     fetching: false,
     fetched: false,
     error: null
-}
+};
 
 export function teamsState(state = initialState, action) {
     switch (action.type) {
