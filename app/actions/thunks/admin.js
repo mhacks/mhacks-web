@@ -9,7 +9,7 @@ export default class AdminThunks {
                 type: actions.ADMIN_LOAD_MODELS_REQUEST
             });
 
-			getResponseFromRoute(endpoints.ADMIN_MODELS).then(response => {
+            getResponseFromRoute(endpoints.ADMIN_MODELS).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch({

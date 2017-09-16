@@ -8,7 +8,6 @@ const PagePulled = styled(PageContainer)`min-height: calc(100vh - 146px);`;
 
 /* Page Component */
 class AdminPage extends React.Component {
-
     componentDidMount() {
         this.props.dispatch(AdminThunks.loadModels());
     }

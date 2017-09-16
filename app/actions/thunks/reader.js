@@ -36,28 +36,30 @@ export default class ReaderThunks {
                 type: actions.LOAD_SPONSOR_PORTAL_APPLICATIONS_REQUEST
             });
 
-            return ReaderRequests.loadSponsorPortalApplications().then(response => {
-                if (response.status == 200) {
-                    response.json().then(json => {
-                        const { applications } = json;
-                        dispatch({
-                            type:
-                                actions.LOAD_SPONSOR_PORTAL_APPLICATIONS_SUCCESS,
-                            data: applications,
-                            message: json.message
+            return ReaderRequests.loadSponsorPortalApplications().then(
+                response => {
+                    if (response.status == 200) {
+                        response.json().then(json => {
+                            const { applications } = json;
+                            dispatch({
+                                type:
+                                    actions.LOAD_SPONSOR_PORTAL_APPLICATIONS_SUCCESS,
+                                data: applications,
+                                message: json.message
+                            });
                         });
-                    });
-                } else {
-                    response.json().then(json => {
-                        dispatch({
-                            type:
-                                actions.LOAD_SPONSOR_PORTAL_APPLICATIONS_ERROR,
-                            error: response.status,
-                            message: json.message
+                    } else {
+                        response.json().then(json => {
+                            dispatch({
+                                type:
+                                    actions.LOAD_SPONSOR_PORTAL_APPLICATIONS_ERROR,
+                                error: response.status,
+                                message: json.message
+                            });
                         });
-                    });
+                    }
                 }
-            });
+            );
         };
     }
 

@@ -30,18 +30,21 @@ router.get('/model/:model', function(req, res) {
         return;
     }
 
-    model.find().then(documents => {
-        res.send({
-            status: true,
-            documents
+    model
+        .find()
+        .then(documents => {
+            res.send({
+                status: true,
+                documents
+            });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({
+                status: false,
+                message: Responses.NOT_FOUND
+            });
         });
-    }).catch(err => {
-        console.error(err);
-        res.status(500).send({
-            status: false,
-            message: Responses.NOT_FOUND
-        });
-    });
 });
 
 router.post('/model/:model', function(req, res) {
@@ -64,29 +67,31 @@ router.post('/model/:model', function(req, res) {
             fields[i] = req.body[i];
         }
     }
-    
+
     if (req.body.id) {
-        Model.findById(req.body.id).then(document => {
-            if (document) {
-                document.updateFields(fields).then(document => {
-                    res.send({
-                        status: true,
-                        document
+        Model.findById(req.body.id)
+            .then(document => {
+                if (document) {
+                    document.updateFields(fields).then(document => {
+                        res.send({
+                            status: true,
+                            document
+                        });
                     });
-                });
-            } else {
-                res.status(404).send({
+                } else {
+                    res.status(404).send({
+                        status: false,
+                        message: Responses.NOT_FOUND
+                    });
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({
                     status: false,
-                    message: Responses.NOT_FOUND
+                    message: Responses.UNKNOWN_ERROR
                 });
-            }
-        }).catch(err => {
-            console.error(err);
-            res.status(500).send({
-                status: false,
-                message: Responses.UNKNOWN_ERROR
             });
-        });
     } else {
         Model.create(fields)
             .then(document => {

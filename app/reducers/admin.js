@@ -1,11 +1,11 @@
 import { actions } from '../actions';
 
 const initialState = {
-	models: {},
-	fetching: false,
-	fetched: false,
-	error: null
-}
+    models: {},
+    fetching: false,
+    fetched: false,
+    error: null
+};
 
 export function adminState(state = initialState, action) {
     switch (action.type) {

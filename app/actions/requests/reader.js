@@ -8,9 +8,7 @@ export default class ReaderRequests {
     }
 
     static loadSponsorPortalApplications() {
-        return getResponseFromRoute(
-            endpoints.ALL_SPONSOR_PORTAL_APPLICATIONS
-        );
+        return getResponseFromRoute(endpoints.ALL_SPONSOR_PORTAL_APPLICATIONS);
     }
 
     static loadMentorApplications() {
