@@ -3,23 +3,22 @@ import { endpoints } from '../../constants';
 import { getResponseFromRoute } from '../../util/actions.js';
 
 export default class ReaderRequests {
-    static loadHackerApplications(token) {
-        return getResponseFromRoute(endpoints.ALL_HACKER_APPLICATIONS, token);
+    static loadHackerApplications() {
+        return getResponseFromRoute(endpoints.ALL_HACKER_APPLICATIONS);
     }
 
-    static loadSponsorPortalApplications(token) {
+    static loadSponsorPortalApplications() {
         return getResponseFromRoute(
-            endpoints.ALL_SPONSOR_PORTAL_APPLICATIONS,
-            token
+            endpoints.ALL_SPONSOR_PORTAL_APPLICATIONS
         );
     }
 
-    static loadMentorApplications(token) {
-        return getResponseFromRoute(endpoints.ALL_MENTOR_APPLICATIONS, token);
+    static loadMentorApplications() {
+        return getResponseFromRoute(endpoints.ALL_MENTOR_APPLICATIONS);
     }
 
-    static loadSpeakerApplications(token) {
-        return getResponseFromRoute(endpoints.ALL_SPEAKER_APPLICATIONS, token);
+    static loadSpeakerApplications() {
+        return getResponseFromRoute(endpoints.ALL_SPEAKER_APPLICATIONS);
     }
 
     static reviewApplications(token, body) {

@@ -28,10 +28,12 @@ export function postFormData(route, token, body, files) {
     });
 }
 
-export function getResponseFromRoute(route, token = '') {
+export function getResponseFromRoute(route) {
     const headers = {
         'Content-Type': 'application/json'
     };
+
+    const token = localStorage.getItem('jwt');
 
     if (token.length > 0) {
         headers.Authorization = 'Bearer ' + token;

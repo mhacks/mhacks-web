@@ -6,9 +6,7 @@ export default class SpeakerThunks {
         return dispatch => {
             dispatch({ type: actions.LOAD_SPEAKER_APPLICATION_REQUEST });
 
-            const token = localStorage.getItem('jwt');
-
-            return SpeakerRequests.loadApplication(token).then(response => {
+            return SpeakerRequests.loadApplication().then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch({
@@ -23,7 +21,6 @@ export default class SpeakerThunks {
                     response.json().then(json => {
                         dispatch({
                             type: actions.LOAD_SPEAKER_APPLICATION_ERROR,
-                            data: token,
                             error: response.status,
                             message: json.message
                         });
@@ -74,9 +71,7 @@ export default class SpeakerThunks {
                 type: actions.LOAD_SPEAKER_APPLICATION_FORM_REQUEST
             });
 
-            const token = localStorage.getItem('jwt');
-
-            return SpeakerRequests.loadForm(token).then(response => {
+            return SpeakerRequests.loadForm().then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch({
