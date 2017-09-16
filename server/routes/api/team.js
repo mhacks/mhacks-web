@@ -108,6 +108,7 @@ router.post('/member', function(req, res) {
             .then(application => {
                 if (application && application.status === 'accepted') {
                     Team.findById(req.body.team)
+                        .populate('members')
                         .then(team => {
                             if (team && team.members.length < 4) {
                                 team.members.addToSet(req.user._id);
@@ -130,9 +131,7 @@ router.post('/member', function(req, res) {
                             } else if (team && team.members.length < 5) {
                                 Application.find({
                                     user: {
-                                        $in: team.members.map(
-                                            member => member.email
-                                        )
+                                        $in: team.members.map( member => member.email )
                                     }
                                 })
                                     .select('experience -_id')

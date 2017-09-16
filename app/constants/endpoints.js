@@ -24,5 +24,6 @@ export default {
     SPEAKER_APPLICATION: '/v1/speaker/application',
     SPEAKER_APPLICATION_FORM: '/v1/form/SpeakerApplication',
     ALL_APPLICATION_RESUMES: '/v1/artifact/resumes?application=true',
-    TEAM_BUILDING: '/v1/teams/'
+    TEAM_BUILDING: '/v1/teams/',
+    TEAM_BUILDING_FORM: '/v1/form/Team'
 };

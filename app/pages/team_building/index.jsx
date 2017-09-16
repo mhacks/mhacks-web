@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { PageContainer } from '../../components';
+import { PageContainer, MHForm } from '../../components';
 import TeamBox from './team_box.jsx';
 import { TeamsThunks } from '../../actions';
 
@@ -12,23 +12,37 @@ const FlexBox = styled.div`
 
 class TeamBuilding extends React.Component {
     componentDidMount() {
+        this.props.dispatch(TeamsThunks.loadTeamForm());
         this.props.dispatch(TeamsThunks.loadTeams());
 
         // refresh team every 20 seconds
         this.poll = setInterval(() => {
             this.props.dispatch(TeamsThunks.loadTeams());
         }, 20 * 1000);
+
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     componentWillUnmount() {
         clearInterval(this.poll);
     }
 
+    onSubmit(formData) {
+        console.log(formData);
+        this.props.dispatch(TeamsThunks.createTeam(formData));
+    }
+
     render() {
-        const teams = this.props.teamsState.data;
+        const teams = this.props.teamsState.data.teams;
 
         return (
             <PageContainer>
+                <MHForm
+                    schema={this.props.teamsState.data.form}
+                    FieldTypes={this.props.teamsState.data.FieldTypes}
+                    theme={this.props.theme}
+                    onSubmit={this.onSubmit}
+                />
                 <FlexBox>
                     {teams.map(function(team, i) {
                         return <TeamBox key={i} team={team} />;
@@ -45,7 +59,8 @@ TeamBuilding.contextTypes = {
 
 function mapStateToProps(state) {
     return {
-        teamsState: state.teamsState
+        teamsState: state.teamsState,
+        theme: state.theme
     };
 }
 

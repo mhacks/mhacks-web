@@ -30,20 +30,24 @@ export default class TeamsThunks {
             });
         };
     }
-    static createTeam() {
+    static createTeam(body) {
         return dispatch => {
             dispatch({ type: actions.CREATE_TEAM_REQUEST });
 
             const token = localStorage.getItem('jwt');
 
-            return TeamsRequests.createTeam(token).then(response => {
+            return TeamsRequests.createTeam(token, body).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
-                        const { team } = json;
-                        dispatch({
-                            type: actions.CREATE_TEAM_SUCCESS,
-                            data: team,
-                            message: json.message
+                        TeamsRequests.loadTeams(token).then(teamsResponse => {
+                            teamsResponse.json().then(teamsJson => {
+                                const { teams } = teamsJson;
+                                dispatch({
+                                    type: actions.CREATE_TEAM_SUCCESS,
+                                    data: teams,
+                                    message: json.message
+                                });
+                            });
                         });
                     });
                 } else {
@@ -68,11 +72,15 @@ export default class TeamsThunks {
             return TeamsRequests.deleteTeam(token, body).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
-                        const { response } = json;
-                        dispatch({
-                            type: actions.DELETE_TEAM_SUCCESS,
-                            data: response,
-                            message: json.message
+                        TeamsRequests.loadTeams(token).then(teamsResponse => {
+                            teamsResponse.json().then(teamsJson => {
+                                const { teams } = teamsJson;
+                                dispatch({
+                                    type: actions.DELETE_TEAM_SUCCESS,
+                                    data: teams,
+                                    message: json.message
+                                });
+                            });
                         });
                     });
                 } else {
@@ -97,7 +105,6 @@ export default class TeamsThunks {
             return TeamsRequests.joinTeam(token, body).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
-                        //const { team } = json;
                         TeamsRequests.loadTeams(token).then(teamsResponse => {
                             teamsResponse.json().then(teamsJson => {
                                 const { teams } = teamsJson;
@@ -131,11 +138,15 @@ export default class TeamsThunks {
             return TeamsRequests.leaveTeam(token, body).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
-                        const { response } = json;
-                        dispatch({
-                            type: actions.LEAVE_TEAM_SUCCESS,
-                            data: response,
-                            message: json.message
+                        TeamsRequests.loadTeams(token).then(teamsResponse => {
+                            teamsResponse.json().then(teamsJson => {
+                                const { teams } = teamsJson;
+                                dispatch({
+                                    type: actions.LEAVE_TEAM_SUCCESS,
+                                    data: teams,
+                                    message: json.message
+                                });
+                            });
                         });
                     });
                 } else {
@@ -143,6 +154,36 @@ export default class TeamsThunks {
                         dispatch({
                             type: actions.LEAVE_TEAM_ERROR,
                             error: response.status,
+                            message: json.message
+                        });
+                    });
+                }
+            });
+        };
+    }
+
+    static loadTeamForm() {
+        return dispatch => {
+            dispatch({
+                type: actions.LOAD_TEAM_FORM_REQUEST
+            });
+
+            const token = localStorage.getItem('jwt');
+
+            return TeamsRequests.loadTeamForm(token).then(response => {
+                if (response.status == 200) {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.LOAD_TEAM_FORM_SUCCESS,
+                            data: { form: json.form, FieldTypes: json.types },
+                            message: json.message
+                        });
+                    });
+                } else {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.LOAD_TEAM_FORM_ERROR,
+                            error: json.status,
                             message: json.message
                         });
                     });

@@ -3,6 +3,7 @@ import { TeamsThunks } from '../../actions';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { RoundedButton } from '../../components';
+import { ProfilePicture } from '../../components';
 
 const Header = styled.h2`
     fontSize: 20px;
@@ -18,17 +19,9 @@ const Description = styled.h2`
 const Box = styled.div`
     borderRadius: 25px;
     border: 2px solid ${props => props.theme.secondary};
-    padding: 20px;
+    padding: 10px;
     margin: 20px;
-    width: 250px;
-    textAlign: center;
-`;
-
-const UserBox = styled.div`
-    borderRadius: 25px;
-    border: 2px solid ${props => props.theme.secondary};
-    padding: 20px;
-    width: 20px;
+    width: 300px;
     textAlign: center;
 `;
 
@@ -38,18 +31,37 @@ const Row = styled.div`
     justifyContent: space-evenly;
 `;
 
+const ProfileContainer = styled.div`
+`;
+
 class TeamBox extends React.Component {
     constructor(props) {
         super(props);
 
-        this.onSubmit = this.onSubmit.bind(this);
+        this.joinTeam = this.joinTeam.bind(this);
+        this.leaveTeam = this.leaveTeam.bind(this);
+        this.deleteTeam = this.deleteTeam.bind(this);
     }
 
-    onSubmit(e) {
+    joinTeam(e) {
         e.preventDefault();
 
         var teamId = this.props.team.id;
         this.props.dispatch(TeamsThunks.joinTeam(teamId));
+    }
+
+    leaveTeam(e) {
+        e.preventDefault();
+
+        var teamId = this.props.team.id;
+        this.props.dispatch(TeamsThunks.leaveTeam(teamId));
+    }
+
+    deleteTeam(e) {
+        e.preventDefault();
+
+        var teamId = this.props.team.id;
+        this.props.dispatch(TeamsThunks.deleteTeam(teamId));
     }
 
     render() {
@@ -57,6 +69,8 @@ class TeamBox extends React.Component {
         var teamName = team.name;
         var description = team.description;
         var members = team.members;
+
+        const user = this.props.userState.data.user;
 
         return (
             <Box>
@@ -66,20 +80,35 @@ class TeamBox extends React.Component {
                 {members.map(function(member, i) {
                     return (
                         <Row key={i}>
-                            <UserBox />
+                            <ProfileContainer>
+                                <ProfilePicture avatars={user.avatars} />
+                            </ProfileContainer>
                             <p>{member.full_name}</p>
+                            <p>{member.email}</p>
                         </Row>
                     );
                 })}
-
-                <form onSubmit={this.onSubmit}>
-                    <RoundedButton
-                        type="submit"
-                        color={props => props.theme.highlight}
-                    >
-                        Join Team
-                    </RoundedButton>
-                </form>
+                <RoundedButton
+                    type="submit"
+                    color={props => props.theme.highlight}
+                    onClick={this.joinTeam}
+                >
+                    Join Team
+                </RoundedButton>
+                <RoundedButton
+                    type="submit"
+                    color={props => props.theme.highlight}
+                    onClick={this.leaveTeam}
+                >
+                    Leave Team
+                </RoundedButton>
+                <RoundedButton
+                    type="submit"
+                    color={props => props.theme.highlight}
+                    onClick={this.deleteTeam}
+                >
+                    Delete Team
+                </RoundedButton>
             </Box>
         );
     }
@@ -87,6 +116,7 @@ class TeamBox extends React.Component {
 
 function mapStateToProps(state) {
     return {
+        userState: state.userState,
         theme: state.theme.data
     };
 }

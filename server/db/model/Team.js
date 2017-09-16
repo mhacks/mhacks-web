@@ -32,7 +32,14 @@ var schema = new mongoose.Schema(
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'
             }
-        ]
+        ],
+        save_button: {
+            type: String,
+            form: {
+                label: 'Create Team',
+                type_override: 'submit'
+            }
+        },
     }),
     defaultOptions
 );
