@@ -19,19 +19,30 @@ const Description = styled.h2`
 const Box = styled.div`
     borderRadius: 25px;
     border: 2px solid ${props => props.theme.secondary};
-    padding: 10px;
-    margin: 20px;
-    width: 300px;
     textAlign: center;
+    margin: 20px;
+    maxWidth: 30%;
+    minWidth: 250px;
+    overflow: hidden;
 `;
 
 const Row = styled.div`
     display: flex;
-    margin: 10px;
     justifyContent: space-evenly;
 `;
 
-const ProfileContainer = styled.div``;
+const FlexBox = styled.div`
+    display: flex;
+    flexDirection: column;
+`;
+
+const ButtonWrapper = styled.div`
+    margin: 20px;
+`;
+
+const PictureWrapper = styled.div`
+    float: left;
+`;
 
 class TeamBox extends React.Component {
     constructor(props) {
@@ -64,50 +75,53 @@ class TeamBox extends React.Component {
     }
 
     render() {
-        var team = this.props.team;
-        var teamName = team.name;
-        var description = team.description;
-        var members = team.members;
+        const team = this.props.team;
+        const userEmail = this.props.userState.data.user.email;
 
-        const user = this.props.userState.data.user;
+        const memberEmails = team.members.map(member => member.email);
+        const position = memberEmails.indexOf(userEmail);
+
+        var display, clickFunction;
+
+        if (position === -1) {
+            display = 'Join Team'
+            clickFunction = this.joinTeam;
+        } else if (position === 0){
+            display = 'Delete Team'
+            clickFunction = this.deleteTeam;
+        } else {
+            display = 'Leave Team';
+            clickFunction = this.leaveTeam;
+        }
+
 
         return (
             <Box>
-                <Header>{teamName}</Header>
-                <Description>{description}</Description>
+                <Header>{team.name}</Header>
+                <Description>{team.description}</Description>
 
-                {members.map(function(member, i) {
+                {team.members.map(function(member, i) {
                     return (
                         <Row key={i}>
-                            <ProfileContainer>
-                                <ProfilePicture avatars={user.avatars} />
-                            </ProfileContainer>
-                            <p>{member.full_name}</p>
-                            <p>{member.email}</p>
+                            <PictureWrapper>
+                                <ProfilePicture avatars={[]} />
+                            </PictureWrapper>
+                            <FlexBox>
+                                <p>{member.full_name}</p>
+                                <p>{member.email}</p>
+                            </FlexBox>
                         </Row>
                     );
                 })}
-                <RoundedButton
-                    type="submit"
-                    color={props => props.theme.highlight}
-                    onClick={this.joinTeam}
-                >
-                    Join Team
-                </RoundedButton>
-                <RoundedButton
-                    type="submit"
-                    color={props => props.theme.highlight}
-                    onClick={this.leaveTeam}
-                >
-                    Leave Team
-                </RoundedButton>
-                <RoundedButton
-                    type="submit"
-                    color={props => props.theme.highlight}
-                    onClick={this.deleteTeam}
-                >
-                    Delete Team
-                </RoundedButton>
+                <ButtonWrapper>
+                    <RoundedButton
+                        type="submit"
+                        color={props => props.theme.highlight}
+                        onClick={clickFunction}
+                    >
+                        {display}
+                    </RoundedButton>
+                </ButtonWrapper>
             </Box>
         );
     }

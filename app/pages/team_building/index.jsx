@@ -8,6 +8,16 @@ import { TeamsThunks } from '../../actions';
 const FlexBox = styled.div`
     display: flex;
     flexWrap: wrap;
+    justifyContent: center;
+`;
+
+const MHFormWrapper = styled.div`
+    borderRadius: 25px;
+    border: 2px solid ${props => props.theme.secondary};
+    textAlign: center;
+    margin: 20px;
+    padding: 20px;
+    minWidth: 80%
 `;
 
 class TeamBuilding extends React.Component {
@@ -37,13 +47,15 @@ class TeamBuilding extends React.Component {
 
         return (
             <PageContainer>
-                <MHForm
-                    schema={this.props.teamsState.data.form}
-                    FieldTypes={this.props.teamsState.data.FieldTypes}
-                    theme={this.props.theme}
-                    onSubmit={this.onSubmit}
-                />
                 <FlexBox>
+                    <MHFormWrapper>
+                        <MHForm
+                            schema={this.props.teamsState.data.form}
+                            FieldTypes={this.props.teamsState.data.FieldTypes}
+                            theme={this.props.theme}
+                            onSubmit={this.onSubmit}
+                        />
+                    </MHFormWrapper>
                     {teams.map(function(team, i) {
                         return <TeamBox key={i} team={team} />;
                     })}
@@ -60,7 +72,7 @@ TeamBuilding.contextTypes = {
 function mapStateToProps(state) {
     return {
         teamsState: state.teamsState,
-        theme: state.theme
+        theme: state.theme.data
     };
 }
 
