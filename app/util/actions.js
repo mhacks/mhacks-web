@@ -60,10 +60,12 @@ export function deleteRequest(route, token = '', body) {
     });
 }
 
-export function getResponseFromRoute(route, token = '') {
+export function getResponseFromRoute(route) {
     const headers = {
         'Content-Type': 'application/json'
     };
+
+    const token = localStorage.getItem('jwt');
 
     if (token.length > 0) {
         headers.Authorization = 'Bearer ' + token;

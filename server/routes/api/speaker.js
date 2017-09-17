@@ -99,7 +99,7 @@ router.get('/all', authMiddleware('reader admin', 'api'), function(req, res) {
             res.send({
                 status: true,
                 applications: applications.map(application => {
-                    return Object.assign({}, application._doc, {
+                    return Object.assign({}, application.toJSON(), {
                         email: application.user.email,
                         name: application.user.full_name,
                         university: application.user.university,

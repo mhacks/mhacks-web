@@ -11,11 +11,15 @@ router.get('/', function(req, res) {
         .then(configuration => {
             if (configuration) {
                 authMiddleware('any', 'api', false, function() {
-                    configuration.should_logout = true;
-
                     res.send({
                         status: true,
-                        configuration: configuration
+                        configuration: Object.assign(
+                            {},
+                            configuration.toJSON(),
+                            {
+                                should_logout: true
+                            }
+                        )
                     });
                 })(req, res, function() {
                     User.find()

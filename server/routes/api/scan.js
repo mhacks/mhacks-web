@@ -140,12 +140,31 @@ router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
                 }
 
                 ScanEvent.findOne({ user: req.user, event: scan })
+                    .populate('event', 'name')
                     .exec()
                     .then(scanevent => {
                         if (scanevent) {
-                            res.send({
-                                status: true,
-                                scanevent: scanevent
+                            req.user.getProfile().then(profile => {
+                                res.send({
+                                    status: true,
+                                    scanevent: Object.assign(
+                                        {},
+                                        scanevent.toJSON(),
+                                        {
+                                            user: profile
+                                        }
+                                    ),
+                                    feedback: [
+                                        {
+                                            label: 'Scanned',
+                                            value: scanevent.event.name
+                                        },
+                                        {
+                                            label: 'Already Scanned',
+                                            value: 'Yes'
+                                        }
+                                    ]
+                                });
                             });
                         } else {
                             if (
@@ -158,9 +177,32 @@ router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
                                     event: scan
                                 })
                                     .then(scanevent => {
-                                        res.send({
-                                            status: true,
-                                            scanevent: scanevent
+                                        req.user.getProfile().then(profile => {
+                                            res.send({
+                                                status: true,
+                                                scanevent: Object.assign(
+                                                    {},
+                                                    scanevent.toJSON(),
+                                                    {
+                                                        user: profile,
+                                                        event: {
+                                                            name: scan.name
+                                                        }
+                                                    }
+                                                ),
+                                                feedback: [
+                                                    {
+                                                        label: 'Scanned',
+                                                        value:
+                                                            scanevent.event.name
+                                                    },
+                                                    {
+                                                        label:
+                                                            'Already Scanned',
+                                                        value: 'No'
+                                                    }
+                                                ]
+                                            });
                                         });
                                     })
                                     .catch(err => {
