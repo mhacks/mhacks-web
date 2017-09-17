@@ -167,7 +167,12 @@ const Burger = styled.div`
 
 class HeaderLinks extends React.Component {
     render() {
-        const { color, userMetadata, isCompact } = this.props;
+        const {
+            color,
+            userMetadata,
+            isCompact,
+            configurationData
+        } = this.props;
         const {
             isLoggedIn,
             isAdmin,
@@ -175,6 +180,7 @@ class HeaderLinks extends React.Component {
             isReader,
             isEmailVerified
         } = userMetadata;
+        const { is_live_page_enabled } = configurationData;
 
         // Either render a Menu component for mobile, or NavContainer for desktop as
         // the parent component for the navigation links.
@@ -228,6 +234,11 @@ class HeaderLinks extends React.Component {
                         Dashboard
                     </StyledNavLink>
                 ) : null}
+                {isLoggedIn && is_live_page_enabled ? (
+                    <StyledNavLink to={routes.LIVE} color={color}>
+                        Live
+                    </StyledNavLink>
+                ) : null}
                 {isLoggedIn ? (
                     <StyledNavLink to={routes.TEAM_BUILDING} color={color}>
                         Team Building
@@ -251,6 +262,7 @@ class Header extends React.Component {
     render() {
         const userData = this.props.userState.data;
         const userMetadata = getUserMetadata(userData);
+        const configurationData = this.props.configurationState.data;
 
         return (
             <div>
@@ -272,6 +284,7 @@ class Header extends React.Component {
                                 </HeaderNavLink>
                                 <HeaderLinks
                                     userMetadata={userMetadata}
+                                    configurationData={configurationData}
                                     color={this.props.theme.highlight}
                                     isCompact={false}
                                 />
@@ -281,6 +294,7 @@ class Header extends React.Component {
                                 >
                                     <HeaderLinks
                                         userMetadata={userMetadata}
+                                        configurationData={configurationData}
                                         color={this.props.theme.highlight}
                                         isCompact={true}
                                     />
@@ -297,6 +311,7 @@ class Header extends React.Component {
 function mapStateToProps(state) {
     return {
         userState: state.userState,
+        configurationState: state.configurationState,
         theme: state.theme.data
     };
 }

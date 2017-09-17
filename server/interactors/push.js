@@ -25,7 +25,8 @@ if (config.push_notifications.enabled) {
                     crypto.decrypt(config.push_notifications.apns.team_id),
                     'base64'
                 ).toString('ascii')
-            }
+            },
+            production: config.push_notifications.apns.production
         }
     });
 }
@@ -35,7 +36,8 @@ function sendNotification(devices, title, message) {
         var data = {
             title: title,
             body: message,
-            retries: 5
+            retries: 5,
+            topic: config.push_notifications.apns.topic
         };
 
         return push.send(devices, data);

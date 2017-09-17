@@ -116,6 +116,14 @@ app.use(function(req, res, next) {
     return next();
 });
 
+app.get('/apple-app-site-association', function(req, res) {
+    res.send({
+        webcredentials: {
+            apps: config.site_association
+        }
+    });
+});
+
 // Other route middleware (modules in `routes/`)
 if (config.service === 'shortener') {
     app.use('/', shortenerRouter);

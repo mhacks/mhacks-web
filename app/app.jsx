@@ -14,6 +14,7 @@ import { routes } from './constants';
 import {
     Navigator,
     HomePage,
+    LivePage,
     Login,
     Logout,
     EditProfile,
@@ -60,10 +61,12 @@ class AppProvider extends React.Component {
     }
 
     render() {
-        if (
-            this.props.configurationState.should_logout &&
-            localStorage.getItem('jwt')
-        ) {
+        const {
+            should_logout,
+            is_live_page_enabled
+        } = this.props.configurationState.data;
+
+        if (should_logout && localStorage.getItem('jwt')) {
             localStorage.removeItem('jwt');
             location.reload();
         }
@@ -93,6 +96,19 @@ class AppProvider extends React.Component {
                                     return <Login />;
                                 }}
                             />
+                            {is_live_page_enabled ? (
+                                <Route
+                                    exact
+                                    path={routes.LIVE}
+                                    render={() => {
+                                        if (this.getMetadata().isLoggedIn) {
+                                            return <LivePage />;
+                                        }
+
+                                        return <Login />;
+                                    }}
+                                />
+                            ) : null}
                             <Route
                                 exact
                                 path={routes.LOGOUT}
@@ -172,10 +188,20 @@ class AppProvider extends React.Component {
                                         isAdmin
                                     } = this.getMetadata();
                                     if (isLoggedIn && isAdmin) {
-                                        return <AdminPage />;
+                                        return <AdminPage.Models />;
                                     }
 
                                     return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                path={'/admin/:model'}
+                                render={({ match }) => {
+                                    return (
+                                        <AdminPage.Model
+                                            model={match.params.model}
+                                        />
+                                    );
                                 }}
                             />
                             <Route

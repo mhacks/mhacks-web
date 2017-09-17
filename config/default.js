@@ -84,7 +84,13 @@ module.exports = {
         apns: {
             key: process.env.APNS_KEY || '',
             key_id: process.env.APNS_KEY_ID || '',
-            team_id: process.env.APNS_TEAM_ID || ''
+            team_id: process.env.APNS_TEAM_ID || '',
+            topic: process.env.APNS_TOPIC || 'com.MPowered.MHacks',
+            production:
+                process.APNS_PRODUCTION ||
+                (process.env.HOST
+                    ? process.env.HOST.indexOf('staging') === -1
+                    : process.env.NODE_ENV === 'production')
         },
         gcm: {
             id: process.env.GCM_ID || ''
@@ -119,7 +125,10 @@ module.exports = {
     },
     admin_name: process.env.ADMIN_NAME || 'Administrator',
     admin_email: process.env.ADMIN_EMAIL || 'hackathon@umich.edu',
-    admin_password: process.env.ADMIN_PASSWORD || 'hunter2'
+    admin_password: process.env.ADMIN_PASSWORD || 'hunter2',
+    site_association: (process.env.SITE_ASSOCIATION ||
+        '478C74MJ7T.com.MPowered.MHacks')
+        .split(',')
 };
 
 function parseBool(value, default_value) {

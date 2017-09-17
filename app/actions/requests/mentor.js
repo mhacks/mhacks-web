@@ -6,11 +6,11 @@ export default class MentorRequests {
         return postFormData(endpoints.MENTOR_APPLICATION, token, body, files);
     }
 
-    static loadApplication(token) {
-        return getResponseFromRoute(endpoints.MENTOR_APPLICATION, token);
+    static loadApplication() {
+        return getResponseFromRoute(endpoints.MENTOR_APPLICATION);
     }
 
-    static loadForm(token) {
-        return getResponseFromRoute(endpoints.MENTOR_APPLICATION_FORM, token);
+    static loadForm() {
+        return getResponseFromRoute(endpoints.MENTOR_APPLICATION_FORM);
     }
 }
