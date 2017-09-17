@@ -39,6 +39,18 @@ var schema = new mongoose.Schema(
     defaultOptions
 );
 
+// All fields are updateable as only admins have power to update.
+schema.statics.getUpdateableFields = function() {
+    return Object.keys(schema.obj);
+};
+
+schema.methods.updateFields = function(fields) {
+    for (var param in fields) {
+        this[param] = fields[param];
+    }
+    return this.save();
+};
+
 // Allow us to query by title
 schema.query.byTitle = function(title) {
     var escapedTitle = escapeStringRegex(title);
