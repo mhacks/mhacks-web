@@ -61,7 +61,7 @@ class Animations extends React.Component {
         for (var i = 0; i < Math.ceil(height / 1000) * squaresPer1000; i++) {
             var id = 'square-' + i;
             var dim = Math.floor(Math.random() * 9) * 5 + 40;
-            var topPos = Math.random() * this.state.pageHeight
+            var topPos = Math.random() * this.state.pageHeight;
             squaresList.push(
                 <Square
                     width={dim}
