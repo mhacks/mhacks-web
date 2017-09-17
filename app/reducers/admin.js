@@ -35,6 +35,18 @@ export function adminState(state = initialState, action) {
                 message: action.message
             };
 
+        case actions.ADMIN_LOAD_MODEL_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                models: {
+                    ...state.models,
+                    ...action.data
+                },
+                message: action.message
+            };
+
         default:
             return state;
     }

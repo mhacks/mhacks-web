@@ -187,10 +187,20 @@ class AppProvider extends React.Component {
                                         isAdmin
                                     } = this.getMetadata();
                                     if (isLoggedIn && isAdmin) {
-                                        return <AdminPage />;
+                                        return <AdminPage.Models />;
                                     }
 
                                     return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                path={'/admin/:model'}
+                                render={({ match }) => {
+                                    return (
+                                        <AdminPage.Model
+                                            model={match.params.model}
+                                        />
+                                    );
                                 }}
                             />
                             <Route

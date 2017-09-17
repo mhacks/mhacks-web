@@ -2,20 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { PageContainer } from '../../components';
-import { AdminThunks } from '../../actions';
+//import { AdminThunks } from '../../actions';
 
 const PagePulled = styled(PageContainer)`min-height: calc(100vh - 146px);`;
 
 /* Page Component */
-class AdminPage extends React.Component {
-    componentDidMount() {
-        this.props.dispatch(AdminThunks.loadModels());
-    }
-
+class Document extends React.Component {
     render() {
+        const document = this.props.document;
+
         return (
             <PagePulled ref="pagecontainer">
-                <p>Hey</p>
+                <h2>{document.id}</h2>
             </PagePulled>
         );
     }
@@ -28,4 +26,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(AdminPage);
+export default connect(mapStateToProps)(Document);

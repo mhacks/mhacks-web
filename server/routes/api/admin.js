@@ -3,12 +3,34 @@ var router = require('express').Router(),
     Configuration = require('../../db/model/Configuration.js'),
     Floor = require('../../db/model/Floor.js'),
     Location = require('../../db/model/Location.js'),
+    Announcement = require('../../db/model/Announcement.js'),
+    Event = require('../../db/model/Event.js'),
+    Sponsor = require('../../db/model/Sponsor.js'),
+    Scan = require('../../db/model/Scan.js'),
+    ScanEvent = require('../../db/model/ScanEvent.js'),
+    Team = require('../../db/model/Team.js'),
+    MentorshipTicket = require('../../db/model/MentorshipTicket.js'),
+    Application = require('../../db/model/Application.js'),
     Responses = require('../../responses/api/index.js');
 
 const models = {
-    configuration: Configuration,
-    floor: Floor,
-    location: Location
+    Configuration: Configuration,
+
+    Floors: Floor,
+    Locations: Location,
+    Events: Event,
+
+    Scans: Scan,
+    ScanEvents: ScanEvent,
+
+    Announcements: Announcement,
+
+    Users: User,
+    Applications: Application,
+
+    Teams: Team,
+    MentorshipTickets: MentorshipTicket,
+    Sponsors: Sponsor
 };
 
 router.get('/model', function(req, res) {
