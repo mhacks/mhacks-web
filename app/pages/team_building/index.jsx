@@ -17,7 +17,7 @@ const MHFormWrapper = styled.div`
     textAlign: center;
     margin: 20px;
     padding: 20px;
-    minWidth: 80%
+    minWidth: 80%;
 `;
 
 class TeamBuilding extends React.Component {

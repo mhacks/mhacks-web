@@ -36,13 +36,9 @@ const FlexBox = styled.div`
     flexDirection: column;
 `;
 
-const ButtonWrapper = styled.div`
-    margin: 20px;
-`;
+const ButtonWrapper = styled.div`margin: 20px;`;
 
-const PictureWrapper = styled.div`
-    float: left;
-`;
+const PictureWrapper = styled.div`float: left;`;
 
 class TeamBox extends React.Component {
     constructor(props) {
@@ -84,16 +80,15 @@ class TeamBox extends React.Component {
         var display, clickFunction;
 
         if (position === -1) {
-            display = 'Join Team'
+            display = 'Join Team';
             clickFunction = this.joinTeam;
-        } else if (position === 0){
-            display = 'Delete Team'
+        } else if (position === 0) {
+            display = 'Delete Team';
             clickFunction = this.deleteTeam;
         } else {
             display = 'Leave Team';
             clickFunction = this.leaveTeam;
         }
-
 
         return (
             <Box>
