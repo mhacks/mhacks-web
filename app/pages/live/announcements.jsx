@@ -34,9 +34,7 @@ const ListItemTimestamp = styled.p`
     color: ${props => props.theme.highlight};
 `;
 
-const ListItemDescription = styled.p`
-    color: white;
-`;
+const ListItemDescription = styled.p`color: white;`;
 
 const Seperator = styled.div`
     background: ${props => props.theme.highlight};
@@ -72,21 +70,13 @@ class Announcements extends React.Component {
 
         return (
             <div key={key}>
-                <ListItemHeader
-                    theme={this.props.theme}
-                >
+                <ListItemHeader theme={this.props.theme}>
                     {announcement.title}
                 </ListItemHeader>
-                <ListItemTimestamp
-                    theme={this.props.theme}
-                >
-                    <FormattedRelative
-                        value={announcement.broadcastTime}
-                    />
+                <ListItemTimestamp theme={this.props.theme}>
+                    <FormattedRelative value={announcement.broadcastTime} />
                 </ListItemTimestamp>
-                <ListItemDescription
-                    theme={this.props.theme}
-                >
+                <ListItemDescription theme={this.props.theme}>
                     {announcement.body}
                 </ListItemDescription>
                 <Seperator />
@@ -98,11 +88,9 @@ class Announcements extends React.Component {
         const announcements = this.props.announcementsState.data;
 
         return (
-            <Wrapper
-                theme={this.props.theme}
-            >
+            <Wrapper theme={this.props.theme}>
                 <ListHeader>Announcements</ListHeader>
-                <div style={{overflow: 'auto', height: '300px'}}>
+                <div style={{ overflow: 'auto', height: '300px' }}>
                     <List
                         itemRenderer={this.renderItem}
                         length={announcements.length}
