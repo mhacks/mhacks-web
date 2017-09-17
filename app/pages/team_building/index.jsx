@@ -14,7 +14,6 @@ const FlexBox = styled.div`
 const MHFormWrapper = styled.div`
     borderRadius: 25px;
     border: 2px solid ${props => props.theme.secondary};
-    textAlign: center;
     margin: 20px;
     padding: 20px;
     minWidth: 80%;
@@ -52,7 +51,7 @@ class TeamBuilding extends React.Component {
         const userEmail = this.props.userState.data.user.email;
 
         var inTeam = false;
-        team.members.forEach(function(member) {
+        team.members.forEach(member => {
             if (member.email === userEmail) {
                 inTeam = true;
             }

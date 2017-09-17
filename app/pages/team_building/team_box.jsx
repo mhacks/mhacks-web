@@ -18,7 +18,7 @@ const Description = styled.h2`
 
 const Box = styled.div`
     borderRadius: 25px;
-    border: 2px solid ${props => props.theme.secondary};
+    border: 3px solid ${props => props.theme.primary};
     textAlign: center;
     margin: 20px;
     maxWidth: 30%;
@@ -115,7 +115,7 @@ class TeamBox extends React.Component {
                 <ButtonWrapper>
                     <RoundedButton
                         type="submit"
-                        color={props => props.theme.highlight}
+                        color={props => props.theme.primary}
                         onClick={clickFunction}
                     >
                         {display}
