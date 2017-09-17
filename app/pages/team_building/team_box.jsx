@@ -8,12 +8,12 @@ import { ProfilePicture } from '../../components';
 const Header = styled.h2`
     fontSize: 20px;
     color: ${props => props.theme.primary};
-    fontWeight: thin;
+    fontWeight: bold;
 `;
 
 const Description = styled.h2`
     fontSize: 15px;
-    color: ${props => props.theme.highlightSecondary};
+    color: ${props => props.theme.primary};
 `;
 
 const Box = styled.div`
@@ -73,16 +73,20 @@ class TeamBox extends React.Component {
     render() {
         const team = this.props.team;
         const userEmail = this.props.userState.data.user.email;
+        const userInTeam = this.props.userInTeam || false;
 
         const memberEmails = team.members.map(member => member.email);
         const position = memberEmails.indexOf(userEmail);
 
         var display, clickFunction;
 
-        if (position === -1) {
+        if (position === -1 && userInTeam) {
+            display = 'Already in Team';
+            clickFunction = () => null;
+        } else if (position === -1 && !userInTeam) {
             display = 'Join Team';
             clickFunction = this.joinTeam;
-        } else if (position === 0) {
+        } else if (memberEmails.length === 1 && position === 0) {
             display = 'Delete Team';
             clickFunction = this.deleteTeam;
         } else {
