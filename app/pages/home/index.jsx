@@ -9,7 +9,9 @@ import Sponsorship from './sponsorship.jsx';
 import HackingCategories from './hacking_categories.jsx';
 
 // Add overflow: hidden to container to prevent floating squares from escaping container
-const StyledPageContainer = styled(PageContainer)`overflow: hidden;`;
+const StyledPageContainer = styled(PageContainer)`
+    overflow: hidden;
+`;
 
 /* Page Component */
 class HomePage extends React.Component {
