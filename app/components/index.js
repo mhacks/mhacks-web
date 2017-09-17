@@ -15,6 +15,7 @@ import MHForm from './MHForm.jsx';
 import Input from './Input.jsx';
 import InputText from './InputText';
 import SponsorLogos from './SponsorLogos';
+import FullScreenAnimation from './FullScreenAnimation.jsx';
 
 export {
     TextSubmit,
@@ -33,5 +34,6 @@ export {
     InputText,
     SponsorLogos,
     MHForm,
-    Input
+    Input,
+    FullScreenAnimation
 };
