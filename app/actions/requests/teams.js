@@ -6,8 +6,8 @@ import {
 } from '../../util/actions.js';
 
 export default class TeamsRequests {
-    static loadTeams(token) {
-        return getResponseFromRoute(endpoints.TEAM_BUILDING, token);
+    static loadTeams() {
+        return getResponseFromRoute(endpoints.TEAM_BUILDING);
     }
 
     static createTeam(token, body) {

@@ -6,9 +6,7 @@ export default class TeamsThunks {
         return dispatch => {
             dispatch({ type: actions.LOAD_TEAMS_REQUEST });
 
-            const token = localStorage.getItem('jwt');
-
-            return TeamsRequests.loadTeams(token).then(response => {
+            return TeamsRequests.loadTeams().then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         const { teams } = json;
