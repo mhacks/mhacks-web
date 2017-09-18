@@ -43,6 +43,12 @@ const Seperator = styled.div`
 `;
 
 class Announcements extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.renderItem = this.renderItem.bind(this);
+    }
+    
     componentDidMount() {
         this.props.dispatch(AnnouncementsThunks.loadAnnouncements());
 
@@ -50,8 +56,6 @@ class Announcements extends React.Component {
         this.poll = setInterval(() => {
             this.props.dispatch(AnnouncementsThunks.loadAnnouncements());
         }, 20 * 1000);
-
-        this.renderItem = this.renderItem.bind(this);
     }
 
     componentWillUnmount() {
