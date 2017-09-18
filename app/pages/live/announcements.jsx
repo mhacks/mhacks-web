@@ -90,7 +90,7 @@ class Announcements extends React.Component {
         return (
             <Wrapper theme={this.props.theme}>
                 <ListHeader>Announcements</ListHeader>
-                <div style={{ overflow: 'auto', height: '300px' }}>
+                <div style={{ overflow: 'auto', height: 'calc(100% - 44px)' }}>
                     <List
                         itemRenderer={this.renderItem}
                         length={announcements.length}

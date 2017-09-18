@@ -10,6 +10,7 @@ import { readerState } from './reader.js';
 import { sponsorState } from './sponsor.js';
 import { teamsState } from './teams.js';
 import { adminState } from './admin.js';
+import { eventsState } from './events.js';
 
 const rootReducer = combineReducers({
     router: routerReducer,
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
     readerState,
     sponsorState,
     teamsState,
-    adminState
+    adminState,
+    eventsState
 });
 
 export default rootReducer;
