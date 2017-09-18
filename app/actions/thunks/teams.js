@@ -166,9 +166,7 @@ export default class TeamsThunks {
                 type: actions.LOAD_TEAM_FORM_REQUEST
             });
 
-            const token = localStorage.getItem('jwt');
-
-            return TeamsRequests.loadTeamForm(token).then(response => {
+            return TeamsRequests.loadTeamForm().then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch({
