@@ -48,7 +48,7 @@ class Announcements extends React.Component {
 
         this.renderItem = this.renderItem.bind(this);
     }
-    
+
     componentDidMount() {
         this.props.dispatch(AnnouncementsThunks.loadAnnouncements());
 
