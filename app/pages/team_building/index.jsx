@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { PageContainer, MHForm } from '../../components';
+import { PageContainer, MHForm, Alert } from '../../components';
 import TeamBox from './team_box.jsx';
 import { TeamsThunks } from '../../actions';
+import { NotificationStack } from 'react-notification';
+import { OrderedSet } from 'immutable';
 
 const FlexBox = styled.div`
     display: flex;
@@ -13,9 +15,21 @@ const FlexBox = styled.div`
 
 const MHFormWrapper = styled.div`
     borderRadius: 25px;
-    border: 2px solid ${props => props.theme.secondary};
+    border: 3px solid ${props => props.theme.primary};
     margin: 20px;
     padding: 20px;
+    minWidth: 80%;
+    display: inline-block;
+`;
+
+const Wrapper = styled.div`
+    display: flex;
+    flexDirection: column;
+    alignItems: center;
+`;
+
+const AlertContainer = styled.div`
+    margin: 10px;
     minWidth: 80%;
 `;
 
@@ -25,8 +39,35 @@ class TeamBuilding extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            notifications: OrderedSet(),
+            descriptionLengthError: false,
+            missingFieldsError: false
+        };
+
         this.onSubmit = this.onSubmit.bind(this);
         this.isUserInTeam = this.isUserInTeam.bind(this);
+    }
+
+    addNotification(message, key, action) {
+        return this.setState({
+            notifications: this.state.notifications.add({
+                message,
+                key,
+                action: action || 'Dismiss',
+                onClick: (notification, deactivate) => {
+                    deactivate();
+                    this.removeNotification(key);
+                },
+                dismissAfter: 5000
+            })
+        });
+    }
+
+    removeNotification(key) {
+        this.setState({
+            notifications: this.state.notifications.filter(n => n.key !== key)
+        });
     }
 
     componentDidMount() {
@@ -44,7 +85,30 @@ class TeamBuilding extends React.Component {
     }
 
     onSubmit(formData) {
-        this.props.dispatch(TeamsThunks.createTeam(formData));
+        var errors = false;
+        this.setState({
+            descriptionLengthError: false,
+            missingFieldsError: false
+        });
+
+        if (!formData.description || formData.description.length < 100) {
+            errors = true;
+            this.setState({
+                descriptionLengthError: true
+            });
+        }
+
+        if (!formData.description || !formData.name) {
+            errors = true;
+            this.setState({
+                missingFieldsError: true
+            });
+        }
+
+        if (!errors) {
+            this.props.dispatch(TeamsThunks.createTeam(formData));
+            this.addNotification('Team Created!', 'save');
+        }
     }
 
     isUserInTeam(team) {
@@ -66,9 +130,18 @@ class TeamBuilding extends React.Component {
 
         return (
             <PagePulled ref="PageContainer">
-                <FlexBox>
-                    <MHFormWrapper>
-                        {userInTeam ? null : (
+                <Wrapper>
+                    {userInTeam ? (
+                        <AlertContainer>
+                            <Alert
+                                message={'You are currently in a team'}
+                                positive={true}
+                            />
+                        </AlertContainer>
+                    ) : null}
+
+                    {!userInTeam ? (
+                        <MHFormWrapper>
                             <MHForm
                                 schema={this.props.teamsState.data.form}
                                 FieldTypes={
@@ -77,8 +150,25 @@ class TeamBuilding extends React.Component {
                                 theme={this.props.theme}
                                 onSubmit={this.onSubmit}
                             />
-                        )}
-                    </MHFormWrapper>
+                        </MHFormWrapper>
+                    ) : null}
+                    {this.state.descriptionLengthError ? (
+                        <AlertContainer>
+                            <Alert
+                                message={
+                                    'The description must be at least 100 characters'
+                                }
+                            />
+                        </AlertContainer>
+                    ) : null}
+                    {this.state.missingFieldsError ? (
+                        <AlertContainer>
+                            <Alert message={'Missing some required fields!'} />
+                        </AlertContainer>
+                    ) : null}
+                </Wrapper>
+
+                <FlexBox>
                     {teams.map(function(team, i) {
                         return (
                             <TeamBox
@@ -89,6 +179,15 @@ class TeamBuilding extends React.Component {
                         );
                     })}
                 </FlexBox>
+                <NotificationStack
+                    notifications={this.state.notifications.toArray()}
+                    onDismiss={notification =>
+                        this.setState({
+                            notifications: this.state.notifications.delete(
+                                notification
+                            )
+                        })}
+                />
             </PagePulled>
         );
     }

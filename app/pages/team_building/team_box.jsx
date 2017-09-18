@@ -4,6 +4,14 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { RoundedButton } from '../../components';
 import { ProfilePicture } from '../../components';
+import { devices } from '../../styles';
+
+const Seperator = styled.div`
+    background: ${props => props.theme.primary};
+    width: 80%;
+    height: 2px;
+    margin: 15px auto;
+`;
 
 const Header = styled.h2`
     fontSize: 20px;
@@ -11,9 +19,10 @@ const Header = styled.h2`
     fontWeight: bold;
 `;
 
-const Description = styled.h2`
+const Description = styled.p`
     fontSize: 15px;
     color: ${props => props.theme.primary};
+    margin: 20px;
 `;
 
 const Box = styled.div`
@@ -21,24 +30,33 @@ const Box = styled.div`
     border: 3px solid ${props => props.theme.primary};
     textAlign: center;
     margin: 20px;
-    maxWidth: 30%;
     minWidth: 250px;
     overflow: hidden;
+
+    ${devices.tablet`
+        maxWidth: 45%;
+    `} ${devices.giant`
+        maxWidth: 30%;
+    `};
 `;
 
 const Row = styled.div`
     display: flex;
-    justifyContent: space-evenly;
+    margin: 20px;
 `;
 
 const FlexBox = styled.div`
     display: flex;
     flexDirection: column;
+    textAlign: left;
+    marginLeft: 20px;
 `;
+
+const EmailLabel = styled.p`wordBreak: break-all;`;
 
 const ButtonWrapper = styled.div`margin: 20px;`;
 
-const PictureWrapper = styled.div`float: left;`;
+const PictureWrapper = styled.div``;
 
 class TeamBox extends React.Component {
     constructor(props) {
@@ -81,7 +99,7 @@ class TeamBox extends React.Component {
         var display, clickFunction;
 
         if (position === -1 && userInTeam) {
-            display = 'Already in Team';
+            display = 'Already in a Team';
             clickFunction = () => null;
         } else if (position === -1 && !userInTeam) {
             display = 'Join Team';
@@ -101,15 +119,18 @@ class TeamBox extends React.Component {
 
                 {team.members.map(function(member, i) {
                     return (
-                        <Row key={i}>
-                            <PictureWrapper>
-                                <ProfilePicture avatars={[]} />
-                            </PictureWrapper>
-                            <FlexBox>
-                                <p>{member.full_name}</p>
-                                <p>{member.email}</p>
-                            </FlexBox>
-                        </Row>
+                        <div key={i}>
+                            <Seperator />
+                            <Row>
+                                <PictureWrapper>
+                                    <ProfilePicture avatars={[]} />
+                                </PictureWrapper>
+                                <FlexBox>
+                                    <p>{member.full_name}</p>
+                                    <EmailLabel>{member.email}</EmailLabel>
+                                </FlexBox>
+                            </Row>
+                        </div>
                     );
                 })}
                 <ButtonWrapper>

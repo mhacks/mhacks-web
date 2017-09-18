@@ -21,7 +21,6 @@ class Alert extends React.Component {
 
         if (this.props.positive) {
             backgroundColor = '#01ff70';
-            color = '#3d9970';
         }
 
         return (
