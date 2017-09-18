@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import theme from '../styles/theme.js';
 
 const Timer = styled.p`
-    color: darkorange;
+    color: ${theme.highlight};
     fontWeight: bold;
     fontSize: 30px;
-    margin: 20px 0;
+    padding: 20px 0;
+    margin: 0;
     textAlign: center;
 `;
 

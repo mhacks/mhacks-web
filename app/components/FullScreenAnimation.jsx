@@ -1,6 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import theme from '../../styles/theme.js';
+import theme from '../styles/theme.js';
+
+// Added to not take up space in document flow but still allow
+// floating squares to be affected by overflow: hidden in containers
+const RelativeContainer = styled.div`
+    position: relative;
+    width: 0;
+    height: 0;
+`;
 
 const Wrapper = styled.div`
     position: absolute;
@@ -8,7 +16,7 @@ const Wrapper = styled.div`
     left: 0;
 
     height: ${props => props.height}px;
-    width: 100%;
+    width: ${props => props.width}px;
     overflow-x: hidden;
     overflow-y: hidden;
     background: rgba(0, 0, 0, 0);
@@ -42,7 +50,7 @@ class Animations extends React.Component {
     componentDidMount() {
         this.setState({
             pageWidth: document.body.scrollWidth,
-            pageHeight: 3570
+            pageHeight: document.body.scrollHeight
         });
     }
 
@@ -53,14 +61,7 @@ class Animations extends React.Component {
         for (var i = 0; i < Math.ceil(height / 1000) * squaresPer1000; i++) {
             var id = 'square-' + i;
             var dim = Math.floor(Math.random() * 9) * 5 + 40;
-            var topPos = Math.floor(
-                Math.random() *
-                    Math.min(
-                        height - 1000 * Math.ceil(i / squaresPer1000),
-                        1000
-                    ) +
-                    1000 * Math.floor(i / squaresPer1000)
-            );
+            var topPos = Math.random() * this.state.pageHeight;
             squaresList.push(
                 <Square
                     width={dim}
@@ -85,9 +86,14 @@ class Animations extends React.Component {
 
     render() {
         return (
-            <Wrapper height={this.state.pageHeight}>
-                {this.randomSquares()}
-            </Wrapper>
+            <RelativeContainer>
+                <Wrapper
+                    width={this.state.pageWidth}
+                    height={this.state.pageHeight}
+                >
+                    {this.randomSquares()}
+                </Wrapper>
+            </RelativeContainer>
         );
     }
 }
