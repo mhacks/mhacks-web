@@ -8,6 +8,7 @@ import { announcementsState } from './announcements.js';
 import { configurationState } from './configuration.js';
 import { readerState } from './reader.js';
 import { sponsorState } from './sponsor.js';
+import { teamsState } from './teams.js';
 import { adminState } from './admin.js';
 
 const rootReducer = combineReducers({
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     configurationState,
     readerState,
     sponsorState,
+    teamsState,
     adminState
 });
 

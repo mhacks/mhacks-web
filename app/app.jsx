@@ -25,7 +25,8 @@ import {
     MentorApply,
     SpeakerApply,
     Dashboard,
-    AdminPage
+    AdminPage,
+    TeamBuilding
 } from './pages';
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';
@@ -281,6 +282,25 @@ class AppProvider extends React.Component {
                                     } = this.getMetadata();
                                     if (isLoggedIn && isAccepted) {
                                         return <Confirm />;
+                                    }
+
+                                    if (isLoggedIn) {
+                                        return <Redirect to={routes.PROFILE} />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.TEAM_BUILDING}
+                                render={() => {
+                                    const {
+                                        isLoggedIn,
+                                        isAccepted
+                                    } = this.getMetadata();
+                                    if (isLoggedIn && isAccepted) {
+                                        return <TeamBuilding />;
                                     }
 
                                     if (isLoggedIn) {
