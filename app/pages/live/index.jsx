@@ -10,6 +10,7 @@ import {
 } from '../../components';
 import Announcements from './announcements.jsx';
 import Schedule from './schedule.jsx';
+import Mentorship from './mentorship.jsx';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const PagePulled = styled(PageContainer)`
@@ -38,6 +39,9 @@ class LivePage extends React.Component {
                     </Row>
                     <Row>
                         <Schedule />
+                    </Row>
+                    <Row>
+                        <Mentorship />
                     </Row>
                 </Container>
             </PagePulled>
