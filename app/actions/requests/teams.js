@@ -25,4 +25,8 @@ export default class TeamsRequests {
     static leaveTeam(token, body) {
         return deleteRequest(endpoints.TEAM_BUILDING + 'member', token, body);
     }
+
+    static loadTeamForm() {
+        return getResponseFromRoute(endpoints.TEAM_BUILDING_FORM);
+    }
 }

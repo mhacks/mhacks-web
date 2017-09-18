@@ -25,41 +25,50 @@ router.get('/', function(req, res) {
 
 router.post('/', function(req, res) {
     if (req.body.name && req.body.description && req.user) {
-        Application.find()
-            .byEmail(req.user.email)
-            .then(application => {
-                if (application && application.status === 'accepted') {
-                    if (req.body.description.length >= 100) {
-                        Team.create({
-                            name: req.body.name,
-                            description: req.body.description,
-                            members: [req.user._id]
-                        })
-                            .then(team => {
-                                res.send({
-                                    status: true,
-                                    team: team
-                                });
-                            })
-                            .catch(err => {
-                                console.error(err);
-                                res.status(500).send({
+        isUserNotInTeam(req.user.id)
+            .then(() => {
+                Application.find()
+                    .byEmail(req.user.email)
+                    .then(application => {
+                        if (application && application.status === 'accepted') {
+                            if (req.body.description.length >= 100) {
+                                Team.create({
+                                    name: req.body.name,
+                                    description: req.body.description,
+                                    members: [req.user._id]
+                                })
+                                    .then(team => {
+                                        res.send({
+                                            status: true,
+                                            team: team
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.error(err);
+                                        res.status(500).send({
+                                            status: false,
+                                            message: Responses.UNKNOWN_ERROR
+                                        });
+                                    });
+                            } else {
+                                res.status(401).send({
                                     status: false,
-                                    message: Responses.UNKNOWN_ERROR
+                                    message: Responses.DESCRIPTION_SHORT
                                 });
+                            }
+                        } else {
+                            res.status(401).send({
+                                status: false,
+                                message: Responses.NOT_ACCEPTED
                             });
-                    } else {
-                        res.status(401).send({
-                            status: false,
-                            message: Responses.DESCRIPTION_SHORT
-                        });
-                    }
-                } else {
-                    res.status(401).send({
-                        status: false,
-                        message: Responses.NOT_ACCEPTED
+                        }
                     });
-                }
+            })
+            .catch(() => {
+                res.status(401).send({
+                    status: false,
+                    message: Responses.USER_IN_TEAM
+                });
             });
     } else {
         res.status(401).send({
@@ -103,70 +112,96 @@ router.delete('/', function(req, res) {
 
 router.post('/member', function(req, res) {
     if (req.user && req.body.team) {
-        Application.find()
-            .byEmail(req.user.email)
-            .then(application => {
-                if (application && application.status === 'accepted') {
-                    Team.findById(req.body.team)
-                        .populate('members', 'email -_id')
-                        .then(team => {
-                            if (team && team.members.length < 4) {
-                                team.members.addToSet(req.user._id);
-                                team.save();
-                                res.send({
-                                    status: true,
-                                    team: team
-                                });
-                                //Check for adopt a noob
-                            } else if (team && team.members.length < 5) {
-                                Application.find({
-                                    user: {
-                                        $in: team.members.map(
-                                            member => member.email
-                                        )
+        isUserNotInTeam(req.user.id)
+            .then(() => {
+                Application.find()
+                    .byEmail(req.user.email)
+                    .then(application => {
+                        if (application && application.status === 'accepted') {
+                            Team.findById(req.body.team)
+                                .populate('members')
+                                .then(team => {
+                                    if (team && team.members.length < 4) {
+                                        team.members.addToSet(req.user._id);
+                                        team.save(function() {
+                                            Team.populate(
+                                                team,
+                                                {
+                                                    path: 'members',
+                                                    select: 'email full_name'
+                                                },
+                                                function() {
+                                                    res.send({
+                                                        status: true,
+                                                        team: team
+                                                    });
+                                                }
+                                            );
+                                        });
+                                        //Check for adopt a noob
+                                    } else if (
+                                        team &&
+                                        team.members.length < 5
+                                    ) {
+                                        Application.find({
+                                            user: {
+                                                $in: team.members.map(
+                                                    member => member.email
+                                                )
+                                            }
+                                        })
+                                            .select('experience -_id')
+                                            .then(applications => {
+                                                var apps = applications.map(
+                                                    item => item['experience']
+                                                );
+                                                apps.push(
+                                                    application.experience
+                                                );
+                                                if (checkGoodTeam(apps)) {
+                                                    team.members.addToSet(
+                                                        req.user._id
+                                                    );
+                                                    team.save();
+                                                    res.send({
+                                                        status: true,
+                                                        team: team
+                                                    });
+                                                } else {
+                                                    res.status(403).send({
+                                                        status: false,
+                                                        message:
+                                                            Responses.NOT_QUALIFIED_NOOB
+                                                    });
+                                                }
+                                            });
+                                    } else {
+                                        res.status(403).send({
+                                            status: false,
+                                            message: Responses.TEAM_FULL
+                                        });
                                     }
                                 })
-                                    .select('experience -_id')
-                                    .then(applications => {
-                                        var apps = applications.map(
-                                            item => item['experience']
-                                        );
-                                        apps.push(application.experience);
-                                        if (checkGoodTeam(apps)) {
-                                            team.members.addToSet(req.user._id);
-                                            team.save();
-                                            res.send({
-                                                status: true,
-                                                team: team
-                                            });
-                                        } else {
-                                            res.status(403).send({
-                                                status: false,
-                                                message:
-                                                    Responses.NOT_QUALIFIED_NOOB
-                                            });
-                                        }
+                                .catch(err => {
+                                    console.error(err);
+                                    res.status(500).send({
+                                        status: false,
+                                        message: Responses.UNKNOWN_ERROR
                                     });
-                            } else {
-                                res.status(403).send({
-                                    status: false,
-                                    message: Responses.TEAM_FULL
                                 });
-                            }
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            res.status(500).send({
+                        } else {
+                            res.status(401).send({
                                 status: false,
-                                message: Responses.UNKNOWN_ERROR
+                                message: Responses.NOT_ACCEPTED
                             });
-                        });
-                } else {
-                    res.status(401).send({
-                        status: false,
-                        message: Responses.NOT_ACCEPTED
+                        }
                     });
-                }
+            })
+            .catch(() => {
+                res.status(401).send({
+                    status: false,
+                    message: Responses.USER_IN_TEAM
+                });
             });
     } else {
         res.status(401).send({
@@ -231,6 +266,22 @@ function checkGoodTeam(experiences) {
     } else {
         return false;
     }
+}
+
+function isUserNotInTeam(userId) {
+    return new Promise((resolve, reject) => {
+        if (userId) {
+            Team.find({ members: userId }).then(teams => {
+                if (teams.length > 0) {
+                    reject('error');
+                } else {
+                    resolve(true);
+                }
+            });
+        } else {
+            resolve(true);
+        }
+    });
 }
 
 module.exports = router;

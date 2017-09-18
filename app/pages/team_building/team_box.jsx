@@ -1,120 +1,148 @@
 import React from 'react';
 import { TeamsThunks } from '../../actions';
 import styled from 'styled-components';
-import { routes } from '../../constants';
-import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { RoundedButton } from '../../components';
+import { ProfilePicture } from '../../components';
+import { devices } from '../../styles';
+
+const Seperator = styled.div`
+    background: ${props => props.theme.primary};
+    width: 80%;
+    height: 2px;
+    margin: 15px auto;
+`;
 
 const Header = styled.h2`
     fontSize: 20px;
     color: ${props => props.theme.primary};
-    fontWeight: thin;
+    fontWeight: bold;
 `;
 
-const Description = styled.h2`
+const Description = styled.p`
     fontSize: 15px;
-    color: ${props => props.theme.highlightSecondary};
+    color: ${props => props.theme.primary};
+    margin: 20px;
 `;
 
 const Box = styled.div`
     borderRadius: 25px;
-    border: 2px solid ${props => props.theme.secondary};
-    padding: 20px;
-    width: 250px;
+    border: 3px solid ${props => props.theme.primary};
     textAlign: center;
-`;
+    margin: 20px;
+    minWidth: 250px;
+    overflow: hidden;
 
-const StyledNavLink = styled(NavLink)`
-    fontSize: 16px;
-    padding: 2px 20px;
-    border: 2px solid ${props => props.theme.highlight};
-    color: ${props => props.theme.highlight};
-    borderRadius: 25px;
-    textDecoration: none;
-    transition: all 0.3s;
-    text-transform: uppercase;
-    &:hover {
-        backgroundColor: ${props => props.theme.highlight};
-        color: white;
-    }
-`;
-
-const UserBox = styled.div`
-    borderRadius: 25px;
-    border: 2px solid ${props => props.theme.secondary};
-    padding: 20px;
-    width: 20px;
-    textAlign: center;
+    ${devices.tablet`
+        maxWidth: 45%;
+    `} ${devices.giant`
+        maxWidth: 30%;
+    `};
 `;
 
 const Row = styled.div`
     display: flex;
-    margin: 10px;
-    justifyContent: space-evenly;
+    margin: 20px;
 `;
 
-const ButtonGroup = styled.div`
+const FlexBox = styled.div`
     display: flex;
-    flexDirection: row;
-    justifyContent: space-between;
+    flexDirection: column;
+    textAlign: left;
+    marginLeft: 20px;
 `;
+
+const EmailLabel = styled.p`wordBreak: break-all;`;
+
+const ButtonWrapper = styled.div`margin: 20px;`;
+
+const PictureWrapper = styled.div``;
 
 class TeamBox extends React.Component {
     constructor(props) {
         super(props);
 
-        this.onSubmit = this.onSubmit.bind(this);
+        this.joinTeam = this.joinTeam.bind(this);
+        this.leaveTeam = this.leaveTeam.bind(this);
+        this.deleteTeam = this.deleteTeam.bind(this);
     }
 
-    onSubmit(e) {
+    joinTeam(e) {
         e.preventDefault();
 
-        var teamId = '59bac3f28f7a6f002b4f0a86';
+        var teamId = this.props.team.id;
         this.props.dispatch(TeamsThunks.joinTeam(teamId));
+        this.props.onTeamJoined();
+    }
+
+    leaveTeam(e) {
+        e.preventDefault();
+
+        var teamId = this.props.team.id;
+        this.props.dispatch(TeamsThunks.leaveTeam(teamId));
+    }
+
+    deleteTeam(e) {
+        e.preventDefault();
+
+        var teamId = this.props.team.id;
+        this.props.dispatch(TeamsThunks.deleteTeam(teamId));
     }
 
     render() {
-        var teamName = 'Team Name';
-        var description =
-            'Test description goes here lorem ipsum can have a pipsum';
+        const team = this.props.team;
+        const userEmail = this.props.userState.data.user.email;
+        const userInTeam = this.props.userInTeam || false;
+
+        const memberEmails = team.members.map(member => member.email);
+        const position = memberEmails.indexOf(userEmail);
+
+        var display, clickFunction;
+
+        if (position === -1 && userInTeam) {
+            display = 'Already in a Team';
+            clickFunction = () => null;
+        } else if (position === -1 && !userInTeam) {
+            display = 'Join Team';
+            clickFunction = this.joinTeam;
+        } else if (memberEmails.length === 1 && position === 0) {
+            display = 'Delete Team';
+            clickFunction = this.deleteTeam;
+        } else {
+            display = 'Leave Team';
+            clickFunction = this.leaveTeam;
+        }
 
         return (
             <Box>
-                <Header>{teamName}</Header>
-                <Description>{description}</Description>
-                <Row>
-                    <UserBox />
-                    <p>Member 1</p>
-                </Row>
-                <Row>
-                    <UserBox />
-                    <p>Member 2</p>
-                </Row>
-                <Row>
-                    <UserBox />
-                    <p>Member 3</p>
-                </Row>
-                <Row>
-                    <UserBox />
-                    <p>Member 4</p>
-                </Row>
-                <Row>
-                    <UserBox />
-                    <p>Member 5</p>
-                </Row>
-                <StyledNavLink to={routes.CONFIRM}>Join Team</StyledNavLink>
+                <Header>{team.name}</Header>
+                <Description>{team.description}</Description>
 
-                <form onSubmit={this.onSubmit}>
-                    <ButtonGroup>
-                        <RoundedButton
-                            type="submit"
-                            color={props => props.theme.highlight}
-                        >
-                            Save
-                        </RoundedButton>
-                    </ButtonGroup>
-                </form>
+                {team.members.map(function(member, i) {
+                    return (
+                        <div key={i}>
+                            <Seperator />
+                            <Row>
+                                <PictureWrapper>
+                                    <ProfilePicture avatars={[]} />
+                                </PictureWrapper>
+                                <FlexBox>
+                                    <p>{member.full_name}</p>
+                                    <EmailLabel>{member.email}</EmailLabel>
+                                </FlexBox>
+                            </Row>
+                        </div>
+                    );
+                })}
+                <ButtonWrapper>
+                    <RoundedButton
+                        type="submit"
+                        color={props => props.theme.primary}
+                        onClick={clickFunction}
+                    >
+                        {display}
+                    </RoundedButton>
+                </ButtonWrapper>
             </Box>
         );
     }
@@ -122,6 +150,7 @@ class TeamBox extends React.Component {
 
 function mapStateToProps(state) {
     return {
+        userState: state.userState,
         theme: state.theme.data
     };
 }

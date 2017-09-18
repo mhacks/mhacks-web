@@ -16,5 +16,6 @@ module.exports = {
     NOT_A_NOOB: 'You must be a novice to join this team',
     NOT_ACCEPTED: 'You have not been accepted to MHacks',
     NOT_QUALIFIED_NOOB:
-        'This team already has 4 members and is not qualified for adopt a noob'
+        'This team already has 4 members and is not qualified for adopt a noob',
+    USER_IN_TEAM: 'You are already in a team'
 };
