@@ -74,6 +74,7 @@
         "qrcode": "^0.9.0",
         "react": "^15.4.2",
         "react-autocomplete": "^1.5.9",
+        "react-big-calendar": "^0.15.0",
         "react-burger-menu": "^2.0.2",
         "react-dom": "^15.4.2",
         "react-file-download": "^0.3.4",
