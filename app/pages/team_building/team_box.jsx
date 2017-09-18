@@ -72,6 +72,7 @@ class TeamBox extends React.Component {
 
         var teamId = this.props.team.id;
         this.props.dispatch(TeamsThunks.joinTeam(teamId));
+        this.props.onTeamJoined();
     }
 
     leaveTeam(e) {

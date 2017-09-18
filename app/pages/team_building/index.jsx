@@ -11,6 +11,7 @@ const FlexBox = styled.div`
     display: flex;
     flexWrap: wrap;
     justifyContent: center;
+    alignItems: center;
 `;
 
 const MHFormWrapper = styled.div`
@@ -46,6 +47,7 @@ class TeamBuilding extends React.Component {
         };
 
         this.onSubmit = this.onSubmit.bind(this);
+        this.onTeamJoined = this.onTeamJoined.bind(this);
         this.isUserInTeam = this.isUserInTeam.bind(this);
     }
 
@@ -111,6 +113,13 @@ class TeamBuilding extends React.Component {
         }
     }
 
+    onTeamJoined() {
+        this.setState({
+            descriptionLengthError: false,
+            missingFieldsError: false
+        });
+    }
+
     isUserInTeam(team) {
         const userEmail = this.props.userState.data.user.email;
 
@@ -127,6 +136,7 @@ class TeamBuilding extends React.Component {
         const teams = this.props.teamsState.data.teams;
 
         const userInTeam = teams.find(this.isUserInTeam) ? true : false;
+        const onTeamJoined = this.onTeamJoined;
 
         return (
             <PagePulled ref="PageContainer">
@@ -175,6 +185,7 @@ class TeamBuilding extends React.Component {
                                 key={i}
                                 team={team}
                                 userInTeam={userInTeam}
+                                onTeamJoined={onTeamJoined}
                             />
                         );
                     })}
