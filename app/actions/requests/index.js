@@ -9,3 +9,4 @@ export { default as ConfirmationRequests } from './confirmation.js';
 export { default as SponsorRequests } from './sponsor.js';
 export { default as MentorRequests } from './mentor.js';
 export { default as SpeakerRequests } from './speaker.js';
+export { default as TeamsRequests } from './teams.js';

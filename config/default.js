@@ -127,7 +127,10 @@ module.exports = {
     },
     admin_name: process.env.ADMIN_NAME || 'Administrator',
     admin_email: process.env.ADMIN_EMAIL || 'hackathon@umich.edu',
-    admin_password: process.env.ADMIN_PASSWORD || 'hunter2'
+    admin_password: process.env.ADMIN_PASSWORD || 'hunter2',
+    site_association: (process.env.SITE_ASSOCIATION ||
+        '478C74MJ7T.com.MPowered.MHacks')
+        .split(',')
 };
 
 function parseBool(value, default_value) {
