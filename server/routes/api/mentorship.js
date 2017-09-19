@@ -5,26 +5,17 @@ var router = require('express').Router(),
     Responses = require('../../responses/api/announcement.js');
 
 // Handles get requests for /v1/mentorship/
-router.get('/', authMiddleware('mentor admin', 'api'), function(req, res) {
-    MentorshipTicket.find({
-        $or: [
-            {
-                mentor: req.user
-            },
-            {
-                mentor: undefined,
-                is_complete: false
-            }
-        ]
-    })
+router.get('/', authMiddleware('any', 'api'), function(req, res) {
+    // TODO: Add an or operator to only grab complete tickets from the database tha
+    // that are the requesting user tickets.
+    MentorshipTicket.find()
         .populate('requestor', 'full_name email')
         .then(tickets => {
             res.send({
                 status: true,
-                available: tickets.filter(
-                    ticket => ticket.mentor === undefined
-                ),
-                accepted: tickets.filter(ticket => ticket.mentor !== undefined)
+                user: tickets.filter(ticket => ticket.requestor.id === req.user.id),
+                available: tickets.filter(ticket => ticket.mentor === undefined && ticket.is_complete === false && ticket.requestor.id !== req.user.id),
+                accepted: tickets.filter(ticket => ticket.mentor !== undefined && ticket.is_complete === false && ticket.requestor.id !== req.user.id)
             });
         })
         .catch(err => {
@@ -51,26 +42,32 @@ router.post('/', authMiddleware('any', 'api'), function(req, res) {
             message: Responses.MISSING_PARAMETERS
         });
     } else {
-        MentorshipTicket.create({
+        MentorshipTicket.findOne({
             requestor: req.user,
-            skills,
-            title,
-            body,
-            location_description
-        })
-            .then(ticket => {
-                res.send({
-                    status: true,
-                    ticket
-                });
+            is_complete: false
+        }).then(existingTicket => {
+            console.log('YEE BUDDY', existingTicket);
+            MentorshipTicket.create({
+                requestor: req.user,
+                skills,
+                title,
+                body,
+                location_description
             })
-            .catch(err => {
-                console.error(err);
-                res.status(500).send({
-                    status: false,
-                    message: Responses.UNKNOWN_ERROR
+                .then(ticket => {
+                    res.send({
+                        status: true,
+                        ticket: ticket.toJSON()
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    res.status(500).send({
+                        status: false,
+                        message: Responses.UNKNOWN_ERROR
+                    });
                 });
-            });
+        })
     }
 });
 

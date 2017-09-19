@@ -179,15 +179,15 @@ class Schedule extends React.Component {
                             var color = 'darkslategray';
 
                             if (event.category === 'Tech Talk') {
-                                color = 'magenta';
+                                color = '#0074d9';
                             } else if (event.category === 'Food') {
-                                color = 'blue';
+                                color = '#3d9970';
                             } else if (event.category === 'General') {
-                                color = this.props.theme.highlight;
+                                color = '#001f3f'
                             } else if (event.category === 'Sponsor Event') {
-                                color = 'red';
+                                color = '#ff4136';
                             } else {
-                                color = 'darkslategray';
+                                color = '#b10dc9';
                             }
 
                             return {

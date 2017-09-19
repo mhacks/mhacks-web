@@ -4,10 +4,15 @@ import { MentorshipThunks } from '../../actions';
 import { connect } from 'react-redux';
 import { FormattedRelative } from 'react-intl';
 import List from 'react-list';
-import { TabGroup, RoundedButton } from '../../components';
+import { MHForm, TabGroup, RoundedButton } from '../../components';
 
 import Components from './components.jsx';
 const { SectionWrapper, SectionHeader } = Components;
+
+const FormContainer = styled.div`
+    width: 80%;
+    margin: 0 auto;
+`;
 
 const ListItemHeader = styled.h2`
     color: ${props => props.theme.highlight};
@@ -41,11 +46,15 @@ const TabGroupContainer = styled.div`
     margin: 0 auto 10px auto;
 `;
 
+const selectedTabKeys = ['user', 'available', 'accepted'];
+
 class Mentorship extends React.Component {
     constructor(props) {
         super(props);
 
+        this.submitTicket = this.submitTicket.bind(this);
         this.acceptTicket = this.acceptTicket.bind(this);
+        this.unacceptTicket = this.unacceptTicket.bind(this);
         this.renderItem = this.renderItem.bind(this);
         this.tabSelect = this.tabSelect.bind(this);
 
@@ -56,6 +65,7 @@ class Mentorship extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(MentorshipThunks.loadTickets());
+        this.props.dispatch(MentorshipThunks.loadTicketForm());
 
         // refresh 20 seconds
         this.poll = setInterval(() => {
@@ -67,12 +77,20 @@ class Mentorship extends React.Component {
         clearInterval(this.poll);
     }
 
+    submitTicket(ticket) {
+        this.props.dispatch(MentorshipThunks.submitTicket(ticket));
+    }
+
     acceptTicket(ticket) {
         this.props.dispatch(MentorshipThunks.acceptTicket(ticket));
     }
 
     unacceptTicket(ticket) {
         this.props.dispatch(MentorshipThunks.unacceptTicket(ticket));
+    }
+
+    completeTicket(ticket) {
+        this.props.dispatch(MentorshipThunks.completeTicket(ticket));
     }
 
     tabSelect(idx) {
@@ -82,10 +100,43 @@ class Mentorship extends React.Component {
     }
 
     renderItem(index, key) {
-        const isAccepted = this.state.selectedTab === 1;
-        const ticket = this.props.mentorshipState.data[
-            isAccepted ? 'accepted' : 'available'
-        ][index];
+        const isUserTickets = this.state.selectedTab === 0;
+        const tickets = this.props.mentorshipState.data[
+            selectedTabKeys[this.state.selectedTab]
+        ];
+
+        if (isUserTickets && index === 0) {
+            // If there is no incomplete tickets, show form
+            if (tickets.findIndex(ticket => !ticket.is_complete) === -1) {
+                return (
+                    <div key={key}>
+                        <FormContainer>
+                            <MHForm
+                                schema={this.props.mentorshipState.data.form}
+                                FieldTypes={this.props.mentorshipState.data.FieldTypes}
+                                theme={this.props.theme}
+                                onSubmit={this.submitTicket}
+                            />
+                        </FormContainer>
+                        <Seperator />
+                    </div>
+                );
+            }
+
+            return (
+                <div key={key}>
+                    <p>You may only have one open ticket at a time. Complete existing tickets before requesting a new one.</p>
+                    <Seperator />
+                </div>
+            );
+        }
+
+        if (isUserTickets) {
+            index -= 1;
+        }
+
+        const isAccepted = this.state.selectedTab === 2;
+        const ticket = tickets[index];
         const isComplete = ticket.is_complete;
 
         return (
@@ -94,39 +145,54 @@ class Mentorship extends React.Component {
                     {ticket.title}
                 </ListItemHeader>
                 <ListItemTimestamp theme={this.props.theme}>
-                    <FormattedRelative value={ticket.createdAt} />
+                    <FormattedRelative value={ticket.createdAt || new Date()} />
                 </ListItemTimestamp>
-                <ListItemSubheader>
-                    {ticket.requestor.full_name}: {ticket.requestor.email}
-                </ListItemSubheader>
+                {isUserTickets ?
+                    null :
+                    <ListItemSubheader>
+                        {ticket.requestor.full_name}: {ticket.requestor.email}
+                    </ListItemSubheader>
+                }
                 <ListItemDescription theme={this.props.theme}>
-                    {ticket.body}
+                    Description: {ticket.body}
                 </ListItemDescription>
                 <ListItemDescription theme={this.props.theme}>
-                    Skills: {ticket.skills}
+                    Skills: {ticket.skills.join(', ')}
                 </ListItemDescription>
                 <ListItemDescription theme={this.props.theme}>
                     Location: {ticket.location_description}
                 </ListItemDescription>
-                {isAccepted ? isComplete ? null : (
-                    <RoundedButton
-                        onClick={() => {
-                            this.unacceptTicket(ticket, false);
-                        }}
-                        color={this.props.theme.highlight}
-                    >
-                        Unaccept
-                    </RoundedButton>
-                ) : (
-                    <RoundedButton
-                        onClick={() => {
-                            this.acceptTicket(ticket);
-                        }}
-                        color={this.props.theme.highlight}
-                    >
-                        Accept
-                    </RoundedButton>
-                )}
+                {isUserTickets ? 
+                    (isComplete ?
+                        null :
+                        <RoundedButton
+                            onClick={() => {
+                                this.completeTicket(ticket, false);
+                            }}
+                            color={this.props.theme.highlight}
+                        >
+                            Complete
+                        </RoundedButton>
+                    ) :
+                    (isAccepted && !isComplete ?
+                        <RoundedButton
+                            onClick={() => {
+                                this.unacceptTicket(ticket, false);
+                            }}
+                            color={this.props.theme.highlight}
+                        >
+                            Unaccept
+                        </RoundedButton> :
+                        <RoundedButton
+                            onClick={() => {
+                                this.acceptTicket(ticket);
+                            }}
+                            color={this.props.theme.highlight}
+                        >
+                            Accept
+                        </RoundedButton>
+                    )
+                }
 
                 <Seperator />
             </div>
@@ -135,8 +201,15 @@ class Mentorship extends React.Component {
 
     render() {
         const tickets = this.props.mentorshipState.data[
-            this.state.selectedTab === 0 ? 'available' : 'accepted'
+            selectedTabKeys[this.state.selectedTab]
         ];
+
+        // If selected tab is "My Tickets", add one to the length for the form
+        var length = tickets.length;
+
+        if (this.state.selectedTab === 0 && this.props.mentorshipState.data.form !== undefined) {
+            length += 1;
+        }
 
         return (
             <SectionWrapper theme={this.props.theme}>
@@ -145,6 +218,10 @@ class Mentorship extends React.Component {
                     <TabGroup
                         defaultIndex={this.state.selectedTab}
                         tabs={[
+                            {
+                                title: 'My Tickets',
+                                onClick: this.tabSelect
+                            },
                             {
                                 title: 'Available',
                                 onClick: this.tabSelect
@@ -160,7 +237,7 @@ class Mentorship extends React.Component {
                 <div style={{ overflow: 'auto', height: 'calc(100% - 100px)' }}>
                     <List
                         itemRenderer={this.renderItem}
-                        length={tickets.length}
+                        length={length}
                         type="variable"
                         threshold={200}
                     />
