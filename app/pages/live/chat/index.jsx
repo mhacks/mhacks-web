@@ -102,8 +102,13 @@ class Chat extends React.Component {
                     });
                 });
 
+                component.socket.on('privatemessages', function(data) {
+                    console.log('Privatemessages', data);
+                });
+
                 setTimeout(function() {
                     component.socket.emit('channels');
+                    component.socket.emit('privatemessages');
                 }, 1000);
             }
         });
@@ -136,6 +141,21 @@ class Chat extends React.Component {
                 users: state.users
             }));
         });
+    }
+
+    // array of user ids
+    createPrivateMessage(users) {
+        if (Array.isArray(users)) {
+            var members = users.map(function(user) {
+                return {
+                    _id: user
+                };
+            });
+
+            this.socket.emit('privatemessage', members);
+        } else {
+            return false;
+        }
     }
 
     requestPermissions(func) {

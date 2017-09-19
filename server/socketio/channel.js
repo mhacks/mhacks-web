@@ -12,6 +12,10 @@ module.exports = function(io) {
     setInterval(function() {
         interval(io);
     }, 250);
+
+    setInterval(function() {
+        addUsers();
+    }, 1000);
 };
 
 function channelHandler(io, socket) {
@@ -153,7 +157,7 @@ function sendPrivateMessages(io, socket) {
         .then(privatemessages => {
             socket.emit('privatemessages', {
                 status: true,
-                channels: privatemessages
+                privatemessages: privatemessages
             });
         })
         .catch(err => {
@@ -178,6 +182,7 @@ function createPrivateMessage(io, socket, data) {
         });
 
         if (!user_is_member) {
+            data.members.push({ _id: socket.handshake.user._id });
             query.push({ _id: socket.handshake.user._id });
         }
 
@@ -216,4 +221,48 @@ function interval(io) {
             leaveRooms(io, io.sockets.sockets[socketName]);
         }
     }
+}
+
+function addUsers() {
+    Channel.find({
+        all_users: true
+    })
+        .exec()
+        .then(channels => {
+            User.find()
+                .exec()
+                .then(users => {
+                    for (var channel of channels) {
+                        if (
+                            users.length !== channel.members.length &&
+                            channel.all_users
+                        ) {
+                            var notFoundUsers = [];
+
+                            for (var user of users) {
+                                var foundUser = false;
+
+                                for (var member of channel.members) {
+                                    if (member.user === user._id) {
+                                        foundUser = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!foundUser) {
+                                    notFoundUsers.push(user);
+                                }
+                            }
+
+                            notFoundUsers.forEach(function(user) {
+                                channel.members.push({
+                                    user: user
+                                });
+                            });
+
+                            channel.save();
+                        }
+                    }
+                });
+        });
 }

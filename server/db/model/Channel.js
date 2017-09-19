@@ -38,6 +38,10 @@ var schema = new mongoose.Schema(
                 }
             }
         ],
+        all_users: {
+            type: Boolean,
+            default: true
+        },
         user_joinable: {
             type: Boolean,
             default: false

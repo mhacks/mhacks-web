@@ -9,6 +9,7 @@ import {
     FullScreenAnimation
 } from '../../components';
 import Announcements from './announcements.jsx';
+import Chat from './chat';
 
 const PagePulled = styled(PageContainer)`
     min-height: calc(100vh - 146px);
@@ -27,6 +28,8 @@ class LivePage extends React.Component {
                         fallback="Submissions Closed!"
                     />
                     <Announcements />
+
+                    <Chat />
                 </Container>
             </PagePulled>
         );
