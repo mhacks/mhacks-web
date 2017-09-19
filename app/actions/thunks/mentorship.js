@@ -180,7 +180,9 @@ export default class MentorshipThunks {
                 type: actions.LOAD_MENTORSHIP_TICKET_FORM_REQUEST
             });
 
-            return getResponseFromRoute(endpoints.MENTORSHIP_TICKET_FORM).then(response => {
+            return getResponseFromRoute(
+                endpoints.MENTORSHIP_TICKET_FORM
+            ).then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch({

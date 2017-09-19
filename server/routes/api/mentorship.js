@@ -13,9 +13,21 @@ router.get('/', authMiddleware('any', 'api'), function(req, res) {
         .then(tickets => {
             res.send({
                 status: true,
-                user: tickets.filter(ticket => ticket.requestor.id === req.user.id),
-                available: tickets.filter(ticket => ticket.mentor === undefined && ticket.is_complete === false && ticket.requestor.id !== req.user.id),
-                accepted: tickets.filter(ticket => ticket.mentor !== undefined && ticket.is_complete === false && ticket.requestor.id !== req.user.id)
+                user: tickets.filter(
+                    ticket => ticket.requestor.id === req.user.id
+                ),
+                available: tickets.filter(
+                    ticket =>
+                        ticket.mentor === undefined &&
+                        ticket.is_complete === false &&
+                        ticket.requestor.id !== req.user.id
+                ),
+                accepted: tickets.filter(
+                    ticket =>
+                        ticket.mentor !== undefined &&
+                        ticket.is_complete === false &&
+                        ticket.requestor.id !== req.user.id
+                )
             });
         })
         .catch(err => {
@@ -67,7 +79,7 @@ router.post('/', authMiddleware('any', 'api'), function(req, res) {
                         message: Responses.UNKNOWN_ERROR
                     });
                 });
-        })
+        });
     }
 });
 

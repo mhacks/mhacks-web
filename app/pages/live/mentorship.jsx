@@ -113,7 +113,9 @@ class Mentorship extends React.Component {
                         <FormContainer>
                             <MHForm
                                 schema={this.props.mentorshipState.data.form}
-                                FieldTypes={this.props.mentorshipState.data.FieldTypes}
+                                FieldTypes={
+                                    this.props.mentorshipState.data.FieldTypes
+                                }
                                 theme={this.props.theme}
                                 onSubmit={this.submitTicket}
                             />
@@ -125,7 +127,10 @@ class Mentorship extends React.Component {
 
             return (
                 <div key={key}>
-                    <p>You may only have one open ticket at a time. Complete existing tickets before requesting a new one.</p>
+                    <p>
+                        You may only have one open ticket at a time. Complete
+                        existing tickets before requesting a new one.
+                    </p>
                     <Seperator />
                 </div>
             );
@@ -147,12 +152,11 @@ class Mentorship extends React.Component {
                 <ListItemTimestamp theme={this.props.theme}>
                     <FormattedRelative value={ticket.createdAt || new Date()} />
                 </ListItemTimestamp>
-                {isUserTickets ?
-                    null :
+                {isUserTickets ? null : (
                     <ListItemSubheader>
                         {ticket.requestor.full_name}: {ticket.requestor.email}
                     </ListItemSubheader>
-                }
+                )}
                 <ListItemDescription theme={this.props.theme}>
                     Description: {ticket.body}
                 </ListItemDescription>
@@ -162,37 +166,34 @@ class Mentorship extends React.Component {
                 <ListItemDescription theme={this.props.theme}>
                     Location: {ticket.location_description}
                 </ListItemDescription>
-                {isUserTickets ? 
-                    (isComplete ?
-                        null :
-                        <RoundedButton
-                            onClick={() => {
-                                this.completeTicket(ticket, false);
-                            }}
-                            color={this.props.theme.highlight}
-                        >
-                            Complete
-                        </RoundedButton>
-                    ) :
-                    (isAccepted && !isComplete ?
-                        <RoundedButton
-                            onClick={() => {
-                                this.unacceptTicket(ticket, false);
-                            }}
-                            color={this.props.theme.highlight}
-                        >
-                            Unaccept
-                        </RoundedButton> :
-                        <RoundedButton
-                            onClick={() => {
-                                this.acceptTicket(ticket);
-                            }}
-                            color={this.props.theme.highlight}
-                        >
-                            Accept
-                        </RoundedButton>
-                    )
-                }
+                {isUserTickets ? isComplete ? null : (
+                    <RoundedButton
+                        onClick={() => {
+                            this.completeTicket(ticket, false);
+                        }}
+                        color={this.props.theme.highlight}
+                    >
+                        Complete
+                    </RoundedButton>
+                ) : isAccepted && !isComplete ? (
+                    <RoundedButton
+                        onClick={() => {
+                            this.unacceptTicket(ticket, false);
+                        }}
+                        color={this.props.theme.highlight}
+                    >
+                        Unaccept
+                    </RoundedButton>
+                ) : (
+                    <RoundedButton
+                        onClick={() => {
+                            this.acceptTicket(ticket);
+                        }}
+                        color={this.props.theme.highlight}
+                    >
+                        Accept
+                    </RoundedButton>
+                )}
 
                 <Seperator />
             </div>
@@ -207,7 +208,10 @@ class Mentorship extends React.Component {
         // If selected tab is "My Tickets", add one to the length for the form
         var length = tickets.length;
 
-        if (this.state.selectedTab === 0 && this.props.mentorshipState.data.form !== undefined) {
+        if (
+            this.state.selectedTab === 0 &&
+            this.props.mentorshipState.data.form !== undefined
+        ) {
             length += 1;
         }
 

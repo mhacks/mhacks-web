@@ -102,7 +102,7 @@ export function mentorshipState(state = initialState, action) {
                         }
                     })
                 }
-            }
+            };
 
         case actions.LOAD_MENTORSHIP_TICKET_FORM_SUCCESS:
             return {

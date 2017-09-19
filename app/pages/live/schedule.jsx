@@ -183,7 +183,7 @@ class Schedule extends React.Component {
                             } else if (event.category === 'Food') {
                                 color = '#3d9970';
                             } else if (event.category === 'General') {
-                                color = '#001f3f'
+                                color = '#001f3f';
                             } else if (event.category === 'Sponsor Event') {
                                 color = '#ff4136';
                             } else {
