@@ -56,8 +56,6 @@ class Announcements extends React.Component {
         this.poll = setInterval(() => {
             this.props.dispatch(AnnouncementsThunks.loadAnnouncements());
         }, 20 * 1000);
-
-        this.renderItem = this.renderItem.bind(this);
     }
 
     componentWillUnmount() {
