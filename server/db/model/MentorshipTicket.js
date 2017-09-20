@@ -39,15 +39,37 @@ var schema = new mongoose.Schema(
         },
         title: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                user_editable: true,
+                label: 'Title',
+                placeholder: 'Briefly, what is your issue?'
+            }
         },
         body: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                user_editable: true,
+                label: 'Description',
+                placeholder: 'Describe your issue in more detail'
+            }
         },
         location_description: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                user_editable: true,
+                label: 'Location',
+                placeholder: 'Describe your location'
+            }
+        },
+        save_button: {
+            type: String,
+            form: {
+                label: 'Submit',
+                type_override: 'submit'
+            }
         }
     }),
     defaultOptions

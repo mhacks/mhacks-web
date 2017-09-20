@@ -14,8 +14,9 @@ const TabItem = styled.div`
     backgroundColor: ${props =>
         props.active ? props.activeColor : 'transparent'};
     border: 3px solid ${props => props.activeColor};
+    borderRight: none;
     color: ${props => (props.active ? 'white' : props.activeColor)};
-    padding: 14px 0;
+    padding: 10px 0;
     fontSize: 18px;
     fontWeight: 500;
 
@@ -27,6 +28,7 @@ const TabItem = styled.div`
     &:last-child {
         borderTopRightRadius: 20px;
         borderBottomRightRadius: 20px;
+        borderRight: 3px solid ${props => props.activeColor};
     }
 
     &:hover {
@@ -36,12 +38,12 @@ const TabItem = styled.div`
 `;
 
 class TabGroup extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.clickMiddleware = this.clickMiddleware.bind(this);
         this.state = {
-            activeIndex: 0
+            activeIndex: props.defaultIndex || 0
         };
     }
 

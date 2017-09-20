@@ -296,6 +296,7 @@ class MHForm extends React.Component {
                 required={field.required || false}
                 key={field.key}
                 hasError={hasError}
+                theme={this.props.theme}
             >
                 {contents}
             </LabeledInput>
