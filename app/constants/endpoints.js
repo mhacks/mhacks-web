@@ -13,6 +13,7 @@ export default {
     CONFIRMATION: '/v1/application/confirm',
     READER: '/v1/reader',
     ANNOUNCEMENTS: '/v1/announcements',
+    EVENTS: '/v1/event',
     CONFIGURATION: '/v1/configuration',
     FORM: '/v1/form/',
     SPONSOR: '/v1/sponsor',
