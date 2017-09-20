@@ -58,7 +58,15 @@ router.post('/', authMiddleware('any', 'api'), function(req, res) {
             requestor: req.user,
             is_complete: false
         }).then(existingTicket => {
-            console.log('YEE BUDDY', existingTicket);
+            if (existingTicket) {
+                res.status(401).send({
+                    status: false,
+                    message: Responses.Mentorship.ONE_TICKET
+                });
+
+                return;
+            }
+            
             MentorshipTicket.create({
                 requestor: req.user,
                 skills,

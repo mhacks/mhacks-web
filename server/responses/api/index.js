@@ -10,7 +10,7 @@ var Responses = {
     METHOD_NOT_ALLOWED: 'Method not allowed',
     UNKNOWN_ERROR:
         'An unknown error occurred. Get in contact at hackathon@umich.edu',
-    MISSING_CONFIG: 'The konnfigurations is missing a necessary values',
+    MISSING_CONFIG: 'The configurations is missing necessary values',
     NOT_FOUND: 'Not found',
     INVALID_TYPE: 'Invalid type.',
     MISSING_PARAMETERS: 'Missing some required fields',
