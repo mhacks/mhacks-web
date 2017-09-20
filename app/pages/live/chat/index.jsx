@@ -4,23 +4,34 @@ import io from 'socket.io-client';
 import styled from 'styled-components';
 import { FormattedRelative } from 'react-intl';
 import Favicon from '../../../../static/nano/favicon.png';
+import List from 'react-list';
 
-import InputBar from './InputBar.jsx';
+//import InputBar from './InputBar.jsx';
+import Components from '../components.jsx';
+const { SectionWrapper, SectionHeader } = Components;
 
-const Wrapper = styled.div`height: 100%;`;
-
-const Header = styled.div`
-    backgroundColor: #e6e6e6;
-    borderRadius: 8px 8px 0 0;
-    padding: 10px;
-    border: 1px solid gray;
-`;
-
-const HeaderText = styled.h3`
+const ListItemHeader = styled.h2`
+    color: ${props => props.theme.highlight};
     margin: 0;
-    fontSize: 22px;
+    fontSize: 20px;
+    fontWeight: bold;
 `;
 
+const ListItemTimestamp = styled.p`
+    fontWeight: bold;
+    marginTop: 7px;
+    color: ${props => props.theme.highlight};
+`;
+
+const ListItemDescription = styled.p`color: white;`;
+
+const Seperator = styled.div`
+    background: ${props => props.theme.highlight};
+    height: 2px;
+    margin: 15px 20px 15px 0;
+`;
+
+/*
 const List = styled.div`
     display: flex;
     flex-direction: column;
@@ -55,6 +66,7 @@ const ListItemDescription = styled.p`
     color: gray;
     margin: 0;
 `;
+*/
 
 class Chat extends React.Component {
     constructor() {
@@ -63,6 +75,7 @@ class Chat extends React.Component {
         this.state = { messages: [], users: [] };
 
         this.inputSubmit = this.inputSubmit.bind(this);
+        this.renderItem = this.renderItem.bind(this);
     }
 
     componentDidMount() {
@@ -235,14 +248,32 @@ class Chat extends React.Component {
         }
     }
 
+    renderItem(index, key) {
+        const messages = this.state.messages;
+        const message = messages[index];
+
+        return (
+            <div key={key}>
+                <ListItemHeader theme={this.props.theme}>
+                    {message.user.name}
+                </ListItemHeader>
+                <ListItemTimestamp theme={this.props.theme}>
+                    <FormattedRelative value={message.time} />
+                </ListItemTimestamp>
+                <ListItemDescription theme={this.props.theme}>
+                    {message.message}
+                </ListItemDescription>
+                <Seperator />
+            </div>
+        );
+    }
+
     render() {
         if (!this.props || !this.props.shouldRender) {
             return (
-                <Wrapper>
-                    <Header>
-                        <HeaderText>Login to Access Chat</HeaderText>
-                    </Header>
-                </Wrapper>
+                <SectionWrapper>
+                    <SectionHeader>Login to Access Chat</SectionHeader>
+                </SectionWrapper>
             );
         } else {
             var users = [];
@@ -251,46 +282,23 @@ class Chat extends React.Component {
             });
 
             return (
-                <Wrapper>
-                    <Header>
+                <SectionWrapper>
+                    <SectionHeader>
                         {this.state.isDisconnected ? (
-                            <HeaderText>You have been disconnected.</HeaderText>
+                            'You have been disconnected.'
                         ) : (
-                            <HeaderText>
-                                Chat with{' '}
-                                {users.length > 0 ? users.length - 1 : '0'}{' '}
-                                other{' '}
-                                {users.length - 1 === 1 ? 'user' : 'users'}
-                            </HeaderText>
+                            'Chat with ' + (users.length > 0 ? users.length - 1 : '0') + (' other ') + (users.length - 1 === 1 ? 'user' : 'users')
                         )}
-                    </Header>
-                    <List>
-                        {this.state.messages.map(
-                            function(message, i) {
-                                var propId =
-                                    i === this.state.messages.length - 1
-                                        ? 'lastItem'
-                                        : '';
-                                return (
-                                    <ListItem key={i} id={propId}>
-                                        <ListItemHeader>
-                                            {message.user.name}
-                                            <ListItemTimestamp>
-                                                <FormattedRelative
-                                                    value={message.time}
-                                                />
-                                            </ListItemTimestamp>
-                                        </ListItemHeader>
-                                        <ListItemDescription>
-                                            {message.message}
-                                        </ListItemDescription>
-                                    </ListItem>
-                                );
-                            }.bind(this)
-                        )}
-                    </List>
-                    <InputBar onSubmit={this.inputSubmit} />
-                </Wrapper>
+                    </SectionHeader>
+                    <div style={{ overflow: 'auto', height: 'calc(100% - 44px)' }}>
+                        <List
+                            itemRenderer={this.renderItem}
+                            length={this.state.messages.length}
+                            type="variable"
+                            threshold={200}
+                        />
+                    </div>
+                </SectionWrapper>
             );
         }
     }
