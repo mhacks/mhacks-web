@@ -66,7 +66,7 @@ router.post('/', authMiddleware('any', 'api'), function(req, res) {
 
                 return;
             }
-            
+
             MentorshipTicket.create({
                 requestor: req.user,
                 skills,
