@@ -43,6 +43,12 @@ const Seperator = styled.div`
 `;
 
 class Announcements extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.renderItem = this.renderItem.bind(this);
+    }
+
     componentDidMount() {
         this.props.dispatch(AnnouncementsThunks.loadAnnouncements());
 

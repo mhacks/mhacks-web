@@ -7,11 +7,7 @@ export default class ReaderThunks {
         return dispatch => {
             dispatch({ type: actions.LOAD_HACKER_APPLICATIONS_REQUEST });
 
-            const token = localStorage.getItem('jwt');
-
-            return ReaderRequests.loadHackerApplications(
-                token
-            ).then(response => {
+            return ReaderRequests.loadHackerApplications().then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         const { applications } = json;
@@ -40,32 +36,30 @@ export default class ReaderThunks {
                 type: actions.LOAD_SPONSOR_PORTAL_APPLICATIONS_REQUEST
             });
 
-            const token = localStorage.getItem('jwt');
-
-            return ReaderRequests.loadSponsorPortalApplications(
-                token
-            ).then(response => {
-                if (response.status == 200) {
-                    response.json().then(json => {
-                        const { applications } = json;
-                        dispatch({
-                            type:
-                                actions.LOAD_SPONSOR_PORTAL_APPLICATIONS_SUCCESS,
-                            data: applications,
-                            message: json.message
+            return ReaderRequests.loadSponsorPortalApplications().then(
+                response => {
+                    if (response.status == 200) {
+                        response.json().then(json => {
+                            const { applications } = json;
+                            dispatch({
+                                type:
+                                    actions.LOAD_SPONSOR_PORTAL_APPLICATIONS_SUCCESS,
+                                data: applications,
+                                message: json.message
+                            });
                         });
-                    });
-                } else {
-                    response.json().then(json => {
-                        dispatch({
-                            type:
-                                actions.LOAD_SPONSOR_PORTAL_APPLICATIONS_ERROR,
-                            error: response.status,
-                            message: json.message
+                    } else {
+                        response.json().then(json => {
+                            dispatch({
+                                type:
+                                    actions.LOAD_SPONSOR_PORTAL_APPLICATIONS_ERROR,
+                                error: response.status,
+                                message: json.message
+                            });
                         });
-                    });
+                    }
                 }
-            });
+            );
         };
     }
 
@@ -73,11 +67,7 @@ export default class ReaderThunks {
         return dispatch => {
             dispatch({ type: actions.LOAD_MENTOR_APPLICATIONS_REQUEST });
 
-            const token = localStorage.getItem('jwt');
-
-            return ReaderRequests.loadMentorApplications(
-                token
-            ).then(response => {
+            return ReaderRequests.loadMentorApplications().then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         const { applications } = json;
@@ -104,11 +94,7 @@ export default class ReaderThunks {
         return dispatch => {
             dispatch({ type: actions.LOAD_SPEAKER_APPLICATIONS_REQUEST });
 
-            const token = localStorage.getItem('jwt');
-
-            return ReaderRequests.loadSpeakerApplications(
-                token
-            ).then(response => {
+            return ReaderRequests.loadSpeakerApplications().then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         const { applications } = json;

@@ -6,11 +6,11 @@ export default class SpeakerRequests {
         return postFormData(endpoints.SPEAKER_APPLICATION, token, body, files);
     }
 
-    static loadApplication(token) {
-        return getResponseFromRoute(endpoints.SPEAKER_APPLICATION, token);
+    static loadApplication() {
+        return getResponseFromRoute(endpoints.SPEAKER_APPLICATION);
     }
 
-    static loadForm(token) {
-        return getResponseFromRoute(endpoints.SPEAKER_APPLICATION_FORM, token);
+    static loadForm() {
+        return getResponseFromRoute(endpoints.SPEAKER_APPLICATION_FORM);
     }
 }

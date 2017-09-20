@@ -6,9 +6,7 @@ export default class MentorThunks {
         return dispatch => {
             dispatch({ type: actions.LOAD_MENTOR_APPLICATION_REQUEST });
 
-            const token = localStorage.getItem('jwt');
-
-            return MentorRequests.loadApplication(token).then(response => {
+            return MentorRequests.loadApplication().then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch({
@@ -23,7 +21,6 @@ export default class MentorThunks {
                     response.json().then(json => {
                         dispatch({
                             type: actions.LOAD_MENTOR_APPLICATION_ERROR,
-                            data: token,
                             error: response.status,
                             message: json.message
                         });
@@ -74,9 +71,7 @@ export default class MentorThunks {
                 type: actions.LOAD_MENTOR_APPLICATION_FORM_REQUEST
             });
 
-            const token = localStorage.getItem('jwt');
-
-            return MentorRequests.loadForm(token).then(response => {
+            return MentorRequests.loadForm().then(response => {
                 if (response.status == 200) {
                     response.json().then(json => {
                         dispatch({

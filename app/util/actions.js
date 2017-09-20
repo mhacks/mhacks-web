@@ -28,10 +28,44 @@ export function postFormData(route, token, body, files) {
     });
 }
 
-export function getResponseFromRoute(route, token = '') {
+export function postRequest(route, token = '', body) {
     const headers = {
         'Content-Type': 'application/json'
     };
+
+    if (token.length > 0) {
+        headers.Authorization = 'Bearer ' + token;
+    }
+
+    return fetch(route, {
+        method: 'post',
+        headers: new Headers(headers),
+        body: JSON.stringify(body)
+    });
+}
+
+export function deleteRequest(route, token = '', body) {
+    const headers = {
+        'Content-Type': 'application/json'
+    };
+
+    if (token.length > 0) {
+        headers.Authorization = 'Bearer ' + token;
+    }
+
+    return fetch(route, {
+        method: 'delete',
+        headers: new Headers(headers),
+        body: JSON.stringify(body)
+    });
+}
+
+export function getResponseFromRoute(route) {
+    const headers = {
+        'Content-Type': 'application/json'
+    };
+
+    const token = localStorage.getItem('jwt');
 
     if (token.length > 0) {
         headers.Authorization = 'Bearer ' + token;

@@ -12,6 +12,7 @@ import Confirm from './confirm';
 import MentorApply from './mentor/apply';
 import SpeakerApply from './speaker/apply';
 import AdminPage from './admin';
+import TeamBuilding from './team_building';
 
 export {
     Navigator,
@@ -27,5 +28,6 @@ export {
     Confirm,
     MentorApply,
     SpeakerApply,
-    AdminPage
+    AdminPage,
+    TeamBuilding
 };
