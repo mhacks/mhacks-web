@@ -27,5 +27,11 @@ export default {
     ALL_APPLICATION_RESUMES: '/v1/artifact/resumes?application=true',
     TEAM_BUILDING: '/v1/teams/',
     TEAM_BUILDING_FORM: '/v1/form/Team',
-    ADMIN_MODELS: '/v1/admin/model'
+    ADMIN_MODELS: '/v1/admin/model',
+
+    MENTORSHIP_TICKETS: '/v1/mentorship',
+    MENTORSHIP_TICKET_FORM: '/v1/form/MentorshipTicket',
+    ACCEPT_MENTORSHIP_TICKET: '/v1/mentorship/accept',
+    UNACCEPT_MENTORSHIP_TICKET: '/v1/mentorship/unaccept',
+    COMPLETE_MENTORSHIP_TICKET: '/v1/mentorship/complete'
 };

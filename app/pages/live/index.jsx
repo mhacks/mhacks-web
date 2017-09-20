@@ -10,6 +10,9 @@ import {
 } from '../../components';
 import Announcements from './announcements.jsx';
 import Schedule from './schedule.jsx';
+import Mentorship from './mentorship.jsx';
+import Hardware from './hardware.jsx';
+import Resources from './resources.jsx';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const PagePulled = styled(PageContainer)`
@@ -21,6 +24,15 @@ const PagePulled = styled(PageContainer)`
 const Row = styled.div`
     height: 500px;
     marginBottom: 20px;
+`;
+
+const Double = styled.div`
+    display: flex;
+    justify-content: space-between;
+
+    div {
+        width: calc(50% - 20px);
+    }
 `;
 
 class LivePage extends React.Component {
@@ -39,6 +51,13 @@ class LivePage extends React.Component {
                     <Row>
                         <Schedule />
                     </Row>
+                    <Row>
+                        <Mentorship />
+                    </Row>
+                    <Double>
+                        <Hardware />
+                        <Resources />
+                    </Double>
                 </Container>
             </PagePulled>
         );
