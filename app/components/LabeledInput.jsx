@@ -30,6 +30,10 @@ const InputField = styled.div`
     }
 `;
 
+const P = styled.p`
+    color: ${props => (props.theme ? props.theme.textColor : 'black')};
+`;
+
 const ChildContainer = styled.div`
     flexGrow: 1;
     width: 100%;
@@ -40,10 +44,10 @@ const LabeledInput = props => (
         labelWidth={props.labelWidth || '60%'}
         hasError={props.hasError}
     >
-        <p>
+        <P theme={props.theme}>
             {props.label}
             {props.required ? '*' : ''}
-        </p>
+        </P>
         <ChildContainer>
             {React.Children.toArray(props.children)}
         </ChildContainer>

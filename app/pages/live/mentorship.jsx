@@ -116,7 +116,10 @@ class Mentorship extends React.Component {
                                 FieldTypes={
                                     this.props.mentorshipState.data.FieldTypes
                                 }
-                                theme={this.props.theme}
+                                theme={Object.assign({}, this.props.theme, {
+                                    primary: this.props.theme.highlight,
+                                    textColor: this.props.theme.highlight
+                                })}
                                 onSubmit={this.submitTicket}
                             />
                         </FormContainer>
@@ -127,9 +130,9 @@ class Mentorship extends React.Component {
 
             return (
                 <div key={key}>
-                    <p>
-                        You may only have one open ticket at a time. Complete
-                        existing tickets before requesting a new one.
+                    <p style={{ color: 'white' }}>
+                        You may only have one open ticket at a time! Complete
+                        existing tickets before requesting a new one!
                     </p>
                     <Seperator />
                 </div>
@@ -201,13 +204,11 @@ class Mentorship extends React.Component {
     }
 
     render() {
-        const tickets = this.props.mentorshipState.data[
+        var length = this.props.mentorshipState.data[
             selectedTabKeys[this.state.selectedTab]
-        ];
+        ].length;
 
         // If selected tab is "My Tickets", add one to the length for the form
-        var length = tickets.length;
-
         if (
             this.state.selectedTab === 0 &&
             this.props.mentorshipState.data.form !== undefined
