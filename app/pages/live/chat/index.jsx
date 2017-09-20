@@ -78,6 +78,8 @@ class Chat extends React.Component {
             reconnection: false
         });
 
+        window.socket = this.socket;
+
         let component = this;
 
         this.socket.on('authenticate', function(data) {

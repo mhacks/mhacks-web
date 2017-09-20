@@ -171,6 +171,7 @@ function sendPrivateMessages(io, socket) {
 function createPrivateMessage(io, socket, data) {
     if (data && 'members' in data && Array.isArray(data.members)) {
         const query = [];
+        const privatemessage_query = [];
         let user_is_member = false;
 
         data.members.forEach(function(member) {
@@ -179,35 +180,52 @@ function createPrivateMessage(io, socket, data) {
             }
 
             query.push({ _id: member._id });
+            privatemessage_query.push({ 'members.user': member._id });
         });
 
         if (!user_is_member) {
             data.members.push({ _id: socket.handshake.user._id });
             query.push({ _id: socket.handshake.user._id });
+            privatemessage_query.push({
+                'members.user': socket.handshake.user._id
+            });
         }
 
-        User.find({
-            $or: query
+        PrivateMessage.findOne({
+            $and: privatemessage_query
         })
             .exec()
-            .then(users => {
-                if (users.length === data.members.length) {
-                    const members = [];
+            .then(privatemessage => {
+                if (!privatemessage) {
+                    User.find({
+                        $or: query
+                    })
+                        .exec()
+                        .then(users => {
+                            if (users.length === data.members.length) {
+                                const members = [];
 
-                    users.forEach(function(user) {
-                        members.push({
-                            user: user
+                                users.forEach(function(user) {
+                                    members.push({
+                                        user: user
+                                    });
+                                });
+
+                                PrivateMessage.create({
+                                    creator: socket.handshake.user,
+                                    members: members
+                                });
+                            } else {
+                                socket.emit('status', {
+                                    status: false,
+                                    message: Responses.MEMBERS_NOT_FOUND
+                                });
+                            }
                         });
-                    });
-
-                    PrivateMessage.create({
-                        creator: socket.handshake.user,
-                        members: members
-                    });
                 } else {
                     socket.emit('status', {
                         status: false,
-                        message: Responses.MEMBERS_NOT_FOUND
+                        message: Responses.CHANNEL_EXISTS
                     });
                 }
             });
@@ -234,24 +252,22 @@ function addUsers() {
                 .then(users => {
                     for (var channel of channels) {
                         if (
-                            users.length !== channel.members.length &&
+                            users.length > channel.members.length &&
                             channel.all_users
                         ) {
                             var notFoundUsers = [];
 
-                            for (var user of users) {
-                                var foundUser = false;
-
+                            mainLoop: for (var user of users) {
                                 for (var member of channel.members) {
-                                    if (member.user === user._id) {
-                                        foundUser = true;
-                                        break;
+                                    if (
+                                        member.user.toString() ===
+                                        user._id.toString()
+                                    ) {
+                                        continue mainLoop;
                                     }
                                 }
 
-                                if (!foundUser) {
-                                    notFoundUsers.push(user);
-                                }
+                                notFoundUsers.push(user);
                             }
 
                             notFoundUsers.forEach(function(user) {
