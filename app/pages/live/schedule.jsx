@@ -14,7 +14,7 @@ const TabGroupContainer = styled.div`
 
     ${devices.tablet`
         width: 80%;
-    `}
+    `};
 `;
 
 const Wrapper = styled.div`

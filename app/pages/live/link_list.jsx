@@ -28,7 +28,7 @@ const StyledSectionWrapper = styled(SectionWrapper)`
     width: 100%;
     margin-bottom: 20px;
     color: ${props => props.theme.highlight};
-    
+
     ${devices.tablet`
         width: 140px;
         margin-right: 20px;
@@ -50,7 +50,10 @@ class LinkList extends React.Component {
             {
                 title: 'Livestream',
                 onClick: () => {
-                    window.open('https://www.youtube.com/user/mhacksf13', '_blank');
+                    window.open(
+                        'https://www.youtube.com/user/mhacksf13',
+                        '_blank'
+                    );
                 }
             },
             {
@@ -88,13 +91,9 @@ class LinkList extends React.Component {
                             theme={this.props.theme}
                             onClick={link.onClick}
                         >
-                            <A
-                                theme={this.props.theme}
-                            >
-                                {link.title}
-                            </A>
+                            <A theme={this.props.theme}>{link.title}</A>
                         </StyledSectionWrapper>
-                    );   
+                    );
                 })}
             </ListContainer>
         );

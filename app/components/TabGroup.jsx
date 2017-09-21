@@ -39,7 +39,7 @@ const TabItem = styled.div`
 
     ${devices.tablet`
         fontSize: 18px;
-    `}
+    `};
 `;
 
 class TabGroup extends React.Component {

@@ -48,7 +48,7 @@ const TabGroupContainer = styled.div`
 
     ${devices.tablet`
         width: 80%;
-    `}
+    `};
 `;
 
 const selectedTabKeys = ['user', 'available', 'accepted'];
@@ -155,7 +155,8 @@ class Mentorship extends React.Component {
         return (
             <div key={key}>
                 <ListItemHeader theme={this.props.theme}>
-                    {ticket.mentor !== undefined ? 'Accepted: ' : ''}{ticket.title}
+                    {ticket.mentor !== undefined ? 'Accepted: ' : ''}
+                    {ticket.title}
                 </ListItemHeader>
                 <ListItemTimestamp theme={this.props.theme}>
                     <FormattedRelative value={ticket.createdAt || new Date()} />
@@ -222,10 +223,7 @@ class Mentorship extends React.Component {
         }
 
         return (
-            <SectionWrapper
-                id="mentorship"
-                theme={this.props.theme}
-            >
+            <SectionWrapper id="mentorship" theme={this.props.theme}>
                 <SectionHeader>Mentorship</SectionHeader>
                 <TabGroupContainer>
                     <TabGroup

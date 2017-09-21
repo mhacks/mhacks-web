@@ -18,7 +18,7 @@ const SectionHeader = styled.h3`
 
     ${devices.small`
         fontSize: 24px;
-    `}
+    `};
 `;
 
 export default {
