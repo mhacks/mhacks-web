@@ -14,7 +14,7 @@ module.exports = function(io) {
     }, 250);
 
     setInterval(function() {
-        addUsers();
+        addUsers(io);
     }, 1000);
 };
 
@@ -29,8 +29,13 @@ function channelHandler(io, socket) {
         });
 
         socket.on('privatemessage', function(data) {
-            if (data && 'members' in data) {
+            if (data && 'members' in data && data.members) {
                 createPrivateMessage(io, socket, data);
+            } else {
+                socket.emit('status', {
+                    status: false,
+                    message: Responses.INVALID_MESSAGE
+                });
             }
         });
 
@@ -214,6 +219,12 @@ function createPrivateMessage(io, socket, data) {
                                 PrivateMessage.create({
                                     creator: socket.handshake.user,
                                     members: members
+                                }).then(() => {
+                                    socket.emit('status', {
+                                        status: true,
+                                        message:
+                                            Responses.PRIVATE_MESSAGE_CREATED
+                                    });
                                 });
                             } else {
                                 socket.emit('status', {
@@ -241,7 +252,7 @@ function interval(io) {
     }
 }
 
-function addUsers() {
+function addUsers(io) {
     Channel.find({
         all_users: true
     })
@@ -281,4 +292,11 @@ function addUsers() {
                     }
                 });
         });
+
+    for (const socketName in io.sockets.sockets) {
+        if (io.sockets.sockets.hasOwnProperty(socketName)) {
+            sendPrivateMessages(io, io.sockets.sockets[socketName]);
+            sendChannels(io, io.sockets.sockets[socketName]);
+        }
+    }
 }
