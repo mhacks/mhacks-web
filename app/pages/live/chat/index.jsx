@@ -71,9 +71,9 @@ class Chat extends React.Component {
 
                     data.channels.forEach(channel => {
                         channel.members.forEach(member => {
-                            if (!seenUsers.hasOwnProperty(member.id)) {
+                            if (!seenUsers.hasOwnProperty(member.user.id)) {
                                 users.push(member);
-                                seenUsers[member.id] = true;
+                                seenUsers[member.user.id] = true;
                             }
                         });
                     });
@@ -266,7 +266,12 @@ class Chat extends React.Component {
                             })}
                         </Sidebar>
                         <ChatContainer>
-                            <ListContainer>
+                            <ListContainer
+                                onClick={() => {
+                                    console.log('hey');
+                                    console.log(this.createPrivateMessage(['59c410dd86721b002c9cb499', '59c40ff886721b002c9cb491']));
+                                }}
+                            >
                                 {filtered.map((message, index) => {
                                     const isLast =
                                         index === filtered.length - 1;
