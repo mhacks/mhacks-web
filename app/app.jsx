@@ -302,18 +302,24 @@ class AppProvider extends React.Component {
                                             isAccepted,
                                             isConfirmed
                                         } = this.getMetadata();
-                                        if (isLoggedIn && isAccepted && isConfirmed) {
+                                        if (
+                                            isLoggedIn &&
+                                            isAccepted &&
+                                            isConfirmed
+                                        ) {
                                             return <TeamBuilding />;
                                         }
 
                                         if (isLoggedIn) {
-                                            return <Redirect to={routes.PROFILE} />;
+                                            return (
+                                                <Redirect to={routes.PROFILE} />
+                                            );
                                         }
 
                                         return <Redirect to={routes.LOGIN} />;
                                     }}
-                                /> 
-                            ) : null }
+                                />
+                            ) : null}
                             <Route
                                 exact
                                 path={routes.SUBSCRIBE}

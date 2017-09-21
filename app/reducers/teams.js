@@ -44,13 +44,14 @@ export function teamsState(state = initialState, action) {
                 data: {
                     ...state.data,
                     teams: state.data.teams.map(team => {
-                        if (team.id !== action.data.id){
+                        if (team.id !== action.data.id) {
                             return team;
                         } else {
-                            return Object.assign({}, team, {members: team.members.concat(action.data.user)});
+                            return Object.assign({}, team, {
+                                members: team.members.concat(action.data.user)
+                            });
                         }
                     })
-
                 },
                 message: action.message
             };
@@ -61,10 +62,14 @@ export function teamsState(state = initialState, action) {
                 data: {
                     ...state.data,
                     teams: state.data.teams.map(team => {
-                        if(team.id !== action.data.id){
+                        if (team.id !== action.data.id) {
                             return team;
                         } else {
-                            return Object.assign({}, team, {members: team.members.filter(member => member.email !== action.data.email)})
+                            return Object.assign({}, team, {
+                                members: team.members.filter(
+                                    member => member.email !== action.data.email
+                                )
+                            });
                         }
                     })
                 },
@@ -88,9 +93,7 @@ export function teamsState(state = initialState, action) {
                 ...state,
                 data: {
                     ...state.data,
-                    teams: state.data.teams.concat(
-                        action.data
-                    )
+                    teams: state.data.teams.concat(action.data)
                 },
                 message: action.message
             };

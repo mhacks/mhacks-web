@@ -99,7 +99,8 @@ router.post('/control', authMiddleware('admin', 'api'), function(req, res) {
                         end_date: req.body.end_date,
                         is_live_page_enabled: req.body.is_live_page_enabled,
                         is_application_open: req.body.is_application_open,
-                        is_team_building_enabled: req.body.is_team_building_enabled
+                        is_team_building_enabled:
+                            req.body.is_team_building_enabled
                     })
                         .then(() => {
                             res.send({

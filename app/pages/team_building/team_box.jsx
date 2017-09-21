@@ -83,7 +83,15 @@ class TeamBox extends React.Component {
         e.preventDefault();
 
         const user = this.props.userState.data.user;
-        const data = {'id': this.props.team.id, 'user': {'full_name': user.full_name, 'email': user.email, 'avatars': user.avatars, 'experience': user.experience}};
+        const data = {
+            id: this.props.team.id,
+            user: {
+                full_name: user.full_name,
+                email: user.email,
+                avatars: user.avatars,
+                experience: user.experience
+            }
+        };
         this.props.dispatch(TeamsThunks.joinTeam(data));
         this.props.onTeamJoined();
     }
@@ -92,7 +100,7 @@ class TeamBox extends React.Component {
         e.preventDefault();
 
         const user = this.props.userState.data.user;
-        const data = {'id': this.props.team.id, 'email': user.email };
+        const data = { id: this.props.team.id, email: user.email };
         this.props.dispatch(TeamsThunks.leaveTeam(data));
     }
 
@@ -123,14 +131,14 @@ class TeamBox extends React.Component {
 
         if (position === -1 && userInTeam) {
             display = 'Already in a Team';
-            clickFunction = (() => null);
+            clickFunction = () => null;
         } else if (position === -1 && !userInTeam) {
-            if(team.members.length === 4) {
+            if (team.members.length === 4) {
                 display = 'Join as Adopt a n00b';
                 clickFunction = this.joinTeam;
             } else if (team.members.length === 5) {
                 display = 'Team Full';
-                clickFunction = (() => null);
+                clickFunction = () => null;
             } else {
                 display = 'Join Team';
                 clickFunction = this.joinTeam;
@@ -143,7 +151,6 @@ class TeamBox extends React.Component {
             clickFunction = this.leaveTeam;
         }
 
-
         return (
             <BoxWrapper>
                 <Header>{team.name}</Header>
@@ -155,12 +162,18 @@ class TeamBox extends React.Component {
                             <Seperator />
                             <Row>
                                 <PictureWrapper>
-                                    <StyledProfilePicture avatars={member.avatars} />
+                                    <StyledProfilePicture
+                                        avatars={member.avatars}
+                                    />
                                 </PictureWrapper>
                                 <FlexBox>
                                     <p>{member.full_name}</p>
                                     <p>{member.experience}</p>
-                                    <EmailLink href={'mailto:'.concat(member.email)}>{member.email}</EmailLink>
+                                    <EmailLink
+                                        href={'mailto:'.concat(member.email)}
+                                    >
+                                        {member.email}
+                                    </EmailLink>
                                 </FlexBox>
                             </Row>
                         </div>

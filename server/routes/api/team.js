@@ -14,29 +14,32 @@ router.get('/', function(req, res) {
 
             teams.map(team => {
                 team.members.map(member => {
-                    emails.push(member.email)
-                })
-            })
+                    emails.push(member.email);
+                });
+            });
             Application.find({
-                user: {$in: emails}
+                user: { $in: emails }
             })
                 .select('experience user')
                 .then(applications => {
                     applications.map(app => {
                         map[app.user] = app.experience;
-                    })
+                    });
                     const newTeams = teams.map(team => {
                         const newMembers = team.members.map(member => {
-                            return (Object.assign({}, member.toJSON(), {experience: map[member.email]}));
-                        })
-                        return (Object.assign({}, team.toJSON(), {members: newMembers}))
-                    })
+                            return Object.assign({}, member.toJSON(), {
+                                experience: map[member.email]
+                            });
+                        });
+                        return Object.assign({}, team.toJSON(), {
+                            members: newMembers
+                        });
+                    });
                     res.send({
                         status: true,
                         teams: newTeams
                     });
-
-                })
+                });
         })
         .catch(err => {
             console.error(err);
@@ -64,7 +67,7 @@ router.post('/', function(req, res) {
                                     .then(() => {
                                         res.send({
                                             status: true
-                                        })
+                                        });
                                     })
                                     .catch(err => {
                                         console.error(err);
@@ -108,12 +111,11 @@ router.delete('/', function(req, res) {
                 //Check if person removing team is leader (first in array)
                 if (team && team.members.indexOf(req.user._id) === 0) {
                     team.remove();
-                    team.save()
-                        .then(() => {
-                            res.send({
-                                status: true
-                            })
-                        })
+                    team.save().then(() => {
+                        res.send({
+                            status: true
+                        });
+                    });
                 } else {
                     res.status(403).send({
                         status: false,
@@ -143,18 +145,20 @@ router.post('/member', function(req, res) {
                 Application.find()
                     .byEmail(req.user.email)
                     .then(userApplication => {
-                        if (userApplication && userApplication.status === 'accepted') {
+                        if (
+                            userApplication &&
+                            userApplication.status === 'accepted'
+                        ) {
                             Team.findById(req.body.team)
                                 .populate('members')
                                 .then(team => {
                                     if (team && team.members.length < 4) {
                                         team.members.addToSet(req.user._id);
-                                        team.save()
-                                            .then(() => {
-                                                res.send({
-                                                    status: true
-                                                })
-                                            })
+                                        team.save().then(() => {
+                                            res.send({
+                                                status: true
+                                            });
+                                        });
                                         //Check for adopt a noob
                                     } else if (
                                         team &&
@@ -166,32 +170,30 @@ router.post('/member', function(req, res) {
                                                     member => member.email
                                                 )
                                             }
-                                        })
-                                            .then(applications => {
-                                                var experiences = applications.map(
-                                                    item => item['experience']
+                                        }).then(applications => {
+                                            var experiences = applications.map(
+                                                item => item['experience']
+                                            );
+                                            experiences.push(
+                                                userApplication.experience
+                                            );
+                                            if (checkGoodTeam(experiences)) {
+                                                team.members.addToSet(
+                                                    req.user._id
                                                 );
-                                                experiences.push(
-                                                    userApplication.experience
-                                                );
-                                                if (checkGoodTeam(experiences)) {
-                                                    team.members.addToSet(
-                                                        req.user._id
-                                                    );
-                                                    team.save()
-                                                        .then(() => {
-                                                            res.send({
-                                                                status: true
-                                                            })
-                                                        })
-                                                } else {
-                                                    res.status(403).send({
-                                                        status: false,
-                                                        message:
-                                                            Responses.NOT_QUALIFIED_NOOB
+                                                team.save().then(() => {
+                                                    res.send({
+                                                        status: true
                                                     });
-                                                }
-                                            });
+                                                });
+                                            } else {
+                                                res.status(403).send({
+                                                    status: false,
+                                                    message:
+                                                        Responses.NOT_QUALIFIED_NOOB
+                                                });
+                                            }
+                                        });
                                     } else {
                                         res.status(403).send({
                                             status: false,
@@ -234,18 +236,17 @@ router.delete('/member', function(req, res) {
             .then(team => {
                 if (team.members.length > 1) {
                     team.members.pull(req.user._id);
-                    team.save()
-                        .then(() => {
-                            Team.find()
-                                .populate('members', 'email full_name avatar')
-                                .exec()
-                                .then(teams =>
-                                    res.send({
-                                        status: true,
-                                        teams: teams
-                                    })
-                                )
-                        })
+                    team.save().then(() => {
+                        Team.find()
+                            .populate('members', 'email full_name avatar')
+                            .exec()
+                            .then(teams =>
+                                res.send({
+                                    status: true,
+                                    teams: teams
+                                })
+                            );
+                    });
                 } else {
                     res.status(403).send({
                         status: false,

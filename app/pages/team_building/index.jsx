@@ -34,13 +34,9 @@ const AlertContainer = styled.div`
     minWidth: 80%;
 `;
 
-const Description = styled.h3`
-    color: ${props => props.theme.primary};
-`;
+const Description = styled.h3`color: ${props => props.theme.primary};`;
 
-const Bullet = styled.h4`
-    color: ${props => props.theme.highlight};
-`;
+const Bullet = styled.h4`color: ${props => props.theme.highlight};`;
 
 const PagePulled = styled(PageContainer)`min-height: calc(100vh - 146px);`;
 
@@ -118,15 +114,25 @@ class TeamBuilding extends React.Component {
 
         if (!errors) {
             const user = this.props.userState.data.user;
-            formData['members'] = [{'full_name': user.full_name, 'email': user.email, 'avatars': user.avatars, 'experience': user.experience}];
+            formData['members'] = [
+                {
+                    full_name: user.full_name,
+                    email: user.email,
+                    avatars: user.avatars,
+                    experience: user.experience
+                }
+            ];
             this.props.dispatch(TeamsThunks.createTeam(formData));
             this.addNotification('Team Created!', 'save');
         }
     }
 
     onChange(formData) {
-        if (formData['description']){
-            var charactersRemaining = (40 - formData.description.length) > 0 ? (40 - formData.description.length) : 0;
+        if (formData['description']) {
+            var charactersRemaining =
+                40 - formData.description.length > 0
+                    ? 40 - formData.description.length
+                    : 0;
             this.setState({
                 charactersRemaining: charactersRemaining
             });
@@ -162,10 +168,24 @@ class TeamBuilding extends React.Component {
             <PagePulled ref="PageContainer">
                 <Wrapper>
                     <BoxWrapper>
-                        <Description>Welcome to the MHacks X Team Builder! Broadcast your idea to find hackers interested in joining your team or find a team that you'd like to join! MHacks X is featuring the adopt-a-n00b program. This means that teams can have up to: </Description>
+                        <Description>
+                            Welcome to the MHacks X Team Builder! Broadcast your
+                            idea to find hackers interested in joining your team
+                            or find a team that you'd like to join! MHacks X is
+                            featuring the adopt-a-n00b program. This means that
+                            teams can have up to:{' '}
+                        </Description>
                         <Bullet>- 4 members normally</Bullet>
-                        <Bullet>- 5 members if the team contains at least one veteran hacker, with the 5th slot only being open to a novice hacker </Bullet>
-                        <Bullet>- 5 members if the team contains at least two experienced hackers, with the 5th slot only being open to a novice hacker</Bullet>
+                        <Bullet>
+                            - 5 members if the team contains at least one
+                            veteran hacker, with the 5th slot only being open to
+                            a novice hacker{' '}
+                        </Bullet>
+                        <Bullet>
+                            - 5 members if the team contains at least two
+                            experienced hackers, with the 5th slot only being
+                            open to a novice hacker
+                        </Bullet>
                     </BoxWrapper>
                     {userInTeam ? (
                         <AlertContainer>
@@ -189,7 +209,11 @@ class TeamBuilding extends React.Component {
                             />
                             {this.state.charactersRemaining > 0 ? (
                                 <AlertContainer>
-                                    <Alert message={'Description characters remaining: '.concat(this.state.charactersRemaining)} />
+                                    <Alert
+                                        message={'Description characters remaining: '.concat(
+                                            this.state.charactersRemaining
+                                        )}
+                                    />
                                 </AlertContainer>
                             ) : null}
                             {this.state.descriptionLengthError ? (
@@ -203,7 +227,11 @@ class TeamBuilding extends React.Component {
                             ) : null}
                             {this.state.missingFieldsError ? (
                                 <AlertContainer>
-                                    <Alert message={'Missing some required fields!'} />
+                                    <Alert
+                                        message={
+                                            'Missing some required fields!'
+                                        }
+                                    />
                                 </AlertContainer>
                             ) : null}
                         </BoxWrapper>
