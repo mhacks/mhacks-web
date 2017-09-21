@@ -91,7 +91,9 @@ class AppProvider extends React.Component {
                                 path={routes.LOGIN}
                                 render={() => {
                                     if (this.getMetadata().isLoggedIn) {
-                                        return <Redirect to={routes.PROFILE} />;
+                                        return (
+                                            <Redirect to={routes.DASHBOARD} />
+                                        );
                                     }
 
                                     return <Login />;
@@ -286,7 +288,9 @@ class AppProvider extends React.Component {
                                     }
 
                                     if (isLoggedIn) {
-                                        return <Redirect to={routes.PROFILE} />;
+                                        return (
+                                            <Redirect to={routes.DASHBOARD} />
+                                        );
                                     }
 
                                     return <Redirect to={routes.LOGIN} />;
@@ -312,7 +316,9 @@ class AppProvider extends React.Component {
 
                                         if (isLoggedIn) {
                                             return (
-                                                <Redirect to={routes.PROFILE} />
+                                                <Redirect
+                                                    to={routes.DASHBOARD}
+                                                />
                                             );
                                         }
 

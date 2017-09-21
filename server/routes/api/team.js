@@ -6,7 +6,7 @@ var router = require('express').Router(),
 // Handles get requests for /v1/teams
 router.get('/', function(req, res) {
     Team.find()
-        .populate('members', 'full_name email avatar experiences')
+        .populate('members', 'full_name email avatar')
         .exec()
         .then(teams => {
             var emails = [];
