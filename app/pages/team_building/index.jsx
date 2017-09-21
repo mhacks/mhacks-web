@@ -14,13 +14,13 @@ const FlexBox = styled.div`
     alignItems: center;
 `;
 
-const MHFormWrapper = styled.div`
+const BoxWrapper = styled.div`
     borderRadius: 25px;
     border: 3px solid ${props => props.theme.primary};
     margin: 20px;
     padding: 20px;
-    minWidth: 80%;
     display: inline-block;
+    width: 80%;
 `;
 
 const Wrapper = styled.div`
@@ -32,6 +32,14 @@ const Wrapper = styled.div`
 const AlertContainer = styled.div`
     margin: 10px;
     minWidth: 80%;
+`;
+
+const Description = styled.h3`
+    color: ${props => props.theme.primary};
+`;
+
+const Bullet = styled.h4`
+    color: ${props => props.theme.highlight};
 `;
 
 const PagePulled = styled(PageContainer)`min-height: calc(100vh - 146px);`;
@@ -47,6 +55,7 @@ class TeamBuilding extends React.Component {
         };
 
         this.onSubmit = this.onSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
         this.onTeamJoined = this.onTeamJoined.bind(this);
         this.isUserInTeam = this.isUserInTeam.bind(this);
     }
@@ -93,7 +102,7 @@ class TeamBuilding extends React.Component {
             missingFieldsError: false
         });
 
-        if (!formData.description || formData.description.length < 100) {
+        if (!formData.description || formData.description.length < 40) {
             errors = true;
             this.setState({
                 descriptionLengthError: true
@@ -108,8 +117,19 @@ class TeamBuilding extends React.Component {
         }
 
         if (!errors) {
+            const user = this.props.userState.data.user;
+            formData['members'] = [{'full_name': user.full_name, 'email': user.email, 'avatars': user.avatars, 'experience': user.experience}];
             this.props.dispatch(TeamsThunks.createTeam(formData));
             this.addNotification('Team Created!', 'save');
+        }
+    }
+
+    onChange(formData) {
+        if (formData['description']){
+            var charactersRemaining = (40 - formData.description.length) > 0 ? (40 - formData.description.length) : 0;
+            this.setState({
+                charactersRemaining: charactersRemaining
+            });
         }
     }
 
@@ -141,6 +161,12 @@ class TeamBuilding extends React.Component {
         return (
             <PagePulled ref="PageContainer">
                 <Wrapper>
+                    <BoxWrapper>
+                        <Description>Welcome to the MHacks X Team Builder! Broadcast your idea to find hackers interested in joining your team or find a team that you'd like to join! MHacks X is featuring the adopt-a-n00b program. This means that teams can have up to: </Description>
+                        <Bullet>- 4 members normally</Bullet>
+                        <Bullet>- 5 members if the team contains at least one veteran hacker, with the 5th slot only being open to a novice hacker </Bullet>
+                        <Bullet>- 5 members if the team contains at least two experienced hackers, with the 5th slot only being open to a novice hacker</Bullet>
+                    </BoxWrapper>
                     {userInTeam ? (
                         <AlertContainer>
                             <Alert
@@ -151,7 +177,7 @@ class TeamBuilding extends React.Component {
                     ) : null}
 
                     {!userInTeam ? (
-                        <MHFormWrapper>
+                        <BoxWrapper>
                             <MHForm
                                 schema={this.props.teamsState.data.form}
                                 FieldTypes={
@@ -159,22 +185,28 @@ class TeamBuilding extends React.Component {
                                 }
                                 theme={this.props.theme}
                                 onSubmit={this.onSubmit}
+                                onChange={this.onChange}
                             />
-                        </MHFormWrapper>
-                    ) : null}
-                    {this.state.descriptionLengthError ? (
-                        <AlertContainer>
-                            <Alert
-                                message={
-                                    'The description must be at least 100 characters'
-                                }
-                            />
-                        </AlertContainer>
-                    ) : null}
-                    {this.state.missingFieldsError ? (
-                        <AlertContainer>
-                            <Alert message={'Missing some required fields!'} />
-                        </AlertContainer>
+                            {this.state.charactersRemaining > 0 ? (
+                                <AlertContainer>
+                                    <Alert message={'Description characters remaining: '.concat(this.state.charactersRemaining)} />
+                                </AlertContainer>
+                            ) : null}
+                            {this.state.descriptionLengthError ? (
+                                <AlertContainer>
+                                    <Alert
+                                        message={
+                                            'The description must be at least 40 characters'
+                                        }
+                                    />
+                                </AlertContainer>
+                            ) : null}
+                            {this.state.missingFieldsError ? (
+                                <AlertContainer>
+                                    <Alert message={'Missing some required fields!'} />
+                                </AlertContainer>
+                            ) : null}
+                        </BoxWrapper>
                     ) : null}
                 </Wrapper>
 

@@ -7,6 +7,7 @@ const initialState = {
     message: null,
     data: {
         is_live_page_enabled: false,
+        is_team_building_enabled: false,
         is_application_open: false
     }
 };

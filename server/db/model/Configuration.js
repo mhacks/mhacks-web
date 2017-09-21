@@ -21,6 +21,15 @@ var schema = new mongoose.Schema(
                 label: 'Live Page Enabled'
             }
         },
+        is_team_building_enabled: {
+            type: Boolean,
+            default: false,
+            required: true,
+            form: {
+                user_editable: true,
+                label: 'Team Building Enabled'
+            }
+        },
         is_application_open: {
             type: Boolean,
             default: false,

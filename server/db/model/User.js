@@ -611,7 +611,8 @@ schema.methods.getProfile = function() {
         portfolio: this.portfolio,
         tshirt: this.tshirt,
         race: this.race,
-        sex: this.sex
+        sex: this.sex,
+        id: this._id
     };
 
     return new Promise(resolve => {
@@ -625,7 +626,8 @@ schema.methods.getProfile = function() {
                     needs_reimbursement,
                     reimbursement,
                     university,
-                    major
+                    major,
+                    experience
                 } = application;
 
                 profile.application_submitted = true;
@@ -634,6 +636,7 @@ schema.methods.getProfile = function() {
                 profile.reimbursement = reimbursement;
                 profile.university = university;
                 profile.major = major;
+                profile.experience = experience;
 
                 if (status === 'accepted') {
                     mongoose
@@ -654,6 +657,10 @@ schema.methods.getProfile = function() {
             });
     });
 };
+
+schema.virtual('avatars').get(function() {
+    return this.getAvatars();
+});
 
 schema.statics.getUpdateableFields = function(groups) {
     var updateables = [];

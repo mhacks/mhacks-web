@@ -175,12 +175,14 @@ class HeaderLinks extends React.Component {
         } = this.props;
         const {
             isLoggedIn,
+            isAccepted,
+            isConfirmed,
             isAdmin,
             isSponsor,
             isReader,
             isEmailVerified
         } = userMetadata;
-        const { is_live_page_enabled } = configurationData;
+        const { is_live_page_enabled, is_team_building_enabled } = configurationData;
 
         // Either render a Menu component for mobile, or NavContainer for desktop as
         // the parent component for the navigation links.
@@ -239,9 +241,9 @@ class HeaderLinks extends React.Component {
                         Live
                     </StyledNavLink>
                 ) : null}
-                {isLoggedIn ? (
+                {isLoggedIn && isAccepted && isConfirmed && is_team_building_enabled? (
                     <StyledNavLink to={routes.TEAM_BUILDING} color={color}>
-                        Team Building
+                        Blueprinting
                     </StyledNavLink>
                 ) : null}
                 {isLoggedIn ? (

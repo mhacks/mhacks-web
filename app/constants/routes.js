@@ -19,5 +19,5 @@ export default {
     SPONSOR_PORTAL: '/portal/sponsor',
     MENTOR_APPLICATION: '/mentor/apply',
     SPEAKER_APPLICATION: '/speaker/apply',
-    TEAM_BUILDING: '/team_building'
+    TEAM_BUILDING: '/blueprinting'
 };

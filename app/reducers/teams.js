@@ -38,50 +38,59 @@ export function teamsState(state = initialState, action) {
                 message: action.message
             };
 
-        case actions.JOIN_TEAM_SUCCESS:
+        case actions.JOIN_TEAM_REQUEST:
             return {
                 ...state,
-                fetching: false,
-                fetched: true,
                 data: {
                     ...state.data,
-                    teams: action.data
+                    teams: state.data.teams.map(team => {
+                        if (team.id !== action.data.id){
+                            return team;
+                        } else {
+                            return Object.assign({}, team, {members: team.members.concat(action.data.user)});
+                        }
+                    })
+
                 },
                 message: action.message
             };
 
-        case actions.LEAVE_TEAM_SUCCESS:
+        case actions.LEAVE_TEAM_REQUEST:
             return {
                 ...state,
-                fetching: false,
-                fetched: true,
                 data: {
                     ...state.data,
-                    teams: action.data
+                    teams: state.data.teams.map(team => {
+                        if(team.id !== action.data.id){
+                            return team;
+                        } else {
+                            return Object.assign({}, team, {members: team.members.filter(member => member.email !== action.data.email)})
+                        }
+                    })
                 },
                 message: action.message
             };
 
-        case actions.DELETE_TEAM_SUCCESS:
+        case actions.DELETE_TEAM_REQUEST:
             return {
                 ...state,
-                fetching: false,
-                fetched: true,
                 data: {
                     ...state.data,
-                    teams: action.data
+                    teams: state.data.teams.filter(
+                        team => team.id !== action.data
+                    )
                 },
                 message: action.message
             };
 
-        case actions.CREATE_TEAM_SUCCESS:
+        case actions.CREATE_TEAM_REQUEST:
             return {
                 ...state,
-                fetching: false,
-                fetched: true,
                 data: {
                     ...state.data,
-                    teams: action.data
+                    teams: state.data.teams.concat(
+                        action.data
+                    )
                 },
                 message: action.message
             };

@@ -6,13 +6,37 @@ var router = require('express').Router(),
 // Handles get requests for /v1/teams
 router.get('/', function(req, res) {
     Team.find()
-        .populate('members', 'full_name email avatar')
+        .populate('members', 'full_name email avatar experiences')
         .exec()
         .then(teams => {
-            res.send({
-                status: true,
-                teams: teams
-            });
+            var emails = [];
+            var map = {};
+
+            teams.map(team => {
+                team.members.map(member => {
+                    emails.push(member.email)
+                })
+            })
+            Application.find({
+                user: {$in: emails}
+            })
+                .select('experience user')
+                .then(applications => {
+                    applications.map(app => {
+                        map[app.user] = app.experience;
+                    })
+                    const newTeams = teams.map(team => {
+                        const newMembers = team.members.map(member => {
+                            return (Object.assign({}, member.toJSON(), {experience: map[member.email]}));
+                        })
+                        return (Object.assign({}, team.toJSON(), {members: newMembers}))
+                    })
+                    res.send({
+                        status: true,
+                        teams: newTeams
+                    });
+
+                })
         })
         .catch(err => {
             console.error(err);
@@ -31,17 +55,16 @@ router.post('/', function(req, res) {
                     .byEmail(req.user.email)
                     .then(application => {
                         if (application && application.status === 'accepted') {
-                            if (req.body.description.length >= 100) {
+                            if (req.body.description.length >= 40) {
                                 Team.create({
                                     name: req.body.name,
                                     description: req.body.description,
                                     members: [req.user._id]
                                 })
-                                    .then(team => {
+                                    .then(() => {
                                         res.send({
-                                            status: true,
-                                            team: team
-                                        });
+                                            status: true
+                                        })
                                     })
                                     .catch(err => {
                                         console.error(err);
@@ -85,9 +108,12 @@ router.delete('/', function(req, res) {
                 //Check if person removing team is leader (first in array)
                 if (team && team.members.indexOf(req.user._id) === 0) {
                     team.remove();
-                    res.send({
-                        status: true
-                    });
+                    team.save()
+                        .then(() => {
+                            res.send({
+                                status: true
+                            })
+                        })
                 } else {
                     res.status(403).send({
                         status: false,
@@ -116,28 +142,19 @@ router.post('/member', function(req, res) {
             .then(() => {
                 Application.find()
                     .byEmail(req.user.email)
-                    .then(application => {
-                        if (application && application.status === 'accepted') {
+                    .then(userApplication => {
+                        if (userApplication && userApplication.status === 'accepted') {
                             Team.findById(req.body.team)
                                 .populate('members')
                                 .then(team => {
                                     if (team && team.members.length < 4) {
                                         team.members.addToSet(req.user._id);
-                                        team.save(function() {
-                                            Team.populate(
-                                                team,
-                                                {
-                                                    path: 'members',
-                                                    select: 'email full_name'
-                                                },
-                                                function() {
-                                                    res.send({
-                                                        status: true,
-                                                        team: team
-                                                    });
-                                                }
-                                            );
-                                        });
+                                        team.save()
+                                            .then(() => {
+                                                res.send({
+                                                    status: true
+                                                })
+                                            })
                                         //Check for adopt a noob
                                     } else if (
                                         team &&
@@ -150,23 +167,23 @@ router.post('/member', function(req, res) {
                                                 )
                                             }
                                         })
-                                            .select('experience -_id')
                                             .then(applications => {
-                                                var apps = applications.map(
+                                                var experiences = applications.map(
                                                     item => item['experience']
                                                 );
-                                                apps.push(
-                                                    application.experience
+                                                experiences.push(
+                                                    userApplication.experience
                                                 );
-                                                if (checkGoodTeam(apps)) {
+                                                if (checkGoodTeam(experiences)) {
                                                     team.members.addToSet(
                                                         req.user._id
                                                     );
-                                                    team.save();
-                                                    res.send({
-                                                        status: true,
-                                                        team: team
-                                                    });
+                                                    team.save()
+                                                        .then(() => {
+                                                            res.send({
+                                                                status: true
+                                                            })
+                                                        })
                                                 } else {
                                                     res.status(403).send({
                                                         status: false,
@@ -217,11 +234,18 @@ router.delete('/member', function(req, res) {
             .then(team => {
                 if (team.members.length > 1) {
                     team.members.pull(req.user._id);
-                    team.save();
-                    res.send({
-                        status: true,
-                        team: team
-                    });
+                    team.save()
+                        .then(() => {
+                            Team.find()
+                                .populate('members', 'email full_name avatar')
+                                .exec()
+                                .then(teams =>
+                                    res.send({
+                                        status: true,
+                                        teams: teams
+                                    })
+                                )
+                        })
                 } else {
                     res.status(403).send({
                         status: false,

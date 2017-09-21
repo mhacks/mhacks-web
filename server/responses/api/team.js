@@ -12,7 +12,7 @@ module.exports = {
     TEAM_FULL: 'The team you are trying to join is full or does not exist',
     TEAM_EMPTY: 'You cannot leave a team if you are the only member',
     NOT_LEADER: 'You are not the leader of this team',
-    DESCRIPTION_SHORT: 'Team descriptions must be at least 100 characters',
+    DESCRIPTION_SHORT: 'Team descriptions must be at least 40 characters',
     NOT_A_NOOB: 'You must be a novice to join this team',
     NOT_ACCEPTED: 'You have not been accepted to MHacks',
     NOT_QUALIFIED_NOOB:

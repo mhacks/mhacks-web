@@ -63,7 +63,8 @@ class AppProvider extends React.Component {
     render() {
         const {
             should_logout,
-            is_live_page_enabled
+            is_live_page_enabled,
+            is_team_building_enabled
         } = this.props.configurationState.data;
 
         if (should_logout && localStorage.getItem('jwt')) {
@@ -291,25 +292,28 @@ class AppProvider extends React.Component {
                                     return <Redirect to={routes.LOGIN} />;
                                 }}
                             />
-                            <Route
-                                exact
-                                path={routes.TEAM_BUILDING}
-                                render={() => {
-                                    const {
-                                        isLoggedIn,
-                                        isAccepted
-                                    } = this.getMetadata();
-                                    if (isLoggedIn && isAccepted) {
-                                        return <TeamBuilding />;
-                                    }
+                            {is_team_building_enabled ? (
+                                <Route
+                                    exact
+                                    path={routes.TEAM_BUILDING}
+                                    render={() => {
+                                        const {
+                                            isLoggedIn,
+                                            isAccepted,
+                                            isConfirmed
+                                        } = this.getMetadata();
+                                        if (isLoggedIn && isAccepted && isConfirmed) {
+                                            return <TeamBuilding />;
+                                        }
 
-                                    if (isLoggedIn) {
-                                        return <Redirect to={routes.PROFILE} />;
-                                    }
+                                        if (isLoggedIn) {
+                                            return <Redirect to={routes.PROFILE} />;
+                                        }
 
-                                    return <Redirect to={routes.LOGIN} />;
-                                }}
-                            />
+                                        return <Redirect to={routes.LOGIN} />;
+                                    }}
+                                /> 
+                            ) : null }
                             <Route
                                 exact
                                 path={routes.SUBSCRIBE}
