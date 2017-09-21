@@ -15,7 +15,7 @@ module.exports = function(io) {
 function chatHandler(io, socket) {
     if (socket.handshake && socket.handshake.authToken) {
         socket.on('chat', function(data) {
-            if ('message' in data && 'channel' in data) {
+            if ('message' in data && 'channel' in data && data.message && data.channel) {
                 if (Object.keys(socket.rooms).indexOf(data.channel) !== -1) {
                     Channel.findById(data.channel)
                         .exec()
@@ -41,6 +41,11 @@ function chatHandler(io, socket) {
                         message: Responses.INVALID_MESSAGE
                     });
                 }
+            } else {
+                socket.emit('status', {
+                    status: false,
+                    message: Responses.INVALID_MESSAGE
+                });
             }
         });
     } else {
