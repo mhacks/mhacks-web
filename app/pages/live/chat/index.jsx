@@ -4,9 +4,8 @@ import io from 'socket.io-client';
 import styled from 'styled-components';
 import { FormattedRelative } from 'react-intl';
 import Favicon from '../../../../static/nano/favicon.png';
-import List from 'react-list';
 
-//import InputBar from './InputBar.jsx';
+import InputBar from './InputBar.jsx';
 import Components from '../components.jsx';
 const { SectionWrapper, SectionHeader } = Components;
 
@@ -31,51 +30,37 @@ const Seperator = styled.div`
     margin: 15px 20px 15px 0;
 `;
 
-/*
-const List = styled.div`
+const ContentContainer = styled.div`
     display: flex;
-    flex-direction: column;
-    overflowY: scroll;
-    height: calc(100% - 48px - 35px);
+    height: calc(100% - 100px);
 `;
 
-const ListItem = styled.div`
-    backgroundColor: #efefef;
-    borderBottom: 0.5px solid black;
-    padding: 10px;
+const Sidebar = styled.div`margin-right: 20px;`;
+
+const ChatContainer = styled.div`flex-grow: 1;`;
+
+const ListContainer = styled.div`
+    overflow: auto;
+    height: 100%;
 `;
 
-const ListItemHeader = styled.h2`
-    color: darkorange;
-    margin: 0;
-    fontSize: 14px;
-`;
+const ChannelLink = styled.p`
+    color: ${props => props.theme.highlight};
+    text-decoration: ${props => (props.active ? 'underline' : 'none')};
 
-const ListItemTimestamp = styled.span`
-    display: inline;
-    fontWeight: bold;
-    color: gray;
-    fontSize: 12px;
-    margin: 0;
-    marginLeft: 5px;
-    position: relative;
-    top: -1px;
+    &:hover {
+        text-decoration: underline;
+    }
 `;
-
-const ListItemDescription = styled.p`
-    color: gray;
-    margin: 0;
-`;
-*/
 
 class Chat extends React.Component {
     constructor() {
         super();
 
-        this.state = { messages: [], users: [] };
+        this.state = { messages: [], users: [], channels: [], channel: {} };
 
         this.inputSubmit = this.inputSubmit.bind(this);
-        this.renderItem = this.renderItem.bind(this);
+        this.renderMessage = this.renderMessage.bind(this);
     }
 
     componentDidMount() {
@@ -103,17 +88,25 @@ class Chat extends React.Component {
 
                 component.socket.on('channels', function(data) {
                     console.log('Channels', data);
-                    data.channels.forEach(function(channel) {
-                        var users = [];
-                        for (var i in channel.members) {
-                            users.push(channel.members[i]);
-                        }
+                    const seenUsers = {};
+                    var users = [];
 
-                        component.setState(state => ({
-                            users: users,
-                            channel: channel,
-                            messages: state.messages
-                        }));
+                    data.channels.forEach(channel => {
+                        channel.members.forEach(member => {
+                            if (!seenUsers.hasOwnProperty(member.id)) {
+                                users.push(member);
+                                seenUsers[member.id] = true;
+                            }
+                        });
+                    });
+
+                    component.setState({
+                        users: users,
+                        channel:
+                            data.channels.length > 0
+                                ? data.channels[0]
+                                : undefined,
+                        channels: data.channels
                     });
                 });
 
@@ -242,18 +235,15 @@ class Chat extends React.Component {
     }
 
     componentDidUpdate() {
-        var element = document.getElementById('lastItem');
+        var element = document.getElementById('lastMessage');
         if (element) {
-            element.scrollIntoView();
+            element.parentNode.scrollTop = element.offsetTop;
         }
     }
 
-    renderItem(index, key) {
-        const messages = this.state.messages;
-        const message = messages[index];
-
+    renderMessage(message, index, isLast) {
         return (
-            <div key={key}>
+            <div key={index} id={isLast ? 'lastMessage' : ''}>
                 <ListItemHeader theme={this.props.theme}>
                     {message.user.name}
                 </ListItemHeader>
@@ -276,9 +266,9 @@ class Chat extends React.Component {
                 </SectionWrapper>
             );
         } else {
-            var users = [];
-            this.state.users.forEach(function(data) {
-                users.push(data.name);
+            const userCount = this.state.users.length;
+            const filtered = this.state.messages.filter(message => {
+                return message.channel === this.state.channel.id;
             });
 
             return (
@@ -287,17 +277,48 @@ class Chat extends React.Component {
                         {this.state.isDisconnected ? (
                             'You have been disconnected.'
                         ) : (
-                            'Chat with ' + (users.length > 0 ? users.length - 1 : '0') + (' other ') + (users.length - 1 === 1 ? 'user' : 'users')
+                            'Chat with ' +
+                            (userCount > 0 ? userCount - 1 : '0') +
+                            ' other ' +
+                            (userCount - 1 === 1 ? 'user' : 'users')
                         )}
                     </SectionHeader>
-                    <div style={{ overflow: 'auto', height: 'calc(100% - 44px)' }}>
-                        <List
-                            itemRenderer={this.renderItem}
-                            length={this.state.messages.length}
-                            type="variable"
-                            threshold={200}
-                        />
-                    </div>
+                    <ContentContainer>
+                        <Sidebar>
+                            {this.state.channels.map((channel, index) => {
+                                return (
+                                    <ChannelLink
+                                        key={index}
+                                        onClick={() => {
+                                            this.setState({
+                                                channel: channel
+                                            });
+                                        }}
+                                        theme={this.props.theme}
+                                        active={
+                                            this.state.channel.id === channel.id
+                                        }
+                                    >
+                                        {channel.name}
+                                    </ChannelLink>
+                                );
+                            })}
+                        </Sidebar>
+                        <ChatContainer>
+                            <ListContainer>
+                                {filtered.map((message, index) => {
+                                    const isLast =
+                                        index === filtered.length - 1;
+                                    return this.renderMessage(
+                                        message,
+                                        index,
+                                        isLast
+                                    );
+                                })}
+                            </ListContainer>
+                            <InputBar onSubmit={this.inputSubmit} />
+                        </ChatContainer>
+                    </ContentContainer>
                 </SectionWrapper>
             );
         }
