@@ -19,7 +19,10 @@ const A = styled.a`
 class Resources extends React.Component {
     render() {
         return (
-            <SectionWrapper theme={this.props.theme}>
+            <SectionWrapper
+                theme={this.props.theme}
+                id="resources"
+            >
                 <SectionHeader>Resources</SectionHeader>
                 <P theme={this.props.theme}>
                     <A href="#">iOS Tutorials</A> <br />{' '}

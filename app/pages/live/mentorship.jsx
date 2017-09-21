@@ -222,7 +222,10 @@ class Mentorship extends React.Component {
         }
 
         return (
-            <SectionWrapper theme={this.props.theme}>
+            <SectionWrapper
+                id="mentorship"
+                theme={this.props.theme}
+            >
                 <SectionHeader>Mentorship</SectionHeader>
                 <TabGroupContainer>
                     <TabGroup

@@ -62,19 +62,19 @@ class LinkList extends React.Component {
             {
                 title: 'Mentorship',
                 onClick: () => {
-                    document.getElementById('mentorship').scrollIntoView();
-                }
-            },
-            {
-                title: 'Resources',
-                onClick: () => {
-                    document.getElementById('mentorship').scrollIntoView();
+                    document.getElementById('mentorship').scrollIntoView(false);
                 }
             },
             {
                 title: 'Hardware',
                 onClick: () => {
-                    document.getElementById('mentorship').scrollIntoView();
+                    document.getElementById('hardware').scrollIntoView(false);
+                }
+            },
+            {
+                title: 'Resources',
+                onClick: () => {
+                    document.getElementById('resources').scrollIntoView(false);
                 }
             }
         ];
