@@ -8,6 +8,7 @@ import {
     Countdown,
     FullScreenAnimation
 } from '../../components';
+import LinkList from './link_list.jsx';
 import Announcements from './announcements.jsx';
 import Schedule from './schedule.jsx';
 import Mentorship from './mentorship.jsx';
@@ -45,6 +46,7 @@ class LivePage extends React.Component {
                         date={this.props.configurationState.data.end_date}
                         fallback="Submissions Closed!"
                     />
+                    <LinkList />
                     <Row>
                         <Announcements />
                     </Row>
