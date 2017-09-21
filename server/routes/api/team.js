@@ -271,22 +271,22 @@ router.delete('/member', function(req, res) {
 
 function checkGoodTeam(experiences) {
     var noviceCount = 0;
-    var expertCount = 0;
+    var experiencedCount = 0;
     var veteranCount = 0;
     for (var i = 0; i < experiences.length; i++) {
         switch (experiences[i]) {
             case 'novice':
                 noviceCount++;
                 break;
-            case 'expert':
-                expertCount++;
+            case 'experienced':
+                experiencedCount++;
                 break;
             case 'veteran':
                 veteranCount++;
                 break;
         }
     }
-    if ((veteranCount > 0 || expertCount > 1) && noviceCount > 0) {
+    if ((veteranCount > 0 || experiencedCount > 1) && noviceCount > 0) {
         return true;
     } else {
         return false;

@@ -43,6 +43,7 @@ const BoxWrapper = styled.div`
 
 const Row = styled.div`
     display: flex;
+    alignItems: center;
     margin: 20px;
 `;
 
@@ -77,6 +78,7 @@ class TeamBox extends React.Component {
         this.leaveTeam = this.leaveTeam.bind(this);
         this.deleteTeam = this.deleteTeam.bind(this);
         this.checkForFull = this.checkForFull.bind(this);
+        this.checkGoodTeam = this.checkGoodTeam.bind(this);
     }
 
     joinTeam(e) {
@@ -119,6 +121,30 @@ class TeamBox extends React.Component {
         }
     }
 
+    checkGoodTeam(experiences) {
+        var noviceCount = 0;
+        var experiencedCount = 0;
+        var veteranCount = 0;
+        for (var i = 0; i < experiences.length; i++) {
+            switch (experiences[i]) {
+                case 'novice':
+                    noviceCount++;
+                    break;
+                case 'experienced':
+                    experiencedCount++;
+                    break;
+                case 'veteran':
+                    veteranCount++;
+                    break;
+            }
+        }
+        if ((veteranCount > 0 || experiencedCount > 1) && noviceCount > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     render() {
         const team = this.props.team;
         const userEmail = this.props.userState.data.user.email;
@@ -127,6 +153,12 @@ class TeamBox extends React.Component {
         const memberEmails = team.members.map(member => member.email);
         const position = memberEmails.indexOf(userEmail);
 
+        const experienceMap = {
+            novice: 'Novice',
+            experienced: 'Experienced',
+            veteran: 'Veteran'
+        };
+
         var display, clickFunction;
 
         if (position === -1 && userInTeam) {
@@ -134,8 +166,15 @@ class TeamBox extends React.Component {
             clickFunction = () => null;
         } else if (position === -1 && !userInTeam) {
             if (team.members.length === 4) {
-                display = 'Join as Adopt a n00b';
-                clickFunction = this.joinTeam;
+                var experiences = team.members.map(member => member.experience);
+                experiences.push(this.props.userState.data.user.experience);
+                if (this.checkGoodTeam(experiences)) {
+                    display = 'Join For adopt-a-n00b';
+                    clickFunction = this.joinTeam;
+                } else {
+                    display = 'Team Full';
+                    clickFunction = () => null;
+                }
             } else if (team.members.length === 5) {
                 display = 'Team Full';
                 clickFunction = () => null;
@@ -168,12 +207,12 @@ class TeamBox extends React.Component {
                                 </PictureWrapper>
                                 <FlexBox>
                                     <p>{member.full_name}</p>
-                                    <p>{member.experience}</p>
                                     <EmailLink
                                         href={'mailto:'.concat(member.email)}
                                     >
                                         {member.email}
                                     </EmailLink>
+                                    <p>{experienceMap[member.experience]}</p>
                                 </FlexBox>
                             </Row>
                         </div>
