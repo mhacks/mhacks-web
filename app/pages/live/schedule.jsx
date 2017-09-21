@@ -4,12 +4,17 @@ import { connect } from 'react-redux';
 import Calendar from 'react-big-calendar';
 import moment from 'moment';
 
+import { devices } from '../../styles';
 import { EventsThunks } from '../../actions';
 import { TabGroup } from '../../components';
 
 const TabGroupContainer = styled.div`
-    width: 80%;
+    width: 100%;
     margin: 0 auto 10px auto;
+
+    ${devices.tablet`
+        width: 80%;
+    `};
 `;
 
 const Wrapper = styled.div`

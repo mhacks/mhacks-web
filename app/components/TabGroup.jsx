@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { devices } from '../styles';
 
 const Group = styled.div`
     display: flex;
@@ -17,7 +18,7 @@ const TabItem = styled.div`
     borderRight: none;
     color: ${props => (props.active ? 'white' : props.activeColor)};
     padding: 10px 0;
-    fontSize: 18px;
+    fontSize: 15px;
     fontWeight: 500;
 
     &:first-child {
@@ -35,6 +36,10 @@ const TabItem = styled.div`
         backgroundColor: ${props => props.activeColor};
         color: white;
     }
+
+    ${devices.tablet`
+        fontSize: 18px;
+    `};
 `;
 
 class TabGroup extends React.Component {

@@ -19,7 +19,7 @@ const A = styled.a`
 class Hardware extends React.Component {
     render() {
         return (
-            <SectionWrapper theme={this.props.theme}>
+            <SectionWrapper theme={this.props.theme} id="hardware">
                 <SectionHeader>Hardware</SectionHeader>
                 <P theme={this.props.theme}>
                     We have tons of hardware for you to hack on! Check out our

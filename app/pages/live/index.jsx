@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { devices } from '../../styles';
 
 import {
     PageContainer,
@@ -8,6 +9,7 @@ import {
     Countdown,
     FullScreenAnimation
 } from '../../components';
+import LinkList from './link_list.jsx';
 import Announcements from './announcements.jsx';
 import Schedule from './schedule.jsx';
 import Mentorship from './mentorship.jsx';
@@ -28,11 +30,22 @@ const Row = styled.div`
 
 const Double = styled.div`
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
 
     div {
-        width: calc(50% - 20px);
+        width: calc(100%);
+        margin-bottom: 20px;
+
+        ${devices.tablet`
+            width: calc(50% - 20px);
+            margin-bottom: 0;
+        `};
     }
+
+    ${devices.tablet`
+        flex-direction: row;
+        justify-content: space-between;
+    `};
 `;
 
 class LivePage extends React.Component {
@@ -45,6 +58,7 @@ class LivePage extends React.Component {
                         date={this.props.configurationState.data.end_date}
                         fallback="Submissions Closed!"
                     />
+                    <LinkList />
                     <Row>
                         <Announcements />
                     </Row>
