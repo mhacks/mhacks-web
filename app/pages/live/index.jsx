@@ -60,17 +60,17 @@ class LivePage extends React.Component {
                     />
                     <LinkList />
                     <Row>
-                        <Announcements />
+                        <Announcements id="announcements" />
                     </Row>
                     <Row>
-                        <Schedule />
+                        <Schedule id="schedule" />
                     </Row>
                     <Row>
-                        <Mentorship />
+                        <Mentorship id="mentorship" />
                     </Row>
                     <Double>
-                        <Hardware />
-                        <Resources />
+                        <Hardware id="hardware" />
+                        <Resources id="resources" />
                     </Double>
                 </Container>
             </PagePulled>

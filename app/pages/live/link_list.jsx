@@ -6,11 +6,12 @@ import { devices } from '../../styles';
 import Components from './components.jsx';
 const { SectionWrapper } = Components;
 
-const P = styled.p`
+const A = styled.a`
+    text-decoration: none;
     text-transform: uppercase;
-    color: ${props => props.theme.highlight};
     margin: 0;
     text-align: center;
+    display: block;
 `;
 
 const ListContainer = styled.div`
@@ -26,6 +27,7 @@ const ListContainer = styled.div`
 const StyledSectionWrapper = styled(SectionWrapper)`
     width: 100%;
     margin-bottom: 20px;
+    color: ${props => props.theme.highlight};
     
     ${devices.tablet`
         width: 140px;
@@ -35,6 +37,11 @@ const StyledSectionWrapper = styled(SectionWrapper)`
             margin-right: 0;
         }
     `};
+
+    &:hover {
+        cursor: pointer;
+        color: white;
+    }
 `;
 
 class LinkList extends React.Component {
@@ -42,23 +49,33 @@ class LinkList extends React.Component {
         const links = [
             {
                 title: 'Livestream',
-                link: 'https://maps.google.com'
+                onClick: () => {
+                    window.open('https://www.youtube.com/user/mhacksf13', '_blank');
+                }
             },
             {
                 title: 'Devpost',
-                link: 'https://maps.google.com'
+                onClick: () => {
+                    window.open('https://mhacksx.devpost.com/', '_blank');
+                }
             },
             {
                 title: 'Mentorship',
-                link: 'https://maps.google.com'
+                onClick: () => {
+                    document.getElementById('mentorship').scrollIntoView();
+                }
             },
             {
                 title: 'Resources',
-                link: 'https://maps.google.com'
+                onClick: () => {
+                    document.getElementById('mentorship').scrollIntoView();
+                }
             },
             {
                 title: 'Hardware',
-                link: 'https://maps.google.com'
+                onClick: () => {
+                    document.getElementById('mentorship').scrollIntoView();
+                }
             }
         ];
 
@@ -69,10 +86,13 @@ class LinkList extends React.Component {
                         <StyledSectionWrapper
                             key={index}
                             theme={this.props.theme}
+                            onClick={link.onClick}
                         >
-                            <P theme={this.props.theme}>
+                            <A
+                                theme={this.props.theme}
+                            >
                                 {link.title}
-                            </P>
+                            </A>
                         </StyledSectionWrapper>
                     );   
                 })}
