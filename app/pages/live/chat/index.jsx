@@ -2,33 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
 import styled from 'styled-components';
-import { FormattedRelative } from 'react-intl';
 import Favicon from '../../../../static/nano/favicon.png';
 
 import InputBar from './InputBar.jsx';
+import Message from './Message.jsx';
 import Components from '../components.jsx';
 const { SectionWrapper, SectionHeader } = Components;
-
-const ListItemHeader = styled.h2`
-    color: ${props => props.theme.highlight};
-    margin: 0;
-    fontSize: 20px;
-    fontWeight: bold;
-`;
-
-const ListItemTimestamp = styled.p`
-    fontWeight: bold;
-    marginTop: 7px;
-    color: ${props => props.theme.highlight};
-`;
-
-const ListItemDescription = styled.p`color: white;`;
-
-const Seperator = styled.div`
-    background: ${props => props.theme.highlight};
-    height: 2px;
-    margin: 15px 20px 15px 0;
-`;
 
 const ContentContainer = styled.div`
     display: flex;
@@ -60,7 +39,6 @@ class Chat extends React.Component {
         this.state = { messages: [], users: [], channels: [], channel: {} };
 
         this.inputSubmit = this.inputSubmit.bind(this);
-        this.renderMessage = this.renderMessage.bind(this);
     }
 
     componentDidMount() {
@@ -241,23 +219,6 @@ class Chat extends React.Component {
         }
     }
 
-    renderMessage(message, index, isLast) {
-        return (
-            <div key={index} id={isLast ? 'lastMessage' : ''}>
-                <ListItemHeader theme={this.props.theme}>
-                    {message.user.name}
-                </ListItemHeader>
-                <ListItemTimestamp theme={this.props.theme}>
-                    <FormattedRelative value={message.time} />
-                </ListItemTimestamp>
-                <ListItemDescription theme={this.props.theme}>
-                    {message.message}
-                </ListItemDescription>
-                <Seperator />
-            </div>
-        );
-    }
-
     render() {
         if (!this.props || !this.props.shouldRender) {
             return (
@@ -309,10 +270,12 @@ class Chat extends React.Component {
                                 {filtered.map((message, index) => {
                                     const isLast =
                                         index === filtered.length - 1;
-                                    return this.renderMessage(
-                                        message,
-                                        index,
-                                        isLast
+                                    return (
+                                        <Message
+                                            key={index}
+                                            message={message}
+                                            isLast={isLast}
+                                        />
                                     );
                                 })}
                             </ListContainer>
