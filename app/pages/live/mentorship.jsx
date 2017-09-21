@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { FormattedRelative } from 'react-intl';
 import List from 'react-list';
 import { MHForm, TabGroup, RoundedButton } from '../../components';
+import { devices } from '../../styles';
 
 import Components from './components.jsx';
 const { SectionWrapper, SectionHeader } = Components;
@@ -42,8 +43,12 @@ const Seperator = styled.div`
 `;
 
 const TabGroupContainer = styled.div`
-    width: 80%;
+    width: 100%;
     margin: 0 auto 10px auto;
+
+    ${devices.tablet`
+        width: 80%;
+    `}
 `;
 
 const selectedTabKeys = ['user', 'available', 'accepted'];
@@ -150,7 +155,7 @@ class Mentorship extends React.Component {
         return (
             <div key={key}>
                 <ListItemHeader theme={this.props.theme}>
-                    {ticket.title}
+                    {ticket.mentor !== undefined ? 'Accepted: ' : ''}{ticket.title}
                 </ListItemHeader>
                 <ListItemTimestamp theme={this.props.theme}>
                     <FormattedRelative value={ticket.createdAt || new Date()} />
@@ -208,7 +213,7 @@ class Mentorship extends React.Component {
             selectedTabKeys[this.state.selectedTab]
         ].length;
 
-        // If selected tab is "My Tickets", add one to the length for the form
+        // If selected tab is "User", add one to the length for the form
         if (
             this.state.selectedTab === 0 &&
             this.props.mentorshipState.data.form !== undefined
@@ -224,7 +229,7 @@ class Mentorship extends React.Component {
                         defaultIndex={this.state.selectedTab}
                         tabs={[
                             {
-                                title: 'My Tickets',
+                                title: 'User',
                                 onClick: this.tabSelect
                             },
                             {
