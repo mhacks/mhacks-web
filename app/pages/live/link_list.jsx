@@ -19,6 +19,7 @@ const ListContainer = styled.div`
 
     ${devices.tablet`
         flex-direction: row;
+        justify-content: center;
     `};
 `;
 
@@ -40,10 +41,6 @@ class LinkList extends React.Component {
     render() {
         const links = [
             {
-                title: 'Map',
-                link: 'https://maps.google.com'
-            },
-            {
                 title: 'Livestream',
                 link: 'https://maps.google.com'
             },
@@ -53,6 +50,10 @@ class LinkList extends React.Component {
             },
             {
                 title: 'Mentorship',
+                link: 'https://maps.google.com'
+            },
+            {
+                title: 'Resources',
                 link: 'https://maps.google.com'
             },
             {
