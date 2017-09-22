@@ -11,16 +11,30 @@ var schema = new mongoose.Schema(
     Object.assign({}, defaultSchema, {
         title: {
             type: String,
-            default: ''
+            default: '',
+            form: {
+                auth_groups: ['admin'],
+                label: 'Title'
+            }
         },
         body: {
             type: String,
-            default: ''
+            default: '',
+            form: {
+                auth_groups: ['admin'],
+                label: 'Body'
+            }
         },
         broadcastTime: {
             type: Date,
             default: Date.now,
-            index: true
+            index: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Broadcast Time',
+                type_override: String,
+                placeholder: new Date()
+            }
         },
         category: {
             type: String,
@@ -31,15 +45,28 @@ var schema = new mongoose.Schema(
                 'event',
                 'sponsored',
                 'chat'
-            ]
+            ],
+            form: {
+                auth_groups: ['admin'],
+                label: 'Category',
+                select: ['Emergency', 'Logistics', 'Food', 'Event', 'Sponsored', 'Chat']
+            }
         },
         isApproved: {
             type: Boolean,
-            default: false
+            default: false,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Is Approved'
+            }
         },
         isSent: {
             type: Boolean,
-            default: false
+            default: false,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Is Sent'
+            }
         },
         devices: {
             type: [String],

@@ -11,29 +11,56 @@ var schema = new mongoose.Schema(
     Object.assign({}, defaultSchema, {
         title: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Title'
+            }
         },
         body: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Body'
+            }
         },
         broadcastTime: {
             type: Date,
             default: Date.now,
-            index: true
+            index: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Broadcast Time',
+                type_override: String,
+                placeholder: new Date()
+            }
         },
         category: {
             type: String,
             enum: ['emergency', 'logistics', 'food', 'event', 'sponsored'],
-            default: 'logistics'
+            default: 'logistics',
+            form: {
+                auth_groups: ['admin'],
+                label: 'Category',
+                select: ['Emergency', 'Logistics', 'Food', 'Event', 'Sponsored']
+            }
         },
         isApproved: {
             type: Boolean,
-            default: false
+            default: false,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Is Approved'
+            }
         },
         isSent: {
             type: Boolean,
-            default: false
+            default: false,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Is Sent'
+            }
         }
     }),
     defaultOptions
