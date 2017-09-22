@@ -10,12 +10,19 @@ services:
       service: mhacks_db
     volumes:
       - /data/mongodb:/data/db
+  mhacks_es:
+    extends:
+      file: docker-compose.yml
+      service: mhacks_es
+    volumes:
+      - /data/elasticsearch:/usr/share/elasticsearch/data
   mhacks_website:
     extends:
       file: docker-compose.yml
       service: mhacks_website
     links:
       - mhacks_db
+      - mhacks_es
     env_file:
       - production.env
   mhacks_shortener:
@@ -24,6 +31,7 @@ services:
       service: mhacks_website
     links:
       - mhacks_db
+      - mhacks_es
     env_file:
       - production.env
     environment:

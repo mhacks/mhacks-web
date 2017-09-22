@@ -11,6 +11,7 @@ import {
 } from '../../components';
 import LinkList from './link_list.jsx';
 import Announcements from './announcements.jsx';
+import Chat from './chat';
 import Schedule from './schedule.jsx';
 import Mentorship from './mentorship.jsx';
 import Hardware from './hardware.jsx';
@@ -67,6 +68,9 @@ class LivePage extends React.Component {
                     </Row>
                     <Row>
                         <Mentorship />
+                    </Row>
+                    <Row>
+                        <Chat />
                     </Row>
                     <Double>
                         <Hardware />

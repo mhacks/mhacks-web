@@ -72,6 +72,40 @@ function modifySchema(schema) {
                 }
             });
         };
+
+        schema.methods.updateFields = function(fields) {
+            for (const param in fields) {
+                if (fields.hasOwnProperty(param)) {
+                    this[param] = fields[param];
+                }
+            }
+            this.save();
+        };
+
+        schema.statics.getUpdateableFields = function(groups) {
+            const updateables = [];
+
+            for (const key in schema.obj) {
+                if (schema.obj.hasOwnProperty(key) && schema.obj[key].form) {
+                    const field = schema.obj[key];
+
+                    if (field.form.user_editable) {
+                        updateables.push(key);
+                    } else if (groups) {
+                        groups.forEach(function(group) {
+                            if (
+                                field.form.auth_groups &&
+                                field.form.auth_groups.indexOf(group) !== -1
+                            ) {
+                                updateables.push(key);
+                            }
+                        });
+                    }
+                }
+            }
+
+            return updateables;
+        };
     }
 }
 
