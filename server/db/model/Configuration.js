@@ -39,6 +39,15 @@ var schema = new mongoose.Schema(
                 label: 'Application Open'
             }
         },
+        is_chat_enabled: {
+            type: Boolean,
+            default: false,
+            required: true,
+            form: {
+                user_editable: true,
+                label: 'Chat Enabled'
+            }
+        },
         save_button: {
             type: String,
             form: {

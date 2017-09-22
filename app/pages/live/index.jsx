@@ -69,9 +69,13 @@ class LivePage extends React.Component {
                     <Row>
                         <Mentorship />
                     </Row>
-                    <Row>
-                        <Chat />
-                    </Row>
+                    {this.props.configurationState.data.is_chat_enabled ? (
+                        <Row>
+                            <Chat />
+                        </Row>
+                    ) : (
+                        undefined
+                    )}
                     <Double>
                         <Hardware />
                         <Resources />

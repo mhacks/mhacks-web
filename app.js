@@ -36,7 +36,8 @@ var http = require('http'),
     apiRouter = require('./server/routes/api.js'),
     indexRouter = require('./server/routes/index.js'),
     shortenerRouter = require('./server/routes/shortener.js'),
-    sharedsession = require('express-socket.io-session');
+    sharedsession = require('express-socket.io-session'),
+    Configuration = require('./server/db/model/Configuration.js');
 
 // Force https
 app.use(function(req, res, next) {
@@ -167,7 +168,11 @@ if (config.service === 'shortener') {
     require('./server/interactors/setup.js');
 }
 
-require('./server/socketio/index.js')(io);
+Configuration.findOne().then(configuration => {
+    if (configuration.is_chat_enabled) {
+        require('./server/socketio/index.js')(io);
+    }
+});
 
 // Now we start the server
 if (config.start_server) {

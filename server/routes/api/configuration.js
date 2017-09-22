@@ -74,6 +74,10 @@ router.post('/control', authMiddleware('admin', 'api'), function(req, res) {
                     req.body.is_live_page_enabled !== undefined
                         ? req.body.is_live_page_enabled
                         : configuration.is_live_page_enabled;
+                configuration.is_chat_enabled =
+                    req.body.is_chat_enabled !== undefined
+                        ? req.body.is_chat_enabled
+                        : configuration.is_chat_enabled;
                 configuration.is_application_open =
                     req.body.is_application_open !== undefined
                         ? req.body.is_application_open
