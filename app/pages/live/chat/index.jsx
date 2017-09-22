@@ -36,7 +36,12 @@ class Chat extends React.Component {
     constructor() {
         super();
 
-        this.state = { messages: [], users: [], channels: [], channel: {} };
+        this.state = {
+            messages: [],
+            users: [],
+            channels: [],
+            channel: {}
+        };
 
         this.inputSubmit = this.inputSubmit.bind(this);
     }
