@@ -1,7 +1,8 @@
 var router = require('express').Router(),
     Announcement = require('../../db/model/Announcement.js'),
     authMiddleware = require('../../middleware/auth.js'),
-    Responses = require('../../responses/api/announcement.js');
+    Responses = require('../../responses/api/announcement.js'),
+    PushNotification = require('../../db/model/PushNotification.js');
 
 function sortByDate(a, b) {
     return new Date(b.broadcastTime) - new Date(a.broadcastTime);
@@ -61,6 +62,16 @@ router.post('/', authMiddleware('admin', 'api'), function(req, res) {
                 isSent: req.body.isSent
             })
                 .then(announcement => {
+                    if (req.body.push) {
+                        PushNotification.create({
+                            title: announcement.title,
+                            body: announcement.body,
+                            category: announcement.category,
+                            isApproved: announcement.isApproved,
+                            broadcastTime: announcement.broadcastTime
+                        });
+                    }
+
                     res.send({
                         status: true,
                         announcement: announcement
