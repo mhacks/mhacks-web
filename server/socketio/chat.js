@@ -23,10 +23,12 @@ function chatHandler(io, socket) {
             ) {
                 if (Object.keys(socket.rooms).indexOf(data.channel) !== -1) {
                     Channel.findById(data.channel)
+                        .cache()
                         .exec()
                         .then(channel => {
                             if (!channel) {
                                 PrivateMessage.findById(data.channel)
+                                    .cache()
                                     .exec()
                                     .then(channel => {
                                         handleChannel(
@@ -99,6 +101,7 @@ function handleChannel(data, channel, io, socket) {
 
     if (messageSent) {
         Device.find({ user: { $in: users } })
+            .cache()
             .exec()
             .then(devices => {
                 var device_ids = devices.map(function(device) {

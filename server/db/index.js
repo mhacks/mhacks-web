@@ -1,4 +1,5 @@
-const mongoose = require('mongoose'),
+const cachegoose = require('cachegoose'),
+    mongoose = require('mongoose'),
     config = require('../../config/default.js'),
     defaultOptions = {
         toObject: {
@@ -40,6 +41,8 @@ mongoose
     .catch(err => {
         console.error('Error connecting to MongoDb', err);
     });
+
+cachegoose(mongoose);
 
 function modifySchema(schema) {
     if (schema.obj) {

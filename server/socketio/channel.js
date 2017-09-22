@@ -51,10 +51,12 @@ function channelHandler(io, socket) {
 function joinRooms(io, socket) {
     Channel.find()
         .byMember(socket.handshake.user)
+        .cache()
         .exec()
         .then(channels => {
             PrivateMessage.find()
                 .byMember(socket.handshake.user)
+                .cache()
                 .exec()
                 .then(privatemessages => {
                     var all = privatemessages.concat(channels);
@@ -103,10 +105,12 @@ function joinRooms(io, socket) {
 function leaveRooms(io, socket) {
     Channel.find()
         .byMember(socket.handshake.user)
+        .cache()
         .exec()
         .then(channels => {
             PrivateMessage.find()
                 .byMember(socket.handshake.user)
+                .cache()
                 .exec()
                 .then(privatemessages => {
                     var all = privatemessages.concat(channels),
@@ -139,6 +143,7 @@ function sendChannels(io, socket) {
     Channel.find()
         .byMemberOrJoinable(socket.handshake.user, true)
         .populate('members.user', 'full_name _id avatars online')
+        .cache()
         .exec()
         .then(channels => {
             socket.emit('channels', {
@@ -152,6 +157,7 @@ function sendPrivateMessages(io, socket) {
     PrivateMessage.find()
         .byMember(socket.handshake.user)
         .populate('members.user', 'full_name _id avatars online')
+        .cache()
         .exec()
         .then(privatemessages => {
             socket.emit('privatemessages', {
@@ -195,6 +201,7 @@ function createPrivateMessage(io, socket, data) {
         PrivateMessage.findOne({
             $and: privatemessage_query
         })
+            .cache()
             .exec()
             .then(privatemessage => {
                 if (!privatemessage) {
@@ -202,6 +209,7 @@ function createPrivateMessage(io, socket, data) {
                         $or: query
                     })
                         .exec()
+                        .cache()
                         .then(users => {
                             if (users.length === data.members.length) {
                                 const members = [];
@@ -244,9 +252,11 @@ function addUsers(io) {
     Channel.find({
         all_users: true
     })
+        .cache()
         .exec()
         .then(channels => {
             User.find()
+                .cache()
                 .exec()
                 .then(users => {
                     for (var channel of channels) {
