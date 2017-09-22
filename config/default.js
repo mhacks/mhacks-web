@@ -58,7 +58,7 @@ module.exports = {
     socket_messages_threshold: process.env.SOCKET_MESSAGES_THRESHOLD || 3,
     socket_messages_ttl: process.env.SOCKET_MESSAGES_TTL || 1,
     only_one_chat_client: parseBool(process.env.ONLY_ONE_CHAT_CLIENT, true),
-    store_chat_messages: parseBool(process.env.STORE_CHAT_MESSAGES, true), // This requires ElasticSearch to be running!
+    store_chat_messages: parseBool(process.env.STORE_CHAT_MESSAGES, false), // This requires ElasticSearch to be running!
     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || '',
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || '',
     AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME || 'mhacks-x',
