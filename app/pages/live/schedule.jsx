@@ -107,22 +107,18 @@ class Schedule extends React.Component {
         ).getTime();
         const currentDate = new Date().getTime();
 
-        var selectedDate = startDate;
         var idx = 0;
 
         if (currentDate < startDate) {
-            selectedDate = startDate;
             idx = 0;
         } else if (currentDate > endDate) {
-            selectedDate = endDate;
             idx = 2;
         } else {
-            selectedDate = currentDate;
             idx = 1;
         }
 
         this.state = {
-            selectedDate: new Date(selectedDate),
+            selectedDate: new Date(startDate + (idx - 1) * 1000 * 60 * 60 * 24),
             initialDateIndex: idx
         };
     }
@@ -133,7 +129,7 @@ class Schedule extends React.Component {
         ).getTime();
 
         this.setState({
-            selectedDate: new Date(startDate + idx * 1000 * 60 * 60 * 24)
+            selectedDate: new Date(startDate + (idx - 1) * 1000 * 60 * 60 * 24)
         });
     }
 
