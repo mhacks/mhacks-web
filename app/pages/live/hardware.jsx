@@ -22,9 +22,7 @@ class Hardware extends React.Component {
             <SectionWrapper theme={this.props.theme}>
                 <SectionHeader>Hardware</SectionHeader>
                 <P theme={this.props.theme}>
-                    We have tons of hardware for you to hack on! Check out our
-                    hardware list <A href="#">here</A>. Learn more about the
-                    MHacks X Hacker Boards{' '}
+                    Learn more about the MHacks X Hacker Boards{' '}
                     <A href="http://mhacks.github.io">here</A>
                 </P>
             </SectionWrapper>
