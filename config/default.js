@@ -15,6 +15,7 @@ module.exports = {
     mongo_hostname: process.env.MONGO_HOSTNAME || 'mhacks_db',
     backend_db: process.env.BACKEND_DB || 'mhacks_backend',
     sessions_db: process.env.SESSIONS_DB || 'mhacks_sessions',
+    es_hostname: process.env.ES_HOSTNAME || 'mhacks_es',
     api_work: parseBool(process.env.APIWORK, false),
     server_port: process.env.PORT || 3000,
     max_tokens: process.env.MAX_TOKENS || 10,
@@ -57,6 +58,7 @@ module.exports = {
     socket_messages_threshold: process.env.SOCKET_MESSAGES_THRESHOLD || 3,
     socket_messages_ttl: process.env.SOCKET_MESSAGES_TTL || 1,
     only_one_chat_client: parseBool(process.env.ONLY_ONE_CHAT_CLIENT, true),
+    store_chat_messages: parseBool(process.env.STORE_CHAT_MESSAGES, true), // This requires ElasticSearch to be running!
     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || '',
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || '',
     AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME || 'mhacks-x',

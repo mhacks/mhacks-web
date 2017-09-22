@@ -149,6 +149,12 @@ function callNext(socket, user, token, io) {
     socket.handshake.email = user.email;
     socket.handshake.groups = user.getGroupsList();
     socket.handshake.authToken = token;
+    socket.handshake.user = user;
+
+    if (!user.online) {
+        user.online = true;
+        user.save();
+    }
 
     for (var nsp in io.nsps) {
         if (socket.id in io.nsps[nsp].sockets) {

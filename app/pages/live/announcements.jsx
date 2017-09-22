@@ -5,21 +5,8 @@ import { AnnouncementsThunks } from '../../actions';
 import { connect } from 'react-redux';
 import List from 'react-list';
 
-const Wrapper = styled.div`
-    height: 100%;
-    borderRadius: 20px;
-    padding: 20px;
-    background: ${props => props.theme.generateBackgroundGradient(45, 0.2)};
-`;
-
-const ListHeader = styled.h3`
-    color: ${props => props.theme.highlight};
-    textAlign: center;
-    textTransform: uppercase;
-    fontSize: 24px;
-    fontWeight: bold;
-    margin: 0 0 20px 0;
-`;
+import Components from './components.jsx';
+const { SectionWrapper, SectionHeader } = Components;
 
 const ListItemHeader = styled.h2`
     color: ${props => props.theme.highlight};
@@ -86,9 +73,9 @@ class Announcements extends React.Component {
         const announcements = this.props.announcementsState.data;
 
         return (
-            <Wrapper theme={this.props.theme}>
-                <ListHeader>Announcements</ListHeader>
-                <div style={{ overflow: 'auto', height: '300px' }}>
+            <SectionWrapper theme={this.props.theme}>
+                <SectionHeader>Announcements</SectionHeader>
+                <div style={{ overflow: 'auto', height: 'calc(100% - 44px)' }}>
                     <List
                         itemRenderer={this.renderItem}
                         length={announcements.length}
@@ -96,7 +83,7 @@ class Announcements extends React.Component {
                         threshold={200}
                     />
                 </div>
-            </Wrapper>
+            </SectionWrapper>
         );
     }
 }

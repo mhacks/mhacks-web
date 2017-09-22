@@ -223,18 +223,9 @@ var schema = new mongoose.Schema(
                 label: 'Sex'
             }
         },
-        push_id: {
-            type: String,
-            form: {
-                user_editable: true
-            }
-        },
-        push_categories: {
-            type: [String],
-            default: ['emergency', 'logistics', 'food', 'event', 'sponsored'],
-            form: {
-                user_editable: true
-            }
+        online: {
+            type: Boolean,
+            default: false
         }
     }),
     defaultOptions
@@ -578,7 +569,7 @@ schema.methods.getAvatars = function() {
         'https://www.gravatar.com/avatar/' +
             crypto
                 .createHash('md5')
-                .update(this.email)
+                .update(this.email || '')
                 .digest('hex') +
             '?d=404',
         'https://api-avatar.trove.com/v1/avatar/' +
@@ -612,7 +603,8 @@ schema.methods.getProfile = function() {
         tshirt: this.tshirt,
         race: this.race,
         sex: this.sex,
-        id: this._id
+        id: this._id,
+        online: this.online
     };
 
     return new Promise(resolve => {

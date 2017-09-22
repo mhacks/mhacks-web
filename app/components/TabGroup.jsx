@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { devices } from '../styles';
 
 const Group = styled.div`
     display: flex;
@@ -14,9 +15,10 @@ const TabItem = styled.div`
     backgroundColor: ${props =>
         props.active ? props.activeColor : 'transparent'};
     border: 3px solid ${props => props.activeColor};
+    borderRight: none;
     color: ${props => (props.active ? 'white' : props.activeColor)};
-    padding: 14px 0;
-    fontSize: 18px;
+    padding: 10px 0;
+    fontSize: 15px;
     fontWeight: 500;
 
     &:first-child {
@@ -27,21 +29,26 @@ const TabItem = styled.div`
     &:last-child {
         borderTopRightRadius: 20px;
         borderBottomRightRadius: 20px;
+        borderRight: 3px solid ${props => props.activeColor};
     }
 
     &:hover {
         backgroundColor: ${props => props.activeColor};
         color: white;
     }
+
+    ${devices.tablet`
+        fontSize: 18px;
+    `};
 `;
 
 class TabGroup extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.clickMiddleware = this.clickMiddleware.bind(this);
         this.state = {
-            activeIndex: 0
+            activeIndex: props.defaultIndex || 0
         };
     }
 
