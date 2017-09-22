@@ -3,7 +3,6 @@ var router = require('express').Router(),
     authMiddleware = require('../../middleware/auth.js'),
     Event = require('../../db/model/Event.js');
 
-
 function sortByDate(a, b) {
     return new Date(a.startDate) - new Date(b.startDate);
 }

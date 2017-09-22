@@ -169,48 +169,50 @@ router.patch('/', authMiddleware('admin', 'api'), function(req, res) {
 });
 
 // prettier-ignore
-var notificationInterval = setInterval(function() { // eslint-disable-line
-    PushNotification.find()
-        .byIsReadyToSend()
-        .exec()
-        .then(pushnotifications => {
-            if (pushnotifications) {
-                pushnotifications.forEach(function(pushnotification) {
-                    getDevicesForPush(pushnotification).then(device_ids => {
-                        if (config.push_notifications.enabled) {
-                            var res = push.sendNotification(
-                                device_ids,
-                                pushnotification.title,
-                                pushnotification.body
-                            );
+if (config.service !== 'shortener') {
+    var notificationInterval = setInterval(function() { // eslint-disable-line
+        PushNotification.find()
+            .byIsReadyToSend()
+            .exec()
+            .then(pushnotifications => {
+                if (pushnotifications) {
+                    pushnotifications.forEach(function(pushnotification) {
+                        getDevicesForPush(pushnotification).then(device_ids => {
+                            if (config.push_notifications.enabled) {
+                                var res = push.sendNotification(
+                                    device_ids,
+                                    pushnotification.title,
+                                    pushnotification.body
+                                );
 
-                            res.then(function() {
-                                Array.prototype.slice.call(arguments).forEach((data) => {
-                                    console.log(util.inspect(data, false, null));
+                                res.then(function() {
+                                    Array.prototype.slice.call(arguments).forEach((data) => {
+                                        console.log(util.inspect(data, false, null));
+                                    });
+                                }).catch(function() {
+                                    Array.prototype.slice.call(arguments).forEach((data) => {
+                                        console.log(util.inspect(data, false, null));
+                                    });
                                 });
-                            }).catch(function() {
-                                Array.prototype.slice.call(arguments).forEach((data) => {
-                                    console.log(util.inspect(data, false, null));
-                                });
-                            });
 
-                            console.log('Sending push notifications:', device_ids, res);
-                        } else {
-                            console.log('Push notification no-op:', device_ids, pushnotification.title, pushnotification.body);
-                        }
+                                console.log('Sending push notifications:', device_ids, res);
+                            } else {
+                                console.log('Push notification no-op:', device_ids, pushnotification.title, pushnotification.body);
+                            }
 
-                        pushnotification.isSent = true;
-                        pushnotification.save();
-                    }).catch(err => {
-                        console.error('Caught error when sending push notifications:', err);
+                            pushnotification.isSent = true;
+                            pushnotification.save();
+                        }).catch(err => {
+                            console.error('Caught error when sending push notifications:', err);
+                        });
                     });
-                });
-            }
-        })
-        .catch(err => {
-            console.error(err);
-        });
-}, 1000);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }, 1000);
+}
 
 function getDevicesForPush(pushnotification) {
     return new Promise((resolve, reject) => {
