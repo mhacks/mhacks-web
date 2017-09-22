@@ -3,7 +3,7 @@ var Responses = require('../responses/socketio/index.js'),
     PushNotification = require('../db/model/PushNotification.js'),
     Device = require('../db/model/Device.js'),
     config = require('../../config/default.js'),
-    Chat = require('../db/elasticsearch/chat.js'),
+    Chat = require('../db/elasticsearch/Chat.js'),
     PrivateMessage = require('../db/model/PrivateMessage.js');
 
 module.exports = function(io) {
