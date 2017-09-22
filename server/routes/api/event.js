@@ -3,6 +3,11 @@ var router = require('express').Router(),
     authMiddleware = require('../../middleware/auth.js'),
     Event = require('../../db/model/Event.js');
 
+
+function sortByDate(a, b) {
+    return new Date(a.startDate) - new Date(b.startDate);
+}
+
 router.post('/', authMiddleware('admin', 'api', true), function(req, res) {
     var updateable_fields = Event.getUpdateableFields();
     var fields = {};
@@ -89,6 +94,8 @@ router.get('/', function(req, res) {
         .exec()
         .then(events => {
             if (events) {
+                events.sort(sortByDate);
+
                 res.send({
                     status: true,
                     events: events
