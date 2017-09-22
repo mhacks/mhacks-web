@@ -2,67 +2,53 @@ import React from 'react';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
 import styled from 'styled-components';
-import { FormattedRelative } from 'react-intl';
 import Favicon from '../../../../static/nano/favicon.png';
 
 import InputBar from './InputBar.jsx';
+import Message from './Message.jsx';
+import Components from '../components.jsx';
+const { SectionWrapper, SectionHeader } = Components;
 
-const Wrapper = styled.div`height: 100%;`;
-
-const Header = styled.div`
-    backgroundColor: #e6e6e6;
-    borderRadius: 8px 8px 0 0;
-    padding: 10px;
-    border: 1px solid gray;
-`;
-
-const HeaderText = styled.h3`
-    margin: 0;
-    fontSize: 22px;
-`;
-
-const List = styled.div`
+const ContentContainer = styled.div`
     display: flex;
-    flex-direction: column;
-    overflowY: scroll;
-    height: calc(100% - 48px - 35px);
+    height: calc(100% - 100px);
 `;
 
-const ListItem = styled.div`
-    backgroundColor: #efefef;
-    borderBottom: 0.5px solid black;
-    padding: 10px;
+const Sidebar = styled.div`margin-right: 20px;`;
+
+const ChatContainer = styled.div`flex-grow: 1;`;
+
+const ListContainer = styled.div`
+    overflow: auto;
+    height: 100%;
 `;
 
-const ListItemHeader = styled.h2`
-    color: darkorange;
-    margin: 0;
-    fontSize: 14px;
+const ChannelLink = styled.p`
+    color: ${props => props.theme.highlight};
+    text-decoration: ${props => (props.active ? 'underline' : 'none')};
+
+    &:hover {
+        text-decoration: underline;
+    }
 `;
 
-const ListItemTimestamp = styled.span`
-    display: inline;
-    fontWeight: bold;
-    color: gray;
-    fontSize: 12px;
-    margin: 0;
-    marginLeft: 5px;
-    position: relative;
-    top: -1px;
-`;
-
-const ListItemDescription = styled.p`
-    color: gray;
-    margin: 0;
-`;
+const SectionDivider = styled.p`color: white;`;
 
 class Chat extends React.Component {
     constructor() {
         super();
 
-        this.state = { messages: [], users: [] };
+        this.state = {
+            messages: [],
+            users: [],
+            channels: [],
+            privateChannels: [],
+            channel: {},
+            profile: {}
+        };
 
         this.inputSubmit = this.inputSubmit.bind(this);
+        this.retrieveProfile = this.retrieveProfile.bind(this);
     }
 
     componentDidMount() {
@@ -78,8 +64,6 @@ class Chat extends React.Component {
             reconnection: false
         });
 
-        window.socket = this.socket;
-
         let component = this;
 
         this.socket.on('authenticate', function(data) {
@@ -90,22 +74,38 @@ class Chat extends React.Component {
 
                 component.socket.on('channels', function(data) {
                     console.log('Channels', data);
-                    data.channels.forEach(function(channel) {
-                        var users = [];
-                        for (var i in channel.members) {
-                            users.push(channel.members[i]);
-                        }
+                    const seenUsers = {};
+                    var users = [];
 
-                        component.setState(state => ({
-                            users: users,
-                            channel: channel,
-                            messages: state.messages
-                        }));
+                    data.channels.forEach(channel => {
+                        channel.members.forEach(member => {
+                            if (!seenUsers.hasOwnProperty(member.user.id)) {
+                                users.push(member);
+                                seenUsers[member.user.id] = true;
+                            }
+                        });
                     });
+
+                    const newState = {
+                        users: users,
+                        channels: data.channels
+                    };
+
+                    if (Object.keys(component.state.channel).length === 0) {
+                        newState.channel =
+                            data.channels.length > 0 ? data.channels[0] : {};
+                    }
+
+                    component.setState(newState);
                 });
 
-                component.socket.on('privatemessages', function(data) {
-                    console.log('Privatemessages', data);
+                component.socket.on('privatemessages', data => {
+                    if (Object.keys(component.state.profile).length > 0) {
+                        console.log('Privatemessages', data);
+                        component.setState({
+                            privateChannels: data.privatemessages
+                        });
+                    }
                 });
 
                 setTimeout(function() {
@@ -115,7 +115,12 @@ class Chat extends React.Component {
             }
         });
 
-        this.socket.on('status', function(data) {
+        this.socket.on('status', data => {
+            if (data.message === 'Private message created.') {
+                this.setState({
+                    channel: data.privatemessage
+                });
+            }
             if (!data.status) {
                 alert(data.message);
             }
@@ -154,7 +159,9 @@ class Chat extends React.Component {
                 };
             });
 
-            this.socket.emit('privatemessage', members);
+            this.socket.emit('privatemessage', {
+                members
+            });
         } else {
             return false;
         }
@@ -198,9 +205,11 @@ class Chat extends React.Component {
 
     retrieveProfile() {
         this.socket.emit('profile');
-        this.socket.on('profile', function(data) {
+        this.socket.on('profile', data => {
             console.log('Profile', data);
-            this.profileData = data;
+            this.setState({
+                profile: data.profile
+            });
         });
     }
 
@@ -228,69 +237,141 @@ class Chat extends React.Component {
         }
     }
 
+    startDM(message) {
+        const users = [this.state.profile.id].concat(message.user.id);
+        console.log('TH', users);
+        this.createPrivateMessage(users);
+    }
+
     componentDidUpdate() {
-        var element = document.getElementById('lastItem');
+        var element = document.getElementById('lastMessage');
         if (element) {
-            element.scrollIntoView();
+            element.parentNode.scrollTop = element.offsetTop;
         }
     }
 
     render() {
         if (!this.props || !this.props.shouldRender) {
             return (
-                <Wrapper>
-                    <Header>
-                        <HeaderText>Login to Access Chat</HeaderText>
-                    </Header>
-                </Wrapper>
+                <SectionWrapper>
+                    <SectionHeader>Login to Access Chat</SectionHeader>
+                </SectionWrapper>
             );
         } else {
-            var users = [];
-            this.state.users.forEach(function(data) {
-                users.push(data.name);
+            const userCount = this.state.users.length;
+            const filtered = this.state.messages.filter(message => {
+                return message.channel === this.state.channel.id;
             });
 
             return (
-                <Wrapper>
-                    <Header>
+                <SectionWrapper>
+                    <SectionHeader>
                         {this.state.isDisconnected ? (
-                            <HeaderText>You have been disconnected.</HeaderText>
+                            'You have been disconnected.'
                         ) : (
-                            <HeaderText>
-                                Chat with{' '}
-                                {users.length > 0 ? users.length - 1 : '0'}{' '}
-                                other{' '}
-                                {users.length - 1 === 1 ? 'user' : 'users'}
-                            </HeaderText>
+                            'Chat with ' +
+                            (userCount > 0 ? userCount - 1 : '0') +
+                            ' other ' +
+                            (userCount - 1 === 1 ? 'user' : 'users')
                         )}
-                    </Header>
-                    <List>
-                        {this.state.messages.map(
-                            function(message, i) {
-                                var propId =
-                                    i === this.state.messages.length - 1
-                                        ? 'lastItem'
-                                        : '';
+                    </SectionHeader>
+                    <ContentContainer>
+                        <Sidebar>
+                            {this.state.channels.length > 0 ? (
+                                <SectionDivider>Public</SectionDivider>
+                            ) : (
+                                undefined
+                            )}
+                            {this.state.channels.map((channel, index) => {
                                 return (
-                                    <ListItem key={i} id={propId}>
-                                        <ListItemHeader>
-                                            {message.user.name}
-                                            <ListItemTimestamp>
-                                                <FormattedRelative
-                                                    value={message.time}
-                                                />
-                                            </ListItemTimestamp>
-                                        </ListItemHeader>
-                                        <ListItemDescription>
-                                            {message.message}
-                                        </ListItemDescription>
-                                    </ListItem>
+                                    <ChannelLink
+                                        key={index}
+                                        onClick={() => {
+                                            this.setState({
+                                                channel: channel
+                                            });
+                                        }}
+                                        theme={this.props.theme}
+                                        active={
+                                            this.state.channel.id === channel.id
+                                        }
+                                    >
+                                        {channel.name}
+                                    </ChannelLink>
                                 );
-                            }.bind(this)
-                        )}
-                    </List>
-                    <InputBar onSubmit={this.inputSubmit} />
-                </Wrapper>
+                            })}
+                            {this.state.privateChannels.length > 0 ? (
+                                <SectionDivider>Private</SectionDivider>
+                            ) : (
+                                undefined
+                            )}
+                            {this.state.privateChannels.map(
+                                (channel, index) => {
+                                    const names = channel.members
+                                        .filter(member => {
+                                            return (
+                                                member.user.id.toString() !==
+                                                this.state.profile.id.toString()
+                                            );
+                                        })
+                                        .map(member => {
+                                            return member.user.full_name;
+                                        });
+
+                                    var displayName = names.reduce(
+                                        (display, member) => {
+                                            return display + ', ' + member;
+                                        }
+                                    );
+
+                                    if (displayName.length > 20) {
+                                        displayName =
+                                            displayName.slice(0, 20) + '...';
+                                    }
+
+                                    return (
+                                        <ChannelLink
+                                            key={index + 20}
+                                            onClick={() => {
+                                                this.setState({
+                                                    channel: channel
+                                                });
+                                            }}
+                                            theme={this.props.theme}
+                                            active={
+                                                this.state.channel.id ===
+                                                channel.id
+                                            }
+                                        >
+                                            {displayName}
+                                        </ChannelLink>
+                                    );
+                                }
+                            )}
+                        </Sidebar>
+                        <ChatContainer>
+                            <ListContainer>
+                                {filtered.map((message, index) => {
+                                    const isLast =
+                                        index === filtered.length - 1;
+                                    return (
+                                        <Message
+                                            key={index}
+                                            theme={this.props.theme}
+                                            message={message}
+                                            isLast={isLast}
+                                            onStartDM={() => {
+                                                console.log('PENIS');
+                                                this.startDM(message);
+                                            }}
+                                        />
+                                    );
+                                })}
+                            </ListContainer>
+                            <InputBar onSubmit={this.inputSubmit} />
+                        </ChatContainer>
+                    </ContentContainer>
+                </SectionWrapper>
             );
         }
     }

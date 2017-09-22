@@ -3,13 +3,12 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 const Input = styled.input`
-    width: 67%;
-    height: 35px;
-    border: 3px solid ${props => props.borderColor};
-    borderRadius: 0 0 8px 8px;
+    height: 40px;
+    width: 100%;
+    border: 2px solid lightgray;
+    borderRadius: 8px;
     padding: 10px;
-    position: absolute;
-    bottom: 0;
+    marginTop: 20px;
 `;
 
 class InputBar extends React.Component {
@@ -38,21 +37,19 @@ class InputBar extends React.Component {
 
     render() {
         return (
-            <div>
-                <Input
-                    type="text"
-                    ref="textField"
-                    value={this.state.text}
-                    onChange={e => {
-                        this.handleChange(e);
-                    }}
-                    onKeyDown={e => {
-                        this.handleKeyPress(e);
-                    }}
-                    borderColor={this.props.theme.primary}
-                    placeholder="Type here and press enter to send a message..."
-                />
-            </div>
+            <Input
+                type="text"
+                ref="textField"
+                value={this.state.text}
+                onChange={e => {
+                    this.handleChange(e);
+                }}
+                onKeyDown={e => {
+                    this.handleKeyPress(e);
+                }}
+                borderColor={this.props.theme.primary}
+                placeholder="Type here and press enter to send a message..."
+            />
         );
     }
 }

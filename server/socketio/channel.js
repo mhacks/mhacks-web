@@ -14,7 +14,7 @@ module.exports = function(io) {
     }, 250);
 
     setInterval(function() {
-        addUsers();
+        addUsers(io);
     }, 1000);
 };
 
@@ -29,8 +29,13 @@ function channelHandler(io, socket) {
         });
 
         socket.on('privatemessage', function(data) {
-            if (data && 'members' in data) {
+            if (data && 'members' in data && data.members) {
                 createPrivateMessage(io, socket, data);
+            } else {
+                socket.emit('status', {
+                    status: false,
+                    message: Responses.INVALID_MESSAGE
+                });
             }
         });
 
@@ -76,9 +81,7 @@ function joinRooms(io, socket) {
                                                 message: data.message,
                                                 channel: data.channel,
                                                 time: data.time,
-                                                user: {
-                                                    name: data.user.name
-                                                }
+                                                user: data.user
                                             });
                                         });
                                 })
@@ -175,7 +178,9 @@ function createPrivateMessage(io, socket, data) {
         let user_is_member = false;
 
         data.members.forEach(function(member) {
-            if (member._id === socket.handshake.user._id) {
+            if (
+                member._id.toString() === socket.handshake.user._id.toString()
+            ) {
                 user_is_member = true;
             }
 
@@ -214,6 +219,13 @@ function createPrivateMessage(io, socket, data) {
                                 PrivateMessage.create({
                                     creator: socket.handshake.user,
                                     members: members
+                                }).then(privatemessage => {
+                                    socket.emit('status', {
+                                        status: true,
+                                        message:
+                                            Responses.PRIVATE_MESSAGE_CREATED,
+                                        privatemessage
+                                    });
                                 });
                             } else {
                                 socket.emit('status', {
@@ -241,7 +253,7 @@ function interval(io) {
     }
 }
 
-function addUsers() {
+function addUsers(io) {
     Channel.find({
         all_users: true
     })
@@ -281,4 +293,11 @@ function addUsers() {
                     }
                 });
         });
+
+    for (const socketName in io.sockets.sockets) {
+        if (io.sockets.sockets.hasOwnProperty(socketName)) {
+            sendPrivateMessages(io, io.sockets.sockets[socketName]);
+            sendChannels(io, io.sockets.sockets[socketName]);
+        }
+    }
 }

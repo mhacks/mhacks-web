@@ -9,14 +9,11 @@ module.exports = function(io) {
                     .exec()
                     .then(user => {
                         if (user) {
-                            socket.emit('profile', {
-                                status: true,
-                                user: {
-                                    email: user.email,
-                                    full_name: user.full_name,
-                                    birthday: user.birthday,
-                                    groups: user.getGroupsList()
-                                }
+                            user.getProfile().then(profile => {
+                                socket.emit('profile', {
+                                    status: true,
+                                    profile
+                                });
                             });
                         } else {
                             socket.emit('profile', {
