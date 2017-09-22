@@ -32,9 +32,7 @@ const ChannelLink = styled.p`
     }
 `;
 
-const SectionDivider = styled.p`
-    color: white;
-`;
+const SectionDivider = styled.p`color: white;`;
 
 class Chat extends React.Component {
     constructor() {
@@ -93,16 +91,17 @@ class Chat extends React.Component {
                     const newState = {
                         users: users,
                         channels: data.channels
-                    }
+                    };
 
                     if (Object.keys(component.state.channel).length === 0) {
-                        newState.channel = data.channels.length > 0 ? data.channels[0] : {};
+                        newState.channel =
+                            data.channels.length > 0 ? data.channels[0] : {};
                     }
 
                     component.setState(newState);
                 });
 
-                component.socket.on('privatemessages', (data) => {
+                component.socket.on('privatemessages', data => {
                     if (Object.keys(component.state.profile).length > 0) {
                         console.log('Privatemessages', data);
                         component.setState({
@@ -118,7 +117,7 @@ class Chat extends React.Component {
             }
         });
 
-        this.socket.on('status', (data) => {
+        this.socket.on('status', data => {
             if (data.message === 'Private message created.') {
                 this.setState({
                     channel: data.privatemessage
@@ -280,7 +279,11 @@ class Chat extends React.Component {
                     </SectionHeader>
                     <ContentContainer>
                         <Sidebar>
-                            {this.state.channels.length > 0 ? <SectionDivider>Public</SectionDivider> : undefined}
+                            {this.state.channels.length > 0 ? (
+                                <SectionDivider>Public</SectionDivider>
+                            ) : (
+                                undefined
+                            )}
                             {this.state.channels.map((channel, index) => {
                                 return (
                                     <ChannelLink
@@ -299,39 +302,54 @@ class Chat extends React.Component {
                                     </ChannelLink>
                                 );
                             })}
-                            {this.state.privateChannels.length > 0 ? <SectionDivider>Private</SectionDivider> : undefined}
-                            {this.state.privateChannels.map((channel, index) => {
-                                const names = channel.members.filter(member => {
-                                    return member.user.id.toString() !== this.state.profile.id.toString();
-                                }).map(member => {
-                                    return member.user.full_name;
-                                });
+                            {this.state.privateChannels.length > 0 ? (
+                                <SectionDivider>Private</SectionDivider>
+                            ) : (
+                                undefined
+                            )}
+                            {this.state.privateChannels.map(
+                                (channel, index) => {
+                                    const names = channel.members
+                                        .filter(member => {
+                                            return (
+                                                member.user.id.toString() !==
+                                                this.state.profile.id.toString()
+                                            );
+                                        })
+                                        .map(member => {
+                                            return member.user.full_name;
+                                        });
 
-                                var displayName = names.reduce((display, member) => {
-                                    return display + ', ' + member;
-                                });
-
-                                if (displayName.length > 20) {
-                                    displayName = displayName.slice(0, 20) + '...';
-                                }
-
-                                return (
-                                    <ChannelLink
-                                        key={index + 20}
-                                        onClick={() => {
-                                            this.setState({
-                                                channel: channel
-                                            });
-                                        }}
-                                        theme={this.props.theme}
-                                        active={
-                                            this.state.channel.id === channel.id
+                                    var displayName = names.reduce(
+                                        (display, member) => {
+                                            return display + ', ' + member;
                                         }
-                                    >
-                                        {displayName}
-                                    </ChannelLink>
-                                );
-                            })}
+                                    );
+
+                                    if (displayName.length > 20) {
+                                        displayName =
+                                            displayName.slice(0, 20) + '...';
+                                    }
+
+                                    return (
+                                        <ChannelLink
+                                            key={index + 20}
+                                            onClick={() => {
+                                                this.setState({
+                                                    channel: channel
+                                                });
+                                            }}
+                                            theme={this.props.theme}
+                                            active={
+                                                this.state.channel.id ===
+                                                channel.id
+                                            }
+                                        >
+                                            {displayName}
+                                        </ChannelLink>
+                                    );
+                                }
+                            )}
                         </Sidebar>
                         <ChatContainer>
                             <ListContainer>

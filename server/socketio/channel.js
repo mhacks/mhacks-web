@@ -178,7 +178,9 @@ function createPrivateMessage(io, socket, data) {
         let user_is_member = false;
 
         data.members.forEach(function(member) {
-            if (member._id.toString() === socket.handshake.user._id.toString()) {
+            if (
+                member._id.toString() === socket.handshake.user._id.toString()
+            ) {
                 user_is_member = true;
             }
 
@@ -217,7 +219,7 @@ function createPrivateMessage(io, socket, data) {
                                 PrivateMessage.create({
                                     creator: socket.handshake.user,
                                     members: members
-                                }).then((privatemessage) => {
+                                }).then(privatemessage => {
                                     socket.emit('status', {
                                         status: true,
                                         message:

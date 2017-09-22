@@ -49,10 +49,7 @@ class Message extends React.Component {
             <div id={isLast ? 'lastMessage' : ''}>
                 <ListItemHeader theme={this.props.theme}>
                     {message.user.name}
-                    <DM
-                        onClick={this.props.onStartDM}
-                        theme={this.props.theme}
-                    >
+                    <DM onClick={this.props.onStartDM} theme={this.props.theme}>
                         Start DM
                     </DM>
                 </ListItemHeader>
