@@ -10,10 +10,6 @@ module.exports = function(io) {
     });
 
     setInterval(function() {
-        interval(io);
-    }, 250);
-
-    setInterval(function() {
         addUsers(io);
     }, 30000);
 };
@@ -244,15 +240,6 @@ function createPrivateMessage(io, socket, data) {
     }
 }
 
-function interval(io) {
-    for (const socketName in io.sockets.sockets) {
-        if (io.sockets.sockets.hasOwnProperty(socketName)) {
-            joinRooms(io, io.sockets.sockets[socketName]);
-            leaveRooms(io, io.sockets.sockets[socketName]);
-        }
-    }
-}
-
 function addUsers(io) {
     Channel.find({
         all_users: true
@@ -298,6 +285,8 @@ function addUsers(io) {
         if (io.sockets.sockets.hasOwnProperty(socketName)) {
             sendPrivateMessages(io, io.sockets.sockets[socketName]);
             sendChannels(io, io.sockets.sockets[socketName]);
+            joinRooms(io, io.sockets.sockets[socketName]);
+            leaveRooms(io, io.sockets.sockets[socketName]);
         }
     }
 }
