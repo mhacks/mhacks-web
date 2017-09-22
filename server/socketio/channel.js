@@ -15,7 +15,7 @@ module.exports = function(io) {
 
     setInterval(function() {
         addUsers(io);
-    }, 1000);
+    }, 30000);
 };
 
 function channelHandler(io, socket) {
