@@ -9,10 +9,37 @@ router.get('/', function(req, res) {
         .populate('members', 'full_name email avatar')
         .exec()
         .then(teams => {
-            res.send({
-                status: true,
-                teams: teams
+            var emails = [];
+            var map = {};
+
+            teams.map(team => {
+                team.members.map(member => {
+                    emails.push(member.email);
+                });
             });
+            Application.find({
+                user: { $in: emails }
+            })
+                .select('experience user')
+                .then(applications => {
+                    applications.map(app => {
+                        map[app.user] = app.experience;
+                    });
+                    const newTeams = teams.map(team => {
+                        const newMembers = team.members.map(member => {
+                            return Object.assign({}, member.toJSON(), {
+                                experience: map[member.email]
+                            });
+                        });
+                        return Object.assign({}, team.toJSON(), {
+                            members: newMembers
+                        });
+                    });
+                    res.send({
+                        status: true,
+                        teams: newTeams
+                    });
+                });
         })
         .catch(err => {
             console.error(err);
@@ -31,16 +58,15 @@ router.post('/', function(req, res) {
                     .byEmail(req.user.email)
                     .then(application => {
                         if (application && application.status === 'accepted') {
-                            if (req.body.description.length >= 100) {
+                            if (req.body.description.length >= 40) {
                                 Team.create({
                                     name: req.body.name,
                                     description: req.body.description,
                                     members: [req.user._id]
                                 })
-                                    .then(team => {
+                                    .then(() => {
                                         res.send({
-                                            status: true,
-                                            team: team
+                                            status: true
                                         });
                                     })
                                     .catch(err => {
@@ -85,8 +111,10 @@ router.delete('/', function(req, res) {
                 //Check if person removing team is leader (first in array)
                 if (team && team.members.indexOf(req.user._id) === 0) {
                     team.remove();
-                    res.send({
-                        status: true
+                    team.save().then(() => {
+                        res.send({
+                            status: true
+                        });
                     });
                 } else {
                     res.status(403).send({
@@ -116,27 +144,20 @@ router.post('/member', function(req, res) {
             .then(() => {
                 Application.find()
                     .byEmail(req.user.email)
-                    .then(application => {
-                        if (application && application.status === 'accepted') {
+                    .then(userApplication => {
+                        if (
+                            userApplication &&
+                            userApplication.status === 'accepted'
+                        ) {
                             Team.findById(req.body.team)
                                 .populate('members')
                                 .then(team => {
                                     if (team && team.members.length < 4) {
                                         team.members.addToSet(req.user._id);
-                                        team.save(function() {
-                                            Team.populate(
-                                                team,
-                                                {
-                                                    path: 'members',
-                                                    select: 'email full_name'
-                                                },
-                                                function() {
-                                                    res.send({
-                                                        status: true,
-                                                        team: team
-                                                    });
-                                                }
-                                            );
+                                        team.save().then(() => {
+                                            res.send({
+                                                status: true
+                                            });
                                         });
                                         //Check for adopt a noob
                                     } else if (
@@ -149,32 +170,30 @@ router.post('/member', function(req, res) {
                                                     member => member.email
                                                 )
                                             }
-                                        })
-                                            .select('experience -_id')
-                                            .then(applications => {
-                                                var apps = applications.map(
-                                                    item => item['experience']
+                                        }).then(applications => {
+                                            var experiences = applications.map(
+                                                item => item['experience']
+                                            );
+                                            experiences.push(
+                                                userApplication.experience
+                                            );
+                                            if (checkGoodTeam(experiences)) {
+                                                team.members.addToSet(
+                                                    req.user._id
                                                 );
-                                                apps.push(
-                                                    application.experience
-                                                );
-                                                if (checkGoodTeam(apps)) {
-                                                    team.members.addToSet(
-                                                        req.user._id
-                                                    );
-                                                    team.save();
+                                                team.save().then(() => {
                                                     res.send({
-                                                        status: true,
-                                                        team: team
+                                                        status: true
                                                     });
-                                                } else {
-                                                    res.status(403).send({
-                                                        status: false,
-                                                        message:
-                                                            Responses.NOT_QUALIFIED_NOOB
-                                                    });
-                                                }
-                                            });
+                                                });
+                                            } else {
+                                                res.status(403).send({
+                                                    status: false,
+                                                    message:
+                                                        Responses.NOT_QUALIFIED_NOOB
+                                                });
+                                            }
+                                        });
                                     } else {
                                         res.status(403).send({
                                             status: false,
@@ -217,10 +236,16 @@ router.delete('/member', function(req, res) {
             .then(team => {
                 if (team.members.length > 1) {
                     team.members.pull(req.user._id);
-                    team.save();
-                    res.send({
-                        status: true,
-                        team: team
+                    team.save().then(() => {
+                        Team.find()
+                            .populate('members', 'email full_name avatar')
+                            .exec()
+                            .then(teams =>
+                                res.send({
+                                    status: true,
+                                    teams: teams
+                                })
+                            );
                     });
                 } else {
                     res.status(403).send({
@@ -246,22 +271,22 @@ router.delete('/member', function(req, res) {
 
 function checkGoodTeam(experiences) {
     var noviceCount = 0;
-    var expertCount = 0;
+    var experiencedCount = 0;
     var veteranCount = 0;
     for (var i = 0; i < experiences.length; i++) {
         switch (experiences[i]) {
             case 'novice':
                 noviceCount++;
                 break;
-            case 'expert':
-                expertCount++;
+            case 'experienced':
+                experiencedCount++;
                 break;
             case 'veteran':
                 veteranCount++;
                 break;
         }
     }
-    if ((veteranCount > 0 || expertCount > 1) && noviceCount > 0) {
+    if ((veteranCount > 0 || experiencedCount > 1) && noviceCount > 0) {
         return true;
     } else {
         return false;

@@ -25,16 +25,17 @@ const Description = styled.p`
     margin: 20px;
 `;
 
-const Box = styled.div`
+const BoxWrapper = styled.div`
     borderRadius: 25px;
     border: 3px solid ${props => props.theme.primary};
     textAlign: center;
     margin: 20px;
     minWidth: 250px;
     overflow: hidden;
+    maxWidth: 80%;
 
     ${devices.tablet`
-        maxWidth: 45%;
+        maxWidth: 40%;
     `} ${devices.giant`
         maxWidth: 30%;
     `};
@@ -42,6 +43,7 @@ const Box = styled.div`
 
 const Row = styled.div`
     display: flex;
+    alignItems: center;
     margin: 20px;
 `;
 
@@ -52,11 +54,21 @@ const FlexBox = styled.div`
     marginLeft: 20px;
 `;
 
-const EmailLabel = styled.p`wordBreak: break-all;`;
+const EmailLink = styled.a`wordBreak: break-all;`;
 
 const ButtonWrapper = styled.div`margin: 20px;`;
 
-const PictureWrapper = styled.div``;
+const StyledProfilePicture = styled(ProfilePicture)`
+    maxWidth: 80px;
+    minWidth: 80px;
+`;
+
+const PictureWrapper = styled.div`
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border: 3px solid ${props => props.theme.primary};
+`;
 
 class TeamBox extends React.Component {
     constructor(props) {
@@ -65,21 +77,33 @@ class TeamBox extends React.Component {
         this.joinTeam = this.joinTeam.bind(this);
         this.leaveTeam = this.leaveTeam.bind(this);
         this.deleteTeam = this.deleteTeam.bind(this);
+        this.checkForFull = this.checkForFull.bind(this);
+        this.checkGoodTeam = this.checkGoodTeam.bind(this);
     }
 
     joinTeam(e) {
         e.preventDefault();
 
-        var teamId = this.props.team.id;
-        this.props.dispatch(TeamsThunks.joinTeam(teamId));
+        const user = this.props.userState.data.user;
+        const data = {
+            id: this.props.team.id,
+            user: {
+                full_name: user.full_name,
+                email: user.email,
+                avatars: user.avatars,
+                experience: user.experience
+            }
+        };
+        this.props.dispatch(TeamsThunks.joinTeam(data));
         this.props.onTeamJoined();
     }
 
     leaveTeam(e) {
         e.preventDefault();
 
-        var teamId = this.props.team.id;
-        this.props.dispatch(TeamsThunks.leaveTeam(teamId));
+        const user = this.props.userState.data.user;
+        const data = { id: this.props.team.id, email: user.email };
+        this.props.dispatch(TeamsThunks.leaveTeam(data));
     }
 
     deleteTeam(e) {
@@ -87,6 +111,38 @@ class TeamBox extends React.Component {
 
         var teamId = this.props.team.id;
         this.props.dispatch(TeamsThunks.deleteTeam(teamId));
+    }
+
+    checkForFull() {
+        if (this.props.team.members.length === 4) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    checkGoodTeam(experiences) {
+        var noviceCount = 0;
+        var experiencedCount = 0;
+        var veteranCount = 0;
+        for (var i = 0; i < experiences.length; i++) {
+            switch (experiences[i]) {
+                case 'novice':
+                    noviceCount++;
+                    break;
+                case 'experienced':
+                    experiencedCount++;
+                    break;
+                case 'veteran':
+                    veteranCount++;
+                    break;
+            }
+        }
+        if ((veteranCount > 0 || experiencedCount > 1) && noviceCount > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     render() {
@@ -97,14 +153,35 @@ class TeamBox extends React.Component {
         const memberEmails = team.members.map(member => member.email);
         const position = memberEmails.indexOf(userEmail);
 
+        const experienceMap = {
+            novice: 'Novice',
+            experienced: 'Experienced',
+            veteran: 'Veteran'
+        };
+
         var display, clickFunction;
 
         if (position === -1 && userInTeam) {
             display = 'Already in a Team';
             clickFunction = () => null;
         } else if (position === -1 && !userInTeam) {
-            display = 'Join Team';
-            clickFunction = this.joinTeam;
+            if (team.members.length === 4) {
+                var experiences = team.members.map(member => member.experience);
+                experiences.push(this.props.userState.data.user.experience);
+                if (this.checkGoodTeam(experiences)) {
+                    display = 'Join For adopt-a-n00b';
+                    clickFunction = this.joinTeam;
+                } else {
+                    display = 'Team Full';
+                    clickFunction = () => null;
+                }
+            } else if (team.members.length === 5) {
+                display = 'Team Full';
+                clickFunction = () => null;
+            } else {
+                display = 'Join Team';
+                clickFunction = this.joinTeam;
+            }
         } else if (memberEmails.length === 1 && position === 0) {
             display = 'Delete Team';
             clickFunction = this.deleteTeam;
@@ -114,7 +191,7 @@ class TeamBox extends React.Component {
         }
 
         return (
-            <Box>
+            <BoxWrapper>
                 <Header>{team.name}</Header>
                 <Description>{team.description}</Description>
 
@@ -124,11 +201,18 @@ class TeamBox extends React.Component {
                             <Seperator />
                             <Row>
                                 <PictureWrapper>
-                                    <ProfilePicture avatars={[]} />
+                                    <StyledProfilePicture
+                                        avatars={member.avatars}
+                                    />
                                 </PictureWrapper>
                                 <FlexBox>
                                     <p>{member.full_name}</p>
-                                    <EmailLabel>{member.email}</EmailLabel>
+                                    <EmailLink
+                                        href={'mailto:'.concat(member.email)}
+                                    >
+                                        {member.email}
+                                    </EmailLink>
+                                    <p>{experienceMap[member.experience]}</p>
                                 </FlexBox>
                             </Row>
                         </div>
@@ -143,7 +227,7 @@ class TeamBox extends React.Component {
                         {display}
                     </RoundedButton>
                 </ButtonWrapper>
-            </Box>
+            </BoxWrapper>
         );
     }
 }

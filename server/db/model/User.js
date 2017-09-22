@@ -603,6 +603,7 @@ schema.methods.getProfile = function() {
         tshirt: this.tshirt,
         race: this.race,
         sex: this.sex,
+        id: this._id,
         online: this.online
     };
 
@@ -617,7 +618,8 @@ schema.methods.getProfile = function() {
                     needs_reimbursement,
                     reimbursement,
                     university,
-                    major
+                    major,
+                    experience
                 } = application;
 
                 profile.application_submitted = true;
@@ -626,6 +628,7 @@ schema.methods.getProfile = function() {
                 profile.reimbursement = reimbursement;
                 profile.university = university;
                 profile.major = major;
+                profile.experience = experience;
 
                 if (status === 'accepted') {
                     mongoose

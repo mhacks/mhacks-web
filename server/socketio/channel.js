@@ -2,7 +2,7 @@ const Responses = require('../responses/socketio/index.js'),
     Channel = require('../db/model/Channel.js'),
     PrivateMessage = require('../db/model/PrivateMessage.js'),
     User = require('../db/model/User.js'),
-    Chat = require('../db/elasticsearch/chat.js');
+    Chat = require('../db/elasticsearch/Chat.js');
 
 module.exports = function(io) {
     io.on('connection', function(socket) {
