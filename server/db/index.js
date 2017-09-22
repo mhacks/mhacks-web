@@ -85,6 +85,7 @@ function modifySchema(schema) {
             this.save();
         };
 
+        /*
         schema.statics.getUpdateableFields = function(groups) {
             const updateables = [];
 
@@ -109,6 +110,7 @@ function modifySchema(schema) {
 
             return updateables;
         };
+        */
     }
 }
 
