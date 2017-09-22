@@ -46,7 +46,7 @@ var schema = new mongoose.Schema(
 
 //Checks the length of the description
 schema.path('description').validate(function(val) {
-    return val.length >= 100;
+    return val.length >= 40;
 }, 'A descrpition must be at least 100 characters.');
 
 // Allow us to query by name
