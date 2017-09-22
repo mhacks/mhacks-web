@@ -32,6 +32,10 @@ const ChannelLink = styled.p`
     }
 `;
 
+const SectionDivider = styled.p`
+    color: white;
+`;
+
 class Chat extends React.Component {
     constructor() {
         super();
@@ -40,10 +44,13 @@ class Chat extends React.Component {
             messages: [],
             users: [],
             channels: [],
-            channel: {}
+            privateChannels: [],
+            channel: {},
+            profile: {}
         };
 
         this.inputSubmit = this.inputSubmit.bind(this);
+        this.retrieveProfile = this.retrieveProfile.bind(this);
     }
 
     componentDidMount() {
@@ -83,18 +90,25 @@ class Chat extends React.Component {
                         });
                     });
 
-                    component.setState({
+                    const newState = {
                         users: users,
-                        channel:
-                            data.channels.length > 0
-                                ? data.channels[0]
-                                : undefined,
                         channels: data.channels
-                    });
+                    }
+
+                    if (Object.keys(component.state.channel).length === 0) {
+                        newState.channel = data.channels.length > 0 ? data.channels[0] : {};
+                    }
+
+                    component.setState(newState);
                 });
 
-                component.socket.on('privatemessages', function(data) {
-                    console.log('Privatemessages', data);
+                component.socket.on('privatemessages', (data) => {
+                    if (Object.keys(component.state.profile).length > 0) {
+                        console.log('Privatemessages', data);
+                        component.setState({
+                            privateChannels: data.privatemessages
+                        });
+                    }
                 });
 
                 setTimeout(function() {
@@ -104,7 +118,12 @@ class Chat extends React.Component {
             }
         });
 
-        this.socket.on('status', function(data) {
+        this.socket.on('status', (data) => {
+            if (data.message === 'Private message created.') {
+                this.setState({
+                    channel: data.privatemessage
+                });
+            }
             if (!data.status) {
                 alert(data.message);
             }
@@ -143,7 +162,9 @@ class Chat extends React.Component {
                 };
             });
 
-            this.socket.emit('privatemessage', members);
+            this.socket.emit('privatemessage', {
+                members
+            });
         } else {
             return false;
         }
@@ -187,9 +208,11 @@ class Chat extends React.Component {
 
     retrieveProfile() {
         this.socket.emit('profile');
-        this.socket.on('profile', function(data) {
+        this.socket.on('profile', data => {
             console.log('Profile', data);
-            this.profileData = data;
+            this.setState({
+                profile: data.profile
+            });
         });
     }
 
@@ -215,6 +238,12 @@ class Chat extends React.Component {
         if (this.state.channel) {
             this.sendMessage(message, this.state.channel.id);
         }
+    }
+
+    startDM(message) {
+        const users = [this.state.profile.id].concat(message.user.id);
+        console.log('TH', users);
+        this.createPrivateMessage(users);
     }
 
     componentDidUpdate() {
@@ -251,6 +280,7 @@ class Chat extends React.Component {
                     </SectionHeader>
                     <ContentContainer>
                         <Sidebar>
+                            {this.state.channels.length > 0 ? <SectionDivider>Public</SectionDivider> : undefined}
                             {this.state.channels.map((channel, index) => {
                                 return (
                                     <ChannelLink
@@ -269,22 +299,55 @@ class Chat extends React.Component {
                                     </ChannelLink>
                                 );
                             })}
+                            {this.state.privateChannels.length > 0 ? <SectionDivider>Private</SectionDivider> : undefined}
+                            {this.state.privateChannels.map((channel, index) => {
+                                const names = channel.members.filter(member => {
+                                    return member.user.id.toString() !== this.state.profile.id.toString();
+                                }).map(member => {
+                                    return member.user.full_name;
+                                });
+
+                                var displayName = names.reduce((display, member) => {
+                                    return display + ', ' + member;
+                                });
+
+                                if (displayName.length > 20) {
+                                    displayName = displayName.slice(0, 20) + '...';
+                                }
+
+                                return (
+                                    <ChannelLink
+                                        key={index + 20}
+                                        onClick={() => {
+                                            this.setState({
+                                                channel: channel
+                                            });
+                                        }}
+                                        theme={this.props.theme}
+                                        active={
+                                            this.state.channel.id === channel.id
+                                        }
+                                    >
+                                        {displayName}
+                                    </ChannelLink>
+                                );
+                            })}
                         </Sidebar>
                         <ChatContainer>
-                            <ListContainer
-                                onClick={() => {
-                                    console.log('hey');
-                                    console.log(this.createPrivateMessage(['59c410dd86721b002c9cb499', '59c40ff886721b002c9cb491']));
-                                }}
-                            >
+                            <ListContainer>
                                 {filtered.map((message, index) => {
                                     const isLast =
                                         index === filtered.length - 1;
                                     return (
                                         <Message
                                             key={index}
+                                            theme={this.props.theme}
                                             message={message}
                                             isLast={isLast}
+                                            onStartDM={() => {
+                                                console.log('PENIS');
+                                                this.startDM(message);
+                                            }}
                                         />
                                     );
                                 })}

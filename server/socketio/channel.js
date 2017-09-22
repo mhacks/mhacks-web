@@ -81,9 +81,7 @@ function joinRooms(io, socket) {
                                                 message: data.message,
                                                 channel: data.channel,
                                                 time: data.time,
-                                                user: {
-                                                    name: data.user.name
-                                                }
+                                                user: data.user
                                             });
                                         });
                                 })
@@ -180,7 +178,7 @@ function createPrivateMessage(io, socket, data) {
         let user_is_member = false;
 
         data.members.forEach(function(member) {
-            if (member._id === socket.handshake.user._id) {
+            if (member._id.toString() === socket.handshake.user._id.toString()) {
                 user_is_member = true;
             }
 
@@ -219,11 +217,12 @@ function createPrivateMessage(io, socket, data) {
                                 PrivateMessage.create({
                                     creator: socket.handshake.user,
                                     members: members
-                                }).then(() => {
+                                }).then((privatemessage) => {
                                     socket.emit('status', {
                                         status: true,
                                         message:
-                                            Responses.PRIVATE_MESSAGE_CREATED
+                                            Responses.PRIVATE_MESSAGE_CREATED,
+                                        privatemessage
                                     });
                                 });
                             } else {
