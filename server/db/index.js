@@ -82,7 +82,7 @@ function modifySchema(schema) {
                     this[param] = fields[param];
                 }
             }
-            this.save();
+            return this.save();
         };
 
         /*
