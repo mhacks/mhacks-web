@@ -1,10 +1,10 @@
 {
-    "name": "mhacks-web",
+    "name": "mh-web",
     "version": "0.0.1",
-    "description": "The super cool mhacks website",
+    "description": "The super cool michigan hackers website",
     "main": "app.js",
-    "repository": "https://github.com/mhacks/mhacks-web",
-    "author": "MHacks Team",
+    "repository": "https://github.com/michiganhackers/mh-web",
+    "author": "Michigan Hackers",
     "license": "GPL-3.0",
     "scripts": {
         "start": "node app.js",

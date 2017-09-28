@@ -1,6 +1,6 @@
 module.exports = {
     start_server: parseBool(process.env.START_SERVER, true),
-    app_name: process.env.APP_NAME || 'MHacks X',
+    app_name: process.env.APP_NAME || 'Michigan Hackers',
     start_date: new Date(process.env.START_DATE || '9-22-17'),
     end_date: new Date(process.env.END_DATE || '9-24-17'),
     is_live_page_enabled: parseBool(process.env.IS_LIVE_PAGE_ENABLED, false),
@@ -9,13 +9,12 @@ module.exports = {
     development: process.env.NODE_ENV !== 'production',
     production: process.env.NODE_ENV === 'production',
     service: process.env.SERVICE || 'web',
-    host: process.env.HOST || 'https://mhacks.org',
+    host: process.env.HOST || 'https://michiganhackers.org',
     shortener_host: process.env.SHORTENER_HOST || 'https://mha.cx',
     secret: process.env.SECRET || 'mhacks',
-    mongo_hostname: process.env.MONGO_HOSTNAME || 'mhacks_db',
-    backend_db: process.env.BACKEND_DB || 'mhacks_backend',
-    sessions_db: process.env.SESSIONS_DB || 'mhacks_sessions',
-    es_hostname: process.env.ES_HOSTNAME || 'mhacks_es',
+    mongo_hostname: process.env.MONGO_HOSTNAME || 'mh_db',
+    backend_db: process.env.BACKEND_DB || 'mh_backend',
+    sessions_db: process.env.SESSIONS_DB || 'mh_sessions',
     api_work: parseBool(process.env.APIWORK, false),
     server_port: process.env.PORT || 3000,
     max_tokens: process.env.MAX_TOKENS || 10,
@@ -25,20 +24,20 @@ module.exports = {
     mailchimp_listid: process.env.MAILCHIMP_LISTID || 'd9245d6d34',
     mandrill_token: process.env.MANDRILL_TOKEN || '',
     email_from: process.env.EMAIL_FROM || 'hackathon@umich.edu',
-    email_from_name: process.env.EMAIL_FROM_NAME || 'MHacks',
+    email_from_name: process.env.EMAIL_FROM_NAME || 'Michigan Hackers',
     confirmation_email_template:
         process.env.CONFIRMATION_EMAIL_TEMPLATE || 'confirmation_instructions',
     confirmation_email_subject:
         process.env.CONFIRMATION_EMAIL_SUBJECT ||
-        'Confirm Your Email for MHacks',
+        'Confirm Your Email for Michigan Hackers',
     password_reset_email_template:
         process.env.PASSWORD_RESET_EMAIL_TEMPLATE || 'change_password',
     password_reset_email_subject:
         process.env.PASSWORD_RESEST_EMAIL_SUBJECT ||
-        'Reset Your MHacks Password',
+        'Reset Your Michigan Hackers Password',
     deployment_secret: process.env.DEPLOYMENT_SECRET || 'some_secret',
     deployment_users: (process.env.DEPLOYMENT_USERS ||
-        'antoniomika,konnor,roball')
+        'antoniomika,konnor,roball,andrewboland')
         .split(','),
     deploy: {
         staging: {

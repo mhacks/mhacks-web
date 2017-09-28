@@ -1,17 +1,13 @@
 version: '2'
 services:
-  mhacks_db:
+  mh_db:
     extends:
       file: docker-compose.yml
-      service: mhacks_db
-  mhacks_es:
+      service: mh_db
+  mh_website:
     extends:
       file: docker-compose.yml
-      service: mhacks_es
-  mhacks_website:
-    extends:
-      file: docker-compose.yml
-      service: mhacks_website
+      service: mh_website
     ports:
       - "3000:3000"
     volumes:
@@ -30,5 +26,4 @@ services:
       - NEWRELIC_APP_NAME
       - NEWRELIC_LICENSE_KEY
     links:
-      - mhacks_db
-      - mhacks_es
+      - mh_db

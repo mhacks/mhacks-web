@@ -1,6 +1,6 @@
 FROM node:8
 
-MAINTAINER MHacks Team
+MAINTAINER Michigan Hackers
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
