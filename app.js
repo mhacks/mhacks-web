@@ -35,7 +35,6 @@ var http = require('http'),
     apiRouter = require('./server/routes/api.js'),
     indexRouter = require('./server/routes/index.js'),
     shortenerRouter = require('./server/routes/shortener.js'),
-    sharedsession = require('express-socket.io-session'),
     Configuration = require('./server/db/model/Configuration.js');
 
 // Force https
@@ -163,7 +162,7 @@ if (config.service === 'shortener') {
 
 Configuration.findOne().then(configuration => {
     if (configuration.is_chat_enabled) {
-        require('./server/socketio/index.js')(io);
+        require('./server/socketio/index.js');
     }
 });
 
