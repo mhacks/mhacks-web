@@ -1,37 +1,29 @@
 version: '2'
 services:
-  mhacks_nginx:
+  mh_nginx:
     extends:
       file: docker-compose.yml
-      service: mhacks_nginx
-  mhacks_db:
+      service: mh_nginx
+  mh_db:
     extends:
       file: docker-compose.yml
-      service: mhacks_db
+      service: mh_db
     volumes:
       - /data/mongodb:/data/db
-#  mhacks_es:
-#    extends:
-#      file: docker-compose.yml
-#      service: mhacks_es
-#    volumes:
-#      - /data/elasticsearch:/usr/share/elasticsearch/data
-  mhacks_website:
+  mh_website:
     extends:
       file: docker-compose.yml
-      service: mhacks_website
+      service: mh_website
     links:
-      - mhacks_db
-#      - mhacks_es
+      - mh_db
     env_file:
       - production.env
-  mhacks_shortener:
+  mh_shortener:
     extends:
       file: docker-compose.yml
-      service: mhacks_website
+      service: mh_website
     links:
-      - mhacks_db
-#      - mhacks_es
+      - mh_db
     env_file:
       - production.env
     environment:

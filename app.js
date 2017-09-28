@@ -27,7 +27,6 @@ var http = require('http'),
     express = require('express'),
     app = express(),
     server = http.createServer(app),
-    io = require('socket.io')(server, { wsEngine: 'uws' }),
     session = require('express-session'),
     bodyParser = require('body-parser'),
     MongoStore = require('connect-mongo')(session),
@@ -101,12 +100,6 @@ var sessionMiddleware = session({
 });
 
 app.use(sessionMiddleware);
-
-io.use(
-    sharedsession(sessionMiddleware, {
-        autoSave: true
-    })
-);
 
 // Set an xsrf-token for the session if it's enabled
 app.use(function(req, res, next) {
@@ -183,6 +176,5 @@ module.exports = {
     mongoose,
     express,
     app,
-    server,
-    io
+    server
 };

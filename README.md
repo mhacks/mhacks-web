@@ -1,13 +1,13 @@
-# MHacks Web
+# Michigan Hackers Web
 
 ## Getting up and running
 
-At MHacks, we utilize Docker to containerize our application so that whether you are using linux, macOS, or Windows, you run exactly the same as everyone else. There are a lot of other advantages to docker too. All the dependencies are automatically installed for you, it is great for ease of deployment, it provides good isolation and security, and much more.
+At Michigan Hackers, we utilize Docker to containerize our application so that whether you are using linux, macOS, or Windows, you run exactly the same as everyone else. There are a lot of other advantages to docker too. All the dependencies are automatically installed for you, it is great for ease of deployment, it provides good isolation and security, and much more.
 
 1. [Get Docker](https://docs.docker.com/engine/getstarted/step_one/#/step-1-get-docker)
 2. [Get Docker Compose](https://docs.docker.com/compose/install/)
-4. Clone this repo: `git clone https://github.com/mhacks/mhacks-web`
-4. Change directory to the deploy repo: `cd mhacks-web/deploy/`
+4. Clone this repo: `git clone https://github.com/michiganhackers/mh-web`
+4. Change directory to the deploy repo: `cd mh-web/deploy/`
 5. Start whatever environment you want
     - Development
         - `docker-compose -f development.yml up -d`
