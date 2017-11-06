@@ -64,7 +64,8 @@ class AppProvider extends React.Component {
         const {
             should_logout,
             is_live_page_enabled,
-            is_team_building_enabled
+            is_team_building_enabled,
+            is_blackout_page_enabled
         } = this.props.configurationState.data;
 
         if (should_logout && localStorage.getItem('jwt')) {
@@ -79,12 +80,25 @@ class AppProvider extends React.Component {
         return (
             <Provider store={store}>
                 <ConnectedRouter history={history}>
-                    <Navigator>
+                    <Navigator
+                        renderHeaderFooter={
+                            !is_blackout_page_enabled ||
+                            location.pathname !== routes.HOME
+                        }
+                    >
                         <Switch>
                             <Route
                                 exact
                                 path={routes.HOME}
-                                component={HomePage}
+                                render={() => {
+                                    if (is_blackout_page_enabled) {
+                                        return (
+                                            <Redirect to={routes.SUBSCRIBE} />
+                                        );
+                                    } else {
+                                        return <HomePage />;
+                                    }
+                                }}
                             />
                             <Route
                                 exact

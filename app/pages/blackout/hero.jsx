@@ -122,7 +122,7 @@ class BlackoutHero extends React.Component {
                         <PinkOrb />
                         <VideoPlayer
                             placeholderImage={VideoPlaceholderImage}
-                            videoUrl="https://www.youtube.com/embed/FcZhyLZlIA8"
+                            videoUrl="https://www.youtube.com/embed/bTC2oPnJ4Zo"
                             showControls={false}
                             showVideoDetails={false}
                             autoplay={true}

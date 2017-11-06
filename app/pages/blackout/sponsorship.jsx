@@ -73,7 +73,9 @@ export default () => (
                 <EmailBody>
                     Interested in sponsoring? Want more information? Shoot us an
                     email at{' '}
-                    <Link href="mailto:kevin@mhacks.org">kevin@mhacks.org</Link>
+                    <Link href="mailto:sponsor-mhacks@umich.edu">
+                        sponsor-mhacks@umich.edu
+                    </Link>
                 </EmailBody>
             </div>
             <Orb src={OrbImage} />

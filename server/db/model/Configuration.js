@@ -48,6 +48,15 @@ var schema = new mongoose.Schema(
                 label: 'Chat Enabled'
             }
         },
+        is_blackout_page_enabled: {
+            type: Boolean,
+            default: true,
+            required: true,
+            form: {
+                user_editable: true,
+                label: 'Blackout page enabled'
+            }
+        },
         save_button: {
             type: String,
             form: {

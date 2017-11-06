@@ -12,9 +12,9 @@ class Navigator extends React.Component {
             <IntlProvider locale="en">
                 <ThemeProvider theme={this.props.theme}>
                     <div>
-                        <Header />
+                        {this.props.renderHeaderFooter ? <Header /> : null}
                         {React.Children.toArray(this.props.children)}
-                        <Footer />
+                        {this.props.renderHeaderFooter ? <Footer /> : null}
                     </div>
                 </ThemeProvider>
             </IntlProvider>
