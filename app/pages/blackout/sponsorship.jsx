@@ -73,8 +73,8 @@ export default () => (
                 <EmailBody>
                     Interested in sponsoring? Want more information? Shoot us an
                     email at{' '}
-                    <Link href="mailto:sponsor-mhacks@umich.edu">
-                        sponsor-mhacks@umich.edu
+                    <Link href="mailto:sponsor@mhacks.org">
+                        sponsor@mhacks.org
                     </Link>
                 </EmailBody>
             </div>
