@@ -86,7 +86,7 @@ router.post('/webhook/slack', function(req, res) {
                     res.send({
                         response_type: 'in_channel',
                         text:
-                            'Deploying master to production. Crossing over to staging to complete update.'
+                            'Deploying master to production. Crossing over to staging to complete update. Finesse it.'
                     });
                 } else {
                     deploy
@@ -167,7 +167,7 @@ router.post('/webhook/slack', function(req, res) {
             } else {
                 res.send({
                     response_type: 'in_channel',
-                    text: 'Deploying master to staging.'
+                    text: 'Deploying master to staging. Finesse it.'
                 });
 
                 deploy
