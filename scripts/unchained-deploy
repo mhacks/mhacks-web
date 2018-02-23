@@ -3,6 +3,7 @@
 cd ~/mhacks-web/ && git pull
 
 cd deploy/ && \
+    /opt/bin/docker-compose -f production.yml pull && \
     /opt/bin/docker-compose -f production.yml build mhacks_website mhacks_shortener && \
     /opt/bin/docker-compose -f production.yml up --no-deps -d mhacks_website mhacks_shortener
     

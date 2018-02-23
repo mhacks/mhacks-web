@@ -15,7 +15,6 @@ module.exports = {
     mongo_hostname: process.env.MONGO_HOSTNAME || 'mhacks_db',
     backend_db: process.env.BACKEND_DB || 'mhacks_backend',
     sessions_db: process.env.SESSIONS_DB || 'mhacks_sessions',
-    es_hostname: process.env.ES_HOSTNAME || 'mhacks_es',
     api_work: parseBool(process.env.APIWORK, false),
     server_port: process.env.PORT || 3000,
     max_tokens: process.env.MAX_TOKENS || 10,
