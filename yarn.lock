@@ -2341,10 +2341,6 @@ es6-map@^0.1.3:
     es6-symbol "~3.1.1"
     event-emitter "~0.3.5"
 
-es6-promise-polyfill@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/es6-promise-polyfill/-/es6-promise-polyfill-1.2.0.tgz#f38925f23cb3e3e8ce6cda8ff774fcebbb090cde"
-
 es6-promise@3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-3.2.1.tgz#ec56233868032909207170c39448e24449dd1fc4"
@@ -2695,13 +2691,6 @@ fast-json-stable-stringify@^2.0.0:
 fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
-
-fast-ratelimit@^2.1.0:
-  version "2.1.8"
-  resolved "https://registry.yarnpkg.com/fast-ratelimit/-/fast-ratelimit-2.1.8.tgz#89856322303a00f5bd4b2b0dff70b4e2850b910c"
-  dependencies:
-    es6-promise-polyfill "1.2.0"
-    hashtable-patch-valeriansaliou "2.1.5"
 
 fastparse@^1.1.1:
   version "1.1.1"
@@ -3175,12 +3164,6 @@ hash.js@^1.0.0, hash.js@^1.0.3:
   dependencies:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.0"
-
-hashtable-patch-valeriansaliou@2.1.5:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/hashtable-patch-valeriansaliou/-/hashtable-patch-valeriansaliou-2.1.5.tgz#5068c6b922bbdb3c0f6bf62517d15c6b7fee14ed"
-  dependencies:
-    nan latest
 
 hawk@3.1.3, hawk@~3.1.3:
   version "3.1.3"
@@ -4592,7 +4575,7 @@ nan@2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.6.2.tgz#e4ff34e6c95fdfb5aecc08de6596f43605a7db45"
 
-nan@^2.3.0, nan@^2.8.0, nan@latest:
+nan@^2.3.0, nan@^2.8.0:
   version "2.9.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.9.2.tgz#f564d75f5f8f36a6d9456cca7a6c4fe488ab7866"
 
