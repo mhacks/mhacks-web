@@ -4593,8 +4593,8 @@ nan@2.6.2:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.6.2.tgz#e4ff34e6c95fdfb5aecc08de6596f43605a7db45"
 
 nan@^2.3.0, nan@^2.8.0, nan@latest:
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.9.1.tgz#af88fcaee5292992c5b755121ceeaa74536fc228"
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.9.2.tgz#f564d75f5f8f36a6d9456cca7a6c4fe488ab7866"
 
 nanomatch@^1.2.9:
   version "1.2.9"
@@ -5905,8 +5905,8 @@ react-select@^1.0.0-rc.5:
     react-input-autosize "^2.1.2"
 
 react-side-effect@^1.1.0:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-1.1.4.tgz#df3b8db8e90af0358bcb718bc1ba6205f3774e8d"
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-1.1.5.tgz#f26059e50ed9c626d91d661b9f3c8bb38cd0ff2d"
   dependencies:
     exenv "^1.2.1"
     shallowequal "^1.0.1"

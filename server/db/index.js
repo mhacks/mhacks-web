@@ -16,7 +16,8 @@ const cachegoose = require('cachegoose'),
                 return ret;
             }
         },
-        timestamps: true
+        timestamps: true,
+        usePushEach: true
     },
     defaultSchema = {
         deleted: {
