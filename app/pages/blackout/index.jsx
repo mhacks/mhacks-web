@@ -14,7 +14,7 @@ const Favicon = require('../../../static/blackout/favicon.png');
 
 /* Containers */
 const Page = styled.div`
-    backgroundColor: black;
+    background-color: black;
     width: 100%;
     height: 100%;
     color: #f1f7ff;

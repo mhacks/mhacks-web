@@ -91,7 +91,7 @@ class VideoPlayer extends React.Component {
             position: relative;
             width: 100%;
             height: 0;
-            paddingBottom: ${aspectRatio}%;
+            padding-bottom: ${aspectRatio}%;
         `;
 
         return (

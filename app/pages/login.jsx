@@ -11,15 +11,15 @@ const Page = styled.div`margin: 80px auto 0 auto;`;
 
 const FormContainer = styled.div`
     width: 500px;
-    maxWidth: calc(100% - 40px);
-    minHeight: calc(100vh - 30px - 2rem - 80px);
+    max-width: calc(100% - 40px);
+    min-height: calc(100vh - 30px - 2rem - 80px);
     padding: 20px 0 50px;
     margin: 0 auto;
 `;
 
 const Flexer = styled.div`
     display: flex;
-    flexDirection: column;
+    flex-direction: column;
 `;
 
 const InputContainer = styled.div`
@@ -29,26 +29,26 @@ const InputContainer = styled.div`
         width: 100%;
         margin: 10px 0;
         padding: 8px;
-        fontSize: 1em;
+        font-size: 1em;
     }
 `;
 
 const ButtonGroup = styled.div`
     display: flex;
-    flexDirection: row;
-    justifyContent: space-between;
+    flex-direction: row;
+    justify-content: space-between;
 `;
 
-const AlertContainer = styled.div`marginTop: 30px;`;
+const AlertContainer = styled.div`margin-top: 30px;`;
 
 const LegalText = styled.p`
-    fontSize: 15px;
+    font-size: 15px;
     color: gray;
 `;
 
 const LegalLink = styled.a`
     color: ${props => props.theme.highlight};
-    textDecoration: none;
+    text-decoration: none;
 `;
 
 /* Login Component */

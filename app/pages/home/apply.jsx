@@ -15,17 +15,17 @@ const Wrapper = styled.div`
 
 const StyledNavLink = styled(NavLink)`
     display: inline-block;
-    fontSize: 20px;
+    font-size: 20px;
     padding: 5px 35px;
     margin: 0px 15px;
     border: 2px solid ${props => props.primaryColor};
     color: ${props => props.primaryColor};
-    borderRadius: 5px;
-    textDecoration: none;
+    border-radius: 5px;
+    text-decoration: none;
     transition: all 0.3s;
 
     &:hover {
-        backgroundColor: ${props => props.primaryColor};
+        background-color: ${props => props.primaryColor};
         color: white;
     }
 
@@ -35,10 +35,10 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 const StyledNavLinkWrapper = styled.div`
-    textAlign: center;
+    text-align: center;
 
     ${devices.tablet`
-        textAlign: left;
+        text-align: left;
     `};
 `;
 

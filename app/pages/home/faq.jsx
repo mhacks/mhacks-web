@@ -12,38 +12,38 @@ const Wrapper = styled.div`
 `;
 
 const FaqSectionHeader = styled.div`
-    fontSize: 20px;
+    font-size: 20px;
     color: ${props => props.theme.highlight};
     text-decoration: underline;
 `;
 
 const Section = styled.div`
-    maxWidth: 90%;
-    marginTop: 15px;
-    marginBottom: 10px;
-    marginLeft: 2%;
+    max-width: 90%;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-left: 2%;
 `;
 
 const Link = styled.a`
     color: ${props => props.theme.highlight};
-    textDecoration: none;
+    text-decoration: none;
 `;
 
-const ExpandingItemWrapper = styled.div`marginTop: 5px;`;
+const ExpandingItemWrapper = styled.div`margin-top: 5px;`;
 
 const FlexBox = styled.div`
     display: flex;
-    flexDirection: column;
+    flex-direction: column;
 
     ${devices.tablet`
-        flexDirection: row;
+        flex-direction: row;
     `};
 `;
 
 const FaqColumn = styled.div``;
 
 const FaqBody = styled.div`
-    maxWidth: 75%;
+    max-width: 75%;
     margin: 30px auto 0;
 `;
 

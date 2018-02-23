@@ -6,22 +6,22 @@ const InputField = styled.div`
     width: 100%;
     margin: 10px 0;
     display: flex;
-    flexDirection: column;
-    justifyContent: space-between;
-    alignItems: flex-start;
-    fontSize: 1em;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 1em;
 
     ${devices.small`
-        flexDirection: row;
-        alignItems: center;
+        flex-direction: row;
+        align-items: center;
     `} p {
         width: ${props => props.labelWidth};
-        marginRight: 30px;
-        marginBottom: 4px;
+        margin-right: 30px;
+        margin-bottom: 4px;
         overflow: hidden;
 
         ${devices.small`
-            marginBottom: 1em;
+            margin-bottom: 1em;
         `};
     }
 
@@ -35,7 +35,7 @@ const P = styled.p`
 `;
 
 const ChildContainer = styled.div`
-    flexGrow: 1;
+    flex-grow: 1;
     width: 100%;
 `;
 

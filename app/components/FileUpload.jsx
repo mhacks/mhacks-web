@@ -4,15 +4,15 @@ import { devices } from '../styles';
 
 const Container = styled.div`
     display: block;
-    textAlign: center;
-    fontSize: 14px;
+    text-align: center;
+    font-size: 14px;
 `;
 
 const SelectionContainer = styled.div`
     display: flex;
-    flexDirection: row;
-    justifyContent: flex-start;
-    alignItems: stretch;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
     border: 3px solid ${props => props.defaultColor};
     position: relative;
 
@@ -21,7 +21,7 @@ const SelectionContainer = styled.div`
         transition: all 0.2s ease-in-out;
 
         .upload-button {
-            backgroundColor: ${props => props.hoverColor};
+            background-color: ${props => props.hoverColor};
             color: white;
             transition: all 0.2s ease-in-out;
         }
@@ -30,7 +30,7 @@ const SelectionContainer = styled.div`
 
 const Button = styled.div`
     order: 1;
-    backgroundColor: ${props => props.backgroundColor};
+    background-color: ${props => props.backgroundColor};
     color: white;
     padding: 12px 10px;
 
@@ -41,12 +41,12 @@ const Button = styled.div`
 
 const FileName = styled.div`
     order: 2;
-    flexGrow: 1;
+    flex-grow: 1;
     padding: 12px;
 `;
 
 const Input = styled.input`
-    zIndex: 100;
+    z-index: 100;
     cursor: pointer;
     position: absolute;
     height: 100%;

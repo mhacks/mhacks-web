@@ -27,16 +27,16 @@ const Input = styled.input`
     width: 100%;
     height: 40px;
     padding: 10px;
-    fontSize: 1em;
-    backgroundColor: white;
+    font-size: 1em;
+    background-color: white;
     border: 3px solid ${props => props.borderColor};
-    borderRadius: 8px;
+    border-radius: 8px;
     color: ${props => props.color};
 `;
 
 const Feedback = styled.div`
     width: 100%;
-    textAlign: left;
+    text-align: left;
     color: ${props => props.color || 'black'};
 `;
 

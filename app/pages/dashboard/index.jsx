@@ -21,15 +21,15 @@ const StyledDiv = styled.div`
 `;
 
 const FullscreenColumnContainer = styled.div`
-    maxWidth: 500px;
+    max-width: 500px;
     margin: 0 auto;
-    minHeight: calc(100vh - 30px - 2rem - 80px);
+    min-height: calc(100vh - 30px - 2rem - 80px);
     padding: 20px 20px 50px 20px;
 `;
 
 const SectionHeader = styled.h2`
-    textTransform: uppercase;
-    fontSize: 24px;
+    text-transform: uppercase;
+    font-size: 24px;
     color: ${props => props.color};
     margin: 0;
 `;

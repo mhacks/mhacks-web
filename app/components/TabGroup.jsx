@@ -4,41 +4,41 @@ import { devices } from '../styles';
 
 const Group = styled.div`
     display: flex;
-    flexDirection: row;
+    flex-direction: row;
     padding: 0;
     margin: 0;
 `;
 
 const TabItem = styled.div`
     flex: 1;
-    textAlign: center;
-    backgroundColor: ${props =>
+    text-align: center;
+    background-color: ${props =>
         props.active ? props.activeColor : 'transparent'};
     border: 3px solid ${props => props.activeColor};
-    borderRight: none;
+    border-right: none;
     color: ${props => (props.active ? 'white' : props.activeColor)};
     padding: 10px 0;
-    fontSize: 15px;
-    fontWeight: 500;
+    font-size: 15px;
+    font-weight: 500;
 
     &:first-child {
-        borderTopLeftRadius: 20px;
-        borderBottomLeftRadius: 20px;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
     }
 
     &:last-child {
-        borderTopRightRadius: 20px;
-        borderBottomRightRadius: 20px;
-        borderRight: 3px solid ${props => props.activeColor};
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border-right: 3px solid ${props => props.activeColor};
     }
 
     &:hover {
-        backgroundColor: ${props => props.activeColor};
+        background-color: ${props => props.activeColor};
         color: white;
     }
 
     ${devices.tablet`
-        fontSize: 18px;
+        font-size: 18px;
     `};
 `;
 

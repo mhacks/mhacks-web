@@ -27,7 +27,6 @@ var http = require('http'),
     express = require('express'),
     app = express(),
     server = http.createServer(app),
-    io = require('socket.io')(server, { wsEngine: 'uws' }),
     session = require('express-session'),
     bodyParser = require('body-parser'),
     MongoStore = require('connect-mongo')(session),
@@ -35,9 +34,9 @@ var http = require('http'),
     csrfProtection = csrf(), // eslint-disable-line
     apiRouter = require('./server/routes/api.js'),
     indexRouter = require('./server/routes/index.js'),
-    shortenerRouter = require('./server/routes/shortener.js'),
-    sharedsession = require('express-socket.io-session'),
-    Configuration = require('./server/db/model/Configuration.js');
+    shortenerRouter = require('./server/routes/shortener.js');
+
+mongoose.set('debug', true);
 
 // Force https
 app.use(function(req, res, next) {
@@ -102,12 +101,6 @@ var sessionMiddleware = session({
 
 app.use(sessionMiddleware);
 
-io.use(
-    sharedsession(sessionMiddleware, {
-        autoSave: true
-    })
-);
-
 // Set an xsrf-token for the session if it's enabled
 app.use(function(req, res, next) {
     if (req.csrfToken) {
@@ -168,12 +161,6 @@ if (config.service === 'shortener') {
     require('./server/interactors/setup.js');
 }
 
-Configuration.findOne().then(configuration => {
-    if (configuration.is_chat_enabled) {
-        require('./server/socketio/index.js')(io);
-    }
-});
-
 // Now we start the server
 if (config.start_server) {
     server.listen(config.server_port);
@@ -183,6 +170,5 @@ module.exports = {
     mongoose,
     express,
     app,
-    server,
-    io
+    server
 };

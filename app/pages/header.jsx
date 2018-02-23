@@ -18,27 +18,27 @@ const Wrapper = styled.div`
     top: 0;
     left: 0;
     right: 0;
-    paddingTop: 15px
-    paddingBottom: 15px
-    zIndex: 100;
+    padding-top: 15px
+    padding-bottom: 15px
+    z-index: 100;
 
     display: flex;
     height: 80px;
-    alignItems: center;
-    justifyContent: flex-start;
+    align-items: center;
+    justify-content: flex-start;
     background: ${theme.primary};
 `;
 
 const FlexWrapper = styled.div`
     display: flex;
-    alignItems: center;
-    justifyContent: center;
+    align-items: center;
+    justify-content: center;
     height: 90%;
     width: calc(100% - 72px);
     margin: 0 auto;
 
     ${devices.tablet`
-        justifyContent: space-between;
+        justify-content: space-between;
     `};
 `;
 
@@ -53,8 +53,8 @@ const Logo = styled.img`
 
 const NavContainer = styled.div`
     display: none;
-    alignItems: center;
-    justifyContent: flex-end;
+    align-items: center;
+    justify-content: flex-end;
     ${devices.tablet`
         ${props => (props.disableCompact ? 'display: flex' : '')};
     `};
@@ -62,52 +62,52 @@ const NavContainer = styled.div`
 
 const HeaderNavLink = styled(NavLink)`
     margin: auto;
-    marginLeft: 0;
+    margin-left: 0;
 `;
 
 const StyledNavLink = styled(NavLink)`
-    fontSize: 16px;
+    font-size: 16px;
     padding: 2px 20px;
     margin: 10px 0 10px 15px;
     border: 2px solid ${props => props.color};
     color: ${props => props.color};
-    backgroundColor: ${theme.primary};
-    borderRadius: 25px;
-    textDecoration: none;
+    background-color: ${theme.primary};
+    border-radius: 25px;
+    text-decoration: none;
     transition: all 0.3s;
     text-transform: uppercase;
 
     &:hover {
-        backgroundColor: ${props => props.color};
+        background-color: ${props => props.color};
         color: white;
     }
 
     &:first-child {
         margin: 0;
-        marginLeft: 15px;
+        margin-left: 15px;
     }
 `;
 
 const StyledALink = styled.a`
-    fontSize: 16px;
+    font-size: 16px;
     padding: 2px 20px;
     margin: 10px 0 10px 15px;
     border: 2px solid ${props => props.color};
     color: ${props => props.color};
-    backgroundColor: ${theme.primary};
-    borderRadius: 25px;
-    textDecoration: none;
+    background-color: ${theme.primary};
+    border-radius: 25px;
+    text-decoration: none;
     transition: all 0.3s;
     text-transform: uppercase;
 
     &:hover {
-        backgroundColor: ${props => props.color};
+        background-color: ${props => props.color};
         color: white;
     }
 
     &:first-child {
         margin: 0;
-        marginLeft: 15px;
+        margin-left: 15px;
     }
 `;
 
@@ -123,7 +123,7 @@ const Burger = styled.div`
     .bm-burger-bars {
         background: ${props => props.primaryColor};
         height: 15% !important;
-        borderRadius: 10px;
+        border-radius: 10px;
     }
 
     .bm-cross-button {
@@ -136,7 +136,7 @@ const Burger = styled.div`
     }
 
     .bm-menu {
-        backgroundColor: ${theme.primary};
+        background-color: ${theme.primary};
         padding: 2.5em 1.5em 0;
         font-size: 1.15em;
     }

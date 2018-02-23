@@ -10,25 +10,25 @@ const Wrapper = styled.div`
     position: relative;
 `;
 
-const Header = styled(SectionHeader)`textAlign: center;`;
+const Header = styled(SectionHeader)`text-align: center;`;
 
 const FaqSectionHeader = styled.h2`
-    fontSize: 18px;
-    textTransform: uppercase;
-    marginTop: 30px;
-    marginBottom: 5px;
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-top: 30px;
+    margin-bottom: 5px;
     color: ${props => props.theme.pink};
 `;
 
 const Section = styled.div`
     display: flex;
-    flexWrap: wrap;
+    flex-wrap: wrap;
 `;
 
 const ExpandingItemWrapper = styled.div`
     display: inline-block;
     position: relative;
-    paddingRight: 30px;
+    padding-right: 30px;
     clear: both;
     width: 100%;
 
@@ -41,7 +41,7 @@ const ExpandingItemWrapper = styled.div`
 
 const Link = styled.a`
     color: ${props => props.theme.teal};
-    textDecoration: none;
+    text-decoration: none;
 `;
 
 const FaqItem = connect(state => {

@@ -14,15 +14,15 @@ const Images = {
 };
 
 const Wrapper = styled.div`
-    backgroundColor: ${props => props.theme.secondary};
+    background-color: ${props => props.theme.secondary};
     color: ${props => props.theme.highlight};
-    paddingTop: 80px;
-    paddingBottom: 40px;
+    padding-top: 80px;
+    padding-bottom: 40px;
 `;
 
 const Container = styled.div`
     width: calc(100% - 60px);
-    maxWidth: 800px;
+    max-width: 800px;
     margin: 0 auto;
 
     ${devices.tablet`
@@ -36,32 +36,32 @@ const Container = styled.div`
 
 const SectionHeader = styled.h2`
     display: block;
-    fontSize: 48px;
-    textTransform: uppercase;
-    fontWeight: 500;
+    font-size: 48px;
+    text-transform: uppercase;
+    font-weight: 500;
     margin: 20px 20px 20px 20px;
     min-width: 100%;
 
     ${devices.tablet`
-        marginLeft: 60px;
+        margin-left: 60px;
         min-width: calc(66.666% - 80px);
     `};
 `;
 
 const Flexbox = styled.div`
     display: flex;
-    flexWrap: wrap;
-    justifyContent: space-between;
+    flex-wrap: wrap;
+    justify-content: space-between;
 `;
 
 const Flex1 = styled.div`
     display: flex;
-    flexDirection: column;
-    justifyContent: flex-end;
-    alignItems: center;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
     width: calc(50% - 40px);
     margin: 20px;
-    marginBottom: 40px;
+    marginB-bttom: 40px;
 
     ${devices.tablet`
         width: calc(33.333% - 40px); 
@@ -77,8 +77,8 @@ const Img100 = styled.img`
 
 const Caption = styled.p`
     display: block;
-    fontSize: 16px;
-    textAlign: center;
+    font-size: 16px;
+    text-align: center;
 `;
 
 class HackingCategories extends React.Component {

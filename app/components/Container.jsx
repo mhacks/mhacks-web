@@ -3,7 +3,7 @@ import { devices } from '../styles';
 
 const Container = styled.div`
     width: calc(100% - 60px);
-    maxWidth: 1200px;
+    max-width: 1200px;
     margin: 0 auto;
 
     z-index: 98;

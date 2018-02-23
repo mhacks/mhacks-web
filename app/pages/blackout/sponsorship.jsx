@@ -23,19 +23,19 @@ const Orb = styled.img`
 
 const FlexBox = styled.div`
     display: flex;
-    flexWrap: wrap;
-    justifyContent: center;
+    flex-wrap: wrap;
+    justify-content: center;
 
     ${devices.tablet`
-        flexWrap: nowrap;
+        flex-wrap: nowrap;
     `};
 `;
 
 const Header = styled(SectionHeader)`
-    textAlign: center;
+    text-align: center;
 
     ${devices.tablet`
-        textAlign: left;
+        text-align: left;
     `};
 `;
 
@@ -48,13 +48,13 @@ const Body = styled(SectionBody)`
     `};
 `;
 
-const EmailBody = styled(Body)`fontWeight: 500;`;
+const EmailBody = styled(Body)`font-weight: 500;`;
 
 const Link = styled.a`color: white;`;
 
 const StyledContainer = styled(Container)`
     ${devices.tablet`
-        marginBottom: -150px;
+        margin-bottom: -150px;
     `};
 `;
 

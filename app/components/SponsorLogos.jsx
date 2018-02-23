@@ -6,10 +6,10 @@ import { SponsorThunks } from '../actions';
 
 const SponsorsFlexBox = styled.div`
     display: flex;
-    flexWrap: wrap;
-    maxWidth: 850px;
-    justifyContent: center;
-    alignItems: center;
+    flex-wrap: wrap;
+    max-width: 850px;
+    justify-content: center;
+    align-items: center;
 `;
 
 const LogoWrapper = styled.div`margin: 25px;`;
@@ -17,19 +17,19 @@ const LogoWrapper = styled.div`margin: 25px;`;
 const SmallLogoImg = styled.img`
     height: 40px;
     width: auto;
-    maxWidth: 100%;
+    max-width: 100%;
 `;
 
 const MediumLogoImg = styled.img`
     height: 70px;
     width: auto;
-    maxWidth: 100%;
+    max-width: 100%;
 `;
 
 const LargeLogoImg = styled.img`
     height: 100px;
     width: auto;
-    maxWidth: 100%;
+    max-width: 100%;
 `;
 
 const SmallLogo = props => (

@@ -20,21 +20,21 @@ const OrbImage1 = styled.img`
 
 const FlexBox = styled.div`
     display: flex;
-    flexWrap: wrap;
-    justifyContent: center;
+    flex-wrap: wrap;
+    justify-content: center;
 
     ${devices.tablet`
-        flexWrap: nowrap;
+        flex-wrap: nowrap;
     `};
 `;
 
 const Header = styled(SectionHeader)`
     position: relative;
-    textAlign: center;
+    text-align: center;
 
     ${devices.tablet`
-        textAlign: left;
-        paddingLeft: 15%;
+        text-align: left;
+        padding-left: 15%;
     `};
 `;
 

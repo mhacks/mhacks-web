@@ -24,14 +24,7 @@ var schema = new mongoose.Schema(
         },
         category: {
             type: String,
-            enum: [
-                'emergency',
-                'logistics',
-                'food',
-                'event',
-                'sponsored',
-                'chat'
-            ]
+            enum: ['emergency', 'logistics', 'food', 'event', 'sponsored']
         },
         isApproved: {
             type: Boolean,

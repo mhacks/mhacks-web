@@ -10,27 +10,27 @@ const Header = styled.h3`
     display: inline-block;
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
-    marginTop: 0;
-    marginBottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
     color: ${props => props.color};
-    fontSize: 25px;
+    font-size: 25px;
 `;
 
 const Body = styled.span`
-    paddingLeft: 25px;
-    paddingTop: 10px;
-    paddingBottom: 10px;
-    marginBottom: 5px;
+    padding-left: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
     -webkit-margin-before: 5px;
     -webkit-margin-after: 5px;
     color: ${props => props.color};
-    fontSize: 15px;
+    font-size: 15px;
 `;
 
 const Flexbox = styled.div`
     display: flex;
     cursor: pointer;
-    justifyContent: space-between;
+    justify-content: space-between;
 `;
 
 const Open = keyframes`
@@ -54,18 +54,18 @@ const Close = keyframes`
 
 const Slider = styled.div`
     overflow: hidden;
-    transformOrigin: top center;
+    transform-origin: top center;
 
     ${props =>
         props.open
             ? ` 
         animation: ${Open} 0.3s ease-in-out;
-        animationFillMode: forwards;
+        animation-fill-mode: forwards;
     `
             : `
         height: max-content;
         animation: ${Close} 0.3s ease-in-out;
-        animationFillMode: forwards;
+        animation-fill-mode: forwards;
     `};
 `;
 
@@ -73,21 +73,21 @@ const PlusWrapper = styled.div`
     position: relative;
     display: inline-block;
     margin: 0;
-    marginLeft: 10px;
+    margin-left: 10px;
     height: 15px;
     width: 15px;
-    zIndex: 10;
+    z-index: 10;
 `;
 
 const PlusLine = styled.div`
     display: inline-block;
     position: absolute;
-    zIndex: -1;
-    backgroundColor: ${props => props.color};
+    z-index: -1;
+    background-color: ${props => props.color};
     height: 15px;
     width: 2px;
     top: 10px;
-    transitionDuration: 0.3s;
+    transition-duration: 0.3s;
 
     ${props =>
         !props.vertical

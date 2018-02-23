@@ -8,13 +8,13 @@ const Wrapper = styled.div`
     background: ${props => props.theme.secondary};
     padding: 0;
     height: calc(100vh - 80px);
-    zIndex: 98;
+    z-index: 98;
 `;
 
 const Container = styled.div`
     height: 100%;
     width: calc(100% - 60px);
-    maxWidth: 1200px;
+    max-width: 1200px;
     margin: 0 auto;
 
     display: flex;
@@ -42,16 +42,16 @@ const LogoImage = styled.img`
 `;
 
 const Text = styled.h2`
-    fontSize: 22px;
+    font-size: 22px;
     color: white;
     text-align: center;
-    fontWeight: 500;
-    textAlign: center;
+    font-weight: 500;
+    text-align: center;
     padding: 0 10vw;
     margin: 5px 0;
 
     ${devices.tablet`
-        fontSize: 28px;
+        font-size: 28px;
     `};
 `;
 

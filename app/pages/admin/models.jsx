@@ -10,7 +10,7 @@ const PagePulled = styled(PageContainer)`min-height: calc(100vh - 146px);`;
 
 const Link = styled.a`
     &:hover {
-        textDecoration: underline;
+        text-decoration: underline;
     }
 `;
 

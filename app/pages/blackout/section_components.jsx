@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 
 const SectionHeader = styled.h2`
-    fontSize: 50px;
-    textTransform: uppercase;
+    font-size: 50px;
+    text-transform: uppercase;
     color: ${props => props.theme.teal};
-    textShadow: 0px 0px 50px ${props => props.theme.teal};
+    text-shadow: 0px 0px 50px ${props => props.theme.teal};
 `;
 
 const SectionBody = styled.p`
     color: white;
-    fontSize: 20px;
+    font-size: 20px;
 `;
 
 export { SectionHeader, SectionBody };

@@ -11,13 +11,13 @@ const { SectionWrapper, SectionHeader } = Components;
 const ListItemHeader = styled.h2`
     color: ${props => props.theme.highlight};
     margin: 0;
-    fontSize: 20px;
-    fontWeight: bold;
+    font-size: 20px;
+    font-weight: bold;
 `;
 
 const ListItemTimestamp = styled.p`
-    fontWeight: bold;
-    marginTop: 7px;
+    font-weight: bold;
+    margin-top: 7px;
     color: ${props => props.theme.highlight};
 `;
 

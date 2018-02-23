@@ -7,38 +7,38 @@ import { getUserMetadata } from '../../util/user.js';
 const ProgressBar = styled.div`
     height: 15px;
     background: ${Theme.reverseBackgroundGradient};
-    borderRadius: 25px;
+    border-radius: 25px;
     display: flex;
-    borderStyle: solid;
-    borderWidth: 1px;
-    borderColor: white;
-    backgroundSize: ${props => props.percent}% 100%;
-    backgroundRepeat: no-repeat;
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+    background-size: ${props => props.percent}% 100%;
+    background-repeat: no-repeat;
 `;
 
 const VerticalLine = styled.div`
     background: white;
     height: 100%;
     width: 1px;
-    marginLeft: calc(33% - 1px);
+    margin-left: calc(33% - 1px);
 `;
 
 const Header = styled.h2`
-    fontSize: 20px;
+    font-size: 20px;
     color: ${props => props.theme.highlightSecondary};
-    fontWeight: thin;
+    font-weight: thin;
 `;
 
 const StatusText = styled.h2`
-    fontSize: 20px;
-    textTransform: uppercase;
+    font-size: 20px;
+    text-transform: uppercase;
     color: ${props => props.theme.highlightSecondary};
 `;
 
 const FlexBox = styled.div`
     display: flex;
-    justifyContent: space-between;
-    alignItems: center;
+    justify-content: space-between;
+    align-items: center;
 `;
 
 class ApplicationStatusBar extends React.Component {

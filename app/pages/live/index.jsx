@@ -11,7 +11,6 @@ import {
 } from '../../components';
 import LinkList from './link_list.jsx';
 import Announcements from './announcements.jsx';
-import Chat from './chat';
 import Schedule from './schedule.jsx';
 import Mentorship from './mentorship.jsx';
 import Hardware from './hardware.jsx';
@@ -20,13 +19,13 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const PagePulled = styled(PageContainer)`
     min-height: calc(100vh - 146px);
-    backgroundColor: ${props => props.theme.secondary};
+    background-color: ${props => props.theme.secondary};
     overflow: hidden;
 `;
 
 const Row = styled.div`
     height: 500px;
-    marginBottom: 20px;
+    margin-bottom: 20px;
 `;
 
 const Double = styled.div`
@@ -69,13 +68,6 @@ class LivePage extends React.Component {
                     <Row>
                         <Mentorship />
                     </Row>
-                    {this.props.configurationState.data.is_chat_enabled ? (
-                        <Row>
-                            <Chat />
-                        </Row>
-                    ) : (
-                        undefined
-                    )}
                     <Double>
                         <Hardware />
                         <Resources />

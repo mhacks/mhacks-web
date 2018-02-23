@@ -20,7 +20,7 @@ const Wrapper = styled.div`
     overflow-x: hidden;
     overflow-y: hidden;
     background: rgba(0, 0, 0, 0);
-    zIndex: 5;
+    z-index: 5;
     pointer-events: none;
 `;
 

@@ -35,36 +35,36 @@ const Input = styled.input`
     position: relative;
     z-index: 1;
     width: 70%;
-    maxWidth: calc(100% - ${minButtonWidth});
+    max-width: calc(100% - ${minButtonWidth});
     height: 40px;
     color: ${props => props.primaryColor || '#E6E6E6'};
     border: 3px solid ${props => props.primaryColor || '#E6E6E6'};
-    borderTopLeftRadius: 8px;
-    borderBottomLeftRadius: 8px;
-    backgroundColor: ${props => props.secondaryColor || 'white'};
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: ${props => props.secondaryColor || 'white'};
     padding: 10px;
-    fontSize: 16px;
+    font-size: 16px;
 `;
 
 const Button = styled.button`
     width: 30%;
-    minWidth: ${minButtonWidth};
+    min-width: ${minButtonWidth};
     height: 40px;
     top: 0px;
     left: -3px;
     position: relative;
-    fontSize: 18px;
+    font-size: 18px;
     border: 3px solid ${props => props.primaryColor || '#E6E6E6'};
-    borderRight: 6px solid ${props => props.primaryColor || '#E6E6E6'};
-    borderTopRightRadius: 8px;
-    borderBottomRightRadius: 8px;
-    backgroundColor: ${props => props.primaryColor || '#E6E6E6'};
+    border-right: 6px solid ${props => props.primaryColor || '#E6E6E6'};
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: ${props => props.primaryColor || '#E6E6E6'};
     color: ${props => props.secondaryColor || 'white'};
 `;
 
 const Feedback = styled.div`
     width: 100%;
-    textAlign: left;
+    text-align: left;
     color: ${props => props.color || '#E6E6E6'};
 `;
 

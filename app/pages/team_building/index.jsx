@@ -9,13 +9,13 @@ import { OrderedSet } from 'immutable';
 
 const FlexBox = styled.div`
     display: flex;
-    flexWrap: wrap;
-    justifyContent: center;
-    alignItems: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 `;
 
 const BoxWrapper = styled.div`
-    borderRadius: 25px;
+    border-radius: 25px;
     border: 3px solid ${props => props.theme.primary};
     margin: 20px;
     padding: 20px;
@@ -25,13 +25,13 @@ const BoxWrapper = styled.div`
 
 const Wrapper = styled.div`
     display: flex;
-    flexDirection: column;
-    alignItems: center;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const AlertContainer = styled.div`
     margin: 10px;
-    minWidth: 80%;
+    min-width: 80%;
 `;
 
 const Description = styled.h3`color: ${props => props.theme.primary};`;

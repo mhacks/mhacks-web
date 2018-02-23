@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 const Avatar = styled.img`
     width: inherit;
-    minWidth: 100px;
-    maxWidth: 200px;
+    min-width: 100px;
+    max-width: 200px;
 `;
 
 const BackupPicture = styled.div`
-    backgroundColor: gray;
+    background-color: gray;
     width: 100px;
     height: 100px;
 `;

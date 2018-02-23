@@ -1,9 +1,7 @@
 var config = require('../../config/default.js'),
     User = require('../db/model/User.js'),
     Scan = require('../db/model/Scan.js'),
-    Channel = require('../db/model/Channel.js'),
-    Configuration = require('../db/model/Configuration.js'),
-    Chat = require('../db/elasticsearch/Chat.js');
+    Configuration = require('../db/model/Configuration.js');
 
 Configuration.find({})
     .exec()
@@ -66,39 +64,6 @@ setTimeout(function() {
                                         .catch(err => {
                                             console.error(
                                                 'Error creating scan type "registration":',
-                                                err
-                                            );
-                                        });
-                                }
-                            });
-
-                        Channel.findOne({ name: '#general' })
-                            .exec()
-                            .then(channel => {
-                                if (!channel) {
-                                    Channel.create({
-                                        creator: user,
-                                        name: '#general',
-                                        members: [
-                                            {
-                                                user: user
-                                            }
-                                        ]
-                                    })
-                                        .then(channel => {
-                                            console.log(
-                                                'Created initial channel name "#general":',
-                                                channel
-                                            );
-
-                                            Chat.createEntry(user, {
-                                                message: 'First message',
-                                                channel: channel._id
-                                            });
-                                        })
-                                        .catch(err => {
-                                            console.error(
-                                                'Error creating channel name "#general":',
                                                 err
                                             );
                                         });

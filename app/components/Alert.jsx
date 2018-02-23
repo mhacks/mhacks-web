@@ -4,8 +4,8 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
     color: ${props => props.color};
     background-color: ${props => props.backgroundColor};
-    textAlign: center;
-    borderRadius: 10px;
+    text-align: center;
+    border-radius: 10px;
 `;
 
 const Message = styled.p`

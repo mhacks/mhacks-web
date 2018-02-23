@@ -18,19 +18,19 @@ const FormContainer = styled.div`
 const ListItemHeader = styled.h2`
     color: ${props => props.theme.highlight};
     margin: 0;
-    fontSize: 20px;
-    fontWeight: bold;
+    font-size: 20px;
+    font-weight: bold;
 `;
 
 const ListItemSubheader = styled.p`
     color: white;
     margin: 0;
-    fontSize: 16px;
+    font-size: 16px;
 `;
 
 const ListItemTimestamp = styled.p`
-    fontWeight: bold;
-    marginTop: 7px;
+    font-weight: bold;
+    margin-top: 7px;
     color: ${props => props.theme.highlight};
 `;
 
