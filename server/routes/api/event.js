@@ -63,7 +63,6 @@ router.post('/', authMiddleware('admin', 'api', true), function(req, res) {
 router.get('/:name', function(req, res) {
     Event.find()
         .byName(req.params.name)
-        .exec()
         .then(event => {
             if (event) {
                 res.send({
@@ -90,7 +89,6 @@ router.get('/:name', function(req, res) {
 router.get('/', function(req, res) {
     Event.find()
         .since(req.query.since)
-        .exec()
         .then(events => {
             if (events) {
                 events.sort(sortByDate);

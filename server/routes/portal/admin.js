@@ -8,19 +8,14 @@ var router = require('express').Router(),
 router.get('/', authMiddleware('admin', 'web'), function(req, res) {
     User.find()
         .byToken(req.authToken)
-        .exec()
         .then(user => {
             User.find()
-                .exec()
                 .then(users => {
                     Application.find()
-                        .exec()
                         .then(applications => {
                             Announcement.find()
-                                .exec()
                                 .then(announcements => {
                                     Shortener.find()
-                                        .exec()
                                         .then(shorteners => {
                                             res.render('admin', {
                                                 user: User,

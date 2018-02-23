@@ -30,12 +30,10 @@ module.exports = function(email, type, application, artifactOverride, url) {
         if (!artifactOverride && !url) {
             User.find()
                 .byEmail(email)
-                .exec()
                 .then(user => {
                     if (user) {
                         if (application) {
                             Application.findOne({ user: email })
-                                .exec()
                                 .then(application => {
                                     if (type in application) {
                                         var url = application[type] || '';

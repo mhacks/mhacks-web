@@ -9,7 +9,6 @@ var router = require('express').Router(),
 
 router.get('/', authMiddleware('admin', 'api'), function(req, res) {
     Shortener.find({})
-        .exec()
         .then(short_urls => {
             res.send({
                 status: true,
@@ -39,7 +38,6 @@ router.get('/:id', function(req, res) {
     if (req.params.id) {
         Shortener.find()
             .byShortCode(req.params.id)
-            .exec()
             .then(short_url => {
                 if (short_url) {
                     res.redirect(short_url.long_url);

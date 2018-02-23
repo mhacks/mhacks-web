@@ -26,7 +26,6 @@ module.exports = function(bucket_name, artifactOverride) {
                     if (req.authToken && !artifactOverride) {
                         User.find()
                             .byToken(req.authToken)
-                            .exec()
                             .then(user => {
                                 if (file.fieldname === 'resume') {
                                     directory = 'resumes';
@@ -129,7 +128,6 @@ module.exports = function(bucket_name, artifactOverride) {
                     if (req.authToken && !artifactOverride) {
                         User.find()
                             .byToken(req.authToken)
-                            .exec()
                             .then(user => {
                                 var fileType = file.originalname
                                     .split('.')

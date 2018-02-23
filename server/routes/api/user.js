@@ -113,13 +113,11 @@ router.get('/ticket', authMiddleware('any', 'api'), function(req, res) {
     if (req.user && req.user.application_submitted) {
         Application.find()
             .byEmail(req.user.email)
-            .exec()
             .then(application => {
                 if (application) {
                     if (application.status === 'accepted') {
-                        Confirmation.findOne({ user: req.user })
-                            .exec()
-                            .then(confirmation => {
+                        Confirmation.findOne({ user: req.user }).then(
+                            confirmation => {
                                 if (confirmation) {
                                     res.set('Content-Type', 'image/png');
                                     qrcode.writeQRCodeToStream(
@@ -133,7 +131,8 @@ router.get('/ticket', authMiddleware('any', 'api'), function(req, res) {
                                             Responses.Application.NOT_CONFIRMED
                                     });
                                 }
-                            });
+                            }
+                        );
                     } else {
                         res.status(400).send({
                             status: false,
@@ -162,13 +161,11 @@ router.get('/ticket/passbook', authMiddleware('any', 'api'), function(
     if (req.user && req.user.application_submitted) {
         Application.find()
             .byEmail(req.user.email)
-            .exec()
             .then(application => {
                 if (application) {
                     if (application.status === 'accepted') {
-                        Confirmation.findOne({ user: req.user })
-                            .exec()
-                            .then(confirmation => {
+                        Confirmation.findOne({ user: req.user }).then(
+                            confirmation => {
                                 if (confirmation) {
                                     passbook
                                         .createPass(req.user.email)
@@ -203,7 +200,8 @@ router.get('/ticket/passbook', authMiddleware('any', 'api'), function(
                                             Responses.Application.NOT_CONFIRMED
                                     });
                                 }
-                            });
+                            }
+                        );
                     } else {
                         res.status(400).send({
                             status: false,
@@ -246,151 +244,138 @@ router.post('/ticket/verify', authMiddleware('scanner admin', 'api'), function(
 ) {
     Scan.find()
         .byType('registration')
-        .exec()
         .then(scan => {
             if (scan) {
                 if (req.body.email) {
                     User.find()
                         .byEmail(req.body.email)
-                        .exec()
                         .then(user => {
                             if (user) {
                                 ScanEvent.findOne({
                                     user: user,
                                     event: scan
-                                })
-                                    .exec()
-                                    .then(event => {
-                                        if (event) {
-                                            res.send({
-                                                status: true,
-                                                feedback: [
-                                                    {
-                                                        label: 'Name',
-                                                        value: user.full_name
-                                                    },
-                                                    {
-                                                        label: 'Minor',
-                                                        value: isMinor(
-                                                            user.birthday
-                                                        )
-                                                            ? 'Yes'
-                                                            : 'No'
-                                                    },
-                                                    {
-                                                        label:
-                                                            'Already Scanned',
-                                                        value: 'Yes'
-                                                    }
-                                                ]
-                                            });
-                                        } else {
-                                            Application.find()
-                                                .byEmail(req.body.email)
-                                                .exec()
-                                                .then(application => {
-                                                    if (application) {
-                                                        if (
-                                                            application.status ===
-                                                            'accepted'
-                                                        ) {
-                                                            Confirmation.findOne(
-                                                                {
-                                                                    user
-                                                                }
-                                                            )
-                                                                .exec()
-                                                                .then(
-                                                                    confirmation => {
-                                                                        if (
-                                                                            confirmation
-                                                                        ) {
-                                                                            ScanEvent.create(
-                                                                                {
-                                                                                    user,
-                                                                                    scanner:
-                                                                                        req.user,
-                                                                                    event: scan
-                                                                                }
-                                                                            ).then(
-                                                                                scanevent => {
-                                                                                    user
-                                                                                        .getProfile()
-                                                                                        .then(
-                                                                                            profile => {
-                                                                                                res.send(
+                                }).then(event => {
+                                    if (event) {
+                                        res.send({
+                                            status: true,
+                                            feedback: [
+                                                {
+                                                    label: 'Name',
+                                                    value: user.full_name
+                                                },
+                                                {
+                                                    label: 'Minor',
+                                                    value: isMinor(
+                                                        user.birthday
+                                                    )
+                                                        ? 'Yes'
+                                                        : 'No'
+                                                },
+                                                {
+                                                    label: 'Already Scanned',
+                                                    value: 'Yes'
+                                                }
+                                            ]
+                                        });
+                                    } else {
+                                        Application.find()
+                                            .byEmail(req.body.email)
+
+                                            .then(application => {
+                                                if (application) {
+                                                    if (
+                                                        application.status ===
+                                                        'accepted'
+                                                    ) {
+                                                        Confirmation.findOne({
+                                                            user
+                                                        }).then(
+                                                            confirmation => {
+                                                                if (
+                                                                    confirmation
+                                                                ) {
+                                                                    ScanEvent.create(
+                                                                        {
+                                                                            user,
+                                                                            scanner:
+                                                                                req.user,
+                                                                            event: scan
+                                                                        }
+                                                                    ).then(
+                                                                        scanevent => {
+                                                                            user
+                                                                                .getProfile()
+                                                                                .then(
+                                                                                    profile => {
+                                                                                        res.send(
+                                                                                            {
+                                                                                                status: true,
+                                                                                                scanevent: Object.assign(
+                                                                                                    {},
+                                                                                                    scanevent,
                                                                                                     {
-                                                                                                        status: true,
-                                                                                                        scanevent: Object.assign(
-                                                                                                            {},
-                                                                                                            scanevent,
-                                                                                                            {
-                                                                                                                user: profile
-                                                                                                            }
-                                                                                                        ),
-                                                                                                        feedback: [
-                                                                                                            {
-                                                                                                                label:
-                                                                                                                    'Name',
-                                                                                                                value:
-                                                                                                                    user.full_name
-                                                                                                            },
-                                                                                                            {
-                                                                                                                label:
-                                                                                                                    'Minor',
-                                                                                                                value: isMinor(
-                                                                                                                    user.birthday
-                                                                                                                )
-                                                                                                                    ? 'Yes'
-                                                                                                                    : 'No'
-                                                                                                            }
-                                                                                                        ]
+                                                                                                        user: profile
                                                                                                     }
-                                                                                                );
+                                                                                                ),
+                                                                                                feedback: [
+                                                                                                    {
+                                                                                                        label:
+                                                                                                            'Name',
+                                                                                                        value:
+                                                                                                            user.full_name
+                                                                                                    },
+                                                                                                    {
+                                                                                                        label:
+                                                                                                            'Minor',
+                                                                                                        value: isMinor(
+                                                                                                            user.birthday
+                                                                                                        )
+                                                                                                            ? 'Yes'
+                                                                                                            : 'No'
+                                                                                                    }
+                                                                                                ]
                                                                                             }
                                                                                         );
-                                                                                }
-                                                                            );
-                                                                        } else {
-                                                                            res
-                                                                                .status(
-                                                                                    400
-                                                                                )
-                                                                                .send(
-                                                                                    {
-                                                                                        status: false,
-                                                                                        message:
-                                                                                            Responses
-                                                                                                .Application
-                                                                                                .NOT_CONFIRMED
                                                                                     }
                                                                                 );
                                                                         }
-                                                                    }
-                                                                );
-                                                        } else {
-                                                            res
-                                                                .status(400)
-                                                                .send({
-                                                                    status: false,
-                                                                    message:
-                                                                        Responses
-                                                                            .Application
-                                                                            .NOT_ACCEPTED
-                                                                });
-                                                        }
+                                                                    );
+                                                                } else {
+                                                                    res
+                                                                        .status(
+                                                                            400
+                                                                        )
+                                                                        .send({
+                                                                            status: false,
+                                                                            message:
+                                                                                Responses
+                                                                                    .Application
+                                                                                    .NOT_CONFIRMED
+                                                                        });
+                                                                }
+                                                            }
+                                                        );
                                                     } else {
                                                         res.status(400).send({
                                                             status: false,
                                                             message:
                                                                 Responses
                                                                     .Application
-                                                                    .NOT_SUBMITTED
+                                                                    .NOT_ACCEPTED
                                                         });
                                                     }
-                                                });
-                                        }
-                                    });
+                                                } else {
+                                                    res.status(400).send({
+                                                        status: false,
+                                                        message:
+                                                            Responses
+                                                                .Application
+                                                                .NOT_SUBMITTED
+                                                    });
+                                                }
+                                            });
+                                    }
+                                });
                             } else {
                                 res.status(400).send({
                                     status: false,

@@ -6,13 +6,10 @@ var router = require('express').Router(),
 router.get('/', authMiddleware('reader admin', 'web'), function(req, res) {
     User.find()
         .byToken(req.authToken)
-        .exec()
         .then(user => {
             User.find()
-                .exec()
                 .then(users => {
                     Application.find()
-                        .exec()
                         .then(applications => {
                             res.render('reader', {
                                 application: Application,

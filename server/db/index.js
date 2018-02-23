@@ -77,16 +77,22 @@ function modifySchema(schema) {
             });
         };
 
-        schema.methods.updateFields = function(fields) {
+        schema.methods.updateFields = function(fields, groups) {
+            const updateables = this.getUpdateableFields(groups);
+
             for (const param in fields) {
                 if (fields.hasOwnProperty(param)) {
-                    this[param] = fields[param];
+                    if (updateables.indexOf(param) !== -1) {
+                        this[param] = fields[param];
+                    } else {
+                        return false;
+                    }
                 }
             }
+
             return this.save();
         };
 
-        /*
         schema.statics.getUpdateableFields = function(groups) {
             const updateables = [];
 
@@ -105,13 +111,14 @@ function modifySchema(schema) {
                                 updateables.push(key);
                             }
                         });
+                    } else if (groups === 'admin') {
+                        updateables.push(key);
                     }
                 }
             }
 
             return updateables;
         };
-        */
     }
 }
 

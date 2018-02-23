@@ -20,7 +20,6 @@ router.post('/', function(req, res) {
             Device.findOne({
                 push_id: req.body.push_id
             })
-                .exec()
                 .then(device => {
                     if (device) {
                         var updateable_fields = Device.getUpdateableFields();
@@ -71,7 +70,6 @@ router.post('/', function(req, res) {
             Device.findOne({
                 push_id: req.body.push_id
             })
-                .exec()
                 .then(device => {
                     if (device) {
                         var updateable_fields = Device.getUpdateableFields();

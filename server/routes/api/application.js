@@ -12,7 +12,6 @@ var router = require('express').Router(),
 router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
     User.find()
         .byToken(req.authToken)
-        .exec()
         .then(user => {
             var updateable_fields = Application.getUpdateableFields(req.groups);
             var fields = {};
@@ -286,7 +285,6 @@ router.get(
 router.post('/confirm', function(req, res) {
     User.find()
         .byToken(req.authToken)
-        .exec()
         .then(user => {
             var updateable_fields = Confirmation.getUpdateableFields();
             var fields = {};

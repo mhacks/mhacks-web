@@ -45,17 +45,6 @@ schema.methods.getCoordinates = function() {
     };
 };
 
-schema.methods.updateFields = function(fields) {
-    for (var param in fields) {
-        this[param] = fields[param];
-    }
-    return this.save();
-};
-
-schema.statics.getUpdateableFields = function() {
-    return Object.keys(schema.obj);
-};
-
 modifySchema(schema);
 
 // Initialize the model with the schema, and export it

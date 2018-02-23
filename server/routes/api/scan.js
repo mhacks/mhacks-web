@@ -7,7 +7,6 @@ var router = require('express').Router(),
 
 router.get('/', authMiddleware('admin', 'api'), function(req, res) {
     Scan.find({})
-        .exec()
         .then(scans => {
             res.send({
                 status: true,
@@ -93,7 +92,6 @@ router.get('/image/:id', authMiddleware('admin', 'api'), function(req, res) {
 router.get('/:id', authMiddleware('any', 'api'), function(req, res) {
     if (req.params.id) {
         Scan.findOne({ _id: req.params.id })
-            .exec()
             .then(scan => {
                 if (scan) {
                     res.redirect('/scan/' + req.params.id);
@@ -116,7 +114,6 @@ router.get('/:id', authMiddleware('any', 'api'), function(req, res) {
 router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
     if (req.params.id) {
         Scan.findOne({ _id: req.params.id })
-            .exec()
             .then(scan => {
                 var valid_group = false;
                 req.groups.forEach(function(group) {
@@ -141,7 +138,6 @@ router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
 
                 ScanEvent.findOne({ user: req.user, event: scan })
                     .populate('event', 'name')
-                    .exec()
                     .then(scanevent => {
                         if (scanevent) {
                             req.user.getProfile().then(profile => {

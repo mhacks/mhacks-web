@@ -136,7 +136,6 @@ router.post('/user/groups', function(req, res) {
     if (req.body.email && req.body.group) {
         User.find()
             .byEmail(req.body.email)
-            .exec()
             .then(user => {
                 if (user) {
                     req.body.group.split(',').forEach(function(group) {

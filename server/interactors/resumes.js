@@ -16,10 +16,8 @@ if (config.AWS_ACCESS_KEY_ID && config.AWS_SECRET_ACCESS_KEY) {
 
 function downloadApplicationsZip(resolve, reject) {
     Application.find({})
-        .exec()
         .then(applications => {
             User.find({})
-                .exec()
                 .then(users => {
                     var archive = archiver('zip', {
                         zlib: { level: 9 }
@@ -80,7 +78,6 @@ function downloadApplicationsZip(resolve, reject) {
 
 function downloadUsersZip(resolve, reject) {
     User.find({})
-        .exec()
         .then(users => {
             var archive = archiver('zip', {
                 zlib: { level: 9 }
@@ -127,10 +124,8 @@ function downloadUsersZip(resolve, reject) {
 
 function downloadS3ApplicationsZip(resolve, reject) {
     Application.find({})
-        .exec()
         .then(applications => {
             User.find({})
-                .exec()
                 .then(users => {
                     var archive = archiver('zip', {
                         zlib: { level: 9 }
@@ -213,7 +208,6 @@ function downloadS3ApplicationsZip(resolve, reject) {
 
 function downloadS3UsersZip(resolve, reject) {
     User.find({})
-        .exec()
         .then(users => {
             var archive = archiver('zip', {
                 zlib: { level: 9 }

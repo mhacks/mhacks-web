@@ -13,7 +13,6 @@ router.get('/', function(req, res) {
     authMiddleware('admin', 'api', true, function() {
         Announcement.find()
             .byIsPublic(req.query.since)
-            .exec()
             .then(announcements => {
                 announcements.sort(sortByDate);
 
@@ -24,6 +23,7 @@ router.get('/', function(req, res) {
             })
             .catch(err => {
                 console.error(err);
+
                 res.send({
                     status: false,
                     message: Responses.UNKNOWN_ERROR
@@ -32,9 +32,9 @@ router.get('/', function(req, res) {
     })(req, res, function() {
         Announcement.find()
             .since(req.query.since)
-            .exec()
             .then(announcements => {
                 announcements.sort(sortByDate);
+
                 res.send({
                     status: true,
                     announcements: announcements
@@ -42,6 +42,7 @@ router.get('/', function(req, res) {
             })
             .catch(err => {
                 console.error(err);
+
                 res.send({
                     status: false,
                     message: Responses.UNKNOWN_ERROR
@@ -53,14 +54,7 @@ router.get('/', function(req, res) {
 router.post('/', authMiddleware('admin', 'api'), function(req, res) {
     if (req.session.loggedIn) {
         if (req.body.title && req.body.body && req.body.category) {
-            Announcement.create({
-                title: req.body.title,
-                body: req.body.body,
-                broadcastTime: req.body.broadcastTime,
-                category: req.body.category,
-                isApproved: req.body.isApproved,
-                isSent: req.body.isSent
-            })
+            Announcement.create(req.body)
                 .then(announcement => {
                     if (req.body.push) {
                         PushNotification.create({
@@ -79,6 +73,7 @@ router.post('/', authMiddleware('admin', 'api'), function(req, res) {
                 })
                 .catch(err => {
                     console.error(err);
+
                     res.status(500).send({
                         status: false,
                         message: Responses.UNKNOWN_ERROR
@@ -102,18 +97,27 @@ router.delete('/:id', authMiddleware('admin', 'api'), function(req, res) {
     if (req.params.id) {
         Announcement.findById(req.params.id)
             .then(announcement => {
-                announcement.deleted = true;
-                announcement.save();
+                if (announcement != false) {
+                    announcement.deleted = true;
+                    announcement.save();
 
-                res.send({
-                    status: true,
-                    announcement: announcement
-                });
+                    res.send({
+                        status: true,
+                        announcement: announcement
+                    });
+                } else {
+                    res.status(404).send({
+                        status: false,
+                        message: Responses.NOT_FOUND
+                    });
+                }
             })
             .catch(err => {
+                console.error(err);
+
                 res.status(500).send({
                     status: false,
-                    message: err
+                    message: Responses.UNKNOWN_ERROR
                 });
             });
     } else {
@@ -128,57 +132,23 @@ router.put('/', authMiddleware('admin', 'api'), function(req, res) {
     if (req.session.loggedIn) {
         if (req.body.id) {
             Announcement.findById(req.body.id)
-                .exec()
                 .then(announcement => {
-                    announcement.title = req.body.title || announcement.title;
-                    announcement.body = req.body.body || announcement.body;
-                    announcement.broadcastTime =
-                        req.body.broadcastTime || announcement.broadcastTime;
-                    announcement.category =
-                        req.body.category || announcement.category;
-                    announcement.isApproved =
-                        req.body.isApproved || announcement.isApproved;
-                    announcement.isSent =
-                        req.body.isSent || announcement.isSent;
-                    announcement.save();
-                    res.send({
-                        status: true
-                    });
-                })
-                .catch(err => {
-                    console.error(err);
-                    res.status(500).send({
-                        status: false,
-                        message: Responses.UNKNOWN_ERROR
-                    });
-                });
-        } else {
-            res.status(401).send({
-                status: false,
-                message: Responses.PARAMS_NOT_FOUND
-            });
-        }
-    } else {
-        res.status(401).send({
-            status: false,
-            message: Responses.PERMISSIONS_REQUIRED
-        });
-    }
-});
+                    if (announcement != false) {
+                        announcement.updateFields(req.body);
 
-router.patch('/', authMiddleware('admin', 'api'), function(req, res) {
-    if (req.session.loggedIn) {
-        if (req.body.id) {
-            Announcement.updateOne({ _id: req.body.id }, req.body, {
-                runValidators: true
-            })
-                .then(() => {
-                    res.send({
-                        status: true
-                    });
+                        res.send({
+                            status: true
+                        });
+                    } else {
+                        res.status(404).send({
+                            status: false,
+                            message: Responses.NOT_FOUND
+                        });
+                    }
                 })
                 .catch(err => {
                     console.error(err);
+
                     res.status(500).send({
                         status: false,
                         message: Responses.UNKNOWN_ERROR

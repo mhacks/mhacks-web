@@ -56,7 +56,6 @@ router.get('/avatar/:email', function(req, res) {
 router.get('/floor/:id', function(req, res) {
     if (req.params.id) {
         Floor.findOne({ _id: req.params.id })
-            .exec()
             .then(floor => {
                 artifact(
                     floor._id,

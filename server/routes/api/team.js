@@ -7,7 +7,6 @@ var router = require('express').Router(),
 router.get('/', function(req, res) {
     Team.find()
         .populate('members', 'full_name email avatar')
-        .exec()
         .then(teams => {
             var emails = [];
             var map = {};
@@ -239,7 +238,6 @@ router.delete('/member', function(req, res) {
                     team.save().then(() => {
                         Team.find()
                             .populate('members', 'email full_name avatar')
-                            .exec()
                             .then(teams =>
                                 res.send({
                                     status: true,

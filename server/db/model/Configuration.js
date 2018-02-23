@@ -9,15 +9,33 @@ var {
 // Define the document Schema
 var schema = new mongoose.Schema(
     Object.assign({}, defaultSchema, {
-        app_name: String,
-        start_date: Date,
-        end_date: Date,
+        app_name: {
+            type: String,
+            form: {
+                auth_groups: ['admin'],
+                label: 'App Name'
+            }
+        },
+        start_date: {
+            type: Date,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Start Date'
+            }
+        },
+        end_date: {
+            type: Date,
+            form: {
+                auth_groups: ['admin'],
+                label: 'End Date'
+            }
+        },
         is_live_page_enabled: {
             type: Boolean,
             default: false,
             required: true,
             form: {
-                user_editable: true,
+                auth_groups: ['admin'],
                 label: 'Live Page Enabled'
             }
         },
@@ -26,7 +44,7 @@ var schema = new mongoose.Schema(
             default: false,
             required: true,
             form: {
-                user_editable: true,
+                auth_groups: ['admin'],
                 label: 'Team Building Enabled'
             }
         },
@@ -35,8 +53,8 @@ var schema = new mongoose.Schema(
             default: false,
             required: true,
             form: {
-                user_editable: true,
-                label: 'Application Open'
+                auth_groups: ['admin'],
+                label: 'Applications Open'
             }
         },
         is_blackout_page_enabled: {
@@ -44,7 +62,7 @@ var schema = new mongoose.Schema(
             default: true,
             required: true,
             form: {
-                user_editable: true,
+                auth_groups: ['admin'],
                 label: 'Blackout page enabled'
             }
         },
@@ -53,7 +71,7 @@ var schema = new mongoose.Schema(
             form: {
                 type_override: 'submit',
                 label: 'Save',
-                user_editable: true
+                auth_groups: ['admin']
             }
         }
     }),

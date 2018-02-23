@@ -56,11 +56,6 @@ schema.methods.getFloorImage = function() {
     return config.host + '/v1/artifact/floor/' + this.id;
 };
 
-// All fields are updateable as only admins have power to update.
-schema.statics.getUpdateableFields = function() {
-    return Object.keys(schema.obj);
-};
-
 modifySchema(schema);
 
 // Initialize the model with the schema, and export it

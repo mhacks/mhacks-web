@@ -7,7 +7,6 @@ var router = require('express').Router(),
 // Handles get requests for /v1/configuration
 router.get('/', function(req, res) {
     ConfigurationSchema.findOne({})
-        .exec()
         .then(configuration => {
             if (configuration) {
                 authMiddleware('any', 'api', false, function() {
@@ -61,7 +60,6 @@ router.get('/', function(req, res) {
 //This is on route /configuration/control so it is not easily accessible (it should be limited to one configuration at a time)
 router.post('/control', authMiddleware('admin', 'api'), function(req, res) {
     ConfigurationSchema.findOne()
-        .exec()
         .then(configuration => {
             if (configuration) {
                 configuration.app_name =

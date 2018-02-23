@@ -18,7 +18,6 @@ module.exports = function(
             var token = authorization.replace(/Bearer /gi, '');
             User.find()
                 .byToken(token)
-                .exec()
                 .then(user => {
                     if (user) {
                         user
@@ -89,7 +88,6 @@ module.exports = function(
         } else if (req.session && req.session.loggedIn) {
             User.find()
                 .byEmail(req.session.email)
-                .exec()
                 .then(user => {
                     if (user) {
                         verifyEmail(verifiedEmail, user)

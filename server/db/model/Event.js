@@ -52,7 +52,6 @@ schema.query.byLocationName = function(name) {
         .model('Location')
         .find()
         .byName(name)
-        .exec()
         .then(loc => {
             return this.find({
                 location: loc._id
@@ -68,18 +67,6 @@ schema.methods.getCoordinates = function() {
         latitude: this.latitude,
         longitude: this.longitude
     };
-};
-
-schema.methods.updateFields = function(fields) {
-    for (var param in fields) {
-        this[param] = fields[param];
-    }
-    return this.save();
-};
-
-// All fields are updateable as only admins have power to create and update.
-schema.statics.getUpdateableFields = function() {
-    return Object.keys(schema.obj);
 };
 
 modifySchema(schema);
