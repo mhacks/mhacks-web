@@ -5,7 +5,9 @@ import { PageContainer } from '../../components';
 import { AdminThunks } from '../../actions';
 import ReactTable from 'react-table';
 
-const PagePulled = styled(PageContainer)`min-height: calc(100vh - 146px);`;
+const PagePulled = styled(PageContainer)`
+    min-height: calc(100vh - 146px);
+`;
 
 /* Page Component */
 class Model extends React.Component {

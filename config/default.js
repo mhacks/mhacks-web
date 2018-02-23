@@ -36,9 +36,9 @@ module.exports = {
         process.env.PASSWORD_RESEST_EMAIL_SUBJECT ||
         'Reset Your MHacks Password',
     deployment_secret: process.env.DEPLOYMENT_SECRET || 'some_secret',
-    deployment_users: (process.env.DEPLOYMENT_USERS ||
-        'antoniomika,konnor,roball')
-        .split(','),
+    deployment_users: (
+        process.env.DEPLOYMENT_USERS || 'antoniomika,konnor,roball'
+    ).split(','),
     deploy: {
         staging: {
             host: process.env.STAGING_HOST || 'staging0.aws.mhacks.org',
@@ -123,9 +123,9 @@ module.exports = {
     admin_name: process.env.ADMIN_NAME || 'Administrator',
     admin_email: process.env.ADMIN_EMAIL || 'hackathon@umich.edu',
     admin_password: process.env.ADMIN_PASSWORD || 'hunter2',
-    site_association: (process.env.SITE_ASSOCIATION ||
-        '478C74MJ7T.com.MPowered.MHacks')
-        .split(',')
+    site_association: (
+        process.env.SITE_ASSOCIATION || '478C74MJ7T.com.MPowered.MHacks'
+    ).split(',')
 };
 
 function parseBool(value, default_value) {

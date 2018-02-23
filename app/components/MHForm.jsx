@@ -7,9 +7,13 @@ import Alert from './Alert.jsx';
 import Select from 'react-select';
 import 'react-select/dist/react-select.min.css';
 
-const FileUploadContainer = styled.div`margin: 10px 0;`;
+const FileUploadContainer = styled.div`
+    margin: 10px 0;
+`;
 
-const AlertContainer = styled.div`margin-top: 30px;`;
+const AlertContainer = styled.div`
+    margin-top: 30px;
+`;
 
 const SectionHeader = styled.h3`
     font-size: 22px;

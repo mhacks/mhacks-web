@@ -34,11 +34,17 @@ const AlertContainer = styled.div`
     min-width: 80%;
 `;
 
-const Description = styled.h3`color: ${props => props.theme.primary};`;
+const Description = styled.h3`
+    color: ${props => props.theme.primary};
+`;
 
-const Bullet = styled.h4`color: ${props => props.theme.highlight};`;
+const Bullet = styled.h4`
+    color: ${props => props.theme.highlight};
+`;
 
-const PagePulled = styled(PageContainer)`min-height: calc(100vh - 146px);`;
+const PagePulled = styled(PageContainer)`
+    min-height: calc(100vh - 146px);
+`;
 
 class TeamBuilding extends React.Component {
     constructor(props) {
@@ -257,7 +263,8 @@ class TeamBuilding extends React.Component {
                             notifications: this.state.notifications.delete(
                                 notification
                             )
-                        })}
+                        })
+                    }
                 />
             </PagePulled>
         );

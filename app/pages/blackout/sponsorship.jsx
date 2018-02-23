@@ -48,9 +48,13 @@ const Body = styled(SectionBody)`
     `};
 `;
 
-const EmailBody = styled(Body)`font-weight: 500;`;
+const EmailBody = styled(Body)`
+    font-weight: 500;
+`;
 
-const Link = styled.a`color: white;`;
+const Link = styled.a`
+    color: white;
+`;
 
 const StyledContainer = styled(Container)`
     ${devices.tablet`

@@ -124,7 +124,8 @@ class Apply extends React.Component {
                             notifications: this.state.notifications.delete(
                                 notification
                             )
-                        })}
+                        })
+                    }
                 />
             </PageContainer>
         );

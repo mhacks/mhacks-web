@@ -78,8 +78,9 @@ class Dashboard extends React.Component {
                         Unverified Email
                     </SectionHeader>
                     <p>
-                        You should have received a verification email at{' ' + userData.email}.
-                        If not, you can request another one by clicking{' '}
+                        You should have received a verification email at{' ' +
+                            userData.email}. If not, you can request another one
+                        by clicking{' '}
                         <Link
                             onClick={this.onClickRequestEmailVerification}
                             color={this.props.theme.highlight}

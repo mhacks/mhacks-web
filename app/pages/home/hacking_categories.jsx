@@ -61,7 +61,7 @@ const Flex1 = styled.div`
     align-items: center;
     width: calc(50% - 40px);
     margin: 20px;
-    marginB-bttom: 40px;
+    marginb-bttom: 40px;
 
     ${devices.tablet`
         width: calc(33.333% - 40px); 

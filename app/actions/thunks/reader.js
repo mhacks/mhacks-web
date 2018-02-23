@@ -131,28 +131,27 @@ export default class ReaderThunks {
 
             const token = localStorage.getItem('jwt');
 
-            return ReaderRequests.reviewApplications(
-                token,
-                review
-            ).then(response => {
-                if (response.status == 200) {
-                    response.json().then(json => {
-                        dispatch({
-                            type: actions.REVIEW_APPLICATIONS_SUCCESS,
-                            data: review,
-                            message: json.message
+            return ReaderRequests.reviewApplications(token, review).then(
+                response => {
+                    if (response.status == 200) {
+                        response.json().then(json => {
+                            dispatch({
+                                type: actions.REVIEW_APPLICATIONS_SUCCESS,
+                                data: review,
+                                message: json.message
+                            });
                         });
-                    });
-                } else {
-                    response.json().then(json => {
-                        dispatch({
-                            type: actions.REVIEW_APPLICATIONS_ERROR,
-                            error: response.status,
-                            message: json.message
+                    } else {
+                        response.json().then(json => {
+                            dispatch({
+                                type: actions.REVIEW_APPLICATIONS_ERROR,
+                                error: response.status,
+                                message: json.message
+                            });
                         });
-                    });
+                    }
                 }
-            });
+            );
         };
     }
 

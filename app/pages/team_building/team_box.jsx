@@ -54,9 +54,13 @@ const FlexBox = styled.div`
     margin-left: 20px;
 `;
 
-const EmailLink = styled.a`word-break: break-all;`;
+const EmailLink = styled.a`
+    word-break: break-all;
+`;
 
-const ButtonWrapper = styled.div`margin: 20px;`;
+const ButtonWrapper = styled.div`
+    margin: 20px;
+`;
 
 const StyledProfilePicture = styled(ProfilePicture)`
     max-width: 80px;

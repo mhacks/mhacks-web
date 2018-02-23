@@ -50,7 +50,9 @@ const CompanyName = styled.div`
     text-align: right;
 `;
 
-const Link = styled.a`color: ${theme.secondary};`;
+const Link = styled.a`
+    color: ${theme.secondary};
+`;
 
 class Sponsorship extends React.Component {
     render() {

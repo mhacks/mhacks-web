@@ -29,7 +29,9 @@ const Link = styled.a`
     text-decoration: none;
 `;
 
-const ExpandingItemWrapper = styled.div`margin-top: 5px;`;
+const ExpandingItemWrapper = styled.div`
+    margin-top: 5px;
+`;
 
 const FlexBox = styled.div`
     display: flex;

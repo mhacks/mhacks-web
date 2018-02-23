@@ -64,7 +64,9 @@ const MLHBanner = styled.a`
     z-index: 99;
 `;
 
-const MLHBannerImage = styled.img`width: 100%;`;
+const MLHBannerImage = styled.img`
+    width: 100%;
+`;
 
 class Landing extends React.Component {
     render() {

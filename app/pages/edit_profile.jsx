@@ -44,7 +44,9 @@ const Flexer = styled.div`
     flex-direction: column;
 `;
 
-const InputContainer = styled.div`margin-bottom: 30px;`;
+const InputContainer = styled.div`
+    margin-bottom: 30px;
+`;
 
 const ButtonGroup = styled.div`
     display: flex;
@@ -66,9 +68,13 @@ const SubsectionHeader = styled.h3`
     margin: 26px 0 0 0;
 `;
 
-const FileUploadContainer = styled.div`margin-top: 10px;`;
+const FileUploadContainer = styled.div`
+    margin-top: 10px;
+`;
 
-const AlertContainer = styled.div`margin-top: 30px;`;
+const AlertContainer = styled.div`
+    margin-top: 30px;
+`;
 
 const Subhead = styled.p`
     margin: 20px 0 0 0;
@@ -301,8 +307,9 @@ class EditProfile extends React.Component {
                         Unverified Email
                     </SectionHeader>
                     <p>
-                        You should have received a verification email at{' ' + userData.user.email}.
-                        If not, you can request another one by clicking{' '}
+                        You should have received a verification email at{' ' +
+                            userData.user.email}. If not, you can request
+                        another one by clicking{' '}
                         <Link
                             onClick={this.onClickRequestEmailVerification}
                             color={this.props.theme.highlight}
@@ -482,19 +489,17 @@ class EditProfile extends React.Component {
                                     <FileUpload
                                         fileTitle="Resume"
                                         defaultColor={
-                                            userData.user.isResumeUploaded ? (
-                                                this.props.theme.success
-                                            ) : (
-                                                this.props.theme.primary
-                                            )
+                                            userData.user.isResumeUploaded
+                                                ? this.props.theme.success
+                                                : this.props.theme.primary
                                         }
                                         hoverColor={this.props.theme.secondary}
                                         activeColor={this.props.theme.success}
                                         onFileSelect={this.handleFileUpload}
                                         defaultText={
-                                            userData.user.isResumeUploaded ? (
-                                                'Resume Uploaded'
-                                            ) : null
+                                            userData.user.isResumeUploaded
+                                                ? 'Resume Uploaded'
+                                                : null
                                         }
                                     />
                                 </FileUploadContainer>
@@ -502,19 +507,17 @@ class EditProfile extends React.Component {
                                     <FileUpload
                                         fileTitle="Profile Picture"
                                         defaultColor={
-                                            this.state.avatars.length > 2 ? (
-                                                this.props.theme.success
-                                            ) : (
-                                                this.props.theme.primary
-                                            )
+                                            this.state.avatars.length > 2
+                                                ? this.props.theme.success
+                                                : this.props.theme.primary
                                         }
                                         hoverColor={this.props.theme.secondary}
                                         activeColor={this.props.theme.success}
                                         onFileSelect={this.handlePictureUpload}
                                         defaultText={
-                                            this.state.avatars.length > 2 ? (
-                                                'Profile Picture Uploaded'
-                                            ) : null
+                                            this.state.avatars.length > 2
+                                                ? 'Profile Picture Uploaded'
+                                                : null
                                         }
                                     />
                                 </FileUploadContainer>
@@ -660,7 +663,8 @@ class EditProfile extends React.Component {
                             notifications: this.state.notifications.delete(
                                 notification
                             )
-                        })}
+                        })
+                    }
                 />
             </PageContainer>
         );

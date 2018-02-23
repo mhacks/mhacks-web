@@ -34,7 +34,9 @@ const ListItemTimestamp = styled.p`
     color: ${props => props.theme.highlight};
 `;
 
-const ListItemDescription = styled.p`color: white;`;
+const ListItemDescription = styled.p`
+    color: white;
+`;
 
 const Seperator = styled.div`
     background: ${props => props.theme.highlight};
@@ -175,15 +177,17 @@ class Mentorship extends React.Component {
                 <ListItemDescription theme={this.props.theme}>
                     Location: {ticket.location_description}
                 </ListItemDescription>
-                {isUserTickets ? isComplete ? null : (
-                    <RoundedButton
-                        onClick={() => {
-                            this.completeTicket(ticket, false);
-                        }}
-                        color={this.props.theme.highlight}
-                    >
-                        Complete
-                    </RoundedButton>
+                {isUserTickets ? (
+                    isComplete ? null : (
+                        <RoundedButton
+                            onClick={() => {
+                                this.completeTicket(ticket, false);
+                            }}
+                            color={this.props.theme.highlight}
+                        >
+                            Complete
+                        </RoundedButton>
+                    )
                 ) : isAccepted && !isComplete ? (
                     <RoundedButton
                         onClick={() => {

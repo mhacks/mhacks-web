@@ -10,7 +10,9 @@ const Wrapper = styled.div`
     position: relative;
 `;
 
-const Header = styled(SectionHeader)`text-align: center;`;
+const Header = styled(SectionHeader)`
+    text-align: center;
+`;
 
 const FaqSectionHeader = styled.h2`
     font-size: 18px;

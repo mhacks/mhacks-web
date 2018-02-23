@@ -1,7 +1,9 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-const Wrapper = styled.div`display: inline-block;`;
+const Wrapper = styled.div`
+    display: inline-block;
+`;
 
 const Header = styled.h3`
     display: inline-block;

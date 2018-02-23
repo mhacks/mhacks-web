@@ -9,7 +9,9 @@ import { isMinor } from '../../util/user.js';
 import { SubsectionContainer, UtilityBar } from './components';
 import { generateCSV } from './util.js';
 
-const A = styled.a`text-align: center;`;
+const A = styled.a`
+    text-align: center;
+`;
 
 const BadMark = <FontAwesome name="times" style={{ color: '#FF4136' }} />;
 const GoodMark = <FontAwesome name="check" style={{ color: '#2ECC40' }} />;

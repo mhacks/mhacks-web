@@ -308,14 +308,14 @@ var schema = new mongoose.Schema(
                         label: 'Experience',
                         auth_groups: ['admin', 'reader', 'sponsor'],
                         type_override: 'array',
-                        array_select: Object.keys(
-                            experienceOptions
-                        ).map(key => {
-                            return {
-                                value: key,
-                                label: experienceOptions[key]
-                            };
-                        })
+                        array_select: Object.keys(experienceOptions).map(
+                            key => {
+                                return {
+                                    value: key,
+                                    label: experienceOptions[key]
+                                };
+                            }
+                        )
                     }
                 },
                 {

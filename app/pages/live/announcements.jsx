@@ -21,7 +21,9 @@ const ListItemTimestamp = styled.p`
     color: ${props => props.theme.highlight};
 `;
 
-const ListItemDescription = styled.p`color: white;`;
+const ListItemDescription = styled.p`
+    color: white;
+`;
 
 const Seperator = styled.div`
     background: ${props => props.theme.highlight};

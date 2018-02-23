@@ -44,7 +44,9 @@ const Flexer = styled.div`
     flex-direction: column;
 `;
 
-const InputContainer = styled.div`margin: 20px 0 30px 0;`;
+const InputContainer = styled.div`
+    margin: 20px 0 30px 0;
+`;
 
 const ButtonGroup = styled.div`
     display: flex;
@@ -59,7 +61,9 @@ const SectionHeader = styled.h2`
     margin: 0;
 `;
 
-const FileUploadContainer = styled.div`margin-top: 30px;`;
+const FileUploadContainer = styled.div`
+    margin-top: 30px;
+`;
 
 const SubsectionHeader = styled.h3`
     font-size: 22px;
@@ -68,7 +72,9 @@ const SubsectionHeader = styled.h3`
     margin: 26px 0 0 0;
 `;
 
-const AlertContainer = styled.div`margin-top: 30px;`;
+const AlertContainer = styled.div`
+    margin-top: 30px;
+`;
 
 const LegalText = styled.p`
     font-size: 15px;
@@ -400,18 +406,17 @@ class Apply extends React.Component {
                                                                     : '')
                                                             }
                                                             labelWidth={
-                                                                field.wideLabel ? (
-                                                                    '150px'
-                                                                ) : (
-                                                                    '100px'
-                                                                )
+                                                                field.wideLabel
+                                                                    ? '150px'
+                                                                    : '100px'
                                                             }
                                                             key={field.key}
                                                         >
                                                             {field.autocomplete ? (
                                                                 <Autocomplete
                                                                     getItemValue={item =>
-                                                                        item}
+                                                                        item
+                                                                    }
                                                                     items={
                                                                         field.autocomplete
                                                                     }
@@ -522,13 +527,11 @@ class Apply extends React.Component {
                                                                     }
                                                                     renderMenu={
                                                                         field.key ===
-                                                                        'university' ? (
-                                                                            this
-                                                                                .handleRenderMenu
-                                                                        ) : (
-                                                                            this
-                                                                                .defaultHandleRenderMenu
-                                                                        )
+                                                                        'university'
+                                                                            ? this
+                                                                                  .handleRenderMenu
+                                                                            : this
+                                                                                  .defaultHandleRenderMenu
                                                                     }
                                                                 />
                                                             ) : (
@@ -674,11 +677,9 @@ class Apply extends React.Component {
                                                                     : '')
                                                             }
                                                             labelWidth={
-                                                                field.wideLabel ? (
-                                                                    '150px'
-                                                                ) : (
-                                                                    '100px'
-                                                                )
+                                                                field.wideLabel
+                                                                    ? '150px'
+                                                                    : '100px'
                                                             }
                                                             key={field.key}
                                                         >
@@ -748,11 +749,9 @@ class Apply extends React.Component {
                                                                     : '')
                                                             }
                                                             labelWidth={
-                                                                field.wideLabel ? (
-                                                                    '150px'
-                                                                ) : (
-                                                                    '100px'
-                                                                )
+                                                                field.wideLabel
+                                                                    ? '150px'
+                                                                    : '100px'
                                                             }
                                                             key={field.key}
                                                         >
@@ -823,11 +822,9 @@ class Apply extends React.Component {
                                                                     : '')
                                                             }
                                                             labelWidth={
-                                                                field.wideLabel ? (
-                                                                    '150px'
-                                                                ) : (
-                                                                    '100px'
-                                                                )
+                                                                field.wideLabel
+                                                                    ? '150px'
+                                                                    : '100px'
                                                             }
                                                             key={field.key}
                                                         >
@@ -926,11 +923,9 @@ class Apply extends React.Component {
                                         <FileUpload
                                             fileTitle="Resume"
                                             defaultColor={
-                                                app && app.resume ? (
-                                                    this.props.theme.success
-                                                ) : (
-                                                    this.props.theme.primary
-                                                )
+                                                app && app.resume
+                                                    ? this.props.theme.success
+                                                    : this.props.theme.primary
                                             }
                                             hoverColor={
                                                 this.props.theme.secondary
@@ -950,18 +945,16 @@ class Apply extends React.Component {
                                                 this.handleFileUpload(e);
                                             }}
                                             defaultText={
-                                                app && app.resume ? (
-                                                    'Resume Uploaded'
-                                                ) : null
+                                                app && app.resume
+                                                    ? 'Resume Uploaded'
+                                                    : null
                                             }
                                         />
 
                                         {(app && app.resume) ||
-                                        this.state.resume ? (
-                                            this.removeError('choosefile')
-                                        ) : (
-                                            this.addError('choosefile')
-                                        )}
+                                        this.state.resume
+                                            ? this.removeError('choosefile')
+                                            : this.addError('choosefile')}
 
                                         {(!(app && app.resume) &&
                                             !this.state.resume) ||
@@ -987,30 +980,25 @@ class Apply extends React.Component {
                                             this.validationErrors.length > 0
                                         }
                                         style={
-                                            this.validationErrors.length > 0 ? (
-                                                {
-                                                    backgroundColor: this.props
-                                                        .theme.secondary
-                                                }
-                                            ) : (
-                                                {}
-                                            )
+                                            this.validationErrors.length > 0
+                                                ? {
+                                                      backgroundColor: this
+                                                          .props.theme.secondary
+                                                  }
+                                                : {}
                                         }
                                         hover={
-                                            this.validationErrors.length > 0 ? (
-                                                'color: ' +
-                                                this.props.theme.primary
-                                            ) : (
-                                                ''
-                                            )
+                                            this.validationErrors.length > 0
+                                                ? 'color: ' +
+                                                  this.props.theme.primary
+                                                : ''
                                         }
                                     >
-                                        {this.validationErrors.length > 0 ? (
-                                            `${this.validationErrors
-                                                .length} Error(s)`
-                                        ) : (
-                                            'Save'
-                                        )}
+                                        {this.validationErrors.length > 0
+                                            ? `${
+                                                  this.validationErrors.length
+                                              } Error(s)`
+                                            : 'Save'}
                                     </RoundedButton>
                                 </ButtonGroup>
                                 <LegalText>
@@ -1031,7 +1019,8 @@ class Apply extends React.Component {
                             notifications: this.state.notifications.delete(
                                 notification
                             )
-                        })}
+                        })
+                    }
                 />
             </PageContainer>
         );

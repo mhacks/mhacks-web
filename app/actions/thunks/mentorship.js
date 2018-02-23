@@ -180,30 +180,31 @@ export default class MentorshipThunks {
                 type: actions.LOAD_MENTORSHIP_TICKET_FORM_REQUEST
             });
 
-            return getResponseFromRoute(
-                endpoints.MENTORSHIP_TICKET_FORM
-            ).then(response => {
-                if (response.status == 200) {
-                    response.json().then(json => {
-                        dispatch({
-                            type: actions.LOAD_MENTORSHIP_TICKET_FORM_SUCCESS,
-                            data: {
-                                form: json.form,
-                                FieldTypes: json.types
-                            },
-                            message: json.message
+            return getResponseFromRoute(endpoints.MENTORSHIP_TICKET_FORM).then(
+                response => {
+                    if (response.status == 200) {
+                        response.json().then(json => {
+                            dispatch({
+                                type:
+                                    actions.LOAD_MENTORSHIP_TICKET_FORM_SUCCESS,
+                                data: {
+                                    form: json.form,
+                                    FieldTypes: json.types
+                                },
+                                message: json.message
+                            });
                         });
-                    });
-                } else {
-                    response.json().then(json => {
-                        dispatch({
-                            type: actions.LOAD_MENTORSHIP_TICKET_FORM_ERROR,
-                            error: json.status,
-                            message: json.message
+                    } else {
+                        response.json().then(json => {
+                            dispatch({
+                                type: actions.LOAD_MENTORSHIP_TICKET_FORM_ERROR,
+                                error: json.status,
+                                message: json.message
+                            });
                         });
-                    });
+                    }
                 }
-            });
+            );
         };
     }
 }

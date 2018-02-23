@@ -101,11 +101,9 @@ class FileUpload extends React.Component {
                         Upload {this.props.fileTitle}
                     </Button>
                     <FileName>
-                        {this.state.fileSelected ? (
-                            this.state.fileName
-                        ) : (
-                            this.props.defaultText || 'No file chosen...'
-                        )}
+                        {this.state.fileSelected
+                            ? this.state.fileName
+                            : this.props.defaultText || 'No file chosen...'}
                     </FileName>
                     <Input
                         type="file"

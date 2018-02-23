@@ -23,7 +23,9 @@ const Seperator = styled.div`
     margin: 15px auto;
 `;
 
-const ImageWrapper = styled.div`text-align: center;`;
+const ImageWrapper = styled.div`
+    text-align: center;
+`;
 
 const QRImage = styled.img`
     width: 80%;
@@ -82,7 +84,9 @@ class TravelTicketSection extends React.Component {
         return (
             <div>
                 <h4>
-                    Travel Reimbursement Offered: Up to ${this.props.userState.data.user.reimbursement}
+                    Travel Reimbursement Offered: Up to ${
+                        this.props.userState.data.user.reimbursement
+                    }
                 </h4>
                 <p>
                     To remain eligible for your reimbursement, you must email
