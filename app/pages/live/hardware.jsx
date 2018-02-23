@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import Components from './components.jsx';
 const { SectionWrapper, SectionHeader } = Components;
 
-const P = styled.p`color: ${props => props.theme.highlight};`;
+const P = styled.p`
+    color: ${props => props.theme.highlight};
+`;
 
 const A = styled.a`
     color: white;

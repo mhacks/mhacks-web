@@ -65,29 +65,27 @@ export default class ProfileThunks {
 
             const token = localStorage.getItem('jwt');
 
-            return ProfileRequests.updateProfile(
-                token,
-                profile,
-                files
-            ).then(response => {
-                if (response.status == 200) {
-                    response.json().then(json => {
-                        dispatch({
-                            type: actions.UPDATE_PROFILE_SUCCESS,
-                            data: { user: profile },
-                            message: json.message
+            return ProfileRequests.updateProfile(token, profile, files).then(
+                response => {
+                    if (response.status == 200) {
+                        response.json().then(json => {
+                            dispatch({
+                                type: actions.UPDATE_PROFILE_SUCCESS,
+                                data: { user: profile },
+                                message: json.message
+                            });
                         });
-                    });
-                } else {
-                    response.json().then(json => {
-                        dispatch({
-                            type: actions.UPDATE_PROFILE_ERROR,
-                            error: response.status,
-                            message: json.message
+                    } else {
+                        response.json().then(json => {
+                            dispatch({
+                                type: actions.UPDATE_PROFILE_ERROR,
+                                error: response.status,
+                                message: json.message
+                            });
                         });
-                    });
+                    }
                 }
-            });
+            );
         };
     }
 
@@ -100,28 +98,27 @@ export default class ProfileThunks {
 
             const token = localStorage.getItem('jwt');
 
-            return ProfileRequests.sendVerificationEmail(
-                token,
-                email
-            ).then(response => {
-                if (response.status == 200) {
-                    response.json().then(json => {
-                        dispatch({
-                            type: actions.SEND_VERIFICATION_SUCCESS,
-                            data: email,
-                            message: json.message
+            return ProfileRequests.sendVerificationEmail(token, email).then(
+                response => {
+                    if (response.status == 200) {
+                        response.json().then(json => {
+                            dispatch({
+                                type: actions.SEND_VERIFICATION_SUCCESS,
+                                data: email,
+                                message: json.message
+                            });
                         });
-                    });
-                } else {
-                    response.json().then(json => {
-                        dispatch({
-                            type: actions.SEND_VERIFICATION_ERROR,
-                            error: response.status,
-                            message: json.message
+                    } else {
+                        response.json().then(json => {
+                            dispatch({
+                                type: actions.SEND_VERIFICATION_ERROR,
+                                error: response.status,
+                                message: json.message
+                            });
                         });
-                    });
+                    }
                 }
-            });
+            );
         };
     }
 

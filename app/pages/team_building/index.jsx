@@ -9,13 +9,13 @@ import { OrderedSet } from 'immutable';
 
 const FlexBox = styled.div`
     display: flex;
-    flexWrap: wrap;
-    justifyContent: center;
-    alignItems: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 `;
 
 const BoxWrapper = styled.div`
-    borderRadius: 25px;
+    border-radius: 25px;
     border: 3px solid ${props => props.theme.primary};
     margin: 20px;
     padding: 20px;
@@ -25,20 +25,26 @@ const BoxWrapper = styled.div`
 
 const Wrapper = styled.div`
     display: flex;
-    flexDirection: column;
-    alignItems: center;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const AlertContainer = styled.div`
     margin: 10px;
-    minWidth: 80%;
+    min-width: 80%;
 `;
 
-const Description = styled.h3`color: ${props => props.theme.primary};`;
+const Description = styled.h3`
+    color: ${props => props.theme.primary};
+`;
 
-const Bullet = styled.h4`color: ${props => props.theme.highlight};`;
+const Bullet = styled.h4`
+    color: ${props => props.theme.highlight};
+`;
 
-const PagePulled = styled(PageContainer)`min-height: calc(100vh - 146px);`;
+const PagePulled = styled(PageContainer)`
+    min-height: calc(100vh - 146px);
+`;
 
 class TeamBuilding extends React.Component {
     constructor(props) {
@@ -257,7 +263,8 @@ class TeamBuilding extends React.Component {
                             notifications: this.state.notifications.delete(
                                 notification
                             )
-                        })}
+                        })
+                    }
                 />
             </PagePulled>
         );

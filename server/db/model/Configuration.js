@@ -39,15 +39,6 @@ var schema = new mongoose.Schema(
                 label: 'Application Open'
             }
         },
-        is_chat_enabled: {
-            type: Boolean,
-            default: false,
-            required: true,
-            form: {
-                user_editable: true,
-                label: 'Chat Enabled'
-            }
-        },
         is_blackout_page_enabled: {
             type: Boolean,
             default: true,

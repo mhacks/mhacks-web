@@ -20,7 +20,7 @@ const Wrapper = styled.div`
     overflow-x: hidden;
     overflow-y: hidden;
     background: rgba(0, 0, 0, 0);
-    zIndex: 5;
+    z-index: 5;
     pointer-events: none;
 `;
 
@@ -69,11 +69,9 @@ class Animations extends React.Component {
                     top={topPos}
                     left={Math.floor(Math.random() * this.state.pageWidth)}
                     sOpacity={
-                        topPos - 300 < 0 ? (
-                            0.28
-                        ) : (
-                            (height - topPos) / (height - 300) * 0.23 + 0.05
-                        )
+                        topPos - 300 < 0
+                            ? 0.28
+                            : (height - topPos) / (height - 300) * 0.23 + 0.05
                     }
                     key={i}
                 >

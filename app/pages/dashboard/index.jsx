@@ -21,15 +21,15 @@ const StyledDiv = styled.div`
 `;
 
 const FullscreenColumnContainer = styled.div`
-    maxWidth: 500px;
+    max-width: 500px;
     margin: 0 auto;
-    minHeight: calc(100vh - 30px - 2rem - 80px);
+    min-height: calc(100vh - 30px - 2rem - 80px);
     padding: 20px 20px 50px 20px;
 `;
 
 const SectionHeader = styled.h2`
-    textTransform: uppercase;
-    fontSize: 24px;
+    text-transform: uppercase;
+    font-size: 24px;
     color: ${props => props.color};
     margin: 0;
 `;
@@ -78,8 +78,9 @@ class Dashboard extends React.Component {
                         Unverified Email
                     </SectionHeader>
                     <p>
-                        You should have received a verification email at{' ' + userData.email}.
-                        If not, you can request another one by clicking{' '}
+                        You should have received a verification email at{' ' +
+                            userData.email}. If not, you can request another one
+                        by clicking{' '}
                         <Link
                             onClick={this.onClickRequestEmailVerification}
                             color={this.props.theme.highlight}

@@ -23,52 +23,58 @@ import { OrderedSet } from 'immutable';
 const StyledSelect = styled.select`
     background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+)
         no-repeat 95% 50%;
-    paddingLeft: 10px;
+    padding-left: 10px;
     appearance: none;
-    borderColor: rgb(215, 215, 215);
-    flexGrow: 1;
+    border-color: rgb(215, 215, 215);
+    flex-grow: 1;
     height: 36px;
     width: 100%;
-    fontSize: 16px;
+    font-size: 16px;
 `;
 
 const FullscreenColumnContainer = styled.div`
-    maxWidth: 500px;
+    max-width: 500px;
     margin: 0 auto;
-    minHeight: calc(100vh - 30px - 2rem - 80px);
+    min-height: calc(100vh - 30px - 2rem - 80px);
     padding: 20px 20px 50px 20px;
 `;
 
 const Flexer = styled.div`
     display: flex;
-    flexDirection: column;
+    flex-direction: column;
 `;
 
-const InputContainer = styled.div`marginBottom: 30px;`;
+const InputContainer = styled.div`
+    margin-bottom: 30px;
+`;
 
 const ButtonGroup = styled.div`
     display: flex;
-    flexDirection: row;
-    justifyContent: space-between;
+    flex-direction: row;
+    justify-content: space-between;
 `;
 
 const SectionHeader = styled.h2`
-    textTransform: uppercase;
-    fontSize: 24px;
+    text-transform: uppercase;
+    font-size: 24px;
     color: ${props => props.color};
     margin: 0;
 `;
 
 const SubsectionHeader = styled.h3`
-    fontSize: 22px;
+    font-size: 22px;
     color: ${props => props.color};
-    fontWeight: 500;
+    font-weight: 500;
     margin: 26px 0 0 0;
 `;
 
-const FileUploadContainer = styled.div`marginTop: 10px;`;
+const FileUploadContainer = styled.div`
+    margin-top: 10px;
+`;
 
-const AlertContainer = styled.div`marginTop: 30px;`;
+const AlertContainer = styled.div`
+    margin-top: 30px;
+`;
 
 const Subhead = styled.p`
     margin: 20px 0 0 0;
@@ -301,8 +307,9 @@ class EditProfile extends React.Component {
                         Unverified Email
                     </SectionHeader>
                     <p>
-                        You should have received a verification email at{' ' + userData.user.email}.
-                        If not, you can request another one by clicking{' '}
+                        You should have received a verification email at{' ' +
+                            userData.user.email}. If not, you can request
+                        another one by clicking{' '}
                         <Link
                             onClick={this.onClickRequestEmailVerification}
                             color={this.props.theme.highlight}
@@ -482,19 +489,17 @@ class EditProfile extends React.Component {
                                     <FileUpload
                                         fileTitle="Resume"
                                         defaultColor={
-                                            userData.user.isResumeUploaded ? (
-                                                this.props.theme.success
-                                            ) : (
-                                                this.props.theme.primary
-                                            )
+                                            userData.user.isResumeUploaded
+                                                ? this.props.theme.success
+                                                : this.props.theme.primary
                                         }
                                         hoverColor={this.props.theme.secondary}
                                         activeColor={this.props.theme.success}
                                         onFileSelect={this.handleFileUpload}
                                         defaultText={
-                                            userData.user.isResumeUploaded ? (
-                                                'Resume Uploaded'
-                                            ) : null
+                                            userData.user.isResumeUploaded
+                                                ? 'Resume Uploaded'
+                                                : null
                                         }
                                     />
                                 </FileUploadContainer>
@@ -502,19 +507,17 @@ class EditProfile extends React.Component {
                                     <FileUpload
                                         fileTitle="Profile Picture"
                                         defaultColor={
-                                            this.state.avatars.length > 2 ? (
-                                                this.props.theme.success
-                                            ) : (
-                                                this.props.theme.primary
-                                            )
+                                            this.state.avatars.length > 2
+                                                ? this.props.theme.success
+                                                : this.props.theme.primary
                                         }
                                         hoverColor={this.props.theme.secondary}
                                         activeColor={this.props.theme.success}
                                         onFileSelect={this.handlePictureUpload}
                                         defaultText={
-                                            this.state.avatars.length > 2 ? (
-                                                'Profile Picture Uploaded'
-                                            ) : null
+                                            this.state.avatars.length > 2
+                                                ? 'Profile Picture Uploaded'
+                                                : null
                                         }
                                     />
                                 </FileUploadContainer>
@@ -660,7 +663,8 @@ class EditProfile extends React.Component {
                             notifications: this.state.notifications.delete(
                                 notification
                             )
-                        })}
+                        })
+                    }
                 />
             </PageContainer>
         );

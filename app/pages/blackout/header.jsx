@@ -9,13 +9,13 @@ const HeaderLogoImage = require('../../../static/icons/blackout-logo.png');
 const HeaderWrapper = styled.div`
     display: flex;
     height: 90px;
-    alignItems: center;
-    justifyContent: center;
+    align-items: center;
+    justify-content: center;
 `;
 
 const HeaderLogoWrapper = styled.div`
     display: flex;
-    alignItems: center;
+    align-items: center;
     height: 90%;
 `;
 

@@ -4,11 +4,11 @@ import theme from '../styles/theme.js';
 
 const Timer = styled.p`
     color: ${theme.highlight};
-    fontWeight: bold;
-    fontSize: 30px;
+    font-weight: bold;
+    font-size: 30px;
     padding: 20px 0;
     margin: 0;
-    textAlign: center;
+    text-align: center;
 `;
 
 class Countdown extends React.Component {

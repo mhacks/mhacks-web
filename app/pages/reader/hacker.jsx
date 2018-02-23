@@ -12,7 +12,9 @@ import FontAwesome from 'react-fontawesome';
 import { HeaderSection, SubsectionContainer, UtilityBar } from './components';
 import { generateCSV } from './util.js';
 
-const A = styled.a`text-align: center;`;
+const A = styled.a`
+    text-align: center;
+`;
 
 const BadMark = <FontAwesome name="times" style={{ color: '#FF4136' }} />;
 const GoodMark = <FontAwesome name="check" style={{ color: '#2ECC40' }} />;
@@ -410,11 +412,9 @@ class ReaderPage extends React.Component {
                                     <p>{data.departing_from}</p>
                                     <h4>Needs Reimbursement</h4>
                                     <p>
-                                        {data.needs_reimbursement ? (
-                                            'true'
-                                        ) : (
-                                            'false'
-                                        )}
+                                        {data.needs_reimbursement
+                                            ? 'true'
+                                            : 'false'}
                                     </p>
                                     <h4>Requested Reimbursement</h4>
                                     <p>{data.requested_reimbursement}</p>

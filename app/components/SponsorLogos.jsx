@@ -6,30 +6,32 @@ import { SponsorThunks } from '../actions';
 
 const SponsorsFlexBox = styled.div`
     display: flex;
-    flexWrap: wrap;
-    maxWidth: 850px;
-    justifyContent: center;
-    alignItems: center;
+    flex-wrap: wrap;
+    max-width: 850px;
+    justify-content: center;
+    align-items: center;
 `;
 
-const LogoWrapper = styled.div`margin: 25px;`;
+const LogoWrapper = styled.div`
+    margin: 25px;
+`;
 
 const SmallLogoImg = styled.img`
     height: 40px;
     width: auto;
-    maxWidth: 100%;
+    max-width: 100%;
 `;
 
 const MediumLogoImg = styled.img`
     height: 70px;
     width: auto;
-    maxWidth: 100%;
+    max-width: 100%;
 `;
 
 const LargeLogoImg = styled.img`
     height: 100px;
     width: auto;
-    maxWidth: 100%;
+    max-width: 100%;
 `;
 
 const SmallLogo = props => (
@@ -87,31 +89,31 @@ class SponsorLogos extends React.Component {
         return (
             <SponsorsFlexBox>
                 {Object.keys(this.state.sponsorState.data).map(function(level) {
-                    return mainComponent.state.sponsorState.data[
-                        level
-                    ].map(function(sponsor) {
-                        var SizeComponent = null;
+                    return mainComponent.state.sponsorState.data[level].map(
+                        function(sponsor) {
+                            var SizeComponent = null;
 
-                        switch (sponsor.logo_size) {
-                            case 'small':
-                                SizeComponent = SmallLogo;
-                                break;
-                            case 'medium':
-                                SizeComponent = MediumLogo;
-                                break;
-                            case 'large':
-                                SizeComponent = LargeLogo;
-                                break;
+                            switch (sponsor.logo_size) {
+                                case 'small':
+                                    SizeComponent = SmallLogo;
+                                    break;
+                                case 'medium':
+                                    SizeComponent = MediumLogo;
+                                    break;
+                                case 'large':
+                                    SizeComponent = LargeLogo;
+                                    break;
+                            }
+
+                            return (
+                                <SizeComponent
+                                    key={sponsor.domain}
+                                    src={sponsor.logo_url}
+                                    href={sponsor.url}
+                                />
+                            );
                         }
-
-                        return (
-                            <SizeComponent
-                                key={sponsor.domain}
-                                src={sponsor.logo_url}
-                                href={sponsor.url}
-                            />
-                        );
-                    });
+                    );
                 })}
             </SponsorsFlexBox>
         );

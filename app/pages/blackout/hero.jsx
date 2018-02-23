@@ -13,13 +13,13 @@ const HeroContainer = styled.div`
     padding: 20px 0;
     overflow: auto;
     display: flex;
-    flexDirection: column;
+    flex-direction: column;
     overflow: visible;
 
     ${devices.desktop`
         padding: 75px 0;
-        flexDirection: row;
-        alignItems: center;
+        flex-direction: row;
+        align-items: center;
     `};
 `;
 
@@ -32,8 +32,8 @@ const LeftSideContainer = styled.div`
 `;
 
 const TextSubmitPositioner = styled.div`
-    marginBottom: 20px;
-    textAlign: center;
+    margin-bottom: 20px;
+    text-align: center;
     ${devices.desktop`
         position: absolute;
         margin: 0;
@@ -42,13 +42,13 @@ const TextSubmitPositioner = styled.div`
 `;
 
 const Text = styled.h2`
-    fontSize: 22px;
-    marginBottom: 0;
-    textAlign: center;
+    font-size: 22px;
+    margin-bottom: 0;
+    text-align: center;
     ${devices.desktop`
-        fontSize: 28px;
+        font-size: 28px;
         margin: -50px 15px 25px 0;
-        textAlign: left;
+        text-align: left;
     `};
 `;
 
@@ -64,7 +64,7 @@ const Orb = styled.div`
     width: 30%;
     height: 30%;
     filter: blur(50px);
-    borderRadius: 80px;
+    border-radius: 80px;
     position: absolute;
     display: none;
 
@@ -74,13 +74,13 @@ const Orb = styled.div`
 `;
 
 const PinkOrb = styled(Orb)`
-    backgroundColor: ${props => props.theme.pink};
+    background-color: ${props => props.theme.pink};
     top: 0;
     right: 20%;
 `;
 
 const TealOrb = styled(Orb)`
-    backgroundColor: ${props => props.theme.teal};
+    background-color: ${props => props.theme.teal};
     bottom: -10%;
     left: 20%;
 `;

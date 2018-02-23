@@ -7,34 +7,38 @@ import Alert from './Alert.jsx';
 import Select from 'react-select';
 import 'react-select/dist/react-select.min.css';
 
-const FileUploadContainer = styled.div`margin: 10px 0;`;
+const FileUploadContainer = styled.div`
+    margin: 10px 0;
+`;
 
-const AlertContainer = styled.div`marginTop: 30px;`;
+const AlertContainer = styled.div`
+    margin-top: 30px;
+`;
 
 const SectionHeader = styled.h3`
-    fontSize: 22px;
+    font-size: 22px;
     color: ${props => props.color};
-    fontWeight: 500;
+    font-weight: 500;
     margin: 26px 0 0 0;
 `;
 
 const Input = styled.input`
     height: 36px;
     width: 100%;
-    paddingLeft: 10px;
+    padding-left: 10px;
     border: 1px solid ${props => (props.hasError ? 'red' : '#ccc')};
-    borderRadius: 4px;
-    fontSize: 1em;
+    border-radius: 4px;
+    font-size: 1em;
 `;
 
 const TextArea = styled.textarea`
     padding: 10px;
-    borderColor: ${props => (props.hasError ? 'red' : 'rgb(215, 215, 215)')};
-    flexGrow: 1;
+    border-color: ${props => (props.hasError ? 'red' : 'rgb(215, 215, 215)')};
+    flex-grow: 1;
     height: 120px;
     width: 100%;
-    borderRadius: 5px;
-    fontSize: 1em;
+    border-radius: 5px;
+    font-size: 1em;
 `;
 
 class MHForm extends React.Component {

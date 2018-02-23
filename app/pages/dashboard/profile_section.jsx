@@ -16,7 +16,7 @@ const Container = styled.div`
 
 const FlexBox = styled.div`
     display: flex;
-    alignItems: center;
+    align-items: center;
 `;
 
 const ProfileContainer = styled.div`
@@ -24,7 +24,9 @@ const ProfileContainer = styled.div`
     height: auto;
 `;
 
-const ContentContainer = styled.div`marginLeft: 10px;`;
+const ContentContainer = styled.div`
+    margin-left: 10px;
+`;
 
 class ProfileSection extends React.Component {
     render() {

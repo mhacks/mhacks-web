@@ -19,17 +19,17 @@ const TabGroupContainer = styled.div`
 
 const Wrapper = styled.div`
     height: 100%;
-    borderRadius: 20px;
+    border-radius: 20px;
     padding: 20px;
     background: ${props => props.theme.generateBackgroundGradient(45, 0.2)};
 `;
 
 const ListHeader = styled.h3`
     color: ${props => props.theme.highlight};
-    textAlign: center;
-    textTransform: uppercase;
-    fontSize: 24px;
-    fontWeight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 24px;
+    font-weight: bold;
     margin: 0 0 20px 0;
 `;
 
@@ -37,7 +37,7 @@ const CalendarContainer = styled.div`
     height: calc(100% - 107px);
 
     .rbc-today {
-        backgroundColor: transparent;
+        background-color: transparent;
     }
 
     .rbc-time-header {
@@ -57,11 +57,11 @@ const CalendarContainer = styled.div`
     }
 
     .rbc-time-content > * + * > * {
-        borderLeft: none;
+        border-left: none;
     }
 
     .rbc-timeslot-group {
-        borderBottom: 1px solid ${props => props.theme.highlight};
+        border-bottom: 1px solid ${props => props.theme.highlight};
     }
 
     .rbc-time-slot.rbc-label {
@@ -74,7 +74,7 @@ const CalendarContainer = styled.div`
 
     .rbc-day-slot .rbc-event {
         &:hover {
-            zIndex: 999;
+            z-index: 999;
             height: 100px !important;
         }
     }

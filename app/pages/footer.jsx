@@ -11,32 +11,32 @@ const TwitterImg = require('../../static/icons/twitter.png');
 
 /* Footer Style */
 const FooterWrapper = styled.div`
-    backgroundColor: ${props => props.theme.secondary};
+    background-color: ${props => props.theme.secondary};
 `;
 
 const HomeFooter = styled.footer`
     position: relative;
     display: flex;
     padding: 1rem;
-    alignContent: space-between;
-    alignItems: center;
-    flexWrap: wrap;
+    align-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
 `;
 
 const Text = styled.h2`
     color: white;
-    fontSize: 12px;
-    marginBottom: 0;
-    textAlign: left;
+    font-size: 12px;
+    margin-bottom: 0;
+    text-align: left;
     flex: 1;
-    textAlign: center;
-    minWidth: 100%;
+    text-align: center;
+    min-width: 100%;
     order: 1;
 
     ${devices.tablet`
-        textAlign: left;
-        textIndent: 50px;
-        minWidth: 0;
+        text-align: left;
+        text-indent: 50px;
+        min-width: 0;
         order: 0;
     `};
 `;
@@ -45,14 +45,14 @@ const Flexer = styled.div`
     flex: 1;
     position: relative;
     display: flex;
-    justifyContent: center;
-    minWidth: 100%;
+    justify-content: center;
+    min-width: 100%;
 
     ${devices.tablet`
-        textAlign: left;
-        minWidth: 0;
+        text-align: left;
+        min-width: 0;
 
-        ${props => (props.right ? 'justifyContent: flex-end;' : '')}
+        ${props => (props.right ? 'justify-content: flex-end;' : '')}
     `};
 `;
 
@@ -65,7 +65,7 @@ const ImgButtonWrapper = styled.div`
     height: 20px;
     width: 20px;
     margin: 5px;
-    textAlign: center;
+    text-align: center;
     display: block;
 `;
 
@@ -73,26 +73,26 @@ const LegalLinks = styled.div`
     flex: 1;
     position: relative;
     display: flex;
-    flexDirection: column;
-    justifyContent: center;
-    minWidth: 100%;
-    textAlign: center;
-    fontSize: 12px;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 100%;
+    text-align: center;
+    font-size: 12px;
     order: 2;
-    marginTop: 10px;
+    margin-top: 10px;
 
     ${devices.tablet`
-        textAlign: right;
-        minWidth: 0;
-        marginTop: 0;
+        text-align: right;
+        min-width: 0;
+        margin-top: 0;
 
-        ${props => (props.right ? 'justifyContent: flex-end;' : '')}
+        ${props => (props.right ? 'justify-content: flex-end;' : '')}
     `};
 `;
 
 const LegalLink = styled.a`
     color: ${props => props.theme.highlight};
-    textDecoration: none;
+    text-decoration: none;
 `;
 
 const ImgButton = props => (

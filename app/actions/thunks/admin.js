@@ -44,30 +44,30 @@ export default class AdminThunks {
                 type: actions.ADMIN_LOAD_MODEL_REQUEST
             });
 
-            getResponseFromRoute(
-                endpoints.ADMIN_MODELS + '/' + model
-            ).then(response => {
-                if (response.status == 200) {
-                    response.json().then(json => {
-                        dispatch({
-                            type: actions.ADMIN_LOAD_MODEL_SUCCESS,
-                            data: {
-                                [model]: {
-                                    documents: json.documents
+            getResponseFromRoute(endpoints.ADMIN_MODELS + '/' + model).then(
+                response => {
+                    if (response.status == 200) {
+                        response.json().then(json => {
+                            dispatch({
+                                type: actions.ADMIN_LOAD_MODEL_SUCCESS,
+                                data: {
+                                    [model]: {
+                                        documents: json.documents
+                                    }
                                 }
-                            }
+                            });
                         });
-                    });
-                } else {
-                    response.json().then(json => {
-                        dispatch({
-                            type: actions.ADMIN_LOAD_MODEL_FAILURE,
-                            error: json.status,
-                            message: json.message
+                    } else {
+                        response.json().then(json => {
+                            dispatch({
+                                type: actions.ADMIN_LOAD_MODEL_FAILURE,
+                                error: json.status,
+                                message: json.message
+                            });
                         });
-                    });
+                    }
                 }
-            });
+            );
         };
     }
 }

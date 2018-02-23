@@ -24,60 +24,66 @@ import { OrderedSet } from 'immutable';
 const StyledSelect = styled.select`
     background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+)
         no-repeat 95% 50%;
-    paddingLeft: 10px;
+    padding-left: 10px;
     appearance: none;
-    borderColor: rgb(215, 215, 215);
-    flexGrow: 1;
+    border-color: rgb(215, 215, 215);
+    flex-grow: 1;
     height: 36px;
     width: 100%;
 `;
 
 const FormContainer = styled.div`
-    maxWidth: 500px;
+    max-width: 500px;
     margin: 0 auto;
-    minHeight: calc(100vh - 30px - 2rem - 80px);
+    min-height: calc(100vh - 30px - 2rem - 80px);
     padding: 20px 20px 50px 20px;
 `;
 
 const Flexer = styled.div`
     display: flex;
-    flexDirection: column;
+    flex-direction: column;
 `;
 
-const InputContainer = styled.div`margin: 20px 0 30px 0;`;
+const InputContainer = styled.div`
+    margin: 20px 0 30px 0;
+`;
 
 const ButtonGroup = styled.div`
     display: flex;
-    flexDirection: row;
-    justifyContent: space-between;
+    flex-direction: row;
+    justify-content: space-between;
 `;
 
 const SectionHeader = styled.h2`
-    fontSize: 40px;
+    font-size: 40px;
     color: ${props => props.color};
-    fontWeight: 500;
+    font-weight: 500;
     margin: 0;
 `;
 
-const FileUploadContainer = styled.div`marginTop: 30px;`;
+const FileUploadContainer = styled.div`
+    margin-top: 30px;
+`;
 
 const SubsectionHeader = styled.h3`
-    fontSize: 22px;
+    font-size: 22px;
     color: ${props => props.color};
-    fontWeight: 500;
+    font-weight: 500;
     margin: 26px 0 0 0;
 `;
 
-const AlertContainer = styled.div`marginTop: 30px;`;
+const AlertContainer = styled.div`
+    margin-top: 30px;
+`;
 
 const LegalText = styled.p`
-    fontSize: 15px;
+    font-size: 15px;
     color: gray;
 `;
 
 const LegalLink = styled.a`
     color: ${props => props.theme.highlight};
-    textDecoration: none;
+    text-decoration: none;
 `;
 
 const Subhead = styled.p`
@@ -400,18 +406,17 @@ class Apply extends React.Component {
                                                                     : '')
                                                             }
                                                             labelWidth={
-                                                                field.wideLabel ? (
-                                                                    '150px'
-                                                                ) : (
-                                                                    '100px'
-                                                                )
+                                                                field.wideLabel
+                                                                    ? '150px'
+                                                                    : '100px'
                                                             }
                                                             key={field.key}
                                                         >
                                                             {field.autocomplete ? (
                                                                 <Autocomplete
                                                                     getItemValue={item =>
-                                                                        item}
+                                                                        item
+                                                                    }
                                                                     items={
                                                                         field.autocomplete
                                                                     }
@@ -522,13 +527,11 @@ class Apply extends React.Component {
                                                                     }
                                                                     renderMenu={
                                                                         field.key ===
-                                                                        'university' ? (
-                                                                            this
-                                                                                .handleRenderMenu
-                                                                        ) : (
-                                                                            this
-                                                                                .defaultHandleRenderMenu
-                                                                        )
+                                                                        'university'
+                                                                            ? this
+                                                                                  .handleRenderMenu
+                                                                            : this
+                                                                                  .defaultHandleRenderMenu
                                                                     }
                                                                 />
                                                             ) : (
@@ -674,11 +677,9 @@ class Apply extends React.Component {
                                                                     : '')
                                                             }
                                                             labelWidth={
-                                                                field.wideLabel ? (
-                                                                    '150px'
-                                                                ) : (
-                                                                    '100px'
-                                                                )
+                                                                field.wideLabel
+                                                                    ? '150px'
+                                                                    : '100px'
                                                             }
                                                             key={field.key}
                                                         >
@@ -748,11 +749,9 @@ class Apply extends React.Component {
                                                                     : '')
                                                             }
                                                             labelWidth={
-                                                                field.wideLabel ? (
-                                                                    '150px'
-                                                                ) : (
-                                                                    '100px'
-                                                                )
+                                                                field.wideLabel
+                                                                    ? '150px'
+                                                                    : '100px'
                                                             }
                                                             key={field.key}
                                                         >
@@ -823,11 +822,9 @@ class Apply extends React.Component {
                                                                     : '')
                                                             }
                                                             labelWidth={
-                                                                field.wideLabel ? (
-                                                                    '150px'
-                                                                ) : (
-                                                                    '100px'
-                                                                )
+                                                                field.wideLabel
+                                                                    ? '150px'
+                                                                    : '100px'
                                                             }
                                                             key={field.key}
                                                         >
@@ -926,11 +923,9 @@ class Apply extends React.Component {
                                         <FileUpload
                                             fileTitle="Resume"
                                             defaultColor={
-                                                app && app.resume ? (
-                                                    this.props.theme.success
-                                                ) : (
-                                                    this.props.theme.primary
-                                                )
+                                                app && app.resume
+                                                    ? this.props.theme.success
+                                                    : this.props.theme.primary
                                             }
                                             hoverColor={
                                                 this.props.theme.secondary
@@ -950,18 +945,16 @@ class Apply extends React.Component {
                                                 this.handleFileUpload(e);
                                             }}
                                             defaultText={
-                                                app && app.resume ? (
-                                                    'Resume Uploaded'
-                                                ) : null
+                                                app && app.resume
+                                                    ? 'Resume Uploaded'
+                                                    : null
                                             }
                                         />
 
                                         {(app && app.resume) ||
-                                        this.state.resume ? (
-                                            this.removeError('choosefile')
-                                        ) : (
-                                            this.addError('choosefile')
-                                        )}
+                                        this.state.resume
+                                            ? this.removeError('choosefile')
+                                            : this.addError('choosefile')}
 
                                         {(!(app && app.resume) &&
                                             !this.state.resume) ||
@@ -987,30 +980,25 @@ class Apply extends React.Component {
                                             this.validationErrors.length > 0
                                         }
                                         style={
-                                            this.validationErrors.length > 0 ? (
-                                                {
-                                                    backgroundColor: this.props
-                                                        .theme.secondary
-                                                }
-                                            ) : (
-                                                {}
-                                            )
+                                            this.validationErrors.length > 0
+                                                ? {
+                                                      backgroundColor: this
+                                                          .props.theme.secondary
+                                                  }
+                                                : {}
                                         }
                                         hover={
-                                            this.validationErrors.length > 0 ? (
-                                                'color: ' +
-                                                this.props.theme.primary
-                                            ) : (
-                                                ''
-                                            )
+                                            this.validationErrors.length > 0
+                                                ? 'color: ' +
+                                                  this.props.theme.primary
+                                                : ''
                                         }
                                     >
-                                        {this.validationErrors.length > 0 ? (
-                                            `${this.validationErrors
-                                                .length} Error(s)`
-                                        ) : (
-                                            'Save'
-                                        )}
+                                        {this.validationErrors.length > 0
+                                            ? `${
+                                                  this.validationErrors.length
+                                              } Error(s)`
+                                            : 'Save'}
                                     </RoundedButton>
                                 </ButtonGroup>
                                 <LegalText>
@@ -1031,7 +1019,8 @@ class Apply extends React.Component {
                             notifications: this.state.notifications.delete(
                                 notification
                             )
-                        })}
+                        })
+                    }
                 />
             </PageContainer>
         );

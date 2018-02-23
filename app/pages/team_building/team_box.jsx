@@ -14,53 +14,57 @@ const Seperator = styled.div`
 `;
 
 const Header = styled.h2`
-    fontSize: 20px;
+    font-size: 20px;
     color: ${props => props.theme.primary};
-    fontWeight: bold;
+    font-weight: bold;
 `;
 
 const Description = styled.p`
-    fontSize: 15px;
+    font-size: 15px;
     color: ${props => props.theme.primary};
     margin: 20px;
 `;
 
 const BoxWrapper = styled.div`
-    borderRadius: 25px;
+    border-radius: 25px;
     border: 3px solid ${props => props.theme.primary};
-    textAlign: center;
+    text-align: center;
     margin: 20px;
-    minWidth: 250px;
+    min-width: 250px;
     overflow: hidden;
-    maxWidth: 80%;
+    max-width: 80%;
 
     ${devices.tablet`
-        maxWidth: 40%;
+        max-width: 40%;
     `} ${devices.giant`
-        maxWidth: 30%;
+        max-width: 30%;
     `};
 `;
 
 const Row = styled.div`
     display: flex;
-    alignItems: center;
+    align-items: center;
     margin: 20px;
 `;
 
 const FlexBox = styled.div`
     display: flex;
-    flexDirection: column;
-    textAlign: left;
-    marginLeft: 20px;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 20px;
 `;
 
-const EmailLink = styled.a`wordBreak: break-all;`;
+const EmailLink = styled.a`
+    word-break: break-all;
+`;
 
-const ButtonWrapper = styled.div`margin: 20px;`;
+const ButtonWrapper = styled.div`
+    margin: 20px;
+`;
 
 const StyledProfilePicture = styled(ProfilePicture)`
-    maxWidth: 80px;
-    minWidth: 80px;
+    max-width: 80px;
+    min-width: 80px;
 `;
 
 const PictureWrapper = styled.div`

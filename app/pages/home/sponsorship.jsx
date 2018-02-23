@@ -11,46 +11,48 @@ import { SponsorLogos } from '../../components';
 import theme from '../../styles/theme.js';
 
 const Wrapper = styled.div`
-    backgroundColor: white;
+    background-color: white;
     padding: 80px 0;
 `;
 
 const SectionBody = styled.p`
     color: ${theme.secondary};
-    fontSize: 16px;
-    maxWidth: 600px;
+    font-size: 16px;
+    max-width: 600px;
 `;
 
 const FlexBox = styled.div`
     display: flex;
-    justifyContent: center;
-    flexWrap: wrap;
-    maxWidth: 640px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 640px;
 
     ${devices.tablet`
-        flexWrap: nowrap;
+        flex-wrap: nowrap;
     `};
 `;
 
 const QuoteWrapper = styled.div`
     margin: 20px;
-    justifyContent: center;
+    justify-content: center;
     padding: 0;
 `;
 
 const QuoteText = styled.div`
     color: ${theme.highlight};
-    fontSize: ${theme.fontSize};
-    textAlign: left;
+    font-size: ${theme.fontSize};
+    text-align: left;
 `;
 
 const CompanyName = styled.div`
     color: ${theme.highlight};
-    fontSize: ${theme.fontSize};
-    textAlign: right;
+    font-size: ${theme.fontSize};
+    text-align: right;
 `;
 
-const Link = styled.a`color: ${theme.secondary};`;
+const Link = styled.a`
+    color: ${theme.secondary};
+`;
 
 class Sponsorship extends React.Component {
     render() {
