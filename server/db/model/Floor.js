@@ -11,46 +11,71 @@ var schema = new mongoose.Schema(
     Object.assign({}, defaultSchema, {
         name: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Name'
+            }
         },
         desc: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Description'
+            }
         },
         level: {
             type: Number,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Level'
+            }
         },
         floor_image: {
             type: String,
-            required: true
+            form: {
+                auth_groups: ['admin'],
+                label: 'Floor Image',
+                type_override: 'file'
+            }
         },
         nw_latitude: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Northwest Latitude'
+            }
         },
         nw_longitude: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Northwest Longitude'
+            }
         },
         se_latitude: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Southeast Latitude'
+            }
         },
         se_longitude: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Southeast Longitude'
+            }
         }
     }),
     defaultOptions
 );
-
-schema.methods.updateFields = function(fields) {
-    for (var param in fields) {
-        this[param] = fields[param];
-    }
-    return this.save();
-};
 
 schema.methods.getFloorImage = function() {
     return config.host + '/v1/artifact/floor/' + this.id;

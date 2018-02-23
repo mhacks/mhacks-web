@@ -16,15 +16,29 @@ var schema = new mongoose.Schema(
         requestor: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Requester ID',
+                type_override: String
+            }
         },
         mentor: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'User',
+            form: {
+                auth_groups: ['admin'],
+                label: 'Mentor ID',
+                type_override: String
+            }
         },
         is_complete: {
             type: Boolean,
-            default: false
+            default: false,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Complete'
+            }
         },
         skills: {
             type: [String],

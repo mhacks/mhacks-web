@@ -12,7 +12,11 @@ var schema = new mongoose.Schema(
     Object.assign({}, defaultSchema, {
         long_url: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Long URL'
+            }
         },
         short_code: {
             type: String,
@@ -28,6 +32,10 @@ var schema = new mongoose.Schema(
                     );
 
                 return text;
+            },
+            form: {
+                auth_groups: ['admin'],
+                label: 'Short Code'
             }
         },
         created_at: {

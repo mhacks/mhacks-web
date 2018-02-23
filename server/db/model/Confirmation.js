@@ -42,7 +42,12 @@ var schema = new mongoose.Schema(
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'User ID',
+                type_override: String
+            }
         },
         phone: {
             type: String,

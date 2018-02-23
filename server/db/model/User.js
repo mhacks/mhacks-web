@@ -551,13 +551,6 @@ schema.methods.getGroupsList = function() {
     return groups;
 };
 
-schema.methods.updateFields = function(fields) {
-    for (var param in fields) {
-        this[param] = fields[param];
-    }
-    this.save();
-};
-
 schema.methods.getAvatars = function() {
     var avatars = [];
 
@@ -611,7 +604,7 @@ schema.methods.getProfile = function() {
         mongoose
             .model('Application')
             .find()
-            .byEmail(this.email)
+            .byUser(this.email)
             .then(application => {
                 const {
                     status,

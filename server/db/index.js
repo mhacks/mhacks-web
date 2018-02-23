@@ -78,11 +78,18 @@ function modifySchema(schema) {
         };
 
         schema.methods.updateFields = function(fields, groups) {
-            const updateables = this.getUpdateableFields(groups);
+            let updateables = false;
+
+            if (groups) {
+                updateables = this.getUpdateableFields(groups);
+            }
 
             for (const param in fields) {
                 if (fields.hasOwnProperty(param)) {
-                    if (updateables.indexOf(param) !== -1) {
+                    if (
+                        updateables === false ||
+                        updateables.indexOf(param) !== -1
+                    ) {
                         this[param] = fields[param];
                     } else {
                         return false;

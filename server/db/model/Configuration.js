@@ -63,7 +63,7 @@ var schema = new mongoose.Schema(
             required: true,
             form: {
                 auth_groups: ['admin'],
-                label: 'Blackout page enabled'
+                label: 'Blackout Page Enabled'
             }
         },
         save_button: {

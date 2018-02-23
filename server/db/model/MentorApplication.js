@@ -19,7 +19,12 @@ var schema = new mongoose.Schema(
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'User ID',
+                type_override: String
+            }
         },
         general_header: {
             type: String,
@@ -219,13 +224,6 @@ schema.query.byUser = function(user) {
     return this.findOne({ user: user });
 };
 
-schema.methods.updateFields = function(fields) {
-    for (var param in fields) {
-        this[param] = fields[param];
-    }
-    this.save();
-};
-
 schema.methods.getResume = function() {
     return (
         config.host +
@@ -233,13 +231,6 @@ schema.methods.getResume = function() {
         this.user.email +
         '?application=true'
     );
-};
-
-schema.methods.getUser = function() {
-    return mongoose
-        .model('User')
-        .find()
-        .byEmail(this.user.email);
 };
 
 schema.plugin(sanitizerPlugin);

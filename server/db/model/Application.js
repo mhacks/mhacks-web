@@ -31,12 +31,12 @@ var schema = new mongoose.Schema(
             }
         },
         user: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
             required: true,
             form: {
                 user_editable: false,
-                label: 'Email',
-                placeholder: 'hackathon@umich.edu'
+                label: 'User ID'
             }
         },
         birthday: {
@@ -385,37 +385,30 @@ schema.query.byToken = function(findToken) {
         .find()
         .byToken(findToken)
         .then(user => {
-            return this.findOne({ user: user.email });
+            return this.findOne({ user: user });
         })
         .catch(() => {});
 };
 
-// Allow us to query by token
+// Allow us to query by email
 schema.query.byEmail = function(email) {
     var escapedEmail = escapeStringRegex(email);
-    return this.findOne({
-        user: new RegExp(escapedEmail, 'i')
-    });
-};
-
-schema.methods.updateFields = function(fields) {
-    for (var param in fields) {
-        this[param] = fields[param];
-    }
-    this.save();
+    return mongoose
+        .model('User')
+        .find()
+        .byEmail(escapedEmail)
+        .then(user => {
+            return this.findOne({
+                user: user
+            });
+        })
+        .catch(() => {});
 };
 
 schema.methods.getResume = function() {
     return (
         config.host + '/v1/artifact/resume/' + this.user + '?application=true'
     );
-};
-
-schema.methods.getUser = function() {
-    return mongoose
-        .model('User')
-        .find()
-        .byEmail(this.user);
 };
 
 schema.plugin(sanitizerPlugin);

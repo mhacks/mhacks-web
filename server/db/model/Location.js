@@ -11,20 +11,37 @@ var schema = new mongoose.Schema(
     Object.assign({}, defaultSchema, {
         name: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Name'
+            }
         },
         latitude: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Latitude'
+            }
         },
         longitude: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Longitude'
+            }
         },
         floor: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Floor',
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Floor',
+                type_override: String
+            }
         }
     }),
     defaultOptions

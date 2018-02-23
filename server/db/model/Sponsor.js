@@ -12,28 +12,55 @@ var schema = new mongoose.Schema(
     Object.assign({}, defaultSchema, {
         name: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Name'
+            }
         },
         domain: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Domain'
+            }
         },
         level: {
             type: String,
             enum: ['bronze', 'silver', 'gold', 'unobtanium'],
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Level',
+                select: ['Bronze', 'Silver', 'Gold', 'Unobtanium']
+            }
         },
         logo: {
             type: String,
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Logo',
+                type_override: 'file'
+            }
         },
         logo_size: {
             type: String,
             enum: ['small', 'medium', 'large'],
-            required: true
+            required: true,
+            form: {
+                auth_groups: ['admin'],
+                label: 'Logo Size',
+                select: ['Small', 'Medium', 'Large']
+            }
         },
         url: {
-            type: String
+            type: String,
+            form: {
+                auth_groups: ['admin'],
+                label: 'URL (link)'
+            }
         }
     }),
     defaultOptions

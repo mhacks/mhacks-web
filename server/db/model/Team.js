@@ -57,13 +57,6 @@ schema.query.byTeamName = function(name) {
     });
 };
 
-schema.methods.updateFields = function(fields) {
-    for (var param in fields) {
-        this[param] = fields[param];
-    }
-    this.save();
-};
-
 schema.plugin(sanitizerPlugin);
 
 modifySchema(schema);
