@@ -36,8 +36,6 @@ var http = require('http'),
     indexRouter = require('./server/routes/index.js'),
     shortenerRouter = require('./server/routes/shortener.js');
 
-mongoose.set('debug', true);
-
 // Force https
 app.use(function(req, res, next) {
     if (

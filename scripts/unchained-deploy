@@ -3,8 +3,8 @@
 cd ~/mhacks-web/ && git pull
 
 cd deploy/ && \
-    /opt/bin/docker-compose -f production.yml pull && \
-    /opt/bin/docker-compose -f production.yml build mhacks_website mhacks_shortener && \
+    /opt/bin/docker-compose -f production.yml pull --ignore-pull-failures && \
+    /opt/bin/docker-compose -f production.yml build --pull mhacks_website mhacks_shortener && \
     /opt/bin/docker-compose -f production.yml up --no-deps -d mhacks_website mhacks_shortener
     
 docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
