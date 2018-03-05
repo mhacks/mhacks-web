@@ -11,25 +11,26 @@ router.post('/', function(req, res) {
     ) {
         const { users, score, status, reimbursement } = req.body;
         users.forEach(user => {
-            Application.findOneAndUpdate(
-                { user },
-                {
-                    status,
-                    score,
-                    reimbursement,
-                    reviewer: req.session.email
-                }
-            ).catch(err => {
-                console.error(err);
-                res.status(500).send({
-                    status: false,
-                    message: Responses.UNKNOWN_ERROR
-                });
-            });
-        });
+            Application.find()
+                .byEmail(user)
+                .then(application => {
+                    application.status = status;
+                    application.score = score;
+                    application.reimbursement = reimbursement;
+                    application.reviewer = req.session.email;
+                    application.save();
 
-        res.send({
-            status: true
+                    res.send({
+                        status: true
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    res.status(500).send({
+                        status: false,
+                        message: Responses.UNKNOWN_ERROR
+                    });
+                });
         });
     } else {
         res.status(401).send({

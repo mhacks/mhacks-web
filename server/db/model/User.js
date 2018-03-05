@@ -604,7 +604,7 @@ schema.methods.getProfile = function() {
         mongoose
             .model('Application')
             .find()
-            .byUser(this.email)
+            .byUser(this)
             .then(application => {
                 const {
                     status,
@@ -636,7 +636,8 @@ schema.methods.getProfile = function() {
                     resolve(profile);
                 }
             })
-            .catch(() => {
+            .catch(err => {
+                console.error(err);
                 profile.application_submitted = false;
                 resolve(profile);
             });

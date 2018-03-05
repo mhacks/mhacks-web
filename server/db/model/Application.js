@@ -5,8 +5,7 @@ var {
         defaultSchema
     } = require('../index.js'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin'),
-    config = require('../../../config/default.js'),
-    escapeStringRegex = require('escape-string-regexp');
+    config = require('../../../config/default.js');
 
 const experienceOptions = {
     novice: 'Novice',
@@ -392,17 +391,22 @@ schema.query.byToken = function(findToken) {
 
 // Allow us to query by email
 schema.query.byEmail = function(email) {
-    var escapedEmail = escapeStringRegex(email);
     return mongoose
         .model('User')
         .find()
-        .byEmail(escapedEmail)
+        .byEmail(email)
         .then(user => {
             return this.findOne({
                 user: user
             });
         })
         .catch(() => {});
+};
+
+schema.query.byUser = function(user) {
+    return this.findOne({
+        user
+    });
 };
 
 schema.methods.getResume = function() {
