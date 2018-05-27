@@ -6,6 +6,7 @@ import { PageContainer, MHForm, Alert } from '../components';
 import { getUserMetadata } from '../util/user.js';
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
+import PropTypes from 'prop-types';
 
 const FormContainer = styled.div`
     max-width: 500px;
@@ -133,7 +134,7 @@ class Confirm extends React.Component {
 }
 
 Confirm.contextTypes = {
-    router: React.PropTypes.object
+    router: PropTypes.object
 };
 
 function mapStateToProps(state) {

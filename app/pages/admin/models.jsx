@@ -5,6 +5,7 @@ import { PageContainer } from '../../components';
 import { AdminThunks } from '../../actions';
 import { routes } from '../../constants';
 import ReactTable from 'react-table';
+import PropTypes from 'prop-types';
 
 const PagePulled = styled(PageContainer)`
     min-height: calc(100vh - 146px);
@@ -67,8 +68,8 @@ class ModelsPage extends React.Component {
 }
 
 ModelsPage.contextTypes = {
-    router: React.PropTypes.shape({
-        history: React.PropTypes.object.isRequired
+    router: PropTypes.shape({
+        history: PropTypes.object.isRequired
     })
 };
 

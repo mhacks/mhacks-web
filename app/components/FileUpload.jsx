@@ -46,7 +46,7 @@ const FileName = styled.div`
 `;
 
 const Input = styled.input`
-    z-index: 100;
+    z-index: 0;
     cursor: pointer;
     position: absolute;
     height: 100%;

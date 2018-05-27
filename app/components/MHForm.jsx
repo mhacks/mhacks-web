@@ -4,8 +4,11 @@ import LabeledInput from './LabeledInput.jsx';
 import RoundedButton from './RoundedButton.jsx';
 import FileUpload from './FileUpload';
 import Alert from './Alert.jsx';
-import Select from 'react-select';
+import Select from 'react-virtualized-select';
+import createFilterOptions from 'react-select-fast-filter-options';
 import 'react-select/dist/react-select.min.css';
+import 'react-virtualized/styles.css';
+import 'react-virtualized-select/styles.css';
 
 const FileUploadContainer = styled.div`
     margin: 10px 0;
@@ -143,9 +146,9 @@ class MHForm extends React.Component {
                 return undefined;
             default:
                 console.error(
-                    'Field Type ' +
+                    'Field Type `' +
                         type +
-                        ' not defined, behavior is undefined!'
+                        '` is not defined, behavior is undefined!'
                 );
         }
     }
@@ -185,7 +188,7 @@ class MHForm extends React.Component {
             case this.FieldTypes.SUBMIT:
                 return defaultForType;
             default:
-                console.error('Field Type not defined, behavior is undefined!');
+                console.error('Field Type `' + field.type + '` is not defined, behavior is undefined!');
                 return defaultForType;
         }
     }
@@ -234,8 +237,8 @@ class MHForm extends React.Component {
                         ...this.state.formData,
                         [name]: selection
                             ? field.type === this.FieldTypes.ARRAY
-                              ? selection
-                              : selection.value
+                                ? selection
+                                : selection.value
                             : this.getFieldDefault(
                                   name,
                                   this.props.schema,
@@ -392,7 +395,7 @@ class MHForm extends React.Component {
                 ) : null}
                 {Object.keys(this.props.schema)
                     .filter(field => {
-                        return !this.props.hidden[field.key];
+                        return !this.props.hidden[field];
                     })
                     .map(fieldKey => {
                         const hasError = this.state.errorFields.includes(
@@ -411,6 +414,9 @@ class MHForm extends React.Component {
                                         onChange={this.handleSelectChange(
                                             field.key
                                         )}
+                                        filterOptions={createFilterOptions({
+                                            options: field.select
+                                        })}
                                     />,
                                     hasError
                                 );
@@ -425,6 +431,9 @@ class MHForm extends React.Component {
                                         onChange={this.handleSelectChange(
                                             field.key
                                         )}
+                                        filterOptions={createFilterOptions({
+                                            options: field.array_select
+                                        })}
                                     />,
                                     hasError
                                 );
@@ -477,8 +486,8 @@ class MHForm extends React.Component {
                                 const uploadBackground = hasError
                                     ? 'red'
                                     : this.state.files[field.key]
-                                      ? this.props.theme.success
-                                      : this.props.theme.primary;
+                                        ? this.props.theme.success
+                                        : this.props.theme.primary;
                                 return (
                                     <FileUploadContainer key={field.label}>
                                         <FileUpload

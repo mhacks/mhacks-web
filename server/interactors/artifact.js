@@ -50,21 +50,19 @@ module.exports = function(email, type, application, artifactOverride, url) {
 
                                             var obj = s3.getObject(params);
 
-                                            obj
-                                                .on('error', function(error) {
-                                                    reject(error);
-                                                })
-                                                .on('success', function(
-                                                    response
-                                                ) {
-                                                    resolve([
-                                                        user.full_name +
-                                                            '.' +
-                                                            extension,
-                                                        response,
-                                                        fileName
-                                                    ]);
-                                                });
+                                            obj.on('error', function(error) {
+                                                reject(error);
+                                            }).on('success', function(
+                                                response
+                                            ) {
+                                                resolve([
+                                                    user.full_name +
+                                                        '.' +
+                                                        extension,
+                                                    response,
+                                                    fileName
+                                                ]);
+                                            });
                                             obj.send();
                                         } else {
                                             if (
@@ -122,13 +120,11 @@ module.exports = function(email, type, application, artifactOverride, url) {
                                 if (s3) {
                                     obj = s3.getObject(params);
 
-                                    obj
-                                        .on('error', function(error) {
-                                            reject(error);
-                                        })
-                                        .on('success', function(response) {
-                                            resolve([fileName, response]);
-                                        });
+                                    obj.on('error', function(error) {
+                                        reject(error);
+                                    }).on('success', function(response) {
+                                        resolve([fileName, response]);
+                                    });
 
                                     obj.send();
                                 } else {
@@ -178,13 +174,11 @@ module.exports = function(email, type, application, artifactOverride, url) {
 
                 obj = s3.getObject(params);
 
-                obj
-                    .on('error', function(error) {
-                        reject(error);
-                    })
-                    .on('success', function(response) {
-                        resolve([artifactOverride, response, email]);
-                    });
+                obj.on('error', function(error) {
+                    reject(error);
+                }).on('success', function(response) {
+                    resolve([artifactOverride, response, email]);
+                });
                 obj.send();
             } else {
                 if (
@@ -228,13 +222,11 @@ module.exports = function(email, type, application, artifactOverride, url) {
 
                 obj = s3.getObject(params);
 
-                obj
-                    .on('error', function(error) {
-                        reject(error);
-                    })
-                    .on('success', function(response) {
-                        resolve([matches[matches.length - 1], response, email]);
-                    });
+                obj.on('error', function(error) {
+                    reject(error);
+                }).on('success', function(response) {
+                    resolve([matches[matches.length - 1], response, email]);
+                });
                 obj.send();
             } else {
                 var splitUrl = url.split('/'),

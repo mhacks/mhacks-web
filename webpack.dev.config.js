@@ -14,6 +14,7 @@ var devConfig = {
         path: '/',
         filename: 'js/app.js'
     },
+    mode: 'development',
     devtool: 'source-map',
     resolve: {
         extensions: ['.js', '.jsx']
@@ -52,7 +53,7 @@ var devConfig = {
         // inject styles and javascript into index.html
         new HtmlWebpackPlugin({
             title: 'Webpack Build',
-            template: './app/index.html'
+            template: './app/index-dev.html'
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"development"'

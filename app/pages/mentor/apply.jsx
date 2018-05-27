@@ -5,6 +5,7 @@ import { MentorThunks } from '../../actions';
 import { PageContainer, MHForm } from '../../components';
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
+import PropTypes from 'prop-types';
 
 const FormContainer = styled.div`
     max-width: 500px;
@@ -97,6 +98,7 @@ class Apply extends React.Component {
                     <MHForm
                         schema={this.state.userState.data.form}
                         FieldTypes={this.state.userState.data.FieldTypes}
+                        hidden={{ user: true }}
                         theme={this.props.theme}
                         onSubmit={this.onSubmit}
                     />
@@ -133,7 +135,7 @@ class Apply extends React.Component {
 }
 
 Apply.contextTypes = {
-    router: React.PropTypes.object
+    router: PropTypes.object
 };
 
 function mapStateToProps(state) {

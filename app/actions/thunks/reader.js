@@ -8,7 +8,7 @@ export default class ReaderThunks {
             dispatch({ type: actions.LOAD_HACKER_APPLICATIONS_REQUEST });
 
             return ReaderRequests.loadHackerApplications().then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         const { applications } = json;
                         dispatch({
@@ -38,7 +38,7 @@ export default class ReaderThunks {
 
             return ReaderRequests.loadSponsorPortalApplications().then(
                 response => {
-                    if (response.status == 200) {
+                    if (response.status === 200) {
                         response.json().then(json => {
                             const { applications } = json;
                             dispatch({
@@ -68,7 +68,7 @@ export default class ReaderThunks {
             dispatch({ type: actions.LOAD_MENTOR_APPLICATIONS_REQUEST });
 
             return ReaderRequests.loadMentorApplications().then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         const { applications } = json;
                         dispatch({
@@ -95,7 +95,7 @@ export default class ReaderThunks {
             dispatch({ type: actions.LOAD_SPEAKER_APPLICATIONS_REQUEST });
 
             return ReaderRequests.loadSpeakerApplications().then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         const { applications } = json;
                         dispatch({
@@ -133,7 +133,7 @@ export default class ReaderThunks {
 
             return ReaderRequests.reviewApplications(token, review).then(
                 response => {
-                    if (response.status == 200) {
+                    if (response.status === 200) {
                         response.json().then(json => {
                             dispatch({
                                 type: actions.REVIEW_APPLICATIONS_SUCCESS,
@@ -164,7 +164,7 @@ export default class ReaderThunks {
             const token = localStorage.getItem('jwt');
 
             return loadFormRequest(token, base + subform).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.LOAD_READER_FORM_SUCCESS,

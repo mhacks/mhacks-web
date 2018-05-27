@@ -154,15 +154,17 @@ export default class ExpandingItem extends React.Component {
             <Wrapper>
                 <Flexbox onClick={this.handleClick}>
                     <Plus
-                        color={this.handlePlusColor}
+                        color={this.handlePlusColor()}
                         open={this.state.expanded}
                     />
-                    <Header color={this.handleHeaderColor}>
+                    <Header color={this.handleHeaderColor()}>
                         {this.props.header}
                     </Header>
                 </Flexbox>
                 <Slider open={this.state.expanded}>
-                    <Body color={this.handleBodyColor}>{this.props.body}</Body>
+                    <Body color={this.handleBodyColor()}>
+                        {this.props.body}
+                    </Body>
                 </Slider>
             </Wrapper>
         );

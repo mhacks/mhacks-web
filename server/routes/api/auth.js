@@ -29,8 +29,7 @@ router.post('/login', function(req, res) {
             .then(user => {
                 console.log(user);
                 if (user) {
-                    user
-                        .checkPassword(req.body.password)
+                    user.checkPassword(req.body.password)
                         .then(checkRes => {
                             if (checkRes) {
                                 user.getProfile().then(profile => {
@@ -171,8 +170,7 @@ router.get('/verify/:token', function(req, res) {
         .byVerificationToken(req.params.token)
         .then(user => {
             if (user) {
-                user
-                    .checkEmailVerificationToken(req.params.token)
+                user.checkEmailVerificationToken(req.params.token)
                     .then(() => {
                         user.verifiedEmail();
                     })
@@ -220,8 +218,7 @@ router.post('/password/:token', function(req, res) {
             .byVerificationToken(req.params.token)
             .then(user => {
                 if (user) {
-                    user
-                        .checkPasswordResetToken(req.params.token)
+                    user.checkPasswordResetToken(req.params.token)
                         .then(() => {
                             user.changePassword(req.body.password);
                             res.send({

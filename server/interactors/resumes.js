@@ -167,20 +167,18 @@ function downloadS3ApplicationsZip(resolve, reject) {
 
                             var obj = s3.getObject(params);
 
-                            obj
-                                .on('error', function(error) {
-                                    console.error(error);
-                                    count--;
-                                })
-                                .on('success', function(response) {
-                                    archive.append(response.data.Body, {
-                                        name:
-                                            'MHacks Resumes/' +
-                                            user.full_name +
-                                            '.' +
-                                            fileEnding
-                                    });
+                            obj.on('error', function(error) {
+                                console.error(error);
+                                count--;
+                            }).on('success', function(response) {
+                                archive.append(response.data.Body, {
+                                    name:
+                                        'MHacks Resumes/' +
+                                        user.full_name +
+                                        '.' +
+                                        fileEnding
                                 });
+                            });
                             obj.send();
                         });
                     });
@@ -245,20 +243,18 @@ function downloadS3UsersZip(resolve, reject) {
 
                 var obj = s3.getObject(params);
 
-                obj
-                    .on('error', function(error) {
-                        console.error(error);
-                        count--;
-                    })
-                    .on('success', function(response) {
-                        archive.append(response.data.Body, {
-                            name:
-                                'MHacks Resumes/' +
-                                user.full_name +
-                                '.' +
-                                fileEnding
-                        });
+                obj.on('error', function(error) {
+                    console.error(error);
+                    count--;
+                }).on('success', function(response) {
+                    archive.append(response.data.Body, {
+                        name:
+                            'MHacks Resumes/' +
+                            user.full_name +
+                            '.' +
+                            fileEnding
                     });
+                });
                 obj.send();
             });
 

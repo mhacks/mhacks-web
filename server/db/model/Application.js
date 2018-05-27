@@ -372,7 +372,14 @@ var schema = new mongoose.Schema(
                     auth_groups: ['admin', 'reader']
                 }
             ]
-        }
+        },
+        save_button: {
+            type: String,
+            form: {
+                label: 'Save',
+                type_override: 'submit'
+            }
+        },
     }),
     defaultOptions
 );

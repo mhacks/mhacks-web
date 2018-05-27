@@ -12,11 +12,20 @@ var bcrypt = require('bcrypt'),
     crypto = require('crypto'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin'),
     escapeStringRegex = require('escape-string-regexp'),
-    secret = config.secret;
+    secret = config.secret,
+    universities = require('../../../static/misc/universities.json'),
+    majors = require('../../../static/misc/majors.json');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
     Object.assign({}, defaultSchema, {
+        general_header: {
+            type: String,
+            form: {
+                label: 'General',
+                type_override: 'sectionheader'
+            }
+        },
         full_name: {
             type: String,
             form: {
@@ -92,28 +101,22 @@ var schema = new mongoose.Schema(
             type: Date,
             default: Date.now
         },
-        birthday: {
-            type: Date,
-            form: {
-                user_editable: true,
-                label: 'Date of Birth',
-                placeholder: 'mm/dd/yyyy'
-            }
-        },
-        major: {
-            type: String,
-            form: {
-                user_editable: true,
-                label: 'Major',
-                placeholder: 'e.g. Computer Science'
-            }
-        },
         university: {
             type: String,
+            enum: universities,
             form: {
                 user_editable: true,
                 label: 'University',
                 placeholder: 'e.g. University of Michigan'
+            }
+        },
+        major: {
+            type: String,
+            enum: majors,
+            form: {
+                user_editable: true,
+                label: 'Major',
+                placeholder: 'e.g. Computer Science'
             }
         },
         groups: [
@@ -138,6 +141,13 @@ var schema = new mongoose.Schema(
                 user_editable: true,
                 label: 'Resume',
                 type_override: 'file'
+            }
+        },
+        links_header: {
+            type: String,
+            form: {
+                label: 'Links',
+                type_override: 'sectionheader'
             }
         },
         github: {
@@ -170,6 +180,21 @@ var schema = new mongoose.Schema(
                 user_editable: true,
                 label: 'Portfolio',
                 placeholder: 'https://'
+            }
+        },
+        private_header: {
+            type: String,
+            form: {
+                label: 'Private',
+                type_override: 'sectionheader'
+            }
+        },
+        birthday: {
+            type: Date,
+            form: {
+                user_editable: true,
+                label: 'Date of Birth',
+                placeholder: 'mm/dd/yyyy'
             }
         },
         tshirt: {
@@ -226,7 +251,14 @@ var schema = new mongoose.Schema(
         online: {
             type: Boolean,
             default: false
-        }
+        },
+        save_button: {
+            type: String,
+            form: {
+                label: 'Save',
+                type_override: 'submit'
+            }
+        },
     }),
     defaultOptions
 );
@@ -274,7 +306,7 @@ schema.methods.verifyToken = function(token) {
     return new Promise((resolve, reject) => {
         try {
             var tokenData = jwt.verify(token, secret);
-            if (this.email == tokenData.email) {
+            if (this.email === tokenData.email) {
                 resolve(true);
             } else {
                 reject('Email does not match token');
@@ -389,8 +421,8 @@ schema.methods.checkTempToken = function(token, tokenType) {
         try {
             var tokenData = jwt.verify(token, secret);
             if (
-                this.email == tokenData.email &&
-                tokenData.tokenType == tokenType
+                this.email === tokenData.email &&
+                tokenData.tokenType === tokenType
             ) {
                 resolve(true);
             } else {

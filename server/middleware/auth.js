@@ -20,8 +20,7 @@ module.exports = function(
                 .byToken(token)
                 .then(user => {
                     if (user) {
-                        user
-                            .verifyToken(token)
+                        user.verifyToken(token)
                             .then(() => {
                                 verifyEmail(verifiedEmail, user)
                                     .then(() => {

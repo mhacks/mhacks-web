@@ -7,7 +7,7 @@ export default class SpeakerThunks {
             dispatch({ type: actions.LOAD_SPEAKER_APPLICATION_REQUEST });
 
             return SpeakerRequests.loadApplication().then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.LOAD_SPEAKER_APPLICATION_SUCCESS,
@@ -44,7 +44,7 @@ export default class SpeakerThunks {
                 formData,
                 files
             ).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.UPLOAD_SPEAKER_APPLICATION_SUCCESS,
@@ -72,7 +72,7 @@ export default class SpeakerThunks {
             });
 
             return SpeakerRequests.loadForm().then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.LOAD_SPEAKER_APPLICATION_FORM_SUCCESS,

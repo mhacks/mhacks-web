@@ -7,7 +7,7 @@ export default class MentorThunks {
             dispatch({ type: actions.LOAD_MENTOR_APPLICATION_REQUEST });
 
             return MentorRequests.loadApplication().then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.LOAD_MENTOR_APPLICATION_SUCCESS,
@@ -44,7 +44,7 @@ export default class MentorThunks {
                 formData,
                 files
             ).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.UPLOAD_MENTOR_APPLICATION_SUCCESS,
@@ -72,7 +72,7 @@ export default class MentorThunks {
             });
 
             return MentorRequests.loadForm().then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.LOAD_MENTOR_APPLICATION_FORM_SUCCESS,

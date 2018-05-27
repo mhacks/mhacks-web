@@ -112,7 +112,7 @@ router.get('/profile', function(req, res) {
 router.get('/ticket', authMiddleware('any', 'api'), function(req, res) {
     if (req.user && req.user.application_submitted) {
         Application.find()
-            .byEmail(req.user.email)
+            .byUser(req.user)
             .then(application => {
                 if (application) {
                     if (application.status === 'accepted') {
@@ -160,7 +160,7 @@ router.get('/ticket/passbook', authMiddleware('any', 'api'), function(
 ) {
     if (req.user && req.user.application_submitted) {
         Application.find()
-            .byEmail(req.user.email)
+            .byUser(req.user)
             .then(application => {
                 if (application) {
                     if (application.status === 'accepted') {
@@ -303,55 +303,51 @@ router.post('/ticket/verify', authMiddleware('scanner admin', 'api'), function(
                                                                         }
                                                                     ).then(
                                                                         scanevent => {
-                                                                            user
-                                                                                .getProfile()
-                                                                                .then(
-                                                                                    profile => {
-                                                                                        res.send(
-                                                                                            {
-                                                                                                status: true,
-                                                                                                scanevent: Object.assign(
-                                                                                                    {},
-                                                                                                    scanevent,
-                                                                                                    {
-                                                                                                        user: profile
-                                                                                                    }
-                                                                                                ),
-                                                                                                feedback: [
-                                                                                                    {
-                                                                                                        label:
-                                                                                                            'Name',
-                                                                                                        value:
-                                                                                                            user.full_name
-                                                                                                    },
-                                                                                                    {
-                                                                                                        label:
-                                                                                                            'Minor',
-                                                                                                        value: isMinor(
-                                                                                                            user.birthday
-                                                                                                        )
-                                                                                                            ? 'Yes'
-                                                                                                            : 'No'
-                                                                                                    }
-                                                                                                ]
-                                                                                            }
-                                                                                        );
-                                                                                    }
-                                                                                );
+                                                                            user.getProfile().then(
+                                                                                profile => {
+                                                                                    res.send(
+                                                                                        {
+                                                                                            status: true,
+                                                                                            scanevent: Object.assign(
+                                                                                                {},
+                                                                                                scanevent,
+                                                                                                {
+                                                                                                    user: profile
+                                                                                                }
+                                                                                            ),
+                                                                                            feedback: [
+                                                                                                {
+                                                                                                    label:
+                                                                                                        'Name',
+                                                                                                    value:
+                                                                                                        user.full_name
+                                                                                                },
+                                                                                                {
+                                                                                                    label:
+                                                                                                        'Minor',
+                                                                                                    value: isMinor(
+                                                                                                        user.birthday
+                                                                                                    )
+                                                                                                        ? 'Yes'
+                                                                                                        : 'No'
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    );
+                                                                                }
+                                                                            );
                                                                         }
                                                                     );
                                                                 } else {
-                                                                    res
-                                                                        .status(
-                                                                            400
-                                                                        )
-                                                                        .send({
-                                                                            status: false,
-                                                                            message:
-                                                                                Responses
-                                                                                    .Application
-                                                                                    .NOT_CONFIRMED
-                                                                        });
+                                                                    res.status(
+                                                                        400
+                                                                    ).send({
+                                                                        status: false,
+                                                                        message:
+                                                                            Responses
+                                                                                .Application
+                                                                                .NOT_CONFIRMED
+                                                                    });
                                                                 }
                                                             }
                                                         );

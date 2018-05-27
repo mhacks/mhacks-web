@@ -191,16 +191,16 @@ var schema = new mongoose.Schema(
                 label: 'Sex'
             }
         },
+        created_at: {
+            type: Date,
+            default: Date.now
+        },
         save_button: {
             type: String,
             form: {
                 label: 'Save',
                 type_override: 'submit'
             }
-        },
-        created_at: {
-            type: Date,
-            default: Date.now
         }
     }),
     defaultOptions

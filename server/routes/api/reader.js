@@ -17,7 +17,7 @@ router.post('/', function(req, res) {
                     application.status = status;
                     application.score = score;
                     application.reimbursement = reimbursement;
-                    application.reviewer = req.session.email;
+                    application.reader = req.user;
                     application.save();
 
                     res.send({

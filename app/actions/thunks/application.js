@@ -8,7 +8,7 @@ export default class ApplicationThunks {
             const token = localStorage.getItem('jwt');
 
             return ApplicationRequests.loadApplication(token).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         const { application } = json;
                         const state = { app: application };
@@ -47,7 +47,7 @@ export default class ApplicationThunks {
                 application,
                 files
             ).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.UPLOAD_APPLICATION_SUCCESS,
@@ -74,16 +74,16 @@ export default class ApplicationThunks {
     static loadForm() {
         return dispatch => {
             dispatch({
-                type: actions.LOAD_APPLICATIONS_FORM_REQUEST
+                type: actions.LOAD_APPLICATION_FORM_REQUEST
             });
 
             const token = localStorage.getItem('jwt');
 
             return ApplicationRequests.loadForm(token).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
-                            type: actions.LOAD_APPLICATIONS_FORM_SUCCESS,
+                            type: actions.LOAD_APPLICATION_FORM_SUCCESS,
                             data: { form: json.form, FieldTypes: json.types },
                             message: json.message
                         });
@@ -91,7 +91,7 @@ export default class ApplicationThunks {
                 } else {
                     response.json().then(json => {
                         dispatch({
-                            type: actions.LOAD_APPLICATIONS_FORM_ERROR,
+                            type: actions.LOAD_APPLICATION_FORM_ERROR,
                             error: json.status,
                             message: json.message
                         });

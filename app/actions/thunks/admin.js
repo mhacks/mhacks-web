@@ -10,7 +10,7 @@ export default class AdminThunks {
             });
 
             getResponseFromRoute(endpoints.ADMIN_MODELS).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         const obj = {};
 
@@ -46,7 +46,7 @@ export default class AdminThunks {
 
             getResponseFromRoute(endpoints.ADMIN_MODELS + '/' + model).then(
                 response => {
-                    if (response.status == 200) {
+                    if (response.status === 200) {
                         response.json().then(json => {
                             dispatch({
                                 type: actions.ADMIN_LOAD_MODEL_SUCCESS,

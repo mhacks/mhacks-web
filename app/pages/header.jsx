@@ -274,7 +274,7 @@ class Header extends React.Component {
 
         return (
             <div>
-                {window.location.pathname == routes.SUBSCRIBE ? null : (
+                {window.location.pathname === routes.SUBSCRIBE ? null : (
                     <div>
                         <Helmet>
                             <title>MHacks X</title>

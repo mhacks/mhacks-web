@@ -107,7 +107,7 @@ class Footer extends React.Component {
     render() {
         return (
             <div>
-                {window.location.pathname == routes.SUBSCRIBE ? null : (
+                {window.location.pathname === routes.SUBSCRIBE ? null : (
                     <FooterWrapper id="asdfFooter">
                         <Container>
                             <HomeFooter>

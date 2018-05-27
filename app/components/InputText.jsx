@@ -47,7 +47,7 @@ export default class InputText extends React.Component {
     }
 
     handleKeyPress(e) {
-        if (e.key == 'Enter') {
+        if (e.key === 'Enter') {
             ReactDOM.findDOMNode(this.refs.textField).blur();
             this.props.onSubmit();
         }

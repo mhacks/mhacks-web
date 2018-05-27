@@ -11,6 +11,7 @@ import Fuse from 'fuse.js';
 import FontAwesome from 'react-fontawesome';
 import { HeaderSection, SubsectionContainer, UtilityBar } from './components';
 import { generateCSV } from './util.js';
+import PropTypes from 'prop-types';
 
 const A = styled.a`
     text-align: center;
@@ -435,8 +436,8 @@ class ReaderPage extends React.Component {
 }
 
 ReaderPage.contextTypes = {
-    router: React.PropTypes.shape({
-        history: React.PropTypes.object.isRequired
+    router: PropTypes.shape({
+        history: PropTypes.object.isRequired
     })
 };
 

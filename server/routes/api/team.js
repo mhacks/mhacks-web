@@ -54,7 +54,7 @@ router.post('/', function(req, res) {
         isUserNotInTeam(req.user.id)
             .then(() => {
                 Application.find()
-                    .byEmail(req.user.email)
+                    .byUser(req.user)
                     .then(application => {
                         if (application && application.status === 'accepted') {
                             if (req.body.description.length >= 40) {
@@ -142,7 +142,7 @@ router.post('/member', function(req, res) {
         isUserNotInTeam(req.user.id)
             .then(() => {
                 Application.find()
-                    .byEmail(req.user.email)
+                    .byUser(req.user)
                     .then(userApplication => {
                         if (
                             userApplication &&

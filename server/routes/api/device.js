@@ -84,8 +84,7 @@ router.post('/', function(req, res) {
                         device.user = req.user;
                         device.updateFields(fields);
 
-                        device.user
-                            .getProfile()
+                        device.user.getProfile()
                             .then(profile => {
                                 res.send({
                                     status: true,
@@ -107,8 +106,7 @@ router.post('/', function(req, res) {
                             push_categories: req.body.push_categories
                         })
                             .then(device => {
-                                device.user
-                                    .getProfile()
+                                device.user.getProfile()
                                     .then(profile => {
                                         res.send({
                                             status: true,

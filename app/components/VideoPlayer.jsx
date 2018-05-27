@@ -86,7 +86,7 @@ class VideoPlayer extends React.Component {
     // the dimensions of the provided image
     generateAspectRatioMaintainer() {
         const aspectRatio =
-            this.state.imageHeight / this.state.imageWidth * 100;
+            (this.state.imageHeight / this.state.imageWidth) * 100;
         const AspectRatioMaintainer = styled.div`
             position: relative;
             width: 100%;

@@ -14,7 +14,7 @@ export default class AuthThunks {
                 email: user.email,
                 password: user.password
             }).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         localStorage.setItem('jwt', json.token);
 
@@ -51,7 +51,7 @@ export default class AuthThunks {
             });
 
             return AuthRequests.login(user).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         localStorage.setItem('jwt', json.token);
 
@@ -85,7 +85,7 @@ export default class AuthThunks {
 
             return AuthRequests.logout().then(response => {
                 localStorage.removeItem('jwt');
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.LOGOUT_SUCCESS,

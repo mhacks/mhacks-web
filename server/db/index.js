@@ -31,9 +31,7 @@ mongoose.Promise = global.Promise;
 
 // Initialize the DB connection
 mongoose
-    .connect('mongodb://' + config.mongo_hostname + '/' + config.backend_db, {
-        useMongoClient: true
-    })
+    .connect('mongodb://' + config.mongo_hostname + '/' + config.backend_db)
     .then(res => {
         if (res) {
             console.log('Connected to MongoDB Successfully');

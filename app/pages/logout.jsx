@@ -2,6 +2,7 @@ import React from 'react';
 import { AuthThunks } from '../actions';
 import { routes } from '../constants';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Logout extends React.Component {
     componentWillMount() {
@@ -16,7 +17,7 @@ class Logout extends React.Component {
 }
 
 Logout.contextTypes = {
-    router: React.PropTypes.object
+    router: PropTypes.object
 };
 
 export default connect()(Logout);

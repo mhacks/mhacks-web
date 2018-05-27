@@ -6,6 +6,7 @@ import TeamBox from './team_box.jsx';
 import { TeamsThunks } from '../../actions';
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
+import PropTypes from 'prop-types';
 
 const FlexBox = styled.div`
     display: flex;
@@ -272,7 +273,7 @@ class TeamBuilding extends React.Component {
 }
 
 TeamBuilding.contextTypes = {
-    router: React.PropTypes.object
+    router: PropTypes.object
 };
 
 function mapStateToProps(state) {
