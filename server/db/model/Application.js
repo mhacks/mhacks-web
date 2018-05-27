@@ -379,7 +379,7 @@ var schema = new mongoose.Schema(
                 label: 'Save',
                 type_override: 'submit'
             }
-        },
+        }
     }),
     defaultOptions
 );

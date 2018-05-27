@@ -51,7 +51,8 @@ class MHForm extends React.Component {
         const initialState = {
             errorFields: [],
             formData: {},
-            files: {}
+            files: {},
+            cachedLoaders: {}
         };
 
         this.FieldTypes = props.FieldTypes;
@@ -87,6 +88,7 @@ class MHForm extends React.Component {
     componentWillReceiveProps(nextProps) {
         const formData = {};
         const files = {};
+        const cachedLoaders = {};
 
         for (const key in nextProps.schema) {
             const fieldType = nextProps.schema[key].type;
@@ -112,6 +114,19 @@ class MHForm extends React.Component {
             ) {
                 editedObject[key] = defaultValue;
             }
+
+            if (
+                (fieldType && fieldType === this.FieldTypes.SELECT) ||
+                fieldType === this.FieldTypes.ARRAY
+            ) {
+                if (!this.state.cachedLoaders[key]) {
+                    cachedLoaders[key] = createFilterOptions({
+                        options:
+                            nextProps.schema[key].select ||
+                            nextProps.schema[key].array_select
+                    });
+                }
+            }
         }
 
         this.setState({
@@ -122,6 +137,10 @@ class MHForm extends React.Component {
             files: {
                 ...this.state.files,
                 ...files
+            },
+            cachedLoaders: {
+                ...this.state.cachedLoaders,
+                ...cachedLoaders
             }
         });
     }
@@ -188,7 +207,11 @@ class MHForm extends React.Component {
             case this.FieldTypes.SUBMIT:
                 return defaultForType;
             default:
-                console.error('Field Type `' + field.type + '` is not defined, behavior is undefined!');
+                console.error(
+                    'Field Type `' +
+                        field.type +
+                        '` is not defined, behavior is undefined!'
+                );
                 return defaultForType;
         }
     }
@@ -414,9 +437,9 @@ class MHForm extends React.Component {
                                         onChange={this.handleSelectChange(
                                             field.key
                                         )}
-                                        filterOptions={createFilterOptions({
-                                            options: field.select
-                                        })}
+                                        filterOptions={
+                                            this.state.cachedLoaders[field.key]
+                                        }
                                     />,
                                     hasError
                                 );
@@ -431,9 +454,9 @@ class MHForm extends React.Component {
                                         onChange={this.handleSelectChange(
                                             field.key
                                         )}
-                                        filterOptions={createFilterOptions({
-                                            options: field.array_select
-                                        })}
+                                        filterOptions={
+                                            this.state.cachedLoaders[field.key]
+                                        }
                                     />,
                                     hasError
                                 );

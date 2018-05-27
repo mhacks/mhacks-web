@@ -2,10 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ApplicationThunks } from '../actions';
-import {
-    PageContainer,
-    Alert
-} from '../components';
+import { PageContainer, Alert } from '../components';
 import {
     FieldTypes,
     ProfileFields,
@@ -135,12 +132,19 @@ class Apply extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.userState.data.form && nextProps.userState.data.app && nextProps.userState.data.user) {
-            var temp =  Object.assign({}, nextProps.userState.data.app, nextProps.userState.data.user);
+        if (
+            nextProps.userState.data.form &&
+            nextProps.userState.data.app &&
+            nextProps.userState.data.user
+        ) {
+            var temp = Object.assign(
+                {},
+                nextProps.userState.data.app,
+                nextProps.userState.data.user
+            );
             for (var i in temp) {
                 if (i in nextProps.userState.data.form) {
-                    nextProps.userState.data.form[i].default =
-                        temp[i];
+                    nextProps.userState.data.form[i].default = temp[i];
                 }
             }
         }
@@ -232,7 +236,6 @@ class Apply extends React.Component {
             return null;
         }
 
-
         return (
             <PageContainer>
                 <FormContainer>
@@ -264,8 +267,7 @@ class Apply extends React.Component {
                         </Subhead>
 
                         <LegalText>
-                            By applying to MHacks X, you agree to the
-                            MHacks{' '}
+                            By applying to MHacks X, you agree to the MHacks{' '}
                             <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
                                 Code of Conduct
                             </LegalLink>.
