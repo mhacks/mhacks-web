@@ -15,7 +15,9 @@ class FontAwesome extends React.Component {
         return (
             <Wrapper style={this.props.style}>
                 <Icon
-                    className={`${this.props.brand ? 'fab' : 'fas'} fa-${this.props.name} fa-${this.props.size}`}
+                    className={`${this.props.brand ? 'fab' : 'fas'} fa-${
+                        this.props.name
+                    } fa-${this.props.size}`}
                     alt={this.props.alt}
                     align="middle"
                 />

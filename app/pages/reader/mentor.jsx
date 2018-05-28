@@ -110,7 +110,7 @@ class MentorReader extends React.Component {
                         }
                     },
                     {
-                        Header: <FontAwesome name="github" brand={true}  />,
+                        Header: <FontAwesome name="github" brand={true} />,
                         accessor: 'github',
                         width: 30,
                         Cell: row => {
@@ -124,7 +124,7 @@ class MentorReader extends React.Component {
                         }
                     },
                     {
-                        Header: <FontAwesome name="linkedin" brand={true}  />,
+                        Header: <FontAwesome name="linkedin" brand={true} />,
                         accessor: 'linkedin',
                         width: 30,
                         Cell: row => {

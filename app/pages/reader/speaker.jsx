@@ -110,7 +110,7 @@ class SpeakerReader extends React.Component {
                         }
                     },
                     {
-                        Header: <FontAwesome name="github" brand={true}  />,
+                        Header: <FontAwesome name="github" brand={true} />,
                         accessor: 'github',
                         width: 30,
                         Cell: row => {
