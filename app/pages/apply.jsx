@@ -3,11 +3,6 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ApplicationThunks } from '../actions';
 import { PageContainer, Alert } from '../components';
-import {
-    FieldTypes,
-    ProfileFields,
-    HackerApplicationFields
-} from '../constants/forms';
 import PropTypes from 'prop-types';
 
 import { NotificationStack } from 'react-notification';
@@ -51,58 +46,11 @@ class Apply extends React.Component {
     constructor(props) {
         super(props);
 
-        const userData = this.props.userState.data.user;
-        const appData = this.props.userState.data.app || {};
-
         this.state = {
-            birthday: userData.birthday
-                ? new Date(userData.birthday).toISOString().split('T')[0]
-                : '',
-            university: userData.university || '',
-            major: userData.major || '',
-            tshirt: userData.tshirt || 'm',
-            hackathonExperience: userData.hackathonExperience || 'novice',
-            resume: null,
-            isResumeUploaded: userData.isResumeUploaded || false,
             notifications: OrderedSet()
         };
 
-        for (const key of Object.keys(ProfileFields)) {
-            if (
-                ProfileFields[key] === FieldTypes.TEXT ||
-                ProfileFields[key] === FieldTypes.LINK
-            ) {
-                this.state[key] = userData[key] || '';
-            } else if (ProfileFields[key] === FieldTypes.SELECT) {
-                this.state[key] = userData[key] || 'unselected';
-            } else if (ProfileFields[key] === FieldTypes.DATE) {
-                this.state[key] = userData[key]
-                    ? new Date(userData[key]).toISOString().split('T')[0]
-                    : '';
-            }
-        }
-
-        for (const field of HackerApplicationFields) {
-            if (!Object.keys(ProfileFields).includes(field.key)) {
-                if (
-                    field.type === FieldTypes.TEXT ||
-                    field.type === FieldTypes.ESSAY
-                ) {
-                    this.state[field.key] = appData[field.key] || '';
-                } else if (field.type === FieldTypes.SELECT) {
-                    this.state[field.key] =
-                        appData[field.key] || field.values[0].key;
-                } else if (field.type === FieldTypes.INTEGER) {
-                    this.state[field.key] = appData[field.key] || 0;
-                }
-            }
-        }
-
         this.onSubmit = this.onSubmit.bind(this);
-        this.handleAttributeChange = this.handleAttributeChange.bind(this);
-        this.handleFileUpload = this.handleFileUpload.bind(this);
-
-        this.validationErrors = [];
     }
 
     addNotification(message, key, action) {
@@ -142,6 +90,23 @@ class Apply extends React.Component {
                 nextProps.userState.data.app,
                 nextProps.userState.data.user
             );
+
+            if (
+                this.state.userState &&
+                this.state.userState.data &&
+                this.state.userState.data.user
+            ) {
+                var temp2 = Object.assign(
+                    {},
+                    this.state.userState.data.app,
+                    this.state.userState.data.user
+                );
+
+                if (Object.keys(temp).length === Object.keys(temp2).length) {
+                    return;
+                }
+            }
+
             for (var i in temp) {
                 if (i in nextProps.userState.data.form) {
                     nextProps.userState.data.form[i].default = temp[i];
@@ -154,84 +119,21 @@ class Apply extends React.Component {
         });
     }
 
-    // Generic function for changing state
-    // -- input using this must have a name attribute
-    handleAttributeChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    }
-
-    handleFileUpload(file) {
-        this.setState({
-            resume: file
-        });
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-
-        var application = {};
-        var files = {};
-
-        for (const field of HackerApplicationFields) {
-            if (
-                field.type === FieldTypes.TEXT ||
-                field.type === FieldTypes.LINK ||
-                field.type === FieldTypes.SELECT ||
-                field.type === FieldTypes.INTEGER ||
-                field.type === FieldTypes.ESSAY
-            ) {
-                application[field.key] = this.state[field.key];
-            } else if (field.type === FieldTypes.DATE) {
-                application[field.key] = new Date(
-                    this.state[field.key]
-                ).getTime();
-            }
-        }
-
-        if (this.state.resume) {
-            application.resume = this.state.resume;
-        }
-
+    onSubmit(formData, files) {
         this.props.dispatch(
-            ApplicationThunks.uploadApplication(application, files)
+            ApplicationThunks.uploadApplication(formData, files)
         );
 
         this.addNotification('Application Saved!', 'save');
-    }
-
-    checkError(key) {
-        return this.validationErrors.indexOf(key) !== -1;
-    }
-
-    addError(key) {
-        if (!this.checkError(key)) {
-            this.validationErrors.push(key);
-        }
-        this.removeError(null);
-    }
-
-    removeError(key) {
-        var errorIndex = this.validationErrors.indexOf(key);
-        if (errorIndex !== -1) {
-            this.validationErrors.splice(errorIndex, 1);
-        }
-
-        var self = this;
-
-        this.validationErrors.forEach(function(key, elem) {
-            if (self.state[key]) {
-                self.validationErrors.splice(elem, 1);
-            }
-        });
     }
 
     render() {
         if (
             !this.state.userState ||
             !this.state.userState.data ||
-            (!this.state.userState.data.form && !this.state.userState.data.app)
+            (!this.state.userState.data.form &&
+                !this.state.userState.data.app &&
+                !this.state.userState.data.user)
         ) {
             return null;
         }

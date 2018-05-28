@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ProfileThunks } from '../actions';
-import { FieldTypes, ProfileFields } from '../constants/forms';
 import { getUserMetadata } from '../util/user.js';
 
 import { PageContainer, Alert } from '../components';
@@ -43,37 +42,11 @@ class EditProfile extends React.Component {
     constructor(props) {
         super(props);
 
-        const userData = this.props.userState.data.user;
         this.state = {
-            birthday: userData.birthday
-                ? new Date(userData.birthday).toISOString().split('T')[0]
-                : '',
-            university: userData.university || '',
-            major: userData.major || '',
-            avatars: userData.avatars || [],
-            isResumeUploaded: userData.isResumeUploaded || false,
             notifications: OrderedSet()
         };
 
-        for (const key of Object.keys(ProfileFields)) {
-            if (
-                ProfileFields[key] === FieldTypes.TEXT ||
-                ProfileFields[key] === FieldTypes.LINK
-            ) {
-                this.state[key] = userData[key] || '';
-            } else if (ProfileFields[key] === FieldTypes.SELECT) {
-                this.state[key] = userData[key] || 'unselected';
-            } else if (ProfileFields[key] === FieldTypes.DATE) {
-                this.state[key] = userData[key]
-                    ? new Date(userData[key]).toISOString().split('T')[0]
-                    : '';
-            }
-        }
-
         this.onSubmit = this.onSubmit.bind(this);
-        this.handleAttributeChange = this.handleAttributeChange.bind(this);
-        this.handleFileUpload = this.handleFileUpload.bind(this);
-        this.handlePictureUpload = this.handlePictureUpload.bind(this);
         this.onClickRequestEmailVerification = this.onClickRequestEmailVerification.bind(
             this
         );
@@ -120,55 +93,8 @@ class EditProfile extends React.Component {
         });
     }
 
-    // Generic function for changing state
-    // -- input using this must have a name attribute
-    handleAttributeChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    }
-
-    handleFileUpload(file) {
-        this.setState({
-            resume: file
-        });
-    }
-
-    handlePictureUpload(file) {
-        this.setState({
-            avatar: file
-        });
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-
-        var profile = {};
-        var files = {};
-
-        if (this.state.resume) {
-            files['resume'] = this.state.resume;
-        }
-        if (this.state.avatar) {
-            files['avatar'] = this.state.avatar;
-        }
-
-        for (const key of Object.keys(ProfileFields)) {
-            if (key === 'name') {
-                profile[key] = this.state[key];
-                profile['full_name'] = this.state[key];
-            } else if (
-                ProfileFields[key] === FieldTypes.TEXT ||
-                ProfileFields[key] === FieldTypes.LINK ||
-                ProfileFields[key] === FieldTypes.SELECT
-            ) {
-                profile[key] = this.state[key];
-            } else if (ProfileFields[key] === FieldTypes.DATE) {
-                profile[key] = new Date(this.state[key]).getTime();
-            }
-        }
-
-        this.props.dispatch(ProfileThunks.updateProfile(profile, files));
+    onSubmit(formData, files) {
+        this.props.dispatch(ProfileThunks.updateProfile(formData, files));
 
         this.addNotification('Profile Saved!', 'save');
     }

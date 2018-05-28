@@ -146,7 +146,7 @@ router.get('/logo/:id', function(req, res) {
                         .then(stream => {
                             res.setHeader(
                                 'Content-Type',
-                                mime.lookup(stream[0])
+                                mime.getType(stream[0])
                             );
                             res.send(stream[1].data.Body);
                         })

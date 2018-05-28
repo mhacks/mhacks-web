@@ -80,8 +80,10 @@ app.set('view engine', 'pug');
 app.set('views', './server/views');
 app.disable('view cache');
 
-// Pretty API Responses
-app.set('json spaces', 4);
+if (app.get('env') !== 'production') {
+    // Pretty API Responses
+    app.set('json spaces', config.api_spaces);
+}
 
 // Disable x-powered-by
 app.disable('x-powered-by');

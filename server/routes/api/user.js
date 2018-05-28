@@ -38,7 +38,7 @@ router.post(
             }
 
             for (var i in req.body) {
-                if (i === 'email') {
+                if (i === 'email' && req.body.email !== req.user.email) {
                     if (!validator.isEmail(req.body.email)) {
                         continue;
                     } else {

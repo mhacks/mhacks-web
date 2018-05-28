@@ -16,6 +16,7 @@ module.exports = {
     backend_db: process.env.BACKEND_DB || 'mhacks_backend',
     sessions_db: process.env.SESSIONS_DB || 'mhacks_sessions',
     api_work: parseBool(process.env.APIWORK, false),
+    api_spaces: process.env.APISPACES || 4,
     server_port: process.env.PORT || 3000,
     max_tokens: process.env.MAX_TOKENS || 10,
     token_expiration: process.env.TOKEN_EXPIRATION || 28, // days

@@ -103,21 +103,63 @@ var schema = new mongoose.Schema(
         },
         university: {
             type: String,
-            enum: universities,
             form: {
                 user_editable: true,
+                type_override: 'select',
+                select: [
+                    {
+                        label: '/v1/form/user/universities',
+                        value: '/v1/form/user/universities'
+                    }
+                ],
                 label: 'University',
                 placeholder: 'e.g. University of Michigan'
             }
         },
+        universities: {
+            type: Object,
+            form: [
+                {
+                    key: 'universities',
+                    type: String,
+                    enum: universities,
+                    form: {
+                        user_editable: true,
+                        label: 'University',
+                        placeholder: 'e.g. University of Michigan'
+                    }
+                }
+            ]
+        },
         major: {
             type: String,
-            enum: majors,
             form: {
                 user_editable: true,
+                type_override: 'select',
+                select: [
+                    {
+                        label: '/v1/form/user/majors',
+                        value: '/v1/form/user/majors'
+                    }
+                ],
                 label: 'Major',
                 placeholder: 'e.g. Computer Science'
             }
+        },
+        majors: {
+            type: Object,
+            form: [
+                {
+                    key: 'majors',
+                    type: String,
+                    enum: majors,
+                    form: {
+                        user_editable: true,
+                        label: 'Major',
+                        placeholder: 'e.g. Computer Science'
+                    }
+                }
+            ]
         },
         groups: [
             {
@@ -606,7 +648,10 @@ schema.methods.getAvatars = function() {
 };
 
 schema.methods.getResume = function() {
-    return config.host + '/v1/artifact/resume/' + this.email;
+    if (this.resume) {
+        return config.host + '/v1/artifact/resume/' + this.email;
+    }
+    return null;
 };
 
 schema.methods.getProfile = function() {
@@ -619,7 +664,7 @@ schema.methods.getProfile = function() {
         groups: this.getGroupsList(),
         major: this.major,
         university: this.university,
-        resume_uploaded: !!this.resume,
+        resume: this.getResume(),
         avatar: this.getAvatars(),
         github: this.github,
         linkedin: this.linkedin,

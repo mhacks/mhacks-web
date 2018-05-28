@@ -54,12 +54,18 @@ class Apply extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (
             nextProps.userState.data.form &&
-            nextProps.userState.data.speaker_application
+            nextProps.userState.data.speaker_application &&
+            nextProps.userState.data.user
         ) {
-            for (var i in nextProps.userState.data.speaker_application) {
+            var temp = Object.assign(
+                {},
+                nextProps.userState.data.speaker_application,
+                nextProps.userState.data.user
+            );
+
+            for (var i in temp) {
                 if (i in nextProps.userState.data.form) {
-                    nextProps.userState.data.form[i].default =
-                        nextProps.userState.data.speaker_application[i];
+                    nextProps.userState.data.form[i].default = temp[i];
                 }
             }
         }
@@ -80,7 +86,8 @@ class Apply extends React.Component {
             !this.state.userState ||
             !this.state.userState.data ||
             (!this.state.userState.data.form &&
-                !this.state.userState.data.speaker_application)
+                !this.state.userState.data.speaker_application &&
+                !this.state.userState.data.user)
         ) {
             return null;
         }

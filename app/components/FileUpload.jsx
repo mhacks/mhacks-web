@@ -74,8 +74,8 @@ class FileUpload extends React.Component {
         const file = e.target.files[0];
 
         this.setState({
-            fileSelected: true,
-            fileName: file.name
+            fileSelected: !!file,
+            fileName: file ? file.name : ''
         });
 
         this.props.onFileSelect(file);

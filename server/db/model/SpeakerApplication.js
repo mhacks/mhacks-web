@@ -230,12 +230,15 @@ schema.methods.updateFields = function(fields) {
 };
 
 schema.methods.getResume = function() {
-    return (
-        config.host +
-        '/v1/artifact/resume/' +
-        this.user.email +
-        '?application=true'
-    );
+    if (this.resume) {
+        return (
+            config.host +
+            '/v1/artifact/resume/' +
+            this.user.email +
+            '?application=true'
+        );
+    }
+    return null;
 };
 
 schema.plugin(sanitizerPlugin);

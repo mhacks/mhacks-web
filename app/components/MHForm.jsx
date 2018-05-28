@@ -120,7 +120,55 @@ class MHForm extends React.Component {
                 fieldType === this.FieldTypes.ARRAY
             ) {
                 if (!this.state.cachedLoaders[key]) {
-                    cachedLoaders[key] = createFilterOptions({
+                    let options =
+                        nextProps.schema[key].select ||
+                        nextProps.schema[key].array_select;
+
+                    if (Array.isArray(options) && options.length === 1) {
+                        let self = this;
+                        fetch(options[0].label)
+                            .then(response => {
+                                return response.json();
+                            })
+                            .then(json => {
+                                const cachedLoaders = {};
+
+                                cachedLoaders[key] = {};
+                                cachedLoaders[key].options =
+                                    json.form[
+                                        options[0].label.split('/').pop()
+                                    ].select;
+                                cachedLoaders[key].loader = createFilterOptions(
+                                    {
+                                        options:
+                                            json.form[
+                                                options[0].label
+                                                    .split('/')
+                                                    .pop()
+                                            ].select
+                                    }
+                                );
+
+                                self.setState({
+                                    formData: {
+                                        ...self.state.formData,
+                                        ...formData
+                                    },
+                                    files: {
+                                        ...self.state.files,
+                                        ...files
+                                    },
+                                    cachedLoaders: {
+                                        ...self.state.cachedLoaders,
+                                        ...cachedLoaders
+                                    }
+                                });
+                            });
+                    }
+
+                    cachedLoaders[key] = {};
+                    cachedLoaders[key].options = options;
+                    cachedLoaders[key].loader = createFilterOptions({
                         options:
                             nextProps.schema[key].select ||
                             nextProps.schema[key].array_select
@@ -426,6 +474,11 @@ class MHForm extends React.Component {
                         );
                         const field = this.props.schema[fieldKey];
                         field.key = fieldKey;
+
+                        if (field.depends_on && !formData[field.depends_on]) {
+                            return null;
+                        }
+
                         switch (field.type) {
                             case this.FieldTypes.SELECT:
                                 return this.renderLabeledInput(
@@ -433,12 +486,22 @@ class MHForm extends React.Component {
                                     <Select
                                         name={field.key}
                                         value={formData[field.key]}
-                                        options={field.select}
+                                        options={
+                                            this.state.cachedLoaders[field.key]
+                                                ? this.state.cachedLoaders[
+                                                      field.key
+                                                  ].options
+                                                : []
+                                        }
                                         onChange={this.handleSelectChange(
                                             field.key
                                         )}
                                         filterOptions={
                                             this.state.cachedLoaders[field.key]
+                                                ? this.state.cachedLoaders[
+                                                      field.key
+                                                  ].loader
+                                                : null
                                         }
                                     />,
                                     hasError
@@ -449,13 +512,23 @@ class MHForm extends React.Component {
                                     <Select
                                         name={field.key}
                                         value={formData[field.key]}
-                                        options={field.array_select}
+                                        options={
+                                            this.state.cachedLoaders[field.key]
+                                                ? this.state.cachedLoaders[
+                                                      field.key
+                                                  ].options
+                                                : []
+                                        }
                                         multi={true}
                                         onChange={this.handleSelectChange(
                                             field.key
                                         )}
                                         filterOptions={
                                             this.state.cachedLoaders[field.key]
+                                                ? this.state.cachedLoaders[
+                                                      field.key
+                                                  ].loader
+                                                : null
                                         }
                                     />,
                                     hasError
@@ -500,22 +573,56 @@ class MHForm extends React.Component {
                                 return (
                                     <SectionHeader
                                         color={this.props.theme.primary}
-                                        key={field.label}
+                                        key={field.key}
                                     >
                                         {field.label}
                                     </SectionHeader>
                                 );
                             case this.FieldTypes.FILE: {
+                                let notExists = true;
+                                if (
+                                    Array.isArray(this.state.files[field.key])
+                                ) {
+                                    for (const i in this.state.files[
+                                        field.key
+                                    ]) {
+                                        if (
+                                            this.state.files[field.key][i] &&
+                                            this.state.files[field.key][i]
+                                                .toLowerCase()
+                                                .indexOf('/artifact/') !== -1
+                                        ) {
+                                            notExists = false;
+                                        }
+                                    }
+                                }
+
+                                if (
+                                    typeof this.state.files[field.key] ===
+                                        'string' &&
+                                    this.state.files[field.key]
+                                        .toLowerCase()
+                                        .indexOf('/artifact/') !== -1
+                                ) {
+                                    notExists = false;
+                                }
+
                                 const uploadBackground = hasError
                                     ? 'red'
-                                    : this.state.files[field.key]
+                                    : this.state.files[field.key] && !notExists
                                         ? this.props.theme.success
                                         : this.props.theme.primary;
                                 return (
-                                    <FileUploadContainer key={field.label}>
+                                    <FileUploadContainer key={field.key}>
                                         <FileUpload
                                             fileTitle={field.label}
                                             defaultColor={uploadBackground}
+                                            defaultText={
+                                                this.state.files[field.key] &&
+                                                !notExists
+                                                    ? 'Uploaded. Click to change.'
+                                                    : false
+                                            }
                                             hoverColor={
                                                 this.props.theme.secondary
                                             }
@@ -529,16 +636,36 @@ class MHForm extends React.Component {
                                     </FileUploadContainer>
                                 );
                             }
-                            case this.FieldTypes.SUBMIT:
+                            case this.FieldTypes.SUBMIT: {
+                                const errors = this.validateFields();
+
                                 return (
                                     <RoundedButton
                                         type="submit"
                                         color={this.props.theme.primary}
-                                        key={field.label}
+                                        key={field.key}
+                                        disabled={errors.length > 0}
+                                        style={
+                                            errors.length > 0
+                                                ? {
+                                                      backgroundColor: this
+                                                          .props.theme.secondary
+                                                  }
+                                                : {}
+                                        }
+                                        hover={
+                                            errors.length > 0
+                                                ? 'color: ' +
+                                                  this.props.theme.primary
+                                                : ''
+                                        }
                                     >
-                                        {field.label}
+                                        {errors.length > 0
+                                            ? `${errors.length} Error(s)`
+                                            : field.label}
                                     </RoundedButton>
                                 );
+                            }
                             case this.FieldTypes.BOOLEAN:
                                 return this.renderLabeledInput(
                                     field,

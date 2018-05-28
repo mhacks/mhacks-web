@@ -49,18 +49,30 @@ var schema = new mongoose.Schema(
         },
         university: {
             type: String,
-            required: true,
             form: {
                 user_editable: true,
+                type_override: 'select',
+                select: [
+                    {
+                        label: '/v1/form/user/universities',
+                        value: '/v1/form/user/universities'
+                    }
+                ],
                 label: 'University',
                 placeholder: 'e.g. University of Michigan'
             }
         },
         major: {
             type: String,
-            required: true,
             form: {
                 user_editable: true,
+                type_override: 'select',
+                select: [
+                    {
+                        label: '/v1/form/user/majors',
+                        value: '/v1/form/user/majors'
+                    }
+                ],
                 label: 'Major',
                 placeholder: 'e.g. Computer Science'
             }
@@ -234,6 +246,7 @@ var schema = new mongoose.Schema(
             form: {
                 user_editable: true,
                 label: 'Departing From',
+                depends_on: 'needs_reimbursement',
                 wideLabel: true
             }
         },
@@ -242,6 +255,7 @@ var schema = new mongoose.Schema(
             form: {
                 user_editable: true,
                 label: 'How much reimbursement do you expect to need?',
+                depends_on: 'needs_reimbursement',
                 wideLabel: true
             }
         },
@@ -417,9 +431,15 @@ schema.query.byUser = function(user) {
 };
 
 schema.methods.getResume = function() {
-    return (
-        config.host + '/v1/artifact/resume/' + this.user + '?application=true'
-    );
+    if (this.resume) {
+        return (
+            config.host +
+            '/v1/artifact/resume/' +
+            this.user.email +
+            '?application=true'
+        );
+    }
+    return null;
 };
 
 schema.plugin(sanitizerPlugin);

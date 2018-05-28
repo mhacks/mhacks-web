@@ -36,7 +36,7 @@ router.get('/avatar/:email', function(req, res) {
     if (req.params.email && validator.isEmail(req.params.email)) {
         artifact(req.params.email, 'avatar')
             .then(stream => {
-                res.setHeader('Content-Type', mime.lookup(stream[0]));
+                res.setHeader('Content-Type', mime.getType(stream[0]));
                 res.send(stream[1].data.Body);
             })
             .catch(err => {
@@ -65,7 +65,7 @@ router.get('/floor/:id', function(req, res) {
                     floor.floor_image
                 )
                     .then(stream => {
-                        res.setHeader('Content-Type', mime.lookup(stream[0]));
+                        res.setHeader('Content-Type', mime.getType(stream[0]));
                         res.send(stream[1].data.Body);
                     })
                     .catch(err => {

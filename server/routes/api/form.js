@@ -180,6 +180,13 @@ function check_types(prop_val, groups) {
         case 'file':
             val_types.type = config.form_types.FILE;
             break;
+        case 'select':
+            val_types.type = config.form_types.SELECT;
+            break;
+    }
+
+    if (prop_val.form.select) {
+        val_types.select = prop_val.form.select;
     }
 
     // If there's an enum, it's a select group
@@ -213,6 +220,10 @@ function check_types(prop_val, groups) {
 
     if (prop_val.form.array_select) {
         val_types.array_select = prop_val.form.array_select;
+    }
+
+    if (prop_val.form.depends_on) {
+        val_types.depends_on = prop_val.form.depends_on;
     }
 
     val_types.required = prop_val.required || false;
