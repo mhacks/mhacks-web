@@ -5,10 +5,10 @@ import ReactTable from 'react-table';
 import { PageContainer, MHForm } from '../../components';
 import { ReaderThunks } from '../../actions';
 import { endpoints } from '../../constants';
-import FontAwesome from 'react-fontawesome';
 import Fuse from 'fuse.js';
 import { HeaderSection, SubsectionContainer, UtilityBar } from './components';
 import { generateCSV } from './util.js';
+import { FontAwesome } from '../../components';
 
 const A = styled.a`
     text-align: center;
@@ -93,7 +93,7 @@ class SponsorReader extends React.Component {
                         )
                     },
                     {
-                        Header: <FontAwesome name="github" />,
+                        Header: <FontAwesome name="github" brand={true}  />,
                         accessor: 'github',
                         width: 30,
                         Cell: row => {
@@ -107,7 +107,7 @@ class SponsorReader extends React.Component {
                         }
                     },
                     {
-                        Header: <FontAwesome name="linkedin-square" />,
+                        Header: <FontAwesome name="linkedin" brand={true}  />,
                         accessor: 'linkedin',
                         width: 30,
                         Cell: row => {

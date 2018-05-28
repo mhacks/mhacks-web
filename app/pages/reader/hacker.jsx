@@ -8,10 +8,10 @@ import { routes } from '../../constants';
 import { FormattedRelative } from 'react-intl';
 import { isMinor } from '../../util/user.js';
 import Fuse from 'fuse.js';
-import FontAwesome from 'react-fontawesome';
 import { HeaderSection, SubsectionContainer, UtilityBar } from './components';
 import { generateCSV } from './util.js';
 import PropTypes from 'prop-types';
+import { FontAwesome } from '../../components';
 
 const A = styled.a`
     text-align: center;
@@ -166,7 +166,7 @@ class ReaderPage extends React.Component {
                         }
                     },
                     {
-                        Header: <FontAwesome name="github" />,
+                        Header: <FontAwesome name="github" brand={true}  />,
                         accessor: 'github',
                         width: 30,
                         Cell: row => {
@@ -180,7 +180,7 @@ class ReaderPage extends React.Component {
                         }
                     },
                     {
-                        Header: <FontAwesome name="linkedin-square" />,
+                        Header: <FontAwesome name="linkedin" brand={true}  />,
                         accessor: 'linkedin',
                         width: 30,
                         Cell: row => {

@@ -91,22 +91,6 @@ class Apply extends React.Component {
                 nextProps.userState.data.user
             );
 
-            if (
-                this.state.userState &&
-                this.state.userState.data &&
-                this.state.userState.data.user
-            ) {
-                var temp2 = Object.assign(
-                    {},
-                    this.state.userState.data.app,
-                    this.state.userState.data.user
-                );
-
-                if (Object.keys(temp).length === Object.keys(temp2).length) {
-                    return;
-                }
-            }
-
             for (var i in temp) {
                 if (i in nextProps.userState.data.form) {
                     nextProps.userState.data.form[i].default = temp[i];

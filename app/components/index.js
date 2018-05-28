@@ -16,6 +16,7 @@ import Input from './Input.jsx';
 import InputText from './InputText';
 import SponsorLogos from './SponsorLogos';
 import FullScreenAnimation from './FullScreenAnimation.jsx';
+import FontAwesome from './FontAwesome.jsx';
 
 export {
     TextSubmit,
@@ -35,5 +36,6 @@ export {
     SponsorLogos,
     MHForm,
     Input,
-    FullScreenAnimation
+    FullScreenAnimation,
+    FontAwesome
 };
