@@ -52,7 +52,7 @@ window.s = store;
 // has rehydrated to prevent redirects and other
 // weird effects
 class AppProvider extends React.Component {
-    componentWillMount() {
+    componentDidMount() {
         this.props.dispatch(ConfigurationThunks.loadConfiguration());
     }
 

@@ -85,7 +85,7 @@ class MHForm extends React.Component {
         this.changeCompletion = this.changeCompletion.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         const formData = {};
         const files = {};
         const cachedLoaders = {};

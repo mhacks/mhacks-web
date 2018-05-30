@@ -71,10 +71,11 @@ class Login extends React.Component {
         this.tabSelect = this.tabSelect.bind(this);
     }
 
-    componentWillUpdate(nextProps) {
+    shouldComponentUpdate(nextProps) {
         if (nextProps.userState.data.isLoggedIn) {
             this.context.router.history.replace(routes.PROFILE);
         }
+        return true;
     }
 
     // Generic function for changing state

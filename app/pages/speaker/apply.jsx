@@ -51,7 +51,7 @@ class Apply extends React.Component {
         this.props.dispatch(SpeakerThunks.loadForm());
     }
 
-    componentWillReceiveProps(nextProps) {
+    static getDerivedStateFromProps(nextProps) {
         if (
             nextProps.userState.data.form &&
             nextProps.userState.data.speaker_application &&
@@ -70,9 +70,9 @@ class Apply extends React.Component {
             }
         }
 
-        this.setState({
+        return {
             userState: nextProps.userState
-        });
+        };
     }
 
     onSubmit(formData, files) {

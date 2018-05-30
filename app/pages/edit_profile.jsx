@@ -78,7 +78,7 @@ class EditProfile extends React.Component {
         this.props.dispatch(ProfileThunks.loadForm());
     }
 
-    componentWillReceiveProps(nextProps) {
+    static getDerivedStateFromProps(nextProps) {
         if (nextProps.userState.data.form && nextProps.userState.data.user) {
             for (var i in nextProps.userState.data.user) {
                 if (i in nextProps.userState.data.form) {
@@ -88,9 +88,9 @@ class EditProfile extends React.Component {
             }
         }
 
-        this.setState({
+        return {
             userState: nextProps.userState
-        });
+        };
     }
 
     onSubmit(formData, files) {
