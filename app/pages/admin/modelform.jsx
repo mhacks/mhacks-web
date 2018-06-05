@@ -95,18 +95,29 @@ class ModelForm extends React.Component {
     render() {
         if (
             !this.state.adminState ||
-            (!this.state.adminState.form && !this.state.adminState.document)
+            !this.state.adminState.form ||
+            (!this.state.adminState.form.form &&
+                !this.state.adminState.document)
         ) {
             return null;
+        }
+
+        let title = '';
+        let showId = true;
+        if (this.props.id === 'create') {
+            title = 'Creating ' + this.props.model.slice(0, -1);
+            showId = false;
+        } else {
+            title = 'Updating ' + this.props.model.slice(0, -1);
         }
 
         return (
             <PagePulled>
                 <FormContainer>
                     <h2>
-                        Updating {this.props.model}
+                        {title}
                         <br />
-                        {this.props.id}
+                        {showId ? this.props.id : null}
                     </h2>
                     <MHForm
                         schema={this.state.adminState.form.form}

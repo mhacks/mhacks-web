@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { PageContainer } from '../../components';
+import { PageContainer, RoundedButton } from '../../components';
 import { AdminThunks } from '../../actions';
 import ReactTable from 'react-table';
 import { routes } from '../../constants';
@@ -9,12 +9,6 @@ import PropTypes from 'prop-types';
 
 const PagePulled = styled(PageContainer)`
     min-height: calc(100vh - 146px);
-`;
-
-const Link = styled.a`
-    &:hover {
-        text-decoration: underline;
-    }
 `;
 
 /* Page Component */
@@ -32,15 +26,18 @@ class Model extends React.Component {
 
         return (
             <PagePulled ref="pagecontainer">
-                <Link
+                <h2>{modelKey}</h2>
+                <RoundedButton
+                    type="submit"
+                    color={this.props.theme.primary}
                     onClick={() => {
                         this.context.router.history.push(
                             routes.ADMIN + '/' + modelKey + '/create'
                         );
                     }}
                 >
-                    <h2>Create a {modelKey.slice(0, -1)}</h2>
-                </Link>
+                    Create
+                </RoundedButton>
                 <ReactTable
                     data={documents}
                     loading={this.props.adminState.fetching}
@@ -54,6 +51,14 @@ class Model extends React.Component {
                                     Cell: row => {
                                         if (Array.isArray(row.value)) {
                                             return JSON.stringify(row.value);
+                                        }
+
+                                        if (typeof row.value === 'boolean') {
+                                            if (row.value) {
+                                                return 'Yes';
+                                            }
+
+                                            return 'No';
                                         }
 
                                         return row.value;
