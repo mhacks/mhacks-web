@@ -31,7 +31,10 @@ module.exports = function(bucket_name, artifactOverride) {
                                     directory = 'resumes';
                                 }
 
-                                if (file.fieldname === 'avatar') {
+                                if (
+                                    file.fieldname === 'avatar' ||
+                                    file.fieldname === 'logo'
+                                ) {
                                     directory = 'avatars';
                                 }
 
@@ -66,7 +69,10 @@ module.exports = function(bucket_name, artifactOverride) {
                             directory = 'resumes';
                         }
 
-                        if (file.fieldname === 'avatar') {
+                        if (
+                            file.fieldname === 'avatar' ||
+                            file.fieldname === 'logo'
+                        ) {
                             directory = 'avatars';
                         }
 
@@ -104,7 +110,10 @@ module.exports = function(bucket_name, artifactOverride) {
                         directory = 'resumes';
                     }
 
-                    if (file.fieldname === 'avatar') {
+                    if (
+                        file.fieldname === 'avatar' ||
+                        file.fieldname === 'logo'
+                    ) {
                         directory = 'avatars';
                     }
 
@@ -150,7 +159,10 @@ module.exports = function(bucket_name, artifactOverride) {
                             directory = 'resumes';
                         }
 
-                        if (file.fieldname === 'avatar') {
+                        if (
+                            file.fieldname === 'avatar' ||
+                            file.fieldname === 'logo'
+                        ) {
                             directory = 'avatars';
                         }
 

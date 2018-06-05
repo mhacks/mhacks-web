@@ -96,7 +96,7 @@ router.post(
 
 router.get('/', function(req, res) {
     authMiddleware('admin', 'api', true, function() {
-        Sponsor.find({}, '-domain -logo')
+        Sponsor.find({}, '-logo')
             .then(sponsors => {
                 sponsors = sortSponsors(sponsors);
 

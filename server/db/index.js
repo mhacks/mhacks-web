@@ -75,29 +75,6 @@ function modifySchema(schema) {
             });
         };
 
-        schema.methods.updateFields = function(fields, groups) {
-            let updateables = false;
-
-            if (groups) {
-                updateables = this.getUpdateableFields(groups);
-            }
-
-            for (const param in fields) {
-                if (fields.hasOwnProperty(param)) {
-                    if (
-                        updateables === false ||
-                        updateables.indexOf(param) !== -1
-                    ) {
-                        this[param] = fields[param];
-                    } else {
-                        return false;
-                    }
-                }
-            }
-
-            return this.save();
-        };
-
         schema.statics.getUpdateableFields = function(groups) {
             const updateables = [];
 
@@ -123,6 +100,29 @@ function modifySchema(schema) {
             }
 
             return updateables;
+        };
+
+        schema.methods.updateFields = function(fields, groups) {
+            let updateables = false;
+
+            if (groups) {
+                updateables = schema.statics.getUpdateableFields(groups);
+            }
+
+            for (const param in fields) {
+                if (fields.hasOwnProperty(param)) {
+                    if (
+                        updateables === false ||
+                        updateables.indexOf(param) !== -1
+                    ) {
+                        this[param] = fields[param];
+                    } else {
+                        return false;
+                    }
+                }
+            }
+
+            return this.save();
         };
     }
 }

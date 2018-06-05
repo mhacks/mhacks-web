@@ -47,6 +47,47 @@ export function adminState(state = initialState, action) {
                 message: action.message
             };
 
+        case actions.ADMIN_LOAD_DOCUMENT_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                document: action.data,
+                message: action.message
+            };
+
+        case actions.ADMIN_LOAD_DOCUMENT_REQUEST:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                models: {
+                    ...state.models,
+                    ...action.data
+                },
+                message: action.message
+            };
+
+        case actions.ADMIN_LOAD_FORM_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                form: action.data,
+                message: action.message
+            };
+
+        case actions.ADMIN_LOAD_FORM_REQUEST:
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: {
+                    ...state.data,
+                    ...action.data
+                },
+                message: action.message
+            };
         default:
             return state;
     }

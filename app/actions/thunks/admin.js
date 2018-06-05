@@ -1,6 +1,9 @@
 import { actions } from '../../actions';
 import { endpoints } from '../../constants';
-import { getResponseFromRoute } from '../../util/actions.js';
+import {
+    getResponseFromRoute,
+    postFormResponseFromRoute
+} from '../../util/actions.js';
 
 export default class AdminThunks {
     static loadModels() {
@@ -68,6 +71,97 @@ export default class AdminThunks {
                     }
                 }
             );
+        };
+    }
+
+    static loadDocument(model, id) {
+        return dispatch => {
+            dispatch({
+                type: actions.ADMIN_LOAD_DOCUMENT_REQUEST
+            });
+
+            getResponseFromRoute(
+                endpoints.ADMIN_MODELS + '/' + model + '/' + id
+            ).then(response => {
+                if (response.status === 200) {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.ADMIN_LOAD_DOCUMENT_SUCCESS,
+                            data: json.document
+                        });
+                    });
+                } else {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.ADMIN_LOAD_DOCUMENT_FAILURE,
+                            error: json.status,
+                            message: json.message
+                        });
+                    });
+                }
+            });
+        };
+    }
+
+    static loadForm(model) {
+        return dispatch => {
+            dispatch({
+                type: actions.ADMIN_LOAD_FORM_REQUEST
+            });
+
+            getResponseFromRoute(
+                endpoints.FORM + '/' + model.slice(0, -1)
+            ).then(response => {
+                if (response.status === 200) {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.ADMIN_LOAD_FORM_SUCCESS,
+                            data: { form: json.form, FieldTypes: json.types },
+                            message: json.message
+                        });
+                    });
+                } else {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.ADMIN_LOAD_FORM_FAILURE,
+                            error: json.status,
+                            message: json.message
+                        });
+                    });
+                }
+            });
+        };
+    }
+
+    static updateModel(model, id, data, files) {
+        return dispatch => {
+            dispatch({
+                type: actions.ADMIN_UPDATE_DOCUMENT_REQUEST
+            });
+
+            postFormResponseFromRoute(
+                endpoints.ADMIN_MODELS + '/' + model + '/' + id,
+                data,
+                files
+            ).then(response => {
+                if (response.status === 200) {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.ADMIN_UPDATE_DOCUMENT_SUCCESS,
+                            data: {},
+                            message: json.message
+                        });
+                    });
+                } else {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.ADMIN_UPDATE_DOCUMENT_FAILURE,
+                            error: json.status,
+                            message: json.message
+                        });
+                    });
+                }
+            });
         };
     }
 }

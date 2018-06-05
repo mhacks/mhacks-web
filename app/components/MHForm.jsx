@@ -364,6 +364,10 @@ class MHForm extends React.Component {
             }
         }
 
+        if (!this.props.validate) {
+            return [];
+        }
+
         return errors;
     }
 
@@ -722,7 +726,8 @@ MHForm.defaultProps = {
         SUBMIT: 10,
         FILE: 11
     },
-    initialData: {}
+    initialData: {},
+    validate: true
 };
 
 export default MHForm;

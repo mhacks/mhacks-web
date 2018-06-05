@@ -28,12 +28,12 @@ var schema = new mongoose.Schema(
         },
         level: {
             type: String,
-            enum: ['bronze', 'silver', 'gold', 'unobtanium'],
+            enum: ['bronze', 'silver', 'gold', 'platinum'],
             required: true,
             form: {
                 auth_groups: ['admin'],
                 label: 'Level',
-                select: ['Bronze', 'Silver', 'Gold', 'Unobtanium']
+                select: ['Bronze', 'Silver', 'Gold', 'Platinum']
             }
         },
         logo: {
@@ -60,6 +60,13 @@ var schema = new mongoose.Schema(
             form: {
                 auth_groups: ['admin'],
                 label: 'URL (link)'
+            }
+        },
+        save_button: {
+            type: String,
+            form: {
+                label: 'Save',
+                type_override: 'submit'
             }
         }
     }),
