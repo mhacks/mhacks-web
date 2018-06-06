@@ -27,7 +27,6 @@ router.post('/login', function(req, res) {
         User.find()
             .byEmail(req.body.email)
             .then(user => {
-                console.log(user);
                 if (user) {
                     user.checkPassword(req.body.password)
                         .then(checkRes => {
