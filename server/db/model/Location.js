@@ -2,48 +2,54 @@ var {
         mongoose,
         defaultOptions,
         modifySchema,
-        defaultSchema
+        defaultSchema,
+        defaultEndSchema
     } = require('../index.js'),
     escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    Object.assign({}, defaultSchema, {
-        name: {
-            type: String,
-            required: true,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Name'
+    Object.assign(
+        {},
+        defaultSchema,
+        {
+            name: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Name'
+                }
+            },
+            latitude: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Latitude'
+                }
+            },
+            longitude: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Longitude'
+                }
+            },
+            floor: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Floor',
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Floor',
+                    type_override: String
+                }
             }
         },
-        latitude: {
-            type: String,
-            required: true,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Latitude'
-            }
-        },
-        longitude: {
-            type: String,
-            required: true,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Longitude'
-            }
-        },
-        floor: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Floor',
-            required: true,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Floor',
-                type_override: String
-            }
-        }
-    }),
+        defaultEndSchema
+    ),
     defaultOptions
 );
 

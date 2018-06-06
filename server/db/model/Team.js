@@ -2,45 +2,44 @@ var {
         mongoose,
         defaultOptions,
         modifySchema,
-        defaultSchema
+        defaultSchema,
+        defaultEndSchema
     } = require('../index.js'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin'),
     escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    Object.assign({}, defaultSchema, {
-        name: {
-            type: String,
-            form: {
-                user_editable: true,
-                label: 'Team Name',
-                placeholder: 'Hacker McHackerTeam'
-            }
+    Object.assign(
+        {},
+        defaultSchema,
+        {
+            name: {
+                type: String,
+                form: {
+                    user_editable: true,
+                    label: 'Team Name',
+                    placeholder: 'Hacker McHackerTeam'
+                }
+            },
+            description: {
+                type: String,
+                form: {
+                    user_editable: true,
+                    label: 'Description',
+                    placeholder: 'Your description goes here'
+                }
+            },
+            //First user in the array will be the 'leader'
+            members: [
+                {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'User'
+                }
+            ]
         },
-        description: {
-            type: String,
-            form: {
-                user_editable: true,
-                label: 'Description',
-                placeholder: 'Your description goes here'
-            }
-        },
-        //First user in the array will be the 'leader'
-        members: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
-            }
-        ],
-        save_button: {
-            type: String,
-            form: {
-                label: 'Create Team',
-                type_override: 'submit'
-            }
-        }
-    }),
+        defaultEndSchema
+    ),
     defaultOptions
 );
 

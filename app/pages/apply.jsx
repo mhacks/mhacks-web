@@ -137,23 +137,28 @@ class Apply extends React.Component {
                         {this.props.userState.data.isApplicationSubmitted ? (
                             <AlertContainer>
                                 <Alert
-                                    message={
-                                        'Your application is submitted but you can make changes on this page and update your application! Thanks for applying to MHacks X.'
-                                    }
+                                    message={`Your application is submitted but you can make changes on this page and update your application! Thanks for applying to ${
+                                        this.props.configurationState.data
+                                            .app_name
+                                    }.`}
                                     positive={true}
                                 />
                             </AlertContainer>
                         ) : null}
                         <Subhead>
-                            Apply for MHacks X! MHacks X will be held on the
-                            University of Michigan's North Campus in Ann Arbor
-                            from September 22nd to 24th. If you already have
-                            teammates in mind, include their names and emails in
-                            the "anything else" question.
+                            Apply for{' '}
+                            {this.props.configurationState.data.app_name}!{' '}
+                            {this.props.configurationState.data.app_name} will
+                            be held on the University of Michigan's North Campus
+                            in Ann Arbor from September 22nd to 24th. If you
+                            already have teammates in mind, include their names
+                            and emails in the "anything else" question.
                         </Subhead>
 
                         <LegalText>
-                            By applying to MHacks X, you agree to the MHacks{' '}
+                            By applying to{' '}
+                            {this.props.configurationState.data.app_name}, you
+                            agree to the MHacks{' '}
                             <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
                                 Code of Conduct
                             </LegalLink>.
@@ -161,7 +166,6 @@ class Apply extends React.Component {
                         <MHForm
                             schema={this.state.userState.data.form}
                             FieldTypes={this.state.userState.data.FieldTypes}
-                            hidden={{ reader: true, status: true }}
                             theme={this.props.theme}
                             onSubmit={this.onSubmit}
                         />
@@ -189,7 +193,8 @@ Apply.contextTypes = {
 function mapStateToProps(state) {
     return {
         userState: state.userState,
-        theme: state.theme.data
+        theme: state.theme.data,
+        configurationState: state.configurationState
     };
 }
 

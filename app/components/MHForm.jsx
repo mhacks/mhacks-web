@@ -173,6 +173,8 @@ class MHForm extends React.Component {
                             nextProps.schema[key].select ||
                             nextProps.schema[key].array_select
                     });
+
+                    this.forceUpdate();
                 }
             }
         }
@@ -390,7 +392,12 @@ class MHForm extends React.Component {
         const errorFields = this.validateFields();
 
         if (errorFields.length === 0) {
-            this.props.onSubmit(this.formatFormData(), this.formatFiles());
+            this.props.onSubmit(
+                this.formatFormData(),
+                this.formatFiles(),
+                e,
+                this.clicked
+            );
         }
 
         this.setState({
@@ -470,7 +477,18 @@ class MHForm extends React.Component {
                 ) : null}
                 {Object.keys(this.props.schema)
                     .filter(field => {
-                        return !this.props.hidden[field];
+                        let hidden = {};
+                        if (!this.props.hidden_override) {
+                            hidden = Object.assign(
+                                {},
+                                MHForm.defaultProps.hidden,
+                                this.props.hidden
+                            );
+                        } else {
+                            hidden = this.props.hidden;
+                        }
+
+                        return !hidden[field];
                     })
                     .map(fieldKey => {
                         const hasError = this.state.errorFields.includes(
@@ -663,6 +681,9 @@ class MHForm extends React.Component {
                                                   this.props.theme.primary
                                                 : ''
                                         }
+                                        onClick={() =>
+                                            (this.clicked = field.key)
+                                        }
                                     >
                                         {errors.length > 0
                                             ? `${errors.length} Error(s)`
@@ -711,7 +732,18 @@ class MHForm extends React.Component {
 }
 
 MHForm.defaultProps = {
-    hidden: {},
+    hidden: {
+        delete_button: true,
+        deleted: true,
+        reader: true,
+        status: true,
+        email: true,
+        password: true,
+        user: true,
+        score: true,
+        reimbursement: true
+    },
+    hidden_override: false,
     FieldTypes: {
         TEXT: 0,
         LINK: 1,

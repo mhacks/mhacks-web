@@ -97,7 +97,7 @@ router.delete('/:id', authMiddleware('admin', 'api'), function(req, res) {
     if (req.params.id) {
         Announcement.findById(req.params.id)
             .then(announcement => {
-                if (announcement != false) {
+                if (announcement !== false) {
                     announcement.deleted = true;
                     announcement.save();
 
@@ -133,7 +133,7 @@ router.put('/', authMiddleware('admin', 'api'), function(req, res) {
         if (req.body.id) {
             Announcement.findById(req.body.id)
                 .then(announcement => {
-                    if (announcement != false) {
+                    if (announcement !== false) {
                         announcement.updateFields(req.body);
 
                         res.send({

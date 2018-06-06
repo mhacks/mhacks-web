@@ -97,15 +97,15 @@ class Apply extends React.Component {
                 <FormContainer>
                     <h2>Speaker Application</h2>
                     <p>
-                        Apply to be a speaker at MHacks X! Know something cool
-                        that others might be interested in learning about? Host
-                        a tech talk or workshop and teach your fellow hackers a
-                        thing or two!
+                        Apply to be a speaker at{' '}
+                        {this.props.configurationState.data.app_name} Know
+                        something cool that others might be interested in
+                        learning about? Host a tech talk or workshop and teach
+                        your fellow hackers a thing or two!
                     </p>
                     <MHForm
                         schema={this.state.userState.data.form}
                         FieldTypes={this.state.userState.data.FieldTypes}
-                        hidden={{ user: true }}
                         theme={this.props.theme}
                         onSubmit={this.onSubmit}
                     />
@@ -148,7 +148,8 @@ Apply.contextTypes = {
 function mapStateToProps(state) {
     return {
         userState: state.userState,
-        theme: state.theme.data
+        theme: state.theme.data,
+        configurationState: state.configurationState
     };
 }
 

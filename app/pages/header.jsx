@@ -272,12 +272,15 @@ class Header extends React.Component {
         const userMetadata = getUserMetadata(userData);
         const configurationData = this.props.configurationState.data;
 
+        document.getElementsByTagName('META')[4].content =
+            configurationData.app_name;
+
         return (
             <div>
                 {window.location.pathname === routes.SUBSCRIBE ? null : (
                     <div>
                         <Helmet>
-                            <title>MHacks X</title>
+                            <title>{configurationData.app_name}</title>
 
                             <link
                                 rel="icon"

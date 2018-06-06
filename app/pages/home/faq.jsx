@@ -127,8 +127,14 @@ class Faq extends React.Component {
                                 <Section>
                                     <FaqItem
                                         header="How do I apply?"
-                                        body="Step one is to create an MHacks Account and fill out some basic information in your MHacks Profile. Once that's done,
-                                     you'll be able to apply for MHacks X! Note that if you're accepted to MHacks X, you will need to Confirm your acceptance."
+                                        body={`Step one is to create an MHacks Account and fill out some basic information in your MHacks Profile. Once that's done,
+                                     you'll be able to apply for ${
+                                         this.props.configurationState.data
+                                             .app_name
+                                     }! Note that if you're accepted to ${
+                                            this.props.configurationState.data
+                                                .app_name
+                                        }, you will need to Confirm your acceptance.`}
                                     />
                                     <FaqItem
                                         header="When are applications closing?"
@@ -283,7 +289,8 @@ class Faq extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        theme: state.theme.data
+        theme: state.theme.data,
+        configurationState: state.configurationState
     };
 }
 

@@ -88,13 +88,15 @@ class Confirm extends React.Component {
 
         const { isConfirmed } = getUserMetadata(this.state.userState.data);
 
+        const configurationData = this.props.configurationState.data;
+
         return (
             <PageContainer>
                 <FormContainer>
                     {isConfirmed ? (
                         <Alert message="You are confirmed!" positive={true} />
                     ) : null}
-                    <h2>Confirm Attendance at MHacks X!</h2>
+                    <h2>Confirm Attendance at {configurationData.app_name}!</h2>
                     <MHForm
                         schema={this.state.userState.data.form}
                         FieldTypes={this.state.userState.data.FieldTypes}
@@ -140,7 +142,8 @@ Confirm.contextTypes = {
 function mapStateToProps(state) {
     return {
         userState: state.userState,
-        theme: state.theme.data
+        theme: state.theme.data,
+        configurationState: state.configurationState
     };
 }
 

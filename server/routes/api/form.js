@@ -226,6 +226,14 @@ function check_types(prop_val, groups) {
         val_types.depends_on = prop_val.form.depends_on;
     }
 
+    if ('default' in prop_val) {
+        val_types.default = prop_val.default;
+    }
+
+    if ('default' in prop_val.form) {
+        val_types.default = prop_val.form.default;
+    }
+
     val_types.required = prop_val.required || false;
 
     return val_types;

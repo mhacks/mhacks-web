@@ -2,7 +2,8 @@ import { actions } from '../../actions';
 import { endpoints } from '../../constants';
 import {
     getResponseFromRoute,
-    postFormResponseFromRoute
+    postFormResponseFromRoute,
+    deleteResponseFromRoute
 } from '../../util/actions.js';
 
 export default class AdminThunks {
@@ -156,6 +157,36 @@ export default class AdminThunks {
                     response.json().then(json => {
                         dispatch({
                             type: actions.ADMIN_UPDATE_DOCUMENT_FAILURE,
+                            error: json.status,
+                            message: json.message
+                        });
+                    });
+                }
+            });
+        };
+    }
+
+    static deleteModel(model, id) {
+        return dispatch => {
+            dispatch({
+                type: actions.ADMIN_DELETE_DOCUMENT_REQUEST
+            });
+
+            deleteResponseFromRoute(
+                endpoints.ADMIN_MODELS + '/' + model + '/' + id
+            ).then(response => {
+                if (response.status === 200) {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.ADMIN_DELETE_DOCUMENT_SUCCESS,
+                            data: {},
+                            message: json.message
+                        });
+                    });
+                } else {
+                    response.json().then(json => {
+                        dispatch({
+                            type: actions.ADMIN_DELETE_DOCUMENT_FAILURE,
                             error: json.status,
                             message: json.message
                         });

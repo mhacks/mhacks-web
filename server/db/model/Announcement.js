@@ -2,65 +2,86 @@ var {
         mongoose,
         defaultOptions,
         modifySchema,
-        defaultSchema
+        defaultSchema,
+        defaultEndSchema
     } = require('../index.js'),
-    escapeStringRegex = require('escape-string-regexp');
+    escapeStringRegex = require('escape-string-regexp'),
+    PushNotification = require('./PushNotification.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    Object.assign({}, defaultSchema, {
-        title: {
-            type: String,
-            required: true,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Title'
+    Object.assign(
+        {},
+        defaultSchema,
+        {
+            title: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Title'
+                }
+            },
+            body: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Body'
+                }
+            },
+            broadcastTime: {
+                type: Date,
+                default: Date.now,
+                index: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Broadcast Time'
+                }
+            },
+            category: {
+                type: String,
+                enum: ['emergency', 'logistics', 'food', 'event', 'sponsored'],
+                default: 'logistics',
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Category',
+                    select: [
+                        'Emergency',
+                        'Logistics',
+                        'Food',
+                        'Event',
+                        'Sponsored'
+                    ]
+                }
+            },
+            isApproved: {
+                type: Boolean,
+                default: false,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Approved'
+                }
+            },
+            isSent: {
+                type: Boolean,
+                default: false,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Sent'
+                }
+            },
+            push: {
+                type: Boolean,
+                default: false,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Push'
+                }
             }
         },
-        body: {
-            type: String,
-            required: true,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Body'
-            }
-        },
-        broadcastTime: {
-            type: Date,
-            default: Date.now,
-            index: true,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Broadcast Time'
-            }
-        },
-        category: {
-            type: String,
-            enum: ['emergency', 'logistics', 'food', 'event', 'sponsored'],
-            default: 'logistics',
-            form: {
-                auth_groups: ['admin'],
-                label: 'Category',
-                select: ['Emergency', 'Logistics', 'Food', 'Event', 'Sponsored']
-            }
-        },
-        isApproved: {
-            type: Boolean,
-            default: false,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Approved'
-            }
-        },
-        isSent: {
-            type: Boolean,
-            default: false,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Sent'
-            }
-        }
-    }),
+        defaultEndSchema
+    ),
     defaultOptions
 );
 
@@ -125,6 +146,28 @@ schema.query.byIsPublic = function(since) {
         }
     });
 };
+
+var changeMiddleware = function(next) {
+    var announcement = this;
+
+    if (!announcement.isModified('push')) return next();
+
+    if (announcement.push) {
+        PushNotification.create({
+            title: announcement.title,
+            body: announcement.body,
+            category: announcement.category,
+            isApproved: announcement.isApproved,
+            broadcastTime: announcement.broadcastTime
+        });
+        return next();
+    }
+};
+
+// Set the update middleware on each of the document save and update events
+schema.pre('save', changeMiddleware);
+schema.pre('findOneAndUpdate', changeMiddleware);
+schema.pre('update', changeMiddleware);
 
 modifySchema(schema);
 

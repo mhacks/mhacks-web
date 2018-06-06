@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { MHForm } from '../../components';
 import { OrderedSet } from 'immutable';
 import { NotificationStack } from 'react-notification';
+import { routes } from '../../constants';
 
 const PagePulled = styled(PageContainer)`
     min-height: calc(100vh - 146px);
@@ -79,23 +80,34 @@ class ModelForm extends React.Component {
         );
     }
 
-    onSubmit(formData, files) {
-        this.props.dispatch(
-            AdminThunks.updateModel(
-                this.props.model,
-                this.props.id,
-                formData,
-                files
-            )
-        );
+    onSubmit(formData, files, e, clicked) {
+        if (clicked === 'delete_button') {
+            this.props.dispatch(
+                AdminThunks.deleteModel(this.props.model, this.props.id)
+            );
 
-        this.addNotification(this.props.model + ' Saved!', 'save');
+            this.addNotification(this.props.model + ' Deleted!', 'save');
+        } else {
+            this.props.dispatch(
+                AdminThunks.updateModel(
+                    this.props.model,
+                    this.props.id,
+                    formData,
+                    files
+                )
+            );
+
+            this.addNotification(this.props.model + ' Saved!', 'save');
+        }
+
+        this.context.router.history.push(routes.ADMIN + '/' + this.props.model);
     }
 
     render() {
         if (
             !this.state.adminState ||
             !this.state.adminState.form ||
+            !this.state.adminState.document ||
             (!this.state.adminState.form.form &&
                 !this.state.adminState.document)
         ) {
@@ -125,6 +137,8 @@ class ModelForm extends React.Component {
                         theme={this.props.theme}
                         onSubmit={this.onSubmit}
                         validate={false}
+                        hidden={{}}
+                        hidden_override={true}
                     />
                     <NotificationStack
                         notifications={this.state.notifications.toArray()}

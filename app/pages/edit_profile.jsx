@@ -167,9 +167,10 @@ class EditProfile extends React.Component {
                         {isApplicationSubmitted && !isApplicationReviewed ? (
                             <AlertContainer>
                                 <Alert
-                                    message={
-                                        'Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to MHacks X'
-                                    }
+                                    message={`Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to ${
+                                        this.props.configurationState.data
+                                            .app_name
+                                    }`}
                                     style={{
                                         backgroundColor: '#01FF70',
                                         color: '#3D9970'
@@ -185,7 +186,6 @@ class EditProfile extends React.Component {
                         <MHForm
                             schema={this.state.userState.data.form}
                             FieldTypes={this.state.userState.data.FieldTypes}
-                            hidden={{ email: true, password: true }}
                             theme={this.props.theme}
                             onSubmit={this.onSubmit}
                         />
@@ -209,7 +209,8 @@ class EditProfile extends React.Component {
 function mapStateToProps(state) {
     return {
         userState: state.userState,
-        theme: state.theme.data
+        theme: state.theme.data,
+        configurationState: state.configurationState
     };
 }
 

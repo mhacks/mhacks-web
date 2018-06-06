@@ -120,7 +120,6 @@ router.post(
         { name: 'resume' }
     ]),
     function(req, res) {
-        console.log(req.files);
         const Model = models[req.params.model];
 
         if (req.files && req.files.logo) {
@@ -203,6 +202,45 @@ router.post(
         }
     }
 );
+
+router.delete('/model/:model/:id', function(req, res) {
+    const Model = models[req.params.model];
+
+    if (Model === undefined) {
+        res.status(404).send({
+            status: false,
+            message: Responses.NOT_FOUND
+        });
+
+        return;
+    }
+
+    if (req.params.id) {
+        Model.findById(req.params.id)
+            .then(document => {
+                if (document) {
+                    document.remove();
+                } else {
+                    res.status(404).send({
+                        status: false,
+                        message: Responses.NOT_FOUND
+                    });
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
+            });
+    } else {
+        res.status(404).send({
+            status: false,
+            message: Responses.NOT_FOUND
+        });
+    }
+});
 
 router.post('/user/groups', function(req, res) {
     if (req.body.email && req.body.group) {

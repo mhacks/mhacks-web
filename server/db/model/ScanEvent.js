@@ -2,34 +2,40 @@ var {
         mongoose,
         defaultOptions,
         modifySchema,
-        defaultSchema
+        defaultSchema,
+        defaultEndSchema
     } = require('../index.js'),
     PushNotification = require('./PushNotification.js'),
     Device = require('./Device.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    Object.assign({}, defaultSchema, {
-        user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            required: true
+    Object.assign(
+        {},
+        defaultSchema,
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                required: true
+            },
+            scanner: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                required: true
+            },
+            event: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Scan',
+                required: true
+            },
+            created_at: {
+                type: Date,
+                default: Date.now
+            }
         },
-        scanner: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            required: true
-        },
-        event: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Scan',
-            required: true
-        },
-        created_at: {
-            type: Date,
-            default: Date.now
-        }
-    }),
+        defaultEndSchema
+    ),
     defaultOptions
 );
 

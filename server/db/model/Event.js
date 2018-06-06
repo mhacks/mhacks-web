@@ -2,72 +2,84 @@ var {
         mongoose,
         defaultOptions,
         modifySchema,
-        defaultSchema
+        defaultSchema,
+        defaultEndSchema
     } = require('../index.js'),
     escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    Object.assign({}, defaultSchema, {
-        name: {
-            type: String,
-            required: true,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Name'
+    Object.assign(
+        {},
+        defaultSchema,
+        {
+            name: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Name'
+                }
+            },
+            desc: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Description'
+                }
+            },
+            startDate: {
+                type: Date,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Start Date'
+                }
+            },
+            endDate: {
+                type: Date,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'End Date'
+                }
+            },
+            category: {
+                type: String,
+                enum: [
+                    'general',
+                    'food',
+                    'tech talk',
+                    'sponsor event',
+                    'other'
+                ],
+                default: 'general',
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Category',
+                    select: [
+                        'General',
+                        'Food',
+                        'Tech Talk',
+                        'Sponsor Event',
+                        'Other'
+                    ]
+                }
+            },
+            location: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Location',
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Location',
+                    type_override: String
+                }
             }
         },
-        desc: {
-            type: String,
-            required: true,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Description'
-            }
-        },
-        startDate: {
-            type: Date,
-            required: true,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Start Date'
-            }
-        },
-        endDate: {
-            type: Date,
-            required: true,
-            form: {
-                auth_groups: ['admin'],
-                label: 'End Date'
-            }
-        },
-        category: {
-            type: String,
-            enum: ['general', 'food', 'tech talk', 'sponsor event', 'other'],
-            default: 'general',
-            form: {
-                auth_groups: ['admin'],
-                label: 'Category',
-                select: [
-                    'General',
-                    'Food',
-                    'Tech Talk',
-                    'Sponsor Event',
-                    'Other'
-                ]
-            }
-        },
-        location: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Location',
-            required: true,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Location',
-                type_override: String
-            }
-        }
-    }),
+        defaultEndSchema
+    ),
     defaultOptions
 );
 

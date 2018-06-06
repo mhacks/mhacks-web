@@ -2,74 +2,86 @@ var {
         mongoose,
         defaultOptions,
         modifySchema,
-        defaultSchema
+        defaultSchema,
+        defaultEndSchema
     } = require('../index.js'),
     escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    Object.assign({}, defaultSchema, {
-        title: {
-            type: String,
-            default: '',
-            required: true,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Title'
+    Object.assign(
+        {},
+        defaultSchema,
+        {
+            title: {
+                type: String,
+                default: '',
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Title'
+                }
+            },
+            body: {
+                type: String,
+                default: '',
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Body'
+                }
+            },
+            broadcastTime: {
+                type: Date,
+                default: Date.now,
+                index: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Broadcast Time'
+                }
+            },
+            category: {
+                type: String,
+                enum: ['emergency', 'logistics', 'food', 'event', 'sponsored'],
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Body',
+                    select: [
+                        'Emergency',
+                        'Logistics',
+                        'Food',
+                        'Event',
+                        'Sponsored'
+                    ]
+                }
+            },
+            isApproved: {
+                type: Boolean,
+                default: false,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Approved'
+                }
+            },
+            isSent: {
+                type: Boolean,
+                default: false,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Sent'
+                }
+            },
+            devices: {
+                type: [String],
+                default: [],
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Devices'
+                }
             }
         },
-        body: {
-            type: String,
-            default: '',
-            required: true,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Body'
-            }
-        },
-        broadcastTime: {
-            type: Date,
-            default: Date.now,
-            index: true,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Broadcast Time'
-            }
-        },
-        category: {
-            type: String,
-            enum: ['emergency', 'logistics', 'food', 'event', 'sponsored'],
-            form: {
-                auth_groups: ['admin'],
-                label: 'Body',
-                select: ['Emergency', 'Logistics', 'Food', 'Event', 'Sponsored']
-            }
-        },
-        isApproved: {
-            type: Boolean,
-            default: false,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Approved'
-            }
-        },
-        isSent: {
-            type: Boolean,
-            default: false,
-            form: {
-                auth_groups: ['admin'],
-                label: 'Sent'
-            }
-        },
-        devices: {
-            type: [String],
-            default: [],
-            form: {
-                auth_groups: ['admin'],
-                label: 'Devices'
-            }
-        }
-    }),
+        defaultEndSchema
+    ),
     defaultOptions
 );
 

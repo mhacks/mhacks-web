@@ -331,6 +331,13 @@ class ReaderPage extends React.Component {
             return null;
         }
 
+        const hidden = {
+            score: false,
+            reimbursement: false,
+            reader: false,
+            status: false
+        };
+
         return (
             <PageContainer ref="pagecontainer">
                 <HeaderSection>
@@ -338,6 +345,7 @@ class ReaderPage extends React.Component {
                         schema={this.props.readerState.data.form.reader_filter}
                         FieldTypes={this.props.readerState.data.FieldTypes}
                         theme={this.props.theme}
+                        hidden={hidden}
                         onChange={formState => {
                             this.setState({
                                 filterData: formState
@@ -348,6 +356,7 @@ class ReaderPage extends React.Component {
                         schema={this.props.readerState.data.form.reader_schema}
                         FieldTypes={this.props.readerState.data.FieldTypes}
                         theme={this.props.theme}
+                        hidden={hidden}
                         onSubmit={this.onSubmit}
                     />
                 </HeaderSection>

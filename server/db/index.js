@@ -19,10 +19,30 @@ const cachegoose = require('cachegoose'),
         timestamps: true,
         usePushEach: true
     },
-    defaultSchema = {
+    defaultSchema = {},
+    defaultEndSchema = {
         deleted: {
             type: Boolean,
-            default: false
+            default: false,
+            form: {
+                label: 'Deleted',
+                auth_groups: ['admin']
+            }
+        },
+        save_button: {
+            type: String,
+            form: {
+                label: 'Save',
+                type_override: 'submit'
+            }
+        },
+        delete_button: {
+            type: String,
+            form: {
+                label: 'Delete',
+                auth_groups: ['admin'],
+                type_override: 'submit'
+            }
         }
     };
 
@@ -131,5 +151,6 @@ module.exports = {
     mongoose,
     defaultOptions,
     modifySchema,
-    defaultSchema
+    defaultSchema,
+    defaultEndSchema
 };
