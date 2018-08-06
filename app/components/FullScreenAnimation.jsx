@@ -71,7 +71,7 @@ class Animations extends React.Component {
                     sOpacity={
                         topPos - 300 < 0
                             ? 0.28
-                            : (height - topPos) / (height - 300) * 0.23 + 0.05
+                            : ((height - topPos) / (height - 300)) * 0.23 + 0.05
                     }
                     key={i}
                 >

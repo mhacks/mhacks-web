@@ -30,6 +30,10 @@ router.post(
                 }
             }
 
+            if (i === 'skills') {
+                req.body[i] = req.body[i].split(',');
+            }
+
             if (updateable_fields.indexOf(i) !== -1) {
                 fields[i] = req.body[i];
             }

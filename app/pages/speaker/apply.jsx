@@ -5,6 +5,7 @@ import { SpeakerThunks } from '../../actions';
 import { PageContainer, MHForm } from '../../components';
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
+import PropTypes from 'prop-types';
 
 const FormContainer = styled.div`
     max-width: 500px;
@@ -50,22 +51,28 @@ class Apply extends React.Component {
         this.props.dispatch(SpeakerThunks.loadForm());
     }
 
-    componentWillReceiveProps(nextProps) {
+    static getDerivedStateFromProps(nextProps) {
         if (
             nextProps.userState.data.form &&
-            nextProps.userState.data.speaker_application
+            nextProps.userState.data.speaker_application &&
+            nextProps.userState.data.user
         ) {
-            for (var i in nextProps.userState.data.speaker_application) {
+            var temp = Object.assign(
+                {},
+                nextProps.userState.data.speaker_application,
+                nextProps.userState.data.user
+            );
+
+            for (var i in temp) {
                 if (i in nextProps.userState.data.form) {
-                    nextProps.userState.data.form[i].default =
-                        nextProps.userState.data.speaker_application[i];
+                    nextProps.userState.data.form[i].default = temp[i];
                 }
             }
         }
 
-        this.setState({
+        return {
             userState: nextProps.userState
-        });
+        };
     }
 
     onSubmit(formData, files) {
@@ -79,7 +86,8 @@ class Apply extends React.Component {
             !this.state.userState ||
             !this.state.userState.data ||
             (!this.state.userState.data.form &&
-                !this.state.userState.data.speaker_application)
+                !this.state.userState.data.speaker_application &&
+                !this.state.userState.data.user)
         ) {
             return null;
         }
@@ -89,10 +97,11 @@ class Apply extends React.Component {
                 <FormContainer>
                     <h2>Speaker Application</h2>
                     <p>
-                        Apply to be a speaker at MHacks X! Know something cool
-                        that others might be interested in learning about? Host
-                        a tech talk or workshop and teach your fellow hackers a
-                        thing or two!
+                        Apply to be a speaker at{' '}
+                        {this.props.configurationState.data.app_name} Know
+                        something cool that others might be interested in
+                        learning about? Host a tech talk or workshop and teach
+                        your fellow hackers a thing or two!
                     </p>
                     <MHForm
                         schema={this.state.userState.data.form}
@@ -133,13 +142,14 @@ class Apply extends React.Component {
 }
 
 Apply.contextTypes = {
-    router: React.PropTypes.object
+    router: PropTypes.object
 };
 
 function mapStateToProps(state) {
     return {
         userState: state.userState,
-        theme: state.theme.data
+        theme: state.theme.data,
+        configurationState: state.configurationState
     };
 }
 

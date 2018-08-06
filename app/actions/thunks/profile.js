@@ -9,7 +9,7 @@ export default class ProfileThunks {
             const token = localStorage.getItem('jwt');
 
             return ProfileRequests.loadProfile(token).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         const { user } = json;
 
@@ -67,7 +67,7 @@ export default class ProfileThunks {
 
             return ProfileRequests.updateProfile(token, profile, files).then(
                 response => {
-                    if (response.status == 200) {
+                    if (response.status === 200) {
                         response.json().then(json => {
                             dispatch({
                                 type: actions.UPDATE_PROFILE_SUCCESS,
@@ -100,7 +100,7 @@ export default class ProfileThunks {
 
             return ProfileRequests.sendVerificationEmail(token, email).then(
                 response => {
-                    if (response.status == 200) {
+                    if (response.status === 200) {
                         response.json().then(json => {
                             dispatch({
                                 type: actions.SEND_VERIFICATION_SUCCESS,
@@ -131,7 +131,7 @@ export default class ProfileThunks {
             const token = localStorage.getItem('jwt');
 
             return ProfileRequests.loadForm(token).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.LOAD_PROFILE_FORM_SUCCESS,

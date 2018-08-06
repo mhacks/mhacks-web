@@ -30,7 +30,7 @@ function createPass(email) {
                 .then(user => {
                     if (user) {
                         Application.find()
-                            .byEmail(email)
+                            .byUser(user)
                             .then(application => {
                                 if (
                                     application &&

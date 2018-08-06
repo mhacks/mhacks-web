@@ -5,6 +5,7 @@ import devices from '../../styles/devices';
 
 import StartIcon from '../../../static/icons/quote_start.png';
 import EndIcon from '../../../static/icons/quote_end.png';
+import { connect } from 'react-redux';
 
 const Wrapper = styled.section`
     padding: 70px 0;
@@ -98,24 +99,28 @@ const CompanyName = styled.div`
     `};
 `;
 
-export default () => (
-    <Wrapper>
-        <QuoteSection>
-            <StartWrapper src={StartIcon} />
-            <EndWrapper src={EndIcon} />
-            <Quote color={props => props.theme.darkPink} position="left">
-                This was one of the most well organized student-run hackathons
-                that we’ve ever sponsored.
-            </Quote>
-            <CompanyName position="left">Google</CompanyName>
-            <Quote color={props => props.theme.darkPink} position="right">
-                The caliber and number of students that MHacks attracts is like
-                no other hacking event.
-            </Quote>
-            <CompanyName position="right" dark>
-                {' '}
-                Walmart{' '}
-            </CompanyName>
-        </QuoteSection>
-    </Wrapper>
-);
+export default connect(state => {
+    return { theme: state.theme.data };
+})(props => {
+    return (
+        <Wrapper>
+            <QuoteSection>
+                <StartWrapper src={StartIcon} />
+                <EndWrapper src={EndIcon} />
+                <Quote color={props.theme.darkPink} position="left">
+                    This was one of the most well organized student-run
+                    hackathons that we’ve ever sponsored.
+                </Quote>
+                <CompanyName position="left">Google</CompanyName>
+                <Quote color={props.theme.darkPink} position="right">
+                    The caliber and number of students that MHacks attracts is
+                    like no other hacking event.
+                </Quote>
+                <CompanyName position="right" dark>
+                    {' '}
+                    Walmart{' '}
+                </CompanyName>
+            </QuoteSection>
+        </Wrapper>
+    );
+});

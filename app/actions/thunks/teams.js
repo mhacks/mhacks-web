@@ -7,7 +7,7 @@ export default class TeamsThunks {
             dispatch({ type: actions.LOAD_TEAMS_REQUEST });
 
             return TeamsRequests.loadTeams().then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         const { teams } = json;
                         dispatch({
@@ -35,7 +35,7 @@ export default class TeamsThunks {
             const token = localStorage.getItem('jwt');
 
             return TeamsRequests.createTeam(token, body).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.CREATE_TEAM_SUCCESS,
@@ -63,7 +63,7 @@ export default class TeamsThunks {
             const body = { team: teamId };
 
             return TeamsRequests.deleteTeam(token, body).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.DELETE_TEAM_SUCCESS,
@@ -91,7 +91,7 @@ export default class TeamsThunks {
             const body = { team: data.id };
 
             return TeamsRequests.joinTeam(token, body).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.JOIN_TEAM_SUCCESS,
@@ -119,7 +119,7 @@ export default class TeamsThunks {
             const body = { team: data.id };
 
             return TeamsRequests.leaveTeam(token, body).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.LEAVE_TEAM_SUCCESS,
@@ -147,7 +147,7 @@ export default class TeamsThunks {
             });
 
             return TeamsRequests.loadTeamForm().then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.LOAD_TEAM_FORM_SUCCESS,

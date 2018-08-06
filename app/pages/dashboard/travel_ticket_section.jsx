@@ -109,7 +109,8 @@ class TravelTicketSection extends React.Component {
         return (
             <p>
                 Unfortunately we are unable to offer you a travel reimbursement
-                to MHacks X. We hope you can still make it!
+                to {this.props.configurationState.data.app_name}. We hope you
+                can still make it!
             </p>
         );
     }
@@ -169,7 +170,8 @@ class TravelTicketSection extends React.Component {
 function mapStateToProps(state) {
     return {
         userState: state.userState,
-        theme: state.theme.data
+        theme: state.theme.data,
+        configurationState: state.configurationState
     };
 }
 

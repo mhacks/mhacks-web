@@ -77,6 +77,24 @@ export function getResponseFromRoute(route) {
     });
 }
 
+export function postResponseFromRoute(route, data) {
+    const token = localStorage.getItem('jwt');
+
+    return postRequest(route, token, data);
+}
+
+export function postFormResponseFromRoute(route, data, files) {
+    const token = localStorage.getItem('jwt');
+
+    return postFormData(route, token, data, files);
+}
+
+export function deleteResponseFromRoute(route, data) {
+    const token = localStorage.getItem('jwt');
+
+    return deleteRequest(route, token, data);
+}
+
 export function loadFormRequest(token, formRoute) {
     return getResponseFromRoute(endpoints.FORM + formRoute, token);
 }

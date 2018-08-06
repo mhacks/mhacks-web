@@ -13,9 +13,10 @@ module.exports = {
     shortener_host: process.env.SHORTENER_HOST || 'https://mha.cx',
     secret: process.env.SECRET || 'mhacks',
     mongo_hostname: process.env.MONGO_HOSTNAME || 'mhacks_db',
-    backend_db: process.env.BACKEND_DB || 'mhacks_backend',
-    sessions_db: process.env.SESSIONS_DB || 'mhacks_sessions',
+    backend_db: process.env.BACKEND_DB || 'mhacks_11_backend',
+    sessions_db: process.env.SESSIONS_DB || 'mhacks_11_sessions',
     api_work: parseBool(process.env.APIWORK, false),
+    api_spaces: process.env.APISPACES || 4,
     server_port: process.env.PORT || 3000,
     max_tokens: process.env.MAX_TOKENS || 10,
     token_expiration: process.env.TOKEN_EXPIRATION || 28, // days

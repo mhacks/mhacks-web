@@ -6,6 +6,7 @@ import TeamBox from './team_box.jsx';
 import { TeamsThunks } from '../../actions';
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
+import PropTypes from 'prop-types';
 
 const FlexBox = styled.div`
     display: flex;
@@ -169,15 +170,17 @@ class TeamBuilding extends React.Component {
 
         const userInTeam = teams.find(this.isUserInTeam) ? true : false;
         const onTeamJoined = this.onTeamJoined;
+        const configurationData = this.props.configurationState.data;
 
         return (
             <PagePulled ref="PageContainer">
                 <Wrapper>
                     <BoxWrapper>
                         <Description>
-                            Welcome to the MHacks X Team Builder! Broadcast your
-                            idea to find hackers interested in joining your team
-                            or find a team that you'd like to join! MHacks X is
+                            Welcome to the {configurationData.app_name} Team
+                            Builder! Broadcast your idea to find hackers
+                            interested in joining your team or find a team that
+                            you'd like to join! {configurationData.app_name} is
                             featuring the adopt-a-n00b program. This means that
                             teams can have up to:{' '}
                         </Description>
@@ -272,13 +275,14 @@ class TeamBuilding extends React.Component {
 }
 
 TeamBuilding.contextTypes = {
-    router: React.PropTypes.object
+    router: PropTypes.object
 };
 
 function mapStateToProps(state) {
     return {
         userState: state.userState,
         teamsState: state.teamsState,
+        configurationState: state.configurationState,
         theme: state.theme.data
     };
 }

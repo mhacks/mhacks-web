@@ -5,9 +5,6 @@ import { Container } from '../../components';
 import { devices } from '../../styles';
 
 const HeaderLogoImage = require('../../../static/icons/blackout-logo.png');
-const InstagramImg = require('../../../static/icons/instagram.png');
-const FacebookImg = require('../../../static/icons/facebook.png');
-const TwitterImg = require('../../../static/icons/twitter.png');
 
 /* Footer Style */
 const Footer = styled.footer`
@@ -53,7 +50,7 @@ const Flexer = styled.div`
     `};
 `;
 
-const Img100 = styled.img`
+const I100 = styled.i`
     height: 100%;
     margin: auto;
 `;
@@ -66,10 +63,10 @@ const ImgButtonWrapper = styled.div`
     display: block;
 `;
 
-const ImgButton = props => (
+const FaButton = props => (
     <ImgButtonWrapper>
-        <a href={props.href}>
-            <Img100 {...props} />
+        <a href={props.href} style={{ color: 'inherit' }}>
+            <I100 {...props} />
         </a>
     </ImgButtonWrapper>
 );
@@ -79,28 +76,34 @@ class BlackoutFooter extends React.Component {
         return (
             <Container>
                 <Footer>
-                    <Text>© MHacks 2017</Text>
+                    <Text>© MHacks 2018</Text>
                     <Flexer>
                         <HeaderLogo src={HeaderLogoImage} align="middle" />
                     </Flexer>
                     <Flexer right>
-                        <ImgButton
-                            src={FacebookImg}
-                            alt="Facebook"
+                        <FaButton
+                            className="fab fa-facebook-f fa-3x"
+                            alt="Medium"
                             align="middle"
                             href="https://www.facebook.com/MHacksHackathon"
                         />
-                        <ImgButton
-                            src={InstagramImg}
+                        <FaButton
+                            className="fab fa-instagram fa-3x"
                             alt="Instagram"
                             align="middle"
                             href="https://www.instagram.com/mhacks_"
                         />
-                        <ImgButton
-                            src={TwitterImg}
+                        <FaButton
+                            className="fab fa-twitter fa-3x"
                             alt="Twitter"
                             align="middle"
                             href="https://twitter.com/mhacks"
+                        />
+                        <FaButton
+                            className="fab fa-medium-m fa-3x"
+                            alt="Medium"
+                            align="middle"
+                            href="https://blog.mhacks.org"
                         />
                     </Flexer>
                 </Footer>

@@ -10,7 +10,7 @@ export default class SubscribeThunks {
             });
 
             return SubscribeRequests.subscribe({ email }).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.SUBSCRIBE_SUCCESS,

@@ -2,63 +2,89 @@ var {
         mongoose,
         defaultOptions,
         modifySchema,
-        defaultSchema
+        defaultSchema,
+        defaultEndSchema
     } = require('../index.js'),
     config = require('../../../config/default.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    Object.assign({}, defaultSchema, {
-        name: {
-            type: String,
-            required: true
+    Object.assign(
+        {},
+        defaultSchema,
+        {
+            name: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Name'
+                }
+            },
+            desc: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Description'
+                }
+            },
+            level: {
+                type: Number,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Level'
+                }
+            },
+            floor_image: {
+                type: String,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Floor Image',
+                    type_override: 'file'
+                }
+            },
+            nw_latitude: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Northwest Latitude'
+                }
+            },
+            nw_longitude: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Northwest Longitude'
+                }
+            },
+            se_latitude: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Southeast Latitude'
+                }
+            },
+            se_longitude: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Southeast Longitude'
+                }
+            }
         },
-        desc: {
-            type: String,
-            required: true
-        },
-        level: {
-            type: Number,
-            required: true
-        },
-        floor_image: {
-            type: String,
-            required: true
-        },
-        nw_latitude: {
-            type: String,
-            required: true
-        },
-        nw_longitude: {
-            type: String,
-            required: true
-        },
-        se_latitude: {
-            type: String,
-            required: true
-        },
-        se_longitude: {
-            type: String,
-            required: true
-        }
-    }),
+        defaultEndSchema
+    ),
     defaultOptions
 );
 
-schema.methods.updateFields = function(fields) {
-    for (var param in fields) {
-        this[param] = fields[param];
-    }
-    return this.save();
-};
-
 schema.methods.getFloorImage = function() {
     return config.host + '/v1/artifact/floor/' + this.id;
-};
-
-// All fields are updateable as only admins have power to update.
-schema.statics.getUpdateableFields = function() {
-    return Object.keys(schema.obj);
 };
 
 modifySchema(schema);

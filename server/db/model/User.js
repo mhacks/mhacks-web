@@ -4,7 +4,8 @@ var bcrypt = require('bcrypt'),
         mongoose,
         defaultOptions,
         modifySchema,
-        defaultSchema
+        defaultSchema,
+        defaultEndSchema
     } = require('../index.js'),
     config = require('../../../config/default.js'),
     Email = require('../../interactors/email.js'),
@@ -12,222 +13,300 @@ var bcrypt = require('bcrypt'),
     crypto = require('crypto'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin'),
     escapeStringRegex = require('escape-string-regexp'),
-    secret = config.secret;
+    secret = config.secret,
+    universities = require('../../../static/misc/universities.json'),
+    majors = require('../../../static/misc/majors.json');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    Object.assign({}, defaultSchema, {
-        full_name: {
-            type: String,
-            form: {
-                user_editable: true,
-                label: 'Full Name',
-                placeholder: 'Hacker McHackface'
-            }
-        },
-        email: {
-            type: String,
-            required: true,
-            index: {
-                unique: true
+    Object.assign(
+        {},
+        defaultSchema,
+        {
+            general_header: {
+                type: String,
+                form: {
+                    label: 'General',
+                    type_override: 'sectionheader'
+                }
             },
-            form: {
-                user_editable: true,
-                label: 'Email',
-                placeholder: 'hackathon@umich.edu'
-            }
-        },
-        email_verified: {
-            type: Boolean,
-            form: {
-                user_editable: false,
-                label: 'Email Verified'
-            }
-        },
-        application_submitted: {
-            type: Boolean,
-            form: {
-                user_editable: false,
-                label: 'Application Submitted'
-            }
-        },
-        verification_tokens: [
-            {
-                created_at: {
-                    type: Date,
-                    default: Date.now
+            full_name: {
+                type: String,
+                form: {
+                    user_editable: true,
+                    label: 'Full Name',
+                    placeholder: 'Hacker McHackface'
+                }
+            },
+            email: {
+                type: String,
+                required: true,
+                index: {
+                    unique: true
                 },
-                token: String,
-                tokenType: String
-            }
-        ],
-        password: {
-            type: String,
-            required: true,
-            form: {
-                user_editable: true,
-                label: 'Password',
-                placeholder: 'hunter2'
-            }
-        },
-        tokens: [
-            {
-                created_at: {
-                    type: Date,
-                    default: Date.now
-                },
-                token: String
-            }
-        ],
-        old_tokens: [
-            {
-                created_at: {
-                    type: Date,
-                    default: Date.now
-                },
-                token: String
-            }
-        ],
-        created_at: {
-            type: Date,
-            default: Date.now
-        },
-        birthday: {
-            type: Date,
-            form: {
-                user_editable: true,
-                label: 'Date of Birth',
-                placeholder: 'mm/dd/yyyy'
-            }
-        },
-        major: {
-            type: String,
-            form: {
-                user_editable: true,
-                label: 'Major',
-                placeholder: 'e.g. Computer Science'
-            }
-        },
-        university: {
-            type: String,
-            form: {
-                user_editable: true,
-                label: 'University',
-                placeholder: 'e.g. University of Michigan'
-            }
-        },
-        groups: [
-            {
-                name: String
-            }
-        ],
-        meta: {
-            ip: String
-        },
-        avatar: {
-            type: String,
-            form: {
-                user_editable: true,
-                label: 'Avatar',
-                type_override: 'file'
-            }
-        },
-        resume: {
-            type: String,
-            form: {
-                user_editable: true,
-                label: 'Resume',
-                type_override: 'file'
-            }
-        },
-        github: {
-            type: String,
-            form: {
-                user_editable: true,
-                label: 'GitHub',
-                placeholder: 'https://github.com/'
-            }
-        },
-        linkedin: {
-            type: String,
-            form: {
-                user_editable: true,
-                label: 'LinkedIn',
-                placeholder: 'https://linkedin.com/in/'
-            }
-        },
-        devpost: {
-            type: String,
-            form: {
-                user_editable: true,
-                label: 'DevPost',
-                placeholder: 'https://devpost.com/'
-            }
-        },
-        portfolio: {
-            type: String,
-            form: {
-                user_editable: true,
-                label: 'Portfolio',
-                placeholder: 'https://'
-            }
-        },
-        tshirt: {
-            type: String,
-            enum: ['unselected', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
-            form: {
-                user_editable: true,
-                select: ['', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
-                label: 'T-Shirt'
-            }
-        },
-        race: {
-            type: String,
-            enum: [
-                'unselected',
-                'white',
-                'black',
-                'am-indian-alaskan',
-                'asian',
-                'hispanic',
-                'other',
-                'prefer-not'
+                form: {
+                    user_editable: true,
+                    label: 'Email',
+                    placeholder: 'hackathon@umich.edu'
+                }
+            },
+            email_verified: {
+                type: Boolean,
+                form: {
+                    user_editable: false,
+                    label: 'Email Verified'
+                }
+            },
+            application_submitted: {
+                type: Boolean,
+                form: {
+                    user_editable: false,
+                    label: 'Application Submitted'
+                }
+            },
+            verification_tokens: [
+                {
+                    created_at: {
+                        type: Date,
+                        default: Date.now
+                    },
+                    token: String,
+                    tokenType: String
+                }
             ],
-            form: {
-                user_editable: true,
-                select: [
-                    '',
-                    'White',
-                    'Black',
-                    'American Indian/Alaskan',
-                    'Asian',
-                    'Hispanic',
-                    'Other',
-                    'Prefer not to answer'
+            password: {
+                type: String,
+                required: true,
+                form: {
+                    user_editable: true,
+                    label: 'Password',
+                    placeholder: 'hunter2'
+                }
+            },
+            tokens: [
+                {
+                    created_at: {
+                        type: Date,
+                        default: Date.now
+                    },
+                    token: String
+                }
+            ],
+            old_tokens: [
+                {
+                    created_at: {
+                        type: Date,
+                        default: Date.now
+                    },
+                    token: String
+                }
+            ],
+            created_at: {
+                type: Date,
+                default: Date.now
+            },
+            university: {
+                type: String,
+                form: {
+                    user_editable: true,
+                    type_override: 'select',
+                    select: [
+                        {
+                            label: '/v1/form/user/universities',
+                            value: '/v1/form/user/universities'
+                        }
+                    ],
+                    label: 'University',
+                    placeholder: 'e.g. University of Michigan'
+                }
+            },
+            universities: {
+                type: Object,
+                form: [
+                    {
+                        key: 'universities',
+                        type: String,
+                        enum: universities,
+                        form: {
+                            user_editable: true,
+                            label: 'University',
+                            placeholder: 'e.g. University of Michigan'
+                        }
+                    }
+                ]
+            },
+            major: {
+                type: String,
+                form: {
+                    user_editable: true,
+                    type_override: 'select',
+                    select: [
+                        {
+                            label: '/v1/form/user/majors',
+                            value: '/v1/form/user/majors'
+                        }
+                    ],
+                    label: 'Major',
+                    placeholder: 'e.g. Computer Science'
+                }
+            },
+            majors: {
+                type: Object,
+                form: [
+                    {
+                        key: 'majors',
+                        type: String,
+                        enum: majors,
+                        form: {
+                            user_editable: true,
+                            label: 'Major',
+                            placeholder: 'e.g. Computer Science'
+                        }
+                    }
+                ]
+            },
+            groups: [
+                {
+                    name: String
+                }
+            ],
+            meta: {
+                ip: String
+            },
+            avatar: {
+                type: String,
+                form: {
+                    user_editable: true,
+                    label: 'Avatar',
+                    type_override: 'file'
+                }
+            },
+            resume: {
+                type: String,
+                form: {
+                    user_editable: true,
+                    label: 'Resume',
+                    type_override: 'file'
+                }
+            },
+            links_header: {
+                type: String,
+                form: {
+                    label: 'Links',
+                    type_override: 'sectionheader'
+                }
+            },
+            github: {
+                type: String,
+                form: {
+                    user_editable: true,
+                    label: 'GitHub',
+                    placeholder: 'https://github.com/'
+                }
+            },
+            linkedin: {
+                type: String,
+                form: {
+                    user_editable: true,
+                    label: 'LinkedIn',
+                    placeholder: 'https://linkedin.com/in/'
+                }
+            },
+            devpost: {
+                type: String,
+                form: {
+                    user_editable: true,
+                    label: 'DevPost',
+                    placeholder: 'https://devpost.com/'
+                }
+            },
+            portfolio: {
+                type: String,
+                form: {
+                    user_editable: true,
+                    label: 'Portfolio',
+                    placeholder: 'https://'
+                }
+            },
+            private_header: {
+                type: String,
+                form: {
+                    label: 'Private',
+                    type_override: 'sectionheader'
+                }
+            },
+            birthday: {
+                type: Date,
+                form: {
+                    user_editable: true,
+                    label: 'Date of Birth',
+                    placeholder: 'mm/dd/yyyy'
+                }
+            },
+            tshirt: {
+                type: String,
+                enum: ['unselected', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
+                form: {
+                    user_editable: true,
+                    select: ['', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
+                    label: 'T-Shirt'
+                }
+            },
+            race: {
+                type: String,
+                enum: [
+                    'unselected',
+                    'white',
+                    'black',
+                    'am-indian-alaskan',
+                    'asian',
+                    'hispanic',
+                    'other',
+                    'prefer-not'
                 ],
-                label: 'Race'
+                form: {
+                    user_editable: true,
+                    select: [
+                        '',
+                        'White',
+                        'Black',
+                        'American Indian/Alaskan',
+                        'Asian',
+                        'Hispanic',
+                        'Other',
+                        'Prefer not to answer'
+                    ],
+                    label: 'Race'
+                }
+            },
+            sex: {
+                type: String,
+                enum: [
+                    'unselected',
+                    'male',
+                    'female',
+                    'non-binary',
+                    'prefer-not'
+                ],
+                form: {
+                    user_editable: true,
+                    select: [
+                        '',
+                        'Male',
+                        'Female',
+                        'Non Binary',
+                        'Prefer not to answer'
+                    ],
+                    label: 'Sex'
+                }
+            },
+            online: {
+                type: Boolean,
+                default: false
             }
         },
-        sex: {
-            type: String,
-            enum: ['unselected', 'male', 'female', 'non-binary', 'prefer-not'],
-            form: {
-                user_editable: true,
-                select: [
-                    '',
-                    'Male',
-                    'Female',
-                    'Non Binary',
-                    'Prefer not to answer'
-                ],
-                label: 'Sex'
-            }
-        },
-        online: {
-            type: Boolean,
-            default: false
-        }
-    }),
+        defaultEndSchema
+    ),
     defaultOptions
 );
 
@@ -274,7 +353,7 @@ schema.methods.verifyToken = function(token) {
     return new Promise((resolve, reject) => {
         try {
             var tokenData = jwt.verify(token, secret);
-            if (this.email == tokenData.email) {
+            if (this.email === tokenData.email) {
                 resolve(true);
             } else {
                 reject('Email does not match token');
@@ -389,8 +468,8 @@ schema.methods.checkTempToken = function(token, tokenType) {
         try {
             var tokenData = jwt.verify(token, secret);
             if (
-                this.email == tokenData.email &&
-                tokenData.tokenType == tokenType
+                this.email === tokenData.email &&
+                tokenData.tokenType === tokenType
             ) {
                 resolve(true);
             } else {
@@ -551,13 +630,6 @@ schema.methods.getGroupsList = function() {
     return groups;
 };
 
-schema.methods.updateFields = function(fields) {
-    for (var param in fields) {
-        this[param] = fields[param];
-    }
-    this.save();
-};
-
 schema.methods.getAvatars = function() {
     var avatars = [];
 
@@ -581,7 +653,10 @@ schema.methods.getAvatars = function() {
 };
 
 schema.methods.getResume = function() {
-    return config.host + '/v1/artifact/resume/' + this.email;
+    if (this.resume) {
+        return config.host + '/v1/artifact/resume/' + this.email;
+    }
+    return null;
 };
 
 schema.methods.getProfile = function() {
@@ -594,7 +669,7 @@ schema.methods.getProfile = function() {
         groups: this.getGroupsList(),
         major: this.major,
         university: this.university,
-        resume_uploaded: !!this.resume,
+        resume: this.getResume(),
         avatar: this.getAvatars(),
         github: this.github,
         linkedin: this.linkedin,
@@ -611,7 +686,7 @@ schema.methods.getProfile = function() {
         mongoose
             .model('Application')
             .find()
-            .byEmail(this.email)
+            .byUser(this)
             .then(application => {
                 const {
                     status,
@@ -643,7 +718,8 @@ schema.methods.getProfile = function() {
                     resolve(profile);
                 }
             })
-            .catch(() => {
+            .catch(err => {
+                console.error(err);
                 profile.application_submitted = false;
                 resolve(profile);
             });
@@ -653,31 +729,6 @@ schema.methods.getProfile = function() {
 schema.virtual('avatars').get(function() {
     return this.getAvatars();
 });
-
-schema.statics.getUpdateableFields = function(groups) {
-    var updateables = [];
-
-    for (var key in schema.obj) {
-        var field = schema.obj[key];
-
-        if (field.form) {
-            if (field.form.user_editable) {
-                updateables.push(key);
-            } else if (groups) {
-                groups.forEach(function(group) {
-                    if (
-                        field.form.auth_groups &&
-                        field.form.auth_groups.indexOf(group) !== -1
-                    ) {
-                        updateables.push(key);
-                    }
-                });
-            }
-        }
-    }
-
-    return updateables;
-};
 
 // Password middleware to update passwords with bcrypt when needed
 var passwordMiddleware = function(next) {

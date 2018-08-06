@@ -46,7 +46,7 @@ const FileName = styled.div`
 `;
 
 const Input = styled.input`
-    z-index: 100;
+    z-index: 0;
     cursor: pointer;
     position: absolute;
     height: 100%;
@@ -74,8 +74,8 @@ class FileUpload extends React.Component {
         const file = e.target.files[0];
 
         this.setState({
-            fileSelected: true,
-            fileName: file.name
+            fileSelected: !!file,
+            fileName: file ? file.name : ''
         });
 
         this.props.onFileSelect(file);

@@ -36,6 +36,10 @@ var http = require('http'),
     indexRouter = require('./server/routes/index.js'),
     shortenerRouter = require('./server/routes/shortener.js');
 
+if (config.development) {
+    mongoose.set('debug', true);
+}
+
 // Force https
 app.use(function(req, res, next) {
     if (
@@ -76,8 +80,10 @@ app.set('view engine', 'pug');
 app.set('views', './server/views');
 app.disable('view cache');
 
-// Pretty API Responses
-app.set('json spaces', 4);
+if (app.get('env') !== 'production') {
+    // Pretty API Responses
+    app.set('json spaces', config.api_spaces);
+}
 
 // Disable x-powered-by
 app.disable('x-powered-by');

@@ -5,6 +5,7 @@ import { MentorThunks } from '../../actions';
 import { PageContainer, MHForm } from '../../components';
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
+import PropTypes from 'prop-types';
 
 const FormContainer = styled.div`
     max-width: 500px;
@@ -50,22 +51,28 @@ class Apply extends React.Component {
         this.props.dispatch(MentorThunks.loadForm());
     }
 
-    componentWillReceiveProps(nextProps) {
+    static getDerivedStateFromProps(nextProps) {
         if (
             nextProps.userState.data.form &&
-            nextProps.userState.data.mentor_application
+            nextProps.userState.data.mentor_application &&
+            nextProps.userState.data.user
         ) {
-            for (var i in nextProps.userState.data.mentor_application) {
+            var temp = Object.assign(
+                {},
+                nextProps.userState.data.mentor_application,
+                nextProps.userState.data.user
+            );
+
+            for (var i in temp) {
                 if (i in nextProps.userState.data.form) {
-                    nextProps.userState.data.form[i].default =
-                        nextProps.userState.data.mentor_application[i];
+                    nextProps.userState.data.form[i].default = temp[i];
                 }
             }
         }
 
-        this.setState({
+        return {
             userState: nextProps.userState
-        });
+        };
     }
 
     onSubmit(formData, files) {
@@ -79,7 +86,8 @@ class Apply extends React.Component {
             !this.state.userState ||
             !this.state.userState.data ||
             (!this.state.userState.data.form &&
-                !this.state.userState.data.mentor_application)
+                !this.state.userState.data.mentor_application &&
+                !this.state.userState.data.user)
         ) {
             return null;
         }
@@ -89,10 +97,11 @@ class Apply extends React.Component {
                 <FormContainer>
                     <h2>Mentor Application</h2>
                     <p>
-                        Apply to be a mentor at MHacks X! We're looking for the
-                        brightest students and professionals from around the
-                        world to be a part of our community and help hackers
-                        create their dreams!
+                        Apply to be a mentor at{' '}
+                        {this.props.configurationState.data.app_name}! We're
+                        looking for the brightest students and professionals
+                        from around the world to be a part of our community and
+                        help hackers create their dreams!
                     </p>
                     <MHForm
                         schema={this.state.userState.data.form}
@@ -133,13 +142,14 @@ class Apply extends React.Component {
 }
 
 Apply.contextTypes = {
-    router: React.PropTypes.object
+    router: PropTypes.object
 };
 
 function mapStateToProps(state) {
     return {
         userState: state.userState,
-        theme: state.theme.data
+        theme: state.theme.data,
+        configurationState: state.configurationState
     };
 }
 

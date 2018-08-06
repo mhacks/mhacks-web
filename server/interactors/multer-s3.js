@@ -26,13 +26,15 @@ module.exports = function(bucket_name, artifactOverride) {
                     if (req.authToken && !artifactOverride) {
                         User.find()
                             .byToken(req.authToken)
-                            .exec()
                             .then(user => {
                                 if (file.fieldname === 'resume') {
                                     directory = 'resumes';
                                 }
 
-                                if (file.fieldname === 'avatar') {
+                                if (
+                                    file.fieldname === 'avatar' ||
+                                    file.fieldname === 'logo'
+                                ) {
                                     directory = 'avatars';
                                 }
 
@@ -67,7 +69,10 @@ module.exports = function(bucket_name, artifactOverride) {
                             directory = 'resumes';
                         }
 
-                        if (file.fieldname === 'avatar') {
+                        if (
+                            file.fieldname === 'avatar' ||
+                            file.fieldname === 'logo'
+                        ) {
                             directory = 'avatars';
                         }
 
@@ -105,7 +110,10 @@ module.exports = function(bucket_name, artifactOverride) {
                         directory = 'resumes';
                     }
 
-                    if (file.fieldname === 'avatar') {
+                    if (
+                        file.fieldname === 'avatar' ||
+                        file.fieldname === 'logo'
+                    ) {
                         directory = 'avatars';
                     }
 
@@ -129,7 +137,6 @@ module.exports = function(bucket_name, artifactOverride) {
                     if (req.authToken && !artifactOverride) {
                         User.find()
                             .byToken(req.authToken)
-                            .exec()
                             .then(user => {
                                 var fileType = file.originalname
                                     .split('.')
@@ -152,7 +159,10 @@ module.exports = function(bucket_name, artifactOverride) {
                             directory = 'resumes';
                         }
 
-                        if (file.fieldname === 'avatar') {
+                        if (
+                            file.fieldname === 'avatar' ||
+                            file.fieldname === 'logo'
+                        ) {
                             directory = 'avatars';
                         }
 

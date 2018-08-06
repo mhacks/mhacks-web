@@ -10,7 +10,7 @@ export default class MentorshipThunks {
                 endpoints.MENTORSHIP_TICKETS,
                 localStorage.getItem('jwt')
             ).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         const { available, accepted, user } = json;
                         dispatch({
@@ -48,7 +48,7 @@ export default class MentorshipThunks {
                 localStorage.getItem('jwt'),
                 ticket
             ).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.SUBMIT_MENTORSHIP_TICKET_SUCCESS,
@@ -83,7 +83,7 @@ export default class MentorshipThunks {
                     ticket: ticket.id
                 }
             ).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.ACCEPT_MENTORSHIP_TICKET_SUCCESS,
@@ -118,7 +118,7 @@ export default class MentorshipThunks {
                     ticket: ticket.id
                 }
             ).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.UNACCEPT_MENTORSHIP_TICKET_SUCCESS,
@@ -153,7 +153,7 @@ export default class MentorshipThunks {
                     ticket: ticket.id
                 }
             ).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.COMPLETE_MENTORSHIP_TICKET_SUCCESS,
@@ -182,7 +182,7 @@ export default class MentorshipThunks {
 
             return getResponseFromRoute(endpoints.MENTORSHIP_TICKET_FORM).then(
                 response => {
-                    if (response.status == 200) {
+                    if (response.status === 200) {
                         response.json().then(json => {
                             dispatch({
                                 type:

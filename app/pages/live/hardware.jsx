@@ -24,7 +24,8 @@ class Hardware extends React.Component {
             <SectionWrapper theme={this.props.theme} id="hardware">
                 <SectionHeader>Hardware</SectionHeader>
                 <P theme={this.props.theme}>
-                    Learn more about the MHacks X Hacker Boards{' '}
+                    Learn more about the{' '}
+                    {this.props.configurationState.data.app_name} Hacker Boards{' '}
                     <A href="http://mhacks.github.io">here</A>
                 </P>
             </SectionWrapper>
@@ -34,7 +35,8 @@ class Hardware extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        theme: state.theme.data
+        theme: state.theme.data,
+        configurationState: state.configurationState
     };
 }
 

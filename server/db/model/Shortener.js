@@ -2,48 +2,62 @@ var {
         mongoose,
         defaultOptions,
         modifySchema,
-        defaultSchema
+        defaultSchema,
+        defaultEndSchema
     } = require('../index.js'),
     config = require('../../../config/default.js'),
     sanitizerPlugin = require('mongoose-sanitizer-plugin');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    Object.assign({}, defaultSchema, {
-        long_url: {
-            type: String,
-            required: true
-        },
-        short_code: {
-            type: String,
-            unique: true,
-            default: function() {
-                var text = '';
-                var possible =
-                    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-                for (var i = 0; i < 3; i++)
-                    text += possible.charAt(
-                        Math.floor(Math.random() * possible.length)
-                    );
-
-                return text;
-            }
-        },
-        created_at: {
-            type: Date,
-            default: Date.now
-        },
-        clicks: [
-            {
-                ip: String,
-                time: {
-                    type: Date,
-                    default: Date.now
+    Object.assign(
+        {},
+        defaultSchema,
+        {
+            long_url: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Long URL'
                 }
-            }
-        ]
-    }),
+            },
+            short_code: {
+                type: String,
+                unique: true,
+                default: function() {
+                    var text = '';
+                    var possible =
+                        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+                    for (var i = 0; i < 3; i++)
+                        text += possible.charAt(
+                            Math.floor(Math.random() * possible.length)
+                        );
+
+                    return text;
+                },
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Short Code'
+                }
+            },
+            created_at: {
+                type: Date,
+                default: Date.now
+            },
+            clicks: [
+                {
+                    ip: String,
+                    time: {
+                        type: Date,
+                        default: Date.now
+                    }
+                }
+            ]
+        },
+        defaultEndSchema
+    ),
     defaultOptions
 );
 

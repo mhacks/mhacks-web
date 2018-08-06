@@ -12,7 +12,6 @@ var router = require('express').Router(),
 router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
     User.find()
         .byToken(req.authToken)
-        .exec()
         .then(user => {
             var updateable_fields = Application.getUpdateableFields(req.groups);
             var fields = {};
@@ -46,7 +45,7 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
                             application: application
                         });
                     } else {
-                        fields.user = user.email;
+                        fields.user = user;
                         Application.create(fields)
                             .then(application => {
                                 user.application_submitted = true;
@@ -97,72 +96,50 @@ router.get('/', function(req, res) {
 // Returns all applications
 router.get('/all', authMiddleware('reader admin', 'api'), function(req, res) {
     Application.find()
+        .populate('user')
         .then(applications => {
-            User.find({
-                email: {
-                    $in: applications
-                        .filter(application => application.user)
-                        .map(application => application.user)
-                }
-            })
-                .then(users => {
-                    Confirmation.find()
-                        .then(confirmations => {
-                            res.send({
-                                status: true,
-                                applications: applications.map(application => {
-                                    const associated_user = users.find(
-                                        user => user.email === application.user
-                                    );
+            Confirmation.find()
+                .then(confirmations => {
+                    res.send({
+                        status: true,
+                        applications: applications.map(application => {
+                            const user_doc = {
+                                full_name: application.user.full_name,
+                                email: application.user.email
+                            };
 
-                                    if (!associated_user) {
-                                        return application;
-                                    }
+                            if (application.resume) {
+                                user_doc.resume = application.getResume();
+                            }
 
-                                    const user_doc = {
-                                        full_name: associated_user.full_name,
-                                        email: associated_user.email
-                                    };
+                            const associated_confirmation = confirmations.find(
+                                confirmation =>
+                                    confirmation.user.equals(
+                                        application.user._id
+                                    )
+                            );
 
-                                    if (application.resume) {
-                                        user_doc.resume = application.getResume();
-                                    }
+                            if (!associated_confirmation) {
+                                return Object.assign(
+                                    {},
+                                    application.toJSON(),
+                                    user_doc,
+                                    { user: undefined }
+                                );
+                            }
 
-                                    const associated_confirmation = confirmations.find(
-                                        confirmation =>
-                                            confirmation.user.equals(
-                                                associated_user._id
-                                            )
-                                    );
-
-                                    if (!associated_confirmation) {
-                                        return Object.assign(
-                                            {},
-                                            application.toJSON(),
-                                            user_doc
-                                        );
-                                    }
-
-                                    return Object.assign(
-                                        {},
-                                        application.toJSON(),
-                                        user_doc,
-                                        Object.assign(
-                                            {},
-                                            associated_confirmation.toJSON(),
-                                            { user: undefined }
-                                        )
-                                    );
-                                })
-                            });
+                            return Object.assign(
+                                {},
+                                application.toJSON(),
+                                user_doc,
+                                Object.assign(
+                                    {},
+                                    associated_confirmation.toJSON(),
+                                    { user: undefined }
+                                )
+                            );
                         })
-                        .catch(err => {
-                            console.error(err);
-                            res.status(500).send({
-                                status: false,
-                                message: Responses.UNKNOWN_ERROR
-                            });
-                        });
+                    });
                 })
                 .catch(err => {
                     console.error(err);
@@ -189,81 +166,52 @@ router.get(
         Application.find({
             status: 'accepted'
         })
+            .populate('user')
             .select(
                 '-needs_reimbursement -requested_reimbursement -status -score -reader -reimbursement'
             )
             .then(applications => {
-                User.find({
-                    email: {
-                        $in: applications
-                            .filter(application => application.user)
-                            .map(application => application.user)
-                    }
-                })
-                    .select('_id full_name email')
-                    .then(users => {
-                        Confirmation.find()
-                            .then(confirmations => {
-                                res.send({
-                                    status: true,
-                                    applications: applications.map(
-                                        application => {
-                                            const associated_user = users.find(
-                                                user =>
-                                                    user.email ===
-                                                    application.user
-                                            );
+                Confirmation.find()
+                    .then(confirmations => {
+                        res.send({
+                            status: true,
+                            applications: applications.map(application => {
+                                const user_doc = {
+                                    full_name: application.user.full_name,
+                                    email: application.user.email
+                                };
 
-                                            if (!associated_user) {
-                                                return application;
-                                            }
+                                if (application.resume) {
+                                    user_doc.resume = application.getResume();
+                                }
 
-                                            const user_doc = {
-                                                full_name:
-                                                    associated_user.full_name,
-                                                email: associated_user.email
-                                            };
+                                const associated_confirmation = confirmations.find(
+                                    confirmation =>
+                                        confirmation.user.equals(
+                                            application.user._id
+                                        )
+                                );
 
-                                            if (application.resume) {
-                                                user_doc.resume = application.getResume();
-                                            }
+                                if (!associated_confirmation) {
+                                    return Object.assign(
+                                        {},
+                                        application.toJSON(),
+                                        user_doc
+                                    );
+                                }
 
-                                            const associated_confirmation = confirmations.find(
-                                                confirmation =>
-                                                    confirmation.user.equals(
-                                                        associated_user._id
-                                                    )
-                                            );
-
-                                            if (!associated_confirmation) {
-                                                return Object.assign(
-                                                    {},
-                                                    application.toJSON(),
-                                                    user_doc
-                                                );
-                                            }
-
-                                            return Object.assign(
-                                                {},
-                                                application.toJSON(),
-                                                user_doc,
-                                                Object.assign(
-                                                    {},
-                                                    associated_confirmation.toJSON(),
-                                                    { user: undefined }
-                                                )
-                                            );
-                                        }
+                                return Object.assign(
+                                    {},
+                                    application.toJSON(),
+                                    user_doc,
+                                    Object.assign(
+                                        {},
+                                        associated_confirmation.toJSON(),
+                                        { user: undefined }
                                     )
-                                });
+                                );
                             })
-                            .catch(err => {
-                                console.error(err);
-                                res.status(500).send({
-                                    status: false,
-                                    message: Responses.UNKNOWN_ERROR
-                                });
-                            });
+                        });
                     })
                     .catch(err => {
                         console.error(err);
@@ -286,7 +234,6 @@ router.get(
 router.post('/confirm', function(req, res) {
     User.find()
         .byToken(req.authToken)
-        .exec()
         .then(user => {
             var updateable_fields = Confirmation.getUpdateableFields();
             var fields = {};

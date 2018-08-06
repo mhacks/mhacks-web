@@ -57,7 +57,7 @@ class ApplicationSection extends React.Component {
                 <SectionBody>
                     You’re awesome. We’re awesome. Let’s make some great things
                     together. Head over to the confirmation form to secure your
-                    spot at MHacks X!
+                    spot at {this.props.configurationState.data.app_name}!
                 </SectionBody>
                 <StyledNavLink to={routes.CONFIRM}>Confirm</StyledNavLink>
             </div>
@@ -67,9 +67,10 @@ class ApplicationSection extends React.Component {
     renderConfirmed() {
         return (
             <SectionBody>
-                We’re excited to see you at MHacks X! We’ve got some great
-                things in store :) In the meantime, we encourage you to connect
-                with other hackers in the{' '}
+                We’re excited to see you at{' '}
+                {this.props.configurationState.data.app_name}! We’ve got some
+                great things in store :) In the meantime, we encourage you to
+                connect with other hackers in the{' '}
                 <Link
                     target="_blank"
                     href="https://www.facebook.com/groups/1506039289667163/"
@@ -80,7 +81,7 @@ class ApplicationSection extends React.Component {
                     target="_blank"
                     href="https://www.facebook.com/events/363750477376350/"
                 >
-                    MHacks X Facebook Event
+                    {this.props.configurationState.data.app_name} Facebook Event
                 </Link>
                 . As always,stay tuned to our{' '}
                 <Link
@@ -101,9 +102,9 @@ class ApplicationSection extends React.Component {
     renderWaitlisted() {
         return (
             <SectionBody>
-                Unfortunately, we are unable to extend an invitation for MHacks
-                X to you at this time. We hope you will still be a part of our
-                community via{' '}
+                Unfortunately, we are unable to extend an invitation for{' '}
+                {this.props.configurationState.data.app_name} to you at this
+                time. We hope you will still be a part of our community via{' '}
                 <Link
                     target="_blank"
                     href="http://facebook.com/MHacksHackathon"
@@ -125,7 +126,8 @@ class ApplicationSection extends React.Component {
         return (
             <SectionBody>
                 Your application is submitted but you can make changes on the
-                hacker application page! Thanks for applying to MHacks X.
+                hacker application page! Thanks for applying to{' '}
+                {this.props.configurationState.data.app_name}.
             </SectionBody>
         );
     }
@@ -155,7 +157,8 @@ class ApplicationSection extends React.Component {
 function mapStateToProps(state) {
     return {
         userState: state.userState,
-        theme: state.theme.data
+        theme: state.theme.data,
+        configurationState: state.configurationState
     };
 }
 

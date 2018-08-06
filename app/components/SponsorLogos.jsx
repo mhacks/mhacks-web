@@ -73,10 +73,10 @@ class SponsorLogos extends React.Component {
         this.props.dispatch(SponsorThunks.loadSponsors());
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({
+    static getDerivedStateFromProps(nextProps) {
+        return {
             sponsorState: nextProps.sponsorState
-        });
+        };
     }
 
     render() {

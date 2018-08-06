@@ -11,7 +11,6 @@ var router = require('express').Router(),
 router.get('/', function(req, res) {
     Floor.find()
         .since(req.query.since)
-        .exec()
         .then(floors => {
             res.send({
                 status: true,

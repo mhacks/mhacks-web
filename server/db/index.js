@@ -19,10 +19,30 @@ const cachegoose = require('cachegoose'),
         timestamps: true,
         usePushEach: true
     },
-    defaultSchema = {
+    defaultSchema = {},
+    defaultEndSchema = {
         deleted: {
             type: Boolean,
-            default: false
+            default: false,
+            form: {
+                label: 'Deleted',
+                auth_groups: ['admin']
+            }
+        },
+        save_button: {
+            type: String,
+            form: {
+                label: 'Save',
+                type_override: 'submit'
+            }
+        },
+        delete_button: {
+            type: String,
+            form: {
+                label: 'Delete',
+                auth_groups: ['admin'],
+                type_override: 'submit'
+            }
         }
     };
 
@@ -31,9 +51,7 @@ mongoose.Promise = global.Promise;
 
 // Initialize the DB connection
 mongoose
-    .connect('mongodb://' + config.mongo_hostname + '/' + config.backend_db, {
-        useMongoClient: true
-    })
+    .connect('mongodb://' + config.mongo_hostname + '/' + config.backend_db)
     .then(res => {
         if (res) {
             console.log('Connected to MongoDB Successfully');
@@ -77,16 +95,6 @@ function modifySchema(schema) {
             });
         };
 
-        schema.methods.updateFields = function(fields) {
-            for (const param in fields) {
-                if (fields.hasOwnProperty(param)) {
-                    this[param] = fields[param];
-                }
-            }
-            return this.save();
-        };
-
-        /*
         schema.statics.getUpdateableFields = function(groups) {
             const updateables = [];
 
@@ -105,13 +113,37 @@ function modifySchema(schema) {
                                 updateables.push(key);
                             }
                         });
+                    } else if (groups === 'admin') {
+                        updateables.push(key);
                     }
                 }
             }
 
             return updateables;
         };
-        */
+
+        schema.methods.updateFields = function(fields, groups) {
+            let updateables = false;
+
+            if (groups) {
+                updateables = schema.statics.getUpdateableFields(groups);
+            }
+
+            for (const param in fields) {
+                if (fields.hasOwnProperty(param)) {
+                    if (
+                        updateables === false ||
+                        updateables.indexOf(param) !== -1
+                    ) {
+                        this[param] = fields[param];
+                    } else {
+                        return false;
+                    }
+                }
+            }
+
+            return this.save();
+        };
     }
 }
 
@@ -119,5 +151,6 @@ module.exports = {
     mongoose,
     defaultOptions,
     modifySchema,
-    defaultSchema
+    defaultSchema,
+    defaultEndSchema
 };

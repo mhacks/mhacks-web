@@ -10,7 +10,7 @@ export default class ConfirmationThunks {
 
             return ConfirmationRequests.loadConfirmation(token).then(
                 response => {
-                    if (response.status == 200) {
+                    if (response.status === 200) {
                         response.json().then(json => {
                             dispatch({
                                 type: actions.LOAD_CONFIRMATION_SUCCESS,
@@ -46,7 +46,7 @@ export default class ConfirmationThunks {
                 token,
                 formData
             ).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.UPLOAD_CONFIRMATION_SUCCESS,
@@ -76,7 +76,7 @@ export default class ConfirmationThunks {
             const token = localStorage.getItem('jwt');
 
             return ConfirmationRequests.loadForm(token).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.LOAD_CONFIRMATION_FORM_SUCCESS,

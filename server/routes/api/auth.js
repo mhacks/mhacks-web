@@ -26,11 +26,9 @@ router.post('/login', function(req, res) {
         // Lookup users with the email provided in the post body
         User.find()
             .byEmail(req.body.email)
-            .exec()
             .then(user => {
                 if (user) {
-                    user
-                        .checkPassword(req.body.password)
+                    user.checkPassword(req.body.password)
                         .then(checkRes => {
                             if (checkRes) {
                                 user.getProfile().then(profile => {
@@ -91,7 +89,6 @@ router.post('/register', function(req, res) {
         // and generate a new JWT to be used as the Authorization header
         User.find()
             .byEmail(req.body.email)
-            .exec()
             .then(user => {
                 if (!user) {
                     User.create({
@@ -142,7 +139,6 @@ router.post('/verify', function(req, res) {
     if (req.body.email && validator.isEmail(req.body.email)) {
         User.find()
             .byEmail(req.body.email)
-            .exec()
             .then(user => {
                 if (user && !user.email_verified) {
                     user.sendVerificationEmail();
@@ -171,11 +167,9 @@ router.post('/verify', function(req, res) {
 router.get('/verify/:token', function(req, res) {
     User.find()
         .byVerificationToken(req.params.token)
-        .exec()
         .then(user => {
             if (user) {
-                user
-                    .checkEmailVerificationToken(req.params.token)
+                user.checkEmailVerificationToken(req.params.token)
                     .then(() => {
                         user.verifiedEmail();
                     })
@@ -192,7 +186,6 @@ router.post('/password', function(req, res) {
     if (req.body.email && validator.isEmail(req.body.email)) {
         User.find()
             .byEmail(req.body.email)
-            .exec()
             .then(user => {
                 if (user) {
                     user.sendPasswordResetEmail();
@@ -222,11 +215,9 @@ router.post('/password/:token', function(req, res) {
     if (req.body.password) {
         User.find()
             .byVerificationToken(req.params.token)
-            .exec()
             .then(user => {
                 if (user) {
-                    user
-                        .checkPasswordResetToken(req.params.token)
+                    user.checkPasswordResetToken(req.params.token)
                         .then(() => {
                             user.changePassword(req.body.password);
                             res.send({
@@ -266,7 +257,6 @@ router.post('/logout', authMiddleware('any', 'api'), function(req, res) {
 
     User.find()
         .byToken(req.authToken)
-        .exec()
         .then(user => {
             if (user) {
                 user.removeToken(req.authToken);

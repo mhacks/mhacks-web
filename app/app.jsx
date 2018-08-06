@@ -52,7 +52,7 @@ window.s = store;
 // has rehydrated to prevent redirects and other
 // weird effects
 class AppProvider extends React.Component {
-    componentWillMount() {
+    componentDidMount() {
         this.props.dispatch(ConfigurationThunks.loadConfiguration());
     }
 
@@ -212,7 +212,18 @@ class AppProvider extends React.Component {
                                 }}
                             />
                             <Route
-                                path={'/admin/:model'}
+                                path={routes.ADMIN + '/:model/:id'}
+                                render={({ match }) => {
+                                    return (
+                                        <AdminPage.ModelForm
+                                            model={match.params.model}
+                                            id={match.params.id}
+                                        />
+                                    );
+                                }}
+                            />
+                            <Route
+                                path={routes.ADMIN + '/:model'}
                                 render={({ match }) => {
                                     return (
                                         <AdminPage.Model

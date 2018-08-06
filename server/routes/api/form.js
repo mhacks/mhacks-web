@@ -2,7 +2,8 @@ var router = require('express').Router(),
     fs = require('fs'),
     path = require('path'),
     config = require('../../../config/default.js'),
-    authMiddleware = require('../../middleware/auth.js');
+    authMiddleware = require('../../middleware/auth.js'),
+    mongoose = require('../../db/index.js').mongoose;
 
 // Handles both routes
 function handler(req, res) {
@@ -147,6 +148,7 @@ function check_types(prop_val, groups) {
     }
 
     switch (type) {
+        case mongoose.Schema.Types.ObjectId:
         case String:
             val_types.type = config.form_types.TEXT;
             break;
@@ -178,13 +180,25 @@ function check_types(prop_val, groups) {
         case 'file':
             val_types.type = config.form_types.FILE;
             break;
+        case 'select':
+            val_types.type = config.form_types.SELECT;
+            break;
+    }
+
+    if (prop_val.form.select) {
+        val_types.select = prop_val.form.select;
     }
 
     // If there's an enum, it's a select group
     if ('enum' in prop_val && prop_val.enum) {
         var select = [];
+
         prop_val.enum.forEach(function(data, elem) {
-            select.push({ label: prop_val.form.select[elem], value: data });
+            if (prop_val.form.select) {
+                select.push({ label: prop_val.form.select[elem], value: data });
+            } else {
+                select.push({ label: prop_val.enum[elem], value: data });
+            }
         });
 
         val_types.type = config.form_types.SELECT;
@@ -206,6 +220,18 @@ function check_types(prop_val, groups) {
 
     if (prop_val.form.array_select) {
         val_types.array_select = prop_val.form.array_select;
+    }
+
+    if (prop_val.form.depends_on) {
+        val_types.depends_on = prop_val.form.depends_on;
+    }
+
+    if ('default' in prop_val) {
+        val_types.default = prop_val.default;
+    }
+
+    if ('default' in prop_val.form) {
+        val_types.default = prop_val.form.default;
     }
 
     val_types.required = prop_val.required || false;

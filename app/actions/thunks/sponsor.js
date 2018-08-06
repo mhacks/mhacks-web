@@ -6,7 +6,7 @@ export default class SponsorThunks {
         return dispatch => {
             dispatch({ type: actions.LOAD_SPONSOR_REQUEST });
             return SponsorRequests.loadSponsors().then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         const { sponsors } = json;
                         dispatch({

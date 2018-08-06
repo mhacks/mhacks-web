@@ -6,7 +6,7 @@ export default class AnnouncementsThunks {
         return dispatch => {
             dispatch({ type: actions.LOAD_ANNOUNCEMENTS_REQUEST });
             return AnnouncementsRequests.loadAnnouncements().then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         const { announcements } = json;
                         dispatch({

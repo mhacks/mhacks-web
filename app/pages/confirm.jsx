@@ -6,6 +6,7 @@ import { PageContainer, MHForm, Alert } from '../components';
 import { getUserMetadata } from '../util/user.js';
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
+import PropTypes from 'prop-types';
 
 const FormContainer = styled.div`
     max-width: 500px;
@@ -51,7 +52,7 @@ class Confirm extends React.Component {
         this.props.dispatch(ConfirmationThunks.loadForm());
     }
 
-    componentWillReceiveProps(nextProps) {
+    static getDerivedStateFromProps(nextProps) {
         if (
             nextProps.userState.data.form &&
             nextProps.userState.data.confirmation
@@ -64,9 +65,9 @@ class Confirm extends React.Component {
             }
         }
 
-        this.setState({
+        return {
             userState: nextProps.userState
-        });
+        };
     }
 
     onSubmit(formData) {
@@ -87,13 +88,15 @@ class Confirm extends React.Component {
 
         const { isConfirmed } = getUserMetadata(this.state.userState.data);
 
+        const configurationData = this.props.configurationState.data;
+
         return (
             <PageContainer>
                 <FormContainer>
                     {isConfirmed ? (
                         <Alert message="You are confirmed!" positive={true} />
                     ) : null}
-                    <h2>Confirm Attendance at MHacks X!</h2>
+                    <h2>Confirm Attendance at {configurationData.app_name}!</h2>
                     <MHForm
                         schema={this.state.userState.data.form}
                         FieldTypes={this.state.userState.data.FieldTypes}
@@ -133,13 +136,14 @@ class Confirm extends React.Component {
 }
 
 Confirm.contextTypes = {
-    router: React.PropTypes.object
+    router: PropTypes.object
 };
 
 function mapStateToProps(state) {
     return {
         userState: state.userState,
-        theme: state.theme.data
+        theme: state.theme.data,
+        configurationState: state.configurationState
     };
 }
 

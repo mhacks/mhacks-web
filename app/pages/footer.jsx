@@ -5,10 +5,6 @@ import { Container } from '../components';
 import { devices } from '../styles';
 import { routes } from '../constants';
 
-const InstagramImg = require('../../static/icons/instagram.png');
-const FacebookImg = require('../../static/icons/facebook.png');
-const TwitterImg = require('../../static/icons/twitter.png');
-
 /* Footer Style */
 const FooterWrapper = styled.div`
     background-color: ${props => props.theme.secondary};
@@ -56,15 +52,10 @@ const Flexer = styled.div`
     `};
 `;
 
-const Img100 = styled.img`
-    height: 100%;
-    margin: auto;
-`;
-
 const ImgButtonWrapper = styled.div`
-    height: 20px;
-    width: 20px;
-    margin: 5px;
+    height: 30px;
+    width: 30px;
+    margin: 10px;
     text-align: center;
     display: block;
 `;
@@ -95,10 +86,15 @@ const LegalLink = styled.a`
     text-decoration: none;
 `;
 
-const ImgButton = props => (
+const I100 = styled.i`
+    height: 100%;
+    margin: auto;
+`;
+
+const FaButton = props => (
     <ImgButtonWrapper>
-        <a href={props.href}>
-            <Img100 {...props} />
+        <a href={props.href} style={{ color: 'white' }}>
+            <I100 {...props} />
         </a>
     </ImgButtonWrapper>
 );
@@ -107,29 +103,35 @@ class Footer extends React.Component {
     render() {
         return (
             <div>
-                {window.location.pathname == routes.SUBSCRIBE ? null : (
+                {window.location.pathname === routes.SUBSCRIBE ? null : (
                     <FooterWrapper id="asdfFooter">
                         <Container>
                             <HomeFooter>
-                                <Text>© MHacks 2017</Text>
+                                <Text>© MHacks 2018</Text>
                                 <Flexer>
-                                    <ImgButton
-                                        src={FacebookImg}
-                                        alt="Facebook"
+                                    <FaButton
+                                        className="fab fa-facebook-f fa-2x"
+                                        alt="Medium"
                                         align="middle"
                                         href="https://www.facebook.com/MHacksHackathon"
                                     />
-                                    <ImgButton
-                                        src={InstagramImg}
+                                    <FaButton
+                                        className="fab fa-instagram fa-2x"
                                         alt="Instagram"
                                         align="middle"
                                         href="https://www.instagram.com/mhacks_"
                                     />
-                                    <ImgButton
-                                        src={TwitterImg}
+                                    <FaButton
+                                        className="fab fa-twitter fa-2x"
                                         alt="Twitter"
                                         align="middle"
                                         href="https://twitter.com/mhacks"
+                                    />
+                                    <FaButton
+                                        className="fab fa-medium-m fa-2x"
+                                        alt="Medium"
+                                        align="middle"
+                                        href="https://blog.mhacks.org"
                                     />
                                 </Flexer>
                                 <LegalLinks>

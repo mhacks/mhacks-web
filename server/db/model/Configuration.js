@@ -2,61 +2,77 @@ var {
         mongoose,
         defaultOptions,
         modifySchema,
-        defaultSchema
+        defaultSchema,
+        defaultEndSchema
     } = require('../index.js'),
     escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    Object.assign({}, defaultSchema, {
-        app_name: String,
-        start_date: Date,
-        end_date: Date,
-        is_live_page_enabled: {
-            type: Boolean,
-            default: false,
-            required: true,
-            form: {
-                user_editable: true,
-                label: 'Live Page Enabled'
+    Object.assign(
+        {},
+        defaultSchema,
+        {
+            app_name: {
+                type: String,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'App Name'
+                }
+            },
+            start_date: {
+                type: Date,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Start Date'
+                }
+            },
+            end_date: {
+                type: Date,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'End Date'
+                }
+            },
+            is_live_page_enabled: {
+                type: Boolean,
+                default: false,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Live Page Enabled'
+                }
+            },
+            is_team_building_enabled: {
+                type: Boolean,
+                default: false,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Team Building Enabled'
+                }
+            },
+            is_application_open: {
+                type: Boolean,
+                default: false,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Applications Open'
+                }
+            },
+            is_blackout_page_enabled: {
+                type: Boolean,
+                default: true,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Blackout Page Enabled'
+                }
             }
         },
-        is_team_building_enabled: {
-            type: Boolean,
-            default: false,
-            required: true,
-            form: {
-                user_editable: true,
-                label: 'Team Building Enabled'
-            }
-        },
-        is_application_open: {
-            type: Boolean,
-            default: false,
-            required: true,
-            form: {
-                user_editable: true,
-                label: 'Application Open'
-            }
-        },
-        is_blackout_page_enabled: {
-            type: Boolean,
-            default: true,
-            required: true,
-            form: {
-                user_editable: true,
-                label: 'Blackout page enabled'
-            }
-        },
-        save_button: {
-            type: String,
-            form: {
-                type_override: 'submit',
-                label: 'Save',
-                user_editable: true
-            }
-        }
-    }),
+        defaultEndSchema
+    ),
     defaultOptions
 );
 

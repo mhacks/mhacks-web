@@ -3,33 +3,27 @@ var config = require('../../config/default.js'),
     Scan = require('../db/model/Scan.js'),
     Configuration = require('../db/model/Configuration.js');
 
-Configuration.find({})
-    .exec()
-    .then(configurations => {
-        if (configurations.length < 1) {
-            Configuration.create({
-                app_name: config.app_name,
-                start_date: config.start_date,
-                end_date: config.end_date,
-                is_live_page_enabled: config.is_live_page_enabled,
-                is_application_open: config.is_application_open
+Configuration.find({}).then(configurations => {
+    if (configurations.length < 1) {
+        Configuration.create({
+            app_name: config.app_name,
+            start_date: config.start_date,
+            end_date: config.end_date,
+            is_live_page_enabled: config.is_live_page_enabled,
+            is_application_open: config.is_application_open
+        })
+            .then(configuration => {
+                console.log('Created initial configuration:', configuration);
             })
-                .then(configuration => {
-                    console.log(
-                        'Created initial configuration:',
-                        configuration
-                    );
-                })
-                .catch(err => {
-                    console.error('Error creating initial configuration', err);
-                });
-        }
-    });
+            .catch(err => {
+                console.error('Error creating initial configuration', err);
+            });
+    }
+});
 
 setTimeout(function() {
     User.find()
         .byEmail(config.admin_email)
-        .exec()
         .then(user => {
             if (!user) {
                 User.create({
@@ -44,7 +38,6 @@ setTimeout(function() {
 
                         Scan.find()
                             .byType('registration')
-                            .exec()
                             .then(scan => {
                                 if (!scan) {
                                     Scan.create({

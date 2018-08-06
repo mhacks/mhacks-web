@@ -20,7 +20,6 @@ router.post('/', function(req, res) {
             Device.findOne({
                 push_id: req.body.push_id
             })
-                .exec()
                 .then(device => {
                     if (device) {
                         var updateable_fields = Device.getUpdateableFields();
@@ -71,7 +70,6 @@ router.post('/', function(req, res) {
             Device.findOne({
                 push_id: req.body.push_id
             })
-                .exec()
                 .then(device => {
                     if (device) {
                         var updateable_fields = Device.getUpdateableFields();
@@ -86,8 +84,7 @@ router.post('/', function(req, res) {
                         device.user = req.user;
                         device.updateFields(fields);
 
-                        device.user
-                            .getProfile()
+                        device.user.getProfile()
                             .then(profile => {
                                 res.send({
                                     status: true,
@@ -109,8 +106,7 @@ router.post('/', function(req, res) {
                             push_categories: req.body.push_categories
                         })
                             .then(device => {
-                                device.user
-                                    .getProfile()
+                                device.user.getProfile()
                                     .then(profile => {
                                         res.send({
                                             status: true,

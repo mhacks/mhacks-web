@@ -11,7 +11,7 @@ export default class ConfigurationThunks {
 
             return ConfigurationRequests.loadConfiguration(token).then(
                 response => {
-                    if (response.status == 200) {
+                    if (response.status === 200) {
                         response.json().then(json => {
                             const { user, configuration } = json;
 
@@ -80,7 +80,7 @@ export default class ConfigurationThunks {
             const token = localStorage.getItem('jwt');
 
             return ConfigurationRequests.loadForm(token).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.LOAD_CONFIGURATION_FORM_SUCCESS,
@@ -113,7 +113,7 @@ export default class ConfigurationThunks {
                 token,
                 formData
             ).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         dispatch({
                             type: actions.UPDATE_CONFIGURATION_SUCCESS,

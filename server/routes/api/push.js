@@ -16,7 +16,6 @@ router.get('/', function(req, res) {
     authMiddleware('admin', 'api', true, function() {
         PushNotification.find()
             .byIsPublic(req.query.since)
-            .exec()
             .then(pushnotifications => {
                 pushnotifications.sort(sortByDate);
 
@@ -35,7 +34,6 @@ router.get('/', function(req, res) {
     })(req, res, function() {
         PushNotification.find()
             .since(req.query.since)
-            .exec()
             .then(pushnotifications => {
                 pushnotifications.sort(sortByDate);
                 res.send({
@@ -95,7 +93,6 @@ router.put('/', authMiddleware('admin', 'api'), function(req, res) {
     if (req.session.loggedIn) {
         if (req.body.id) {
             PushNotification.findById(req.body.id)
-                .exec()
                 .then(pushnotification => {
                     pushnotification.title =
                         req.body.title || pushnotification.title;
@@ -169,11 +166,10 @@ router.patch('/', authMiddleware('admin', 'api'), function(req, res) {
 });
 
 // prettier-ignore
-if (config.service !== 'shortener') {
+if (config.service !== 'shortener' && config.push_notifications.enabled) {
     var notificationInterval = setInterval(function() { // eslint-disable-line
         PushNotification.find()
             .byIsReadyToSend()
-            .exec()
             .then(pushnotifications => {
                 if (pushnotifications) {
                     pushnotifications.forEach(function(pushnotification) {
@@ -229,7 +225,6 @@ function getDevicesForPush(pushnotification) {
             }
 
             Device.find(query)
-                .exec()
                 .then(devices => {
                     devices.forEach(function(device) {
                         device_ids.push(device.push_id);
@@ -251,7 +246,6 @@ function getDevicesForPush(pushnotification) {
             }
 
             Device.find(query)
-                .exec()
                 .then(devices => {
                     devices.forEach(function(device) {
                         device_ids.push(device.push_id);

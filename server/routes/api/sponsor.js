@@ -96,8 +96,7 @@ router.post(
 
 router.get('/', function(req, res) {
     authMiddleware('admin', 'api', true, function() {
-        Sponsor.find({}, '-domain -logo')
-            .exec()
+        Sponsor.find({}, '-logo')
             .then(sponsors => {
                 sponsors = sortSponsors(sponsors);
 
@@ -115,7 +114,6 @@ router.get('/', function(req, res) {
             });
     })(req, res, function() {
         Sponsor.find({})
-            .exec()
             .then(sponsors => {
                 sponsors = sortSponsors(sponsors);
 
@@ -137,7 +135,6 @@ router.get('/', function(req, res) {
 router.get('/logo/:id', function(req, res) {
     if (req.params.id) {
         Sponsor.findOne({ _id: req.params.id })
-            .exec()
             .then(sponsor => {
                 if (sponsor) {
                     artifact(
@@ -149,7 +146,7 @@ router.get('/logo/:id', function(req, res) {
                         .then(stream => {
                             res.setHeader(
                                 'Content-Type',
-                                mime.lookup(stream[0])
+                                mime.getType(stream[0])
                             );
                             res.send(stream[1].data.Body);
                         })

@@ -59,7 +59,6 @@ router.post('/', authMiddleware('admin', 'api', true), function(req, res) {
 router.get('/', function(req, res) {
     Location.find()
         .since(req.query.since)
-        .exec()
         .then(locations => {
             if (locations) {
                 res.send({

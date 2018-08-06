@@ -2,40 +2,73 @@ var {
         mongoose,
         defaultOptions,
         modifySchema,
-        defaultSchema
+        defaultSchema,
+        defaultEndSchema
     } = require('../index.js'),
     config = require('../../../config/default.js'),
     escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    Object.assign({}, defaultSchema, {
-        name: {
-            type: String,
-            required: true
+    Object.assign(
+        {},
+        defaultSchema,
+        {
+            name: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Name'
+                }
+            },
+            domain: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Domain'
+                }
+            },
+            level: {
+                type: String,
+                enum: ['bronze', 'silver', 'gold', 'platinum'],
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Level',
+                    select: ['Bronze', 'Silver', 'Gold', 'Platinum']
+                }
+            },
+            logo: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Logo',
+                    type_override: 'file'
+                }
+            },
+            logo_size: {
+                type: String,
+                enum: ['small', 'medium', 'large'],
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Logo Size',
+                    select: ['Small', 'Medium', 'Large']
+                }
+            },
+            url: {
+                type: String,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'URL (link)'
+                }
+            }
         },
-        domain: {
-            type: String,
-            required: true
-        },
-        level: {
-            type: String,
-            enum: ['bronze', 'silver', 'gold', 'unobtanium'],
-            required: true
-        },
-        logo: {
-            type: String,
-            required: true
-        },
-        logo_size: {
-            type: String,
-            enum: ['small', 'medium', 'large'],
-            required: true
-        },
-        url: {
-            type: String
-        }
-    }),
+        defaultEndSchema
+    ),
     defaultOptions
 );
 

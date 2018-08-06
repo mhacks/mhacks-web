@@ -8,9 +8,10 @@ import { routes } from '../../constants';
 import { FormattedRelative } from 'react-intl';
 import { isMinor } from '../../util/user.js';
 import Fuse from 'fuse.js';
-import FontAwesome from 'react-fontawesome';
 import { HeaderSection, SubsectionContainer, UtilityBar } from './components';
 import { generateCSV } from './util.js';
+import PropTypes from 'prop-types';
+import { FontAwesome } from '../../components';
 
 const A = styled.a`
     text-align: center;
@@ -165,7 +166,7 @@ class ReaderPage extends React.Component {
                         }
                     },
                     {
-                        Header: <FontAwesome name="github" />,
+                        Header: <FontAwesome name="github" brand={true} />,
                         accessor: 'github',
                         width: 30,
                         Cell: row => {
@@ -179,7 +180,7 @@ class ReaderPage extends React.Component {
                         }
                     },
                     {
-                        Header: <FontAwesome name="linkedin-square" />,
+                        Header: <FontAwesome name="linkedin" brand={true} />,
                         accessor: 'linkedin',
                         width: 30,
                         Cell: row => {
@@ -330,6 +331,13 @@ class ReaderPage extends React.Component {
             return null;
         }
 
+        const hidden = {
+            score: false,
+            reimbursement: false,
+            reader: false,
+            status: false
+        };
+
         return (
             <PageContainer ref="pagecontainer">
                 <HeaderSection>
@@ -337,6 +345,7 @@ class ReaderPage extends React.Component {
                         schema={this.props.readerState.data.form.reader_filter}
                         FieldTypes={this.props.readerState.data.FieldTypes}
                         theme={this.props.theme}
+                        hidden={hidden}
                         onChange={formState => {
                             this.setState({
                                 filterData: formState
@@ -347,6 +356,7 @@ class ReaderPage extends React.Component {
                         schema={this.props.readerState.data.form.reader_schema}
                         FieldTypes={this.props.readerState.data.FieldTypes}
                         theme={this.props.theme}
+                        hidden={hidden}
                         onSubmit={this.onSubmit}
                     />
                 </HeaderSection>
@@ -435,8 +445,8 @@ class ReaderPage extends React.Component {
 }
 
 ReaderPage.contextTypes = {
-    router: React.PropTypes.shape({
-        history: React.PropTypes.object.isRequired
+    router: PropTypes.shape({
+        history: PropTypes.object.isRequired
     })
 };
 

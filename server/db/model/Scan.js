@@ -2,53 +2,92 @@ var {
     mongoose,
     defaultOptions,
     modifySchema,
-    defaultSchema
+    defaultSchema,
+    defaultEndSchema
 } = require('../index.js');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    Object.assign({}, defaultSchema, {
-        type: {
-            type: String,
-            required: true
+    Object.assign(
+        {},
+        defaultSchema,
+        {
+            type: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Type'
+                }
+            },
+            name: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Name'
+                }
+            },
+            count: {
+                type: Number,
+                required: true,
+                default: 0,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Count (number of scans)'
+                }
+            },
+            max_count: {
+                type: Number,
+                required: true,
+                default: -1,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Max number of scans'
+                }
+            },
+            creator: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Creator',
+                    type_override: String
+                }
+            },
+            notes: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Notes'
+                }
+            },
+            public: {
+                type: Boolean,
+                required: true,
+                default: false,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Public'
+                }
+            },
+            auth_groups: {
+                type: [String],
+                default: ['any'],
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Allowed auth groups to scan'
+                }
+            },
+            created_at: {
+                type: Date,
+                default: Date.now
+            }
         },
-        name: {
-            type: String,
-            required: true
-        },
-        count: {
-            type: Number,
-            required: true,
-            default: 0
-        },
-        max_count: {
-            type: Number,
-            required: true,
-            default: -1
-        },
-        creator: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            required: true
-        },
-        notes: {
-            type: String,
-            required: true
-        },
-        public: {
-            type: Boolean,
-            required: true,
-            default: false
-        },
-        auth_groups: {
-            type: [String],
-            default: ['any']
-        },
-        created_at: {
-            type: Date,
-            default: Date.now
-        }
-    }),
+        defaultEndSchema
+    ),
     defaultOptions
 );
 
@@ -58,38 +97,6 @@ schema.query.byUser = function(user) {
 
 schema.query.byType = function(type) {
     return this.findOne({ type: type });
-};
-
-schema.methods.updateFields = function(fields) {
-    for (var param in fields) {
-        this[param] = fields[param];
-    }
-    this.save();
-};
-
-schema.statics.getUpdateableFields = function(groups) {
-    var updateables = [];
-
-    for (var key in schema.obj) {
-        var field = schema.obj[key];
-
-        if (field.form) {
-            if (field.form.user_editable) {
-                updateables.push(key);
-            } else if (groups) {
-                groups.forEach(function(group) {
-                    if (
-                        field.form.auth_groups &&
-                        field.form.auth_groups.indexOf(group) !== -1
-                    ) {
-                        updateables.push(key);
-                    }
-                });
-            }
-        }
-    }
-
-    return updateables;
 };
 
 modifySchema(schema);

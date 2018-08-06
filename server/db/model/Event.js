@@ -2,40 +2,84 @@ var {
         mongoose,
         defaultOptions,
         modifySchema,
-        defaultSchema
+        defaultSchema,
+        defaultEndSchema
     } = require('../index.js'),
     escapeStringRegex = require('escape-string-regexp');
 
 // Define the document Schema
 var schema = new mongoose.Schema(
-    Object.assign({}, defaultSchema, {
-        name: {
-            type: String,
-            required: true
+    Object.assign(
+        {},
+        defaultSchema,
+        {
+            name: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Name'
+                }
+            },
+            desc: {
+                type: String,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Description'
+                }
+            },
+            startDate: {
+                type: Date,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Start Date'
+                }
+            },
+            endDate: {
+                type: Date,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'End Date'
+                }
+            },
+            category: {
+                type: String,
+                enum: [
+                    'general',
+                    'food',
+                    'tech talk',
+                    'sponsor event',
+                    'other'
+                ],
+                default: 'general',
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Category',
+                    select: [
+                        'General',
+                        'Food',
+                        'Tech Talk',
+                        'Sponsor Event',
+                        'Other'
+                    ]
+                }
+            },
+            location: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Location',
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Location',
+                    type_override: String
+                }
+            }
         },
-        desc: {
-            type: String,
-            required: true
-        },
-        startDate: {
-            type: Date,
-            required: true
-        },
-        endDate: {
-            type: Date,
-            required: true
-        },
-        category: {
-            type: String,
-            enum: ['General', 'Food', 'Tech Talk', 'Sponsor Event', 'Other'],
-            default: 'General'
-        },
-        location: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Location',
-            required: true
-        }
-    }),
+        defaultEndSchema
+    ),
     defaultOptions
 );
 
@@ -52,7 +96,6 @@ schema.query.byLocationName = function(name) {
         .model('Location')
         .find()
         .byName(name)
-        .exec()
         .then(loc => {
             return this.find({
                 location: loc._id
@@ -68,18 +111,6 @@ schema.methods.getCoordinates = function() {
         latitude: this.latitude,
         longitude: this.longitude
     };
-};
-
-schema.methods.updateFields = function(fields) {
-    for (var param in fields) {
-        this[param] = fields[param];
-    }
-    return this.save();
-};
-
-// All fields are updateable as only admins have power to create and update.
-schema.statics.getUpdateableFields = function() {
-    return Object.keys(schema.obj);
 };
 
 modifySchema(schema);
