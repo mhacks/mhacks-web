@@ -74,8 +74,8 @@ module.exports = {
         SUBMIT: 10,
         FILE: 11
     },
-    color_dark: process.env.COLOR_DARK || '#5d3e6e',
-    color_light: process.env.COLOR_LIGHT || '#fafafa',
+    color_dark: process.env.COLOR_DARK || '#DCDCE5',
+    color_light: process.env.COLOR_LIGHT || '#FDFDFD',
     push_notifications: {
         enabled: parseBool(process.env.PUSH_NOTIS_ENABLED, false),
         apns: {

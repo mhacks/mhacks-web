@@ -8,8 +8,8 @@ import { NavLink } from 'react-router-dom';
 import { SectionHeader, SectionBody } from './section_components.jsx';
 
 const Wrapper = styled.div`
-    background: ${props => props.theme.gradientOverlay}, ${props =>
-    props.theme.primary}
+    background: ${props => props.theme.gradientOverlay},
+        ${props => props.theme.primary};
     padding: 80px 0;
 `;
 
