@@ -11,6 +11,8 @@ var router = require('express').Router(),
     Team = require('../../db/model/Team.js'),
     MentorshipTicket = require('../../db/model/MentorshipTicket.js'),
     Application = require('../../db/model/Application.js'),
+    Device = require('../../db/model/Device.js'),
+    PushNotification = require('../../db/model/PushNotification.js'),
     config = require('../../../config/default.js'),
     uploadHelper = require('../../interactors/multer-s3.js')(
         config.AWS_BUCKET_NAME,
@@ -28,14 +30,16 @@ const models = {
     Scans: Scan,
     ScanEvents: ScanEvent,
 
-    Announcements: Announcement,
-
     Users: User,
     Applications: Application,
 
     Teams: Team,
     MentorshipTickets: MentorshipTicket,
-    Sponsors: Sponsor
+    Sponsors: Sponsor,
+
+    Announcements: Announcement,
+    Devices: Device,
+    PushNotifications: PushNotification
 };
 
 router.get('/model', function(req, res) {
