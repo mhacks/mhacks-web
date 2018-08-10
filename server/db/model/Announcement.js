@@ -162,6 +162,8 @@ var changeMiddleware = function(next) {
         });
         return next();
     }
+
+    return next();
 };
 
 // Set the update middleware on each of the document save and update events
