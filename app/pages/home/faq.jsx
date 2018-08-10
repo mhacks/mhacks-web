@@ -5,8 +5,7 @@ import { Container, ExpandingItem } from '../../components';
 import { SectionHeader } from './section_components.jsx';
 import { devices } from '../../styles';
 
-const Wrapper = styled.div`
-`;
+const Wrapper = styled.div``;
 
 const FaqSectionHeader = styled.div`
     font-size: 30px;
@@ -181,12 +180,12 @@ class Faq extends React.Component {
                                         header="How do I apply?"
                                         body={`Step one is to create an MHacks Account and fill out some basic information in your MHacks Profile. Once that's done,
                                      you'll be able to apply for ${
+                                         this.props.configurationState.data
+                                             .app_name
+                                     }! Note that if you're accepted to ${
                                             this.props.configurationState.data
                                                 .app_name
-                                            }! Note that if you're accepted to ${
-                                            this.props.configurationState.data
-                                                .app_name
-                                            }, you will need to Confirm your acceptance.`}
+                                        }, you will need to Confirm your acceptance.`}
                                     />
                                     <FaqItem
                                         header="When are applications closing?"

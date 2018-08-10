@@ -113,13 +113,15 @@ class Footer extends React.Component {
                                         MLH CoC
                                     </LegalLink>
                                 </LegalLinks>
-                                <ImgButtonWrapper style={{
-                                    order: 1,
-                                    flex: 1,
-                                    position: 'relative',
-                                    display: 'flex',
-                                    justifyContent: 'center'
-                                }}>
+                                <ImgButtonWrapper
+                                    style={{
+                                        order: 1,
+                                        flex: 1,
+                                        position: 'relative',
+                                        display: 'flex',
+                                        justifyContent: 'center'
+                                    }}
+                                >
                                     <img src={MHacksLogo} height={30} />
                                 </ImgButtonWrapper>
                                 <Flexer>

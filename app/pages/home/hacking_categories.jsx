@@ -78,9 +78,7 @@ class HackingCategories extends React.Component {
             <Wrapper>
                 <Container>
                     <Flexbox>
-                        <SectionHeader>
-                            Hacking Cortices
-                        </SectionHeader>
+                        <SectionHeader>Hacking Cortices</SectionHeader>
                         {Object.keys(Images).map(function(name, index) {
                             return (
                                 <Flex1 key={index}>

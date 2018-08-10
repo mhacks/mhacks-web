@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { devices } from '../../styles';
-import {
-    SectionHeader
-} from './section_components.jsx';
+import { SectionHeader } from './section_components.jsx';
 
 import { SponsorLogos } from '../../components';
 import theme from '../../styles/theme.js';
@@ -97,14 +95,14 @@ class Sponsorship extends React.Component {
                             {' '}
                             MHacks is the gateway between you and the top tech
                             talent in the world. Whether you come to network,
-                            promote brand awareness, or get feedback on a product or
-                            API, we’ll provide the tools you need to make the most
-                            out of your experience.{' '}
+                            promote brand awareness, or get feedback on a
+                            product or API, we’ll provide the tools you need to
+                            make the most out of your experience.{' '}
                         </SectionBody>
                         <SectionBody>
                             {' '}
-                            Interested in sponsoring? Want more information? Shoot
-                            us an email at{' '}
+                            Interested in sponsoring? Want more information?
+                            Shoot us an email at{' '}
                             <Link href="mailto:sponsor@mhacks.org">
                                 sponsor@mhacks.org
                             </Link>{' '}
@@ -119,7 +117,9 @@ class Sponsorship extends React.Component {
                                 student-run hackathons that we’ve ever
                                 sponsored.”{' '}
                             </QuoteText>
-                            <CompanyName><CompanyLogo src={GoogleLogo} /></CompanyName>
+                            <CompanyName>
+                                <CompanyLogo src={GoogleLogo} />
+                            </CompanyName>
                         </QuoteWrapper>
                         <QuoteWrapper>
                             <QuoteText>
@@ -127,7 +127,9 @@ class Sponsorship extends React.Component {
                                 “The caliber and number of students that MHacks
                                 attracts is like no other hacking event.”{' '}
                             </QuoteText>
-                            <CompanyName><CompanyLogo src={WalmartLogo} /></CompanyName>
+                            <CompanyName>
+                                <CompanyLogo src={WalmartLogo} />
+                            </CompanyName>
                         </QuoteWrapper>
                     </FlexBox>
 

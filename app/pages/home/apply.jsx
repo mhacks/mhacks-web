@@ -61,13 +61,12 @@ class Apply extends React.Component {
             <Wrapper color={this.props.theme.primary}>
                 <Container>
                     <Holder>
-                        <SectionHeader>Applications are open now!</SectionHeader>
+                        <SectionHeader>
+                            Applications are open now!
+                        </SectionHeader>
                         <StyledNavLinkWrapper>
                             {this.props.userState.data.isLoggedIn ? (
-                                <StyledNavLink
-                                    to={routes.APPLY}
-                                    color="white"
-                                >
+                                <StyledNavLink to={routes.APPLY} color="white">
                                     Apply
                                 </StyledNavLink>
                             ) : (
