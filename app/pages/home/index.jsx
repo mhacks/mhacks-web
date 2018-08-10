@@ -1,30 +1,25 @@
 import React from 'react';
-import styled from 'styled-components';
-import { PageContainer, FullScreenAnimation } from '../../components';
 
 import Landing from './landing.jsx';
 import Faq from './faq.jsx';
-import Welcome from './welcome.jsx';
+import Hero from './hero.jsx';
 import Sponsorship from './sponsorship.jsx';
 import HackingCategories from './hacking_categories.jsx';
 
-// Add overflow: hidden to container to prevent floating squares from escaping container
-const StyledPageContainer = styled(PageContainer)`
-    overflow: hidden;
-`;
+import Apply from './apply.jsx';
 
 /* Page Component */
 class HomePage extends React.Component {
     render() {
         return (
-            <StyledPageContainer ref="pagecontainer">
-                <FullScreenAnimation />
+            <div>
                 <Landing />
-                <Welcome />
+                <Apply />
+                <Hero />
                 <HackingCategories />
                 <Faq />
                 <Sponsorship />
-            </StyledPageContainer>
+            </div>
         );
     }
 }

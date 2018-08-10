@@ -4,20 +4,18 @@ import styled from 'styled-components';
 import { devices } from '../../styles';
 
 const Images = {
-    'AI/ML': require('../../../static/mx/ai-ml.png'),
-    'Android <br />Development': require('../../../static/mx/android.png'),
-    'AR/VR': require('../../../static/mx/ar-vr.png'),
-    'Game <br />Development': require('../../../static/mx/game-dev.png'),
-    Hardware: require('../../../static/mx/hardware.png'),
-    'iOS <br />Development': require('../../../static/mx/ios.png'),
-    'Web <br />Development': require('../../../static/mx/web-dev.png')
+    'AI/ML': require('../../../static/m11/cortices/ai.svg'),
+    'Android <br />Development': require('../../../static/m11/cortices/android.svg'),
+    'AR/VR': require('../../../static/m11/cortices/vr.svg'),
+    'Game <br />Development': require('../../../static/m11/cortices/game.svg'),
+    Hardware: require('../../../static/m11/cortices/hardware.svg'),
+    'iOS <br />Development': require('../../../static/m11/cortices/ios.svg'),
+    'Web <br />Development': require('../../../static/m11/cortices/web.svg')
 };
 
 const Wrapper = styled.div`
-    background-color: ${props => props.theme.secondary};
+    background-color: white;
     color: ${props => props.theme.highlight};
-    padding-top: 80px;
-    padding-bottom: 40px;
 `;
 
 const Container = styled.div`
@@ -39,33 +37,26 @@ const SectionHeader = styled.h2`
     font-size: 48px;
     text-transform: uppercase;
     font-weight: 500;
-    margin: 20px 20px 20px 20px;
+    margin: 0px 20px 20px 20px;
     min-width: 100%;
-
-    ${devices.tablet`
-        margin-left: 60px;
-        min-width: calc(66.666% - 80px);
-    `};
+    text-align: center;
 `;
 
 const Flexbox = styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
 `;
 
 const Flex1 = styled.div`
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     justify-content: flex-end;
     align-items: center;
-    width: calc(50% - 40px);
+    width: calc(25% - 40px);
     margin: 20px;
-    marginb-bttom: 40px;
-
-    ${devices.tablet`
-        width: calc(33.333% - 40px); 
-    `};
+    margin-bottom: 40px;
 `;
 
 const Img100 = styled.img`
@@ -88,7 +79,7 @@ class HackingCategories extends React.Component {
                 <Container>
                     <Flexbox>
                         <SectionHeader>
-                            Hacking <br />Cortices
+                            Hacking Cortices
                         </SectionHeader>
                         {Object.keys(Images).map(function(name, index) {
                             return (

@@ -25,11 +25,11 @@ function hexToRgbA(hex, opq) {
 // example use
 let theme = {
     // Color primitives
-    primaryFont: 'Montserrat',
-    primary: '#DCDCE5',
-    secondary: '#FDFDFD',
-    highlight: '#D41359',
-    highlightSecondary: '#B22752',
+    primaryFont: 'FFDINWebProRegular',
+    primary: '#D41359',
+    secondary: '#B22752',
+    highlight: '#666666',
+    highlightSecondary: '#333333',
     success: '#2ecc71',
     teal: '#1CA3A3',
     darkPink: '#CA2171',

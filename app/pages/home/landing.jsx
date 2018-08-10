@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-const Logo = require('../../../static/icons/x-logo-title.png');
 import { devices } from '../../styles';
 
 const Wrapper = styled.div`
-    background: ${props => props.theme.secondary};
-    padding: 0;
-    height: calc(100vh - 80px);
+    background: ${props => props.theme.primary};
+    padding-top: 80px;
     z-index: 98;
 `;
 
@@ -31,17 +29,22 @@ const Container = styled.div`
     `};
 `;
 
-const LogoImage = styled.img`
+const LogoText = styled.div`
+    position: relative;
     height: auto;
     width: auto;
-    max-height: 50%;
-    max-width: 90%;
+    font-size: 16vw;
+    white-space: nowrap;
+    color: white;
+    opacity: 0.4;
+`;
 
-    margin-bottom: 20px;
-    z-index: 99;
+const OverlayDiv = styled.div`
+    position: absolute;
 `;
 
 const Text = styled.h2`
+    position: relative;
     font-size: 22px;
     color: white;
     text-align: center;
@@ -57,7 +60,6 @@ const Text = styled.h2`
 
 const MLHBanner = styled.a`
     display: block;
-    width: 60px;
     position: absolute;
     left: 31px;
     top: 80px;
@@ -73,18 +75,20 @@ class Landing extends React.Component {
         return (
             <Wrapper>
                 <MLHBanner
-                    href="https://mlh.io/seasons/na-2018/events?utm_source=na-2018&utm_medium=TrustBadge&utm_campaign=na-2018&utm_content=gray"
+                    href="https://mlh.io/seasons/na-2019/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2019-season&utm_content=gray"
                     target="_blank"
                 >
                     <MLHBannerImage
-                        src="https://s3.amazonaws.com/logged-assets/trust-badge/2018/gray.svg"
-                        alt="Major League Hacking 2017 Hackathon Season"
+                        src="https://s3.amazonaws.com/logged-assets/trust-badge/2019/mlh-trust-badge-2019-gray.svg"
+                        alt="Major League Hacking 2019 Hackathon Season"
                     />
                 </MLHBanner>
                 <Container>
-                    <LogoImage src={Logo} />
-                    <Text>September 22nd - 24th, 2017</Text>
-                    <Text>University of Michigan North Campus</Text>
+                    <LogoText>MHACKS 11</LogoText>
+                    <OverlayDiv>
+                        <Text>TBAMONTH TBADATE1-TBADATE2</Text> {/* TODO */}
+                        <Text>TBALOCATION</Text> {/* TODO */}
+                    </OverlayDiv>
                 </Container>
             </Wrapper>
         );
