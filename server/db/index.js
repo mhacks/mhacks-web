@@ -102,7 +102,12 @@ function modifySchema(schema) {
                 if (schema.obj.hasOwnProperty(key) && schema.obj[key].form) {
                     const field = schema.obj[key];
 
-                    if (field.form.user_editable) {
+                    if (
+                        Array.isArray(groups) &&
+                        groups.indexOf('admin') !== -1
+                    ) {
+                        updateables.push(key);
+                    } else if (field.form.user_editable) {
                         updateables.push(key);
                     } else if (groups) {
                         groups.forEach(function(group) {
@@ -113,9 +118,13 @@ function modifySchema(schema) {
                                 updateables.push(key);
                             }
                         });
-                    } else if (groups === 'admin') {
-                        updateables.push(key);
                     }
+                } else if (
+                    schema.obj.hasOwnProperty(key) &&
+                    Array.isArray(groups) &&
+                    groups.indexOf('admin') !== -1
+                ) {
+                    updateables.push(key);
                 }
             }
 

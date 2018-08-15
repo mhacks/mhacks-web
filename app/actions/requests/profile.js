@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import { endpoints } from '../../constants';
+import { postFormResponseFromRoute } from '../../util/actions';
 
 export default class ProfileRequests {
     static loadProfile(token) {
@@ -13,29 +14,7 @@ export default class ProfileRequests {
     }
 
     static updateProfile(token, body, files) {
-        const formData = new FormData();
-
-        if (files['resume']) {
-            formData.append('resume', files['resume']);
-        }
-
-        if (files['avatar']) {
-            formData.append('avatar', files['avatar']);
-        }
-
-        for (var key in body) {
-            if (body.hasOwnProperty(key)) {
-                formData.append(key, body[key]);
-            }
-        }
-
-        return fetch(endpoints.PROFILE, {
-            method: 'post',
-            headers: new Headers({
-                Authorization: 'Bearer ' + token
-            }),
-            body: formData
-        });
+        return postFormResponseFromRoute(endpoints.PROFILE, body, files);
     }
 
     static sendVerificationEmail(token, email) {

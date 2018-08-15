@@ -114,6 +114,7 @@ function check_types(prop_val, groups) {
 
     // Check if the user is in the auth_groups for the schema value
     var inGroup = false;
+    var isAdmin = Array.isArray(groups) && groups.indexOf('admin') !== -1;
     if (groups) {
         groups.forEach(function(group) {
             if (
@@ -130,7 +131,8 @@ function check_types(prop_val, groups) {
         !inGroup &&
         !prop_val.form.user_editable &&
         prop_val.form.type_override !== 'sectionheader' &&
-        prop_val.form.type_override !== 'submit'
+        prop_val.form.type_override !== 'submit' &&
+        !isAdmin
     ) {
         return undefined;
     }
@@ -232,6 +234,10 @@ function check_types(prop_val, groups) {
 
     if ('default' in prop_val.form) {
         val_types.default = prop_val.form.default;
+    }
+
+    if ('creatable' in prop_val.form) {
+        val_types.creatable = prop_val.form.creatable;
     }
 
     val_types.required = prop_val.required || false;

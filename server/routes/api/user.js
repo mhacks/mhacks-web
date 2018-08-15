@@ -37,6 +37,10 @@ router.post(
                     '/uploads/' + req.files.avatar[0].filename;
             }
 
+            if (!(req.files && req.files.avatar) && req.body.avatar) {
+                req.body.avatar = undefined;
+            }
+
             for (var i in req.body) {
                 if (i === 'email' && req.body.email !== req.user.email) {
                     if (!validator.isEmail(req.body.email)) {

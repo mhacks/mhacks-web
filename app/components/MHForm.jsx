@@ -5,10 +5,17 @@ import RoundedButton from './RoundedButton.jsx';
 import FileUpload from './FileUpload';
 import Alert from './Alert.jsx';
 import Select from 'react-virtualized-select';
+import { Creatable as ReactSelectCreatable } from 'react-select';
 import createFilterOptions from 'react-select-fast-filter-options';
 import 'react-select/dist/react-select.min.css';
 import 'react-virtualized/styles.css';
 import 'react-virtualized-select/styles.css';
+
+class Creatable extends React.Component {
+    render() {
+        return <ReactSelectCreatable {...this.props} />;
+    }
+}
 
 const FileUploadContainer = styled.div`
     margin: 10px 0;
@@ -83,6 +90,10 @@ class MHForm extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.changeCompletion = this.changeCompletion.bind(this);
+    }
+
+    componentDidMount() {
+        this.UNSAFE_componentWillReceiveProps(this.props);
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -212,6 +223,7 @@ class MHForm extends React.Component {
                 return [];
             case this.FieldTypes.SECTIONHEADER:
             case this.FieldTypes.SUBMIT:
+            case undefined:
                 return undefined;
             default:
                 console.error(
@@ -255,6 +267,7 @@ class MHForm extends React.Component {
             }
             case this.FieldTypes.SECTIONHEADER:
             case this.FieldTypes.SUBMIT:
+            case undefined:
                 return defaultForType;
             default:
                 console.error(
@@ -550,7 +563,12 @@ class MHForm extends React.Component {
                                                 ? this.state.cachedLoaders[
                                                       field.key
                                                   ].loader
-                                                : null
+                                                : undefined
+                                        }
+                                        selectComponent={
+                                            field.creatable
+                                                ? Creatable
+                                                : undefined
                                         }
                                     />,
                                     hasError

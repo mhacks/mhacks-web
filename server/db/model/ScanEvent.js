@@ -55,13 +55,6 @@ schema.query.byUser = function(user) {
     return this.findOne({ user: user });
 };
 
-schema.methods.updateFields = function(fields) {
-    for (var param in fields) {
-        this[param] = fields[param];
-    }
-    this.save();
-};
-
 schema.post('save', function(doc) {
     var body = '';
 
