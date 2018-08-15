@@ -52,6 +52,7 @@ var schema = new mongoose.Schema(
             },
             email_verified: {
                 type: Boolean,
+                default: false,
                 form: {
                     user_editable: false,
                     label: 'Email Verified'
@@ -59,6 +60,7 @@ var schema = new mongoose.Schema(
             },
             application_submitted: {
                 type: Boolean,
+                default: false,
                 form: {
                     user_editable: false,
                     label: 'Application Submitted'
@@ -165,11 +167,16 @@ var schema = new mongoose.Schema(
                     }
                 ]
             },
-            groups: [
-                {
-                    name: String
+            groups: {
+                type: [{ name: String }],
+                default: [],
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Groups',
+                    type_override: 'array',
+                    creatable: true
                 }
-            ],
+            },
             meta: {
                 ip: String
             },

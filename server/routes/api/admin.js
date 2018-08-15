@@ -11,6 +11,7 @@ var router = require('express').Router(),
     Team = require('../../db/model/Team.js'),
     MentorshipTicket = require('../../db/model/MentorshipTicket.js'),
     Application = require('../../db/model/Application.js'),
+    Confirmation = require('../../db/model/Confirmation.js'),
     Device = require('../../db/model/Device.js'),
     PushNotification = require('../../db/model/PushNotification.js'),
     config = require('../../../config/default.js'),
@@ -32,6 +33,7 @@ const models = {
 
     Users: User,
     Applications: Application,
+    Confirmations: Confirmation,
 
     Teams: Team,
     MentorshipTickets: MentorshipTicket,
@@ -102,9 +104,19 @@ router.get('/model/:model/:id', function(req, res) {
     model
         .findById(req.params.id)
         .then(document => {
+            document = document.toObject();
+            if (
+                req.params.model === 'Users' &&
+                Array.isArray(document.groups)
+            ) {
+                document.groups = document.groups.map(function(data) {
+                    return { label: data.name, value: data.name };
+                });
+            }
+
             res.send({
                 status: true,
-                document
+                document: document
             });
         })
         .catch(err => {
@@ -158,7 +170,17 @@ router.post(
 
         for (const i in req.body) {
             if (updateableFields.indexOf(i) !== -1) {
-                fields[i] = req.body[i];
+                if (req.params.model === 'Users' && i === 'groups') {
+                    if (req.body[i].trim().length === 0) {
+                        fields[i] = [];
+                    } else {
+                        fields[i] = req.body[i].split(',').map(function(data) {
+                            return { name: data };
+                        });
+                    }
+                } else {
+                    fields[i] = req.body[i];
+                }
             }
         }
 

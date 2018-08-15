@@ -245,6 +245,7 @@ var schema = new mongoose.Schema(
             },
             needs_reimbursement: {
                 type: Boolean,
+                default: false,
                 form: {
                     user_editable: true,
                     label: 'Do you need travel reimbursement?',
@@ -262,6 +263,7 @@ var schema = new mongoose.Schema(
             },
             requested_reimbursement: {
                 type: Number,
+                default: 0,
                 form: {
                     user_editable: true,
                     label: 'How much reimbursement do you expect to need?',
@@ -281,6 +283,7 @@ var schema = new mongoose.Schema(
             },
             score: {
                 type: Number,
+                default: 0,
                 form: {
                     label: 'Score',
                     auth_groups: ['admin', 'reader']
@@ -295,6 +298,7 @@ var schema = new mongoose.Schema(
             },
             reimbursement: {
                 type: Number,
+                default: 0,
                 form: {
                     label: 'Reimbursement',
                     auth_groups: ['admin', 'reader']
