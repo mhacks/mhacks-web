@@ -11,8 +11,7 @@ import WalmartLogo from '../../../static/logos/walmart.svg';
 
 const Wrapper = styled.div`
     background-color: white;
-    padding: 80px 0;
-    margin: 0 60px;
+    margin: 0 20px;
 `;
 
 const SectionBody = styled.p`
@@ -22,6 +21,13 @@ const SectionBody = styled.p`
 `;
 
 const FlexBox = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 640px;
+`;
+
+const FlexBox2 = styled.div`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -64,19 +70,12 @@ const SponsorshipContainer = styled.div`
     display: flex;
     flex-direction: column;
     overflow: visible;
+    margin: 0px 60px;
 
-    ${devices.desktop`
+    ${devices.tablet`
         padding: 75px 0;
         flex-direction: row;
         align-items: center;
-    `};
-`;
-
-const LeftSideContainer = styled.div`
-    order: -1;
-    ${devices.desktop`
-        width: calc(50% - 20px);
-        float: left;
     `};
 `;
 
@@ -89,7 +88,7 @@ class Sponsorship extends React.Component {
         return (
             <Wrapper>
                 <SponsorshipContainer>
-                    <LeftSideContainer>
+                    <FlexBox2>
                         <LeftSectionHeader>Sponsorship</LeftSectionHeader>
                         <SectionBody>
                             {' '}
@@ -107,7 +106,7 @@ class Sponsorship extends React.Component {
                                 sponsor@mhacks.org
                             </Link>{' '}
                         </SectionBody>
-                    </LeftSideContainer>
+                    </FlexBox2>
 
                     <FlexBox>
                         <QuoteWrapper>

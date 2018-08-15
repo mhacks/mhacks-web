@@ -16,6 +16,7 @@ const Images = {
 const Wrapper = styled.div`
     background-color: white;
     color: ${props => props.theme.highlight};
+    margin: 0 20px;
 `;
 
 const Container = styled.div`

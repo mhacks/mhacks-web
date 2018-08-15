@@ -10,7 +10,7 @@ import theme from '../styles/theme.js';
 import { getUserMetadata } from '../util/user.js';
 
 const HeaderLogoImage = require('../../static/m11/logo.svg');
-const Favicon = require('../../static/m11/logo.png');
+const Favicon = require('../../static/m11/favicon.png');
 
 /* Header Section */
 const Wrapper = styled.div`

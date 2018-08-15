@@ -7,12 +7,20 @@ import { SubscribeThunks } from '../../actions';
 import { connect } from 'react-redux';
 import VideoPlaceholderImage from '../../../static/blackout/video-placeholder.png';
 
+const Wrapper = styled.div`
+    background: white;
+    margin: 0 20px;
+    text-align: center;
+`;
+
 const HeroContainer = styled.div`
     padding: 20px 0;
+    margin: 0 20px;
     overflow: auto;
     display: flex;
     flex-direction: column;
     overflow: visible;
+    background: white;
 
     ${devices.desktop`
         padding: 75px 0;
@@ -84,33 +92,36 @@ class HomeHero extends React.Component {
 
     render() {
         return (
-            <Container>
-                <HeroContainer>
-                    <VideoPlayerContainer>
-                        <VideoPlayer
-                            placeholderImage={VideoPlaceholderImage}
-                            videoUrl="https://www.youtube.com/embed/bTC2oPnJ4Zo"
-                            showControls={false}
-                            showVideoDetails={false}
-                            autoplay={true}
-                        />
-                    </VideoPlayerContainer>
-                    <LeftSideContainer>
-                        <Text>Welcome to MHacks 11</Text>
-                        <SubText>
-                            MHacks is a 36-hour hackathon run by University of
-                            Michigan students. At MHacks, we want to help you
-                            turn your ideas into reality. You're welcome to come
-                            with or without a team. We'll provide you with all
-                            the resources you need to help you work on something
-                            cool or learn new skills. You'll have the freedom to
-                            create a product and have fun working on a project
-                            with friends. For newcomers and veterans alike,
-                            MHacks is an experience you won’t want to miss.
-                        </SubText>
-                    </LeftSideContainer>
-                </HeroContainer>
-            </Container>
+            <Wrapper>
+                <Container>
+                    <HeroContainer>
+                        <VideoPlayerContainer>
+                            <VideoPlayer
+                                placeholderImage={VideoPlaceholderImage}
+                                videoUrl="https://www.youtube.com/embed/bTC2oPnJ4Zo"
+                                showControls={false}
+                                showVideoDetails={false}
+                                autoplay={true}
+                            />
+                        </VideoPlayerContainer>
+                        <LeftSideContainer>
+                            <Text>Welcome to MHacks 11</Text>
+                            <SubText>
+                                MHacks is a 36-hour hackathon run by University
+                                of Michigan students. At MHacks, we want to help
+                                you turn your ideas into reality. You're welcome
+                                to come with or without a team. We'll provide
+                                you with all the resources you need to help you
+                                work on something cool or learn new skills.
+                                You'll have the freedom to create a product and
+                                have fun working on a project with friends. For
+                                newcomers and veterans alike, MHacks is an
+                                experience you won’t want to miss.
+                            </SubText>
+                        </LeftSideContainer>
+                    </HeroContainer>
+                </Container>
+            </Wrapper>
         );
     }
 }

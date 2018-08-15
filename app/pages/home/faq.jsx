@@ -5,7 +5,11 @@ import { Container, ExpandingItem } from '../../components';
 import { SectionHeader } from './section_components.jsx';
 import { devices } from '../../styles';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+    background: white;
+    margin: 0 20px;
+    margin-top: -24px;
+`;
 
 const FaqSectionHeader = styled.div`
     font-size: 30px;

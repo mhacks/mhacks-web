@@ -58,7 +58,7 @@ const Dashed = styled.div`
 class Apply extends React.Component {
     render() {
         return (
-            <Wrapper color={this.props.theme.primary}>
+            <Wrapper>
                 <Container>
                     <Holder>
                         <SectionHeader>
