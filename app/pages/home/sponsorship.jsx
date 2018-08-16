@@ -79,6 +79,20 @@ const SponsorshipContainer = styled.div`
     `};
 `;
 
+const Container = styled.div`
+    width: calc(100% - 60px);
+    max-width: 1200px;
+    margin: 0 auto;
+
+    ${devices.tablet`
+        width: calc(100% - 100px);
+    `} ${devices.desktop`
+        width: calc(100% - 140px);
+    `} ${devices.giant`
+        width: calc(100% - 160px);
+    `};
+`;
+
 const LeftSectionHeader = styled(SectionHeader)`
     text-align: left;
 `;
@@ -87,53 +101,57 @@ class Sponsorship extends React.Component {
     render() {
         return (
             <Wrapper>
-                <SponsorshipContainer>
-                    <FlexBox2>
-                        <LeftSectionHeader>Sponsorship</LeftSectionHeader>
-                        <SectionBody>
-                            {' '}
-                            MHacks is the gateway between you and the top tech
-                            talent in the world. Whether you come to network,
-                            promote brand awareness, or get feedback on a
-                            product or API, we’ll provide the tools you need to
-                            make the most out of your experience.{' '}
-                        </SectionBody>
-                        <SectionBody>
-                            {' '}
-                            Interested in sponsoring? Want more information?
-                            Shoot us an email at{' '}
-                            <Link href="mailto:sponsor@mhacks.org">
-                                sponsor@mhacks.org
-                            </Link>{' '}
-                        </SectionBody>
-                    </FlexBox2>
-
-                    <FlexBox>
-                        <QuoteWrapper>
-                            <QuoteText>
+                <Container>
+                    <SponsorshipContainer>
+                        <FlexBox2>
+                            <LeftSectionHeader>Sponsorship</LeftSectionHeader>
+                            <SectionBody>
                                 {' '}
-                                “This was one of the most well organized
-                                student-run hackathons that we’ve ever
-                                sponsored.”{' '}
-                            </QuoteText>
-                            <CompanyName>
-                                <CompanyLogo src={GoogleLogo} />
-                            </CompanyName>
-                        </QuoteWrapper>
-                        <QuoteWrapper>
-                            <QuoteText>
+                                MHacks is the gateway between you and the top
+                                tech talent in the world. Whether you come to
+                                network, promote brand awareness, or get
+                                feedback on a product or API, we’ll provide the
+                                tools you need to make the most out of your
+                                experience.{' '}
+                            </SectionBody>
+                            <SectionBody>
                                 {' '}
-                                “The caliber and number of students that MHacks
-                                attracts is like no other hacking event.”{' '}
-                            </QuoteText>
-                            <CompanyName>
-                                <CompanyLogo src={WalmartLogo} />
-                            </CompanyName>
-                        </QuoteWrapper>
-                    </FlexBox>
+                                Interested in sponsoring? Want more information?
+                                Shoot us an email at{' '}
+                                <Link href="mailto:sponsor@mhacks.org">
+                                    sponsor@mhacks.org
+                                </Link>{' '}
+                            </SectionBody>
+                        </FlexBox2>
 
-                    <SponsorLogos />
-                </SponsorshipContainer>
+                        <FlexBox>
+                            <QuoteWrapper>
+                                <QuoteText>
+                                    {' '}
+                                    “This was one of the most well organized
+                                    student-run hackathons that we’ve ever
+                                    sponsored.”{' '}
+                                </QuoteText>
+                                <CompanyName>
+                                    <CompanyLogo src={GoogleLogo} />
+                                </CompanyName>
+                            </QuoteWrapper>
+                            <QuoteWrapper>
+                                <QuoteText>
+                                    {' '}
+                                    “The caliber and number of students that
+                                    MHacks attracts is like no other hacking
+                                    event.”{' '}
+                                </QuoteText>
+                                <CompanyName>
+                                    <CompanyLogo src={WalmartLogo} />
+                                </CompanyName>
+                            </QuoteWrapper>
+                        </FlexBox>
+
+                        <SponsorLogos />
+                    </SponsorshipContainer>
+                </Container>
             </Wrapper>
         );
     }
