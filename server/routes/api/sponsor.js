@@ -11,22 +11,24 @@ var router = require('express').Router(),
     mime = require('mime');
 
 function sortSponsors(sponsors) {
-    var levels = {
-        unobtanium: [],
+    var levels = ['platinum', 'gold', 'silver', 'bronze'];
+
+    var levelsData = {
+        platinum: [],
         gold: [],
         silver: [],
         bronze: []
     };
 
     sponsors.forEach(function(sponsor) {
-        if (sponsor.level in levels) {
-            levels[sponsor.level].push(sponsor);
+        if (sponsor.level in levelsData) {
+            levelsData[sponsor.level].push(sponsor);
         } else {
-            levels[sponsor.level] = [sponsor];
+            levelsData[sponsor.level] = [sponsor];
         }
     });
 
-    return levels;
+    return [levels, levelsData];
 }
 
 router.post(
@@ -95,14 +97,16 @@ router.post(
 );
 
 router.get('/', function(req, res) {
+    var sponsorsList, sponsors;
     authMiddleware('admin', 'api', true, function() {
         Sponsor.find({}, '-logo')
-            .then(sponsors => {
-                sponsors = sortSponsors(sponsors);
+            .then(sponsorsDocs => {
+                [sponsorsList, sponsors] = sortSponsors(sponsorsDocs);
 
                 res.send({
                     status: true,
-                    sponsors: sponsors
+                    sponsors: sponsors,
+                    sponsorsList: sponsorsList
                 });
             })
             .catch(err => {
@@ -114,12 +118,13 @@ router.get('/', function(req, res) {
             });
     })(req, res, function() {
         Sponsor.find({})
-            .then(sponsors => {
-                sponsors = sortSponsors(sponsors);
+            .then(sponsorsDocs => {
+                [sponsorsList, sponsors] = sortSponsors(sponsorsDocs);
 
                 res.send({
                     status: true,
-                    sponsors: sponsors
+                    sponsors: sponsors,
+                    sponsorsList: sponsorsList
                 });
             })
             .catch(err => {

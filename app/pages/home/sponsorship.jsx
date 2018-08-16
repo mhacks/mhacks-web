@@ -148,9 +148,8 @@ class Sponsorship extends React.Component {
                                 </CompanyName>
                             </QuoteWrapper>
                         </FlexBox>
-
-                        <SponsorLogos />
                     </SponsorshipContainer>
+                    <SponsorLogos />
                 </Container>
             </Wrapper>
         );
