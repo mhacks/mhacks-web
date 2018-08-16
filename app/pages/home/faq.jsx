@@ -6,15 +6,14 @@ import { SectionHeader } from './section_components.jsx';
 import { devices } from '../../styles';
 
 const Wrapper = styled.div`
-    background: ${props => props.theme.gradientOverlay}, ${props =>
-    props.theme.primary}
-    padding: 80px 0;
+    background: white;
+    margin: 0 20px;
+    margin-top: -24px;
 `;
 
 const FaqSectionHeader = styled.div`
-    font-size: 20px;
+    font-size: 30px;
     color: ${props => props.theme.highlight};
-    text-decoration: underline;
 `;
 
 const Section = styled.div`
@@ -36,13 +35,18 @@ const ExpandingItemWrapper = styled.div`
 const FlexBox = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    max-width: 80%;
+    margin: 0 auto;
 
     ${devices.tablet`
         flex-direction: row;
     `};
 `;
 
-const FaqColumn = styled.div``;
+const FaqColumn = styled.div`
+    max-width: 50%;
+`;
 
 const FaqBody = styled.div`
     max-width: 75%;
@@ -65,7 +69,7 @@ class Faq extends React.Component {
         return (
             <Wrapper>
                 <Container>
-                    <SectionHeader>FAQ</SectionHeader>
+                    <SectionHeader>Frequently Asked Questions</SectionHeader>
                     <FlexBox>
                         <FaqColumn>
                             <FaqBody>
@@ -122,6 +126,57 @@ class Faq extends React.Component {
                                     />
                                 </Section>
                             </FaqBody>
+
+                            <FaqBody>
+                                <FaqSectionHeader>Hacking</FaqSectionHeader>
+                                <Section>
+                                    <FaqItem
+                                        header="What if I don’t have a team or idea?"
+                                        body="Not to worry, most people don’t! We have some great activities planned before and during the event to help you meet teammates and start thinking through your ideas."
+                                    />
+                                    <FaqItem
+                                        header="What kind of hardware will there be?"
+                                        body="There’ll be tons of cool hardware for you to hack on. We’ll put out a list closer to the event so you can see what’s available.
+                                         You can also feel free to bring your own from home or email us with any suggestions."
+                                    />
+                                </Section>
+                            </FaqBody>
+                            <FaqBody>
+                                <FaqSectionHeader>Help!</FaqSectionHeader>
+                                <Section>
+                                    <FaqItem
+                                        header="I don’t want to hack, I want to ________!"
+                                        body={
+                                            <span>
+                                                If you’re contemplating judging,
+                                                volunteering, or mentoring,
+                                                shoot us an email at{' '}
+                                                <Link href="mailto:hackathon@umich.edu">
+                                                    hackathon@umich.edu
+                                                </Link>. If your company is
+                                                interested in becoming a
+                                                sponsor, check out the
+                                                sponsorship section below.
+                                            </span>
+                                        }
+                                    />
+                                    <FaqItem
+                                        header="I didn’t find my question here..."
+                                        body={
+                                            <span>
+                                                If you’ve got something else on
+                                                your mind, fire it off to{' '}
+                                                <Link href="mailto:hackathon@umich.edu">
+                                                    hackathon@umich.edu
+                                                </Link>!
+                                            </span>
+                                        }
+                                    />
+                                </Section>
+                            </FaqBody>
+                        </FaqColumn>
+
+                        <FaqColumn>
                             <FaqBody>
                                 <FaqSectionHeader>Application</FaqSectionHeader>
                                 <Section>
@@ -170,23 +225,6 @@ class Faq extends React.Component {
                                     />
                                 </Section>
                             </FaqBody>
-                            <FaqBody>
-                                <FaqSectionHeader>Hacking</FaqSectionHeader>
-                                <Section>
-                                    <FaqItem
-                                        header="What if I don’t have a team or idea?"
-                                        body="Not to worry, most people don’t! We have some great activities planned before and during the event to help you meet teammates and start thinking through your ideas."
-                                    />
-                                    <FaqItem
-                                        header="What kind of hardware will there be?"
-                                        body="There’ll be tons of cool hardware for you to hack on. We’ll put out a list closer to the event so you can see what’s available.
-                                         You can also feel free to bring your own from home or email us with any suggestions."
-                                    />
-                                </Section>
-                            </FaqBody>
-                        </FaqColumn>
-
-                        <FaqColumn>
                             <FaqBody>
                                 <FaqSectionHeader>Logistics</FaqSectionHeader>
                                 <Section>
@@ -242,40 +280,6 @@ class Faq extends React.Component {
                                     <FaqItem
                                         header="What shouldn’t I bring?"
                                         body="Weapons of any kind, drugs, or alcohol. If you’re not sure whether something will be okay, please ask ahead of time!"
-                                    />
-                                </Section>
-                            </FaqBody>
-
-                            <FaqBody>
-                                <FaqSectionHeader>Help!</FaqSectionHeader>
-                                <Section>
-                                    <FaqItem
-                                        header="I don’t want to hack, I want to ________!"
-                                        body={
-                                            <span>
-                                                If you’re contemplating judging,
-                                                volunteering, or mentoring,
-                                                shoot us an email at{' '}
-                                                <Link href="mailto:hackathon@umich.edu">
-                                                    hackathon@umich.edu
-                                                </Link>. If your company is
-                                                interested in becoming a
-                                                sponsor, check out the
-                                                sponsorship section below.
-                                            </span>
-                                        }
-                                    />
-                                    <FaqItem
-                                        header="I didn’t find my question here..."
-                                        body={
-                                            <span>
-                                                If you’ve got something else on
-                                                your mind, fire it off to{' '}
-                                                <Link href="mailto:hackathon@umich.edu">
-                                                    hackathon@umich.edu
-                                                </Link>!
-                                            </span>
-                                        }
                                     />
                                 </Section>
                             </FaqBody>

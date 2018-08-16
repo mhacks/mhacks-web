@@ -1,0 +1,35 @@
+/**
+ * @license
+ * MyFonts Webfont Build ID 3619412, 2018-08-06T22:19:20-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: FF DIN Web Pro Regular by FontFont
+ * URL: https://www.myfonts.com/fonts/fontfont/ff-din/pro-regular/
+ * Copyright: 2016 published by Monotype GmbH
+ * 
+ * Webfont: FF DIN Web Pro Medium by FontFont
+ * URL: https://www.myfonts.com/fonts/fontfont/ff-din/pro-medium/
+ * Copyright: 2005 Albert-Jan Pool published by FSI FontShop International GmbH
+ * 
+ * 
+ * License: https://www.myfonts.com/viewlicense?type=web&buildid=3619412
+ * Licensed pageviews: 50,000
+ * 
+ * © 2018 MyFonts Inc
+*/
+
+
+/* @import must be at top of file, otherwise CSS will not work */
+@import url("//hello.myfonts.net/count/373a54");
+
+  
+@font-face {font-family: 'FFDINWebProRegular';src: url('webfonts/373A54_0_0.eot');src: url('webfonts/373A54_0_0.eot?#iefix') format('embedded-opentype'),url('webfonts/373A54_0_0.woff2') format('woff2'),url('webfonts/373A54_0_0.woff') format('woff'),url('webfonts/373A54_0_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'FFDINWebProMedium';src: url('webfonts/373A54_1_0.eot');src: url('webfonts/373A54_1_0.eot?#iefix') format('embedded-opentype'),url('webfonts/373A54_1_0.woff2') format('woff2'),url('webfonts/373A54_1_0.woff') format('woff'),url('webfonts/373A54_1_0.ttf') format('truetype');}
+ 

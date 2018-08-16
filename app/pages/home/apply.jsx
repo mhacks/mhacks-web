@@ -2,44 +2,57 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { routes } from '../../constants';
-import { devices } from '../../styles';
 import { Container } from '../../components';
 import { NavLink } from 'react-router-dom';
-import { SectionHeader, SectionBody } from './section_components.jsx';
+import { SectionHeader } from './section_components.jsx';
+import theme from '../../styles/theme';
 
 const Wrapper = styled.div`
-    background: ${props => props.theme.gradientOverlay}, ${props =>
-    props.theme.primary}
-    padding: 80px 0;
+    background: ${props => props.color};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+`;
+
+const Holder = styled.div`
+    background: white;
+    padding: 10px 0;
 `;
 
 const StyledNavLink = styled(NavLink)`
-    display: inline-block;
-    font-size: 20px;
-    padding: 5px 35px;
-    margin: 0px 15px;
-    border: 2px solid ${props => props.primaryColor};
-    color: ${props => props.primaryColor};
-    border-radius: 5px;
+    font-size: 16px;
+    padding: 2px 20px;
+    margin: 10px 0 10px 15px;
+    border: 2px solid ${props => props.color};
+    color: ${props => props.color};
+    background-color: ${theme.color};
+    border-radius: 25px;
     text-decoration: none;
     transition: all 0.3s;
+    text-transform: uppercase;
 
     &:hover {
-        background-color: ${props => props.primaryColor};
+        background-color: ${props => props.color};
         color: white;
     }
 
-    &:last-child {
+    &:first-child {
         margin: 0;
+        margin-left: 15px;
     }
 `;
 
 const StyledNavLinkWrapper = styled.div`
     text-align: center;
+`;
 
-    ${devices.tablet`
-        text-align: left;
-    `};
+const Dashed = styled.div`
+    position: relative;
+    top: 40px;
+    height: 40px;
+    left: 50%;
+    border-left: 2px solid #444;
 `;
 
 class Apply extends React.Component {
@@ -47,28 +60,26 @@ class Apply extends React.Component {
         return (
             <Wrapper>
                 <Container>
-                    <SectionHeader>Apply</SectionHeader>
-                    <SectionBody>
-                        Apply to MHacks Nano! We will just ask you a couple
-                        quick questions. Nothing long or difficult :)
-                    </SectionBody>
-                    <StyledNavLinkWrapper>
-                        {this.props.userState.data.isLoggedIn ? (
-                            <StyledNavLink
-                                to={routes.APPLY}
-                                primaryColor="white"
-                            >
-                                Apply
-                            </StyledNavLink>
-                        ) : (
-                            <StyledNavLink
-                                to={routes.LOGIN}
-                                primaryColor={this.props.theme.highlight}
-                            >
-                                Log In
-                            </StyledNavLink>
-                        )}
-                    </StyledNavLinkWrapper>
+                    <Holder>
+                        <SectionHeader>
+                            Applications are open now!
+                        </SectionHeader>
+                        <StyledNavLinkWrapper>
+                            {this.props.userState.data.isLoggedIn ? (
+                                <StyledNavLink to={routes.APPLY} color="white">
+                                    Apply
+                                </StyledNavLink>
+                            ) : (
+                                <StyledNavLink
+                                    to={routes.LOGIN}
+                                    color={this.props.theme.highlight}
+                                >
+                                    Log In
+                                </StyledNavLink>
+                            )}
+                        </StyledNavLinkWrapper>
+                        <Dashed />
+                    </Holder>
                 </Container>
             </Wrapper>
         );

@@ -11,7 +11,8 @@ const Header = styled.h3`
     -webkit-margin-after: 0;
     margin-top: 0;
     margin-bottom: 0;
-    color: ${props => props.color};
+    max-width: 80%;
+    color: ${props => props.primary};
     font-size: 18px;
 `;
 
@@ -22,13 +23,15 @@ const Body = styled.p`
     margin-bottom: 5px;
     -webkit-margin-before: 5px;
     -webkit-margin-after: 5px;
-    color: ${props => props.color};
+    color: ${props => props.primary};
     font-size: 15px;
 `;
 
 const Flexbox = styled.div`
     display: flex;
     cursor: pointer;
+    position: relative;
+    width: 100%;
 `;
 
 const Open = keyframes`
@@ -67,42 +70,21 @@ const Slider = styled.div`
     `};
 `;
 
-const PlusWrapper = styled.div`
-    position: relative;
-    display: inline-block;
-    margin: 0;
-    margin-left: 10px;
-    height: 15px;
-    width: 15px;
-    z-index: 10;
-`;
-
-const PlusLine = styled.div`
-    display: inline-block;
-    position: absolute;
-    z-index: -1;
-    background-color: ${props => props.color};
-    height: 10px;
-    width: 2px;
-    top: 4px;
-    transition-duration: 0.3s;
-
-    ${props =>
-        !props.vertical
-            ? `
-        transform: rotate(90deg);
-    `
-            : `
-        transform: rotate(0deg);
-    `};
-`;
-
-const Plus = props => {
+const Chevron = props => {
     return (
-        <PlusWrapper>
-            <PlusLine color={props.color} />
-            <PlusLine color={props.color} vertical={!props.open} />
-        </PlusWrapper>
+        <i
+            className="fas fa-chevron-right"
+            style={{
+                display: 'inline-block',
+                position: 'absolute',
+                right: 0,
+                float: 'right',
+                color: props.color,
+                transition: 'all 0.3s linear',
+                transform: props.open ? 'rotate(90deg)' : 'rotate(0deg)',
+                paddingTop: '3px'
+            }}
+        />
     );
 };
 
@@ -111,7 +93,7 @@ export default class ExpandingItem extends React.Component {
         super();
         this.state = { expanded: false, currentColor: props.colorOff };
         this.handleClick = this.handleClick.bind(this);
-        this.handlePlusColor = this.handlePlusColor.bind(this);
+        this.handleChevronColor = this.handleChevronColor.bind(this);
         this.handleHeaderColor = this.handleHeaderColor.bind(this);
         this.handleBodyColor = this.handleBodyColor.bind(this);
     }
@@ -131,10 +113,10 @@ export default class ExpandingItem extends React.Component {
         }
     }
 
-    handlePlusColor() {
+    handleChevronColor() {
         return this.props.expandColor
             ? this.state.currentColor
-            : this.props.plusColor;
+            : this.props.chevronColor;
     }
 
     handleHeaderColor() {
@@ -153,16 +135,16 @@ export default class ExpandingItem extends React.Component {
         return (
             <Wrapper>
                 <Flexbox onClick={this.handleClick}>
-                    <Plus
-                        color={this.handlePlusColor()}
-                        open={this.state.expanded}
-                    />
-                    <Header color={this.handleHeaderColor()}>
+                    <Header primary={this.handleHeaderColor()}>
+                        <Chevron
+                            color={this.handleChevronColor()}
+                            open={this.state.expanded}
+                        />
                         {this.props.header}
                     </Header>
                 </Flexbox>
                 <Slider open={this.state.expanded}>
-                    <Body color={this.handleBodyColor()}>
+                    <Body primary={this.handleBodyColor()}>
                         {this.props.body}
                     </Body>
                 </Slider>

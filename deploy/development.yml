@@ -12,7 +12,7 @@ services:
       - "3000:3000"
     volumes:
       - ..:/usr/src/app
-    command: sh -c "yarn install && nodemon app.js"
+    command: sh -c "yarn install && nodemon --ignore app/ app.js"
     environment:
       - DEBUG
       - APIWORK

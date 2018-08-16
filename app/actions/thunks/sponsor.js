@@ -8,10 +8,10 @@ export default class SponsorThunks {
             return SponsorRequests.loadSponsors().then(response => {
                 if (response.status === 200) {
                     response.json().then(json => {
-                        const { sponsors } = json;
+                        const { sponsors, sponsorsList } = json;
                         dispatch({
                             type: actions.LOAD_SPONSOR_SUCCESS,
-                            data: sponsors,
+                            data: { sponsors, sponsorsList },
                             message: json.message
                         });
                     });

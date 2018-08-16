@@ -5,9 +5,11 @@ import { Container } from '../components';
 import { devices } from '../styles';
 import { routes } from '../constants';
 
+import MHacksLogo from '../../static/m11/logo.svg';
+
 /* Footer Style */
 const FooterWrapper = styled.div`
-    background-color: ${props => props.theme.secondary};
+    background-color: ${props => props.theme.primary};
 `;
 
 const HomeFooter = styled.footer`
@@ -19,33 +21,16 @@ const HomeFooter = styled.footer`
     flex-wrap: wrap;
 `;
 
-const Text = styled.h2`
-    color: white;
-    font-size: 12px;
-    margin-bottom: 0;
-    text-align: left;
-    flex: 1;
-    text-align: center;
-    min-width: 100%;
-    order: 1;
-
-    ${devices.tablet`
-        text-align: left;
-        text-indent: 50px;
-        min-width: 0;
-        order: 0;
-    `};
-`;
-
 const Flexer = styled.div`
     flex: 1;
+    order: 2;
     position: relative;
     display: flex;
     justify-content: center;
     min-width: 100%;
 
     ${devices.tablet`
-        text-align: left;
+        text-align: right;
         min-width: 0;
 
         ${props => (props.right ? 'justify-content: flex-end;' : '')}
@@ -60,20 +45,30 @@ const ImgButtonWrapper = styled.div`
     display: block;
 `;
 
+const Dot = styled.div`
+    height: 4px;
+    width: 4px;
+    background-color: white;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 7px;
+`;
+
 const LegalLinks = styled.div`
     flex: 1;
     position: relative;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     min-width: 100%;
     text-align: center;
     font-size: 12px;
-    order: 2;
+    order: 0;
     margin-top: 10px;
+    color: white;
 
     ${devices.tablet`
-        text-align: right;
+        text-align: left;
         min-width: 0;
         margin-top: 0;
 
@@ -82,8 +77,8 @@ const LegalLinks = styled.div`
 `;
 
 const LegalLink = styled.a`
-    color: ${props => props.theme.highlight};
     text-decoration: none;
+    color: white;
 `;
 
 const I100 = styled.i`
@@ -107,7 +102,28 @@ class Footer extends React.Component {
                     <FooterWrapper id="asdfFooter">
                         <Container>
                             <HomeFooter>
-                                <Text>© MHacks 2018</Text>
+                                <LegalLinks>
+                                    <LegalLink>© MHacks 2018</LegalLink>
+                                    <Dot />
+                                    <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
+                                        MHacks CoC
+                                    </LegalLink>
+                                    <Dot />
+                                    <LegalLink href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
+                                        MLH CoC
+                                    </LegalLink>
+                                </LegalLinks>
+                                <ImgButtonWrapper
+                                    style={{
+                                        order: 1,
+                                        flex: 1,
+                                        position: 'relative',
+                                        display: 'flex',
+                                        justifyContent: 'center'
+                                    }}
+                                >
+                                    <img src={MHacksLogo} height={30} />
+                                </ImgButtonWrapper>
                                 <Flexer>
                                     <FaButton
                                         className="fab fa-facebook-f fa-2x"
@@ -134,14 +150,6 @@ class Footer extends React.Component {
                                         href="https://blog.mhacks.org"
                                     />
                                 </Flexer>
-                                <LegalLinks>
-                                    <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
-                                        MHacks CoC
-                                    </LegalLink>
-                                    <LegalLink href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
-                                        MLH CoC
-                                    </LegalLink>
-                                </LegalLinks>
                             </HomeFooter>
                         </Container>
                     </FooterWrapper>

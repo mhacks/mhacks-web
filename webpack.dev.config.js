@@ -1,5 +1,7 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 
 var devConfig = {
@@ -58,6 +60,13 @@ var devConfig = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"development"'
         }),
+        new CleanWebpackPlugin(['build/logo-title.png', 'build/logo.png', 'build/fonts', 'build/js', 'build/styles', 'build/index.html']),
+        new CopyWebpackPlugin([
+            { from: './static/icons/x-logo.png', to: './logo.png' },
+            { from: './static/icons/x-logo-title.png', to: './logo-title.png' },
+            { from: './app/favicon/', to: './favicon/'},
+            { from: './app/fonts/', to: './fonts/' },
+        ]),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin()
     ]

@@ -1,6 +1,6 @@
 module.exports = {
     start_server: parseBool(process.env.START_SERVER, true),
-    app_name: process.env.APP_NAME || 'MHacks X',
+    app_name: process.env.APP_NAME || 'MHacks 11',
     start_date: new Date(process.env.START_DATE || '9-22-17'),
     end_date: new Date(process.env.END_DATE || '9-24-17'),
     is_live_page_enabled: parseBool(process.env.IS_LIVE_PAGE_ENABLED, false),
@@ -37,7 +37,7 @@ module.exports = {
         'Reset Your MHacks Password',
     deployment_secret: process.env.DEPLOYMENT_SECRET || 'some_secret',
     deployment_users: (
-        process.env.DEPLOYMENT_USERS || 'antoniomika,konnor,roball'
+        process.env.DEPLOYMENT_USERS || 'antoniomika,konnor,roball,mwilson'
     ).split(','),
     deploy: {
         staging: {
@@ -56,7 +56,7 @@ module.exports = {
         process.env.SLACK_NOTIFICATIONS_CHANNEL || '#notifications',
     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || '',
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || '',
-    AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME || 'mhacks-x',
+    AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME || 'mhacks-11',
     newrelic_enabled: parseBool(process.env.NEWRELIC_ENABLED, false),
     newrelic_license_key: process.env.NEWRELIC_LICENSE_KEY || '',
     newrelic_app_name: process.env.NEWRELIC_APP_NAME || 'mhacks-web',
@@ -74,8 +74,8 @@ module.exports = {
         SUBMIT: 10,
         FILE: 11
     },
-    color_dark: process.env.COLOR_DARK || '#5d3e6e',
-    color_light: process.env.COLOR_LIGHT || '#fafafa',
+    color_dark: process.env.COLOR_DARK || '#D41359',
+    color_light: process.env.COLOR_LIGHT || '#666666',
     push_notifications: {
         enabled: parseBool(process.env.PUSH_NOTIS_ENABLED, false),
         apns: {
@@ -115,7 +115,7 @@ module.exports = {
             process.env.PASSBOOK_BEACON_DESCRIPTION || 'You are near a scanner',
         locations: JSON.parse(
             process.env.PASSBOOK_LOCATION ||
-                '[{"lat":42.291033,"lng":-83.718001,"text":"MHacks X"},{"lat":42.291234,"lng":-83.716693,"text":"MHacks X"},{"lat":42.291841,"lng":-83.714762,"text":"MHacks X"}]'
+                '[{"lat":42.291033,"lng":-83.718001,"text":"MHacks 11"},{"lat":42.291234,"lng":-83.716693,"text":"MHacks 11"},{"lat":42.291841,"lng":-83.714762,"text":"MHacks 11"}]'
         ),
         date: process.env.PASSBOOK_DATE || 'September 22-24',
         pass_type: process.env.PASSBOOK_PASS_TYPE || 'pass.com.MHacks.UserPass'

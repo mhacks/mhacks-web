@@ -9,8 +9,8 @@ const StyledSectionBody = styled(SectionBody)`
 `;
 
 const Container = styled.div`
-    background: ${props => props.theme.gradientOverlay}, ${props =>
-    props.theme.primary}
+    background: ${props => props.theme.gradientOverlay},
+        ${props => props.theme.primary};
     padding: 10px;
 `;
 
