@@ -133,7 +133,8 @@ router.post(
     uploadHelper.fields([
         { name: 'logo' },
         { name: 'avatar' },
-        { name: 'resume' }
+        { name: 'resume' },
+        { name: 'floor_image' }
     ]),
     function(req, res) {
         const Model = models[req.params.model];
@@ -154,6 +155,12 @@ router.post(
             req.body.resume =
                 req.files.resume[0].location ||
                 '/uploads/' + req.files.resume[0].filename;
+        }
+
+        if (req.files && req.files.floor_image) {
+            req.body.floor_image =
+                req.files.floor_image[0].location ||
+                '/uploads/' + req.files.floor_image[0].filename;
         }
 
         if (Model === undefined) {
