@@ -60,10 +60,11 @@ var devConfig = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"development"'
         }),
-        new CleanWebpackPlugin(['build/logo-title.png', 'build/logo.png', 'build/fonts', 'build/js', 'build/styles', 'build/index.html']),
+        new CleanWebpackPlugin(['build/logo-title.png', 'build/logo.png', 'build/logo-media.png', 'build/fonts', 'build/js', 'build/styles', 'build/index.html']),
         new CopyWebpackPlugin([
             { from: './static/m11/favicon.png', to: './logo.png' },
             { from: './static/m11/logo.png', to: './logo-title.png' },
+            { from: './static/m11/media.png', to: './logo-media.png' },
             { from: './app/favicon/', to: './favicon/'},
             { from: './app/fonts/', to: './fonts/' },
         ]),

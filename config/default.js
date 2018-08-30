@@ -100,10 +100,10 @@ module.exports = {
         description: process.env.PASSBOOK_DESCRIPTION || 'MHacks Ticket',
         logo_url:
             process.env.PASSBOOK_LOGO_URL ||
-            '/usr/src/app/static/icons/x-logo.png',
+            '/usr/src/app/static/m11/media.png',
         logo_title_url:
             process.env.PASSBOOK_LOGO_TITLE_URL ||
-            '/usr/src/app/static/icons/x-logo-title.png',
+            '/usr/src/app/static/m11/media.png',
         team_id: process.env.PASSBOOK_TEAM_ID || '478C74MJ7T',
         organization_name: process.env.PASSBOOK_ORGANIZATION_NAME || 'MHacks',
         label_color: process.env.PASSBOOK_LABEL_TEXT || 'rgba(0, 0, 0, 0.6)',

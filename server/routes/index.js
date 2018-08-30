@@ -10,6 +10,10 @@ router.get('/logo-title.png', function(req, res) {
     res.sendFile(path.join(__dirname, '../../build/logo-title.png'));
 });
 
+router.get('/logo-media.png', function(req, res) {
+    res.sendFile(path.join(__dirname, '../../build/logo-media.png'));
+});
+
 router.use('/portal', portalHandler);
 
 module.exports = router;
