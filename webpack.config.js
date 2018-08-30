@@ -129,8 +129,8 @@ let buildConfig = {
         new CleanWebpackPlugin(['build/logo-title.png', 'build/logo.png', 'build/fonts', 'build/js', 'build/styles', 'build/index.html']),
         cssExtractor,
         new CopyWebpackPlugin([
-            { from: './static/icons/x-logo.png', to: './logo.png' },
-            { from: './static/icons/x-logo-title.png', to: './logo-title.png' },
+            { from: './static/m11/favicon.png', to: './logo.png' },
+            { from: './static/m11/logo.png', to: './logo-title.png' },
             {context: './app/favicon/', from: '**/*', to: './favicon/'},
             {context: './app/fonts/', from: '**/*', to: './fonts/'}
         ]),
