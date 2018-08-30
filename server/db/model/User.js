@@ -119,7 +119,8 @@ var schema = new mongoose.Schema(
                         }
                     ],
                     label: 'University',
-                    placeholder: 'e.g. University of Michigan'
+                    placeholder: 'e.g. University of Michigan',
+                    creatable: true
                 }
             },
             universities: {
@@ -149,7 +150,8 @@ var schema = new mongoose.Schema(
                         }
                     ],
                     label: 'Major',
-                    placeholder: 'e.g. Computer Science'
+                    placeholder: 'e.g. Computer Science',
+                    creatable: true
                 }
             },
             majors: {

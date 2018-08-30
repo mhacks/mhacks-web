@@ -21,7 +21,7 @@ const Wrapper = styled.div`
     height: 100%;
     border-radius: 20px;
     padding: 20px;
-    background: ${props => props.theme.generateBackgroundGradient(45, 0.2)};
+    background: ${props => props.theme.generateBackgroundGradient(45, 0.2, props.theme.highlightOpposite, props.theme.highlightSecondaryOpposite)};
 `;
 
 const ListHeader = styled.h3`

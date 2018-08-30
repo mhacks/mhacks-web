@@ -538,6 +538,11 @@ class MHForm extends React.Component {
                                                   ].loader
                                                 : null
                                         }
+                                        selectComponent={
+                                            field.creatable
+                                                ? Creatable
+                                                : undefined
+                                        }
                                     />,
                                     hasError
                                 );

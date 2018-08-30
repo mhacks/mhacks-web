@@ -63,7 +63,7 @@ class Apply extends React.Component {
                     deactivate();
                     this.removeNotification(key);
                 },
-                dismissAfter: 5000
+                dismissAfter: 100000000000000
             })
         });
     }
@@ -181,6 +181,9 @@ class Apply extends React.Component {
                             )
                         })
                     }
+                    barStyleFactory={function() {
+                        return {'z-index': 10000}
+                    }}
                 />
             </PageContainer>
         );
