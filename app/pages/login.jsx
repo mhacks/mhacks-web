@@ -52,7 +52,7 @@ const LegalText = styled.p`
 `;
 
 const LegalLink = styled.a`
-    color: ${props => props.theme.highlight};
+    color: ${props => props.theme.primary};
     text-decoration: none;
 `;
 
