@@ -41,8 +41,7 @@ class ModelForm extends React.Component {
                 onClick: (notification, deactivate) => {
                     deactivate();
                     this.removeNotification(key);
-                },
-                dismissAfter: 5000
+                }
             })
         });
     }
@@ -149,6 +148,15 @@ class ModelForm extends React.Component {
                                 )
                             })
                         }
+                        activeBarStyleFactory={(index, style) => {
+                            return Object.assign(
+                                {},
+                                style,
+                                { bottom: `${2 + index * 4}rem` },
+                                { zIndex: 10000 }
+                            );
+                        }}
+                        dismissAfter={5000}
                     />
                 </FormContainer>
             </PagePulled>
