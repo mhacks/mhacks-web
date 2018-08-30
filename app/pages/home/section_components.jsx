@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { devices } from '../../styles';
+import theme from '../../styles/theme';
 
 const CenteredContainer = styled.div`
     display: flex;
@@ -22,9 +23,17 @@ const CenteredContainer = styled.div`
 `;
 
 const SectionHeader = styled.h2`
-    font-size: 28px;
-    color: ${props => props.theme.highlight};
+    display: block;
+    font-size: 48px;
+    font-weight: 900;
+    min-width: 100%;
     text-align: center;
+    color: ${theme.highlightOpposite};
+    padding-top: 50px;
+
+    ${devices.tiny`
+        font-size: 32px;
+    `};
 `;
 
 const SectionBody = styled.p`

@@ -11,8 +11,8 @@ const FaqItem = props => (
     <ExpandingItem
         {...props}
         expandColor
-        colorOn={props => props.theme.highlightSecondary}
-        colorOff={props => props.theme.highlight}
+        colorOn={props => props.theme.highlight}
+        colorOff={props => props.theme.highlightSecondary}
     />
 );
 
@@ -59,22 +59,22 @@ class TravelTicketSection extends React.Component {
     renderTravelInfo() {
         return (
             <p>
-                Please plan to arrive in Ann Arbor before 6pm on Friday,
-                September 22nd. Registration will begin at 4pm and end at 6pm.
-                Late registration will be available at the Help Desk. Closing
-                Ceremonies will last until about 5pm on Sunday, September 24th.{' '}
+                Please plan to arrive in Ann Arbor before 6pm on Friday, October
+                12th. Registration will begin at 4pm and end at 6pm. Late
+                registration will be available at the Help Desk. Closing
+                Ceremonies will last until about 5pm on Sunday, October 14th.{' '}
                 <br /> <br />
                 <strong>MHacks Buses</strong>: We will be sending buses to
                 several campuses across the nation, stay tuned for more details
                 in the coming weeks. <br /> <br />
                 <strong>Flying</strong>: MHacks airport shuttles will pickup
-                from DTW at 2:30pm and 4pm on Friday, September 22nd. Airport
-                shuttles will leave from Ann Arbor at 6pm on Sunday, September
-                24th. Please book flights accordingly so that you can ride one
+                from DTW at 2:30pm and 4pm on Friday, October 12th. Airport
+                shuttles will leave from Ann Arbor at 6pm on Sunday, October
+                14th. Please book flights accordingly so that you can ride one
                 of the shuttles - travel between the airport and Ann Arbor will
                 not be reimbursed. <br /> <br />
                 <strong>Driving</strong>: Free parking will be available after
-                4pm on Friday, September 22nd first-come first-serve at parking
+                4pm on Friday, October 12th first-come first-serve at parking
                 lots on campus.
             </p>
         );
@@ -93,8 +93,8 @@ class TravelTicketSection extends React.Component {
                     flymhacks@umich.edu with any relevant receipts, ticket
                     confirmations, etc. within 5 days of application acceptance.{' '}
                     <br /> <br />If you are driving, please indicate as such on
-                    the confirmation form - you will have until September 30th
-                    to send a single email to flymhacks@umich.edu with all costs
+                    the confirmation form - you will have until October 30th to
+                    send a single email to flymhacks@umich.edu with all costs
                     you would like to be reimbursed for. <br /> <br />
                     If you need a time extension on the deadline, please email
                     us at flymhacks@umich.edu. We have many other hackers on our

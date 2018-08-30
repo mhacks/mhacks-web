@@ -6,6 +6,7 @@ injectGlobal`
 body {
     margin: 0px;
     font-family: ${Theme.primaryFont}, sans-serif;
+    font-weight: bold;
     font-size: 14px;
     line-height: 1.42857143;
 }

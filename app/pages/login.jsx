@@ -129,7 +129,7 @@ class Login extends React.Component {
                                 onClick: this.tabSelect
                             },
                             {
-                                title: 'Log In',
+                                title: 'Login',
                                 onClick: this.tabSelect
                             }
                         ]}

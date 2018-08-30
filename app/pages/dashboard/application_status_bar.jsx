@@ -25,14 +25,14 @@ const VerticalLine = styled.div`
 
 const Header = styled.h2`
     font-size: 20px;
-    color: ${props => props.theme.highlightSecondary};
+    color: ${props => props.theme.highlight};
     font-weight: thin;
 `;
 
 const StatusText = styled.h2`
     font-size: 20px;
     text-transform: uppercase;
-    color: ${props => props.theme.highlightSecondary};
+    color: ${props => props.theme.highlight};
 `;
 
 const FlexBox = styled.div`

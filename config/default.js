@@ -1,8 +1,8 @@
 module.exports = {
     start_server: parseBool(process.env.START_SERVER, true),
     app_name: process.env.APP_NAME || 'MHacks 11',
-    start_date: new Date(process.env.START_DATE || '9-22-17'),
-    end_date: new Date(process.env.END_DATE || '9-24-17'),
+    start_date: new Date(process.env.START_DATE || '10-12-18'),
+    end_date: new Date(process.env.END_DATE || '10-14-18'),
     is_live_page_enabled: parseBool(process.env.IS_LIVE_PAGE_ENABLED, false),
     is_application_open: parseBool(process.env.IS_APPLICATION_OPEN, true),
     env: process.env.NODE_ENV || 'development',
@@ -115,9 +115,9 @@ module.exports = {
             process.env.PASSBOOK_BEACON_DESCRIPTION || 'You are near a scanner',
         locations: JSON.parse(
             process.env.PASSBOOK_LOCATION ||
-                '[{"lat":42.291033,"lng":-83.718001,"text":"MHacks 11"},{"lat":42.291234,"lng":-83.716693,"text":"MHacks 11"},{"lat":42.291841,"lng":-83.714762,"text":"MHacks 11"}]'
+                '[{"lat":42.2693618,"lng":-83.7446532,"text":"MHacks 11"},{"lat":42.2693618,"lng":-83.7446532,"text":"MHacks 11"},{"lat":42.2693618,"lng":-83.7446532,"text":"MHacks 11"}]'
         ),
-        date: process.env.PASSBOOK_DATE || 'September 22-24',
+        date: process.env.PASSBOOK_DATE || 'October 12-14',
         pass_type: process.env.PASSBOOK_PASS_TYPE || 'pass.com.MHacks.UserPass'
     },
     admin_name: process.env.ADMIN_NAME || 'Administrator',

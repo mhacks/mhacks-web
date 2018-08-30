@@ -121,7 +121,7 @@ class EditProfile extends React.Component {
                         another one by clicking{' '}
                         <Link
                             onClick={this.onClickRequestEmailVerification}
-                            color={this.props.theme.highlight}
+                            color={this.props.theme.primary}
                         >
                             here
                         </Link>. After you verify your email you can continue

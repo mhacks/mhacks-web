@@ -20,7 +20,9 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
 
-    ${devices.tablet`
+    ${devices.tiny`
+        margin-top: 160px;
+    `} ${devices.tablet`
         width: calc(100% - 100px);
     `} ${devices.desktop`
         width: calc(100% - 140px);
@@ -68,6 +70,7 @@ const MLHBanner = styled.a`
 
 const MLHBannerImage = styled.img`
     width: 100%;
+    max-width: 84px;
 `;
 
 class Landing extends React.Component {
@@ -86,8 +89,10 @@ class Landing extends React.Component {
                 <Container>
                     <LogoText>MHACKS 11</LogoText>
                     <OverlayDiv>
-                        <Text>TBAMONTH TBADATE1-TBADATE2</Text> {/* TODO */}
-                        <Text>TBALOCATION</Text> {/* TODO */}
+                        <Text>October 12th-14th</Text>
+                        <Text>
+                            University of Michigan - Intramural Sports Building
+                        </Text>
                     </OverlayDiv>
                 </Container>
             </Wrapper>

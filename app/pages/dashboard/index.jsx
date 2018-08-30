@@ -83,7 +83,7 @@ class Dashboard extends React.Component {
                         by clicking{' '}
                         <Link
                             onClick={this.onClickRequestEmailVerification}
-                            color={this.props.theme.highlight}
+                            color={this.props.theme.primary}
                         >
                             here
                         </Link>. After you verify your email you can continue

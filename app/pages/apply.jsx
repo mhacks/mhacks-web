@@ -33,7 +33,7 @@ const LegalText = styled.p`
 `;
 
 const LegalLink = styled.a`
-    color: ${props => props.theme.highlight};
+    color: ${props => props.theme.primary};
     text-decoration: none;
 `;
 
@@ -149,10 +149,11 @@ class Apply extends React.Component {
                             Apply for{' '}
                             {this.props.configurationState.data.app_name}!{' '}
                             {this.props.configurationState.data.app_name} will
-                            be held on the University of Michigan's North Campus
-                            in Ann Arbor from September 22nd to 24th. If you
-                            already have teammates in mind, include their names
-                            and emails in the "anything else" question.
+                            be held on the University of Michigan's Intramural
+                            Sports Building in Ann Arbor from October 12th to
+                            14th. If you already have teammates in mind, include
+                            their names and emails in the "anything else"
+                            question.
                         </Subhead>
 
                         <LegalText>

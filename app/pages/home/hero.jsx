@@ -32,17 +32,18 @@ const HeroContainer = styled.div`
 const LeftSideContainer = styled.div`
     order: -1;
     ${devices.desktop`
-        width: calc(40% - 20px);
+        width: 60%;
         float: left;
     `};
 `;
 
 const Text = styled.h2`
-    font-size: 22px;
+    font-size: 42px;
+    font-weight: 900;
     margin-bottom: 0;
     text-align: center;
     ${devices.desktop`
-        font-size: 28px;
+        font-size: 42px;
         margin: -50px 15px 25px 0;
         text-align: left;
     `};
@@ -50,11 +51,11 @@ const Text = styled.h2`
 
 const SubText = styled.h2`
     font-size: 14px;
-    text-align: center;
+    text-align: left;
+    line-height: 35px;
     ${devices.desktop`
         font-size: 18px;
         margin: 0px 15px 25px 0;
-        text-align: left;
     `};
 `;
 

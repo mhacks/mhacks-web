@@ -2,9 +2,15 @@ import { css } from 'styled-components';
 
 // device media queries for non-mobile -- design mobile first
 export default {
+    tiny: (...args) =>
+        css`
+            @media (min-width: 192px) {
+                ${css(...args)};
+            }
+        `,
     small: (...args) =>
         css`
-            @media (min-width: 480px) {
+            @media (min-width: 576px) {
                 ${css(...args)};
             }
         `,

@@ -1,6 +1,15 @@
 // Generators
-function generateBackgroundGradient(angle, alpha) {
-    return `-webkit-linear-gradient(${angle}deg, rgba(240,47,23,${alpha}) 0%, rgba(246,41,12,${alpha}) 0%, rgba(241,111,92,${alpha}) 0%, rgba(253,177,154,${alpha}) 0%, rgba(197,99,250,${alpha}) 100%)`;
+function generateBackgroundGradient(angle, alpha, primary, secondary) {
+    return `-webkit-linear-gradient(${angle}deg, ${hexToRgbA(
+        primary,
+        alpha
+    )} 0%, ${hexToRgbA(secondary, alpha)} 0%, ${hexToRgbA(
+        primary,
+        alpha
+    )} 0%, ${hexToRgbA(secondary, alpha)} 0%, ${hexToRgbA(
+        primary,
+        alpha
+    )} 100%)`;
 }
 
 function hexToRgbA(hex, opq) {
@@ -28,13 +37,13 @@ let theme = {
     primaryFont: 'FFDINWebProRegular',
     primary: '#D41359',
     secondary: '#B22752',
-    highlight: '#666666',
-    highlightSecondary: '#333333',
+    highlight: '#ffffff',
+    highlightSecondary: '#999999',
+    highlightOpposite: '#333333',
+    highlightSecondaryOpposite: '#666666',
     success: '#2ecc71',
     teal: '#1CA3A3',
     darkPink: '#CA2171',
-    backgroundGradient: generateBackgroundGradient(45, 1.0),
-    reverseBackgroundGradient: generateBackgroundGradient(135, 1.0),
 
     // Font sizes
     headerFontSize: '50px',
@@ -48,5 +57,18 @@ theme.gradientOverlay = `-webkit-linear-gradient(left, ${hexToRgbA(
     theme.secondary,
     0.4
 )} 0%, ${hexToRgbA(theme.primary, 0.4)} 100%)`;
+
+theme.backgroundGradient = generateBackgroundGradient(
+    45,
+    1.0,
+    theme.highlightOpposite,
+    theme.highlightSecondaryOpposite
+);
+theme.reverseBackgroundGradient = generateBackgroundGradient(
+    135,
+    1.0,
+    theme.highlightOpposite,
+    theme.highlightSecondaryOpposite
+);
 
 export default theme;

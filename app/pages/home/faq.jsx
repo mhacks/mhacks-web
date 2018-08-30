@@ -8,12 +8,12 @@ import { devices } from '../../styles';
 const Wrapper = styled.div`
     background: white;
     margin: 0 20px;
-    margin-top: -24px;
+    margin-top: -28px;
 `;
 
 const FaqSectionHeader = styled.div`
     font-size: 30px;
-    color: ${props => props.theme.highlight};
+    color: ${props => props.theme.highlightOpposite};
 `;
 
 const Section = styled.div`
@@ -24,19 +24,19 @@ const Section = styled.div`
 `;
 
 const Link = styled.a`
-    color: ${props => props.theme.highlight};
+    color: ${props => props.theme.highlightOpposite};
     text-decoration: none;
 `;
 
 const ExpandingItemWrapper = styled.div`
-    margin-top: 5px;
+    margin-top: 40px;
 `;
 
 const FlexBox = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    max-width: 80%;
+    max-width: 90%;
     margin: 0 auto;
 
     ${devices.tablet`
@@ -45,7 +45,11 @@ const FlexBox = styled.div`
 `;
 
 const FaqColumn = styled.div`
-    max-width: 50%;
+    max-width: 100%;
+
+    ${devices.tablet`
+        max-width: 50%;
+    `};
 `;
 
 const FaqBody = styled.div`
@@ -58,8 +62,8 @@ const FaqItem = props => (
         <ExpandingItem
             {...props}
             expandColor
-            colorOn={props => props.theme.highlightSecondary}
-            colorOff={props => props.theme.highlight}
+            colorOn={props => props.theme.highlightSecondaryOpposite}
+            colorOff={props => props.theme.highlightOpposite}
         />
     </ExpandingItemWrapper>
 );
@@ -193,8 +197,8 @@ class Faq extends React.Component {
                                     />
                                     <FaqItem
                                         header="When are applications closing?"
-                                        body="Applications will be evaluated on a rolling basis until Monday, September 4th. Space fills up quickly, so apply early!
-                                     &#10;To be eligible for a Travel Reimbursement, you will need to apply latest by Monday, August 14th, no exceptions will
+                                        body="Applications will be evaluated on a rolling basis. Space fills up quickly, so apply early!
+                                     &#10;To be eligible for a Travel Reimbursement, you will need to apply ASAP, no exceptions will
                                       be made. You are eligible for a Travel Reimbursement if there are no MHacks Buses nearby your location and it costs you money
                                       to get to MHacks.&#10;"
                                     />

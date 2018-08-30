@@ -15,8 +15,9 @@ const Wrapper = styled.div`
 `;
 
 const SectionBody = styled.p`
-    color: ${theme.secondary};
-    font-size: 16px;
+    color: ${theme.highlightOpposite};
+    line-height: 30px;
+    font-size: 22px;
     max-width: 600px;
 `;
 
@@ -24,14 +25,11 @@ const FlexBox = styled.div`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    max-width: 640px;
-`;
+    max-width: 100%;
 
-const FlexBox2 = styled.div`
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    max-width: 640px;
+    ${devices.tablet`
+        max-width: 50%;
+    `};
 `;
 
 const QuoteWrapper = styled.div`
@@ -45,13 +43,13 @@ const QuoteWrapper = styled.div`
 `;
 
 const QuoteText = styled.div`
-    color: ${theme.highlight};
+    color: ${theme.primary};
     font-size: ${theme.fontSize};
     text-align: left;
 `;
 
 const CompanyName = styled.div`
-    color: ${theme.highlight};
+    color: ${theme.primary};
     font-size: ${theme.fontSize};
     text-align: right;
 `;
@@ -70,7 +68,7 @@ const SponsorshipContainer = styled.div`
     display: flex;
     flex-direction: column;
     overflow: visible;
-    margin: 0px 60px;
+    margin: 0px 20px;
 
     ${devices.tablet`
         padding: 75px 0;
@@ -83,18 +81,12 @@ const Container = styled.div`
     width: calc(100% - 60px);
     max-width: 1200px;
     margin: 0 auto;
-
-    ${devices.tablet`
-        width: calc(100% - 100px);
-    `} ${devices.desktop`
-        width: calc(100% - 140px);
-    `} ${devices.giant`
-        width: calc(100% - 160px);
-    `};
 `;
 
 const LeftSectionHeader = styled(SectionHeader)`
-    text-align: left;
+    ${devices.desktop`
+        text-align: left;
+    `};
 `;
 
 class Sponsorship extends React.Component {
@@ -103,7 +95,7 @@ class Sponsorship extends React.Component {
             <Wrapper>
                 <Container>
                     <SponsorshipContainer>
-                        <FlexBox2>
+                        <FlexBox>
                             <LeftSectionHeader>Sponsorship</LeftSectionHeader>
                             <SectionBody>
                                 {' '}
@@ -122,7 +114,7 @@ class Sponsorship extends React.Component {
                                     sponsor@mhacks.org
                                 </Link>{' '}
                             </SectionBody>
-                        </FlexBox2>
+                        </FlexBox>
 
                         <FlexBox>
                             <QuoteWrapper>

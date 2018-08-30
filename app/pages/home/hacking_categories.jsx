@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { devices } from '../../styles';
+import theme from '../../styles/theme';
 
 const Images = {
     'AI/ML': require('../../../static/m11/cortices/ai.svg'),
@@ -36,11 +37,11 @@ const Container = styled.div`
 const SectionHeader = styled.h2`
     display: block;
     font-size: 48px;
-    text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 900;
     margin: 0px 20px 20px 20px;
     min-width: 100%;
     text-align: center;
+    color: ${theme.highlightOpposite};
 `;
 
 const Flexbox = styled.div`
@@ -58,6 +59,7 @@ const Flex1 = styled.div`
     width: calc(25% - 40px);
     margin: 20px;
     margin-bottom: 40px;
+    flex-basis: 20%;
 `;
 
 const Img100 = styled.img`
@@ -71,6 +73,7 @@ const Caption = styled.p`
     display: block;
     font-size: 16px;
     text-align: center;
+    color: ${theme.primary};
 `;
 
 class HackingCategories extends React.Component {

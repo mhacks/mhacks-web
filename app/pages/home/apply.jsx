@@ -18,12 +18,12 @@ const Wrapper = styled.div`
 const Holder = styled.div`
     background: white;
     padding: 10px 0;
+    margin: 0px 10%;
 `;
 
 const StyledNavLink = styled(NavLink)`
     font-size: 16px;
-    padding: 2px 20px;
-    margin: 10px 0 10px 15px;
+    padding: 10px 60px;
     border: 2px solid ${props => props.color};
     color: ${props => props.color};
     background-color: ${theme.color};
@@ -36,23 +36,19 @@ const StyledNavLink = styled(NavLink)`
         background-color: ${props => props.color};
         color: white;
     }
-
-    &:first-child {
-        margin: 0;
-        margin-left: 15px;
-    }
 `;
 
 const StyledNavLinkWrapper = styled.div`
     text-align: center;
+    padding-top: 20px;
 `;
 
 const Dashed = styled.div`
     position: relative;
     top: 40px;
-    height: 40px;
-    left: 50%;
-    border-left: 2px solid #444;
+    height: 60px;
+    left: 50%
+    border-left: 1px solid ${theme.highlightSecondary};
 `;
 
 class Apply extends React.Component {
@@ -66,15 +62,18 @@ class Apply extends React.Component {
                         </SectionHeader>
                         <StyledNavLinkWrapper>
                             {this.props.userState.data.isLoggedIn ? (
-                                <StyledNavLink to={routes.APPLY} color="white">
+                                <StyledNavLink
+                                    to={routes.APPLY}
+                                    color={this.props.theme.primary}
+                                >
                                     Apply
                                 </StyledNavLink>
                             ) : (
                                 <StyledNavLink
                                     to={routes.LOGIN}
-                                    color={this.props.theme.highlight}
+                                    color={this.props.theme.primary}
                                 >
-                                    Log In
+                                    Login
                                 </StyledNavLink>
                             )}
                         </StyledNavLinkWrapper>
