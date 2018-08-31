@@ -119,7 +119,8 @@ var schema = new mongoose.Schema(
                         }
                     ],
                     label: 'University',
-                    placeholder: 'e.g. University of Michigan'
+                    placeholder: 'e.g. University of Michigan',
+                    creatable: true
                 }
             },
             universities: {
@@ -149,7 +150,8 @@ var schema = new mongoose.Schema(
                         }
                     ],
                     label: 'Major',
-                    placeholder: 'e.g. Computer Science'
+                    placeholder: 'e.g. Computer Science',
+                    creatable: true
                 }
             },
             majors: {
@@ -755,10 +757,41 @@ var passwordMiddleware = function(next) {
         });
 };
 
+var updateApp = function(next) {
+    var user = this;
+    var fields = ['university', 'major'];
+
+    var modified = false;
+    fields.forEach(function(data) {
+        if (user.isModified(data)) modified = true;
+    });
+
+    if (!modified) return next();
+    if (!user.application_submitted) return next();
+
+    mongoose
+        .model('Application')
+        .find()
+        .byUser(this)
+        .then(application => {
+            if (application) {
+                fields.forEach(function(field) {
+                    application[field] = user[field];
+                });
+
+                application.save();
+            }
+            next();
+        });
+};
+
 // Set the update middleware on each of the document save and update events
 schema.pre('save', passwordMiddleware);
+schema.pre('save', updateApp);
 schema.pre('findOneAndUpdate', passwordMiddleware);
+schema.pre('findOneAndUpdate', updateApp);
 schema.pre('update', passwordMiddleware);
+schema.pre('update', updateApp);
 
 schema.plugin(sanitizerPlugin);
 

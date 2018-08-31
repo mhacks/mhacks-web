@@ -103,7 +103,7 @@ class MHForm extends React.Component {
 
         for (const key in nextProps.schema) {
             const fieldType = nextProps.schema[key].type;
-            const defaultValue = this.getFieldDefault(
+            let defaultValue = this.getFieldDefault(
                 key,
                 nextProps.schema,
                 nextProps.initialData
@@ -142,6 +142,11 @@ class MHForm extends React.Component {
                                 return response.json();
                             })
                             .then(json => {
+                                if (defaultValue.indexOf('/v1/') === 0) {
+                                    defaultValue = '';
+                                    editedObject[key] = defaultValue;
+                                }
+
                                 const cachedLoaders = {};
 
                                 cachedLoaders[key] = {};
@@ -149,14 +154,19 @@ class MHForm extends React.Component {
                                     json.form[
                                         options[0].label.split('/').pop()
                                     ].select;
+
+                                let pulledOptions =
+                                    json.form[options[0].label.split('/').pop()]
+                                        .select;
+
+                                pulledOptions.push({
+                                    label: defaultValue,
+                                    value: defaultValue
+                                });
+
                                 cachedLoaders[key].loader = createFilterOptions(
                                     {
-                                        options:
-                                            json.form[
-                                                options[0].label
-                                                    .split('/')
-                                                    .pop()
-                                            ].select
+                                        options: pulledOptions
                                     }
                                 );
 
@@ -452,9 +462,17 @@ class MHForm extends React.Component {
                     } else {
                         formatted[key] = formData[key];
                     }
+
+                    if (formatted[key].indexOf('/v1/') === 0) {
+                        formatted[key] = '';
+                    }
                     break;
                 case this.FieldTypes.ARRAY:
+                    if (!Array.isArray(formData[key])) {
+                        formData[key] = formData[key].split(' ');
+                    }
                     formatted[key] = formData[key].map(obj => obj.value);
+                    break;
             }
         }
 
@@ -536,7 +554,12 @@ class MHForm extends React.Component {
                                                 ? this.state.cachedLoaders[
                                                       field.key
                                                   ].loader
-                                                : null
+                                                : undefined
+                                        }
+                                        selectComponent={
+                                            field.creatable
+                                                ? Creatable
+                                                : undefined
                                         }
                                     />,
                                     hasError
