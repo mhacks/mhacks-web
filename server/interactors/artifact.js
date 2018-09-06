@@ -33,7 +33,8 @@ module.exports = function(email, type, application, artifactOverride, url) {
                 .then(user => {
                     if (user) {
                         if (application) {
-                            Application.findOne({ user: email })
+                            Application.find()
+                                .byUser(user)
                                 .then(application => {
                                     if (type in application) {
                                         var url = application[type] || '';

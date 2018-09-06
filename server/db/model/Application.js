@@ -312,6 +312,7 @@ var schema = new mongoose.Schema(
                     {
                         key: 'status',
                         enum: false,
+                        default: undefined,
                         form: {
                             label: 'Status',
                             auth_groups: ['admin', 'reader'],
@@ -329,6 +330,7 @@ var schema = new mongoose.Schema(
                     {
                         key: 'needs_reimbursement',
                         label: 'Needs Reimbursement',
+                        default: undefined,
                         auth_groups: ['admin', 'reader']
                     },
                     {
