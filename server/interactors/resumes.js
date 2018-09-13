@@ -139,7 +139,8 @@ function downloadS3ApplicationsZip(resolve, reject) {
                     users.forEach(function(user) {
                         applications.forEach(function(application) {
                             if (
-                                user.email !== application.user ||
+                                user.id.toString() !==
+                                    application.user.toString() ||
                                 !application.resume
                             ) {
                                 return;
