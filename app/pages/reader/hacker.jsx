@@ -277,17 +277,17 @@ class ReaderPage extends React.Component {
             }
 
             if (
-                (needs_reimbursement !== '' &&
-                    (needs_reimbursement &&
-                        !application.needs_reimbursement)) ||
-                (!needs_reimbursement && application.needs_reimbursement)
+                needs_reimbursement !== '' &&
+                ((needs_reimbursement && !application.needs_reimbursement) ||
+                    (!needs_reimbursement && application.needs_reimbursement))
             ) {
                 return false;
             }
 
             if (
-                (minor !== '' && (minor && !isMinor(application.birthday))) ||
-                (!minor && isMinor(application.birthday))
+                minor !== '' &&
+                ((minor && !isMinor(application.birthday)) ||
+                    (!minor && isMinor(application.birthday)))
             ) {
                 return false;
             }
