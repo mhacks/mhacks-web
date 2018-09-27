@@ -44,7 +44,7 @@ const models = {
     Devices: Device,
     PushNotifications: PushNotification,
 
-    Shortener: Shortener
+    Shorteners: Shortener
 };
 
 router.get('/model', function(req, res) {
