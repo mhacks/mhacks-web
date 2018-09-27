@@ -83,7 +83,8 @@ var schema = new mongoose.Schema(
                     user_editable: true,
                     label: 'Password',
                     placeholder: 'hunter2'
-                }
+                },
+                select: false
             },
             tokens: [
                 {
@@ -697,33 +698,40 @@ schema.methods.getProfile = function() {
             .find()
             .byUser(this)
             .then(application => {
-                const {
-                    status,
-                    needs_reimbursement,
-                    reimbursement,
-                    university,
-                    major,
-                    experience
-                } = application;
+                if (application) {
+                    const {
+                        status,
+                        needs_reimbursement,
+                        reimbursement,
+                        university,
+                        major,
+                        experience
+                    } = application;
 
-                profile.application_submitted = true;
-                profile.status = status;
-                profile.needs_reimbursement = needs_reimbursement;
-                profile.reimbursement = reimbursement;
-                profile.university = university;
-                profile.major = major;
-                profile.experience = experience;
+                    profile.application_submitted = true;
+                    profile.status = status;
+                    profile.needs_reimbursement = needs_reimbursement;
+                    profile.reimbursement = reimbursement;
+                    profile.university = university;
+                    profile.major = major;
+                    profile.experience = experience;
 
-                if (status === 'accepted') {
-                    mongoose
-                        .model('Confirmation')
-                        .findOne({ user: this })
-                        .then(application => {
-                            profile.is_confirmed = application ? true : false;
-                            resolve(profile);
-                        });
+                    if (status === 'accepted') {
+                        mongoose
+                            .model('Confirmation')
+                            .findOne({ user: this })
+                            .then(application => {
+                                profile.is_confirmed = application
+                                    ? true
+                                    : false;
+                                resolve(profile);
+                            });
+                    } else {
+                        profile.is_confirmed = false;
+                        resolve(profile);
+                    }
                 } else {
-                    profile.is_confirmed = false;
+                    profile.application_submitted = false;
                     resolve(profile);
                 }
             })

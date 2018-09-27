@@ -1,0 +1,9 @@
+{
+    "search": {
+        "type": 0,
+        "label": "Search",
+        "placeholder": "By name, uni, email, anything",
+        "required": false,
+        "key": "search"
+    }
+}

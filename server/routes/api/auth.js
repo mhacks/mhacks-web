@@ -26,6 +26,7 @@ router.post('/login', function(req, res) {
         // Lookup users with the email provided in the post body
         User.find()
             .byEmail(req.body.email)
+            .select('+password')
             .then(user => {
                 if (user) {
                     user.checkPassword(req.body.password)
@@ -257,6 +258,7 @@ router.post('/logout', authMiddleware('any', 'api'), function(req, res) {
 
     User.find()
         .byToken(req.authToken)
+        .select('+password')
         .then(user => {
             if (user) {
                 user.removeToken(req.authToken);

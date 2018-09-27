@@ -14,6 +14,7 @@ var router = require('express').Router(),
     Confirmation = require('../../db/model/Confirmation.js'),
     Device = require('../../db/model/Device.js'),
     PushNotification = require('../../db/model/PushNotification.js'),
+    Shortener = require('../../db/model/Shortener.js'),
     config = require('../../../config/default.js'),
     uploadHelper = require('../../interactors/multer-s3.js')(
         config.AWS_BUCKET_NAME,
@@ -41,7 +42,9 @@ const models = {
 
     Announcements: Announcement,
     Devices: Device,
-    PushNotifications: PushNotification
+    PushNotifications: PushNotification,
+
+    Shortener: Shortener
 };
 
 router.get('/model', function(req, res) {
@@ -185,6 +188,12 @@ router.post(
                             return { name: data };
                         });
                     }
+                } else if (
+                    req.params.model === 'Users' &&
+                    i === 'password' &&
+                    !req.body[i]
+                ) {
+                    continue;
                 } else {
                     fields[i] = req.body[i];
                 }
@@ -193,6 +202,7 @@ router.post(
 
         if (req.params.id && req.params.id !== 'create') {
             Model.findById(req.params.id)
+                .select(req.params.model === 'Users' ? '+password' : '')
                 .then(document => {
                     if (document) {
                         document
