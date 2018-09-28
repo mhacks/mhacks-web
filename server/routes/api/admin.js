@@ -189,9 +189,12 @@ router.post(
                         });
                     }
                 } else if (
-                    req.params.model === 'Users' &&
-                    i === 'password' &&
-                    !req.body[i]
+                    (req.params.model === 'Users' &&
+                        i === 'password' &&
+                        !req.body[i]) ||
+                    (req.params.model === 'Shorteners' &&
+                        i === 'short_code' &&
+                        !req.body[i])
                 ) {
                     continue;
                 } else {
