@@ -191,6 +191,13 @@ class MentorReader extends React.Component {
                                 );
                             },
                             title: 'CSV'
+                        },
+                        {
+                            title: this.props.readerState.data
+                                .mentorApplications
+                                ? this.props.readerState.data.mentorApplications
+                                      .length
+                                : 0
                         }
                     ]}
                 />

@@ -2,13 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { MHForm } from '../../components';
-import { PageContainer, RoundedButton } from '../../components';
+import { PageContainer } from '../../components';
 import { AdminThunks } from '../../actions';
 import ReactTable from 'react-table';
 import { routes } from '../../constants';
 import PropTypes from 'prop-types';
 import Fuse from 'fuse.js';
 import adminFilter from './filter.json';
+import { generateCSV } from '../reader/util';
+import { UtilityBar } from '../reader/components';
 
 const PagePulled = styled(PageContainer)`
     min-height: calc(100vh - 146px);
@@ -56,6 +58,8 @@ class Model extends React.Component {
         const fields =
             documents && documents.length > 0 ? Object.keys(documents[0]) : [];
 
+        const filteredDocs = this.filterDocuments(documents);
+
         return (
             <PagePulled ref="pagecontainer">
                 <h2>{modelKey}</h2>
@@ -68,19 +72,30 @@ class Model extends React.Component {
                         });
                     }}
                 />
-                <RoundedButton
-                    type="submit"
-                    color={this.props.theme.primary}
-                    onClick={() => {
-                        this.context.router.history.push(
-                            routes.ADMIN + '/' + modelKey + '/create'
-                        );
-                    }}
-                >
-                    Create
-                </RoundedButton>
+                <UtilityBar
+                    theme={this.props.theme}
+                    utilities={[
+                        {
+                            onClick: () => {
+                                this.context.router.history.push(
+                                    routes.ADMIN + '/' + modelKey + '/create'
+                                );
+                            },
+                            title: 'Create'
+                        },
+                        {
+                            onClick: () => {
+                                generateCSV(filteredDocs, 'docs.csv');
+                            },
+                            title: 'CSV'
+                        },
+                        {
+                            title: filteredDocs ? filteredDocs.length : 0
+                        }
+                    ]}
+                />
                 <ReactTable
-                    data={this.filterDocuments(documents)}
+                    data={filteredDocs}
                     loading={this.props.adminState.fetching}
                     columns={[
                         {

@@ -236,6 +236,10 @@ class SponsorReader extends React.Component {
             return null;
         }
 
+        const filteredApps = this.filterApplications(
+            this.props.readerState.data.sponsorPortalApplications
+        );
+
         return (
             <PageContainer ref="pagecontainer">
                 <HeaderSection>
@@ -268,13 +272,14 @@ class SponsorReader extends React.Component {
                             onClick: () => {
                                 window.open(endpoints.ALL_APPLICATION_RESUMES);
                             }
+                        },
+                        {
+                            title: filteredApps ? filteredApps.length : 0
                         }
                     ]}
                 />
                 <ReactTable
-                    data={this.filterApplications(
-                        this.props.readerState.data.sponsorPortalApplications
-                    )}
+                    data={filteredApps}
                     columns={this.generateColumns()}
                     loading={this.props.readerState.fetching}
                     SubComponent={row => {

@@ -338,6 +338,10 @@ class ReaderPage extends React.Component {
             status: false
         };
 
+        const filteredApps = this.filterApplications(
+            this.props.readerState.data.applications
+        );
+
         return (
             <PageContainer ref="pagecontainer">
                 <HeaderSection>
@@ -398,13 +402,14 @@ class ReaderPage extends React.Component {
                                 );
                             },
                             title: 'Speaker'
+                        },
+                        {
+                            title: filteredApps ? filteredApps.length : 0
                         }
                     ]}
                 />
                 <ReactTable
-                    data={this.filterApplications(
-                        this.props.readerState.data.applications
-                    )}
+                    data={filteredApps}
                     loading={this.props.readerState.fetching}
                     columns={this.generateColumns(this.state.selected)}
                     SubComponent={row => {

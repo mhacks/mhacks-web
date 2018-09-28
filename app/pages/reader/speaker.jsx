@@ -191,6 +191,13 @@ class SpeakerReader extends React.Component {
                                 );
                             },
                             title: 'CSV'
+                        },
+                        {
+                            title: this.props.readerState.data
+                                .speakerApplications
+                                ? this.props.readerState.data
+                                      .speakerApplications.length
+                                : 0
                         }
                     ]}
                 />
