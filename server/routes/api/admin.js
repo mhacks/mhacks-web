@@ -68,6 +68,7 @@ router.get('/model/:model', function(req, res) {
 
     model
         .find()
+        .select(req.params.model === 'Users' ? '-password' : '')
         .then(documents => {
             res.send({
                 status: true,
@@ -106,6 +107,7 @@ router.get('/model/:model/:id', function(req, res) {
 
     model
         .findById(req.params.id)
+        .select(req.params.model === 'Users' ? '-password' : '')
         .then(document => {
             document = document.toObject();
             if (
@@ -205,7 +207,6 @@ router.post(
 
         if (req.params.id && req.params.id !== 'create') {
             Model.findById(req.params.id)
-                .select(req.params.model === 'Users' ? '+password' : '')
                 .then(document => {
                     if (document) {
                         document

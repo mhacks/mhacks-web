@@ -26,7 +26,8 @@ import {
     SpeakerApply,
     Dashboard,
     AdminPage,
-    TeamBuilding
+    TeamBuilding,
+    PasswordReset
 } from './pages';
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';
@@ -111,6 +112,12 @@ class AppProvider extends React.Component {
                                     }
 
                                     return <Login />;
+                                }}
+                            />
+                            <Route
+                                path={routes.PASSWORD_RESET}
+                                render={() => {
+                                    return <PasswordReset />;
                                 }}
                             />
                             {is_live_page_enabled ? (

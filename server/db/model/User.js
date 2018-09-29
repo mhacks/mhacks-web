@@ -83,8 +83,7 @@ var schema = new mongoose.Schema(
                     user_editable: true,
                     label: 'Password',
                     placeholder: 'hunter2'
-                },
-                select: false
+                }
             },
             tokens: [
                 {

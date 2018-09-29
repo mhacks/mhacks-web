@@ -8,5 +8,7 @@ module.exports = {
     EMAIL_NOT_PROVIDED: 'Please provide a valid email',
     MISSING_CONFIG: 'The configuration is missing necessary values',
     VERIFICATION_URL_CONSOLE:
-        'Access this link in your browser to verify your account:'
+        'Access this link in your browser to verify your account:',
+    PASSWORDRESET_URL_CONSOLE:
+        'Access this link in your browser to reset your password:'
 };

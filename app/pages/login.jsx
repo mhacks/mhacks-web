@@ -56,6 +56,17 @@ const LegalLink = styled.a`
     text-decoration: none;
 `;
 
+const ResetLink = styled.a`
+    color: ${props => props.theme.primary};
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+`;
+
+const ResetContainer = styled.div`
+    float: left;
+`;
+
 /* Login Component */
 class Login extends React.Component {
     constructor() {
@@ -65,10 +76,12 @@ class Login extends React.Component {
             name: '',
             email: '',
             password: '',
-            isRegistering: true
+            isRegistering: true,
+            isResetting: false
         };
 
         this.tabSelect = this.tabSelect.bind(this);
+        this.resetSelect = this.resetSelect.bind(this);
     }
 
     shouldComponentUpdate(nextProps) {
@@ -97,6 +110,8 @@ class Login extends React.Component {
                     password: this.state.password
                 })
             );
+        } else if (this.state.isResetting) {
+            this.props.dispatch(AuthThunks.reset({ email: this.state.email }));
         } else {
             this.props.dispatch(
                 AuthThunks.login({
@@ -118,26 +133,61 @@ class Login extends React.Component {
         }
     }
 
+    resetSelect() {
+        if (this.state.isResetting) {
+            this.setState({
+                isResetting: !this.state.isResetting,
+                isRegistering: true
+            });
+        } else {
+            this.setState({
+                isResetting: !this.state.isResetting
+            });
+        }
+    }
+
     render() {
         return (
             <Page>
                 <FormContainer>
-                    <TabGroup
-                        tabs={[
-                            {
-                                title: 'Sign Up',
-                                onClick: this.tabSelect
-                            },
-                            {
-                                title: 'Login',
-                                onClick: this.tabSelect
-                            }
-                        ]}
-                        primaryColor={this.props.theme.primary}
-                    />
+                    {!this.state.isResetting ? (
+                        <TabGroup
+                            tabs={[
+                                {
+                                    title: 'Sign Up',
+                                    onClick: this.tabSelect
+                                },
+                                {
+                                    title: 'Log In',
+                                    onClick: this.tabSelect
+                                }
+                            ]}
+                            primaryColor={this.props.theme.primary}
+                        />
+                    ) : (
+                        <TabGroup
+                            tabs={[
+                                {
+                                    title: 'Back',
+                                    onClick: this.resetSelect
+                                }
+                            ]}
+                            primaryColor={this.props.theme.primary}
+                        />
+                    )}
+
                     {this.props.userState.error ? (
                         <AlertContainer>
                             <Alert message={this.props.userState.message} />
+                        </AlertContainer>
+                    ) : null}
+                    {!this.props.userState.error &&
+                    this.props.userState.message ? (
+                        <AlertContainer>
+                            <Alert
+                                message={this.props.userState.message}
+                                positive={true}
+                            />
                         </AlertContainer>
                     ) : null}
                     <form onSubmit={this.onSubmit.bind(this)}>
@@ -167,16 +217,35 @@ class Login extends React.Component {
                                         this
                                     )}
                                 />
-                                <input
-                                    id="password"
-                                    type="password"
-                                    name="password"
-                                    placeholder="Password (e.g. hunter2)"
-                                    value={this.state.password}
-                                    onChange={this.handleAttributeChange.bind(
-                                        this
-                                    )}
-                                />
+
+                                {!this.state.isResetting ? (
+                                    <input
+                                        id="password"
+                                        type="password"
+                                        name="password"
+                                        placeholder="Password (e.g. hunter2)"
+                                        value={this.state.password}
+                                        onChange={this.handleAttributeChange.bind(
+                                            this
+                                        )}
+                                    />
+                                ) : (
+                                    undefined
+                                )}
+
+                                {!this.state.isRegistering &&
+                                !this.state.isResetting ? (
+                                    <ResetContainer>
+                                        <ResetLink
+                                            href="#"
+                                            onClick={this.resetSelect}
+                                        >
+                                            Forget your password?
+                                        </ResetLink>
+                                    </ResetContainer>
+                                ) : (
+                                    undefined
+                                )}
                             </InputContainer>
                             <ButtonGroup>
                                 <RoundedButton

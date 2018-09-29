@@ -13,6 +13,7 @@ import MentorApply from './mentor/apply';
 import SpeakerApply from './speaker/apply';
 import AdminPage from './admin';
 import TeamBuilding from './team_building';
+import PasswordReset from './passwordreset';
 
 export {
     Navigator,
@@ -29,5 +30,6 @@ export {
     MentorApply,
     SpeakerApply,
     AdminPage,
-    TeamBuilding
+    TeamBuilding,
+    PasswordReset
 };

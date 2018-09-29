@@ -2,6 +2,7 @@
 export default {
     SUBSCRIBE: '/v1/email/subscribe',
     REGISTER: '/v1/auth/register',
+    RESET: '/v1/auth/password',
     VERIFY: '/v1/auth/verify',
     LOGIN: '/v1/auth/login',
     LOGOUT: '/v1/auth/logout',

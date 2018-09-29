@@ -13,6 +13,26 @@ export default class AuthRequests {
         });
     }
 
+    static reset(body) {
+        return fetch(endpoints.RESET, {
+            method: 'post',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(body)
+        });
+    }
+
+    static resetToken(body, token) {
+        return fetch(endpoints.RESET + '/' + token, {
+            method: 'post',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(body)
+        });
+    }
+
     static login(body) {
         return fetch(endpoints.LOGIN, {
             method: 'post',

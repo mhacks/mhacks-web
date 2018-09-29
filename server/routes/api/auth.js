@@ -26,7 +26,6 @@ router.post('/login', function(req, res) {
         // Lookup users with the email provided in the post body
         User.find()
             .byEmail(req.body.email)
-            .select('+password')
             .then(user => {
                 if (user) {
                     user.checkPassword(req.body.password)
@@ -191,11 +190,13 @@ router.post('/password', function(req, res) {
                 if (user) {
                     user.sendPasswordResetEmail();
                     res.send({
-                        status: true
+                        status: true,
+                        message: Responses.CHECK_EMAIL
                     });
                 } else {
                     res.send({
-                        status: false
+                        status: false,
+                        message: Responses.PARAMS_NOT_FOUND
                     });
                 }
             })
@@ -222,13 +223,15 @@ router.post('/password/:token', function(req, res) {
                         .then(() => {
                             user.changePassword(req.body.password);
                             res.send({
-                                status: true
+                                status: true,
+                                message: Responses.PASSWORD_CHANGED
                             });
                         })
                         .catch(err => {
                             console.error(err);
                             res.send({
-                                status: false
+                                status: false,
+                                message: Responses.PARAMS_NOT_FOUND
                             });
                         });
                 } else {
@@ -258,7 +261,6 @@ router.post('/logout', authMiddleware('any', 'api'), function(req, res) {
 
     User.find()
         .byToken(req.authToken)
-        .select('+password')
         .then(user => {
             if (user) {
                 user.removeToken(req.authToken);

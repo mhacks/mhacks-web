@@ -7,6 +7,7 @@ export function userState(state = initialUserState, action) {
         case actions.LOGOUT_REQUEST:
             return initialUserState;
 
+        case actions.RESET_REQUEST:
         case actions.REGISTER_REQUEST:
         case actions.LOGIN_REQUEST:
             return {
@@ -16,6 +17,7 @@ export function userState(state = initialUserState, action) {
                 error: null
             };
 
+        case actions.RESET_ERROR:
         case actions.REGISTER_ERROR:
         case actions.LOGIN_ERROR:
             return {
@@ -26,6 +28,7 @@ export function userState(state = initialUserState, action) {
                 message: action.message
             };
 
+        case actions.RESET_SUCCESS:
         case actions.REGISTER_SUCCESS:
         case actions.LOGIN_SUCCESS:
             return {

@@ -145,7 +145,11 @@ if (config.service === 'shortener') {
             });
 
         app.use(webpackMiddlewareInstance);
-        app.use(historyApiFallback());
+        app.use(
+            historyApiFallback({
+                disableDotRule: true
+            })
+        );
         app.use(webpackMiddlewareInstance);
 
         app.use(
