@@ -180,11 +180,13 @@ class HeaderLinks extends React.Component {
             isAdmin,
             isSponsor,
             isReader,
-            isEmailVerified
+            isEmailVerified,
+            isApplicationSubmitted
         } = userMetadata;
         const {
             is_live_page_enabled,
-            is_team_building_enabled
+            is_team_building_enabled,
+            is_application_open
         } = configurationData;
 
         // Either render a Menu component for mobile, or NavContainer for desktop as
@@ -211,7 +213,9 @@ class HeaderLinks extends React.Component {
                         Reader
                     </StyledALink>
                 ) : null}
-                {!isLoggedIn || !isEmailVerified ? null : (
+                {!isLoggedIn ||
+                !isEmailVerified ||
+                !(is_application_open || isApplicationSubmitted) ? null : (
                     <StyledNavLink to={routes.APPLY} color={color}>
                         Hacker App
                     </StyledNavLink>

@@ -65,9 +65,12 @@ class AppProvider extends React.Component {
         const {
             should_logout,
             is_live_page_enabled,
+            is_application_open,
             is_team_building_enabled,
             is_blackout_page_enabled
         } = this.props.configurationState.data;
+
+        const appSubmitted = this.getMetadata().isApplicationSubmitted;
 
         if (should_logout && localStorage.getItem('jwt')) {
             localStorage.removeItem('jwt');
@@ -184,25 +187,29 @@ class AppProvider extends React.Component {
                                     return <Redirect to={routes.LOGIN} />;
                                 }}
                             />
-                            <Route
-                                exact
-                                path={routes.APPLY}
-                                render={() => {
-                                    const {
-                                        isLoggedIn,
-                                        isEmailVerified
-                                    } = this.getMetadata();
-                                    if (isLoggedIn && isEmailVerified) {
-                                        return <Apply />;
-                                    }
+                            {is_application_open || appSubmitted ? (
+                                <Route
+                                    exact
+                                    path={routes.APPLY}
+                                    render={() => {
+                                        const {
+                                            isLoggedIn,
+                                            isEmailVerified
+                                        } = this.getMetadata();
+                                        if (isLoggedIn && isEmailVerified) {
+                                            return <Apply />;
+                                        }
 
-                                    if (isLoggedIn && !isEmailVerified) {
-                                        return <Redirect to={routes.PROFILE} />;
-                                    }
+                                        if (isLoggedIn && !isEmailVerified) {
+                                            return (
+                                                <Redirect to={routes.PROFILE} />
+                                            );
+                                        }
 
-                                    return <Redirect to={routes.LOGIN} />;
-                                }}
-                            />
+                                        return <Redirect to={routes.LOGIN} />;
+                                    }}
+                                />
+                            ) : null}
                             <Route
                                 exact
                                 path={routes.ADMIN}

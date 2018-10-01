@@ -200,9 +200,11 @@ router.post('/password', function(req, res) {
                     });
                 }
             })
-            .catch(() => {
+            .catch(err => {
+                console.error(err);
                 res.send({
-                    status: false
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
                 });
             });
     } else {
@@ -235,14 +237,18 @@ router.post('/password/:token', function(req, res) {
                             });
                         });
                 } else {
+                    console.error('User not found for token');
                     res.send({
-                        status: false
+                        status: false,
+                        message: Responses.UNKNOWN_ERROR
                     });
                 }
             })
-            .catch(() => {
+            .catch(err => {
+                console.error(err);
                 res.send({
-                    status: false
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
                 });
             });
     } else {

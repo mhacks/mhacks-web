@@ -1,6 +1,7 @@
 var router = require('express').Router(),
     Responses = require('../../responses/api'),
     User = require('../../db/model/User.js'),
+    Configuration = require('../../db/model/Configuration.js'),
     Application = require('../../db/model/Application.js'),
     Confirmation = require('../../db/model/Confirmation.js'),
     config = require('../../../config/default.js'),
@@ -45,16 +46,38 @@ router.post('/', uploadHelper.fields([{ name: 'resume' }]), function(req, res) {
                             application: application
                         });
                     } else {
-                        fields.user = user;
-                        Application.create(fields)
-                            .then(application => {
-                                user.application_submitted = true;
-                                user.save();
+                        Configuration.findOne({})
+                            .then(configuration => {
+                                if (
+                                    configuration &&
+                                    configuration.is_application_open
+                                ) {
+                                    fields.user = user;
+                                    Application.create(fields)
+                                        .then(application => {
+                                            user.application_submitted = true;
+                                            user.save();
 
-                                res.send({
-                                    status: true,
-                                    application: application
-                                });
+                                            res.send({
+                                                status: true,
+                                                application: application
+                                            });
+                                        })
+                                        .catch(err => {
+                                            console.error(err);
+                                            res.status(500).send({
+                                                status: false,
+                                                message: Responses.UNKNOWN_ERROR
+                                            });
+                                        });
+                                } else {
+                                    res.status(400).send({
+                                        status: false,
+                                        message:
+                                            Responses.Application
+                                                .APPLICATION_CLOSED
+                                    });
+                                }
                             })
                             .catch(err => {
                                 console.error(err);

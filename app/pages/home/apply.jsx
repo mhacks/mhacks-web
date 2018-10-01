@@ -53,20 +53,31 @@ const Dashed = styled.div`
 
 class Apply extends React.Component {
     render() {
+        const is_application_open = this.props.configurationState.data
+            .is_application_open;
+
         return (
             <Wrapper>
                 <Container>
                     <Holder>
                         <SectionHeader>
-                            Applications are open now!
+                            {is_application_open
+                                ? 'Applications are open now!'
+                                : 'Applications are now closed.'}
                         </SectionHeader>
                         <StyledNavLinkWrapper>
                             {this.props.userState.data.isLoggedIn ? (
                                 <StyledNavLink
-                                    to={routes.APPLY}
+                                    to={
+                                        is_application_open
+                                            ? routes.APPLY
+                                            : routes.DASHBOARD
+                                    }
                                     color={this.props.theme.primary}
                                 >
-                                    Apply
+                                    {is_application_open
+                                        ? 'Apply'
+                                        : 'Dashboard'}
                                 </StyledNavLink>
                             ) : (
                                 <StyledNavLink
@@ -88,6 +99,7 @@ class Apply extends React.Component {
 function mapStateToProps(state) {
     return {
         userState: state.userState,
+        configurationState: state.configurationState,
         theme: state.theme.data
     };
 }
