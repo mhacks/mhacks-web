@@ -52,43 +52,36 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', authMiddleware('admin', 'api'), function(req, res) {
-    if (req.session.loggedIn) {
-        if (req.body.title && req.body.body && req.body.category) {
-            Announcement.create(req.body)
-                .then(announcement => {
-                    if (req.body.push) {
-                        PushNotification.create({
-                            title: announcement.title,
-                            body: announcement.body,
-                            category: announcement.category,
-                            isApproved: announcement.isApproved,
-                            broadcastTime: announcement.broadcastTime
-                        });
-                    }
-
-                    res.send({
-                        status: true,
-                        announcement: announcement
+    if (req.body.title && req.body.body && req.body.category) {
+        Announcement.create(req.body)
+            .then(announcement => {
+                if (req.body.push) {
+                    PushNotification.create({
+                        title: announcement.title,
+                        body: announcement.body,
+                        category: announcement.category,
+                        isApproved: announcement.isApproved,
+                        broadcastTime: announcement.broadcastTime
                     });
-                })
-                .catch(err => {
-                    console.error(err);
+                }
 
-                    res.status(500).send({
-                        status: false,
-                        message: Responses.UNKNOWN_ERROR
-                    });
+                res.send({
+                    status: true,
+                    announcement: announcement
                 });
-        } else {
-            res.status(401).send({
-                status: false,
-                message: Responses.PARAMS_NOT_FOUND
+            })
+            .catch(err => {
+                console.error(err);
+
+                res.status(500).send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
             });
-        }
     } else {
         res.status(401).send({
             status: false,
-            message: Responses.PERMISSIONS_REQUIRED
+            message: Responses.PARAMS_NOT_FOUND
         });
     }
 });
@@ -129,41 +122,34 @@ router.delete('/:id', authMiddleware('admin', 'api'), function(req, res) {
 });
 
 router.put('/', authMiddleware('admin', 'api'), function(req, res) {
-    if (req.session.loggedIn) {
-        if (req.body.id) {
-            Announcement.findById(req.body.id)
-                .then(announcement => {
-                    if (announcement !== false) {
-                        announcement.updateFields(req.body);
+    if (req.body.id) {
+        Announcement.findById(req.body.id)
+            .then(announcement => {
+                if (announcement !== false) {
+                    announcement.updateFields(req.body);
 
-                        res.send({
-                            status: true
-                        });
-                    } else {
-                        res.status(404).send({
-                            status: false,
-                            message: Responses.NOT_FOUND
-                        });
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-
-                    res.status(500).send({
-                        status: false,
-                        message: Responses.UNKNOWN_ERROR
+                    res.send({
+                        status: true
                     });
+                } else {
+                    res.status(404).send({
+                        status: false,
+                        message: Responses.NOT_FOUND
+                    });
+                }
+            })
+            .catch(err => {
+                console.error(err);
+
+                res.status(500).send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
                 });
-        } else {
-            res.status(401).send({
-                status: false,
-                message: Responses.PARAMS_NOT_FOUND
             });
-        }
     } else {
         res.status(401).send({
             status: false,
-            message: Responses.PERMISSIONS_REQUIRED
+            message: Responses.PARAMS_NOT_FOUND
         });
     }
 });
