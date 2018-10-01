@@ -86,6 +86,11 @@ class PasswordReset extends React.Component {
     }
 
     render() {
+        if (!this.props.userState.error && this.props.userState.message) {
+            this.context.router.history.push(routes.LOGIN);
+            return null;
+        }
+
         return (
             <Page>
                 <FormContainer>
@@ -134,7 +139,9 @@ class PasswordReset extends React.Component {
 }
 
 PasswordReset.contextTypes = {
-    router: PropTypes.object
+    router: PropTypes.shape({
+        history: PropTypes.object.isRequired
+    })
 };
 
 function mapStateToProps(state) {
