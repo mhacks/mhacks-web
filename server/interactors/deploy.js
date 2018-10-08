@@ -41,7 +41,7 @@ function damageReport(host, user, privateKey) {
         ssh.connect({
             host: host,
             username: user,
-            privateKey: new Buffer(
+            privateKey: Buffer.from(
                 crypto.decrypt(privateKey),
                 'base64'
             ).toString('ascii')
@@ -106,7 +106,7 @@ function deploy(host, user, privateKey) {
         ssh.connect({
             host: host,
             username: user,
-            privateKey: new Buffer(
+            privateKey: Buffer.from(
                 crypto.decrypt(privateKey),
                 'base64'
             ).toString('ascii')
