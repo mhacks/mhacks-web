@@ -187,9 +187,9 @@ class EditProfile extends React.Component {
                             FieldTypes={this.state.userState.data.FieldTypes}
                             theme={this.props.theme}
                             hidden={{
-                                email_verified: false,
-                                application_submitted: false,
-                                groups: false
+                                email_verified: true,
+                                application_submitted: true,
+                                groups: true
                             }}
                             onSubmit={this.onSubmit}
                         />
