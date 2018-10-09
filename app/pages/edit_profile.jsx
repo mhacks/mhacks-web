@@ -186,6 +186,11 @@ class EditProfile extends React.Component {
                             schema={this.state.userState.data.form}
                             FieldTypes={this.state.userState.data.FieldTypes}
                             theme={this.props.theme}
+                            hidden={{
+                                email_verified: false,
+                                application_submitted: false,
+                                groups: false
+                            }}
                             onSubmit={this.onSubmit}
                         />
                     </div>
