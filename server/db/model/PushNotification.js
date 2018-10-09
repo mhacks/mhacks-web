@@ -45,7 +45,7 @@ var schema = new mongoose.Schema(
                 enum: ['emergency', 'logistics', 'food', 'event', 'sponsored'],
                 form: {
                     auth_groups: ['admin'],
-                    label: 'Body',
+                    label: 'Category',
                     select: [
                         'Emergency',
                         'Logistics',
