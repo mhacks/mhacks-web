@@ -76,7 +76,9 @@ var schema = new mongoose.Schema(
                 default: [],
                 form: {
                     auth_groups: ['admin'],
-                    label: 'Devices'
+                    label: 'Devices',
+                    type_override: 'array',
+                    creatable: true
                 }
             }
         },

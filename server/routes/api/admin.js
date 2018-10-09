@@ -110,13 +110,19 @@ router.get('/model/:model/:id', function(req, res) {
         .select(req.params.model === 'Users' ? '-password' : '')
         .then(document => {
             document = document.toObject();
-            if (
-                req.params.model === 'Users' &&
-                Array.isArray(document.groups)
-            ) {
-                document.groups = document.groups.map(function(data) {
-                    return { label: data.name, value: data.name };
-                });
+
+            for (var i in document) {
+                if (Array.isArray(document[i])) {
+                    if (req.params.model === 'Users' && i === 'groups') {
+                        document.groups = document.groups.map(function(data) {
+                            return { label: data.name, value: data.name };
+                        });
+                    } else {
+                        document[i] = document[i].map(function(data) {
+                            return { label: data, value: data };
+                        });
+                    }
+                }
             }
 
             res.send({
