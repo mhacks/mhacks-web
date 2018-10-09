@@ -8,16 +8,16 @@ router.get('/', function(req, res) {
     Team.find()
         .populate('members', 'full_name email avatar')
         .then(teams => {
-            var emails = [];
+            var users = [];
             var map = {};
 
             teams.map(team => {
                 team.members.map(member => {
-                    emails.push(member.email);
+                    users.push(member);
                 });
             });
             Application.find({
-                user: { $in: emails }
+                user: { $in: users }
             })
                 .select('experience user')
                 .then(applications => {

@@ -158,7 +158,11 @@ function check_types(prop_val, groups) {
             val_types.type = config.form_types.BOOLEAN;
             break;
         case Date:
-            val_types.type = config.form_types.DATE;
+            if (isAdmin) {
+                val_types.type = config.form_types.DATETIME;
+            } else {
+                val_types.type = config.form_types.DATE;
+            }
             break;
         case Number:
             val_types.type = config.form_types.NUMBER;

@@ -115,7 +115,6 @@ export default class AuthThunks {
             return AuthRequests.reset({
                 email: user.email
             }).then(response => {
-                console.log(response);
                 if (response.status == 200) {
                     response.json().then(json => {
                         if (!json.status) {
@@ -162,7 +161,6 @@ export default class AuthThunks {
                 },
                 token
             ).then(response => {
-                console.log(response);
                 if (response.status == 200) {
                     response.json().then(json => {
                         if (!json.status) {

@@ -59,7 +59,7 @@ class LinkList extends React.Component {
             {
                 title: 'Devpost',
                 onClick: () => {
-                    window.open('https://mhacksx.devpost.com/', '_blank');
+                    window.open('https://mhacks11.devpost.com/', '_blank');
                 }
             },
             {

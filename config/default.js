@@ -72,7 +72,8 @@ module.exports = {
         BUFFER: 8,
         ARRAY: 9,
         SUBMIT: 10,
-        FILE: 11
+        FILE: 11,
+        DATETIME: 12
     },
     color_dark: process.env.COLOR_DARK || '#D41359',
     color_light: process.env.COLOR_LIGHT || '#ffffff',

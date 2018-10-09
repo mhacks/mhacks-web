@@ -167,7 +167,7 @@ class Schedule extends React.Component {
                                 onClick: this.tabSelect
                             }
                         ]}
-                        primaryColor={this.props.theme.highlight}
+                        primaryColor={this.props.theme.primary}
                     />
                 </TabGroupContainer>
                 <CalendarContainer theme={this.props.theme}>

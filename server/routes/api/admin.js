@@ -196,9 +196,21 @@ router.post(
                         !req.body[i]) ||
                     (req.params.model === 'Shorteners' &&
                         i === 'short_code' &&
+                        !req.body[i]) ||
+                    (req.params.model === 'Devices' &&
+                        i === 'user' &&
                         !req.body[i])
                 ) {
                     continue;
+                } else if (
+                    Array.isArray(Model.schema.obj[i].type) ||
+                    (('form' in Model.schema.obj[i] &&
+                        ('type_override' in Model.schema.obj[i].form &&
+                            Model.schema.obj[i].form.type_override ===
+                                'array')) ||
+                        'array_select' in Model.schema.obj[i].form)
+                ) {
+                    fields[i] = req.body[i].split(',');
                 } else {
                     fields[i] = req.body[i];
                 }

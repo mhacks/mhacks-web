@@ -216,6 +216,26 @@ class MHForm extends React.Component {
         });
     }
 
+    dateLocaleISO(date) {
+        var pad = function(num) {
+            var norm = Math.floor(Math.abs(num));
+            return (norm < 10 ? '0' : '') + norm;
+        };
+        return (
+            date.getFullYear() +
+            '-' +
+            pad(date.getMonth() + 1) +
+            '-' +
+            pad(date.getDate()) +
+            'T' +
+            pad(date.getHours()) +
+            ':' +
+            pad(date.getMinutes()) +
+            ':' +
+            pad(date.getSeconds())
+        );
+    }
+
     defaultForType(type) {
         switch (type) {
             case this.FieldTypes.TEXT:
@@ -228,6 +248,9 @@ class MHForm extends React.Component {
                 return '';
             case this.FieldTypes.DATE: {
                 return 'yyyy-MM-dd';
+            }
+            case this.FieldTypes.DATETIME: {
+                return this.dateLocaleISO(new Date());
             }
             case this.FieldTypes.ARRAY:
                 return [];
@@ -274,6 +297,14 @@ class MHForm extends React.Component {
                 }
 
                 return date.toISOString().split('T')[0];
+            }
+            case this.FieldTypes.DATETIME: {
+                const date = new Date(field.default);
+                if (isNaN(date.getTime())) {
+                    return defaultForType;
+                }
+
+                return this.dateLocaleISO(date);
             }
             case this.FieldTypes.SECTIONHEADER:
             case this.FieldTypes.SUBMIT:
@@ -451,6 +482,13 @@ class MHForm extends React.Component {
                     }
                     break;
                 }
+                case this.FieldTypes.DATETIME: {
+                    const formDate = new Date(formData[key]);
+                    if (!isNaN(formDate.getTime())) {
+                        formatted[key] = formDate.getTime();
+                    }
+                    break;
+                }
                 case this.FieldTypes.SELECT:
                     if (
                         !field.required &&
@@ -471,7 +509,9 @@ class MHForm extends React.Component {
                     if (!Array.isArray(formData[key])) {
                         formData[key] = formData[key].split(' ');
                     }
-                    formatted[key] = formData[key].map(obj => obj.value);
+                    formatted[key] = formData[key].map(obj => {
+                        return typeof obj === 'object' ? obj.value : obj;
+                    });
                     break;
             }
         }
@@ -627,6 +667,18 @@ class MHForm extends React.Component {
                                         name={field.key}
                                         type="date"
                                         placeholder="yyyy-mm-dd"
+                                        value={formData[field.key]}
+                                        onChange={this.handleAttributeChange}
+                                        hasError={hasError}
+                                    />
+                                );
+                            case this.FieldTypes.DATETIME:
+                                return this.renderLabeledInput(
+                                    field,
+                                    <Input
+                                        name={field.key}
+                                        type="datetime-local"
+                                        placeholder="yyyy-mm-ddTH:m:S"
                                         value={formData[field.key]}
                                         onChange={this.handleAttributeChange}
                                         hasError={hasError}
@@ -797,7 +849,8 @@ MHForm.defaultProps = {
         BUFFER: 8,
         ARRAY: 9,
         SUBMIT: 10,
-        FILE: 11
+        FILE: 11,
+        DATETIME: 12
     },
     initialData: {},
     validate: true

@@ -39,8 +39,8 @@ var schema = new mongoose.Schema(
                     type_override: 'array',
                     array_select: pushCategories.map(str => {
                         return {
-                            value: str.charAt(0).toUpperCase() + str.slice(1),
-                            label: str
+                            value: str,
+                            label: str.charAt(0).toUpperCase() + str.slice(1)
                         };
                     })
                 }

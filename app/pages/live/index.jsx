@@ -3,12 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { devices } from '../../styles';
 
-import {
-    PageContainer,
-    Container,
-    Countdown,
-    FullScreenAnimation
-} from '../../components';
+import { PageContainer, Container, Countdown } from '../../components';
 import LinkList from './link_list.jsx';
 import Announcements from './announcements.jsx';
 import Schedule from './schedule.jsx';
@@ -53,7 +48,6 @@ class LivePage extends React.Component {
         return (
             <PagePulled>
                 <Container>
-                    <FullScreenAnimation />
                     <Countdown
                         date={this.props.configurationState.data.end_date}
                         fallback="Submissions Closed!"

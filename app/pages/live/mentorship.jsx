@@ -246,7 +246,7 @@ class Mentorship extends React.Component {
                                 onClick: this.tabSelect
                             }
                         ]}
-                        primaryColor={this.props.theme.highlight}
+                        primaryColor={this.props.theme.primary}
                     />
                 </TabGroupContainer>
                 <div style={{ overflow: 'auto', height: 'calc(100% - 100px)' }}>

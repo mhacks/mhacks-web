@@ -39,10 +39,6 @@ const Description = styled.h3`
     color: ${props => props.theme.primary};
 `;
 
-const Bullet = styled.h4`
-    color: ${props => props.theme.highlight};
-`;
-
 const PagePulled = styled(PageContainer)`
     min-height: calc(100vh - 146px);
 `;
@@ -179,21 +175,9 @@ class TeamBuilding extends React.Component {
                             Welcome to the {configurationData.app_name} Team
                             Builder! Broadcast your idea to find hackers
                             interested in joining your team or find a team that
-                            you'd like to join! {configurationData.app_name} is
-                            featuring the adopt-a-n00b program. This means that
-                            teams can have up to:{' '}
+                            you'd like to join! For {configurationData.app_name},
+                            you can have teams up to a size of 4.
                         </Description>
-                        <Bullet>- 4 members normally</Bullet>
-                        <Bullet>
-                            - 5 members if the team contains at least one
-                            veteran hacker, with the 5th slot only being open to
-                            a novice hacker{' '}
-                        </Bullet>
-                        <Bullet>
-                            - 5 members if the team contains at least two
-                            experienced hackers, with the 5th slot only being
-                            open to a novice hacker
-                        </Bullet>
                     </BoxWrapper>
                     {userInTeam ? (
                         <AlertContainer>

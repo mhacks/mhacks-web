@@ -79,7 +79,7 @@ const StyledNavLink = styled(NavLink)`
 
     &:hover {
         background-color: ${props => props.color};
-        color: white;
+        color: ${theme.primary};
     }
 
     &:first-child {
@@ -102,7 +102,7 @@ const StyledALink = styled.a`
 
     &:hover {
         background-color: ${props => props.color};
-        color: white;
+        color: ${theme.primary};
     }
 
     &:first-child {
