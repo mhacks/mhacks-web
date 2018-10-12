@@ -31,12 +31,19 @@ var schema = new mongoose.Schema(
                 }
             },
             //First user in the array will be the 'leader'
-            members: [
-                {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: 'User'
+            members: {
+                type: [
+                    {
+                        type: mongoose.Schema.Types.ObjectId,
+                        ref: 'User'
+                    }
+                ],
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Members',
+                    placeholder: 'Members'
                 }
-            ]
+            }
         },
         defaultEndSchema
     ),

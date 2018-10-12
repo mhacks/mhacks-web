@@ -216,7 +216,11 @@ router.post(
                                 'array')) ||
                         'array_select' in Model.schema.obj[i].form)
                 ) {
-                    fields[i] = req.body[i].split(',');
+                    if (req.body[i]) {
+                        fields[i] = req.body[i].split(',');
+                    } else {
+                        continue;
+                    }
                 } else {
                     fields[i] = req.body[i];
                 }

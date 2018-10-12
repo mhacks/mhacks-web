@@ -17,17 +17,29 @@ var schema = new mongoose.Schema(
             user: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User',
-                required: true
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'User'
+                }
             },
             scanner: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User',
-                required: true
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Scanner'
+                }
             },
             event: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Scan',
-                required: true
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Event'
+                }
             },
             created_at: {
                 type: Date,
