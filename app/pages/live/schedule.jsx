@@ -185,13 +185,13 @@ class Schedule extends React.Component {
                         eventPropGetter={event => {
                             var color = 'darkslategray';
 
-                            if (event.category === 'Tech Talk') {
+                            if (event.category === 'tech talk') {
                                 color = '#0074d9';
-                            } else if (event.category === 'Food') {
+                            } else if (event.category === 'food') {
                                 color = '#3d9970';
-                            } else if (event.category === 'General') {
+                            } else if (event.category === 'general') {
                                 color = '#001f3f';
-                            } else if (event.category === 'Sponsor Event') {
+                            } else if (event.category === 'sponsor event') {
                                 color = '#ff4136';
                             } else {
                                 color = '#b10dc9';
