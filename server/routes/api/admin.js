@@ -219,7 +219,7 @@ router.post(
                     if (req.body[i]) {
                         fields[i] = req.body[i].split(',');
                     } else {
-                        continue;
+                        fields[i] = [];
                     }
                 } else {
                     fields[i] = req.body[i];
