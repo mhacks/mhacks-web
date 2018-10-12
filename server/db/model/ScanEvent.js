@@ -77,7 +77,7 @@ schema.post('save', function(doc) {
     }
 
     Device.find({
-        user: { $in: [[doc.user._id, doc.scanner._id]] }
+        user: { $in: [doc.user._id, doc.scanner._id] }
     }).then(devices => {
         var device_ids = devices.map(function(device) {
             return device._id;
