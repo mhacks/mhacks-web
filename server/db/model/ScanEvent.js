@@ -83,13 +83,15 @@ schema.post('save', function(doc) {
             return device._id;
         });
 
-        PushNotification.create({
-            title: 'Scan Event!',
-            body: body,
-            category: 'logistics',
-            isApproved: true,
-            devices: device_ids
-        });
+        if (device_ids.length > 1) {
+            PushNotification.create({
+                title: 'Scan Event!',
+                body: body,
+                category: 'logistics',
+                isApproved: true,
+                devices: device_ids
+            });
+        }
     });
 });
 
