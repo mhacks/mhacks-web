@@ -284,7 +284,6 @@ router.post('/ticket/verify', authMiddleware('scanner admin', 'api'), function(
                                     } else {
                                         Application.find()
                                             .byEmail(req.body.email)
-
                                             .then(application => {
                                                 if (application) {
                                                     if (
