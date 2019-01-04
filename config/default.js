@@ -21,7 +21,7 @@ module.exports = {
     max_tokens: process.env.MAX_TOKENS || 10,
     token_expiration: process.env.TOKEN_EXPIRATION || 28, // days
     mailchimp_token: process.env.MAILCHIMP_TOKEN || '',
-    mailchimp_listid: process.env.MAILCHIMP_LISTID || 'd9245d6d34',
+    mailchimp_listid: process.env.MAILCHIMP_LISTID || '382fb6e35d',
     mandrill_token: process.env.MANDRILL_TOKEN || '',
     email_from: process.env.EMAIL_FROM || 'hackathon@umich.edu',
     email_from_name: process.env.EMAIL_FROM_NAME || 'MHacks',
