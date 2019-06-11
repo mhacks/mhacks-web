@@ -313,7 +313,7 @@ router.post('/ticket/verify', authMiddleware('scanner admin', 'api'), function(
                                                                                             status: true,
                                                                                             scanevent: Object.assign(
                                                                                                 {},
-                                                                                                scanevent,
+                                                                                                scanevent.toJSON(),
                                                                                                 {
                                                                                                     user: profile
                                                                                                 }
