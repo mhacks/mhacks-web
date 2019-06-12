@@ -2,16 +2,20 @@ FROM node:11
 
 MAINTAINER MHacks Team
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
-COPY . /usr/src/app
-RUN yarn install
-RUN yarn run build
+WORKDIR /usr/src/app
+
 RUN npm install -g nodemon
 
-CMD ["yarn", "start"]
+ADD yarn.lock .
+ADD package.json .
 
+RUN yarn install
+
+ADD . .
+
+RUN yarn run build
+
+CMD ["yarn", "start"]
 EXPOSE 3000
