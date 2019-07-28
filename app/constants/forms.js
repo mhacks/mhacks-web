@@ -11,7 +11,7 @@ export const FieldTypes = {
     ARRAY: 9,
     SUBMIT: 10,
     FILE: 11,
-    DATETIME: 12,
+    DATETIME: 12
 };
 
 export const ProfileFields = {

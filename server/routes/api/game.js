@@ -6,7 +6,7 @@ var router = require('express').Router(),
     User = require('../../db/model/User.js');
 
 // Handles /v1/game/questions
-router.get('/questions', function (req, res) {
+router.get('/questions', function(req, res) {
     res.send({
         status: true,
         questions: Questions
@@ -14,7 +14,7 @@ router.get('/questions', function (req, res) {
 });
 
 // Returns GameState for the current user
-router.get('/', authMiddleware('any', 'api'), function (req, res) {
+router.get('/', authMiddleware('any', 'api'), function(req, res) {
     GameState.find({})
         .byToken(req.authToken)
         .then(gameState => {
@@ -32,12 +32,14 @@ router.get('/', authMiddleware('any', 'api'), function (req, res) {
 });
 
 // Create/update answers in GameState
-router.post('/', authMiddleware('any', 'api'), function (req, res) {
+router.post('/', authMiddleware('any', 'api'), function(req, res) {
     GameState.find()
         .byToken(req.authToken)
         .then(state => {
             if (state) {
-                for (const [question, answer] of Object.entries(req.body.answers)) {
+                for (const [question, answer] of Object.entries(
+                    req.body.answers
+                )) {
                     state.answers.set(question, answer);
                 }
                 state.save();
@@ -56,7 +58,9 @@ router.post('/', authMiddleware('any', 'api'), function (req, res) {
                             answers: {}
                         })
                             .then(state => {
-                                for (const [question, answer] of Object.entries(req.body.answers)) {
+                                for (const [question, answer] of Object.entries(
+                                    req.body.answers
+                                )) {
                                     state.answers.set(question, answer);
                                 }
                                 state.save();

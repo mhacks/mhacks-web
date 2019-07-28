@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { GameThunks } from '../actions';
 import { PageContainer } from '../components';
 import PropTypes from 'prop-types';
-import { FieldTypes } from '../constants/forms.js'
+import { FieldTypes } from '../constants/forms.js';
 
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
@@ -66,7 +66,8 @@ class Game extends React.Component {
     }
 
     onSubmit(answers) {
-        this.props.dispatch(GameThunks.uploadAnswers(answers))
+        this.props
+            .dispatch(GameThunks.uploadAnswers(answers))
             .then(() => this.addNotification('Answers Saved!', 'save'));
     }
 
@@ -79,11 +80,12 @@ class Game extends React.Component {
                     </SectionHeader>
                     <div>
                         <Subhead>
-                            Welcome to the SiMHacks questionnaire! SiMHacks is a minigame
-                            within MHacks 12 in which hackers can earn points for finding
-                            other hackers with certain interests and getting to know them
-                            a bit more! To begin, fill out the questions below, and when
-                            MHacks 12 rolls around come with your spidey senses ready!
+                            Welcome to the SiMHacks questionnaire! SiMHacks is a
+                            minigame within MHacks 12 in which hackers can earn
+                            points for finding other hackers with certain
+                            interests and getting to know them a bit more! To
+                            begin, fill out the questions below, and when MHacks
+                            12 rolls around come with your spidey senses ready!
                         </Subhead>
                         <MHForm
                             schema={this.props.questions}
@@ -123,28 +125,31 @@ Game.contextTypes = {
 
 function mapStateToProps(state) {
     var questions = {};
-    state.gameState.data.questions.forEach(question => questions[question.name] = {
-        key: question.name,
-        label: question.text,
-        type: FieldTypes.SELECT,
-        select: question.options.map(option => ({
-            label: option,
-            value: option,
-            type: FieldTypes.TEXT,
-        })),
-        required: true,
-    });
+    state.gameState.data.questions.forEach(
+        question =>
+            (questions[question.name] = {
+                key: question.name,
+                label: question.text,
+                type: FieldTypes.SELECT,
+                select: question.options.map(option => ({
+                    label: option,
+                    value: option,
+                    type: FieldTypes.TEXT
+                })),
+                required: true
+            })
+    );
 
     questions['save'] = {
         label: 'Save',
-        type: FieldTypes.SUBMIT,
+        type: FieldTypes.SUBMIT
     };
 
     return {
         theme: state.theme.data,
         configurationState: state.configurationState,
         questions: questions,
-        answers: state.gameState.data.state.answers,
+        answers: state.gameState.data.state.answers
     };
 }
 

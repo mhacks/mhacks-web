@@ -5,7 +5,7 @@ const defaultGameState = {
     ...objectState,
     data: {
         questions: [],
-        state: {},
+        state: {}
     }
 };
 

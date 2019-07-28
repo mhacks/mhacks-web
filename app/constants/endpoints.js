@@ -37,5 +37,5 @@ export default {
     COMPLETE_MENTORSHIP_TICKET: '/v1/mentorship/complete',
 
     GAME: '/v1/game',
-    GAME_QUESTIONS: '/v1/game/questions',
+    GAME_QUESTIONS: '/v1/game/questions'
 };

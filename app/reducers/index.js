@@ -27,7 +27,7 @@ const rootReducer = combineReducers({
     teamsState,
     adminState,
     mentorshipState,
-    gameState,
+    gameState
 });
 
 export default rootReducer;

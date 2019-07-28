@@ -18,16 +18,16 @@ var schema = new mongoose.Schema(
                 required: true,
                 form: {
                     user_editable: false,
-                    label: 'User ID',
-                },
+                    label: 'User ID'
+                }
             },
             answers: {
                 type: Map,
                 of: String,
                 required: true,
                 form: {
-                    user_editable: false,
-                },
+                    user_editable: false
+                }
             },
             points: {
                 type: Number,
@@ -35,9 +35,9 @@ var schema = new mongoose.Schema(
                 required: true,
                 form: {
                     user_editable: false,
-                    label: 'Points',
-                },
-            },
+                    label: 'Points'
+                }
+            }
         },
         defaultEndSchema
     ),
@@ -45,7 +45,7 @@ var schema = new mongoose.Schema(
 );
 
 // Allow us to query by token
-schema.query.byToken = function (findToken) {
+schema.query.byToken = function(findToken) {
     return mongoose
         .model('User')
         .find()
@@ -53,7 +53,7 @@ schema.query.byToken = function (findToken) {
         .then(user => {
             return this.findOne({ user: user });
         })
-        .catch(() => { });
+        .catch(() => {});
 };
 
 modifySchema(schema);

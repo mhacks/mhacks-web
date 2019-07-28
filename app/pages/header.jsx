@@ -214,12 +214,12 @@ class HeaderLinks extends React.Component {
                     </StyledALink>
                 ) : null}
                 {!isLoggedIn ||
-                    !isEmailVerified ||
-                    !(is_application_open || isApplicationSubmitted) ? null : (
-                        <StyledNavLink to={routes.APPLY} color={color}>
-                            Hacker App
+                !isEmailVerified ||
+                !(is_application_open || isApplicationSubmitted) ? null : (
+                    <StyledNavLink to={routes.APPLY} color={color}>
+                        Hacker App
                     </StyledNavLink>
-                    )}
+                )}
                 {isLoggedIn ? (
                     <StyledNavLink to={routes.MENTOR_APPLICATION} color={color}>
                         Mentor App
@@ -254,22 +254,22 @@ class HeaderLinks extends React.Component {
                     </StyledNavLink>
                 ) : null}
                 {isLoggedIn &&
-                    isAccepted &&
-                    isConfirmed &&
-                    is_team_building_enabled ? (
-                        <StyledNavLink to={routes.TEAM_BUILDING} color={color}>
-                            Blueprinting
+                isAccepted &&
+                isConfirmed &&
+                is_team_building_enabled ? (
+                    <StyledNavLink to={routes.TEAM_BUILDING} color={color}>
+                        Blueprinting
                     </StyledNavLink>
-                    ) : null}
+                ) : null}
                 {isLoggedIn ? (
                     <StyledNavLink to={routes.LOGOUT} color={color}>
                         Logout
                     </StyledNavLink>
                 ) : (
-                        <StyledNavLink to={routes.LOGIN} color={color}>
-                            Login
+                    <StyledNavLink to={routes.LOGIN} color={color}>
+                        Login
                     </StyledNavLink>
-                    )}
+                )}
             </WrappingComponent>
         );
     }
