@@ -7,6 +7,7 @@ export default {
     APPLY: '/apply',
     PROFILE: '/profile',
     DASHBOARD: '/dashboard',
+    GAME: '/game',
     LIVE: '/live',
     HACKER_READER: '/reader/hacker',
     MENTOR_READER: '/reader/mentor',

@@ -1,0 +1,143 @@
+[
+    {
+        "name": "icecream",
+        "text": "What is your favorite ice cream flavor?",
+        "options": [
+            "Vanilla",
+            "Chocolate",
+            "Cookie Dough",
+            "Strawberry",
+            "Mint Chocolate Chip",
+            "Rocky Roadhouse"
+        ],
+        "task_format": "Find someone whose favorite ice cream flavor is {}."
+    },
+    {
+        "name": "dinosaur",
+        "text": "What is your favorite dinosaur?",
+        "options": [
+            "Tyrannosaurus rex",
+            "Triceratops",
+            "Velociraptor",
+            "Stegosaurus",
+            "Brachiosaurus",
+            "Barney"
+        ],
+        "task_format": "Find someone whose favorite dinosaur is {}."
+    },
+    {
+        "name": "fuel",
+        "text": "What is your go-to gaming fuel?",
+        "options": [
+            "Doritos",
+            "Cheetos",
+            "Mountain Dew",
+            "Energy Drinks",
+            "Water",
+            "La Croix",
+            "Pizza Rolls"
+        ],
+        "task_format": "Find someone whose gaming fuel of choice is {}."
+    },
+    {
+        "name": "console",
+        "text": "What is your favorite game console?",
+        "options": [
+            "PS4",
+            "Xbox One",
+            "Nintendo Switch",
+            "PC",
+            "Mobile",
+            "Nintendo Game Boy",
+            "Nintendo DS",
+            "Atari"
+        ],
+        "task_format": "Find someone whose favorite game console is {}."
+    },
+    {
+        "name": "studio",
+        "text": "Who makes the best games?",
+        "options": [
+            "EA",
+            "Ubisoft",
+            "Rockstar",
+            "CD Projekt Red",
+            "Blizzard",
+            "Bethesda",
+            "Nintendo"
+        ],
+        "task_format": "Find someone who thinks {} makes the best games."
+    },
+    {
+        "name": "pokemon",
+        "text": "Who is the coolest Pokémon?",
+        "options": [
+            "Pikachu",
+            "Squirtle",
+            "Charmander",
+            "Bulbasaur",
+            "Eevee",
+            "Latias and Latios",
+            "Mr. Mime"
+        ],
+        "task_format": "Find someone whose favorite Pokémon is {}."
+    },
+    {
+        "name": "marvel",
+        "text": "Who is your favorite Marvel superhero?",
+        "options": [
+            "Thor",
+            "Iron Man",
+            "Spiderman",
+            "Scarlet Witch",
+            "Captain Marvel",
+            "Captain America"
+        ],
+        "task_format": "Find someone whose favorite Marvel superhero is {}."
+    },
+    {
+        "name": "genre",
+        "text": "What is your favorite video game genre?",
+        "options": [
+            "Role Playing",
+            "First Person Shooter",
+            "Platformer",
+            "MMO",
+            "Simulation",
+            "Real-Time Strategy"
+        ],
+        "task_format": "Find someone whose favorite video game genre is {}."
+    },
+    {
+        "name": "retro",
+        "text": "What is your favorite retro video game?",
+        "options": [
+            "Pacman",
+            "Pong",
+            "Super Mario Bros.",
+            "Tetris",
+            "Space Invaders",
+            "Duck Hunt"
+        ],
+        "task_format": "Find someone whose favorite retro video game is {}."
+    },
+    {
+        "name": "smash",
+        "text": "Who is your Smash main?",
+        "options": [
+            "Mario",
+            "Donkey Kong",
+            "Link",
+            "Samus",
+            "Yoshi",
+            "Kirby",
+            "Fox",
+            "Pikachu",
+            "Jigglypuff",
+            "Captain Falcon",
+            "Ness",
+            "Luigi"
+        ],
+        "task_format": "Find someone whose mains {}."
+    }
+]
