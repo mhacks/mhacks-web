@@ -105,7 +105,8 @@ class Model extends React.Component {
                                     Header: key,
                                     accessor: key,
                                     Cell: row => {
-                                        if (Array.isArray(row.value)) {
+                                        if (Array.isArray(row.value)
+                                            || typeof row.value === 'object') {
                                             return JSON.stringify(row.value);
                                         }
 
@@ -128,10 +129,10 @@ class Model extends React.Component {
                         onClick: () => {
                             this.context.router.history.push(
                                 routes.ADMIN +
-                                    '/' +
-                                    this.props.model +
-                                    '/' +
-                                    rowInfo.row.id
+                                '/' +
+                                this.props.model +
+                                '/' +
+                                rowInfo.row.id
                             );
                         }
                     })}

@@ -25,6 +25,7 @@ import {
     MentorApply,
     SpeakerApply,
     Dashboard,
+    Game,
     AdminPage,
     TeamBuilding,
     PasswordReset
@@ -182,6 +183,17 @@ class AppProvider extends React.Component {
                                 render={() => {
                                     if (this.getMetadata().isLoggedIn) {
                                         return <Dashboard />;
+                                    }
+
+                                    return <Redirect to={routes.LOGIN} />;
+                                }}
+                            />
+                            <Route
+                                exact
+                                path={routes.GAME}
+                                render={() => {
+                                    if (this.getMetadata().isLoggedIn) {
+                                        return <Game />;
                                     }
 
                                     return <Redirect to={routes.LOGIN} />;
