@@ -1,6 +1,6 @@
-FROM node:11
+FROM node:latest
 
-MAINTAINER MHacks Team
+LABEL maintainer="MHacks Team <tech@mhacks.org>" 
 
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
