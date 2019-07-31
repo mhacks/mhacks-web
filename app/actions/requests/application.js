@@ -10,7 +10,7 @@ export default class ApplicationRequests {
         }
 
         for (var key in body) {
-            if (body.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(body, key)) {
                 formData.append(key, body[key]);
             }
         }

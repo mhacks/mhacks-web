@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-var CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 
 var devConfig = {
@@ -9,7 +9,6 @@ var devConfig = {
         poll: 1000
     },
     entry: [
-        'babel-polyfill',
         './app/app.jsx',
         'webpack/hot/dev-server',
         'webpack-hot-middleware/client'
@@ -36,13 +35,23 @@ var devConfig = {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader',
                     'postcss-loader?' + JSON.stringify(
-                    [ autoprefixer({ browsers: ['last 3 versions'] }) ]
+                    [ autoprefixer() ]
                 )]
             },
             {
-                test: /\.jsx?$/,
+                test: /\.m?jsx?$/,
                 exclude: /(node_modules|bower_components)/,
-                use: ['babel-loader']
+                use: {
+                  loader: 'babel-loader',
+                  options: {
+                    presets: [[
+                        '@babel/preset-env', {
+                            useBuiltIns: 'usage',
+                            corejs: 3
+                        }
+                    ], '@babel/preset-react']
+                  }
+                }
             },
             {
                 test: /\.(eot|ttf|woff|woff2|otf)$/,
@@ -63,7 +72,9 @@ var devConfig = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"development"'
         }),
-        new CleanWebpackPlugin(['build/logo-title.png', 'build/logo.png', 'build/logo-media.png', 'build/fonts', 'build/js', 'build/styles', 'build/index.html']),
+        new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: ['build/logo-title.png', 'build/logo.png', 'build/logo-media.png', 'build/fonts', 'build/js', 'build/styles', 'build/index.html']
+        }),
         new CopyWebpackPlugin([
             { from: './static/m11/favicon.png', to: './logo.png' },
             { from: './static/m11/logo.png', to: './logo-title.png' },

@@ -175,8 +175,8 @@ class TeamBuilding extends React.Component {
                             Welcome to the {configurationData.app_name} Team
                             Builder! Broadcast your idea to find hackers
                             interested in joining your team or find a team that
-                            you'd like to join! For {configurationData.app_name},
-                            you can have teams up to a size of 4.
+                            you'd like to join! For {configurationData.app_name}
+                            , you can have teams up to a size of 4.
                         </Description>
                     </BoxWrapper>
                     {userInTeam ? (

@@ -44,7 +44,12 @@ export default class ConfigurationThunks {
                                 };
 
                                 for (const key of Object.keys(ProfileFields)) {
-                                    if (user.hasOwnProperty(key)) {
+                                    if (
+                                        Object.prototype.hasOwnProperty.call(
+                                            user,
+                                            key
+                                        )
+                                    ) {
                                         state.userData.user[key] = user[key];
                                     }
                                 }

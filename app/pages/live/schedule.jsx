@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import Calendar from 'react-big-calendar';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 
 import { devices } from '../../styles';
 import { EventsThunks } from '../../actions';
 import { TabGroup } from '../../components';
+
+const localizer = momentLocalizer(moment);
 
 const TabGroupContainer = styled.div`
     width: 100%;
@@ -95,8 +97,6 @@ function Event({ event }) {
     );
 }
 
-Calendar.momentLocalizer(moment);
-
 class Schedule extends React.Component {
     constructor(props) {
         super(props);
@@ -172,6 +172,7 @@ class Schedule extends React.Component {
                 </TabGroupContainer>
                 <CalendarContainer theme={this.props.theme}>
                     <Calendar
+                        localizer={localizer}
                         events={events}
                         toolbar={false}
                         defaultView="day"

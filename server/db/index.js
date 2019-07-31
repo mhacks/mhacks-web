@@ -51,7 +51,11 @@ mongoose.Promise = global.Promise;
 
 // Initialize the DB connection
 mongoose
-    .connect('mongodb://' + config.mongo_hostname + '/' + config.backend_db)
+    .connect('mongodb://' + config.mongo_hostname + '/' + config.backend_db, {
+        useNewUrlParser: true,
+        useFindAndModify: false,
+        useCreateIndex: true
+    })
     .then(res => {
         if (res) {
             console.log('Connected to MongoDB Successfully');
@@ -72,7 +76,7 @@ function modifySchema(schema) {
         for (const propertyName in obj) {
             (function() {
                 if (
-                    obj.hasOwnProperty(propertyName) &&
+                    Object.prototype.hasOwnProperty.call(obj, propertyName) &&
                     (obj[propertyName] === Date ||
                         (obj[propertyName].type &&
                             obj[propertyName].type === Date))
@@ -99,7 +103,10 @@ function modifySchema(schema) {
             const updateables = [];
 
             for (const key in schema.obj) {
-                if (schema.obj.hasOwnProperty(key) && schema.obj[key].form) {
+                if (
+                    Object.prototype.hasOwnProperty.call(schema.obj, key) &&
+                    schema.obj[key].form
+                ) {
                     const field = schema.obj[key];
 
                     if (
@@ -120,7 +127,7 @@ function modifySchema(schema) {
                         });
                     }
                 } else if (
-                    schema.obj.hasOwnProperty(key) &&
+                    Object.prototype.hasOwnProperty.call(schema.obj, key) &&
                     Array.isArray(groups) &&
                     groups.indexOf('admin') !== -1
                 ) {
@@ -139,7 +146,7 @@ function modifySchema(schema) {
             }
 
             for (const param in fields) {
-                if (fields.hasOwnProperty(param)) {
+                if (Object.prototype.hasOwnProperty.call(fields, param)) {
                     if (
                         updateables === false ||
                         updateables.indexOf(param) !== -1

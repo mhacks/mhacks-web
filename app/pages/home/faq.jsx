@@ -157,10 +157,10 @@ class Faq extends React.Component {
                                                 shoot us an email at{' '}
                                                 <Link href="mailto:hackathon@umich.edu">
                                                     hackathon@umich.edu
-                                                </Link>. If your company is
-                                                interested in becoming a
-                                                sponsor, check out the
-                                                sponsorship section below.
+                                                </Link>
+                                                . If your company is interested
+                                                in becoming a sponsor, check out
+                                                the sponsorship section below.
                                             </span>
                                         }
                                     />
@@ -172,7 +172,8 @@ class Faq extends React.Component {
                                                 your mind, fire it off to{' '}
                                                 <Link href="mailto:hackathon@umich.edu">
                                                     hackathon@umich.edu
-                                                </Link>!
+                                                </Link>
+                                                !
                                             </span>
                                         }
                                     />
@@ -187,13 +188,7 @@ class Faq extends React.Component {
                                     <FaqItem
                                         header="How do I apply?"
                                         body={`Step one is to create an MHacks Account and fill out some basic information in your MHacks Profile. Once that's done,
-                                     you'll be able to apply for ${
-                                         this.props.configurationState.data
-                                             .app_name
-                                     }! Note that if you're accepted to ${
-                                            this.props.configurationState.data
-                                                .app_name
-                                        }, you will need to Confirm your acceptance.`}
+                                     you'll be able to apply for ${this.props.configurationState.data.app_name}! Note that if you're accepted to ${this.props.configurationState.data.app_name}, you will need to Confirm your acceptance.`}
                                     />
                                     <FaqItem
                                         header="When are applications closing?"
@@ -265,7 +260,8 @@ class Faq extends React.Component {
                                                 at{' '}
                                                 <Link href="mailto:hackathon@umich.edu">
                                                     hackathon@umich.edu
-                                                </Link>.
+                                                </Link>
+                                                .
                                             </span>
                                         }
                                     />

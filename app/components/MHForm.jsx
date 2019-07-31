@@ -5,15 +5,13 @@ import RoundedButton from './RoundedButton.jsx';
 import FileUpload from './FileUpload';
 import Alert from './Alert.jsx';
 import Select from 'react-virtualized-select';
-import { Creatable as ReactSelectCreatable } from 'react-select';
 import createFilterOptions from 'react-select-fast-filter-options';
-import 'react-select/dist/react-select.min.css';
 import 'react-virtualized/styles.css';
 import 'react-virtualized-select/styles.css';
 
 class Creatable extends React.Component {
     render() {
-        return <ReactSelectCreatable {...this.props} />;
+        return <Select.Creatable {...this.props} />;
     }
 }
 
@@ -119,7 +117,7 @@ class MHForm extends React.Component {
 
             if (
                 defaultValue !== undefined &&
-                (!existingObject.hasOwnProperty(key) ||
+                (!Object.prototype.hasOwnProperty.call(existingObject, key) ||
                     existingObject[key] === undefined ||
                     existingObject[key] === this.defaultForType(fieldType))
             ) {
@@ -725,8 +723,8 @@ class MHForm extends React.Component {
                                 const uploadBackground = hasError
                                     ? 'red'
                                     : this.state.files[field.key] && !notExists
-                                        ? this.props.theme.success
-                                        : this.props.theme.primary;
+                                    ? this.props.theme.success
+                                    : this.props.theme.primary;
                                 return (
                                     <FileUploadContainer key={field.key}>
                                         <FileUpload

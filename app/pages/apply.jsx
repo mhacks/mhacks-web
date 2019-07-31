@@ -136,10 +136,7 @@ class Apply extends React.Component {
                         {this.props.userState.data.isApplicationSubmitted ? (
                             <AlertContainer>
                                 <Alert
-                                    message={`Your application is submitted but you can make changes on this page and update your application! Thanks for applying to ${
-                                        this.props.configurationState.data
-                                            .app_name
-                                    }.`}
+                                    message={`Your application is submitted but you can make changes on this page and update your application! Thanks for applying to ${this.props.configurationState.data.app_name}.`}
                                     positive={true}
                                 />
                             </AlertContainer>
@@ -161,7 +158,8 @@ class Apply extends React.Component {
                             agree to the MHacks{' '}
                             <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
                                 Code of Conduct
-                            </LegalLink>.
+                            </LegalLink>
+                            .
                         </LegalText>
                         <MHForm
                             schema={this.state.userState.data.form}

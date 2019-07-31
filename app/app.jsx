@@ -33,6 +33,7 @@ import {
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';
 import { getUserMetadata } from './util/user.js';
+import { GlobalStyle } from './styles';
 
 // polyfill Promise for IE browsers
 require('es6-promise').polyfill();
@@ -84,6 +85,7 @@ class AppProvider extends React.Component {
 
         return (
             <Provider store={store}>
+                <GlobalStyle />
                 <ConnectedRouter history={history}>
                     <Navigator
                         renderHeaderFooter={

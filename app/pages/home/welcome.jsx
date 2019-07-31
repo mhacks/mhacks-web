@@ -21,8 +21,8 @@ class Welcome extends React.Component {
                 <CenteredContainer>
                     <Brick />
                     <SectionHeader>
-                        Welcome <br />to{' '}
-                        {this.props.configurationState.data.app_name}
+                        Welcome <br />
+                        to {this.props.configurationState.data.app_name}
                     </SectionHeader>
                     <SectionBody>
                         During {this.props.configurationState.data.app_name},

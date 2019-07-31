@@ -109,7 +109,7 @@ router.delete('/', function(req, res) {
             .then(team => {
                 //Check if person removing team is leader (first in array)
                 if (team && team.members.indexOf(req.user._id) === 0) {
-                    team.remove();
+                    team.deleteOne();
                     team.save().then(() => {
                         res.send({
                             status: true

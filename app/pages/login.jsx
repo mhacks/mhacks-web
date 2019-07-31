@@ -265,7 +265,8 @@ class Login extends React.Component {
                                     and{' '}
                                     <LegalLink href="https://docs.google.com/document/d/1b-NwrHVRvct-1Fqx7QdjMWgERC1Isy8dHtE0q3v5tZA/pub">
                                         Terms of Service
-                                    </LegalLink>.
+                                    </LegalLink>
+                                    .
                                 </LegalText>
                             ) : (
                                 undefined

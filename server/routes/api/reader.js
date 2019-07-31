@@ -4,10 +4,10 @@ var router = require('express').Router(),
 
 router.post('/', function(req, res) {
     if (
-        req.body.hasOwnProperty('users') &&
-        req.body.hasOwnProperty('score') &&
-        req.body.hasOwnProperty('status') &&
-        req.body.hasOwnProperty('reimbursement')
+        Object.prototype.hasOwnProperty.call(req.body, 'users') &&
+        Object.prototype.hasOwnProperty.call(req.body, 'score') &&
+        Object.prototype.hasOwnProperty.call(req.body, 'status') &&
+        Object.prototype.hasOwnProperty.call(req.body, 'reimbursement')
     ) {
         const { users, score, status, reimbursement } = req.body;
         users.forEach(user => {

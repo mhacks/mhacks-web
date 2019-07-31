@@ -84,18 +84,18 @@ class TravelTicketSection extends React.Component {
         return (
             <div>
                 <h4>
-                    Travel Reimbursement Offered: Up to ${
-                        this.props.userState.data.user.reimbursement
-                    }
+                    Travel Reimbursement Offered: Up to $
+                    {this.props.userState.data.user.reimbursement}
                 </h4>
                 <p>
                     To remain eligible for your reimbursement, you must email
                     flymhacks@umich.edu with any relevant receipts, ticket
                     confirmations, etc. within 5 days of application acceptance.{' '}
-                    <br /> <br />If you are driving, please indicate as such on
-                    the confirmation form - you will have until October 30th to
-                    send a single email to flymhacks@umich.edu with all costs
-                    you would like to be reimbursed for. <br /> <br />
+                    <br /> <br />
+                    If you are driving, please indicate as such on the
+                    confirmation form - you will have until October 30th to send
+                    a single email to flymhacks@umich.edu with all costs you
+                    would like to be reimbursed for. <br /> <br />
                     If you need a time extension on the deadline, please email
                     us at flymhacks@umich.edu. We have many other hackers on our
                     waitlist who would also need a travel reimbursement to

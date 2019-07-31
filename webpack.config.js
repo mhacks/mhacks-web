@@ -14,7 +14,7 @@ const cssExtractor = new MiniCssExtractPlugin({
 const lifecycleEvent = process.env.npm_lifecycle_event;
 
 let devConfig = {
-    entry: ['babel-polyfill', './app/app.jsx'],
+    entry: ['./app/app.jsx'],
     output: {
         publicPath: '/',
         path: path.resolve('./build'),
@@ -42,12 +42,16 @@ let devConfig = {
                 )]
             },
             {
-                test: /\.m?js$/,
+                test: /\.m?jsx?$/,
                 exclude: /(node_modules|bower_components)/,
                 use: {
                   loader: 'babel-loader',
                   options: {
-                    presets: ['@babel/preset-env']
+                    presets: [[
+                        '@babel/preset-env', {
+                        useBuiltIns: 'usage',
+                        corejs: 3
+                    }], '@babel/preset-react']
                   }
                 }
             },
@@ -85,7 +89,7 @@ let devConfig = {
 };
 
 let buildConfig = {
-    entry: ['babel-polyfill', './app/app.jsx'],
+    entry: ['./app/app.jsx'],
     output: {
         publicPath: '/',
         path: path.resolve('./build'),
