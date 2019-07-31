@@ -138,6 +138,6 @@
             "Ness",
             "Luigi"
         ],
-        "task_format": "Find someone whose mains {}."
+        "task_format": "Find someone who mains {}."
     }
 ]

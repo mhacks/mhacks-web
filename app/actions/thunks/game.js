@@ -65,7 +65,7 @@ export default class GameThunks {
     static uploadAnswers(answers) {
         return dispatch => {
             dispatch({
-                type: actions.LOAD_GAMESTATE_REQUEST
+                type: actions.UPLOAD_GAME_QUESTIONS_REQUEST
             });
 
             const token = localStorage.getItem('jwt');

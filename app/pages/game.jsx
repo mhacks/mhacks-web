@@ -81,11 +81,14 @@ class Game extends React.Component {
                     <div>
                         <Subhead>
                             Welcome to the SiMHacks questionnaire! SiMHacks is a
-                            minigame within MHacks 12 in which hackers can earn
-                            points for finding other hackers with certain
-                            interests and getting to know them a bit more! To
-                            begin, fill out the questions below, and when MHacks
-                            12 rolls around come with your spidey senses ready!
+                            minigame within{' '}
+                            {this.props.configurationState.data.app_name} in
+                            which hackers can earn points for finding other
+                            hackers with certain interests and getting to know
+                            them a bit more! To begin, fill out the questions
+                            below, and when{' '}
+                            {this.props.configurationState.data.app_name} rolls
+                            around come with your spidey senses ready!
                         </Subhead>
                         <MHForm
                             schema={this.props.questions}
