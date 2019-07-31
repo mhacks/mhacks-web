@@ -163,6 +163,14 @@ class Apply extends React.Component {
                                 Code of Conduct
                             </LegalLink>.
                         </LegalText>
+                        <LegalText>
+                            All minors must submit the{' '}
+                            <LegalLink href="https://mha.cx/minorforms">
+                                University of Michigan Children on Campus
+                            </LegalLink>{' '}
+                            form prior to confirming their attendance to{' '}
+                            {this.props.configurationState.data.app_name}.
+                        </LegalText>
                         <MHForm
                             schema={this.state.userState.data.form}
                             FieldTypes={this.state.userState.data.FieldTypes}
