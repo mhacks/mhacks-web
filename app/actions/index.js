@@ -15,3 +15,4 @@ export { default as EventsThunks } from './thunks/events.js';
 export { default as TeamsThunks } from './thunks/teams.js';
 export { default as AdminThunks } from './thunks/admin.js';
 export { default as MentorshipThunks } from './thunks/mentorship.js';
+export { default as GameThunks } from './thunks/game.js';

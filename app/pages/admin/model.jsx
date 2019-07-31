@@ -105,7 +105,10 @@ class Model extends React.Component {
                                     Header: key,
                                     accessor: key,
                                     Cell: row => {
-                                        if (Array.isArray(row.value)) {
+                                        if (
+                                            Array.isArray(row.value) ||
+                                            typeof row.value === 'object'
+                                        ) {
                                             return JSON.stringify(row.value);
                                         }
 

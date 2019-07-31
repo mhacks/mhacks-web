@@ -23,6 +23,7 @@ var router = require('express').Router(),
     speakerHandler = require('./api/speaker.js'),
     mentorshipHandler = require('./api/mentorship.js'),
     deviceHandler = require('./api/device.js'),
+    gameHandler = require('./api/game.js'),
     swaggerUI = require('swagger-ui-express'),
     swaggerDoc = require('../../static/docs/openapi.json');
 
@@ -50,6 +51,7 @@ router.use('/speaker', speakerHandler);
 router.use('/teams', authMiddleware('any', 'api', false), teamHandler);
 router.use('/mentorship', mentorshipHandler);
 router.use('/device', deviceHandler);
+router.use('/game', gameHandler);
 
 router.get('/', function(req, res) {
     res.redirect('/v1/docs');

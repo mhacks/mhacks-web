@@ -5,6 +5,7 @@ import Login from './login.jsx';
 import Logout from './logout.jsx';
 import EditProfile from './edit_profile.jsx';
 import Dashboard from './dashboard';
+import Game from './game.jsx';
 import Apply from './apply.jsx';
 import LivePage from './live';
 import Reader from './reader';
@@ -23,6 +24,7 @@ export {
     Logout,
     EditProfile,
     Dashboard,
+    Game,
     Apply,
     LivePage,
     Reader,

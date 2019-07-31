@@ -34,5 +34,8 @@ export default {
     MENTORSHIP_TICKET_FORM: '/v1/form/MentorshipTicket',
     ACCEPT_MENTORSHIP_TICKET: '/v1/mentorship/accept',
     UNACCEPT_MENTORSHIP_TICKET: '/v1/mentorship/unaccept',
-    COMPLETE_MENTORSHIP_TICKET: '/v1/mentorship/complete'
+    COMPLETE_MENTORSHIP_TICKET: '/v1/mentorship/complete',
+
+    GAME: '/v1/game',
+    GAME_QUESTIONS: '/v1/game/questions'
 };

@@ -243,6 +243,11 @@ class HeaderLinks extends React.Component {
                         Dashboard
                     </StyledNavLink>
                 ) : null}
+                {isLoggedIn ? (
+                    <StyledNavLink to={routes.GAME} color={color}>
+                        SiMHacks
+                    </StyledNavLink>
+                ) : null}
                 {isLoggedIn && is_live_page_enabled ? (
                     <StyledNavLink to={routes.LIVE} color={color}>
                         Live

@@ -7,7 +7,11 @@ export const FieldTypes = {
     ESSAY: 5,
     BOOLEAN: 6,
     SECTIONHEADER: 7,
-    MULTI: 8
+    MULTI: 8,
+    ARRAY: 9,
+    SUBMIT: 10,
+    FILE: 11,
+    DATETIME: 12
 };
 
 export const ProfileFields = {
