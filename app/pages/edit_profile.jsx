@@ -135,6 +135,7 @@ class EditProfile extends React.Component {
     render() {
         if (
             !this.state.userState ||
+            !this.state.userState.fetched ||
             !this.state.userState.data ||
             (!this.state.userState.data.form && !this.state.userState.data.user)
         ) {

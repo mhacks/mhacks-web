@@ -105,6 +105,7 @@ class ModelForm extends React.Component {
     render() {
         if (
             !this.state.adminState ||
+            !this.state.adminState.fetched ||
             !this.state.adminState.form ||
             !this.state.adminState.document ||
             (!this.state.adminState.form.form &&

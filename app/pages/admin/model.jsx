@@ -125,7 +125,7 @@ class Model extends React.Component {
                                             return 'No';
                                         }
 
-                                        return row.value;
+                                        return row.value || 'N/A';
                                     }
                                 };
                             })
