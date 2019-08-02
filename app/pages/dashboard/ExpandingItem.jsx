@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
 const Wrapper = styled.div`
     display: inline-block;
@@ -52,21 +52,22 @@ const Close = keyframes`
     }
 `;
 
+const sliderOpen = css`
+    animation: ${Open} 0.3s ease-in-out;
+    animation-fill-mode: forwards;
+`;
+
+const sliderClosed = css`
+    height: max-content;
+    animation: ${Close} 0.3s ease-in-out;
+    animation-fill-mode: forwards;
+`;
+
 const Slider = styled.div`
     overflow: hidden;
     transform-origin: top center;
 
-    ${props =>
-        props.open
-            ? ` 
-        animation: ${Open} 0.3s ease-in-out;
-        animation-fill-mode: forwards;
-    `
-            : `
-        height: max-content;
-        animation: ${Close} 0.3s ease-in-out;
-        animation-fill-mode: forwards;
-    `};
+    ${props => (props.open ? sliderOpen : sliderClosed)};
 `;
 
 const PlusWrapper = styled.div`

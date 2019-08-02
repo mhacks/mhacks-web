@@ -6,7 +6,7 @@ import { PageContainer } from '../../components';
 import { AdminThunks } from '../../actions';
 import ReactTable from 'react-table';
 import { routes } from '../../constants';
-import PropTypes from 'prop-types';
+import { push } from 'connected-react-router';
 import Fuse from 'fuse.js';
 import adminFilter from './filter.json';
 import { generateCSV } from '../reader/util';
@@ -77,8 +77,13 @@ class Model extends React.Component {
                     utilities={[
                         {
                             onClick: () => {
-                                this.context.router.history.push(
-                                    routes.ADMIN + '/' + modelKey + '/create'
+                                this.props.dispatch(
+                                    push(
+                                        routes.ADMIN +
+                                            '/' +
+                                            modelKey +
+                                            '/create'
+                                    )
                                 );
                             },
                             title: 'Create'
@@ -129,12 +134,14 @@ class Model extends React.Component {
                     className="-striped -highlight"
                     getTrProps={(state, rowInfo) => ({
                         onClick: () => {
-                            this.context.router.history.push(
-                                routes.ADMIN +
-                                    '/' +
-                                    this.props.model +
-                                    '/' +
-                                    rowInfo.row.id
+                            this.props.dispatch(
+                                push(
+                                    routes.ADMIN +
+                                        '/' +
+                                        this.props.model +
+                                        '/' +
+                                        rowInfo.row.id
+                                )
                             );
                         }
                     })}
@@ -143,12 +150,6 @@ class Model extends React.Component {
         );
     }
 }
-
-Model.contextTypes = {
-    router: PropTypes.shape({
-        history: PropTypes.object.isRequired
-    })
-};
 
 function mapStateToProps(state) {
     return {

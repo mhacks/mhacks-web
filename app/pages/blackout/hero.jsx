@@ -6,7 +6,7 @@ import { TextSubmit, Container, VideoPlayer } from '../../components';
 import { SubscribeThunks } from '../../actions';
 import { routes } from '../../constants';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import VideoPlaceholderImage from '../../../static/blackout/video-placeholder.png';
 
 const HeroContainer = styled.div`

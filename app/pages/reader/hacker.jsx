@@ -10,7 +10,7 @@ import { isMinor } from '../../util/user.js';
 import Fuse from 'fuse.js';
 import { HeaderSection, SubsectionContainer, UtilityBar } from './components';
 import { generateCSV } from './util.js';
-import PropTypes from 'prop-types';
+import { push } from 'connected-react-router';
 import { FontAwesome } from '../../components';
 
 const A = styled.a`
@@ -389,16 +389,14 @@ class ReaderPage extends React.Component {
                         },
                         {
                             onClick: () => {
-                                this.context.router.history.push(
-                                    routes.MENTOR_READER
-                                );
+                                this.props.dispatch(push(routes.MENTOR_READER));
                             },
                             title: 'Mentor'
                         },
                         {
                             onClick: () => {
-                                this.context.router.history.push(
-                                    routes.SPEAKER_READER
+                                this.props.dispatch(
+                                    push(routes.SPEAKER_READER)
                                 );
                             },
                             title: 'Speaker'
@@ -448,12 +446,6 @@ class ReaderPage extends React.Component {
         );
     }
 }
-
-ReaderPage.contextTypes = {
-    router: PropTypes.shape({
-        history: PropTypes.object.isRequired
-    })
-};
 
 function mapStateToProps(state) {
     return {

@@ -6,6 +6,7 @@ var autoprefixer = require('autoprefixer');
 
 var devConfig = {
     watchOptions: {
+        aggregateTimeout: 300,
         poll: 1000
     },
     entry: [

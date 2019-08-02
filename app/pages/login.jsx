@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { replace } from 'connected-react-router';
+
 import { AuthThunks } from '../actions';
 import { connect } from 'react-redux';
 import { routes } from '../constants';
 
 import { TabGroup, RoundedButton, Alert } from '../components';
-import PropTypes from 'prop-types';
 
 /* Containers */
 const Page = styled.div`
@@ -86,7 +87,7 @@ class Login extends React.Component {
 
     shouldComponentUpdate(nextProps) {
         if (nextProps.userState.data.isLoggedIn) {
-            this.context.router.history.replace(routes.PROFILE);
+            this.props.dispatch(replace(routes.PROFILE));
         }
         return true;
     }
@@ -278,10 +279,6 @@ class Login extends React.Component {
         );
     }
 }
-
-Login.contextTypes = {
-    router: PropTypes.object
-};
 
 function mapStateToProps(state) {
     return {

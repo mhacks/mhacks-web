@@ -5,13 +5,15 @@ import RoundedButton from './RoundedButton.jsx';
 import FileUpload from './FileUpload';
 import Alert from './Alert.jsx';
 import Select from 'react-virtualized-select';
+import { Creatable as ReactSelectCreatable } from 'react-select';
 import createFilterOptions from 'react-select-fast-filter-options';
+import 'react-select/dist/react-select.min.css';
 import 'react-virtualized/styles.css';
 import 'react-virtualized-select/styles.css';
 
 class Creatable extends React.Component {
     render() {
-        return <Select.Creatable {...this.props} />;
+        return <ReactSelectCreatable {...this.props} />;
     }
 }
 
@@ -397,6 +399,7 @@ class MHForm extends React.Component {
                     }
                     break;
                 case this.FieldTypes.DATE:
+                case this.FieldTypes.DATETIME:
                     if (isNaN(new Date(formData[field.key]).getTime())) {
                         errors.push(field.key);
                     }

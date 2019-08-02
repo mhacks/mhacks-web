@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { PageContainer } from '../../components';
 import { AdminThunks } from '../../actions';
-import PropTypes from 'prop-types';
+import { push } from 'connected-react-router';
 import { MHForm } from '../../components';
 import { OrderedSet } from 'immutable';
 import { NotificationStack } from 'react-notification';
@@ -99,7 +99,7 @@ class ModelForm extends React.Component {
             this.addNotification(this.props.model + ' Saved!', 'save');
         }
 
-        this.context.router.history.push(routes.ADMIN + '/' + this.props.model);
+        this.props.dispatch(push(routes.ADMIN + '/' + this.props.model));
     }
 
     render() {
@@ -163,12 +163,6 @@ class ModelForm extends React.Component {
         );
     }
 }
-
-ModelForm.contextTypes = {
-    router: PropTypes.shape({
-        history: PropTypes.object.isRequired
-    })
-};
 
 function mapStateToProps(state) {
     return {
