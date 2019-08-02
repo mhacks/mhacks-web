@@ -23,8 +23,8 @@ let devConfig = {
     mode: 'development',
     devtool: 'source-map',
     resolve: {
-      modules: ['web_modules', 'node_modules', 'app', 'static'],
-      extensions: ['.js', '.jsx'],
+        modules: ['web_modules', 'node_modules', 'app', 'static'],
+        extensions: ['.js', '.jsx']
     },
     module: {
         rules: [
@@ -36,23 +36,29 @@ let devConfig = {
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader',
-                    'postcss-loader?' + JSON.stringify(
-                    [ autoprefixer() ]
-                )]
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'postcss-loader?' + JSON.stringify([autoprefixer()])
+                ]
             },
             {
                 test: /\.m?jsx?$/,
                 exclude: /(node_modules|bower_components)/,
                 use: {
-                  loader: 'babel-loader',
-                  options: {
-                    presets: [[
-                        '@babel/preset-env', {
-                        useBuiltIns: 'usage',
-                        corejs: 3
-                    }], '@babel/preset-react']
-                  }
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            [
+                                '@babel/preset-env',
+                                {
+                                    useBuiltIns: 'usage',
+                                    corejs: 3
+                                }
+                            ],
+                            '@babel/preset-react'
+                        ]
+                    }
                 }
             },
             {
@@ -114,14 +120,14 @@ let buildConfig = {
             {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
-                  {
-                    loader: MiniCssExtractPlugin.loader,
-                    options: {
-                      hmr: process.env.NODE_ENV === 'development',
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            hmr: process.env.NODE_ENV === 'development'
+                        }
                     },
-                  },
-                  'css-loader'
-                ],
+                    'css-loader'
+                ]
             },
             {
                 test: /\.jsx?$/,
@@ -144,15 +150,23 @@ let buildConfig = {
             'process.env.NODE_ENV': '"production"'
         }),
         new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: ['build/logo-title.png', 'build/logo.png', 'build/logo-media.png', 'build/fonts', 'build/js', 'build/styles', 'build/index.html']
+            cleanOnceBeforeBuildPatterns: [
+                'build/logo-title.png',
+                'build/logo.png',
+                'build/logo-media.png',
+                'build/fonts',
+                'build/js',
+                'build/styles',
+                'build/index.html'
+            ]
         }),
         cssExtractor,
         new CopyWebpackPlugin([
             { from: './static/m11/favicon.png', to: './logo.png' },
             { from: './static/m11/logo.png', to: './logo-title.png' },
             { from: './static/m11/media.png', to: './logo-media.png' },
-            {context: './app/favicon/', from: '**/*', to: './favicon/'},
-            {context: './app/fonts/', from: '**/*', to: './fonts/'}
+            { context: './app/favicon/', from: '**/*', to: './favicon/' },
+            { context: './app/fonts/', from: '**/*', to: './fonts/' }
         ]),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin()
@@ -172,9 +186,9 @@ let buildConfig = {
 
 switch (lifecycleEvent) {
     case 'build':
-    module.exports = buildConfig;
-    break;
+        module.exports = buildConfig;
+        break;
     default:
-    module.exports = devConfig;
-    break;
+        module.exports = devConfig;
+        break;
 }

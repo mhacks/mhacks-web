@@ -2,12 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ApplicationThunks } from '../actions';
-import { PageContainer, Alert } from '../components';
+import { PageContainer, Alert, MHForm } from '../components';
 import PropTypes from 'prop-types';
 
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
-import { MHForm } from '../components';
 
 const FormContainer = styled.div`
     max-width: 500px;

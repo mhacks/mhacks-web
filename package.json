@@ -12,7 +12,7 @@
         "startprod": "npm run build && NODE_ENV=production npm run start",
         "build": "webpack --progress --colors",
         "test": "yarn run lint && yarn run prettier && yarn run build",
-        "lint": "eslint server/ app/ config/ *.js",
+        "lint": "eslint --ext .jsx,.js server/ app/ config/ *.js",
         "prettier": "ci/prettier.sh",
         "gendocs": "cd static/docs && node ../../scripts/unchained-generate-docs.js > openapi.json.tmp && mv openapi.json.tmp openapi.json"
     },

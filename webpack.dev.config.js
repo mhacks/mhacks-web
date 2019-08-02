@@ -34,24 +34,29 @@ var devConfig = {
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader',
-                    'postcss-loader?' + JSON.stringify(
-                    [ autoprefixer() ]
-                )]
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'postcss-loader?' + JSON.stringify([autoprefixer()])
+                ]
             },
             {
                 test: /\.m?jsx?$/,
                 exclude: /(node_modules|bower_components)/,
                 use: {
-                  loader: 'babel-loader',
-                  options: {
-                    presets: [[
-                        '@babel/preset-env', {
-                            useBuiltIns: 'usage',
-                            corejs: 3
-                        }
-                    ], '@babel/preset-react']
-                  }
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            [
+                                '@babel/preset-env',
+                                {
+                                    useBuiltIns: 'usage',
+                                    corejs: 3
+                                }
+                            ],
+                            '@babel/preset-react'
+                        ]
+                    }
                 }
             },
             {
@@ -74,14 +79,22 @@ var devConfig = {
             'process.env.NODE_ENV': '"development"'
         }),
         new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: ['build/logo-title.png', 'build/logo.png', 'build/logo-media.png', 'build/fonts', 'build/js', 'build/styles', 'build/index.html']
+            cleanOnceBeforeBuildPatterns: [
+                'build/logo-title.png',
+                'build/logo.png',
+                'build/logo-media.png',
+                'build/fonts',
+                'build/js',
+                'build/styles',
+                'build/index.html'
+            ]
         }),
         new CopyWebpackPlugin([
             { from: './static/m11/favicon.png', to: './logo.png' },
             { from: './static/m11/logo.png', to: './logo-title.png' },
             { from: './static/m11/media.png', to: './logo-media.png' },
-            { from: './app/favicon/', to: './favicon/'},
-            { from: './app/fonts/', to: './fonts/' },
+            { from: './app/favicon/', to: './favicon/' },
+            { from: './app/fonts/', to: './fonts/' }
         ]),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin()
