@@ -244,6 +244,12 @@ function check_types(prop_val, groups) {
         val_types.creatable = prop_val.form.creatable;
     }
 
+    // We need an explicit !== undefined just in case
+    // we want to require a value of false
+    if (prop_val.form.required_value !== undefined) {
+        val_types.required_value = prop_val.form.required_value;
+    }
+
     val_types.required = prop_val.required || false;
 
     return val_types;
