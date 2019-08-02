@@ -394,7 +394,11 @@ class MHForm extends React.Component {
                 case this.FieldTypes.BOOLEAN:
                 case this.FieldTypes.LINK:
                 case this.FieldTypes.NUMBER:
-                    if (formData[field.key] === '') {
+                    if (
+                        formData[field.key] === '' ||
+                        (field.required_value !== undefined &&
+                            field.required_value !== formData[field.key])
+                    ) {
                         errors.push(field.key);
                     }
                     break;
