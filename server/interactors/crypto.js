@@ -1,18 +1,28 @@
-var crypto = require('crypto'),
+const crypto = require('crypto'),
     config = require('../../config/default.js'),
-    secret = config.secret,
+    secret = crypto
+        .createHash('sha256')
+        .update(String(config.secret))
+        .digest('base64')
+        .substr(0, 32),
     algo = 'aes-256-ctr';
 
 function encrypt(text) {
-    var cipher = crypto.createCipher(algo, secret);
-    var crypted = cipher.update(text, 'utf8', 'hex');
+    const iv = crypto.randomBytes(16);
+    const cipher = crypto.createCipheriv(algo, secret, iv);
+    let crypted = cipher.update(text, 'utf8', 'hex');
     crypted += cipher.final('hex');
-    return crypted;
+    return Buffer.from(iv.toString('hex') + ':' + crypted).toString('base64');
 }
 
 function decrypt(text) {
-    var decipher = crypto.createDecipher(algo, secret);
-    var dec = decipher.update(text, 'hex', 'utf8');
+    const parts = Buffer.from(text, 'base64')
+        .toString('ascii')
+        .split(':');
+    const iv = Buffer.from(parts[0], 'hex');
+    const cipherText = parts[1];
+    const decipher = crypto.createDecipheriv(algo, secret, iv);
+    let dec = decipher.update(cipherText, 'hex', 'utf8');
     dec += decipher.final('utf8');
     return dec;
 }

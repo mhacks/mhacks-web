@@ -6,25 +6,13 @@ var PushNotifications = require('node-pushnotifications'),
 if (config.push_notifications.enabled) {
     push = new PushNotifications({
         gcm: {
-            id: Buffer.from(
-                crypto.decrypt(config.push_notifications.gcm.id),
-                'base64'
-            ).toString('ascii')
+            id: crypto.decrypt(config.push_notifications.gcm.id)
         },
         apn: {
             token: {
-                key: Buffer.from(
-                    crypto.decrypt(config.push_notifications.apns.key),
-                    'base64'
-                ).toString('ascii'),
-                keyId: Buffer.from(
-                    crypto.decrypt(config.push_notifications.apns.key_id),
-                    'base64'
-                ).toString('ascii'),
-                teamId: Buffer.from(
-                    crypto.decrypt(config.push_notifications.apns.team_id),
-                    'base64'
-                ).toString('ascii')
+                key: crypto.decrypt(config.push_notifications.apns.key),
+                keyId: crypto.decrypt(config.push_notifications.apns.key_id),
+                teamId: crypto.decrypt(config.push_notifications.apns.team_id)
             },
             production: config.push_notifications.apns.production
         }

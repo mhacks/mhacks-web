@@ -1,5 +1,6 @@
 var router = require('express').Router(),
     validator = require('validator'),
+    passkit = require('@destinationstransfers/passkit'),
     Responses = require('../../responses/api'),
     authMiddleware = require('../../middleware/auth.js'),
     User = require('../../db/model/User.js'),
@@ -176,14 +177,24 @@ router.get('/ticket/passbook', authMiddleware('any', 'api'), function(
                                         .then(pass => {
                                             if (pass) {
                                                 res.attachment('MHacks.pkpass');
-                                                pass.render(res).catch(err => {
-                                                    console.error(err);
+                                                res.setHeader(
+                                                    'Content-Type',
+                                                    passkit.constants
+                                                        .PASS_MIME_TYPE
+                                                );
 
-                                                    res.status(500).send({
-                                                        status: false,
-                                                        message: err
+                                                pass.asBuffer()
+                                                    .then(buff => {
+                                                        res.send(buff);
+                                                    })
+                                                    .catch(err => {
+                                                        console.error(err);
+
+                                                        res.status(500).send({
+                                                            status: false,
+                                                            message: err
+                                                        });
                                                     });
-                                                });
                                             } else {
                                                 res.status(404).send({
                                                     status: false,
@@ -192,6 +203,8 @@ router.get('/ticket/passbook', authMiddleware('any', 'api'), function(
                                             }
                                         })
                                         .catch(err => {
+                                            console.log(err);
+
                                             res.status(500).send({
                                                 status: false,
                                                 message: err
