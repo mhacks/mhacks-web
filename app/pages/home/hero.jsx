@@ -106,7 +106,10 @@ class HomeHero extends React.Component {
                             />
                         </VideoPlayerContainer>
                         <LeftSideContainer>
-                            <Text>Welcome to MHacks 11</Text>
+                            <Text>
+                                Welcome to{' '}
+                                {this.props.configurationState.data.app_name}
+                            </Text>
                             <SubText>
                                 MHacks is a 36-hour hackathon run by University
                                 of Michigan students. At MHacks, we want to help
@@ -130,7 +133,8 @@ class HomeHero extends React.Component {
 function mapStateToProps(state) {
     return {
         status: state.subscribeState,
-        theme: state.theme.data
+        theme: state.theme.data,
+        configurationState: state.configurationState
     };
 }
 

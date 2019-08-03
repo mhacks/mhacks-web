@@ -87,9 +87,23 @@ class Landing extends React.Component {
                     />
                 </MLHBanner>
                 <Container>
-                    <LogoText>MHACKS 11</LogoText>
+                    <LogoText>
+                        {this.props.configurationState.data.app_name.toUpperCase()}
+                    </LogoText>
                     <OverlayDiv>
-                        <Text>October 12th-14th</Text>
+                        <Text>
+                            {new Date(
+                                this.props.configurationState.data.start_date
+                            ).toLocaleString('default', {
+                                month: 'long',
+                                day: 'numeric'
+                            })}
+                            th-
+                            {new Date(
+                                this.props.configurationState.data.end_date
+                            ).toLocaleString('default', { day: 'numeric' })}
+                            th
+                        </Text>
                         <Text>
                             University of Michigan - Intramural Sports Building
                         </Text>
@@ -102,7 +116,8 @@ class Landing extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        theme: state.theme.data
+        theme: state.theme.data,
+        configurationState: state.configurationState
     };
 }
 

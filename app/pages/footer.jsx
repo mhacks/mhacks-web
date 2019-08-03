@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import { Container } from '../components';
 import { devices } from '../styles';
@@ -103,7 +104,14 @@ class Footer extends React.Component {
                         <Container>
                             <HomeFooter>
                                 <LegalLinks>
-                                    <LegalLink>© MHacks 2018</LegalLink>
+                                    <LegalLink>
+                                        © MHacks{' '}
+                                        {new Date(
+                                            this.props.configurationState.data.start_date
+                                        ).toLocaleString('default', {
+                                            year: 'numeric'
+                                        })}
+                                    </LegalLink>
                                     <Dot />
                                     <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
                                         MHacks CoC
@@ -159,4 +167,12 @@ class Footer extends React.Component {
     }
 }
 
-export default Footer;
+function mapStateToProps(state) {
+    return {
+        userState: state.userState,
+        theme: state.theme.data,
+        configurationState: state.configurationState
+    };
+}
+
+export default connect(mapStateToProps)(Footer);

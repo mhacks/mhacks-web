@@ -146,8 +146,18 @@ class Apply extends React.Component {
                             {this.props.configurationState.data.app_name}!{' '}
                             {this.props.configurationState.data.app_name} will
                             be held on the University of Michigan's Intramural
-                            Sports Building in Ann Arbor from October 12th to
-                            14th. If you already have teammates in mind, include
+                            Sports Building in Ann Arbor from{' '}
+                            {new Date(
+                                this.props.configurationState.data.start_date
+                            ).toLocaleString('default', {
+                                month: 'long',
+                                day: 'numeric'
+                            })}
+                            th to{' '}
+                            {new Date(
+                                this.props.configurationState.data.end_date
+                            ).toLocaleString('default', { day: 'numeric' })}
+                            th. If you already have teammates in mind, include
                             their names and emails in the "anything else"
                             question.
                         </Subhead>
