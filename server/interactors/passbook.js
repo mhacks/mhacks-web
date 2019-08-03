@@ -1,4 +1,6 @@
-const { Template, constants } = require('@destinationstransfers/passkit'),
+const { join } = require('path'),
+    sharp = require('sharp'),
+    { Template, constants } = require('@destinationstransfers/passkit'),
     config = require('../../config/default.js'),
     User = require('../db/model/User.js'),
     Application = require('../db/model/Application.js'),
@@ -17,9 +19,21 @@ if (config.passbook.enabled) {
         associatedStoreIdentifiers: [config.passbook.store_identifier]
     });
 
-    template.keys(config.passbook.directory, config.passbook.secret);
-    template.images.setImage('icon', '1x', config.passbook.logo_url);
-    template.images.setImage('logo', '1x', config.passbook.logo_url);
+    template.loadCertificate(
+        join(
+            config.passbook.directory,
+            (config.passbook.pass_type + '.pem').replace('pass.', '')
+        ),
+        config.passbook.secret
+    );
+
+    sharp(config.passbook.logo_url)
+        .resize(160)
+        .toBuffer()
+        .then(data => {
+            template.images.add('icon', data);
+            template.images.add('logo', data);
+        });
 }
 
 function createPass(email) {
@@ -46,18 +60,16 @@ function createPass(email) {
                                                     config.passbook.description
                                             });
 
-                                            pass.headerFields.add(
-                                                'date',
-                                                'Date',
-                                                config.passbook.date,
-                                                {
-                                                    textAlignment:
-                                                        constants.TEXT_DIRECTION
-                                                            .RIGHT
-                                                }
-                                            );
+                                            pass.headerFields.add({
+                                                key: 'date',
+                                                label: 'Date',
+                                                value: config.passbook.date,
+                                                textAlignment:
+                                                    constants.textDirection
+                                                        .RIGHT
+                                            });
 
-                                            pass.fields.barcodes = [
+                                            pass.barcodes = [
                                                 {
                                                     message: email,
                                                     format:
@@ -68,7 +80,7 @@ function createPass(email) {
                                                 }
                                             ];
 
-                                            pass.fields.beacons = [
+                                            pass.beacons = [
                                                 {
                                                     proximityUUID:
                                                         config.passbook.beacon,
@@ -81,53 +93,57 @@ function createPass(email) {
                                                 }
                                             ];
 
-                                            pass.primaryFields.add(
-                                                'name',
-                                                'HACKER',
-                                                user.full_name
-                                            );
-                                            pass.backFields.add(
-                                                'name',
-                                                'NAME',
-                                                user.full_name
-                                            );
-                                            pass.backFields.add(
-                                                'email',
-                                                'EMAIL',
-                                                user.email
-                                            );
+                                            pass.primaryFields.add({
+                                                key: 'name',
+                                                label: 'HACKER',
+                                                value: user.full_name
+                                            });
+                                            pass.backFields.add({
+                                                key: 'name',
+                                                label: 'NAME',
+                                                value: user.full_name
+                                            });
+                                            pass.backFields.add({
+                                                key: 'email',
+                                                label: 'EMAIL',
+                                                value: user.email
+                                            });
 
-                                            pass.secondaryFields.add(
-                                                'school',
-                                                'SCHOOL',
-                                                application.university
-                                            );
-                                            pass.backFields.add(
-                                                'school',
-                                                'SCHOOL',
-                                                application.university
-                                            );
+                                            pass.secondaryFields.add({
+                                                key: 'school',
+                                                label: 'SCHOOL',
+                                                value: application.university
+                                            });
+                                            pass.backFields.add({
+                                                key: 'school',
+                                                label: 'SCHOOL',
+                                                value: application.university
+                                            });
 
-                                            pass.auxiliaryFields.add(
-                                                'minor',
-                                                'MINOR',
-                                                isMinor(application.birthday)
+                                            pass.auxiliaryFields.add({
+                                                key: 'minor',
+                                                label: 'MINOR',
+                                                value: isMinor(
+                                                    application.birthday
+                                                )
                                                     ? 'YES'
                                                     : 'NO'
-                                            );
-                                            pass.backFields.add(
-                                                'minor',
-                                                'MINOR',
-                                                isMinor(application.birthday)
+                                            });
+                                            pass.backFields.add({
+                                                key: 'minor',
+                                                label: 'MINOR',
+                                                value: isMinor(
+                                                    application.birthday
+                                                )
                                                     ? 'YES'
                                                     : 'NO'
-                                            );
+                                            });
 
-                                            pass.backFields.add(
-                                                'tshirt',
-                                                'T-SHIRT SIZE',
-                                                application.tshirt.toUpperCase()
-                                            );
+                                            pass.backFields.add({
+                                                key: 'tshirt',
+                                                label: 'T-SHIRT SIZE',
+                                                value: application.tshirt.toUpperCase()
+                                            });
 
                                             config.passbook.locations.forEach(
                                                 function(location) {
