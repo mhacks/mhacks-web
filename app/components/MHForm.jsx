@@ -119,7 +119,7 @@ class MHForm extends React.Component {
 
             if (
                 defaultValue !== undefined &&
-                (!existingObject.hasOwnProperty(key) ||
+                (!Object.prototype.hasOwnProperty.call(existingObject, key) ||
                     existingObject[key] === undefined ||
                     existingObject[key] === this.defaultForType(fieldType))
             ) {
@@ -403,6 +403,7 @@ class MHForm extends React.Component {
                     }
                     break;
                 case this.FieldTypes.DATE:
+                case this.FieldTypes.DATETIME:
                     if (isNaN(new Date(formData[field.key]).getTime())) {
                         errors.push(field.key);
                     }
@@ -729,8 +730,8 @@ class MHForm extends React.Component {
                                 const uploadBackground = hasError
                                     ? 'red'
                                     : this.state.files[field.key] && !notExists
-                                        ? this.props.theme.success
-                                        : this.props.theme.primary;
+                                    ? this.props.theme.success
+                                    : this.props.theme.primary;
                                 return (
                                     <FileUploadContainer key={field.key}>
                                         <FileUpload

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { routes } from '../constants';
 
 import { RoundedButton, Alert } from '../components';
-import PropTypes from 'prop-types';
+import { replace, push } from 'connected-react-router';
 
 /* Containers */
 const Page = styled.div`
@@ -59,7 +59,7 @@ class PasswordReset extends React.Component {
 
     shouldComponentUpdate(nextProps) {
         if (nextProps.userState.data.isLoggedIn) {
-            this.context.router.history.replace(routes.PROFILE);
+            this.props.dispatch(replace(routes.PROFILE));
         }
         return true;
     }
@@ -87,7 +87,7 @@ class PasswordReset extends React.Component {
 
     render() {
         if (!this.props.userState.error && this.props.userState.message) {
-            this.context.router.history.push(routes.LOGIN);
+            this.props.dispatch(push(routes.LOGIN));
             return null;
         }
 
@@ -137,12 +137,6 @@ class PasswordReset extends React.Component {
         );
     }
 }
-
-PasswordReset.contextTypes = {
-    router: PropTypes.shape({
-        history: PropTypes.object.isRequired
-    })
-};
 
 function mapStateToProps(state) {
     return {

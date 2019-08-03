@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import { Container } from '../../components';
 import { devices } from '../../styles';
@@ -76,7 +77,12 @@ class BlackoutFooter extends React.Component {
         return (
             <Container>
                 <Footer>
-                    <Text>© MHacks 2018</Text>
+                    <Text>
+                        © MHacks{' '}
+                        {new Date(
+                            this.props.configurationState.data.start_date
+                        ).toLocaleString('default', { year: 'numeric' })}
+                    </Text>
                     <Flexer>
                         <HeaderLogo src={HeaderLogoImage} align="middle" />
                     </Flexer>
@@ -112,4 +118,12 @@ class BlackoutFooter extends React.Component {
     }
 }
 
-export default BlackoutFooter;
+function mapStateToProps(state) {
+    return {
+        userState: state.userState,
+        theme: state.theme.data,
+        configurationState: state.configurationState
+    };
+}
+
+export default connect(mapStateToProps)(BlackoutFooter);

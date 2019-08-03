@@ -83,6 +83,7 @@ class Apply extends React.Component {
     render() {
         if (
             !this.state.userState ||
+            !this.state.userState.fetched ||
             !this.state.userState.data ||
             (!this.state.userState.data.form &&
                 !this.state.userState.data.mentor_application &&
@@ -113,16 +114,20 @@ class Apply extends React.Component {
                         read and agree to the{' '}
                         <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
                             MLH Code of Conduct
-                        </a>, the{' '}
+                        </a>
+                        , the{' '}
                         <a href="https://github.com/MLH/mlh-policies/blob/master/data-sharing.md">
                             MLH Data Sharing Provision
-                        </a>, the{' '}
+                        </a>
+                        , the{' '}
                         <a href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
                             MHacks Code of Conduct
-                        </a>, and the{' '}
+                        </a>
+                        , and the{' '}
                         <a href="https://docs.google.com/document/d/1tFmaC_eVVPJ9fKnjGeYHRX2_th3-JOd9ZP-IoTEM91I/pub">
                             MHacks Liability Waiver
-                        </a>.
+                        </a>
+                        .
                     </p>
                 </FormContainer>
                 <NotificationStack

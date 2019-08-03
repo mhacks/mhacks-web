@@ -6,7 +6,7 @@ export function postFormData(route, token, body, files) {
 
     for (var fileKey in files) {
         if (
-            files.hasOwnProperty(fileKey) &&
+            Object.prototype.hasOwnProperty.call(files, fileKey) &&
             typeof files[fileKey] === 'object'
         ) {
             formData.append(fileKey, files[fileKey]);
@@ -14,7 +14,7 @@ export function postFormData(route, token, body, files) {
     }
 
     for (var key in body) {
-        if (body.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(body, key)) {
             formData.append(key, body[key]);
         }
     }

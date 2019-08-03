@@ -5,8 +5,9 @@ var {
         defaultSchema,
         defaultEndSchema
     } = require('../index.js'),
-    end = 2026,
-    start = 2018,
+    now = new Date(),
+    end = now.getFullYear() + 8,
+    start = now.getFullYear(),
     years = new Array(end - start)
         .fill()
         .map((_, idx) => (start + idx).toString())

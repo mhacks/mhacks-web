@@ -290,7 +290,7 @@ router.delete('/model/:model/:id', function(req, res) {
         Model.findById(req.params.id)
             .then(document => {
                 if (document) {
-                    document.remove();
+                    document.deleteOne();
                 } else {
                     res.status(404).send({
                         status: false,

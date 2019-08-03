@@ -13,11 +13,7 @@ function generateQRCode(text, cb) {
 }
 
 function generateQRCodeString(text, cb) {
-    qrcode.toString(
-        text,
-        options,
-        cb
-    );
+    qrcode.toString(text, options, cb);
 }
 
 function writeQRCodeToStream(text, stream) {

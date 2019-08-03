@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
+import { connectRouter } from 'connected-react-router';
 
 import { theme } from './theme.js';
 import { subscribeState } from './subscribe.js';
@@ -14,20 +14,19 @@ import { adminState } from './admin.js';
 import { mentorshipState } from './mentorship.js';
 import { gameState } from './game.js';
 
-const rootReducer = combineReducers({
-    router: routerReducer,
-    theme,
-    subscribeState,
-    userState,
-    announcementsState,
-    configurationState,
-    readerState,
-    sponsorState,
-    eventsState,
-    teamsState,
-    adminState,
-    mentorshipState,
-    gameState
-});
-
-export default rootReducer;
+export default history =>
+    combineReducers({
+        router: connectRouter(history),
+        theme,
+        subscribeState,
+        userState,
+        announcementsState,
+        configurationState,
+        readerState,
+        sponsorState,
+        eventsState,
+        teamsState,
+        adminState,
+        mentorshipState,
+        gameState
+    });

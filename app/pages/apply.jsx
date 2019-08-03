@@ -2,12 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { ApplicationThunks } from '../actions';
-import { PageContainer, Alert } from '../components';
+import { PageContainer, Alert, MHForm } from '../components';
 import PropTypes from 'prop-types';
 
 import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
-import { MHForm } from '../components';
 
 const FormContainer = styled.div`
     max-width: 500px;
@@ -113,6 +112,7 @@ class Apply extends React.Component {
     render() {
         if (
             !this.state.userState ||
+            !this.state.userState.fetched ||
             !this.state.userState.data ||
             (!this.state.userState.data.form &&
                 !this.state.userState.data.app &&
@@ -136,10 +136,7 @@ class Apply extends React.Component {
                         {this.props.userState.data.isApplicationSubmitted ? (
                             <AlertContainer>
                                 <Alert
-                                    message={`Your application is submitted but you can make changes on this page and update your application! Thanks for applying to ${
-                                        this.props.configurationState.data
-                                            .app_name
-                                    }.`}
+                                    message={`Your application is submitted but you can make changes on this page and update your application! Thanks for applying to ${this.props.configurationState.data.app_name}.`}
                                     positive={true}
                                 />
                             </AlertContainer>
@@ -149,8 +146,18 @@ class Apply extends React.Component {
                             {this.props.configurationState.data.app_name}!{' '}
                             {this.props.configurationState.data.app_name} will
                             be held on the University of Michigan's Intramural
-                            Sports Building in Ann Arbor from October 12th to
-                            14th. If you already have teammates in mind, include
+                            Sports Building in Ann Arbor from{' '}
+                            {new Date(
+                                this.props.configurationState.data.start_date
+                            ).toLocaleString('default', {
+                                month: 'long',
+                                day: 'numeric'
+                            })}
+                            th to{' '}
+                            {new Date(
+                                this.props.configurationState.data.end_date
+                            ).toLocaleString('default', { day: 'numeric' })}
+                            th. If you already have teammates in mind, include
                             their names and emails in the "anything else"
                             question.
                         </Subhead>
@@ -161,7 +168,8 @@ class Apply extends React.Component {
                             agree to the MHacks{' '}
                             <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">
                                 Code of Conduct
-                            </LegalLink>.
+                            </LegalLink>
+                            .
                         </LegalText>
                         <LegalText>
                             All minors must submit the{' '}

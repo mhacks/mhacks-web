@@ -5,7 +5,7 @@ import { PageContainer } from '../../components';
 import { AdminThunks } from '../../actions';
 import { routes } from '../../constants';
 import ReactTable from 'react-table';
-import PropTypes from 'prop-types';
+import { push } from 'connected-react-router';
 
 const PagePulled = styled(PageContainer)`
     min-height: calc(100vh - 146px);
@@ -46,10 +46,12 @@ class ModelsPage extends React.Component {
                                     Cell: row => (
                                         <Link
                                             onClick={() => {
-                                                this.context.router.history.push(
-                                                    routes.ADMIN +
-                                                        '/' +
-                                                        row.value
+                                                this.props.dispatch(
+                                                    push(
+                                                        routes.ADMIN +
+                                                            '/' +
+                                                            row.value
+                                                    )
                                                 );
                                             }}
                                         >
@@ -66,12 +68,6 @@ class ModelsPage extends React.Component {
         );
     }
 }
-
-ModelsPage.contextTypes = {
-    router: PropTypes.shape({
-        history: PropTypes.object.isRequired
-    })
-};
 
 function mapStateToProps(state) {
     return {

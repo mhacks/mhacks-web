@@ -2,14 +2,13 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import { render } from 'react-dom';
 
 import { Route, Switch, Redirect } from 'react-router';
-import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
-import createHistory from 'history/createBrowserHistory';
+import { ConnectedRouter, routerMiddleware } from 'connected-react-router';
+import { createBrowserHistory } from 'history';
 
 import { compose, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 
-import reducers from './reducers';
 import { routes } from './constants';
 import {
     Navigator,
@@ -33,6 +32,7 @@ import {
 import { ConfigurationThunks } from './actions';
 import { connect } from 'react-redux';
 import { getUserMetadata } from './util/user.js';
+import { GlobalStyle } from './styles';
 
 // polyfill Promise for IE browsers
 require('es6-promise').polyfill();
@@ -40,7 +40,11 @@ require('es6-promise').polyfill();
 /* uncomment to view redux logs in console */
 //import logger from 'redux-logger';
 
-const history = createHistory();
+const history = createBrowserHistory();
+
+import getReducers from './reducers';
+const reducers = getReducers(history);
+
 const middleware = routerMiddleware(history);
 const store = createStore(
     reducers,
@@ -53,7 +57,7 @@ window.s = store;
 // Delay render of components until the store
 // has rehydrated to prevent redirects and other
 // weird effects
-class AppProvider extends React.Component {
+export default class AppProvider extends React.Component {
     componentDidMount() {
         this.props.dispatch(ConfigurationThunks.loadConfiguration());
     }
@@ -84,6 +88,7 @@ class AppProvider extends React.Component {
 
         return (
             <Provider store={store}>
+                <GlobalStyle />
                 <ConnectedRouter history={history}>
                     <Navigator
                         renderHeaderFooter={

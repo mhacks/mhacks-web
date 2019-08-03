@@ -115,16 +115,17 @@ class EditProfile extends React.Component {
                         Unverified Email
                     </SectionHeader>
                     <p>
-                        You should have received a verification email at{' ' +
-                            userData.user.email}. If not, you can request
+                        You should have received a verification email at
+                        {' ' + userData.user.email}. If not, you can request
                         another one by clicking{' '}
                         <Link
                             onClick={this.onClickRequestEmailVerification}
                             color={this.props.theme.primary}
                         >
                             here
-                        </Link>. After you verify your email you can continue
-                        setting up your profile!
+                        </Link>
+                        . After you verify your email you can continue setting
+                        up your profile!
                     </p>
                 </FullscreenColumnContainer>
             </PageContainer>
@@ -134,6 +135,7 @@ class EditProfile extends React.Component {
     render() {
         if (
             !this.state.userState ||
+            !this.state.userState.fetched ||
             !this.state.userState.data ||
             (!this.state.userState.data.form && !this.state.userState.data.user)
         ) {
@@ -166,10 +168,7 @@ class EditProfile extends React.Component {
                         {isApplicationSubmitted && !isApplicationReviewed ? (
                             <AlertContainer>
                                 <Alert
-                                    message={`Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to ${
-                                        this.props.configurationState.data
-                                            .app_name
-                                    }`}
+                                    message={`Your application is submitted but you can still make changes on the application page to update it! Thanks for applying to ${this.props.configurationState.data.app_name}`}
                                     style={{
                                         backgroundColor: '#01FF70',
                                         color: '#3D9970'

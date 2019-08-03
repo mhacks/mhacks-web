@@ -76,7 +76,8 @@ class ApplicationSection extends React.Component {
                     href="https://www.facebook.com/groups/1506039289667163/"
                 >
                     HH MHacks Facebook Group
-                </Link>, and the{' '}
+                </Link>
+                , and the{' '}
                 <Link
                     target="_blank"
                     href="https://www.facebook.com/events/310452576398095/"
@@ -89,12 +90,13 @@ class ApplicationSection extends React.Component {
                     href="http://facebook.com/MHacksHackathon"
                 >
                     Facebook
-                </Link>,{' '}
+                </Link>
+                ,{' '}
                 <Link target="_blank" href="http://twitter.com/mhacks">
                     Twitter
-                </Link>, and{' '}
-                <Link href="http://instagram.com/mhacks_">Instagram</Link> for
-                updates on all things MHacks.
+                </Link>
+                , and <Link href="http://instagram.com/mhacks_">Instagram</Link>{' '}
+                for updates on all things MHacks.
             </SectionBody>
         );
     }
@@ -110,14 +112,17 @@ class ApplicationSection extends React.Component {
                     href="http://facebook.com/MHacksHackathon"
                 >
                     Facebook
-                </Link>,{' '}
+                </Link>
+                ,{' '}
                 <Link target="_blank" href="http://twitter.com/mhacks">
                     Twitter
-                </Link>,{' '}
+                </Link>
+                ,{' '}
                 <Link target="_blank" href="http://instagram.com/mhacks_">
                     Instagram
-                </Link>, and and encourage you to apply for the next MHacks
-                event in the winter.
+                </Link>
+                , and and encourage you to apply for the next MHacks event in
+                the winter.
             </SectionBody>
         );
     }
