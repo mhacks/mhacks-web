@@ -42,7 +42,7 @@ const ExpandingItemWrapper = styled.div`
 `;
 
 const Link = styled.a`
-    color: ${props => props.theme.teal};
+    color: ${props => props.theme.secondary};
     text-decoration: none;
 `;
 

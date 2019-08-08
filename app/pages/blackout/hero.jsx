@@ -73,14 +73,8 @@ const Orb = styled.div`
     `};
 `;
 
-const PinkOrb = styled(Orb)`
-    background-color: ${props => props.theme.pink};
-    top: 0;
-    right: 20%;
-`;
-
-const TealOrb = styled(Orb)`
-    background-color: ${props => props.theme.teal};
+const SecondaryOrb = styled(Orb)`
+    background-color: ${props => props.theme.secondary};
     bottom: -10%;
     left: 20%;
 `;
@@ -118,11 +112,10 @@ class BlackoutHero extends React.Component {
             <Container>
                 <HeroContainer>
                     <VideoPlayerContainer>
-                        <TealOrb />
-                        <PinkOrb />
+                        <SecondaryOrb />
                         <VideoPlayer
                             placeholderImage={VideoPlaceholderImage}
-                            videoUrl="https://www.youtube.com/embed/bTC2oPnJ4Zo"
+                            videoUrl="https://www.youtube.com/embed/IbCV5APhSic"
                             showControls={false}
                             showVideoDetails={false}
                             autoplay={true}
@@ -134,7 +127,7 @@ class BlackoutHero extends React.Component {
                         </Text>
                         <TextSubmitPositioner>
                             <TextSubmit
-                                primaryColor={this.props.theme.teal}
+                                primaryColor={this.props.theme.secondary}
                                 secondaryColor="white"
                                 feedbackColor="white"
                                 placeholder="ENTER YOUR EMAIL"

@@ -767,17 +767,20 @@ class MHForm extends React.Component {
                                         disabled={errors.length > 0}
                                         style={
                                             errors.length > 0
-                                                ? {
-                                                      backgroundColor: this
-                                                          .props.theme.secondary
+                                                ? {}
+                                                : {
+                                                      //   backgroundColor: this
+                                                      //       .props.theme
+                                                      //       .secondary,
+                                                      borderColor: this.props
+                                                          .theme.secondary
                                                   }
-                                                : {}
                                         }
                                         hover={
                                             errors.length > 0
-                                                ? 'color: ' +
-                                                  this.props.theme.primary
-                                                : ''
+                                                ? ''
+                                                : 'background-color: ' +
+                                                  this.props.theme.secondary
                                         }
                                         onClick={() =>
                                             (this.clicked = field.key)

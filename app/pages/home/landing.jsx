@@ -1,70 +1,56 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { devices } from '../../styles';
+
+import Apply from './apply.jsx';
+
+import Cover from 'react-video-cover';
+const BackgroundVideo = require('../../../static/m12/background-video.mp4');
+const LandingLogo = require('../../../static/m12/logo-landing.png');
 
 const Wrapper = styled.div`
     background: ${props => props.theme.primary};
     padding-top: 80px;
     z-index: 98;
+    margin-bottom: 20px;
 `;
 
 const Container = styled.div`
-    height: 100%;
-    width: calc(100% - 60px);
-    max-width: 1200px;
+    height: 100vh;
     margin: 0 auto;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-
-    ${devices.tiny`
-        margin-top: 160px;
-    `} ${devices.tablet`
-        width: calc(100% - 100px);
-    `} ${devices.desktop`
-        width: calc(100% - 140px);
-    `} ${devices.giant`
-        width: calc(100% - 160px);
-    `};
-`;
-
-const LogoText = styled.div`
+    justify-content: flex-start;
     position: relative;
-    height: auto;
-    width: auto;
-    font-size: 16vw;
-    white-space: nowrap;
-    color: white;
-    opacity: 0.4;
 `;
 
-const OverlayDiv = styled.div`
+const InnerContainer = styled.div`
     position: absolute;
+    height: 75vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 `;
 
-const Text = styled.h2`
-    position: relative;
-    font-size: 22px;
-    color: white;
-    text-align: center;
-    font-weight: 500;
-    text-align: center;
-    padding: 0 10vw;
-    margin: 5px 0;
+const Logo = styled.div`
+    height: 45vh;
+    width: auto;
+`;
 
-    ${devices.tablet`
-        font-size: 28px;
-    `};
+const ApplyBox = styled.div`
+    width: 100%;
 `;
 
 const MLHBanner = styled.a`
     display: block;
     position: absolute;
-    left: 31px;
-    top: 80px;
+    left: 2%;
+    margin-top: 2%;
+    width: 10%;
     z-index: 99;
 `;
 
@@ -74,7 +60,23 @@ const MLHBannerImage = styled.img`
 `;
 
 class Landing extends React.Component {
+    constructor() {
+        super();
+
+        this.state = {
+            resizeNotifier: () => {}
+        };
+    }
+
     render() {
+        const videoOptions = {
+            src: BackgroundVideo,
+            autoPlay: true,
+            muted: true,
+            loop: true,
+            playsInline: true
+        };
+
         return (
             <Wrapper>
                 <MLHBanner
@@ -87,27 +89,23 @@ class Landing extends React.Component {
                     />
                 </MLHBanner>
                 <Container>
-                    <LogoText>
-                        {this.props.configurationState.data.app_name.toUpperCase()}
-                    </LogoText>
-                    <OverlayDiv>
-                        <Text>
-                            {new Date(
-                                this.props.configurationState.data.start_date
-                            ).toLocaleString('default', {
-                                month: 'long',
-                                day: 'numeric'
-                            })}
-                            th-
-                            {new Date(
-                                this.props.configurationState.data.end_date
-                            ).toLocaleString('default', { day: 'numeric' })}
-                            th
-                        </Text>
-                        <Text>
-                            University of Michigan - Intramural Sports Building
-                        </Text>
-                    </OverlayDiv>
+                    <Cover
+                        videoOptions={videoOptions}
+                        remeasureOnWindowResize
+                        getResizeNotifier={resizeNotifier => {
+                            this.setState({
+                                resizeNotifier
+                            });
+                        }}
+                    />
+                    <InnerContainer>
+                        <Logo>
+                            <img src={LandingLogo} style={{ height: '100%' }} />
+                        </Logo>
+                        <ApplyBox>
+                            <Apply />
+                        </ApplyBox>
+                    </InnerContainer>
                 </Container>
             </Wrapper>
         );

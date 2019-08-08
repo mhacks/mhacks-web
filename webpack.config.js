@@ -138,7 +138,10 @@ let buildConfig = {
             //     test: /\.(eot|ttf|woff|woff2|otf)(\?\S*)?$/,
             //     use: ['file-loader?name=fonts/[name].[ext]']
             // },
-            { test: /\.(png|jpg|jpeg|gif|woff|svg|otf)$/, use: 'file-loader' }
+            {
+                test: /\.(png|jpg|jpeg|gif|woff|svg|otf|mp4)$/,
+                use: 'file-loader'
+            }
         ]
     },
     plugins: [
@@ -162,9 +165,9 @@ let buildConfig = {
         }),
         cssExtractor,
         new CopyWebpackPlugin([
-            { from: './static/m11/favicon.png', to: './logo.png' },
-            { from: './static/m11/logo.png', to: './logo-title.png' },
-            { from: './static/m11/media.png', to: './logo-media.png' },
+            { from: './static/m12/favicon.png', to: './logo.png' },
+            { from: './static/m12/logo.png', to: './logo-title.png' },
+            { from: './static/m12/media.png', to: './logo-media.png' },
             { context: './app/favicon/', from: '**/*', to: './favicon/' },
             { context: './app/fonts/', from: '**/*', to: './fonts/' }
         ]),

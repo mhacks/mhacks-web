@@ -8,7 +8,6 @@ import Hero from './hero.jsx';
 import Sponsorship from './sponsorship.jsx';
 import HackingCategories from './hacking_categories.jsx';
 
-import Apply from './apply.jsx';
 import connect from 'react-redux/es/connect/connect';
 
 const BodyDiv = styled.div`
@@ -21,7 +20,6 @@ class HomePage extends React.Component {
         return (
             <BodyDiv>
                 <Landing />
-                <Apply />
                 <Hero />
                 <HackingCategories />
                 <Faq />

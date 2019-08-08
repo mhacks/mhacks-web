@@ -12,19 +12,21 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 20px;
 `;
 
 const Holder = styled.div`
-    background: white;
+    background: rgba(136, 136, 136, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
     padding: 10px 0;
-    margin: 0px 10%;
+    margin: 0px 20%;
 `;
 
 const StyledNavLink = styled(NavLink)`
     font-size: 16px;
-    padding: 10px 60px;
-    border: 2px solid ${props => props.color};
+    font-weight: 900;
+    padding: 10px 10%;
+    border: 4px solid ${props => props.color};
     color: ${props => props.color};
     background-color: ${theme.color};
     border-radius: 25px;
@@ -34,21 +36,13 @@ const StyledNavLink = styled(NavLink)`
 
     &:hover {
         background-color: ${props => props.color};
-        color: white;
+        color: ${theme.primary};
     }
 `;
 
 const StyledNavLinkWrapper = styled.div`
     text-align: center;
-    padding-top: 20px;
-`;
-
-const Dashed = styled.div`
-    position: relative;
-    top: 40px;
-    height: 60px;
-    left: 50%
-    border-left: 1px solid ${theme.highlightSecondary};
+    padding: 20px 0px 30px;
 `;
 
 class Apply extends React.Component {
@@ -60,9 +54,15 @@ class Apply extends React.Component {
             <Wrapper>
                 <Container>
                     <Holder>
-                        <SectionHeader>
+                        <SectionHeader
+                            style={{
+                                color: this.props.theme.highlight,
+                                padding: '0 10px',
+                                fontSize: '24px'
+                            }}
+                        >
                             {is_application_open
-                                ? 'Applications are open now!'
+                                ? 'Applications are now open!'
                                 : 'Applications are now closed.'}
                         </SectionHeader>
                         <StyledNavLinkWrapper>
@@ -73,7 +73,7 @@ class Apply extends React.Component {
                                             ? routes.APPLY
                                             : routes.DASHBOARD
                                     }
-                                    color={this.props.theme.primary}
+                                    color={this.props.theme.highlight}
                                 >
                                     {is_application_open
                                         ? 'Apply'
@@ -82,13 +82,12 @@ class Apply extends React.Component {
                             ) : (
                                 <StyledNavLink
                                     to={routes.LOGIN}
-                                    color={this.props.theme.primary}
+                                    color={this.props.theme.highlight}
                                 >
                                     Login
                                 </StyledNavLink>
                             )}
                         </StyledNavLinkWrapper>
-                        <Dashed />
                     </Holder>
                 </Container>
             </Wrapper>

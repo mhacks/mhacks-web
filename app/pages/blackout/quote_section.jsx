@@ -107,12 +107,12 @@ export default connect(state => {
             <QuoteSection>
                 <StartWrapper src={StartIcon} />
                 <EndWrapper src={EndIcon} />
-                <Quote color={props.theme.darkPink} position="left">
+                <Quote color={props.theme.highlight} position="left">
                     This was one of the most well organized student-run
                     hackathons that we’ve ever sponsored.
                 </Quote>
                 <CompanyName position="left">Google</CompanyName>
-                <Quote color={props.theme.darkPink} position="right">
+                <Quote color={props.theme.highlight} position="right">
                     The caliber and number of students that MHacks attracts is
                     like no other hacking event.
                 </Quote>

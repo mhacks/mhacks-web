@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Container } from '../../components';
 import { devices } from '../../styles';
 
-const HeaderLogoImage = require('../../../static/icons/blackout-logo.png');
+const HeaderLogoImage = require('../../../static/m12/logo.svg');
 
 /* Footer Style */
 const Footer = styled.footer`
