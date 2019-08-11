@@ -94,9 +94,9 @@ class BlackoutFaq extends React.Component {
                                 <span>
                                     Common areas of focus include iOS or Android
                                     apps, web apps, and hardware hacks. Check
-                                    out the hacks from MHacks 9 on &nbsp;
+                                    out the hacks from MHacks 11 on &nbsp;
                                     <Link
-                                        href="https://mhacks9.devpost.com/submissions"
+                                        href="https://mhacks11.devpost.com/submissions"
                                         target="_blank"
                                     >
                                         Devpost.

@@ -108,9 +108,9 @@ class Faq extends React.Component {
                                                 Web Development, Android, iOS,
                                                 AI/ML, AR/VR, Game Development,
                                                 and Hardware. Check out the
-                                                hacks from MHacks 9 on{' '}
+                                                hacks from MHacks 11 on{' '}
                                                 <Link
-                                                    href="https://mhacks9.devpost.com/submissions"
+                                                    href="https://mhacks11.devpost.com/submissions"
                                                     target="_blank"
                                                 >
                                                     Devpost.
