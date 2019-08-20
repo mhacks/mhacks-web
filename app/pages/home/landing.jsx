@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { devices } from '../../styles';
 
 import Apply from './apply.jsx';
 
@@ -28,17 +29,22 @@ const Container = styled.div`
 
 const InnerContainer = styled.div`
     position: absolute;
-    height: 75vh;
+    height: 80%;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 `;
 
 const Logo = styled.div`
-    height: 45vh;
-    width: auto;
+    height: auto;
+
+    ${devices.tiny`
+        width: 120vw;
+    `} ${devices.small`
+        width: 70vw;
+    `};
 `;
 
 const ApplyBox = styled.div`
@@ -100,7 +106,7 @@ class Landing extends React.Component {
                     />
                     <InnerContainer>
                         <Logo>
-                            <img src={LandingLogo} style={{ height: '100%' }} />
+                            <img src={LandingLogo} style={{ width: '100%' }} />
                         </Logo>
                         <ApplyBox>
                             <Apply />

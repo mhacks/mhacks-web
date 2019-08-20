@@ -36,7 +36,7 @@ let theme = {
     // Color primitives
     primaryFont: 'FFDINWebProRegular',
     primary: '#000000',
-    secondary: '#6DB7E1',
+    secondary: '#CA3333',
     highlight: '#ffffff',
     highlightSecondary: '#DDDDDD',
     highlightOpposite: '#333333',
