@@ -42,7 +42,7 @@ const ExpandingItemWrapper = styled.div`
 `;
 
 const Link = styled.a`
-    color: ${props => props.theme.secondary};
+    color: ${props => props.theme.teal};
     text-decoration: none;
 `;
 
@@ -94,7 +94,7 @@ class BlackoutFaq extends React.Component {
                                 <span>
                                     Common areas of focus include iOS or Android
                                     apps, web apps, and hardware hacks. Check
-                                    out the hacks from MHacks 11 on &nbsp;
+                                    out the hacks from MHacks 11 on{' '}
                                     <Link
                                         href="https://mhacks11.devpost.com/submissions"
                                         target="_blank"

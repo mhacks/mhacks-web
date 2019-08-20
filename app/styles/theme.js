@@ -42,6 +42,8 @@ let theme = {
     highlightOpposite: '#333333',
     highlightSecondaryOpposite: '#666666',
     success: '#2ecc71',
+    teal: '#1CA3A3',
+    darkPink: '#CA2171',
 
     // Font sizes
     headerFontSize: '50px',

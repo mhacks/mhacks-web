@@ -73,8 +73,8 @@ const Orb = styled.div`
     `};
 `;
 
-const SecondaryOrb = styled(Orb)`
-    background-color: ${props => props.theme.secondary};
+const TealOrb = styled(Orb)`
+    background-color: ${props => props.theme.teal};
     bottom: -10%;
     left: 20%;
 `;
@@ -112,7 +112,7 @@ class BlackoutHero extends React.Component {
             <Container>
                 <HeroContainer>
                     <VideoPlayerContainer>
-                        <SecondaryOrb />
+                        <TealOrb />
                         <VideoPlayer
                             placeholderImage={VideoPlaceholderImage}
                             videoUrl="https://www.youtube.com/embed/IbCV5APhSic"
@@ -127,7 +127,7 @@ class BlackoutHero extends React.Component {
                         </Text>
                         <TextSubmitPositioner>
                             <TextSubmit
-                                primaryColor={this.props.theme.secondary}
+                                primaryColor={this.props.theme.teal}
                                 secondaryColor="white"
                                 feedbackColor="white"
                                 placeholder="ENTER YOUR EMAIL"
