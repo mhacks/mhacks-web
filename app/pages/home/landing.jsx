@@ -41,7 +41,7 @@ const Logo = styled.div`
     height: auto;
 
     ${devices.tiny`
-        width: 120vw;
+        width: 100vw;
     `} ${devices.small`
         width: 70vw;
     `};
@@ -57,6 +57,7 @@ const MLHBanner = styled.a`
     left: 2%;
     margin-top: 2%;
     width: 10%;
+    max-width: 84px;
     z-index: 99;
 `;
 

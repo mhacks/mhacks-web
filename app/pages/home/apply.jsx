@@ -6,6 +6,7 @@ import { Container } from '../../components';
 import { NavLink } from 'react-router-dom';
 import { SectionHeader } from './section_components.jsx';
 import theme from '../../styles/theme';
+import { devices } from '../../styles';
 
 const Wrapper = styled.div`
     background: ${props => props.color};
@@ -45,6 +46,17 @@ const StyledNavLinkWrapper = styled.div`
     padding: 20px 0px 30px;
 `;
 
+const ApplyBoxText = styled(SectionHeader)`
+    color: ${theme.highlight};
+    padding: 0 10px;
+
+    ${devices.tiny`
+        font-size: 20px;
+    `} ${devices.small`
+        font-size: 24px;
+    `};
+`;
+
 class Apply extends React.Component {
     render() {
         const is_application_open = this.props.configurationState.data
@@ -54,17 +66,24 @@ class Apply extends React.Component {
             <Wrapper>
                 <Container>
                     <Holder>
-                        <SectionHeader
-                            style={{
-                                color: this.props.theme.highlight,
-                                padding: '0 10px',
-                                fontSize: '24px'
-                            }}
-                        >
+                        <ApplyBoxText>
+                            {new Date(
+                                this.props.configurationState.data.start_date
+                            ).toLocaleString('default', {
+                                month: 'long',
+                                day: 'numeric'
+                            })}
+                            th–
+                            {new Date(
+                                this.props.configurationState.data.end_date
+                            ).toLocaleString('default', { day: 'numeric' })}
+                            th. U‑M Intramural Sports Building.
+                        </ApplyBoxText>
+                        <ApplyBoxText>
                             {is_application_open
                                 ? 'Applications are now open!'
                                 : 'Applications are now closed.'}
-                        </SectionHeader>
+                        </ApplyBoxText>
                         <StyledNavLinkWrapper>
                             {this.props.userState.data.isLoggedIn ? (
                                 <StyledNavLink
