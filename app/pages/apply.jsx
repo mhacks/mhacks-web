@@ -161,7 +161,12 @@ class Apply extends React.Component {
                             their names and emails in the "anything else"
                             question.
                         </Subhead>
-
+                        <Subhead>
+                            After applying, head over to the{' '}
+                            <LegalLink href="/game">SiMHacks</LegalLink> page to
+                            fill out a quick questionnaire for a minigame within{' '}
+                            {this.props.configurationState.data.app_name}!
+                        </Subhead>
                         <LegalText>
                             By applying to{' '}
                             {this.props.configurationState.data.app_name}, you
