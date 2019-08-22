@@ -99,7 +99,7 @@ class HomeHero extends React.Component {
                         <VideoPlayerContainer>
                             <VideoPlayer
                                 placeholderImage={VideoPlaceholderImage}
-                                videoUrl="https://www.youtube.com/embed/bTC2oPnJ4Zo"
+                                videoUrl="https://www.youtube.com/embed/IbCV5APhSic"
                                 showControls={false}
                                 showVideoDetails={false}
                                 autoplay={true}

@@ -73,12 +73,6 @@ const Orb = styled.div`
     `};
 `;
 
-const PinkOrb = styled(Orb)`
-    background-color: ${props => props.theme.pink};
-    top: 0;
-    right: 20%;
-`;
-
 const TealOrb = styled(Orb)`
     background-color: ${props => props.theme.teal};
     bottom: -10%;
@@ -119,10 +113,9 @@ class BlackoutHero extends React.Component {
                 <HeroContainer>
                     <VideoPlayerContainer>
                         <TealOrb />
-                        <PinkOrb />
                         <VideoPlayer
                             placeholderImage={VideoPlaceholderImage}
-                            videoUrl="https://www.youtube.com/embed/bTC2oPnJ4Zo"
+                            videoUrl="https://www.youtube.com/embed/IbCV5APhSic"
                             showControls={false}
                             showVideoDetails={false}
                             autoplay={true}

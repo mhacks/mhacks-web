@@ -762,23 +762,13 @@ class MHForm extends React.Component {
                                 return (
                                     <RoundedButton
                                         type="submit"
-                                        color={this.props.theme.primary}
+                                        color={
+                                            errors.length > 0
+                                                ? this.props.theme.primary
+                                                : this.props.theme.secondary
+                                        }
                                         key={field.key}
                                         disabled={errors.length > 0}
-                                        style={
-                                            errors.length > 0
-                                                ? {
-                                                      backgroundColor: this
-                                                          .props.theme.secondary
-                                                  }
-                                                : {}
-                                        }
-                                        hover={
-                                            errors.length > 0
-                                                ? 'color: ' +
-                                                  this.props.theme.primary
-                                                : ''
-                                        }
                                         onClick={() =>
                                             (this.clicked = field.key)
                                         }

@@ -3,68 +3,61 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { devices } from '../../styles';
 
+import Apply from './apply.jsx';
+
+import Cover from 'react-video-cover';
+const BackgroundVideo = require('../../../static/m12/background-video.mp4');
+const LandingLogo = require('../../../static/m12/logo-landing.png');
+
 const Wrapper = styled.div`
     background: ${props => props.theme.primary};
     padding-top: 80px;
     z-index: 98;
+    margin-bottom: 20px;
 `;
 
 const Container = styled.div`
-    height: 100%;
-    width: calc(100% - 60px);
-    max-width: 1200px;
+    height: 100vh;
     margin: 0 auto;
 
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+    position: relative;
+`;
+
+const InnerContainer = styled.div`
+    position: absolute;
+    height: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+`;
+
+const Logo = styled.div`
+    height: auto;
 
     ${devices.tiny`
-        margin-top: 160px;
-    `} ${devices.tablet`
-        width: calc(100% - 100px);
-    `} ${devices.desktop`
-        width: calc(100% - 140px);
-    `} ${devices.giant`
-        width: calc(100% - 160px);
+        width: 100vw;
+    `} ${devices.small`
+        width: 70vw;
     `};
 `;
 
-const LogoText = styled.div`
-    position: relative;
-    height: auto;
-    width: auto;
-    font-size: 16vw;
-    white-space: nowrap;
-    color: white;
-    opacity: 0.4;
-`;
-
-const OverlayDiv = styled.div`
-    position: absolute;
-`;
-
-const Text = styled.h2`
-    position: relative;
-    font-size: 22px;
-    color: white;
-    text-align: center;
-    font-weight: 500;
-    text-align: center;
-    padding: 0 10vw;
-    margin: 5px 0;
-
-    ${devices.tablet`
-        font-size: 28px;
-    `};
+const ApplyBox = styled.div`
+    width: 100%;
 `;
 
 const MLHBanner = styled.a`
     display: block;
     position: absolute;
-    left: 31px;
-    top: 80px;
+    left: 2%;
+    margin-top: 2%;
+    width: 10%;
+    max-width: 84px;
     z-index: 99;
 `;
 
@@ -74,40 +67,52 @@ const MLHBannerImage = styled.img`
 `;
 
 class Landing extends React.Component {
+    constructor() {
+        super();
+
+        this.state = {
+            resizeNotifier: () => {}
+        };
+    }
+
     render() {
+        const videoOptions = {
+            src: BackgroundVideo,
+            autoPlay: true,
+            muted: true,
+            loop: true,
+            playsInline: true
+        };
+
         return (
             <Wrapper>
                 <MLHBanner
-                    href="https://mlh.io/seasons/na-2019/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2019-season&utm_content=gray"
+                    href="https://mlh.io/seasons/na-2020/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2020-season&utm_content=gray"
                     target="_blank"
                 >
                     <MLHBannerImage
-                        src="https://s3.amazonaws.com/logged-assets/trust-badge/2019/mlh-trust-badge-2019-gray.svg"
-                        alt="Major League Hacking 2019 Hackathon Season"
+                        src="https://s3.amazonaws.com/logged-assets/trust-badge/2020/mlh-trust-badge-2020-gray.svg"
+                        alt="Major League Hacking 2020 Hackathon Season"
                     />
                 </MLHBanner>
                 <Container>
-                    <LogoText>
-                        {this.props.configurationState.data.app_name.toUpperCase()}
-                    </LogoText>
-                    <OverlayDiv>
-                        <Text>
-                            {new Date(
-                                this.props.configurationState.data.start_date
-                            ).toLocaleString('default', {
-                                month: 'long',
-                                day: 'numeric'
-                            })}
-                            th-
-                            {new Date(
-                                this.props.configurationState.data.end_date
-                            ).toLocaleString('default', { day: 'numeric' })}
-                            th
-                        </Text>
-                        <Text>
-                            University of Michigan - Intramural Sports Building
-                        </Text>
-                    </OverlayDiv>
+                    <Cover
+                        videoOptions={videoOptions}
+                        remeasureOnWindowResize
+                        getResizeNotifier={resizeNotifier => {
+                            this.setState({
+                                resizeNotifier
+                            });
+                        }}
+                    />
+                    <InnerContainer>
+                        <Logo>
+                            <img src={LandingLogo} style={{ width: '100%' }} />
+                        </Logo>
+                        <ApplyBox>
+                            <Apply />
+                        </ApplyBox>
+                    </InnerContainer>
                 </Container>
             </Wrapper>
         );

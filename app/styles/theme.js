@@ -35,10 +35,10 @@ function hexToRgbA(hex, opq) {
 let theme = {
     // Color primitives
     primaryFont: 'FFDINWebProRegular',
-    primary: '#D41359',
-    secondary: '#B22752',
+    primary: '#000000',
+    secondary: '#CA3333',
     highlight: '#ffffff',
-    highlightSecondary: '#999999',
+    highlightSecondary: '#DDDDDD',
     highlightOpposite: '#333333',
     highlightSecondaryOpposite: '#666666',
     success: '#2ecc71',

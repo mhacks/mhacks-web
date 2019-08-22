@@ -5,13 +5,13 @@ import { devices } from '../../styles';
 import theme from '../../styles/theme';
 
 const Images = {
-    'AI/ML': require('../../../static/m11/cortices/ai.svg'),
-    'Android <br />Development': require('../../../static/m11/cortices/android.svg'),
-    'AR/VR': require('../../../static/m11/cortices/vr.svg'),
-    'Game <br />Development': require('../../../static/m11/cortices/game.svg'),
-    Hardware: require('../../../static/m11/cortices/hardware.svg'),
-    'iOS <br />Development': require('../../../static/m11/cortices/ios.svg'),
-    'Web <br />Development': require('../../../static/m11/cortices/web.svg')
+    'AI/ML': require('../../../static/m12/cortices/ai.svg'),
+    'Android <br />Development': require('../../../static/m12/cortices/android.svg'),
+    'AR/VR': require('../../../static/m12/cortices/vr.svg'),
+    'Game <br />Development': require('../../../static/m12/cortices/game.svg'),
+    Hardware: require('../../../static/m12/cortices/hardware.svg'),
+    'iOS <br />Development': require('../../../static/m12/cortices/ios.svg'),
+    'Web <br />Development': require('../../../static/m12/cortices/web.svg')
 };
 
 const Wrapper = styled.div`
