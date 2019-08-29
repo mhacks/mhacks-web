@@ -67,17 +67,7 @@ class Apply extends React.Component {
                 <Container>
                     <Holder>
                         <ApplyBoxText>
-                            {new Date(
-                                this.props.configurationState.data.start_date
-                            ).toLocaleString('default', {
-                                month: 'long',
-                                day: 'numeric'
-                            })}
-                            th–
-                            {new Date(
-                                this.props.configurationState.data.end_date
-                            ).toLocaleString('default', { day: 'numeric' })}
-                            th. U‑M Intramural Sports Building.
+                            11th-13th. U‑M Intramural Sports Building.
                         </ApplyBoxText>
                         <ApplyBoxText>
                             {is_application_open
