@@ -49,6 +49,9 @@ class Apply extends React.Component {
             notifications: OrderedSet()
         };
 
+        this.props.dispatch(ApplicationThunks.loadApplication());
+        this.props.dispatch(ApplicationThunks.loadForm());
+
         this.onSubmit = this.onSubmit.bind(this);
     }
 
@@ -70,11 +73,6 @@ class Apply extends React.Component {
         this.setState({
             notifications: this.state.notifications.filter(n => n.key !== key)
         });
-    }
-
-    componentDidMount() {
-        this.props.dispatch(ApplicationThunks.loadApplication());
-        this.props.dispatch(ApplicationThunks.loadForm());
     }
 
     static getDerivedStateFromProps(nextProps) {
