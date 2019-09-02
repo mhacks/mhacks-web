@@ -79,11 +79,11 @@ class Dashboard extends React.Component {
                     </SectionHeader>
                     <p>
                         You should have received a verification email at
-                        {' ' + userData.email}. If not, you can request another
+                        {' ' + userData.user.email}. If not, you can request another
                         one by clicking{' '}
                         <Link
                             onClick={this.onClickRequestEmailVerification}
-                            color={this.props.theme.primary}
+                            color={this.props.theme.secondary}
                         >
                             here
                         </Link>
