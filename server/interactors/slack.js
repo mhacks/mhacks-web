@@ -16,10 +16,33 @@ function sendMessage(location, message) {
             form: {
                 token: location,
                 channel: message.channel,
-                text: message.text
+                text: message.text,
+                blocks: message.blocks
             }
         });
     }
+}
+
+function createGroupDM(token, users) {
+    return request({
+        method: 'POST',
+        uri: 'https://slack.com/api/conversations.open',
+        form: {
+            token: token,
+            users: users.join()
+        }
+    });
+}
+
+function getBotUserID(token, bot) {
+    return request({
+        method: 'POST',
+        uri: 'https://slack.com/api/bots.info',
+        form: {
+            token: token,
+            bot: bot
+        }
+    });
 }
 
 function postSnippet(token, message) {
@@ -37,5 +60,7 @@ function postSnippet(token, message) {
 
 module.exports = {
     sendMessage,
+    createGroupDM,
+    getBotUserID,
     postSnippet
 };

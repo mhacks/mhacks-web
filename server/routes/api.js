@@ -22,6 +22,7 @@ var router = require('express').Router(),
     floorHandler = require('./api/floor.js'),
     speakerHandler = require('./api/speaker.js'),
     mentorshipHandler = require('./api/mentorship.js'),
+    mentorshipBotHandler = require('./api/mentorshipbot.js'),
     deviceHandler = require('./api/device.js'),
     gameHandler = require('./api/game.js'),
     swaggerUI = require('swagger-ui-express'),
@@ -50,6 +51,7 @@ router.use('/floor', floorHandler);
 router.use('/speaker', speakerHandler);
 router.use('/teams', authMiddleware('any', 'api', false), teamHandler);
 router.use('/mentorship', mentorshipHandler);
+router.use('/mentorshipbot', mentorshipBotHandler);
 router.use('/device', deviceHandler);
 router.use('/game', gameHandler);
 
