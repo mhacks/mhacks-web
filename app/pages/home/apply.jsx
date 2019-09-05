@@ -67,7 +67,7 @@ class Apply extends React.Component {
                 <Container>
                     <Holder>
                         <ApplyBoxText>
-                            11th-13th. U‑M Intramural Sports Building.
+                            October 11th-13th. U‑M Intramural Sports Building.
                         </ApplyBoxText>
                         <ApplyBoxText>
                             {is_application_open
