@@ -179,25 +179,6 @@ var schema = new mongoose.Schema(
                         auth_groups: ['admin', 'reader', 'sponsor']
                     }
                 ]
-            },
-            mlh_coc_agreement: {
-                type: Boolean,
-                required: true,
-                form: {
-                    user_editable: true,
-                    label: 'I have read and agree to the MLH Code of Conduct.',
-                    required_value: true
-                }
-            },
-            mlh_affiliation_agreement: {
-                type: Boolean,
-                required: true,
-                form: {
-                    user_editable: true,
-                    label:
-                        'I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy.',
-                    required_value: true
-                }
             }
         },
         defaultEndSchema

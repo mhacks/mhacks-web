@@ -25,5 +25,6 @@ services:
       - NEWRELIC_ENABLED
       - NEWRELIC_APP_NAME
       - NEWRELIC_LICENSE_KEY
+      - SLACKBOT_TOKEN
     links:
       - mhacks_db

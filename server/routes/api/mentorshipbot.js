@@ -2,19 +2,19 @@ var router = require('express').Router(),
     config = require('../../../config/default.js'),
     slack = require('../../interactors/slack.js');
 
-const createBlockWithButton = (user_name, text) => {
+const createBlockWithButton = (user_id, user_name, text) => {
     return JSON.stringify([
         {
             type: 'section',
             text: {
                 type: 'mrkdwn',
-                text: formatInquiry(user_name, text)
+                text: formatInquiry(user_id, text)
             },
             accessory: {
                 type: 'button',
                 text: {
                     type: 'plain_text',
-                    text: `Help User ${user_name}`,
+                    text: `Help User @${user_name}`,
                     emoji: true
                 },
                 value: 'pair_user_with_mentor'
@@ -23,30 +23,43 @@ const createBlockWithButton = (user_name, text) => {
     ]);
 };
 
-const formatInquiry = (user_name, text) =>
-    `*${user_name} wants help with:* ${text}`;
+const formatInquiry = (user_id, text) =>
+    `*<@${user_id}> wants help with:* ${text}`;
 const strikeThroughInquiry = text => `~${text}~`;
 
 router.post('/', function(req, res) {
     let inquiry = req.body || '';
     if (inquiry.text && inquiry.command == '/helpmewith') {
         slack
-            .sendMessage(config.slackbot_token, {
-                channel: config.slack_mentorship_channel,
-                text: inquiry.user_id, // NOTE: using text object is currently the best way to pass this id, but Slack is phasing out usernames. Check API in future.
-                blocks: createBlockWithButton(inquiry.user_name, inquiry.text) // defines message content and appearance
-            })
+            .getUserForID(config.slackbot_token, inquiry.user_id)
             .then(response => {
-                response = JSON.parse(response);
-                if (!response.ok) throw Error(response.error);
-                res.send({
-                    response_type: 'in_channel',
-                    text: `Your inquiry: '${inquiry.text}' was sent to the ${config.slack_mentorship_channel} channel`
-                });
+                slack
+                    .sendMessage(config.slackbot_token, {
+                        channel: config.slack_mentorship_channel,
+                        text: inquiry.user_id, // NOTE: using text object is currently the best way to pass this id, but Slack is phasing out usernames. Check API in future.
+                        blocks: createBlockWithButton(
+                            inquiry.user_id,
+                            response.user.real_name,
+                            inquiry.text
+                        ) // defines message content and appearance
+                    })
+                    .then(() => {
+                        res.send({
+                            response_type: 'in_channel',
+                            text: `Your inquiry: '${inquiry.text}' was sent to the ${config.slack_mentorship_channel} channel`
+                        });
+                    })
+                    .catch(e => {
+                        console.error(e);
+                        res.status(500).json(e);
+                    });
             })
             .catch(e => {
+                console.error(e);
                 res.status(500).json(e);
             });
+    } else {
+        res.status(400).send({ status: false });
     }
 });
 
@@ -69,19 +82,13 @@ router.post('/interactions/', function(req, res) {
     slack
         .createGroupDM(config.slackbot_token, users)
         .then(response => {
-            response = JSON.parse(response);
-            if (!response.ok) throw Error(response.error);
-
             // Post question in GroupDM.
             slack
                 .sendMessage(config.slackbot_token, {
                     channel: response.channel.id,
-                    text: `${payload.user.username},\n${inquiry}\nThank you for helping!`
+                    text: `<@${payload.user.id}>,\n\n${inquiry}\n\nThank you for helping!`
                 })
-                .then(response => {
-                    response = JSON.parse(response);
-                    if (!response.ok) throw Error(response.error);
-
+                .then(() => {
                     // Cross-out inquiry in mentorship channel
                     slack
                         .sendMessage(payload.response_url, {

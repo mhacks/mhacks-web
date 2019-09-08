@@ -238,6 +238,11 @@ class HeaderLinks extends React.Component {
                         Edit Profile
                     </StyledNavLink>
                 ) : null}
+                {isLoggedIn && isAccepted ? (
+                    <StyledNavLink to={routes.CONFIRM} color={color}>
+                        Confirm
+                    </StyledNavLink>
+                ) : null}
                 {isLoggedIn ? (
                     <StyledNavLink to={routes.DASHBOARD} color={color}>
                         Dashboard
