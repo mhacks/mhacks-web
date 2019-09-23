@@ -80,7 +80,7 @@ class ApplicationSection extends React.Component {
                 , and the{' '}
                 <Link
                     target="_blank"
-                    href="https://www.facebook.com/events/310452576398095/"
+                    href="https://www.facebook.com/events/480557766124623/"
                 >
                     {this.props.configurationState.data.app_name} Facebook Event
                 </Link>

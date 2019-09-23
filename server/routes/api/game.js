@@ -20,7 +20,7 @@ router.get('/', authMiddleware('any', 'api'), function(req, res) {
         .byToken(req.authToken)
         .then(gameState => {
             if (
-                gameState !== undefined &&
+                gameState !== null &&
                 gameState.quests.length < config.game_max_quests
             ) {
                 gameState.fillQuests();
