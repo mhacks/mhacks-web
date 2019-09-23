@@ -130,7 +130,8 @@ module.exports = {
     admin_password: process.env.ADMIN_PASSWORD || 'hunter2',
     site_association: (
         process.env.SITE_ASSOCIATION || '478C74MJ7T.com.MPowered.MHacks'
-    ).split(',')
+    ).split(','),
+    game_max_quests: process.env.GAME_MAX_QUESTS || 3
 };
 
 function parseBool(value, default_value) {
