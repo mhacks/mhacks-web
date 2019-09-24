@@ -15,7 +15,11 @@ var Responses = {
     INVALID_TYPE: 'Invalid type.',
     MISSING_PARAMETERS: 'Missing some required fields',
     CREATED: 'Created successfully',
-    UPDATED: 'Updated successfully'
+    UPDATED: 'Updated successfully',
+    INCORRECT_ANSWER:
+        'This user does not have the required answer for this quest',
+    ALREADY_SCANNED: 'You have already scanned this user',
+    SELF_SCAN: 'You cannot scan yourself!'
 };
 
 Responses.Auth = authResponses;
