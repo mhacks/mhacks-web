@@ -96,6 +96,8 @@ class Apply extends React.Component {
             }
         }
 
+        nextProps.userState.done = true;
+
         return {
             userState: nextProps.userState
         };
@@ -112,6 +114,7 @@ class Apply extends React.Component {
     render() {
         if (
             !this.state.userState ||
+            !this.state.userState.done ||
             !this.state.userState.fetched ||
             !this.state.userState.data ||
             (!this.state.userState.data.form &&

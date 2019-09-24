@@ -93,10 +93,10 @@ class MHForm extends React.Component {
     }
 
     componentDidMount() {
-        this.UNSAFE_componentWillReceiveProps(this.props);
+        this.handleProps(this.props);
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
+    handleProps(nextProps) {
         const formData = {};
         const files = {};
         const cachedLoaders = {};
@@ -242,10 +242,11 @@ class MHForm extends React.Component {
             case this.FieldTypes.ESSAY:
             case this.FieldTypes.SELECT:
             case this.FieldTypes.FILE:
-            case this.FieldTypes.BOOLEAN:
             case this.FieldTypes.LINK:
             case this.FieldTypes.NUMBER:
                 return '';
+            case this.FieldTypes.BOOLEAN:
+                return false;
             case this.FieldTypes.DATE: {
                 return 'yyyy-MM-dd';
             }
@@ -391,11 +392,19 @@ class MHForm extends React.Component {
                 case this.FieldTypes.TEXT:
                 case this.FieldTypes.ESSAY:
                 case this.FieldTypes.SELECT:
-                case this.FieldTypes.BOOLEAN:
                 case this.FieldTypes.LINK:
                 case this.FieldTypes.NUMBER:
                     if (
                         formData[field.key] === '' ||
+                        (field.required_value !== undefined &&
+                            field.required_value !== formData[field.key])
+                    ) {
+                        errors.push(field.key);
+                    }
+                    break;
+                case this.FieldTypes.BOOLEAN:
+                    if (
+                        formData[field.key] === false ||
                         (field.required_value !== undefined &&
                             field.required_value !== formData[field.key])
                     ) {
@@ -543,7 +552,6 @@ class MHForm extends React.Component {
     }
 
     render() {
-        const formData = this.state.formData;
         return !this.props.schema ? null : (
             <form onSubmit={this.onSubmit}>
                 {this.state.errorFields.length > 0 ? (
@@ -570,39 +578,39 @@ class MHForm extends React.Component {
                         const hasError = this.state.errorFields.includes(
                             fieldKey
                         );
-                        const field = this.props.schema[fieldKey];
-                        field.key = fieldKey;
 
-                        if (field.depends_on && !formData[field.depends_on]) {
+                        this.props.schema[fieldKey].key = fieldKey;
+
+                        if (this.props.schema[fieldKey].depends_on && !this.state.formData[this.props.schema[fieldKey].depends_on]) {
                             return null;
                         }
 
-                        switch (field.type) {
+                        switch (this.props.schema[fieldKey].type) {
                             case this.FieldTypes.SELECT:
                                 return this.renderLabeledInput(
-                                    field,
+                                    this.props.schema[fieldKey],
                                     <Select
-                                        name={field.key}
-                                        value={formData[field.key]}
+                                        name={fieldKey}
+                                        value={this.state.formData[fieldKey]}
                                         options={
-                                            this.state.cachedLoaders[field.key]
+                                            this.state.cachedLoaders[fieldKey]
                                                 ? this.state.cachedLoaders[
-                                                      field.key
+                                                      fieldKey
                                                   ].options
                                                 : []
                                         }
                                         onChange={this.handleSelectChange(
-                                            field.key
+                                            fieldKey
                                         )}
                                         filterOptions={
-                                            this.state.cachedLoaders[field.key]
+                                            this.state.cachedLoaders[fieldKey]
                                                 ? this.state.cachedLoaders[
-                                                      field.key
+                                                      fieldKey
                                                   ].loader
                                                 : undefined
                                         }
                                         selectComponent={
-                                            field.creatable
+                                            this.props.schema[fieldKey].creatable
                                                 ? Creatable
                                                 : undefined
                                         }
@@ -611,30 +619,30 @@ class MHForm extends React.Component {
                                 );
                             case this.FieldTypes.ARRAY:
                                 return this.renderLabeledInput(
-                                    field,
+                                    this.props.schema[fieldKey],
                                     <Select
-                                        name={field.key}
-                                        value={formData[field.key]}
+                                        name={fieldKey}
+                                        value={this.state.formData[fieldKey]}
                                         options={
-                                            this.state.cachedLoaders[field.key]
+                                            this.state.cachedLoaders[fieldKey]
                                                 ? this.state.cachedLoaders[
-                                                      field.key
+                                                      fieldKey
                                                   ].options
                                                 : []
                                         }
                                         multi={true}
                                         onChange={this.handleSelectChange(
-                                            field.key
+                                            fieldKey
                                         )}
                                         filterOptions={
-                                            this.state.cachedLoaders[field.key]
+                                            this.state.cachedLoaders[fieldKey]
                                                 ? this.state.cachedLoaders[
-                                                      field.key
+                                                      fieldKey
                                                   ].loader
                                                 : undefined
                                         }
                                         selectComponent={
-                                            field.creatable
+                                            this.props.schema[fieldKey].creatable
                                                 ? Creatable
                                                 : undefined
                                         }
@@ -644,47 +652,47 @@ class MHForm extends React.Component {
                             case this.FieldTypes.LINK:
                             case this.FieldTypes.TEXT:
                                 return this.renderLabeledInput(
-                                    field,
+                                    this.props.schema[fieldKey],
                                     <Input
-                                        name={field.key}
+                                        name={fieldKey}
                                         type="text"
-                                        placeholder={field.placeholder}
-                                        value={formData[field.key]}
+                                        placeholder={this.props.schema[fieldKey].placeholder}
+                                        value={this.state.formData[fieldKey]}
                                         onChange={this.handleAttributeChange}
                                         hasError={hasError}
                                     />
                                 );
                             case this.FieldTypes.NUMBER:
                                 return this.renderLabeledInput(
-                                    field,
+                                    this.props.schema[fieldKey],
                                     <Input
-                                        name={field.key}
+                                        name={fieldKey}
                                         type="number"
-                                        value={formData[field.key]}
+                                        value={this.state.formData[fieldKey]}
                                         onChange={this.handleAttributeChange}
                                         hasError={hasError}
                                     />
                                 );
                             case this.FieldTypes.DATE:
                                 return this.renderLabeledInput(
-                                    field,
+                                    this.props.schema[fieldKey],
                                     <Input
-                                        name={field.key}
+                                        name={fieldKey}
                                         type="date"
                                         placeholder="yyyy-mm-dd"
-                                        value={formData[field.key]}
+                                        value={this.state.formData[fieldKey]}
                                         onChange={this.handleAttributeChange}
                                         hasError={hasError}
                                     />
                                 );
                             case this.FieldTypes.DATETIME:
                                 return this.renderLabeledInput(
-                                    field,
+                                    this.props.schema[fieldKey],
                                     <Input
-                                        name={field.key}
+                                        name={fieldKey}
                                         type="datetime-local"
                                         placeholder="yyyy-mm-ddTH:m:S"
-                                        value={formData[field.key]}
+                                        value={this.state.formData[fieldKey]}
                                         onChange={this.handleAttributeChange}
                                         hasError={hasError}
                                     />
@@ -693,22 +701,22 @@ class MHForm extends React.Component {
                                 return (
                                     <SectionHeader
                                         color={this.props.theme.primary}
-                                        key={field.key}
+                                        key={fieldKey}
                                     >
-                                        {field.label}
+                                        {this.props.schema[fieldKey].label}
                                     </SectionHeader>
                                 );
                             case this.FieldTypes.FILE: {
                                 let notExists = true;
                                 if (
-                                    Array.isArray(this.state.files[field.key])
+                                    Array.isArray(this.state.files[fieldKey])
                                 ) {
                                     for (const i in this.state.files[
-                                        field.key
+                                        fieldKey
                                     ]) {
                                         if (
-                                            this.state.files[field.key][i] &&
-                                            this.state.files[field.key][i]
+                                            this.state.files[fieldKey][i] &&
+                                            this.state.files[fieldKey][i]
                                                 .toLowerCase()
                                                 .indexOf('/artifact/') !== -1
                                         ) {
@@ -718,9 +726,9 @@ class MHForm extends React.Component {
                                 }
 
                                 if (
-                                    typeof this.state.files[field.key] ===
+                                    typeof this.state.files[fieldKey] ===
                                         'string' &&
-                                    this.state.files[field.key]
+                                    this.state.files[fieldKey]
                                         .toLowerCase()
                                         .indexOf('/artifact/') !== -1
                                 ) {
@@ -729,16 +737,16 @@ class MHForm extends React.Component {
 
                                 const uploadBackground = hasError
                                     ? 'red'
-                                    : this.state.files[field.key] && !notExists
+                                    : this.state.files[fieldKey] && !notExists
                                     ? this.props.theme.success
                                     : this.props.theme.primary;
                                 return (
-                                    <FileUploadContainer key={field.key}>
+                                    <FileUploadContainer key={fieldKey}>
                                         <FileUpload
-                                            fileTitle={field.label}
+                                            fileTitle={this.props.schema[fieldKey].label}
                                             defaultColor={uploadBackground}
                                             defaultText={
-                                                this.state.files[field.key] &&
+                                                this.state.files[fieldKey] &&
                                                 !notExists
                                                     ? 'Uploaded. Click to change.'
                                                     : false
@@ -750,7 +758,7 @@ class MHForm extends React.Component {
                                                 this.props.theme.success
                                             }
                                             onFileSelect={this.handleFileUploadForKey(
-                                                field.key
+                                                fieldKey
                                             )}
                                         />
                                     </FileUploadContainer>
@@ -767,24 +775,24 @@ class MHForm extends React.Component {
                                                 ? this.props.theme.primary
                                                 : this.props.theme.secondary
                                         }
-                                        key={field.key}
+                                        key={fieldKey}
                                         disabled={errors.length > 0}
                                         onClick={() =>
-                                            (this.clicked = field.key)
+                                            (this.clicked = fieldKey)
                                         }
                                     >
                                         {errors.length > 0
                                             ? `${errors.length} Error(s)`
-                                            : field.label}
+                                            : this.props.schema[fieldKey].label}
                                     </RoundedButton>
                                 );
                             }
                             case this.FieldTypes.BOOLEAN:
                                 return this.renderLabeledInput(
-                                    field,
+                                    this.props.schema[fieldKey],
                                     <Select
-                                        name={field.key}
-                                        value={formData[field.key]}
+                                        name={fieldKey}
+                                        value={this.state.formData[fieldKey]}
                                         options={[
                                             {
                                                 value: true,
@@ -796,18 +804,18 @@ class MHForm extends React.Component {
                                             }
                                         ]}
                                         onChange={this.handleSelectChange(
-                                            field.key
+                                            fieldKey
                                         )}
                                     />,
                                     hasError
                                 );
                             case this.FieldTypes.ESSAY:
                                 return this.renderLabeledInput(
-                                    field,
+                                    this.props.schema[fieldKey],
                                     <TextArea
-                                        name={field.key}
-                                        value={formData[field.key]}
-                                        placeholder={field.placeholder}
+                                        name={fieldKey}
+                                        value={this.state.formData[fieldKey] || this.props.schema[fieldKey].default || ''}
+                                        placeholder={this.props.schema[fieldKey].placeholder}
                                         onChange={this.handleAttributeChange}
                                         hasError={hasError}
                                     />
