@@ -123,10 +123,12 @@ class Confirm extends React.Component {
                         <a href="https://docs.google.com/document/d/1tFmaC_eVVPJ9fKnjGeYHRX2_th3-JOd9ZP-IoTEM91I/pub">
                             MHacks Liability Waiver
                         </a>
-                        . Additionally you authorize MHacks to share your application/registration
-                        information for event administration, ranking, MLH administration, pre- and
-                        post-event informational e-mails, and occasional messages about hackathons
-                        in-line with the MLH Privacy Policy.
+                        . Additionally you authorize MHacks to share your
+                        application/registration information for event
+                        administration, ranking, MLH administration, pre- and
+                        post-event informational e-mails, and occasional
+                        messages about hackathons in-line with the MLH Privacy
+                        Policy.
                     </p>
                 </FormContainer>
                 <NotificationStack
