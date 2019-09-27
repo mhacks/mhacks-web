@@ -409,7 +409,7 @@ var schema = new mongoose.Schema(
             },
             mlh_coc_agreement: {
                 type: Boolean,
-                required: true,
+                required: false,
                 form: {
                     user_editable: true,
                     label: 'I have read and agree to the MLH Code of Conduct.',
@@ -418,7 +418,7 @@ var schema = new mongoose.Schema(
             },
             mlh_affiliation_agreement: {
                 type: Boolean,
-                required: true,
+                required: false,
                 form: {
                     user_editable: true,
                     label:
