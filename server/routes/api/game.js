@@ -131,9 +131,16 @@ router.post('/scan', authMiddleware('any', 'api'), function(req, res) {
                 throw new Error('User not found with email ' + scannedEmail);
             }
 
-            GameState.find()
+            GameState.findOne()
                 .byUser(req.user)
                 .then(currentUserState => {
+                    if (currentUserState === null) {
+                        return res.status(400).send({
+                            status: false,
+                            message: Responses.NO_ANSWERS
+                        });
+                    }
+
                     // Check if quest exists in our current user
                     const foundQuests = currentUserState.quests.filter(
                         quest => quest.question === questName
