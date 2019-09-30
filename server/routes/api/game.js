@@ -227,4 +227,51 @@ router.post('/scan', authMiddleware('any', 'api'), function(req, res) {
         });
 });
 
+// Returns the leaderboard for GameStates.
+// Specify a limit, 1 <= limit <= 100, as a query
+// parameter to request a certain amount of entries.
+// The default is 10 entries.
+router.get('/leaderboard', authMiddleware('any', 'api'), function(req, res) {
+    const limit =
+        req.query.limit !== undefined ? parseInt(req.query.limit) : 10;
+
+    if (isNaN(limit) || limit < 1 || limit > 100) {
+        res.status(400).send({
+            status: false
+        });
+    }
+
+    GameState.find({})
+        .limit(limit)
+        .sort({ points: -1 })
+        .populate('user', { id: 1, full_name: 1 })
+        .select({ points: 1, user: 1 })
+        .then(gameStates => {
+            res.send({
+                status: true,
+                // It would be nicer to just have Mongoose filter out all
+                // the fields that we don't need, however even when only
+                // selecting the user's name and ID their birthday timestamp
+                // still shows up, so for security purposes it's probably
+                // best to just manually map the responses.
+                leaderboard: gameStates.map(state => {
+                    return {
+                        user: {
+                            id: state.user.id,
+                            full_name: state.user.full_name
+                        },
+                        points: state.points
+                    };
+                })
+            });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({
+                status: false,
+                message: Responses.UNKNOWN_ERROR
+            });
+        });
+});
+
 module.exports = router;
