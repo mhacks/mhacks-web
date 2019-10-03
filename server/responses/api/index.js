@@ -16,6 +16,8 @@ var Responses = {
     MISSING_PARAMETERS: 'Missing some required fields',
     CREATED: 'Created successfully',
     UPDATED: 'Updated successfully',
+    NO_ANSWERS:
+        'You must fill out the questionnaire before attempting to scan users',
     INCORRECT_ANSWER:
         'This user does not have the required answer for this quest',
     ALREADY_SCANNED: 'You have already scanned this user',
