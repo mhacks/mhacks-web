@@ -66,6 +66,17 @@ class Game extends React.Component {
     }
 
     onSubmit(answers) {
+        if (
+            this.props.configurationState.data === undefined ||
+            !this.props.configurationState.data.is_game_responses_enabled
+        ) {
+            this.addNotification(
+                'Changing your responses is currently disabled!',
+                'disabled'
+            );
+            return;
+        }
+
         this.props
             .dispatch(GameThunks.uploadAnswers(answers))
             .then(() => this.addNotification('Answers Saved!', 'save'));
