@@ -69,6 +69,24 @@ var schema = new mongoose.Schema(
                     auth_groups: ['admin'],
                     label: 'Blackout Page Enabled'
                 }
+            },
+            is_game_scanning_enabled: {
+                type: Boolean,
+                default: false,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Game Scanning Enabled'
+                }
+            },
+            is_game_responses_enabled: {
+                type: Boolean,
+                default: true,
+                required: true,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Game Responses Enabled'
+                }
             }
         },
         defaultEndSchema

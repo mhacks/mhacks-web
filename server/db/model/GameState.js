@@ -67,7 +67,14 @@ var schema = new mongoose.Schema(
                         label: 'Scanned Users'
                     }
                 }
-            ]
+            ],
+            lastPointsTime: {
+                type: Date,
+                form: {
+                    auth_groups: ['admin'],
+                    label: 'Last Points Time'
+                }
+            }
         },
         defaultEndSchema
     ),

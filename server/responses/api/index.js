@@ -4,7 +4,8 @@ var authResponses = require('./auth.js'),
     deployResponse = require('./deploy.js'),
     shortenerResponse = require('./shortener.js'),
     mentorshipResponse = require('./mentorship.js'),
-    scanResponse = require('./scan.js');
+    scanResponse = require('./scan.js'),
+    gameResponse = require('./game.js');
 
 var Responses = {
     METHOD_NOT_ALLOWED: 'Method not allowed',
@@ -15,13 +16,7 @@ var Responses = {
     INVALID_TYPE: 'Invalid type.',
     MISSING_PARAMETERS: 'Missing some required fields',
     CREATED: 'Created successfully',
-    UPDATED: 'Updated successfully',
-    NO_ANSWERS:
-        'You must fill out the questionnaire before attempting to scan users',
-    INCORRECT_ANSWER:
-        'This user does not have the required answer for this quest',
-    ALREADY_SCANNED: 'You have already scanned this user',
-    SELF_SCAN: 'You cannot scan yourself!'
+    UPDATED: 'Updated successfully'
 };
 
 Responses.Auth = authResponses;
@@ -31,5 +26,5 @@ Responses.Application = applicationResponse;
 Responses.Shortener = shortenerResponse;
 Responses.Scan = scanResponse;
 Responses.Mentorship = mentorshipResponse;
-
+Responses.Game = gameResponse;
 module.exports = Responses;
