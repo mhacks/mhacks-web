@@ -45,7 +45,7 @@ router.post('/', function(req, res) {
                     })
                     .then(() => {
                         res.send({
-                            response_type: 'in_channel',
+                            response_type: 'ephemeral',
                             text: `Your inquiry: '${inquiry.text}' was sent to the ${config.slack_mentorship_channel} channel`
                         });
                     })
