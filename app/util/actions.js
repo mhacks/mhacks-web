@@ -60,15 +60,17 @@ export function deleteRequest(route, token = '', body) {
     });
 }
 
-export function getResponseFromRoute(route) {
+export function getResponseFromRoute(route, authRequired) {
     const headers = {
         'Content-Type': 'application/json'
     };
 
-    const token = localStorage.getItem('jwt');
+    if (authRequired == undefined || authRequired) {
+        const token = localStorage.getItem('jwt');
 
-    if (token.length > 0) {
-        headers.Authorization = 'Bearer ' + token;
+        if (token.length > 0) {
+            headers.Authorization = 'Bearer ' + token;
+        }
     }
 
     return fetch(route, {

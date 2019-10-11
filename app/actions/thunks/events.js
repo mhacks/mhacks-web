@@ -6,7 +6,7 @@ export default class EventsThunks {
     static loadEvents() {
         return dispatch => {
             dispatch({ type: actions.LOAD_EVENTS_REQUEST });
-            return getResponseFromRoute(endpoints.EVENTS).then(response => {
+            return getResponseFromRoute(endpoints.EVENTS, false).then(response => {
                 if (response.status === 200) {
                     response.json().then(json => {
                         const { events } = json;
