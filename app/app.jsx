@@ -106,9 +106,7 @@ export default class AppProvider extends React.Component {
                                             <Redirect to={routes.SUBSCRIBE} />
                                         );
                                     } else if (is_live_page_enabled) {
-                                        return (
-                                            <Redirect to={routes.LIVE} />
-                                        );
+                                        return <Redirect to={routes.LIVE} />;
                                     } else {
                                         return <HomePage />;
                                     }
@@ -138,7 +136,10 @@ export default class AppProvider extends React.Component {
                                     exact
                                     path={routes.LIVE}
                                     render={() => {
-                                        if (this.getMetadata().isLoggedIn || is_live_page_enabled) {
+                                        if (
+                                            this.getMetadata().isLoggedIn ||
+                                            is_live_page_enabled
+                                        ) {
                                             return <LivePage />;
                                         }
 
