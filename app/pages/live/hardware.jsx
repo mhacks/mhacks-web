@@ -9,24 +9,14 @@ const P = styled.p`
     color: ${props => props.theme.highlight};
 `;
 
-const A = styled.a`
-    color: white;
-    text-decoration: none;
-
-    &:hover {
-        text-decoration: underline;
-    }
-`;
-
 class Hardware extends React.Component {
     render() {
         return (
             <SectionWrapper theme={this.props.theme} id="hardware">
                 <SectionHeader>Hardware</SectionHeader>
                 <P theme={this.props.theme}>
-                    Learn more about the{' '}
-                    {this.props.configurationState.data.app_name} Hacker Boards{' '}
-                    <A href="http://mhacks.github.io">here</A>
+                    Come learn more about MHacks 12 hardware at our hardware
+                    table!
                 </P>
             </SectionWrapper>
         );

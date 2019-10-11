@@ -67,7 +67,24 @@ class Apply extends React.Component {
                 <Container>
                     <Holder>
                         <ApplyBoxText>
-                            October 11th-13th. U‑M Intramural Sports Building.
+                            {new Date(
+                                new Date(
+                                    this.props.configurationState.data.start_date
+                                ).getTime() -
+                                    60 * 60 * 1000
+                            ).toLocaleString('default', {
+                                month: 'long',
+                                day: 'numeric',
+                                timeZone: 'America/Detroit'
+                            })}
+                            th–
+                            {new Date(
+                                this.props.configurationState.data.end_date
+                            ).toLocaleString('default', {
+                                day: 'numeric',
+                                timeZone: 'America/Detroit'
+                            })}
+                            th. U‑M Intramural Sports Building.
                         </ApplyBoxText>
                         <ApplyBoxText>
                             {is_application_open

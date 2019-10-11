@@ -652,10 +652,10 @@ schema.methods.getAvatars = function() {
                 .createHash('md5')
                 .update(this.email || '')
                 .digest('hex') +
-            '?d=404',
-        'https://api-avatar.trove.com/v1/avatar/' +
-            this.email +
-            '?fallback=true'
+            '?d=' +
+            encodeURIComponent(
+                'https://ui-avatars.com/api/' + this.full_name + '/128'
+            )
     ]);
 
     return avatars;

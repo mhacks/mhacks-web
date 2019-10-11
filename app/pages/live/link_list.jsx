@@ -48,24 +48,15 @@ class LinkList extends React.Component {
     render() {
         const links = [
             {
-                title: 'Livestream',
-                onClick: () => {
-                    window.open(
-                        'https://www.youtube.com/user/mhacksf13',
-                        '_blank'
-                    );
-                }
-            },
-            {
                 title: 'Devpost',
                 onClick: () => {
-                    window.open('https://mhacks11.devpost.com/', '_blank');
+                    window.open('https://mhacks12.devpost.com/', '_blank');
                 }
             },
             {
-                title: 'Mentorship',
+                title: 'Slack',
                 onClick: () => {
-                    document.getElementById('mentorship').scrollIntoView(false);
+                    window.open('http://mha.cx/slack', '_blank');
                 }
             },
             {

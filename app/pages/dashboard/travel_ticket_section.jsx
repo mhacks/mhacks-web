@@ -61,36 +61,70 @@ class TravelTicketSection extends React.Component {
             <p>
                 Please plan to arrive in Ann Arbor before 6pm on Friday,{' '}
                 {new Date(
-                    this.props.configurationState.data.start_date
-                ).toLocaleString('default', { month: 'long', day: 'numeric' })}
+                    new Date(
+                        this.props.configurationState.data.start_date
+                    ).getTime() -
+                        60 * 60 * 1000
+                ).toLocaleString('default', {
+                    month: 'long',
+                    day: 'numeric',
+                    timeZone: 'America/Detroit'
+                })}
                 th. Registration will begin at 4pm and end at 6pm. Late
                 registration will be available at the Help Desk. Closing
-                Ceremonies will last until about 5pm on Sunday,{' '}
+                Ceremonies will last until about 4pm on Sunday,{' '}
                 {new Date(
                     this.props.configurationState.data.end_date
-                ).toLocaleString('default', { month: 'long', day: 'numeric' })}
+                ).toLocaleString('default', {
+                    month: 'long',
+                    day: 'numeric',
+                    timeZone: 'America/Detroit'
+                })}
                 th. <br /> <br />
                 <strong>MHacks Buses</strong>: We will be sending buses to
                 several campuses across the nation, stay tuned for more details
                 in the coming weeks. <br /> <br />
                 <strong>Flying</strong>: MHacks airport shuttles will pickup
-                from DTW at 2:30pm and 4pm on Friday,{' '}
+                from DTW at 6pm on Friday,{' '}
                 {new Date(
-                    this.props.configurationState.data.start_date
-                ).toLocaleString('default', { month: 'long', day: 'numeric' })}
-                th. Airport shuttles will leave from Ann Arbor at 6pm on Sunday,{' '}
+                    new Date(
+                        this.props.configurationState.data.start_date
+                    ).getTime() -
+                        60 * 60 * 1000
+                ).toLocaleString('default', {
+                    month: 'long',
+                    day: 'numeric',
+                    timeZone: 'America/Detroit'
+                })}
+                th. Airport shuttles will leave from Ann Arbor at 4pm on Sunday,{' '}
                 {new Date(
                     this.props.configurationState.data.end_date
-                ).toLocaleString('default', { month: 'long', day: 'numeric' })}
+                ).toLocaleString('default', {
+                    month: 'long',
+                    day: 'numeric',
+                    timeZone: 'America/Detroit'
+                })}
                 th. Please book flights accordingly so that you can ride one of
                 the shuttles - travel between the airport and Ann Arbor will not
                 be reimbursed. <br /> <br />
                 <strong>Driving</strong>: Free parking will be available after
-                4pm on Friday,{' '}
+                6pm on Friday,{' '}
                 {new Date(
-                    this.props.configurationState.data.start_date
-                ).toLocaleString('default', { month: 'long', day: 'numeric' })}
-                th first-come first-serve at parking lots on campus.
+                    new Date(
+                        this.props.configurationState.data.start_date
+                    ).getTime() -
+                        60 * 60 * 1000
+                ).toLocaleString('default', {
+                    month: 'long',
+                    day: 'numeric',
+                    timeZone: 'America/Detroit'
+                })}
+                th first-come first-serve at parking lots and streets on campus.
+                We have some passes for the{' '}
+                <a href="https://ltp.umich.edu/lot/?xyz=cy">
+                    Thompson Street Structure
+                </a>
+                , but they are subject to availability.
             </p>
         );
     }

@@ -81,7 +81,10 @@ class BlackoutFooter extends React.Component {
                         © MHacks{' '}
                         {new Date(
                             this.props.configurationState.data.start_date
-                        ).toLocaleString('default', { year: 'numeric' })}
+                        ).toLocaleString('default', {
+                            year: 'numeric',
+                            timeZone: 'America/Detroit'
+                        })}
                     </Text>
                     <Flexer>
                         <HeaderLogo src={HeaderLogoImage} align="middle" />
