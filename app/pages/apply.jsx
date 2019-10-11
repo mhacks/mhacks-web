@@ -151,12 +151,16 @@ class Apply extends React.Component {
                                 this.props.configurationState.data.start_date
                             ).toLocaleString('default', {
                                 month: 'long',
-                                day: 'numeric'
+                                day: 'numeric',
+                                timeZone: 'America/Detroit'
                             })}
                             th to{' '}
                             {new Date(
                                 this.props.configurationState.data.end_date
-                            ).toLocaleString('default', { day: 'numeric' })}
+                            ).toLocaleString('default', {
+                                day: 'numeric',
+                                timeZone: 'America/Detroit'
+                            })}
                             th. If you already have teammates in mind, include
                             their names and emails in the "anything else"
                             question.

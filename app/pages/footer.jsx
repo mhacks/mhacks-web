@@ -109,7 +109,8 @@ class Footer extends React.Component {
                                         {new Date(
                                             this.props.configurationState.data.start_date
                                         ).toLocaleString('default', {
-                                            year: 'numeric'
+                                            year: 'numeric',
+                                            timeZone: 'America/Detroit'
                                         })}
                                     </LegalLink>
                                     <Dot />

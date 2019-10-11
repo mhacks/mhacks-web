@@ -7,7 +7,6 @@ import { PageContainer, Container, Countdown } from '../../components';
 import LinkList from './link_list.jsx';
 import Announcements from './announcements.jsx';
 import Schedule from './schedule.jsx';
-import Mentorship from './mentorship.jsx';
 import Hardware from './hardware.jsx';
 import Resources from './resources.jsx';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -58,9 +57,6 @@ class LivePage extends React.Component {
                     </Row>
                     <Row>
                         <Schedule />
-                    </Row>
-                    <Row>
-                        <Mentorship />
                     </Row>
                     <Double>
                         <Hardware />

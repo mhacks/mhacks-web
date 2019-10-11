@@ -12,7 +12,7 @@ const Header = styled.h3`
     -webkit-margin-after: 0;
     margin-top: 0;
     margin-bottom: 0;
-    color: ${props => props.color};
+    color: ${props => props.primary};
     font-size: 25px;
 `;
 
@@ -23,7 +23,7 @@ const Body = styled.span`
     margin-bottom: 5px;
     -webkit-margin-before: 5px;
     -webkit-margin-after: 5px;
-    color: ${props => props.color};
+    color: ${props => props.primary};
     font-size: 15px;
 `;
 
@@ -84,7 +84,7 @@ const PlusLine = styled.div`
     display: inline-block;
     position: absolute;
     z-index: -1;
-    background-color: ${props => props.color};
+    background-color: ${props => props.primary};
     height: 15px;
     width: 2px;
     top: 10px;
@@ -103,8 +103,8 @@ const PlusLine = styled.div`
 const Plus = props => {
     return (
         <PlusWrapper>
-            <PlusLine color={props.color} />
-            <PlusLine color={props.color} vertical={!props.open} />
+            <PlusLine primary={props.primary} />
+            <PlusLine primary={props.primary} vertical={!props.open} />
         </PlusWrapper>
     );
 };
@@ -156,16 +156,18 @@ export default class ExpandingItem extends React.Component {
         return (
             <Wrapper>
                 <Flexbox onClick={this.handleClick}>
-                    <Header color={this.handleHeaderColor}>
+                    <Header primary={this.handleHeaderColor()}>
                         {this.props.header}
                     </Header>
                     <Plus
-                        color={this.handlePlusColor}
+                        primary={this.handlePlusColor()}
                         open={this.state.expanded}
                     />
                 </Flexbox>
                 <Slider open={this.state.expanded}>
-                    <Body color={this.handleBodyColor}>{this.props.body}</Body>
+                    <Body primary={this.handleBodyColor()}>
+                        {this.props.body}
+                    </Body>
                 </Slider>
             </Wrapper>
         );
