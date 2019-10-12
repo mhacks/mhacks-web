@@ -5,21 +5,42 @@ var router = require('express').Router(),
     ScanEvent = require('../../db/model/ScanEvent.js'),
     Scan = require('../../db/model/Scan.js');
 
-router.get('/', authMiddleware('admin', 'api'), function(req, res) {
-    Scan.find({})
-        .then(scans => {
-            res.send({
-                status: true,
-                scans: scans
+router.get('/', function(req, res) {
+    authMiddleware('any', 'api', true, function() {
+        Scan.find({ public: true })
+            .then(scans => {
+                res.send({
+                    status: true,
+                    scans: scans
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
             });
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(500).send({
-                status: false,
-                message: Responses.UNKNOWN_ERROR
+    })(req, res, function() {
+        var query = { auth_groups: { $in: req.groups } };
+        if (req.groups.indexOf('admin') !== -1) {
+            query = {};
+        }
+        Scan.find(query)
+            .then(scans => {
+                res.send({
+                    status: true,
+                    scans: scans
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({
+                    status: false,
+                    message: Responses.UNKNOWN_ERROR
+                });
             });
-        });
+    });
 });
 
 router.post('/', authMiddleware('admin', 'api'), function(req, res) {
@@ -119,7 +140,7 @@ router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
                 req.groups.forEach(function(group) {
                     if (
                         scan.auth_groups &&
-                        scan.auth_groups.indexOf(group) !== -1
+                        (scan.auth_groups.indexOf(group) !== -1 || group == 'admin')
                     ) {
                         valid_group = true;
                     }
