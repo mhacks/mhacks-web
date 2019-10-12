@@ -140,7 +140,8 @@ router.post('/:id', authMiddleware('any', 'api'), function(req, res) {
                 req.groups.forEach(function(group) {
                     if (
                         scan.auth_groups &&
-                        (scan.auth_groups.indexOf(group) !== -1 || group == 'admin')
+                        (scan.auth_groups.indexOf(group) !== -1 ||
+                            group == 'admin')
                     ) {
                         valid_group = true;
                     }
