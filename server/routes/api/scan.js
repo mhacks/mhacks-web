@@ -22,7 +22,8 @@ router.get('/', function(req, res) {
                 });
             });
     })(req, res, function() {
-        var query = { auth_groups: { $in: req.groups } };
+        var groups = ['any'].concat(req.groups);
+        var query = { auth_groups: { $in: groups } };
         if (req.groups.indexOf('admin') !== -1) {
             query = {};
         }
