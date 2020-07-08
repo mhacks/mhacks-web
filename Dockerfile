@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:12
 
 LABEL maintainer="MHacks Team <tech@mhacks.org>" 
 
