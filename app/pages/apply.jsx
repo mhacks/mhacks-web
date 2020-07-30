@@ -38,7 +38,7 @@ const LegalLink = styled.a`
 
 const Subhead = styled.p`
     margin: 20px 0 0 0;
-    color: ${props => props.theme.secondary};
+    color: ${props => props.theme.primary};
 `;
 
 class Apply extends React.Component {

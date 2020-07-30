@@ -47,7 +47,7 @@ const StyledNavLinkWrapper = styled.div`
 `;
 
 const ApplyBoxText = styled(SectionHeader)`
-    color: ${theme.highlight};
+    color: ${theme.secondary};
     padding: 0 10px;
 
     ${devices.tiny`
@@ -99,7 +99,7 @@ class Apply extends React.Component {
                                             ? routes.APPLY
                                             : routes.DASHBOARD
                                     }
-                                    color={this.props.theme.highlight}
+                                    color={this.props.theme.highlightSecondary}
                                 >
                                     {is_application_open
                                         ? 'Register'

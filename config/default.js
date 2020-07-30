@@ -79,7 +79,7 @@ module.exports = {
         FILE: 11,
         DATETIME: 12
     },
-    color_dark: process.env.COLOR_DARK || '#D41359',
+    color_dark: process.env.COLOR_DARK || '#0A192E',
     color_light: process.env.COLOR_LIGHT || '#ffffff',
     push_notifications: {
         enabled: parseBool(process.env.PUSH_NOTIS_ENABLED, false),

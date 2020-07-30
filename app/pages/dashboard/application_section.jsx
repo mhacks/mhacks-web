@@ -10,15 +10,15 @@ import { NavLink } from 'react-router-dom';
 const StyledNavLink = styled(NavLink)`
     font-size: 16px;
     padding: 2px 20px;
-    border: 2px solid ${props => props.theme.highlight};
-    color: ${props => props.theme.highlight};
+    border: 2px solid ${props => props.theme.primary};
+    color: ${props => props.theme.primary};
     border-radius: 25px;
     text-decoration: none;
     transition: all 0.3s;
     text-transform: uppercase;
 
     &:hover {
-        background-color: ${props => props.theme.highlight};
+        background-color: ${props => props.theme.primary};
         color: white;
     }
 `;

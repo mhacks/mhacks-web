@@ -764,8 +764,8 @@ class MHForm extends React.Component {
                                         type="submit"
                                         color={
                                             errors.length > 0
-                                                ? this.props.theme.primary
-                                                : this.props.theme.secondary
+                                                ? this.props.theme.highlight
+                                                : this.props.theme.primary
                                         }
                                         key={field.key}
                                         disabled={errors.length > 0}

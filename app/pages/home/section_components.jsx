@@ -28,7 +28,7 @@ const SectionHeader = styled.h2`
     font-weight: 900;
     min-width: 100%;
     text-align: center;
-    color: ${theme.highlightOpposite};
+    color: ${theme.highlight};
     padding-top: 50px;
 
     ${devices.tiny`

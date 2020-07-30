@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 
 const FaqSectionHeader = styled.div`
     font-size: 30px;
-    color: ${props => props.theme.highlightOpposite};
+    color: ${props => props.theme.highlight};
 `;
 
 const Section = styled.div`
@@ -24,7 +24,7 @@ const Section = styled.div`
 `;
 
 const Link = styled.a`
-    color: ${props => props.theme.highlightOpposite};
+    color: ${props => props.theme.highlight};
     text-decoration: none;
 `;
 
@@ -62,8 +62,8 @@ const FaqItem = props => (
         <ExpandingItem
             {...props}
             expandColor
-            colorOn={props => props.theme.highlightSecondaryOpposite}
-            colorOff={props => props.theme.highlightOpposite}
+            colorOn={props => props.theme.secondary}
+            colorOff={props => props.theme.highlight}
         />
     </ExpandingItemWrapper>
 );
@@ -71,7 +71,7 @@ const FaqItem = props => (
 class Faq extends React.Component {
     render() {
         return (
-            <Wrapper>
+            <Wrapper style={{backgroundColor: this.props.backgroundColor}}>
                 <Container>
                     <SectionHeader>Frequently Asked Questions</SectionHeader>
                     <FlexBox>
