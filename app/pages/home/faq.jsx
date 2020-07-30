@@ -138,11 +138,13 @@ class Faq extends React.Component {
                                         header="What if I don’t have a team or idea?"
                                         body="Not to worry, most people don’t! We have some great activities planned before and during the event to help you meet teammates and start thinking through your ideas."
                                     />
+                                    {/*
                                     <FaqItem
                                         header="What kind of hardware will there be?"
                                         body="There’ll be tons of cool hardware for you to hack on. We’ll put out a list closer to the event so you can see what’s available.
                                          You can also feel free to bring your own from home or email us with any suggestions."
                                     />
+                                    */}
                                 </Section>
                             </FaqBody>
                             <FaqBody>
@@ -211,17 +213,17 @@ class Faq extends React.Component {
                                         header="What if I’m a Michigan student?"
                                         body="Michigan students will need to register and be accepted to be able to attend MHacks."
                                     />
-                                    <FaqItem
+                                    {/*<FaqItem
                                         header="What are you looking for in an application?"
                                         body="Above anything else—passion. Tell us what you care about, what excites you. We want to know what’ll drive you to start and continue hacking. If there’s something about MHacks in particular that you’re excited about, we’d love to hear about that too!"
                                     />
                                     <FaqItem
                                         header="Are you allowing walk-ins?"
                                         body="We will not be allowing walk-ins. To ensure that you’ll be allowed in, please apply ahead of time."
-                                    />
+                                    />*/}
                                 </Section>
                             </FaqBody>
-                            <FaqBody>
+                            {/*<FaqBody>
                                 <FaqSectionHeader>Logistics</FaqSectionHeader>
                                 <Section>
                                     <FaqItem
@@ -279,7 +281,7 @@ class Faq extends React.Component {
                                         body="Weapons of any kind, drugs, or alcohol. If you’re not sure whether something will be okay, please ask ahead of time!"
                                     />
                                 </Section>
-                            </FaqBody>
+                            </FaqBody>*/}
                         </FaqColumn>
                     </FlexBox>
                 </Container>

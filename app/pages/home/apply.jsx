@@ -84,7 +84,7 @@ class Apply extends React.Component {
                                 day: 'numeric',
                                 timeZone: 'America/Detroit'
                             })}
-                            th. U‑M Intramural Sports Building.
+                            th. Anywhere you are.
                         </ApplyBoxText>
                         <ApplyBoxText>
                             {is_application_open

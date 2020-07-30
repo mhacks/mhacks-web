@@ -145,8 +145,7 @@ class Apply extends React.Component {
                             Register for{' '}
                             {this.props.configurationState.data.app_name}!{' '}
                             {this.props.configurationState.data.app_name} will
-                            be held on the University of Michigan's Intramural
-                            Sports Building in Ann Arbor from{' '}
+                            be held online from{' '}
                             {new Date(
                                 this.props.configurationState.data.start_date
                             ).toLocaleString('default', {
@@ -164,12 +163,6 @@ class Apply extends React.Component {
                             th. If you already have teammates in mind, include
                             their names and emails in the "anything else"
                             question.
-                        </Subhead>
-                        <Subhead>
-                            After applying, head over to the{' '}
-                            <LegalLink href="/game">SiMHacks</LegalLink> page to
-                            fill out a quick questionnaire for a minigame within{' '}
-                            {this.props.configurationState.data.app_name}!
                         </Subhead>
                         <LegalText>
                             By registering for{' '}
