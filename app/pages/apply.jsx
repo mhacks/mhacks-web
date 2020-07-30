@@ -106,7 +106,7 @@ class Apply extends React.Component {
             ApplicationThunks.uploadApplication(formData, files)
         );
 
-        this.addNotification('Application Saved!', 'save');
+        this.addNotification('Registration Saved!', 'save');
     }
 
     render() {
@@ -125,7 +125,7 @@ class Apply extends React.Component {
             <PageContainer>
                 <FormContainer>
                     <SectionHeader color={this.props.theme.primary}>
-                        Application
+                        Register
                     </SectionHeader>
                     <div>
                         {this.props.userState.error ? (
@@ -136,13 +136,13 @@ class Apply extends React.Component {
                         {this.props.userState.data.isApplicationSubmitted ? (
                             <AlertContainer>
                                 <Alert
-                                    message={`Your application is submitted but you can make changes on this page and update your application! Thanks for applying to ${this.props.configurationState.data.app_name}.`}
+                                    message={`Your registration is submitted but you can make changes on this page and update your information! Thanks for registering for ${this.props.configurationState.data.app_name}.`}
                                     positive={true}
                                 />
                             </AlertContainer>
                         ) : null}
                         <Subhead>
-                            Apply for{' '}
+                            Register for{' '}
                             {this.props.configurationState.data.app_name}!{' '}
                             {this.props.configurationState.data.app_name} will
                             be held on the University of Michigan's Intramural
@@ -172,7 +172,7 @@ class Apply extends React.Component {
                             {this.props.configurationState.data.app_name}!
                         </Subhead>
                         <LegalText>
-                            By applying to{' '}
+                            By registering for{' '}
                             {this.props.configurationState.data.app_name}, you
                             agree to the MHacks{' '}
                             <LegalLink href="https://docs.google.com/document/d/1L9wC7lfXmOBCKdUQancuoYQf86KIQqUJ0is4dr8QqQM/pub">

@@ -88,8 +88,8 @@ class Apply extends React.Component {
                         </ApplyBoxText>
                         <ApplyBoxText>
                             {is_application_open
-                                ? 'Applications are now open!'
-                                : 'Applications are now closed.'}
+                                ? 'Registrations are now open!'
+                                : 'Registrations are now closed.'}
                         </ApplyBoxText>
                         <StyledNavLinkWrapper>
                             {this.props.userState.data.isLoggedIn ? (
@@ -102,7 +102,7 @@ class Apply extends React.Component {
                                     color={this.props.theme.highlight}
                                 >
                                     {is_application_open
-                                        ? 'Apply'
+                                        ? 'Register'
                                         : 'Dashboard'}
                                 </StyledNavLink>
                             ) : (

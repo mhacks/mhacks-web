@@ -72,7 +72,7 @@ class ApplicationStatusBar extends React.Component {
         return (
             <div>
                 <FlexBox>
-                    <Header>Application Status</Header>
+                    <Header>Registration Status</Header>
                     <StatusText>{applicationStatus}</StatusText>
                 </FlexBox>
                 <ProgressBar percent={percent}>

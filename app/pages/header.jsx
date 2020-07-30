@@ -217,7 +217,7 @@ class HeaderLinks extends React.Component {
                 !isEmailVerified ||
                 !(is_application_open || isApplicationSubmitted) ? null : (
                     <StyledNavLink to={routes.APPLY} color={color}>
-                        Hacker App
+                        Register
                     </StyledNavLink>
                 )}
                 {isLoggedIn ? (
