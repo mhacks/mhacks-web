@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import { PageContainer, MHForm } from '../../components';
 import { ReaderThunks } from '../../actions';
-import { endpoints } from '../../constants';
 import Fuse from 'fuse.js';
 import { HeaderSection, SubsectionContainer, UtilityBar } from './components';
 import { generateCSV } from './util.js';
@@ -82,16 +81,6 @@ class SponsorReader extends React.Component {
             {
                 Header: 'Links',
                 columns: [
-                    {
-                        Header: <FontAwesome name="paperclip" />,
-                        accessor: 'resume',
-                        width: 30,
-                        Cell: row => (
-                            <A target="_blank" href={row.value}>
-                                {GoodMark}
-                            </A>
-                        )
-                    },
                     {
                         Header: <FontAwesome name="github" brand={true} />,
                         accessor: 'github',
@@ -266,12 +255,6 @@ class SponsorReader extends React.Component {
                                 );
                             },
                             title: 'CSV'
-                        },
-                        {
-                            title: 'Download All Resumes',
-                            onClick: () => {
-                                window.open(endpoints.ALL_APPLICATION_RESUMES);
-                            }
                         },
                         {
                             title: filteredApps ? filteredApps.length : 0
