@@ -92,7 +92,7 @@ const LeftSectionHeader = styled(SectionHeader)`
 class Sponsorship extends React.Component {
     render() {
         return (
-            <Wrapper style={{backgroundColor: this.props.backgroundColor}}>
+            <Wrapper style={{ backgroundColor: this.props.backgroundColor }}>
                 <Container>
                     <SponsorshipContainer>
                         <FlexBox>

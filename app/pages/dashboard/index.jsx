@@ -11,8 +11,7 @@ import { PageContainer } from '../../components';
 
 import { OrderedSet } from 'immutable';
 
-const StyledPageContainer = styled(PageContainer)`
-`;
+const StyledPageContainer = styled(PageContainer)``;
 
 const StyledDiv = styled.div`
     padding: 10px;

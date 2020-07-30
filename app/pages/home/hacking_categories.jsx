@@ -79,7 +79,7 @@ const Caption = styled.p`
 class HackingCategories extends React.Component {
     render() {
         return (
-            <Wrapper style={{backgroundColor: this.props.backgroundColor}}>
+            <Wrapper style={{ backgroundColor: this.props.backgroundColor }}>
                 <Container>
                     <Flexbox>
                         <SectionHeader>Hacking Cortices</SectionHeader>

@@ -212,11 +212,10 @@ router.post(
                     continue;
                 } else if (
                     Array.isArray(Model.schema.obj[i].type) ||
-                    (('form' in Model.schema.obj[i] &&
-                        ('type_override' in Model.schema.obj[i].form &&
-                            Model.schema.obj[i].form.type_override ===
-                                'array')) ||
-                        'array_select' in Model.schema.obj[i].form)
+                    ('form' in Model.schema.obj[i] &&
+                        'type_override' in Model.schema.obj[i].form &&
+                        Model.schema.obj[i].form.type_override === 'array') ||
+                    'array_select' in Model.schema.obj[i].form
                 ) {
                     if (req.body[i]) {
                         fields[i] = req.body[i].split(',');

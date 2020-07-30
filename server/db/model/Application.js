@@ -103,15 +103,15 @@ var schema = new mongoose.Schema(
                     select: Object.values(experienceOptions)
                 }
             },
-			address: {
-				type: String,
-				required: true,
-				form: {
-					user_editable: true,
-					label: 'Full address (for prizes!)',
-					type_override: 'essay',
-				}
-			},
+            address: {
+                type: String,
+                required: true,
+                form: {
+                    user_editable: true,
+                    label: 'Full address (for prizes!)',
+                    type_override: 'essay'
+                }
+            },
             links_header: {
                 type: String,
                 form: {
@@ -218,13 +218,13 @@ var schema = new mongoose.Schema(
                     label: 'Sex'
                 }
             },
-			short_answer_headers: {
-				type: String,
-				form: {
-					label: 'Finishing Up',
-					type_override: 'sectionheader'
-				}
-			},
+            short_answer_headers: {
+                type: String,
+                form: {
+                    label: 'Finishing Up',
+                    type_override: 'sectionheader'
+                }
+            },
             // why_mhacks: {
             //     type: String,
             //     required: true,

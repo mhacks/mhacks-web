@@ -71,7 +71,7 @@ const FaqItem = props => (
 class Faq extends React.Component {
     render() {
         return (
-            <Wrapper style={{backgroundColor: this.props.backgroundColor}}>
+            <Wrapper style={{ backgroundColor: this.props.backgroundColor }}>
                 <Container>
                     <SectionHeader>Frequently Asked Questions</SectionHeader>
                     <FlexBox>
@@ -185,7 +185,9 @@ class Faq extends React.Component {
 
                         <FaqColumn>
                             <FaqBody>
-                                <FaqSectionHeader>Registration</FaqSectionHeader>
+                                <FaqSectionHeader>
+                                    Registration
+                                </FaqSectionHeader>
                                 <Section>
                                     <FaqItem
                                         header="How do I register?"

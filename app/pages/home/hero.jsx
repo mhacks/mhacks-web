@@ -95,9 +95,11 @@ class HomeHero extends React.Component {
 
     render() {
         return (
-            <Wrapper style={{backgroundColor: this.props.backgroundColor}}>
+            <Wrapper style={{ backgroundColor: this.props.backgroundColor }}>
                 <Container>
-                    <HeroContainer style={{backgroundColor: this.props.backgroundColor}}>
+                    <HeroContainer
+                        style={{ backgroundColor: this.props.backgroundColor }}
+                    >
                         <VideoPlayerContainer>
                             <VideoPlayer
                                 placeholderImage={VideoPlaceholderImage}

@@ -96,7 +96,7 @@ class Landing extends React.Component {
                     />
                 </MLHBanner>
                 <Container>
-					<img src={LandingBackground} style={{ height: '100vh' }} />
+                    <img src={LandingBackground} style={{ height: '100vh' }} />
                     <InnerContainer>
                         <Logo>
                             <img src={LandingLogo} style={{ width: '100%' }} />
