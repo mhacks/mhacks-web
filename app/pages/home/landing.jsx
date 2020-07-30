@@ -5,8 +5,8 @@ import { devices } from '../../styles';
 
 import Apply from './apply.jsx';
 
-import Cover from 'react-video-cover';
-const BackgroundVideo = require('../../../static/m12/background-video.mp4');
+// import Cover from 'react-video-cover';
+const LandingBackground = require('../../../static/m13/landing.png');
 const LandingLogo = require('../../../static/m12/logo-landing.png');
 
 const Wrapper = styled.div`
@@ -76,13 +76,13 @@ class Landing extends React.Component {
     }
 
     render() {
-        const videoOptions = {
-            src: BackgroundVideo,
-            autoPlay: true,
-            muted: true,
-            loop: true,
-            playsInline: true
-        };
+        // const videoOptions = {
+        //     src: BackgroundVideo,
+        //     autoPlay: true,
+        //     muted: true,
+        //     loop: true,
+        //     playsInline: true
+        // };
 
         return (
             <Wrapper>
@@ -96,15 +96,7 @@ class Landing extends React.Component {
                     />
                 </MLHBanner>
                 <Container>
-                    <Cover
-                        videoOptions={videoOptions}
-                        remeasureOnWindowResize
-                        getResizeNotifier={resizeNotifier => {
-                            this.setState({
-                                resizeNotifier
-                            });
-                        }}
-                    />
+					<img src={LandingBackground} style={{ height: '100vh' }} />
                     <InnerContainer>
                         <Logo>
                             <img src={LandingLogo} style={{ width: '100%' }} />

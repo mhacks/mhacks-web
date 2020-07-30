@@ -6,7 +6,7 @@ import { Container } from '../components';
 import { devices } from '../styles';
 import { routes } from '../constants';
 
-import MHacksLogo from '../../static/m12/logo.svg';
+import MHacksLogo from '../../static/m13/logo.png';
 
 /* Footer Style */
 const FooterWrapper = styled.div`
