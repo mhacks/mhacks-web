@@ -9,8 +9,8 @@ import { devices } from '../styles';
 import theme from '../styles/theme.js';
 import { getUserMetadata } from '../util/user.js';
 
-const HeaderLogoImage = require('../../static/m12/logo.svg');
-const Favicon = require('../../static/m12/favicon.png');
+const HeaderLogoImage = require('../../static/m13/logo.png');
+const Favicon = require('../../static/m13/favicon.png');
 
 /* Header Section */
 const Wrapper = styled.div`
@@ -217,7 +217,7 @@ class HeaderLinks extends React.Component {
                 !isEmailVerified ||
                 !(is_application_open || isApplicationSubmitted) ? null : (
                     <StyledNavLink to={routes.APPLY} color={color}>
-                        Hacker App
+                        Register
                     </StyledNavLink>
                 )}
                 {isLoggedIn ? (
@@ -246,11 +246,6 @@ class HeaderLinks extends React.Component {
                 {isLoggedIn ? (
                     <StyledNavLink to={routes.DASHBOARD} color={color}>
                         Dashboard
-                    </StyledNavLink>
-                ) : null}
-                {isLoggedIn ? (
-                    <StyledNavLink to={routes.GAME} color={color}>
-                        SiMHacks
                     </StyledNavLink>
                 ) : null}
                 {isLoggedIn && is_live_page_enabled ? (

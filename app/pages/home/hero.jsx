@@ -42,6 +42,7 @@ const Text = styled.h2`
     font-weight: 900;
     margin-bottom: 0;
     text-align: center;
+    color: ${props => props.color};
     ${devices.desktop`
         font-size: 42px;
         margin: -50px 15px 25px 0;
@@ -53,6 +54,7 @@ const SubText = styled.h2`
     font-size: 14px;
     text-align: left;
     line-height: 35px;
+    color: ${props => props.color};
     ${devices.desktop`
         font-size: 18px;
         margin: 0px 15px 25px 0;
@@ -93,9 +95,11 @@ class HomeHero extends React.Component {
 
     render() {
         return (
-            <Wrapper>
+            <Wrapper style={{ backgroundColor: this.props.backgroundColor }}>
                 <Container>
-                    <HeroContainer>
+                    <HeroContainer
+                        style={{ backgroundColor: this.props.backgroundColor }}
+                    >
                         <VideoPlayerContainer>
                             <VideoPlayer
                                 placeholderImage={VideoPlaceholderImage}
@@ -106,11 +110,11 @@ class HomeHero extends React.Component {
                             />
                         </VideoPlayerContainer>
                         <LeftSideContainer>
-                            <Text>
+                            <Text color={this.props.theme.highlight}>
                                 Welcome to{' '}
                                 {this.props.configurationState.data.app_name}
                             </Text>
-                            <SubText>
+                            <SubText color={this.props.theme.highlight}>
                                 MHacks is a 36-hour hackathon run by University
                                 of Michigan students. At MHacks, we want to help
                                 you turn your ideas into reality. You're welcome

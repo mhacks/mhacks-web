@@ -20,10 +20,10 @@ class HomePage extends React.Component {
         return (
             <BodyDiv>
                 <Landing />
-                <Hero />
-                <HackingCategories />
-                <Faq />
-                <Sponsorship />
+                <Hero backgroundColor={this.props.theme.primary} />
+                <HackingCategories backgroundColor={this.props.theme.primary} />
+                <Faq backgroundColor={this.props.theme.primary} />
+                <Sponsorship backgroundColor={this.props.theme.primary} />
             </BodyDiv>
         );
     }

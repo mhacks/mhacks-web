@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 
 const FaqSectionHeader = styled.div`
     font-size: 30px;
-    color: ${props => props.theme.highlightOpposite};
+    color: ${props => props.theme.highlight};
 `;
 
 const Section = styled.div`
@@ -24,7 +24,7 @@ const Section = styled.div`
 `;
 
 const Link = styled.a`
-    color: ${props => props.theme.highlightOpposite};
+    color: ${props => props.theme.highlight};
     text-decoration: none;
 `;
 
@@ -62,8 +62,8 @@ const FaqItem = props => (
         <ExpandingItem
             {...props}
             expandColor
-            colorOn={props => props.theme.highlightSecondaryOpposite}
-            colorOff={props => props.theme.highlightOpposite}
+            colorOn={props => props.theme.secondary}
+            colorOff={props => props.theme.highlight}
         />
     </ExpandingItemWrapper>
 );
@@ -71,7 +71,7 @@ const FaqItem = props => (
 class Faq extends React.Component {
     render() {
         return (
-            <Wrapper>
+            <Wrapper style={{ backgroundColor: this.props.backgroundColor }}>
                 <Container>
                     <SectionHeader>Frequently Asked Questions</SectionHeader>
                     <FlexBox>
@@ -138,11 +138,13 @@ class Faq extends React.Component {
                                         header="What if I don’t have a team or idea?"
                                         body="Not to worry, most people don’t! We have some great activities planned before and during the event to help you meet teammates and start thinking through your ideas."
                                     />
+                                    {/*
                                     <FaqItem
                                         header="What kind of hardware will there be?"
                                         body="There’ll be tons of cool hardware for you to hack on. We’ll put out a list closer to the event so you can see what’s available.
                                          You can also feel free to bring your own from home or email us with any suggestions."
                                     />
+                                    */}
                                 </Section>
                             </FaqBody>
                             <FaqBody>
@@ -183,48 +185,47 @@ class Faq extends React.Component {
 
                         <FaqColumn>
                             <FaqBody>
-                                <FaqSectionHeader>Application</FaqSectionHeader>
+                                <FaqSectionHeader>
+                                    Registration
+                                </FaqSectionHeader>
                                 <Section>
                                     <FaqItem
-                                        header="How do I apply?"
+                                        header="How do I register?"
                                         body={`Step one is to create an MHacks Account and fill out some basic information in your MHacks Profile. Once that's done,
-                                     you'll be able to apply for ${this.props.configurationState.data.app_name}! Note that if you're accepted to ${this.props.configurationState.data.app_name}, you will need to Confirm your acceptance.`}
+                                     you'll be able to register for ${this.props.configurationState.data.app_name}! Note that if you're accepted to ${this.props.configurationState.data.app_name}, you will need to Confirm your acceptance.`}
                                     />
                                     <FaqItem
-                                        header="When are applications closing?"
-                                        body="Applications will be evaluated on a rolling basis. Space fills up quickly, so apply early!
-                                     &#10;To be eligible for a Travel Reimbursement, you will need to apply ASAP, no exceptions will
-                                      be made. You are eligible for a Travel Reimbursement if there are no MHacks Buses nearby your location and it costs you money
-                                      to get to MHacks.&#10;"
+                                        header="When are registrations closing?"
+                                        body="Registrations will be evaluated on a rolling basis. Space fills up quickly, so apply early!"
                                     />
                                     <FaqItem
                                         header="How and when will I hear back?"
-                                        body="We’ll be releasing decisions weekly on Mondays soon after the application opens."
+                                        body="We’ll be releasing decisions weekly on Mondays soon after the registration opens."
                                     />
                                     <FaqItem
-                                        header="Who can apply?"
+                                        header="Who can register?"
                                         body="If you’re enrolled in a high school, college, or university, or if you left school during the current school year,
-                                    you’re good to go! (Minors are welcome to apply, but will need to fill out a couple extra forms in order to attend.)"
+                                    you’re good to go! (Minors are welcome to register, but will need to fill out a couple extra forms in order to attend.)"
                                     />
                                     <FaqItem
-                                        header="Can we apply as a team?"
-                                        body="Apply individually for now and include your teammates' emails in the 'anything else' question. We'll have a tool in the near future to get teams set up."
+                                        header="Can we register as a team?"
+                                        body="Register individually for now and include your teammates' emails in the 'anything else' question. We'll have a tool in the near future to get teams set up."
                                     />
                                     <FaqItem
                                         header="What if I’m a Michigan student?"
-                                        body="Michigan students will need to apply and be accepted to be able to attend MHacks."
+                                        body="Michigan students will need to register and be accepted to be able to attend MHacks."
                                     />
-                                    <FaqItem
+                                    {/*<FaqItem
                                         header="What are you looking for in an application?"
                                         body="Above anything else—passion. Tell us what you care about, what excites you. We want to know what’ll drive you to start and continue hacking. If there’s something about MHacks in particular that you’re excited about, we’d love to hear about that too!"
                                     />
                                     <FaqItem
                                         header="Are you allowing walk-ins?"
                                         body="We will not be allowing walk-ins. To ensure that you’ll be allowed in, please apply ahead of time."
-                                    />
+                                    />*/}
                                 </Section>
                             </FaqBody>
-                            <FaqBody>
+                            {/*<FaqBody>
                                 <FaqSectionHeader>Logistics</FaqSectionHeader>
                                 <Section>
                                     <FaqItem
@@ -282,7 +283,7 @@ class Faq extends React.Component {
                                         body="Weapons of any kind, drugs, or alcohol. If you’re not sure whether something will be okay, please ask ahead of time!"
                                     />
                                 </Section>
-                            </FaqBody>
+                            </FaqBody>*/}
                         </FaqColumn>
                     </FlexBox>
                 </Container>

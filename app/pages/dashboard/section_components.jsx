@@ -2,14 +2,14 @@ import styled from 'styled-components';
 
 const SectionHeader = styled.h2`
     font-size: 25px;
-    color: ${props => props.theme.highlight};
+    color: ${props => props.theme.primary};
     text-transform: uppercase;
     //display: inline;
     margin-bottom: 5px;
 `;
 
 const SectionBody = styled.p`
-    color: ${props => props.theme.highlight};
+    color: ${props => props.theme.primary};
     font-size: 16px;
     max-width: 600px;
 `;

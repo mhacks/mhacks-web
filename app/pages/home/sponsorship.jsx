@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 `;
 
 const SectionBody = styled.p`
-    color: ${theme.highlightOpposite};
+    color: ${theme.highlight};
     line-height: 30px;
     font-size: 22px;
     max-width: 600px;
@@ -43,7 +43,7 @@ const QuoteWrapper = styled.div`
 `;
 
 const QuoteText = styled.div`
-    color: ${theme.primary};
+    color: ${theme.highlightSecondary};
     font-size: ${theme.fontSize};
     text-align: left;
 `;
@@ -92,7 +92,7 @@ const LeftSectionHeader = styled(SectionHeader)`
 class Sponsorship extends React.Component {
     render() {
         return (
-            <Wrapper>
+            <Wrapper style={{ backgroundColor: this.props.backgroundColor }}>
                 <Container>
                     <SponsorshipContainer>
                         <FlexBox>

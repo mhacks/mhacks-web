@@ -41,7 +41,7 @@ const SectionHeader = styled.h2`
     margin: 0px 20px 20px 20px;
     min-width: 100%;
     text-align: center;
-    color: ${theme.highlightOpposite};
+    color: ${theme.highlight};
 `;
 
 const Flexbox = styled.div`
@@ -79,7 +79,7 @@ const Caption = styled.p`
 class HackingCategories extends React.Component {
     render() {
         return (
-            <Wrapper>
+            <Wrapper style={{ backgroundColor: this.props.backgroundColor }}>
                 <Container>
                     <Flexbox>
                         <SectionHeader>Hacking Cortices</SectionHeader>

@@ -47,7 +47,7 @@ const StyledNavLinkWrapper = styled.div`
 `;
 
 const ApplyBoxText = styled(SectionHeader)`
-    color: ${theme.highlight};
+    color: ${theme.secondary};
     padding: 0 10px;
 
     ${devices.tiny`
@@ -84,12 +84,12 @@ class Apply extends React.Component {
                                 day: 'numeric',
                                 timeZone: 'America/Detroit'
                             })}
-                            th. U‑M Intramural Sports Building.
+                            th. Anywhere you are.
                         </ApplyBoxText>
                         <ApplyBoxText>
                             {is_application_open
-                                ? 'Applications are now open!'
-                                : 'Applications are now closed.'}
+                                ? 'Registrations are now open!'
+                                : 'Registrations are now closed.'}
                         </ApplyBoxText>
                         <StyledNavLinkWrapper>
                             {this.props.userState.data.isLoggedIn ? (
@@ -99,10 +99,10 @@ class Apply extends React.Component {
                                             ? routes.APPLY
                                             : routes.DASHBOARD
                                     }
-                                    color={this.props.theme.highlight}
+                                    color={this.props.theme.highlightSecondary}
                                 >
                                     {is_application_open
-                                        ? 'Apply'
+                                        ? 'Register'
                                         : 'Dashboard'}
                                 </StyledNavLink>
                             ) : (

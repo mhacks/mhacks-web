@@ -83,16 +83,16 @@ var schema = new mongoose.Schema(
                     creatable: true
                 }
             },
-            tshirt: {
-                type: String,
-                required: true,
-                enum: ['unselected', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
-                form: {
-                    user_editable: true,
-                    label: 'T-Shirt',
-                    select: ['', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL']
-                }
-            },
+            // tshirt: {
+            //     type: String,
+            //     required: true,
+            //     enum: ['unselected', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl'],
+            //     form: {
+            //         user_editable: true,
+            //         label: 'T-Shirt',
+            //         select: ['', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL']
+            //     }
+            // },
             experience: {
                 type: String,
                 required: true,
@@ -101,6 +101,15 @@ var schema = new mongoose.Schema(
                     user_editable: true,
                     label: 'Experience',
                     select: Object.values(experienceOptions)
+                }
+            },
+            address: {
+                type: String,
+                required: true,
+                form: {
+                    user_editable: true,
+                    label: 'Full address (for prizes!)',
+                    type_override: 'essay'
                 }
             },
             links_header: {
@@ -212,30 +221,30 @@ var schema = new mongoose.Schema(
             short_answer_headers: {
                 type: String,
                 form: {
-                    label: 'Short Answer',
+                    label: 'Finishing Up',
                     type_override: 'sectionheader'
                 }
             },
-            why_mhacks: {
-                type: String,
-                required: true,
-                form: {
-                    user_editable: true,
-                    type_override: 'essay',
-                    label: 'Why do you want to come to MHacks?',
-                    placeholder: ''
-                }
-            },
-            favorite_memory: {
-                type: String,
-                form: {
-                    user_editable: true,
-                    type_override: 'essay',
-                    label:
-                        'What is your favorite memory from  MHacks (if applicable)?',
-                    placeholder: ''
-                }
-            },
+            // why_mhacks: {
+            //     type: String,
+            //     required: true,
+            //     form: {
+            //         user_editable: true,
+            //         type_override: 'essay',
+            //         label: 'Why do you want to come to MHacks?',
+            //         placeholder: ''
+            //     }
+            // },
+            // favorite_memory: {
+            //     type: String,
+            //     form: {
+            //         user_editable: true,
+            //         type_override: 'essay',
+            //         label:
+            //             'What is your favorite memory from  MHacks (if applicable)?',
+            //         placeholder: ''
+            //     }
+            // },
             anything_else: {
                 type: String,
                 form: {
@@ -245,34 +254,34 @@ var schema = new mongoose.Schema(
                     placeholder: ''
                 }
             },
-            needs_reimbursement: {
-                type: Boolean,
-                default: false,
-                form: {
-                    user_editable: true,
-                    label: 'Do you need travel reimbursement?',
-                    wideLabel: true
-                }
-            },
-            departing_from: {
-                type: String,
-                form: {
-                    user_editable: true,
-                    label: 'Departing From',
-                    depends_on: 'needs_reimbursement',
-                    wideLabel: true
-                }
-            },
-            requested_reimbursement: {
-                type: Number,
-                default: 0,
-                form: {
-                    user_editable: true,
-                    label: 'How much reimbursement do you expect to need?',
-                    depends_on: 'needs_reimbursement',
-                    wideLabel: true
-                }
-            },
+            // needs_reimbursement: {
+            //     type: Boolean,
+            //     default: false,
+            //     form: {
+            //         user_editable: true,
+            //         label: 'Do you need travel reimbursement?',
+            //         wideLabel: true
+            //     }
+            // },
+            // departing_from: {
+            //     type: String,
+            //     form: {
+            //         user_editable: true,
+            //         label: 'Departing From',
+            //         depends_on: 'needs_reimbursement',
+            //         wideLabel: true
+            //     }
+            // },
+            // requested_reimbursement: {
+            //     type: Number,
+            //     default: 0,
+            //     form: {
+            //         user_editable: true,
+            //         label: 'How much reimbursement do you expect to need?',
+            //         depends_on: 'needs_reimbursement',
+            //         wideLabel: true
+            //     }
+            // },
             status: {
                 type: String,
                 enum: Object.keys(statusOptions),
@@ -409,7 +418,7 @@ var schema = new mongoose.Schema(
             },
             mlh_coc_agreement: {
                 type: Boolean,
-                required: false,
+                required: true,
                 form: {
                     user_editable: true,
                     label: 'I have read and agree to the MLH Code of Conduct.',
@@ -418,7 +427,7 @@ var schema = new mongoose.Schema(
             },
             mlh_affiliation_agreement: {
                 type: Boolean,
-                required: false,
+                required: true,
                 form: {
                     user_editable: true,
                     label:

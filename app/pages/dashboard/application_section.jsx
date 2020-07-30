@@ -10,15 +10,15 @@ import { NavLink } from 'react-router-dom';
 const StyledNavLink = styled(NavLink)`
     font-size: 16px;
     padding: 2px 20px;
-    border: 2px solid ${props => props.theme.highlight};
-    color: ${props => props.theme.highlight};
+    border: 2px solid ${props => props.theme.primary};
+    color: ${props => props.theme.primary};
     border-radius: 25px;
     text-decoration: none;
     transition: all 0.3s;
     text-transform: uppercase;
 
     &:hover {
-        background-color: ${props => props.theme.highlight};
+        background-color: ${props => props.theme.primary};
         color: white;
     }
 `;
@@ -130,8 +130,8 @@ class ApplicationSection extends React.Component {
     renderSubmitted() {
         return (
             <SectionBody>
-                Your application is submitted but you can make changes on the
-                hacker application page! Thanks for applying to{' '}
+                Your registration is submitted but you can make changes on the
+                hacker register page! Thanks for registering for{' '}
                 {this.props.configurationState.data.app_name}.
             </SectionBody>
         );
@@ -141,9 +141,9 @@ class ApplicationSection extends React.Component {
         return (
             <div>
                 <SectionBody>
-                    Head on over to the application section to apply!
+                    Head on over to the registration section to register!
                 </SectionBody>
-                <StyledNavLink to={routes.APPLY}>Apply</StyledNavLink>
+                <StyledNavLink to={routes.APPLY}>Register</StyledNavLink>
             </div>
         );
     }
@@ -151,7 +151,7 @@ class ApplicationSection extends React.Component {
     render() {
         return (
             <div>
-                <SectionHeader>Application</SectionHeader>
+                <SectionHeader>Registration</SectionHeader>
                 <ApplicationStatusBar userData={this.props.userData} />
                 {this.renderApplicationReviewSection()}
             </div>

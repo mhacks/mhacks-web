@@ -11,12 +11,9 @@ import { PageContainer } from '../../components';
 
 import { OrderedSet } from 'immutable';
 
-const StyledPageContainer = styled(PageContainer)`
-    background: ${props => props.theme.secondary};
-`;
+const StyledPageContainer = styled(PageContainer)``;
 
 const StyledDiv = styled.div`
-    background: ${props => props.theme.secondary};
     padding: 10px;
 `;
 
