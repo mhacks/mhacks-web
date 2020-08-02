@@ -120,7 +120,7 @@ class EditProfile extends React.Component {
                         another one by clicking{' '}
                         <Link
                             onClick={this.onClickRequestEmailVerification}
-                            color={this.props.theme.secondary}
+                            color={this.props.theme.highlightSecondary}
                         >
                             here
                         </Link>

@@ -30,6 +30,7 @@ const SectionHeader = styled.h2`
     text-align: center;
     color: ${theme.highlight};
     padding-top: 50px;
+    text-transform: uppercase;
 
     ${devices.tiny`
         font-size: 32px;
