@@ -49,6 +49,7 @@ const StyledNavLinkWrapper = styled.div`
 const ApplyBoxText = styled(SectionHeader)`
     color: ${theme.secondary};
     padding: 0 10px;
+    text-transform: none;
 
     ${devices.tiny`
         font-size: 20px;
@@ -108,9 +109,9 @@ class Apply extends React.Component {
                             ) : (
                                 <StyledNavLink
                                     to={routes.LOGIN}
-                                    color={this.props.theme.highlight}
+                                    color={this.props.theme.highlightSecondary}
                                 >
-                                    Login
+                                    {is_application_open ? 'Register' : 'Login'}
                                 </StyledNavLink>
                             )}
                         </StyledNavLinkWrapper>

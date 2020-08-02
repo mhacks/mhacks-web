@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { devices } from '../../styles';
+// import { devices } from '../../styles';
 
 import Apply from './apply.jsx';
 
 // import Cover from 'react-video-cover';
+const BackgroundVideo = require('../../../static/m13/background.mp4');
 const LandingBackground = require('../../../static/m13/landing.png');
-const LandingLogo = require('../../../static/m12/logo-landing.png');
+// const LandingLogo = require('../../../static/m12/logo-landing.png');
 
 const Wrapper = styled.div`
     background: ${props => props.theme.primary};
@@ -34,18 +35,18 @@ const InnerContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
 `;
 
-const Logo = styled.div`
-    height: auto;
+// const Logo = styled.div`
+//     height: auto;
 
-    ${devices.tiny`
-        width: 100vw;
-    `} ${devices.small`
-        width: 70vw;
-    `};
-`;
+//     ${devices.tiny`
+//         width: 100vw;
+//     `} ${devices.small`
+//         width: 70vw;
+//     `};
+// `;
 
 const ApplyBox = styled.div`
     width: 100%;
@@ -80,7 +81,7 @@ class Landing extends React.Component {
         //     src: BackgroundVideo,
         //     autoPlay: true,
         //     muted: true,
-        //     loop: true,
+        //     loop: false,
         //     playsInline: true
         // };
 
@@ -95,12 +96,30 @@ class Landing extends React.Component {
                         alt="Major League Hacking 2020 Hackathon Season"
                     />
                 </MLHBanner>
-                <Container>
-                    <img src={LandingBackground} style={{ height: '100vh' }} />
+                <Container style={{ height: '100vh' }}>
+                    <img
+                        src={LandingBackground}
+                        style={{
+                            zIndex: '2',
+                            height: '100%',
+                            width: '100%',
+                            objectFit: 'cover'
+                        }}
+                    />
                     <InnerContainer>
-                        <Logo>
-                            <img src={LandingLogo} style={{ width: '100%' }} />
-                        </Logo>
+                        <video
+                            src={BackgroundVideo}
+                            autoPlay
+                            muted
+                            playsInline
+                            style={{
+                                zIndex: '1',
+                                maxHeight: '35vh',
+                                maxWidth: '90vw',
+                                height: 'auto',
+                                width: 'auto'
+                            }}
+                        />
                         <ApplyBox>
                             <Apply />
                         </ApplyBox>

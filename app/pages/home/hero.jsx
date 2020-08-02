@@ -38,13 +38,14 @@ const LeftSideContainer = styled.div`
 `;
 
 const Text = styled.h2`
-    font-size: 42px;
+    font-size: 30px;
     font-weight: 900;
     margin-bottom: 0;
     text-align: center;
     color: ${props => props.color};
+    text-transform: uppercase;
     ${devices.desktop`
-        font-size: 42px;
+        font-size: 30px;
         margin: -50px 15px 25px 0;
         text-align: left;
     `};

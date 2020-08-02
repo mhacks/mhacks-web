@@ -5,13 +5,11 @@ import { devices } from '../../styles';
 import theme from '../../styles/theme';
 
 const Images = {
-    'AI/ML': require('../../../static/m12/cortices/ai.svg'),
-    'Android <br />Development': require('../../../static/m12/cortices/android.svg'),
-    'AR/VR': require('../../../static/m12/cortices/vr.svg'),
-    'Game <br />Development': require('../../../static/m12/cortices/game.svg'),
-    Hardware: require('../../../static/m12/cortices/hardware.svg'),
-    'iOS <br />Development': require('../../../static/m12/cortices/ios.svg'),
-    'Web <br />Development': require('../../../static/m12/cortices/web.svg')
+    'Social Justice': require('../../../static/m13/subtracks/SocialJustice.png'),
+    Professional: require('../../../static/m13/subtracks/Professional.png'),
+    Educational: require('../../../static/m13/subtracks/Educational.png'),
+    Social: require('../../../static/m13/subtracks/Social.png'),
+    Medical: require('../../../static/m13/subtracks/Medical.png')
 };
 
 const Wrapper = styled.div`
@@ -36,12 +34,13 @@ const Container = styled.div`
 
 const SectionHeader = styled.h2`
     display: block;
-    font-size: 48px;
+    font-size: 30px;
     font-weight: 900;
     margin: 0px 20px 20px 20px;
     min-width: 100%;
     text-align: center;
     color: ${theme.highlight};
+    text-transform: uppercase;
 `;
 
 const Flexbox = styled.div`
@@ -73,7 +72,7 @@ const Caption = styled.p`
     display: block;
     font-size: 16px;
     text-align: center;
-    color: ${theme.primary};
+    color: ${theme.highlightSecondary};
 `;
 
 class HackingCategories extends React.Component {
@@ -82,7 +81,7 @@ class HackingCategories extends React.Component {
             <Wrapper style={{ backgroundColor: this.props.backgroundColor }}>
                 <Container>
                     <Flexbox>
-                        <SectionHeader>Hacking Cortices</SectionHeader>
+                        <SectionHeader>Subtracks</SectionHeader>
                         {Object.keys(Images).map(function(name, index) {
                             return (
                                 <Flex1 key={index}>
