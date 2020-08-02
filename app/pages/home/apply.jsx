@@ -71,21 +71,20 @@ class Apply extends React.Component {
                             {new Date(
                                 new Date(
                                     this.props.configurationState.data.start_date
-                                ).getTime() -
-                                    60 * 60 * 1000
+                                ).getTime()
                             ).toLocaleString('default', {
                                 month: 'long',
                                 day: 'numeric',
                                 timeZone: 'America/Detroit'
                             })}
-                            th–
+                            st–
                             {new Date(
                                 this.props.configurationState.data.end_date
                             ).toLocaleString('default', {
                                 day: 'numeric',
                                 timeZone: 'America/Detroit'
                             })}
-                            th. Anywhere you are.
+                            rd. Anywhere you are.
                         </ApplyBoxText>
                         <ApplyBoxText>
                             {is_application_open
