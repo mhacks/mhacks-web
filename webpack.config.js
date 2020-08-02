@@ -165,9 +165,9 @@ let buildConfig = {
         }),
         cssExtractor,
         new CopyWebpackPlugin([
-            { from: './static/m12/favicon.png', to: './logo.png' },
-            { from: './static/m12/logo.png', to: './logo-title.png' },
-            { from: './static/m12/media.png', to: './logo-media.png' },
+            { from: './static/m13/favicon.png', to: './logo.png' },
+            { from: './static/m13/logo.png', to: './logo-title.png' },
+            { from: './static/m13/media.png', to: './logo-media.png' },
             { context: './app/favicon/', from: '**/*', to: './favicon/' },
             { context: './app/fonts/', from: '**/*', to: './fonts/' }
         ]),
