@@ -200,7 +200,7 @@ class Faq extends React.Component {
                                     />
                                     <FaqItem
                                         header="How and when will I hear back?"
-                                        body="We’ll be releasing decisions weekly on Mondays soon after the registration opens."
+                                        body="We’ll be releasing decisions weekly soon after the registration opens."
                                     />
                                     <FaqItem
                                         header="Who can register?"
