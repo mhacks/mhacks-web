@@ -38,7 +38,7 @@ module.exports = {
     deployment_secret: process.env.DEPLOYMENT_SECRET || 'some_secret',
     deployment_users: (
         process.env.DEPLOYMENT_USERS ||
-        'antoniomika,konnor,roball,mwilson,sbein,shashank_murching,hoffcar'
+        'antoniomika,konnor,roball,mwilson,sbein,shashank_murching,hoffcar,rjmarzec'
     ).split(','),
     deploy: {
         staging: {
