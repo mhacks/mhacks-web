@@ -31,11 +31,6 @@ const SectionHeader = styled.h2`
     margin: 0;
 `;
 
-const Link = styled.a`
-    color: ${props => props.color};
-    cursor: pointer;
-`;
-
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
@@ -67,7 +62,6 @@ class Dashboard extends React.Component {
     }
 
     renderEmailVerificationPage() {
-        const userData = this.props.userState.data;
         return (
             <PageContainer>
                 <FullscreenColumnContainer>

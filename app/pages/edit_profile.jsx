@@ -33,11 +33,6 @@ const Subhead = styled.p`
     color: ${props => props.theme.secondary};
 `;
 
-const Link = styled.a`
-    color: ${props => props.color};
-    cursor: pointer;
-`;
-
 class EditProfile extends React.Component {
     constructor(props) {
         super(props);
@@ -107,7 +102,6 @@ class EditProfile extends React.Component {
     }
 
     renderEmailVerificationPage() {
-        const userData = this.props.userState.data;
         return (
             <PageContainer>
                 <FullscreenColumnContainer>
