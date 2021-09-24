@@ -75,17 +75,12 @@ class Dashboard extends React.Component {
                         Unverified Email
                     </SectionHeader>
                     <p>
-                        You should have received a verification email at
-                        {' ' + userData.user.email}. If not, you can request
-                        another one by clicking{' '}
-                        <Link
-                            onClick={this.onClickRequestEmailVerification}
-                            color={this.props.theme.secondary}
-                        >
-                            here
-                        </Link>
-                        . After you verify your email you can continue setting
-                        up your profile!
+                        Thank you for signing up! At the moment our email
+                        verification service is down, so we will be manually
+                        verifying all new sign-ups for the time being. Please
+                        check back in again later, and if you're still having
+                        issues, feel free to email director@mhacks.org. Thank
+                        you for your patience!
                     </p>
                 </FullscreenColumnContainer>
             </PageContainer>
