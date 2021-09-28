@@ -8,6 +8,16 @@ var Errors = {
     UNKNOWN: 'UNKNOWN_ERROR'
 };
 
+const formData = require('form-data');
+const Mailgun = require('mailgun.js');
+const mailgun = new Mailgun(formData);
+const mg = mailgun.client({
+  username: 'mhacks.org',
+  key: process.env.MAILGUN_API_KEY || 'key-3c4f7813f2541f7b7ac2774aa91a6b1c',
+  public_key: process.env.MAILGUN_PUBLIC_KEY || 'pubkey-e705b491e75108109796e42bdc6565a2'
+});
+
+
 function subscribe(email) {
     return new Promise((resolve, reject) => {
         if (!config.mailchimp_token || !config.mailchimp_listid) {
@@ -68,6 +78,22 @@ function sendEmailTemplate(
     from_name
 ) {
     return new Promise((resolve, reject) => {
+      mg.messages.create('mhacks.org', {
+          from: from_email,
+          to: [to_email],
+          subject: subject,
+          text: template_content,
+        })
+        .then(msg => {
+            console.log(msg);
+            resolve(msg);
+          }) // logs response data
+        .catch(err => {
+            console.log(err);
+            reject(err);
+          }); // logs any error
+
+        /*
         if (!config.mandrill_token) {
             reject(Errors.MISSING_CONFIG);
             return;
@@ -105,6 +131,7 @@ function sendEmailTemplate(
                 reject(error);
             }
         );
+        */
     });
 }
 
