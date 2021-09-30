@@ -185,7 +185,7 @@ var schema = new mongoose.Schema(
                 required: true,
                 form: {
                     user_editable: true,
-                    label: 'I have read and agree to the MLH Code of Conduct.',
+                    label: 'MLH Code of Conduct: I have read and agree to the MLH Code of Conduct.',
                     required_value: true
                 }
             },
@@ -195,8 +195,17 @@ var schema = new mongoose.Schema(
                 form: {
                     user_editable: true,
                     label:
-                        'I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy.',
+                        'Event Logistics Information: I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy Policy. I further agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy.',
                     required_value: true
+                }
+            },
+            mlh_optional_communication: {
+                type: Boolean,
+                required: true,
+                form: {
+                    user_editable: true,
+                    label:
+                        'Communication from MLH: I authorize MLH to send me pre- and post-event informational emails, which contain free credit and opportunities from their partners.'
                 }
             }
         },
