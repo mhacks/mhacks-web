@@ -530,7 +530,7 @@ schema.methods.changePassword = function(password) {
 };
 
 schema.methods.sendVerificationEmail = function() {
-    if (config.development) {
+    if (!config.development) {
         console.log(
             emailResponses.VERIFICATION_URL_CONSOLE,
             config.host +
@@ -538,7 +538,19 @@ schema.methods.sendVerificationEmail = function() {
                 this.generateEmailVerificationToken()
         );
     } else {
+        var verification_content = '<html><body>Hi ';
+        verification_content += this.full_name
+            ? this.full_name.split(' ')[0]
+            : 'Hacker';
+        verification_content += '! Thanks for signing up for MHacks! Please click the following link to verifiy your email <a href=';
+        verification_content += config.host +
+            '/v1/auth/verify/' +
+            this.generateEmailVerificationToken();
+        verification_content += '">here.</a></body></html>';
+
+
         Email.sendEmailTemplate(
+            /*
             config.confirmation_email_template,
             {
                 confirmation_url:
@@ -549,12 +561,14 @@ schema.methods.sendVerificationEmail = function() {
                     ? this.full_name.split(' ')[0]
                     : 'Hacker'
             },
+            */
+            this.verification_content,
             config.confirmation_email_subject,
             this.email,
             config.email_from,
             config.email_from_name
         ).catch(error => {
-            console.error('MANDRILL', error);
+            console.error('MAILGUN VERIFICATION EMAIL ERROR: ', error);
             return false;
         });
     }

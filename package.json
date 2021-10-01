@@ -60,6 +60,7 @@
         "jsonwebtoken": "^8.5.1",
         "lodash": "^4.17.19",
         "mailchimp-api-v3": "^1.13.1",
+        "mailgun-js": "^0.22.0",
         "mailgun.js": "^3.5.9",
         "mandrill-api": "^1.0.45",
         "mime": "^2.4.4",
