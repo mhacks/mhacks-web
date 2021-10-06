@@ -538,16 +538,11 @@ schema.methods.sendVerificationEmail = function() {
                 this.generateEmailVerificationToken()
         );
     } else {
-        var verification_content = '<html><body>Hi ';
-        verification_content += this.full_name
-            ? this.full_name.split(' ')[0]
-            : 'Hacker';
-        verification_content += '! Thanks for signing up for MHacks! Please click the following link to verifiy your email <a href=';
-        verification_content += config.host +
-            '/v1/auth/verify/' +
-            this.generateEmailVerificationToken();
-        verification_content += '">here.</a></body></html>';
-
+        var confirmation_content = '<html><body>Hi ';
+        confirmation_content += this.full_name ? this.full_name.split(' ')[0] : 'Hacker';
+        confirmation_content += '! Thanks for signing up for MHacks! Please click the following link to verify your email <a href=';
+        confirmation_content += config.host + '/v1/auth/verify/' + this.generateEmailVerificationToken();
+        confirmation_content += '">here.</a></body></html>';
 
         Email.sendEmailTemplate(
             /*
@@ -562,7 +557,8 @@ schema.methods.sendVerificationEmail = function() {
                     : 'Hacker'
             },
             */
-            this.verification_content,
+            'Confirmation Email Template',
+            confirmation_content,
             config.confirmation_email_subject,
             this.email,
             config.email_from,
