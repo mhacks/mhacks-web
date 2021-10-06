@@ -530,7 +530,7 @@ schema.methods.changePassword = function(password) {
 };
 
 schema.methods.sendVerificationEmail = function() {
-    if (!config.development) {
+    if (config.development) {
         console.log(
             emailResponses.VERIFICATION_URL_CONSOLE,
             config.host +

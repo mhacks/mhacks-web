@@ -31,6 +31,11 @@ const SectionHeader = styled.h2`
     margin: 0;
 `;
 
+const Link = styled.a`
+    color: ${props => props.color};
+    cursor: pointer;
+`;
+
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
@@ -62,6 +67,7 @@ class Dashboard extends React.Component {
     }
 
     renderEmailVerificationPage() {
+        const userData = this.props.userState.data;
         return (
             <PageContainer>
                 <FullscreenColumnContainer>
@@ -69,12 +75,17 @@ class Dashboard extends React.Component {
                         Unverified Email
                     </SectionHeader>
                     <p>
-                        Thank you for signing up! At the moment our email
-                        verification service is down, so we will be manually
-                        verifying all new sign-ups for the time being. Please
-                        check back in again later, and if you're still having
-                        issues, feel free to email director@mhacks.org. Thank
-                        you for your patience!
+                      You should have received a verification email at
+                      {' ' + userData.user.email}. If not, you can request
+                      another one by clicking{' '}
+                      <Link
+                          onClick={this.onClickRequestEmailVerification}
+                          color={this.props.theme.secondary}
+                      >
+                          here
+                      </Link>
+                      . After you verify your email you can continue setting
+                      up your profile!
                     </p>
                 </FullscreenColumnContainer>
             </PageContainer>
