@@ -77,14 +77,14 @@ class Apply extends React.Component {
                                 day: 'numeric',
                                 timeZone: 'America/Detroit'
                             })}
-                            st–
+                            th–
                             {new Date(
                                 this.props.configurationState.data.end_date
                             ).toLocaleString('default', {
                                 day: 'numeric',
                                 timeZone: 'America/Detroit'
                             })}
-                            rd. Anywhere you are.
+                            th. Anywhere you are.
                         </ApplyBoxText>
                         <ApplyBoxText>
                             {is_application_open
