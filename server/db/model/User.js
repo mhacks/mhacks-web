@@ -540,9 +540,10 @@ schema.methods.sendVerificationEmail = function() {
     } else {
         var confirmation_content = '<html><body>Hi ';
         confirmation_content += this.full_name ? this.full_name.split(' ')[0] : 'Hacker';
-        confirmation_content += '! Thanks for signing up for MHacks! Please click the following link to verify your email <a href=';
+        confirmation_content += '! Thanks for signing up for MHacks! Please click the following link to verify your email <a href=\"';
         confirmation_content += config.host + '/v1/auth/verify/' + this.generateEmailVerificationToken();
-        confirmation_content += '">here.</a></body></html>';
+        confirmation_content += '\">here</a>.</body></html>';
+        console.log('\"config.host' + '/v1/auth/verify/' + 'this.generateEmailVerificationToken()\"');
 
         Email.sendEmailTemplate(
             /*
