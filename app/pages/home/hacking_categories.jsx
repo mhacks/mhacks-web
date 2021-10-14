@@ -4,14 +4,6 @@ import styled from 'styled-components';
 import { devices } from '../../styles';
 import theme from '../../styles/theme';
 
-const Images = {
-    //'Social Justice': require('../../../static/m13/subtracks/SocialJustice.png'),
-    //Professional: require('../../../static/m13/subtracks/Professional.png'),
-    //Educational: require('../../../static/m13/subtracks/Educational.png'),
-    //Social: require('../../../static/m13/subtracks/Social.png'),
-    //Medical: require('../../../static/m13/subtracks/Medical.png')
-};
-
 const Wrapper = styled.div`
     background-color: white;
     color: ${props => props.theme.highlight};
@@ -80,21 +72,7 @@ class HackingCategories extends React.Component {
         return (
             <Wrapper style={{ backgroundColor: this.props.backgroundColor }}>
                 <Container>
-                    <Flexbox>
-                        <Flex1> </Flex1>
-                        {Object.keys(Images).map(function(name, index) {
-                            return (
-                                <Flex1 key={index}>
-                                    <Img100 src={Images[name]} />
-                                    <Caption
-                                        dangerouslySetInnerHTML={{
-                                            __html: name
-                                        }}
-                                    />
-                                </Flex1>
-                            );
-                        })}
-                    </Flexbox>
+                    <p>- - - - -</p>
                 </Container>
             </Wrapper>
         );
