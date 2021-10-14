@@ -81,6 +81,7 @@ class HackingCategories extends React.Component {
             <Wrapper style={{ backgroundColor: this.props.backgroundColor }}>
                 <Container>
                     <Flexbox>
+                        <Flex1> </Flex1>
                         {Object.keys(Images).map(function(name, index) {
                             return (
                                 <Flex1 key={index}>
