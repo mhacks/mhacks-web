@@ -5,11 +5,11 @@ import { devices } from '../../styles';
 import theme from '../../styles/theme';
 
 const Images = {
-    'Social Justice': require('../../../static/m13/subtracks/SocialJustice.png'),
-    Professional: require('../../../static/m13/subtracks/Professional.png'),
-    Educational: require('../../../static/m13/subtracks/Educational.png'),
-    Social: require('../../../static/m13/subtracks/Social.png'),
-    Medical: require('../../../static/m13/subtracks/Medical.png')
+    //'Social Justice': require('../../../static/m13/subtracks/SocialJustice.png'),
+    //Professional: require('../../../static/m13/subtracks/Professional.png'),
+    //Educational: require('../../../static/m13/subtracks/Educational.png'),
+    //Social: require('../../../static/m13/subtracks/Social.png'),
+    //Medical: require('../../../static/m13/subtracks/Medical.png')
 };
 
 const Wrapper = styled.div`
@@ -81,7 +81,7 @@ class HackingCategories extends React.Component {
             <Wrapper style={{ backgroundColor: this.props.backgroundColor }}>
                 <Container>
                     <Flexbox>
-                        <SectionHeader>Subtracks</SectionHeader>
+                        //<SectionHeader>Subtracks</SectionHeader>
                         {Object.keys(Images).map(function(name, index) {
                             return (
                                 <Flex1 key={index}>
