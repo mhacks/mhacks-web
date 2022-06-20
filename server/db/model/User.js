@@ -583,9 +583,9 @@ schema.methods.sendPasswordResetEmail = function() {
         var confirmation_content = '<html><body>Hi ';
         confirmation_content += this.full_name ? this.full_name.split(' ')[0] : 'Hacker';
         confirmation_content += '!\n\nPlease use the following link to reset your password <a href=\"';
-        confirmation_content += config.host + '/v1/auth/passwordreset/' + this.generatePasswordResetToken();
+        confirmation_content += config.host + '/auth/passwordreset/' + this.generatePasswordResetToken();
         confirmation_content += '\">here</a>.</body></html>';
-        console.log('\"config.host' + '/v1/auth/passwordreset/' + 'this.generatePasswordResetToken()\"');
+        console.log('\"config.host' + '/auth/passwordreset/' + 'this.generatePasswordResetToken()\"');
 
         Email.sendEmailTemplate(
             /*
