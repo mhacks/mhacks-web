@@ -565,7 +565,7 @@ schema.methods.sendVerificationEmail = function() {
             config.email_from,
             config.email_from_name
         ).catch(error => {
-            console.error('MAILGUN VERIFICATION EMAIL ERROR: ', error);
+            console.error('MAILGUN VERIFICATION EMAIL ERROR (EMAIL VERIFICATION): ', error);
             return false;
         });
     }
@@ -608,7 +608,7 @@ schema.methods.sendPasswordResetEmail = function() {
             config.email_from,
             config.email_from_name
         ).catch(error => {
-            console.error('MAILGUN VERIFICATION EMAIL ERROR: ', error);
+            console.error('MAILGUN VERIFICATION EMAIL ERROR (PASSWORD RESET): ', error);
             return false;
         });
     }
