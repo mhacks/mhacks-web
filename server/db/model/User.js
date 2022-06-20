@@ -540,7 +540,7 @@ schema.methods.sendVerificationEmail = function() {
     } else {
         var confirmation_content = '<html><body>Hi ';
         confirmation_content += this.full_name ? this.full_name.split(' ')[0] : 'Hacker';
-        confirmation_content += '! Thanks for signing up for MHacks! Please click the following link to verify your email <a href=\"';
+        confirmation_content += '!\n\nThanks for signing up for MHacks! Please click the following link to verify your email <a href=\"';
         confirmation_content += config.host + '/v1/auth/verify/' + this.generateEmailVerificationToken();
         confirmation_content += '\">here</a>.</body></html>';
         console.log('\"config.host' + '/v1/auth/verify/' + 'this.generateEmailVerificationToken()\"');
@@ -580,7 +580,15 @@ schema.methods.sendPasswordResetEmail = function() {
                 this.generatePasswordResetToken()
         );
     } else {
+        var confirmation_content = '<html><body>Hi ';
+        confirmation_content += this.full_name ? this.full_name.split(' ')[0] : 'Hacker';
+        confirmation_content += '!\n\nPlease use the following link to reset your password <a href=\"';
+        confirmation_content += config.host + '/v1/auth/verify/' + this.generatePasswordResetToken();
+        confirmation_content += '\">here</a>.</body></html>';
+        console.log('\"config.host' + '/v1/auth/verify/' + 'this.generatePasswordResetToken()\"');
+
         Email.sendEmailTemplate(
+            /*
             config.password_reset_email_template,
             {
                 update_password_url:
@@ -592,8 +600,16 @@ schema.methods.sendPasswordResetEmail = function() {
             this.email,
             config.email_from,
             config.email_from_name
+            */
+            'Password Reset Email Template',
+            confirmation_content,
+            config.password_reset_email_subject,
+            this.email,
+            config.email_from,
+            config.email_from_name
         ).catch(error => {
-            console.error('MANDRILL', error);
+            console.error('MAILGUN VERIFICATION EMAIL ERROR: ', error);
+            return false;
         });
     }
 };
