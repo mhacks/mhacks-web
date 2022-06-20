@@ -585,7 +585,7 @@ schema.methods.sendPasswordResetEmail = function() {
         confirmation_content += '!\n\nPlease use the following link to reset your password <a href=\"';
         confirmation_content += config.host + '/v1/auth/passwordreset/' + this.generatePasswordResetToken();
         confirmation_content += '\">here</a>.</body></html>';
-        console.log('\"config.host' + '/v1/auth/verify/' + 'this.generatePasswordResetToken()\"');
+        console.log('\"config.host' + '/v1/auth/passwordreset/' + 'this.generatePasswordResetToken()\"');
 
         Email.sendEmailTemplate(
             /*
