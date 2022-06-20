@@ -77,28 +77,19 @@ function sendEmailTemplate(
     from_email,
     from_name
 ) {
-    console.log('@@@@@@@@@@@@@@@');
-
     return new Promise((resolve, reject) => {
-      console.log('111111111111');
-
       var DOMAIN = 'mhacks.org';
       var api_key = 'key-3c4f7813f2541f7b7ac2774aa91a6b1c';
       var mailgun = require('mailgun-js')({ apiKey: api_key, domain: DOMAIN });
-
-      console.log('2222222222222');
 
       console.log(template_content);
 
       var data = {
         from: from_email,
         to: to_email,
-        cc: 'hackathon@mhacks.org',
         subject: subject,
         html: template_content,
       };
-
-      console.log('33333333333333');
 
       mailgun.messages().send(data, function (error, body) {
         console.log(body);
