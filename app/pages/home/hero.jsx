@@ -117,7 +117,7 @@ class HomeHero extends React.Component {
                             </Text>
                             <SubText color={this.props.theme.highlight}>
                                 MHacks is a 36-hour hackathon in October run by University of Michigan students.
-                                This fall, we will be back in-person in Ann Arbor, with the option to join virtually as well.
+                                This fall, we will be back to fully in-person in Ann Arbor.
                                 At MHacks, we want to help you turn your ideas into reality. 
                                 You're welcome to come with or without a team. 
                                 We'll provide you with all the resources and mentors you need to help you work on something cool or learn new skills. 
