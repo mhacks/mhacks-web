@@ -116,15 +116,14 @@ class HomeHero extends React.Component {
                                 {this.props.configurationState.data.app_name}
                             </Text>
                             <SubText color={this.props.theme.highlight}>
-                                MHacks is going virtual. Although we aren't able
-                                to welcome you in person, we wouldn't miss the
-                                chance to interact with all of you and your
-                                innovative and wacky ideas for anything. We've
-                                all felt the distance over the past few months,
-                                and we want to give everyone the chance to come
-                                together and have an unparalleled experience
-                                learning, interacting and making something truly
-                                amazing.
+                                MHacks is a 36-hour hackathon in October run by University of Michigan students.
+                                This fall, we will be back in-person in Ann Arbor, with the option to join virtually as well.
+                                At MHacks, we want to help you turn your ideas into reality. 
+                                You're welcome to come with or without a team. 
+                                We'll provide you with all the resources and mentors you need to help you work on something cool or learn new skills. 
+                                You'll have the freedom to create a product, learn new techniques for your future work, or just have fun working on a project with friends. 
+                                Moreover, we will offer you a chance to network with other creators and professionals. 
+                                For newcomers and veterans alike, MHacks is a weekend experience you won’t want to miss.
                             </SubText>
                         </LeftSideContainer>
                     </HeroContainer>
