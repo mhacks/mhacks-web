@@ -13,8 +13,8 @@ const Mailgun = require('mailgun.js');
 const mailgun = new Mailgun(formData);
 const mg = mailgun.client({
   username: 'mhacks.org',
-  key: process.env.MAILGUN_API_KEY || 'key-3c4f7813f2541f7b7ac2774aa91a6b1c',
-  public_key: process.env.MAILGUN_PUBLIC_KEY || 'pubkey-e705b491e75108109796e42bdc6565a2'
+  key: process.env.MAILGUN_API_KEY || secrets.MailgunAPIKey,
+  public_key: process.env.MAILGUN_PUBLIC_KEY || secrets.MailgunPublicKey
 });
 
 
