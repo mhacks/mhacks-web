@@ -45,5 +45,4 @@ build/*
 
 .vscode/
 
-keys/*
 !keys/.gitkeep
