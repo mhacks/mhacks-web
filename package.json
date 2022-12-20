@@ -28,7 +28,7 @@
         "@newrelic/native-metrics": "^4.1.0",
         "archiver": "^3.0.3",
         "autoprefixer": "^9.6.1",
-        "aws-sdk": "^2.503.0",
+        "aws-sdk": "^2.814.0",
         "babel-loader": "^8.0.6",
         "bcrypt": "^3.0.6",
         "body-parser": "^1.19.0",
