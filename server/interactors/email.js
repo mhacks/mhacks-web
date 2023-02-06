@@ -10,7 +10,7 @@ var Errors = {
   UNKNOWN: "UNKNOWN_ERROR",
 };
 
-const KEYS_FOLDER = "../../keys";
+const KEYS_FOLDER = "keys";
 
 const get_mailgun_api_key = () => {
   const apikeyFolder = KEYS_FOLDER + "/mg_k";
